@@ -28,7 +28,7 @@ class Gallery extends Component {
         </Grid>
         <Grid item sm={12} xs={12} container justify="center">
           {this.state.images.map((image, index) => (
-            <Grid item sm={2} xs={4}>
+            <Grid item sm={2} xs={4} key={index}>
               <img alt="" key={index} src={image} style={imageStyle} />
             </Grid>
           ))}

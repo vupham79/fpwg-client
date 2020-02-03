@@ -1,5 +1,5 @@
+import { Divider, Grid, Typography } from "@material-ui/core";
 import React, { Component } from "react";
-import { Grid, Typography, Divider, Box } from "@material-ui/core";
 import styles from "./about.module.css";
 
 export default class AboutPage extends Component {
@@ -15,15 +15,13 @@ export default class AboutPage extends Component {
           >
             About
           </Typography>
-          <Divider className="divider" variant="center" />
+          <Divider className="divider" variant="middle" />
         </Grid>
-        <Grid item sm={10} xs={10} justify="flex-start">
+        <Grid container item sm={10} xs={10} justify="flex-start">
           <Typography variant="body1" color="textPrimary">
-            <Box lineHeight={5}>Welcome to our website!</Box>
-            <Box>
+           Welcome to our website!<br/>
               Take a look around and feel free to contact us for more
               information.
-            </Box>
           </Typography>
         </Grid>
       </Grid>

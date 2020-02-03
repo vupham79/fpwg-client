@@ -51,7 +51,7 @@ const useStyles = makeStyles({
     }
   },
   media: {
-    height: 160
+    height: 140
   }
 });
 
@@ -89,11 +89,11 @@ class New extends Component {
 
   render() {
     return (
-      <Grid container justify="center" className={styles.news}>
+      <Grid container justify="space-around" className={styles.news}>
         <Grid item sm={12} xs={12} className={styles.title}>
           News
         </Grid>
-        <Grid item sm={12} xs={12} container spacing={4}>
+        <Grid item sm={12} xs={12} container>
           {this.state.cards.map((card, index) => (
             <Grid container item sm={3} xs={6} key={index}>
               <MyCard

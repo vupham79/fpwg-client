@@ -7,8 +7,6 @@ import { Container } from "@material-ui/core";
 
 class HomePage extends Component {
   render() {
-    console.log("homepage");
-
     return (
       <Container className={styles.home_page}>
         <CarouselImages />
