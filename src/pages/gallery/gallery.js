@@ -36,14 +36,11 @@ export default class GalleryPage extends Component {
           <Divider variant="center" />
         </Grid>
         <Grid item sm={6} xs={12}>
-          <img src={imgUrl[1]} style={imgStyles} />
+          <img src={imgUrl[1]} style={imgStyles} alt="" />
         </Grid>
         <Grid item sm={4} xs={12} className={styles.anh_dai_dien}>
           <Typography variant="h5" className={styles.child_title}>
-            <Box>Ảnh đại diện</Box>
-            <Box lineHeight={2} sizeHeight={2}>
-              Photos
-            </Box>
+            Ảnh đại diện Photos
           </Typography>
           <div className={styles.btn_view}>
             <Button>
@@ -59,10 +56,7 @@ export default class GalleryPage extends Component {
         </Grid>
         <Grid item sm={4} xs={12} className={styles.anh_dai_dien}>
           <Typography variant="h5" className={styles.child_title}>
-            <Box>Ảnh bìa</Box>
-            <Box lineHeight={2} sizeHeight={2}>
-              Photos
-            </Box>
+            Ảnh bìa Photos
           </Typography>
           <div className={styles.btn_view}>
             <Button>

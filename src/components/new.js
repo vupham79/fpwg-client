@@ -6,7 +6,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Grid, Card, makeStyles } from "@material-ui/core";
-import styles from './index.module.css'
+import styles from "./index.module.css";
 
 const cards = [
   {
@@ -29,9 +29,9 @@ const cards = [
   },
   {
     imageUrl:
-    "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
-  date: "Jan 30, 2020",
-  name: "Foody"
+      "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
+    date: "Jan 30, 2020",
+    name: "Foody"
   }
 ];
 
@@ -46,12 +46,12 @@ const useStyles = makeStyles({
   card: {
     hover: {
       "&:hover": {
-        background: 'background: rgba(24, 20, 20, 0.5)'
+        background: "background: rgba(24, 20, 20, 0.5)"
       }
     }
   },
   media: {
-    height: 160,
+    height: 160
   }
 });
 
@@ -95,9 +95,8 @@ class New extends Component {
         </Grid>
         <Grid item sm={12} xs={12} container spacing={4}>
           {this.state.cards.map((card, index) => (
-            <Grid item sm={3} xs={6}>
-              <MyCard 
-                key={index}
+            <Grid container item sm={3} xs={6} key={index}>
+              <MyCard
                 imageUrl={card.imageUrl}
                 date={card.date}
                 name={card.name}

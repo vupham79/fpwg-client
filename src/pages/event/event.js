@@ -1,9 +1,8 @@
-import React, { Component } from "react";
-import { Grid, Typography, Divider, Box, Button } from "@material-ui/core";
-import styles from "./event.module.css";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, Divider, Grid, Typography } from "@material-ui/core";
+import React, { Component } from "react";
+import styles from "./event.module.css";
 
 const imgUrl = [
   "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
@@ -21,7 +20,12 @@ const imgStyles = {
 export default class EventPage extends Component {
   render() {
     return (
-      <Grid container alignItems="center" direction="column" className={styles.event_page}>
+      <Grid
+        container
+        alignItems="center"
+        direction="column"
+        className={styles.event_page}
+      >
         <Grid item sm={10} xs={10}>
           <Typography
             className={styles.title}
@@ -31,31 +35,27 @@ export default class EventPage extends Component {
           >
             Events
           </Typography>
-          <Divider className="divider" variant="center" />
+          <Divider className="divider" variant="fullWidth" />
         </Grid>
         <Grid
           item
           sm={3}
           xs={3}
-          cotainer
-          justify="flex-center"
+          container
+          justify="center"
           className={styles.event_body}
         >
           <Grid item sm={12} container>
-            <Grid sm={3}>
+            <Grid item sm={3}>
               <div className={styles.image_page}>
-                <Link>
-                  <img src={imgUrl[1]} style={imgStyles} />
-                </Link>
+                <img  alt=""  src={imgUrl[1]} style={imgStyles} />
               </div>
             </Grid>
-            <Grid sm={9} container direction="column">
+            <Grid item sm={9} container direction="column">
               <Grid>
-                <Link className={styles.link}>
-                  <Typography variant="h6" className={styles.shop_name}>
-                    Foody
-                  </Typography>
-                </Link>
+                <Typography variant="h6" className={styles.shop_name}>
+                  Foody
+                </Typography>
               </Grid>
               <Grid>
                 <Button className={styles.btn_like}>
@@ -69,7 +69,7 @@ export default class EventPage extends Component {
               </Grid>
             </Grid>
           </Grid>
-          <Grid container sm={12} className={styles.contain_event}>
+          <Grid item container sm={12} className={styles.contain_event}>
             <Grid className={styles.event}>
               <Typography className={styles.event_content}>
                 Foody does not have any upcoming events.
@@ -77,16 +77,16 @@ export default class EventPage extends Component {
             </Grid>
           </Grid>
         </Grid>
-        <Grid sm={3} justify="center">
-            <Button className={styles.btn_view}>
-              <Typography
-                align="center"
-                variant="h6"
-                className={styles.btn_content}
-              >
-                View Events On FaceBook
-              </Typography>
-            </Button>
+        <Grid item container sm={3} justify="center">
+          <Button className={styles.btn_view}>
+            <Typography
+              align="center"
+              variant="h6"
+              className={styles.btn_content}
+            >
+              View Events On FaceBook
+            </Typography>
+          </Button>
         </Grid>
       </Grid>
     );

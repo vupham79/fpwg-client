@@ -4,8 +4,6 @@ import styles from "./about.module.css";
 
 export default class AboutPage extends Component {
   render() {
-    console.log("about page");
-
     return (
       <Grid container justify="center" className={styles.about_page}>
         <Grid item sm={10} xs={10}>

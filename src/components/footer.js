@@ -3,9 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
 import styles from "./index.module.css";
 import {
-  faCommentDots,
   faEllipsisH,
-  faTimes
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
@@ -41,7 +39,12 @@ class FooterPage extends Component {
 
   render() {
     return (
-      <Grid container direction="row" justify="space-around" className={styles.footer}>
+      <Grid
+        container
+        direction="row"
+        justify="space-around"
+        className={styles.footer}
+      >
         <Grid item sm={4} xs={12} className={styles.content}>
           <Typography variant="h5" color="textSecondary">
             ABOUT
@@ -63,9 +66,7 @@ class FooterPage extends Component {
           <Grid container justify="flex-start" direction="column">
             {this.state.links.map((link, index) => (
               <Grid item xs={2} sm={1} key={index}>
-                <Typography variant="body1">
-                  <Box lineHeight={2}>{link}</Box>
-                </Typography>
+                <Box lineHeight={2}>{link}</Box>
               </Grid>
             ))}
           </Grid>
@@ -75,34 +76,26 @@ class FooterPage extends Component {
             SIGN UP FOR OUR NEWSLETTER
           </Typography>
           <Typography variant="body1">
-            <Box>
-              Get exclusive updates and promotions straight to your email.
-            </Box>
+            Get exclusive updates and promotions straight to your email.
           </Typography>
-          <form>
-            <Input
-              style={txtStyles}
-              variant="outlined"
-              placeholder="Email"
-              autoComplete="true"
-              inputProps={{ "aria-label": "description" }}
-            />
-            <Button className={styles.btn_signUp} variant="outlined">
-              Sign UP
-            </Button>
-          </form>
+          <Input
+            style={txtStyles}
+            variant="outlined"
+            placeholder="Email"
+            autoComplete="true"
+            inputProps={{ "aria-label": "description" }}
+          />
+          <Button className={styles.btn_signUp} variant="outlined">
+            Sign UP
+          </Button>
         </Grid>
         <Divider className={styles.bot_divider} variant="middle" />
         <Grid item sm={12} xs={12} container className={styles.bot_footer}>
-          <Grid item sm={9} justify="flex-start">
-            <Typography variant="body1">
-              <Box>© Foody</Box>
-            </Typography>
+          <Grid item sm={9} container justify="flex-start">
+            <Typography variant="body1">© Foody</Typography>
           </Grid>
-          <Grid item sm={3} justify="center">
-            <Typography variant="body1">
-              <Box>POWERED BY </Box>
-            </Typography>
+          <Grid item sm={3} container justify="center">
+            <Typography variant="body1">POWERED BY</Typography>
           </Grid>
         </Grid>
         <Fab variant="extended" color="secondary" position="right-bottom">

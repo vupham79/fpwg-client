@@ -19,7 +19,7 @@ class ContactPage extends Component {
             variant="h4"
             color="textSecondary"
             align="center"
-            gutterBottom="true"
+            gutterBottom
             className={styles.title}
           >
             Contacts
@@ -73,21 +73,21 @@ class ContactPage extends Component {
               id="outlined-basic"
               label="Name"
               variant="outlined"
-              fullWidth="true"
+              fullWidth
             />
             <TextField
               className={styles.txtInput}
               id="outlined-basic"
               label="Email"
               variant="outlined"
-              fullWidth="true"
+              fullWidth
             />
             <TextField
               className={styles.txtInput}
               id="outlined-basic"
               label="Phone"
               variant="outlined"
-              fullWidth="true"
+              fullWidth
             />
 
             <TextField
@@ -97,7 +97,7 @@ class ContactPage extends Component {
               variant="outlined"
               multiline
               rows="10"
-              fullWidth="true"
+              fullWidth
             />
 
             <div className={styles.btn_send}>

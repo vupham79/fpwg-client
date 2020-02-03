@@ -1,11 +1,8 @@
-import React, { Component } from "react";
-import { Grid, Button } from "@material-ui/core";
+import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Button, Grid } from "@material-ui/core";
+import React, { Component } from "react";
 import styles from './index.module.css';
-import {
-  faChevronRight,
-  faChevronLeft
-} from "@fortawesome/free-solid-svg-icons";
 
 const ArrowButtonStyles = {
   color: "whitesmoke"
@@ -82,7 +79,7 @@ class CarouselImages extends Component {
           </Button>
         </div>
         <Grid item xs={12} className={styles.images_slider}>
-          <img src={imgUrl[this.state.currentImageIndex]} style={imgStyles} />
+          <img src={imgUrl[this.state.currentImageIndex]} alt="" style={imgStyles} />
         </Grid>
         <div className={styles.info}>
           Welcome to our website! Take a look around and feel free to contact us
