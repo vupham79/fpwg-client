@@ -1,10 +1,9 @@
 import React from 'react';
-import './App.css';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Layout from "./main_layout/layout";
-import { Routes } from "./routes/routes";
+import Layout from "../layout/layout";
+import { Routes } from "../../../routes/routes";
 
-function App() {
+function ShowPage() {
   return (
     <BrowserRouter>
           <Layout>
@@ -23,4 +22,4 @@ function App() {
   );
 }
 
-export default App;
+export default ShowPage;

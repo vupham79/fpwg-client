@@ -1,0 +1,125 @@
+.header {
+  border-bottom: 1px solid black;
+}
+
+.title {
+  padding: 1.5vh 0vh;
+}
+.support_icon {
+  margin-right: 1.5vh;
+}
+
+.help_icon {
+  color: springgreen !important;
+  margin-right: 1.5vh;
+}
+
+.nav_icon {
+  color: rgb(68, 70, 211) !important;
+  margin-right: 3vh;
+  font-size: 3.5vh !important;
+}
+
+.support {
+  cursor: pointer;
+}
+
+.help_button {
+  padding: 0.5vh 2vh !important;
+  margin-right: 3vh !important;
+  border: 1px solid #616161 !important;
+}
+
+.navigation {
+  background: #e7e7e7;
+  height: 90vh;
+  overflow: auto;
+  border: 1px solid #616161 !important;
+}
+.menu_list {
+  width: 100% !important;
+}
+
+.current_edit {
+  border-bottom: 1px solid black !important;
+  background: #434d58;
+}
+
+.info {
+  border-left: 1px solid black;
+  padding: 1vh 2vh !important;
+}
+
+.info_content {
+  font-weight: 600 !important;
+  font-size: 2.3vh !important;
+  color: white;
+}
+
+.manage_button {
+  background: #13a1ee !important;
+  padding: 1vh 2vh !important;
+  color: white !important;
+  font-weight: 300 !important;
+}
+
+.create_button {
+  background: #2fc96c !important;
+  padding: 1vh 2vh !important;
+  color: white !important;
+  font-weight: 300 !important;
+  margin-right: 2vh !important;
+}
+
+.on_button{
+  margin: 4vh 1vh !important;
+
+}
+
+.profile {
+  position: absolute;
+  bottom: 0;
+  background: white;
+  border: 1px solid black;
+}
+
+.profile_img {
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  border: 1px solid black;
+  width: 20%;
+  float: left;
+  margin-right: 2vh;
+}
+
+.profile_content {
+  font-size: 2vh !important;
+  color: #616161;
+  cursor: pointer;
+  padding: 2vh;
+}
+
+.web_logo {
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+  border: 1px solid black;
+  float: left;
+  margin-right: 2vh;
+}
+
+.web_content{
+  color: black;
+  padding: 2vh;
+}
+.web_item {
+  margin: 3vh;
+  border: 1px solid black;
+  border-radius: 1vh;
+  padding: 2vh;
+}
+
+.web_icon{
+  margin-left: 1vh;
+}

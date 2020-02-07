@@ -1,0 +1,9 @@
+  
+  .changableAppBar {
+    background-color: "white",
+    opacity 0.6,
+    position sticky,
+    color #535353,
+    textAlign right,
+    top 65
+  }

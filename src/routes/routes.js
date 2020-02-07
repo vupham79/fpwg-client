@@ -1,13 +1,15 @@
-import HomePage from "../pages/home";
-import NewPage from "../pages/new";
-import AboutPage from "../pages/about";
-import EventPage from "../pages/event";
-import ContactPage from "../pages/contact";
-import GalleryPage from "../components/gallery";
+import HomePage from "../theme/theme2/pages/home/index";
+import NewPage from "../theme/theme2/pages/new/index";
+import AboutPage from "../theme/theme2/pages/about/index";
+import EventPage from "../theme/theme2/pages/event/index";
+import ContactPage from "../theme/theme2/pages/contact/index";
+import GalleryPage from "../theme/theme2/pages/gallery/index";
+import EditPage from "../theme/theme1/components/PageSelectPage"
+import MainPage from "../theme/theme2/pages/main/main"
 
 export const Routes = [
   {
-    component: HomePage,
+    component: MainPage,
     exact: true,
     path: "/"
   },
@@ -34,5 +36,9 @@ export const Routes = [
   {
     component: GalleryPage,
     path: "/Gallery"
+  },
+  {
+    component: EditPage,
+    path: "/edit"
   }
 ];
