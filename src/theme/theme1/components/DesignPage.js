@@ -1,5 +1,5 @@
 import React from 'react'
-import ClippedDrawer from './SideBarEditor'
+import ClippedDrawer from '../../../component/SideBarEditor'
 
 const DesignPage = () => { 
   return (   

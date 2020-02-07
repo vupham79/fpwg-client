@@ -1,0 +1,34 @@
+.body {
+  background-image: -webkit-linear-gradient(left, #2fc96c, #13a1ee) !important;
+  height: 100vh;
+  width: 100%;
+  overflow: auto;
+  text-align: center;
+}
+
+.title {
+  font-size: 8vh !important;
+  padding: 10vh 0;
+  font-family: serif !important;
+  color: whitesmoke !important;
+}
+
+.content {
+  font-size: 3vh;
+  color: whitesmoke !important;
+}
+.login_button {
+  background: #4267b2 !important;
+  color: white !important;
+
+}
+
+.facebook_icon {
+  font-size: 4vh !important;
+  color: white !important;
+  margin-right: 2vh;
+}
+
+.link_content {
+  color: white !important;
+}

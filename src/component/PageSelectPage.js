@@ -1,9 +1,9 @@
 import React from "react";
-import UserProfileFacebook from "./UserProfileFB";
-import CustomNavBarEditor from "./CustomNavBarEditor";
+import UserProfileFacebook from "../theme/theme1/components/UserProfileFB";
+import CustomNavBarEditor from "../component/SideBarEditor";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import HomePage from "./HomePage";
-import DesignPage from "./DesignPage";
+import HomePage from "../theme/theme1/components/HomePage";
+import DesignPage from "../theme/theme1/components/DesignPage";
 
 const PageSelectPage = () => {
   return (

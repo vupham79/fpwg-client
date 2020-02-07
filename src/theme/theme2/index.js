@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Layout from "../layout/layout";
-import { Routes } from "../../../routes/routes";
+import Layout from "../theme2/layout/layout";
+import { Routes } from "./routes/routes";
 
 function ShowPage() {
   return (
     <BrowserRouter>
           <Layout>
-            <Switch>
+            {/* <Switch>
               {Routes.map(route => (
                 <Route
                   key={route.path}
@@ -16,7 +16,7 @@ function ShowPage() {
                   component={route.component}
                 />
               ))}
-            </Switch>
+            </Switch> */}
           </Layout>
       </BrowserRouter>
   );

@@ -9,7 +9,6 @@
 
 .app_bar {
   background-color: white !important;
-  position: absolute;
 }
 
 .nav_item {
@@ -17,15 +16,10 @@
   margin-right: 5vh;
 }
 
-.links{
-  text-decoration: none !important;
-  color: #000;
-}
 
 /*Carousel*/
 .arrow_left {
-  position: absolute;
-  left: 10vh;
+  position: relative;
 }
 
 .images_slider {
@@ -34,20 +28,17 @@
 }
 
 .arrow_right {
-  position: absolute;
-  right: 10vh;
+  position: relative;
 }
 
 .info {
-  position: absolute;
+  position: relative;
   text-align: center;
   font-size: 5vh;
-  bottom: 12vh;
-  left: 12%;
-  right: 12%;
   padding: 3vh 6vh;
   display: inline;
   color: white;
+  bottom: 25vh;
   font-family: Georgia, "Times New Roman", Times, serif;
   z-index: 1;
   background: rgba(24, 20, 20, 0.5);
@@ -87,7 +78,7 @@ h5 {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
   font-weight: 700 !important;
   height: 7vh;
-  width: 40%;
+  width: 80%;
   background-color: white !important;
   border-radius: 1vh !important;
 }

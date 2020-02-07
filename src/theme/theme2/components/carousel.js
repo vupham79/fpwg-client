@@ -1,8 +1,11 @@
-import { faChevronLeft, faChevronRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronLeft,
+  faChevronRight
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Grid } from "@material-ui/core";
 import React, { Component } from "react";
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
 const ArrowButtonStyles = {
   color: "whitesmoke"
@@ -28,11 +31,9 @@ class CarouselImages extends Component {
     this.state = {
       currentImageIndex: 0
     };
-    this.nextSlide = this.nextSlide.bind(this);
-    this.previousSlide = this.previousSlide.bind(this);
   }
 
-  previousSlide() {
+  previousSlide = () => {
     const lastIndex = imgUrl.length - 1;
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === 0;
@@ -40,9 +41,9 @@ class CarouselImages extends Component {
     this.setState({
       currentImageIndex: index
     });
-  }
+  };
 
-  nextSlide() {
+  nextSlide = () => {
     const lastIndex = imgUrl.length - 1;
     const { currentImageIndex } = this.state;
     const shouldResetIndex = currentImageIndex === lastIndex;
@@ -50,7 +51,7 @@ class CarouselImages extends Component {
     this.setState({
       currentImageIndex: index
     });
-  }
+  };
 
   componentDidMount() {
     this.startCarousel();
@@ -69,7 +70,7 @@ class CarouselImages extends Component {
   render() {
     return (
       <Grid container alignItems="center">
-        <div className={styles.arrow_left}>
+        {/* <div className={styles.arrow_left}>
           <Button style={ArrowButtonStyles}>
             <FontAwesomeIcon
               icon={faChevronLeft}
@@ -77,15 +78,19 @@ class CarouselImages extends Component {
               onClick={this.previousSlide}
             />
           </Button>
-        </div>
+        </div> */}
         <Grid item xs={12} className={styles.images_slider}>
-          <img src={imgUrl[this.state.currentImageIndex]} alt="" style={imgStyles} />
+          <img
+            src={imgUrl[this.state.currentImageIndex]}
+            alt=""
+            style={imgStyles}
+          />
         </Grid>
         <div className={styles.info}>
           Welcome to our website! Take a look around and feel free to contact us
           for more information.
         </div>
-        <div className={styles.arrow_right}>
+        {/* <div className={styles.arrow_right}>
           <Button style={ArrowButtonStyles}>
             <FontAwesomeIcon
               icon={faChevronRight}
@@ -93,7 +98,7 @@ class CarouselImages extends Component {
               onClick={this.nextSlide}
             />
           </Button>
-        </div>
+        </div> */}
       </Grid>
     );
   }

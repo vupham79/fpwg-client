@@ -1,18 +1,17 @@
-import React, { useState, useRef } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
-import Select from "@material-ui/core/Select";
-import FontPicker from "font-picker-react";
-import { Overlay, Button } from "react-bootstrap";
-import { TwitterPicker, ChromePicker } from "react-color";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Theme1Home from "../pages/theme1-home/Theme1Home";
+import Drawer from "@material-ui/core/Drawer";
+import List from "@material-ui/core/List";
 import MenuItem from "@material-ui/core/MenuItem";
-import ShowPage from "../../theme2/components/show"
+import Select from "@material-ui/core/Select";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import FontPicker from "font-picker-react";
+import React, { useRef, useState } from "react";
+import { Button, Overlay } from "react-bootstrap";
+import { ChromePicker, TwitterPicker } from "react-color";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Grid } from "@material-ui/core";
 
 export default function ClippedDrawer() {
   const drawerWidth = 280;
@@ -35,28 +34,22 @@ export default function ClippedDrawer() {
 
   const useStyles = makeStyles(theme => ({
     root: {
-      display: "flex"
+      display: "flex",
+      position: "sticky"
     },
     appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-      height: 10,
-      top: 62,
-      backgroundColor: "#2a2e2a",
-      position: "fixed"
+      backgroundColor: "#2a2e2a"
     },
     drawer: {
-      width: drawerWidth,
       flexShrink: 0
     },
     drawerPaper: {
-      width: drawerWidth,
       paddingTop: 10,
       paddingLeft: 10,
       paddingRight: 10,
-      marginTop: 70,
+      position: "relative",
       overflowY: "scroll",
-      height: "85%",
-      minHeight: 300
+      height: "87vh"
     },
     content: {
       flexGrow: 1,
@@ -84,17 +77,14 @@ export default function ClippedDrawer() {
       borderRadius: 10,
       borderWidth: 1,
       borderColor: "#2a2e2a",
-      paddingTop: 10,
-      paddingBottom: 10,
-      paddingLeft: 10,
-      paddingRight: 10
+      padding: "2vh"
     }
   }));
 
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
+    <Grid className={classes.root}>
       <CssBaseline />
 
       <Drawer
@@ -124,7 +114,7 @@ export default function ClippedDrawer() {
 
         <Typography className={classes.title}>Font</Typography>
 
-        <div className={classes.sideBarBox}>
+        <Grid className={classes.sideBarBox}>
           <Typography className={classes.title2}>Font Title</Typography>
 
           <List>
@@ -146,7 +136,7 @@ export default function ClippedDrawer() {
             activeFontFamily={themeFontBody}
             onChange={nextFont => setThemeFontBody(nextFont.family)}
           />
-        </div>
+        </Grid>
 
         <Divider
           style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
@@ -154,7 +144,7 @@ export default function ClippedDrawer() {
 
         <Typography className={classes.title}>Color</Typography>
 
-        <div className={classes.sideBarBox}>
+        <Grid className={classes.sideBarBox}>
           <Typography className={classes.title2}>Suggested Color</Typography>
 
           <TwitterPicker
@@ -178,7 +168,7 @@ export default function ClippedDrawer() {
               outOfBoundaries,
               show: _show
             }) => (
-              <div
+              <Grid
                 style={{
                   left: drawerWidth + 10,
                   width: 220,
@@ -194,16 +184,11 @@ export default function ClippedDrawer() {
                   color={themeColor}
                   onChangeComplete={color => setThemeColor(color.hex)}
                 />
-              </div>
+              </Grid>
             )}
           </Overlay>
-        </div>
+        </Grid>
       </Drawer>
-      <main className={classes.content}>
-        {/* <Theme1Home themeFont={themeFont} themeFontBody={themeFontBody} themeColor={themeColor} mapLat={10.8231} mapLng={106.6297} /> */}
-
-        <ShowPage />
-      </main>
-    </div>
+    </Grid>
   );
 }

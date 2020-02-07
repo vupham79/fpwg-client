@@ -22,7 +22,7 @@ import {
 } from "@material-ui/core";
 import React, { Component } from "react";
 import styles from "./main.module.css";
-import Link from "../../components/link";
+import Link from "../../../../component/link";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -135,10 +135,12 @@ function WebsiteItem() {
           </Button>
         </Grid>
         <Grid>
-          <Button className={styles.help_button}>
-            <Link to="/Edit">Edit</Link>
-            <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
-          </Button>
+          <Link to="/edit">
+            <Button className={styles.help_button}>
+              Edit
+              <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
+            </Button>
+          </Link>
         </Grid>
         <Grid container item justify="flex-end" className={styles.on_button}>
           <Button className={styles.create_button}>On</Button>
