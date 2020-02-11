@@ -1,6 +1,6 @@
 /*Header */
 .shopName {
-  font-size: 5vh;
+  font-size: 3vh;
   padding: 0vh 6vh;
   color: red;
   font-weight: 700;
@@ -9,13 +9,13 @@
 
 .app_bar {
   background-color: white !important;
+  /* position: relative !important; */
 }
 
 .nav_item {
   color: black;
-  margin-right: 5vh;
+  /* margin-right: 5vh; */
 }
-
 
 /*Carousel*/
 .arrow_left {
@@ -34,7 +34,7 @@
 .info {
   position: relative;
   text-align: center;
-  font-size: 5vh;
+  font-size: 4vh;
   padding: 3vh 6vh;
   display: inline;
   color: white;

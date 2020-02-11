@@ -1,15 +1,18 @@
+// import {
+//   faChevronLeft,
+//   faChevronRight
+// } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faChevronLeft,
-  faChevronRight
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Grid } from "@material-ui/core";
+  // Button,
+  Grid
+} from "@material-ui/core";
 import React, { Component } from "react";
 import styles from "./index.module.css";
 
-const ArrowButtonStyles = {
-  color: "whitesmoke"
-};
+// const ArrowButtonStyles = {
+//   color: "whitesmoke"
+// };
 
 const imgUrl = [
   "https://s3.amazonaws.com/pv-featured-images/restaurant-cafe/coffee-918926_1920.jpg",

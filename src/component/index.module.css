@@ -1,6 +1,13 @@
+.links {
+  text-decoration: none !important;
+  color: #000;
+  padding: 2vh;
+}
 
-.links{
-    text-decoration: none !important;
-    color: #000;
-    padding: 2vh;
-  }
+.app_bar {
+  padding: 2vh 2vh;
+  background-color: #e8efe9 !important;
+}
+.name {
+  color: #00d084;
+}

@@ -8,10 +8,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import FontPicker from "font-picker-react";
 import React, { useRef, useState } from "react";
-import { Button, Overlay } from "react-bootstrap";
+import { Overlay } from "react-bootstrap";
 import { ChromePicker, TwitterPicker } from "react-color";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Grid } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 
 export default function ClippedDrawer() {
   const drawerWidth = 280;
@@ -34,22 +34,24 @@ export default function ClippedDrawer() {
 
   const useStyles = makeStyles(theme => ({
     root: {
-      display: "flex",
-      position: "sticky"
+      position: "sticky",
+      height: "100%"
     },
     appBar: {
       backgroundColor: "#2a2e2a"
     },
     drawer: {
-      flexShrink: 0
+      flexShrink: 0,
+      height: "100%"
     },
     drawerPaper: {
-      paddingTop: 10,
-      paddingLeft: 10,
-      paddingRight: 10,
+      // paddingTop: 10,
+      // paddingLeft: 10,
+      // paddingRight: 10,
+      padding: "1rem",
       position: "relative",
       overflowY: "scroll",
-      height: "87vh"
+      height: "100%"
     },
     content: {
       flexGrow: 1,
@@ -77,7 +79,7 @@ export default function ClippedDrawer() {
       borderRadius: 10,
       borderWidth: 1,
       borderColor: "#2a2e2a",
-      padding: "2vh"
+      padding: "1rem"
     }
   }));
 
@@ -157,7 +159,12 @@ export default function ClippedDrawer() {
 
           <Typography className={classes.title2}>Custom Color</Typography>
 
-          <Button variant="info" ref={target} onClick={() => setShow(!show)}>
+          <Button
+            variant="contained"
+            color="primary"
+            ref={target}
+            onClick={() => setShow(!show)}
+          >
             Select custom color
           </Button>
           <Overlay target={target.current} show={show} placement="right">

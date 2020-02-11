@@ -22,7 +22,7 @@ import {
 } from "@material-ui/core";
 import React, { Component } from "react";
 import styles from "./main.module.css";
-import Link from "../../../../component/link";
+import Link from "../../component/link";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -35,8 +35,7 @@ const imgStyles = {
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  width: "85%",
-  height: "100%"
+  width: "85%"
 };
 
 const StyledMenu = withStyles({
@@ -115,10 +114,10 @@ function WebsiteItem() {
   return (
     <Grid container justify="space-between" className={styles.web_item}>
       <Grid container item sm={7} alignItems="center">
-        <Grid item sm={3} xs={2} className={styles.web_logo}>
+        <Grid item sm={3} xs={6} className={styles.web_logo}>
           <img src={imgUrl[3]} alt="logo" style={imgStyles} />
         </Grid>
-        <Grid item sm={9}>
+        <Grid item sm={9} xs={6}>
           <Typography variant="h5" className={styles.web_content}>
             Foody
           </Typography>
@@ -127,14 +126,14 @@ function WebsiteItem() {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container item sm={5} justify="flex-end">
-        <Grid item>
+      <Grid container item sm={4} justify="flex-end" className={styles.button}>
+        <Grid item sm={6}>
           <Button className={styles.help_button}>
             View
             <FontAwesomeIcon className={styles.web_icon} icon={faEye} />
           </Button>
         </Grid>
-        <Grid>
+        <Grid item sm={6}>
           <Link to="/edit">
             <Button className={styles.help_button}>
               Edit

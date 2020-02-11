@@ -1,13 +1,16 @@
-import React from 'react';
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import React from "react";
+import {
+  BrowserRouter
+  // , Switch, Route
+} from "react-router-dom";
 import Layout from "../theme2/layout/layout";
-import { Routes } from "./routes/routes";
+// import { Routes } from "./routes/routes";
 
 function ShowPage() {
   return (
     <BrowserRouter>
-          <Layout>
-            {/* <Switch>
+      <Layout>
+        {/* <Switch>
               {Routes.map(route => (
                 <Route
                   key={route.path}
@@ -17,8 +20,8 @@ function ShowPage() {
                 />
               ))}
             </Switch> */}
-          </Layout>
-      </BrowserRouter>
+      </Layout>
+    </BrowserRouter>
   );
 }
 

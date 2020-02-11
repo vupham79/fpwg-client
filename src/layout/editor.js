@@ -7,14 +7,14 @@ export default class componentName extends Component {
   render() {
     return (
       <Grid container>
-        <Grid item md={12}>
+        <Grid item md={12} xs={12}>
           <CustomNavBarEditor />
         </Grid>
-        <Grid container item>
-          <Grid item md={3}>
+        <Grid container item xs={12}>
+          <Grid item md={3} xs={4}>
             <SiteBarEditor />
           </Grid>
-          <Grid item md={9}>
+          <Grid item md={9} xs={8}>
             {this.props.children}
           </Grid>
         </Grid>

@@ -71,9 +71,8 @@
   margin-right: 2vh !important;
 }
 
-.on_button{
-  margin: 4vh 1vh !important;
-
+.on_button {
+  margin: 5vh 0vh !important;
 }
 
 .profile {
@@ -97,19 +96,15 @@
   font-size: 2vh !important;
   color: #616161;
   cursor: pointer;
-  padding: 2vh;
+  /* padding: 2vh; */
 }
 
 .web_logo {
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
   border: 1px solid black;
-  float: left;
   margin-right: 2vh;
 }
 
-.web_content{
+.web_content {
   color: black;
   padding: 2vh;
 }
@@ -117,9 +112,12 @@
   margin: 3vh;
   border: 1px solid black;
   border-radius: 1vh;
-  padding: 2vh;
+  padding: 0vh 2vh;
 }
 
-.web_icon{
+.web_icon {
   margin-left: 1vh;
+}
+.button {
+  margin-top: 3vh !important;
 }
