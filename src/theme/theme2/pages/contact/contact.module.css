@@ -1,7 +1,7 @@
 .contact_page {
   position: relative;
-  margin-top: 35vh;
-  margin-bottom: 5%;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
 }
 
 .title {
@@ -47,7 +47,7 @@
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
 }
 
-.btn_send :hover{
+.btn_send :hover {
   width: 100%;
   background: #646464 !important;
 }

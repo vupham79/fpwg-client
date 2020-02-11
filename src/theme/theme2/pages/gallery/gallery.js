@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { Grid, Typography, Divider, Box, Button } from "@material-ui/core";
+import React from "react";
+import { Grid, Typography, Divider, Button } from "@material-ui/core";
 import styles from "./gallery.module.css";
 
 const imgUrl = [
@@ -15,7 +15,7 @@ const imgStyles = {
   width: "110%"
 };
 
-export default class GalleryPage extends Component {
+class GalleryPage extends React.Component {
   render() {
     return (
       <Grid
@@ -71,9 +71,11 @@ export default class GalleryPage extends Component {
           </div>
         </Grid>
         <Grid item sm={5} xs={12}>
-          <img src={imgUrl[0]} style={imgStyles} />
+          <img src={imgUrl[0]} style={imgStyles} alt="" />
         </Grid>
       </Grid>
     );
   }
 }
+
+export default GalleryPage;

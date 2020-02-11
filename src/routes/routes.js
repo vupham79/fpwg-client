@@ -2,7 +2,8 @@ import EditPage from "../page/edit/edit";
 import LoginPage from "../page/login/login";
 import DesignPage from "../theme/theme1/components/DesignPage";
 import MainPage from "../page/main/main";
-import ViewPage from "../page/view/viewpage";
+// View generated site
+import ViewSitePage from "../page/view/ViewSite";
 
 export const Routes = [
   {
@@ -23,7 +24,7 @@ export const Routes = [
     path: "/design"
   },
   {
-    component: ViewPage,
-    path: "/home/:id"
+    component: ViewSitePage,
+    path: "/:id"
   }
 ];

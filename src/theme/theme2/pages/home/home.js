@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import CarouselImages from "../../components/carousel";
 import styles from "./home.module.css";
 import New from "../../components/new";
 import Gallery from "../../components/gallery";
 import { Container } from "@material-ui/core";
 
-class HomePage extends Component {
+class HomePage extends React.Component {
   render() {
     return (
       <Container className={styles.home_page}>

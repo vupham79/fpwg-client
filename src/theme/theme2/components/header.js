@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import { AppBar } from "@material-ui/core";
 import styles from "./index.module.css";
+import { connect } from "react-redux";
 import Link from "../../../component/link";
 
 class Header extends Component {
   render() {
     const navItems = ["Home", "About", "Gallery", "Event", "Contact", "New"];
+    const { siteId } = this.props;
     const currentPage = "";
     return (
       <AppBar className={styles.app_bar} position="sticky">
@@ -27,7 +29,7 @@ class Header extends Component {
                   {currentPage ? (
                     <Link className={styles.links}>{item}</Link>
                   ) : (
-                    <Link className={styles.links} to={item}>
+                    <Link className={styles.links} to={`/${siteId}/${item}`}>
                       {item}
                     </Link>
                   )}
@@ -41,4 +43,8 @@ class Header extends Component {
   }
 }
 
-export default Header;
+const mapStateToProps = state => ({
+  siteId: state.site.id
+});
+
+export default connect(mapStateToProps, null)(Header);

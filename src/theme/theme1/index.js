@@ -1,8 +1,9 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Layout from "../theme2/layout/layout";
+import Layout from "../theme1/layout/layout";
 import { Routes } from "./routes/routes";
-class Theme2 extends React.Component {
+
+class Theme1 extends React.Component {
   render() {
     return (
       <Layout>
@@ -21,4 +22,4 @@ class Theme2 extends React.Component {
   }
 }
 
-export default Theme2;
+export default Theme1;

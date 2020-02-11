@@ -1,6 +1,6 @@
 import { AppBar, Grid } from "@material-ui/core";
 import React from "react";
-import LoginButtonFacebook from "../theme/theme1/components/LoginButtonFB";
+import LoginButtonFacebook from "./LoginFBButton";
 import styles from "./index.module.css";
 import Link from "./link";
 

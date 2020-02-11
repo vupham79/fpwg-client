@@ -1,4 +1,5 @@
-import theme2 from "../theme/theme2";
+import Theme2 from "../theme/theme2";
+import React from "react";
 
 export const themes = [
   {
@@ -6,6 +7,6 @@ export const themes = [
   },
   {
     name: "theme2",
-    component: theme2
+    component: <Theme2 />
   }
 ];

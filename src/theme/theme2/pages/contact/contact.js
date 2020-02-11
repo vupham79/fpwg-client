@@ -1,5 +1,4 @@
 import React from "react";
-import { Component } from "react";
 import {
   Grid,
   Typography,
@@ -10,7 +9,7 @@ import {
 } from "@material-ui/core";
 import styles from "./contact.module.css";
 
-class ContactPage extends Component {
+class ContactPage extends React.Component {
   render() {
     return (
       <Grid container justify="center" className={styles.contact_page}>

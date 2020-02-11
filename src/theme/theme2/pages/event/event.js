@@ -1,7 +1,7 @@
 import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Divider, Grid, Typography } from "@material-ui/core";
-import React, { Component } from "react";
+import React from "react";
 import styles from "./event.module.css";
 
 const imgUrl = [
@@ -17,7 +17,7 @@ const imgStyles = {
   height: "100%"
 };
 
-export default class EventPage extends Component {
+class EventPage extends React.Component {
   render() {
     return (
       <Grid
@@ -48,7 +48,7 @@ export default class EventPage extends Component {
           <Grid item sm={12} container>
             <Grid item sm={3}>
               <div className={styles.image_page}>
-                <img  alt=""  src={imgUrl[1]} style={imgStyles} />
+                <img alt="" src={imgUrl[1]} style={imgStyles} />
               </div>
             </Grid>
             <Grid item sm={9} container direction="column">
@@ -92,3 +92,5 @@ export default class EventPage extends Component {
     );
   }
 }
+
+export default EventPage;

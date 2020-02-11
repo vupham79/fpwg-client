@@ -101,23 +101,6 @@ h5 {
   padding-left: 14vh;
 }
 
-/*New*/
-.title {
-  text-align: center;
-  font-size: 5.5vh;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-  font-weight: 700;
-  color: #646464;
-  padding-top: 10vh;
-  padding-bottom: 5vh;
-}
-
-.news {
-  background-color: #f4f4f4;
-  padding-bottom: 10vh;
-}
-
 /*Gallery*/
 .gallery {
   text-align: center;

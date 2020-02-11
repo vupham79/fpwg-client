@@ -1,15 +1,14 @@
 import React, { Component } from "react";
 import Footer from "../components/footer";
 import Header from "../components/header";
-import PreHomePage from "../pages/home";
 
 export default class Layout extends Component {
   render() {
+    // console.log("helllooo");
     return (
       <>
         <Header />
-        {/* {this.props.children} */}
-        <PreHomePage/>
+        {this.props.children}
         <Footer />
       </>
     );
