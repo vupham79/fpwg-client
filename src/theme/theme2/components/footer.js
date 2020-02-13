@@ -2,16 +2,13 @@ import React, { Component } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
 import styles from "./index.module.css";
-import { faEllipsisH } from "@fortawesome/free-solid-svg-icons";
-
 import {
   Grid,
   Typography,
   Box,
   Input,
   Button,
-  Divider,
-  Fab
+  Divider
 } from "@material-ui/core";
 import { connect } from "react-redux";
 

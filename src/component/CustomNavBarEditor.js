@@ -1,4 +1,4 @@
-import { AppBar, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
 import LoginButtonFacebook from "./LoginFBButton";
 import styles from "./index.module.css";
@@ -21,34 +21,31 @@ const navItems = [
 
 const CustomNavBarEditor = () => {
   return (
-    <AppBar className={styles.app_bar} position="sticky">
-      <Grid container justify="space-between">
-        <Grid container item xs={8} sm={11} alignItems="center">
-          <Grid item sm={1} xs={2} className={styles.name}>
-            <img
-              src="./images/v-icon.png"
-              width="30"
-              height="30"
-              alt=""
-              className="d-inline-block align-center"
-            />
-            ampPage
-          </Grid>
-          <Grid container justify="space-around" item sm={2} xs={10}>
-            {navItems.map((item, index) => (
-              <Grid className={styles.nav_item} item xs={3} sm={1} key={index}>
-                <Link className={styles.links} to={item.link}>
-                  {item.title}
-                </Link>
-              </Grid>
-            ))}
-          </Grid>
+    <Grid container className={styles.navbar_editor}>
+      <Grid container item md={10} xs={12} alignItems="center">
+        <Grid item md={1} xs={2} className={styles.brand}>
+          <h3>FPWG</h3>
         </Grid>
-        <Grid item xs={3} sm={1}>
-          <LoginButtonFacebook />
+        <Grid container justify={"space-between"} item sm={2} xs={10}>
+          {navItems.map((item, index) => (
+            <Grid
+              // className={styles.nav_item}
+              item
+              xs={3}
+              sm={1}
+              key={index}
+            >
+              <Link className={styles.links} to={item.link}>
+                {item.title}
+              </Link>
+            </Grid>
+          ))}
         </Grid>
       </Grid>
-    </AppBar>
+      <Grid container item md={2} xs={12} justify={"flex-end"}>
+        <LoginButtonFacebook />
+      </Grid>
+    </Grid>
   );
 };
 

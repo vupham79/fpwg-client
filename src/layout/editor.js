@@ -6,17 +6,17 @@ import CustomNavBarEditor from "../component/CustomNavBarEditor";
 export default class componentName extends Component {
   render() {
     return (
-      <Grid container>
-        <Grid item md={12} xs={12}>
-          <CustomNavBarEditor />
+      <>
+        <CustomNavBarEditor />
+        <Grid container>
+          <Grid item md={3} xs={12}>
+            <SiteBarEditor />
+          </Grid>
+          <Grid item md={9} xs={12}>
+            {this.props.children}
+          </Grid>
         </Grid>
-        <Grid item md={3} xs={4}>
-          <SiteBarEditor />
-        </Grid>
-        <Grid item md={9} xs={8}>
-          {this.props.children}
-        </Grid>
-      </Grid>
+      </>
     );
   }
 }

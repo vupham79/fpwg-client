@@ -5,9 +5,21 @@
 }
 
 .app_bar {
-  padding: 2vh 2vh;
+  padding: 1.5rem;
   background-color: #e8efe9 !important;
 }
-.name {
+
+.navbar_editor {
+  position: sticky;
+  padding: 1rem;
+  background-color: #e8efe9 !important;
+}
+
+.brand {
   color: #00d084;
+  font-weight: bold;
+}
+
+.sidebar {
+  position: sticky;
 }

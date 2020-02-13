@@ -8,11 +8,9 @@ import Select from "@material-ui/core/Select";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import FontPicker from "font-picker-react";
-import React, { useRef, useState } from "react";
-import { Overlay } from "react-bootstrap";
+import React from "react";
 import { ChromePicker, TwitterPicker } from "react-color";
 import { connect } from "react-redux";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { themes } from "../constant/constant";
 import {
   changeTheme,
@@ -24,16 +22,13 @@ import {
 
 const useStyles = theme => ({
   root: {
-    height: "90vh"
+    height: "100vh"
   },
   drawer: {
     flexShrink: 0,
     height: "100%"
   },
   drawerPaper: {
-    // paddingTop: 10,
-    // paddingLeft: 10,
-    // paddingRight: 10,
     padding: "1rem",
     position: "relative",
     overflowY: "scroll",
@@ -82,31 +77,13 @@ class ClippedDrawer extends React.Component {
       changeFontBody,
       isShow,
       themeColor,
-      setShowCustomColor
+      setShowCustomColor,
+      classes
     } = this.props;
-
-    // const [themeToChange, setTheme] = React.useState("");
-
-    // const [themeFont, setThemeFont] = useState("Arial");
-
-    // const [themeFontBody, setThemeFontBody] = useState("Arial");
-
-    // const [show, setShow] = useState(false);
-
-    // const [themeColor, setThemeColor] = useState("#FF6900");
-
-    // const target = useRef(null);
-
-    // const handleChange = e => {
-    // setTheme(e.target.value);
-    // };
-
-    const { classes } = this.props;
 
     return (
       <AppBar className={classes.root} position="sticky">
         <CssBaseline />
-
         <Drawer
           className={classes.drawer}
           variant="permanent"
@@ -115,11 +92,11 @@ class ClippedDrawer extends React.Component {
           }}
         >
           <Typography className={classes.title}>Theme</Typography>
-
           <Select
             defaultValue={themeName}
             autoComplete="true"
             value={themeName}
+            fullWidth
             onChange={event => changeTheme(event.target.value)}
           >
             {themes.map((element, index) => (
@@ -128,16 +105,12 @@ class ClippedDrawer extends React.Component {
               </MenuItem>
             ))}
           </Select>
-
           <Divider
             style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
           />
-
           <Typography className={classes.title}>Font</Typography>
-
           <Grid className={classes.sideBarBox}>
             <Typography className={classes.title2}>Font Title</Typography>
-
             <List>
               <FontPicker
                 apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
@@ -146,11 +119,8 @@ class ClippedDrawer extends React.Component {
                 onChange={e => changeFontTitle(e.family)}
               />
             </List>
-
             <Divider />
-
             <Typography className={classes.title2}>Font Body</Typography>
-
             <FontPicker
               apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
               sort="alphabet"
@@ -158,24 +128,18 @@ class ClippedDrawer extends React.Component {
               onChange={e => changeFontBody(e.family)}
             />
           </Grid>
-
           <Divider
             style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
           />
-
           <Typography className={classes.title}>Color</Typography>
-
           <Grid className={classes.sideBarBox}>
             <Typography className={classes.title2}>Suggested Color</Typography>
-
             <TwitterPicker
-              width={220}
+              width={"fit-content"}
               color={themeColor}
               onChangeComplete={e => changeColor(e.hex)}
             />
-
             <Divider />
-
             <Typography className={classes.title2}>Custom Color</Typography>
             <Button
               variant="contained"
