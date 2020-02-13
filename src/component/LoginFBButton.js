@@ -3,6 +3,10 @@ import { Button } from "@material-ui/core";
 
 export default class LoginFBButton extends React.Component {
   render() {
-    return <Button variant={"contained"}>Login</Button>;
+    return (
+      <Button variant={"contained"} color="primary">
+        Login
+      </Button>
+    );
   }
 }

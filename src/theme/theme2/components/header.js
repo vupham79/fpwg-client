@@ -8,13 +8,21 @@ import Link from "../../../component/link";
 class Header extends Component {
   render() {
     const navItems = ["Home", "About", "Gallery", "Event", "Contact", "New"];
-    const { siteId } = this.props;
+    const { siteId, themeFontTitle, themeColor } = this.props;
     const currentPage = "";
+
+    const changeStyle = {
+      fontFamily: themeFontTitle,
+      color: themeColor
+    };
+
     return (
-      <AppBar className={styles.app_bar} position="sticky">
+      <AppBar className={styles.app_bar} style={changeStyle} position="sticky">
         <Grid container alignItems="center">
           <Grid item xs={12} sm={2}>
-            <p className={styles.shopName}>Foody</p>
+            <p className={styles.shopName} style={changeStyle}>
+              Foody
+            </p>
           </Grid>
           <Grid item xs={12} sm={10}>
             <Grid container justify="flex-end">
@@ -44,7 +52,9 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-  siteId: state.site.id
+  siteId: state.site.id,
+  themeFontTitle: state.theme.fontTitle,
+  themeColor: state.theme.color
 });
 
 export default connect(mapStateToProps, null)(Header);

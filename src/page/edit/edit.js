@@ -1,13 +1,18 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import { themes } from "../../constant/constant";
 import EditLayout from "../../layout/editor";
-import Theme2 from "../../theme/theme2";
 
-export default class EditPage extends Component {
+class EditPage extends Component {
   render() {
-    return (
-      <EditLayout>
-        <Theme2 />
-      </EditLayout>
-    );
+    const { themeName } = this.props;
+    const theme = themes.find(element => element.name === themeName);
+    return <EditLayout>{theme.component}</EditLayout>;
   }
 }
+
+const mapStateToProps = state => ({
+  themeName: state.theme.name
+});
+
+export default connect(mapStateToProps, null)(EditPage);

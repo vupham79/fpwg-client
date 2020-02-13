@@ -58,9 +58,8 @@
 }
 
 h5 {
-  color: #646464 !important;
+  /* color: #646464 !important; */
   font-weight: 700 !important;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
   padding-bottom: 5vh;
 }
 
@@ -112,6 +111,17 @@ h5 {
   background: rgba(24, 20, 20, 0.5);
   height: 25vh;
   top: -25.5vh;
+}
+
+.title {
+  text-align: center;
+  font-size: 5.5vh;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  font-weight: 700;
+  color: #646464;
+  padding-top: 10vh;
+  padding-bottom: 5vh;
 }
 
 .view_button {

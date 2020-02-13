@@ -10,13 +10,11 @@ export default class componentName extends Component {
         <Grid item md={12} xs={12}>
           <CustomNavBarEditor />
         </Grid>
-        <Grid container item xs={12}>
-          <Grid item md={3} xs={4}>
-            <SiteBarEditor />
-          </Grid>
-          <Grid item md={9} xs={8}>
-            {this.props.children}
-          </Grid>
+        <Grid item md={3} xs={4}>
+          <SiteBarEditor />
+        </Grid>
+        <Grid item md={9} xs={8}>
+          {this.props.children}
         </Grid>
       </Grid>
     );

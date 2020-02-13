@@ -1,7 +1,7 @@
 import React from "react";
 import CarouselImages from "../../components/carousel";
 import styles from "./home.module.css";
-import New from "../../components/new";
+import New from "../../pages/new";
 import Gallery from "../../components/gallery";
 import { Container } from "@material-ui/core";
 

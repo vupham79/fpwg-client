@@ -1,6 +1,7 @@
 import { Button, Grid } from "@material-ui/core";
 import React, { Component } from "react";
 import styles from "./index.module.css";
+import { connect } from "react-redux";
 
 const images = [
   "https://scontent.xx.fbcdn.net/v/t1.0-9/84357702_100161708215284_6628528314745094144_n.jpg?_nc_cat=111&_nc_ohc=j0bhRaMn6QIAX-D2JrZ&_nc_ht=scontent.xx&oh=00c77acfe89ec5953a9b1689b85308cb&oe=5EDA3199",
@@ -21,9 +22,16 @@ class Gallery extends Component {
   }
 
   render() {
+    const { themeFontTitle, themeColor } = this.props;
+
+    const changeStyle = {
+      fontFamily: themeFontTitle,
+      color: themeColor
+    };
+
     return (
       <Grid container justify="center" className={styles.gallery} spacing={0}>
-        <Grid item sm={12} xs={12} className={styles.title}>
+        <Grid item sm={12} xs={12} className={styles.title} style={changeStyle}>
           Gallery
         </Grid>
         <Grid item sm={12} xs={12} container justify="center">
@@ -50,4 +58,9 @@ class Gallery extends Component {
   }
 }
 
-export default Gallery;
+const mapStateToProps = state => ({
+  themeFontTitle: state.theme.fontTitle,
+  themeColor: state.theme.color
+});
+
+export default connect(mapStateToProps, null)(Gallery);

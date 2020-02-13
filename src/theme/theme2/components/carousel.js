@@ -3,11 +3,9 @@
 //   faChevronRight
 // } from "@fortawesome/free-solid-svg-icons";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  // Button,
-  Grid
-} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import styles from "./index.module.css";
 
 // const ArrowButtonStyles = {
@@ -71,6 +69,11 @@ class CarouselImages extends Component {
   }
 
   render() {
+    const { themeFontBody } = this.props;
+
+    const changeStyle = {
+      fontFamily: themeFontBody
+    };
     return (
       <Grid container alignItems="center">
         {/* <div className={styles.arrow_left}>
@@ -89,7 +92,7 @@ class CarouselImages extends Component {
             style={imgStyles}
           />
         </Grid>
-        <div className={styles.info}>
+        <div className={styles.info} style={changeStyle}>
           Welcome to our website! Take a look around and feel free to contact us
           for more information.
         </div>
@@ -107,4 +110,8 @@ class CarouselImages extends Component {
   }
 }
 
-export default CarouselImages;
+const mapStateToProps = state => ({
+  themeFontBody: state.theme.fontBody
+});
+
+export default connect(mapStateToProps, null)(CarouselImages);

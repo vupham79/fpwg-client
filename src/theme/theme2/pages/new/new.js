@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { Grid, Card, makeStyles, Container } from "@material-ui/core";
 import styles from "./new.module.css";
+import { connect } from "react-redux";
 
 const cards = [
   {
@@ -88,13 +89,25 @@ class NewPage extends Component {
   }
 
   render() {
+    const { themeFontTitle, themeColor } = this.props;
+
+    const changeStyle = {
+      fontFamily: themeFontTitle,
+      color: themeColor
+    };
     return (
       <Container className={styles.news}>
         <Grid container>
-          <Grid item sm={12} xs={12} className={styles.title}>
+          <Grid
+            item
+            sm={12}
+            xs={12}
+            className={styles.title}
+            style={changeStyle}
+          >
             News
           </Grid>
-          <Grid item sm={12} xs={12} container justify={""} spacing={2}>
+          <Grid item sm={12} xs={12} container justify="center" spacing={2}>
             {this.state.cards.map((card, index) => (
               <Grid container item sm={3} xs={6} key={index}>
                 <MyCard
@@ -111,4 +124,9 @@ class NewPage extends Component {
   }
 }
 
-export default NewPage;
+const mapStateToProps = state => ({
+  themeFontTitle: state.theme.fontTitle,
+  themeColor: state.theme.color
+});
+
+export default connect(mapStateToProps, null)(NewPage);
