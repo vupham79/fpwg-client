@@ -1,5 +1,14 @@
 .header {
   border-bottom: 1px solid black;
+  min-height: 10vh;
+}
+
+.body {
+  min-height: 90vh;
+}
+
+.righter {
+  height: fit-content;
 }
 
 .title {
@@ -22,17 +31,18 @@
 
 .support {
   cursor: pointer;
+  border: 1px solid #616161 !important;
 }
 
 .help_button {
-  padding: 0.5vh 2vh !important;
-  margin-right: 3vh !important;
+  /* padding: 0.5vh 2vh !important; */
+  /* margin-right: 3vh !important; */
   border: 1px solid #616161 !important;
 }
 
 .navigation {
   background: #e7e7e7;
-  height: 90vh;
+  /* height: 90vh; */
   overflow: auto;
   border: 1px solid #616161 !important;
 }
@@ -47,12 +57,12 @@
 
 .info {
   border-left: 1px solid black;
-  padding: 1vh 2vh !important;
+  padding: 2vh !important;
 }
 
 .info_content {
-  font-weight: 600 !important;
-  font-size: 2.3vh !important;
+  font-weight: 400 !important;
+  font-size: 2.6vh !important;
   color: white;
 }
 
@@ -60,6 +70,7 @@
   background: #13a1ee !important;
   padding: 1vh 2vh !important;
   color: white !important;
+  margin: 2vh !important;
   font-weight: 300 !important;
 }
 
@@ -68,7 +79,7 @@
   padding: 1vh 2vh !important;
   color: white !important;
   font-weight: 300 !important;
-  margin-right: 2vh !important;
+  margin: 2vh !important;
 }
 
 .on_button {
@@ -76,8 +87,7 @@
 }
 
 .profile {
-  position: absolute;
-  bottom: 0;
+  padding: 2vh;
   background: white;
   border: 1px solid black;
 }
@@ -96,7 +106,9 @@
   font-size: 2vh !important;
   color: #616161;
   cursor: pointer;
-  /* padding: 2vh; */
+  border: 1px solid #616161 !important;
+  padding: 0.2rem !important;
+  border-radius: 0.2rem;
 }
 
 .web_logo {
@@ -109,10 +121,9 @@
   padding: 2vh;
 }
 .web_item {
-  margin: 3vh;
   border: 1px solid black;
   border-radius: 1vh;
-  padding: 0vh 2vh;
+  padding: 0.5rem;
 }
 
 .web_icon {
@@ -120,4 +131,9 @@
 }
 .button {
   margin-top: 3vh !important;
+}
+
+.siteItem {
+  margin-top: 1rem !important;
+  margin-left: 1rem !important;
 }

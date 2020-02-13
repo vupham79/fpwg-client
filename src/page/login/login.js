@@ -4,9 +4,11 @@ import styles from "./login.module.css";
 import Link from "../../component/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
-
-export default class LoginPage extends Component {
+import { connect } from "react-redux";
+import { setLogin } from "../../actions";
+class LoginPage extends Component {
   render() {
+    const { login } = this.props;
     return (
       <Grid container justify="center" className={styles.body}>
         <Grid item xs={12}>
@@ -19,7 +21,10 @@ export default class LoginPage extends Component {
         </Grid>
         <Grid item>
           <Link to="/view">
-            <Button className={styles.login_button}>
+            <Button
+              className={styles.login_button}
+              onClick={() => setLogin(login)}
+            >
               <FontAwesomeIcon
                 icon={faFacebookSquare}
                 className={styles.facebook_icon}
@@ -32,3 +37,13 @@ export default class LoginPage extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  login: state.user.isLogin
+});
+
+const mapDispatchToProps = dispatch => ({
+  setLogin: login => dispatch(setLogin(login))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

@@ -6,6 +6,7 @@ import {
   changeColor,
   setShowCustomColor
 } from "./theme";
+import { setLogin } from "./user";
 
 export {
   updateSiteId,
@@ -13,5 +14,6 @@ export {
   changeColor,
   changeFontTitle,
   changeFontBody,
-  setShowCustomColor
+  setShowCustomColor,
+  setLogin
 };

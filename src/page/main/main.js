@@ -35,13 +35,11 @@ const imgStyles = {
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  width: "85%"
+  width: "80%"
 };
 
 const StyledMenu = withStyles({
-  paper: {
-    border: "1px solid #d3d4d5"
-  }
+  paper: {}
 })(props => (
   <Menu
     elevation={0}
@@ -81,18 +79,14 @@ function CustomizedMenus() {
   };
 
   return (
-    <div>
-      <Typography
-        variant="body1"
-        onClick={handleClick}
-        className={styles.support}
-      >
+    <>
+      <Button className={styles.help_button}>
         <FontAwesomeIcon
           className={styles.support_icon}
           icon={faHeadphonesAlt}
         />
-        Support
-      </Typography>
+        View
+      </Button>
       <StyledMenu
         anchorEl={anchorEl}
         keepMounted
@@ -106,18 +100,18 @@ function CustomizedMenus() {
           <ListItemText primary="Message Us" />
         </StyledMenuItem>
       </StyledMenu>
-    </div>
+    </>
   );
 }
 
 function WebsiteItem() {
   return (
     <Grid container justify="space-between" className={styles.web_item}>
-      <Grid container item sm={7} alignItems="center">
-        <Grid item sm={3} xs={6} className={styles.web_logo}>
+      <Grid container item sm={8} xs={12} alignItems="center">
+        <Grid item sm={4} md={4} xs={4} className={styles.web_logo}>
           <img src={imgUrl[3]} alt="logo" style={imgStyles} />
         </Grid>
-        <Grid item sm={9} xs={6}>
+        <Grid item sm={8} xs={8} md={6}>
           <Typography variant="h5" className={styles.web_content}>
             Foody
           </Typography>
@@ -126,22 +120,31 @@ function WebsiteItem() {
           </Typography>
         </Grid>
       </Grid>
-      <Grid container item sm={4} justify="flex-end" className={styles.button}>
-        <Grid item sm={6}>
-          <Button className={styles.help_button}>
-            View
-            <FontAwesomeIcon className={styles.web_icon} icon={faEye} />
-          </Button>
-        </Grid>
-        <Grid item sm={6}>
-          <Link to="/edit">
+      <Grid
+        container
+        item
+        sm={4}
+        xs={12}
+        justify="flex-end"
+        alignItems="center"
+      >
+        <Grid container item spacing={6}>
+          <Grid item sm={5}>
             <Button className={styles.help_button}>
-              Edit
-              <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
+              View
+              <FontAwesomeIcon className={styles.web_icon} icon={faEye} />
             </Button>
-          </Link>
+          </Grid>
+          <Grid item sm={5}>
+            <Link to="/edit">
+              <Button className={styles.help_button}>
+                Edit
+                <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
+              </Button>
+            </Link>
+          </Grid>
         </Grid>
-        <Grid container item justify="flex-end" className={styles.on_button}>
+        <Grid container item justify="flex-end" md={12}>
           <Button className={styles.create_button}>On</Button>
         </Grid>
       </Grid>
@@ -161,7 +164,7 @@ function ProfileMenu() {
   };
 
   return (
-    <div>
+    <>
       <Typography
         variant="body1"
         onClick={handleClick}
@@ -184,17 +187,17 @@ function ProfileMenu() {
           <ListItemText primary="Log Out" />
         </StyledMenuItem>
       </StyledMenu>
-    </div>
+    </>
   );
 }
 
 export default class MainPage extends Component {
   render() {
     return (
-      <Grid container>
+      <>
         <Grid container item justify="space-between" className={styles.header}>
-          <Grid container item sm={3} xs={3}>
-            <Grid item sm={2} xs={6}>
+          <Grid container item sm={3} xs={3} md={2} alignItems="center">
+            <Grid item sm={3} xs={6}>
               <img src={imgUrl[0]} style={imgStyles} alt="" />
             </Grid>
             <Grid item sm={2} xs={6}>
@@ -207,11 +210,22 @@ export default class MainPage extends Component {
               </Typography>
             </Grid>
           </Grid>
-          <Grid container item sm={3} xs={6} alignItems="center">
-            <Grid container item sm={6} xs={6} justify="flex-end">
+          <Grid
+            container
+            item
+            sm={8}
+            xs={6}
+            md={4}
+            alignItems="center"
+            spacing={3}
+          >
+            <Grid container item sm={5} xs={12}>
+              <ProfileMenu />
+            </Grid>
+            <Grid container item sm={3} xs={6}>
               <CustomizedMenus />
             </Grid>
-            <Grid container item sm={6} xs={6} justify="flex-end">
+            <Grid container item sm={3} xs={6}>
               <Button className={styles.help_button}>
                 <FontAwesomeIcon
                   className={styles.help_icon}
@@ -222,63 +236,59 @@ export default class MainPage extends Component {
             </Grid>
           </Grid>
         </Grid>
-        <Grid container item>
-          <Grid container item sm={2} xs={5} className={styles.navigation}>
-            <Grid item sm={12}>
-              <MenuList className={styles.menu_list}>
-                <MenuItem>
-                  <FontAwesomeIcon
-                    className={styles.nav_icon}
-                    icon={faThLarge}
-                  />
-                  <Typography variant="inherit">Sites</Typography>
-                </MenuItem>
-                <MenuItem>
-                  <FontAwesomeIcon
-                    className={styles.nav_icon}
-                    icon={faChartLine}
-                  />
-                  <Typography variant="inherit">Performance</Typography>
-                </MenuItem>
-                <MenuItem>
-                  <FontAwesomeIcon
-                    className={styles.nav_icon}
-                    icon={faStoreAlt}
-                  />
-                  <Typography variant="inherit">Ecommerce</Typography>
-                </MenuItem>
-                <MenuItem>
-                  <FontAwesomeIcon
-                    className={styles.nav_icon}
-                    icon={faMoneyCheck}
-                  />
-                  <Typography variant="inherit">Billing</Typography>
-                </MenuItem>
-                <MenuItem>
-                  <FontAwesomeIcon
-                    className={styles.nav_icon}
-                    icon={faEnvelopeOpenText}
-                  />
-                  <Typography variant="inherit">Newsletter</Typography>
-                </MenuItem>
-              </MenuList>
-            </Grid>
-            <Grid item sm={2} xs={5} className={styles.profile}>
-              <ProfileMenu />
-            </Grid>
+        <Grid container item className={styles.body}>
+          <Grid
+            container
+            item
+            direction="column"
+            sm={3}
+            xs={5}
+            md={2}
+            className={styles.navigation}
+          >
+            <MenuList className={styles.menu_list}>
+              <MenuItem>
+                <FontAwesomeIcon className={styles.nav_icon} icon={faThLarge} />
+                <Typography variant="inherit">Sites</Typography>
+              </MenuItem>
+              <MenuItem>
+                <FontAwesomeIcon
+                  className={styles.nav_icon}
+                  icon={faChartLine}
+                />
+                <Typography variant="inherit">Performance</Typography>
+              </MenuItem>
+              <MenuItem>
+                <FontAwesomeIcon
+                  className={styles.nav_icon}
+                  icon={faStoreAlt}
+                />
+                <Typography variant="inherit">Ecommerce</Typography>
+              </MenuItem>
+              <MenuItem>
+                <FontAwesomeIcon
+                  className={styles.nav_icon}
+                  icon={faMoneyCheck}
+                />
+                <Typography variant="inherit">Billing</Typography>
+              </MenuItem>
+              <MenuItem>
+                <FontAwesomeIcon
+                  className={styles.nav_icon}
+                  icon={faEnvelopeOpenText}
+                />
+                <Typography variant="inherit">Newsletter</Typography>
+              </MenuItem>
+            </MenuList>
           </Grid>
-          <Grid container item sm={10} xs={7} direction="column">
-            <Grid
-              container
-              justify="space-between"
-              item
-              className={styles.current_edit}
-            >
-              <Grid container item sm={8}>
+          <Grid container item sm={9} xs={7} md={10} className={styles.righter}>
+            <Grid container item className={styles.current_edit}>
+              <Grid container item xs sm md>
                 <Grid
                   container
                   item
-                  sm={4}
+                  sm={6}
+                  md={4}
                   className={styles.info}
                   alignItems="center"
                 >
@@ -289,14 +299,15 @@ export default class MainPage extends Component {
                 <Grid
                   container
                   item
-                  sm={4}
+                  sm={6}
+                  md={4}
                   className={styles.info}
                   alignItems="center"
                 >
-                  <Grid item sm={3} xs={2}>
+                  <Grid item sm={5} md={3} xs={2}>
                     <img src={imgUrl[3]} alt="logo" style={imgStyles} />
                   </Grid>
-                  <Grid item sm={1}>
+                  <Grid item sm={2}>
                     <Typography variant="body1" className={styles.info_content}>
                       Foody
                     </Typography>
@@ -305,7 +316,8 @@ export default class MainPage extends Component {
                 <Grid
                   container
                   item
-                  sm={4}
+                  sm={10}
+                  md={4}
                   className={styles.info}
                   alignItems="center"
                 >
@@ -317,11 +329,12 @@ export default class MainPage extends Component {
               <Grid
                 container
                 item
-                sm={4}
+                sm={6}
+                md={4}
                 alignItems="center"
                 justify="flex-end"
               >
-                <Grid container item sm={4}>
+                <Grid container item sm={6}>
                   <Button className={styles.manage_button}>Manage Site</Button>
                 </Grid>
                 <Grid container item sm={6}>
@@ -331,14 +344,16 @@ export default class MainPage extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid container item>
-              <Grid container item sm={6}>
-                <WebsiteItem />
-              </Grid>
+            <Grid container item sm={10} xs={12} md={6}>
+              {[1, 1, 1, 1, 1].map((e, index) => (
+                <Grid item className={styles.siteItem} key={index}>
+                  <WebsiteItem />
+                </Grid>
+              ))}
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </>
     );
   }
 }

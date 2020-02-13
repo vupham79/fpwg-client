@@ -5,9 +5,11 @@ import MainPage from "../page/main/main";
 // View generated site
 import ViewSitePage from "../page/view/ViewSite";
 
+import PreLoginPage from "../page/login";
+
 export const Routes = [
   {
-    component: LoginPage,
+    component: PreLoginPage,
     exact: true,
     path: "/"
   },
