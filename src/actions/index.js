@@ -6,7 +6,7 @@ import {
   changeColor,
   setShowCustomColor
 } from "./theme";
-import { setLogin } from "./user";
+import { setLogin, setLogout } from "./user";
 import { updateTabValue } from "./tab";
 import { getImageUrl } from "./image";
 
@@ -18,6 +18,7 @@ export {
   changeFontBody,
   setShowCustomColor,
   setLogin,
+  setLogout,
   updateTabValue,
   getImageUrl
 };

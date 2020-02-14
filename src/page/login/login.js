@@ -6,9 +6,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { connect } from "react-redux";
 import { setLogin } from "../../actions";
+import { Redirect } from "react-router-dom";
 class LoginPage extends Component {
-  render() {
+  handleLogin = () => {
     const { setLogin } = this.props;
+    setLogin();
+    return <Redirect to={"/view"} />;
+  };
+
+  render() {
     return (
       <Grid container justify="center" className={styles.body}>
         <Grid item xs={12}>
@@ -23,7 +29,7 @@ class LoginPage extends Component {
           <Link to="/view">
             <Button
               className={styles.login_button}
-              onClick={() => setLogin(true)}
+              onClick={() => this.handleLogin()}
             >
               <FontAwesomeIcon
                 icon={faFacebookSquare}
@@ -39,7 +45,7 @@ class LoginPage extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  setLogin: login => dispatch(setLogin(login))
+  setLogin: () => dispatch(setLogin())
 });
 
 export default connect(null, mapDispatchToProps)(LoginPage);

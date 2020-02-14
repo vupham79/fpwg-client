@@ -175,6 +175,7 @@ class DesignEditorTab extends React.Component {
               src={img}
               key={i}
               onClick={() => getImageUrl(img)}
+              alt="logo"
             />
           ))}
         </Grid>

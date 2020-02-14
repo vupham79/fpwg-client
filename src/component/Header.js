@@ -16,7 +16,7 @@ import {
 } from "@material-ui/core";
 import { connect } from "react-redux";
 
-import { setLogin } from "../actions";
+import { setLogout } from "../actions";
 import Link from "../component/link";
 
 const imgUrl = [
@@ -129,10 +129,7 @@ function ProfileMenu(props) {
         </StyledMenuItem>
         <StyledMenuItem>
           <Link to="/">
-            <ListItemText
-              primary="Log Out"
-              onClick={() => props.setLogin(false)}
-            />
+            <ListItemText primary="Log Out" onClick={() => props.setLogout()} />
           </Link>
         </StyledMenuItem>
       </StyledMenu>
@@ -142,11 +139,11 @@ function ProfileMenu(props) {
 
 class CustomNavBarEditor extends React.Component {
   render() {
-    const { imgUrl, setLogin } = this.props;
+    const { imgUrl, setLogout } = this.props;
     return (
       <Grid container item justify="space-between" className={styles.header}>
         <Grid container item sm={2} xs={12} md={2} alignItems="center">
-          <img style={imgStyles} src={imgUrl} />
+          <img style={imgStyles} src={imgUrl} alt="logo" />
           <Typography variant="h5" color="textPrimary" className={styles.title}>
             FPWG
           </Typography>
@@ -160,7 +157,7 @@ class CustomNavBarEditor extends React.Component {
           justify="flex-end"
         >
           <Grid container item sm={2} xs={12}>
-            <ProfileMenu setLogin={setLogin} />
+            <ProfileMenu setLogout={setLogout} />
           </Grid>
           <Grid container item sm={1} xs={6} justify="flex-end">
             <CustomizedMenus />
@@ -185,6 +182,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setLogin: isLogin => dispatch(setLogin(isLogin))
+  setLogout: () => dispatch(setLogout())
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CustomNavBarEditor);

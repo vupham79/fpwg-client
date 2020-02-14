@@ -1,12 +1,4 @@
-import {
-  faThLarge,
-  faChartLine,
-  faStoreAlt,
-  faMoneyCheck,
-  faEnvelopeOpenText,
-  faEye,
-  faCog
-} from "@fortawesome/free-solid-svg-icons";
+import { faThLarge, faEye, faCog } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Button,
