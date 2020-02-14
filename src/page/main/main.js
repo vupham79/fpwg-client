@@ -102,34 +102,6 @@ export default class MainPage extends Component {
                 <FontAwesomeIcon className={styles.nav_icon} icon={faThLarge} />
                 <Typography variant="inherit">Sites</Typography>
               </MenuItem>
-              <MenuItem>
-                <FontAwesomeIcon
-                  className={styles.nav_icon}
-                  icon={faChartLine}
-                />
-                <Typography variant="inherit">Performance</Typography>
-              </MenuItem>
-              <MenuItem>
-                <FontAwesomeIcon
-                  className={styles.nav_icon}
-                  icon={faStoreAlt}
-                />
-                <Typography variant="inherit">Ecommerce</Typography>
-              </MenuItem>
-              <MenuItem>
-                <FontAwesomeIcon
-                  className={styles.nav_icon}
-                  icon={faMoneyCheck}
-                />
-                <Typography variant="inherit">Billing</Typography>
-              </MenuItem>
-              <MenuItem>
-                <FontAwesomeIcon
-                  className={styles.nav_icon}
-                  icon={faEnvelopeOpenText}
-                />
-                <Typography variant="inherit">Newsletter</Typography>
-              </MenuItem>
             </MenuList>
           </Grid>
           <Grid container item sm={9} xs={7} md={10} className={styles.righter}>

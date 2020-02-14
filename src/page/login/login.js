@@ -8,7 +8,7 @@ import { connect } from "react-redux";
 import { setLogin } from "../../actions";
 class LoginPage extends Component {
   render() {
-    const { login } = this.props;
+    const { setLogin } = this.props;
     return (
       <Grid container justify="center" className={styles.body}>
         <Grid item xs={12}>
@@ -38,12 +38,8 @@ class LoginPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  login: state.user.isLogin
-});
-
 const mapDispatchToProps = dispatch => ({
   setLogin: login => dispatch(setLogin(login))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect(null, mapDispatchToProps)(LoginPage);

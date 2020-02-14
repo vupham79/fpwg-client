@@ -1,6 +1,6 @@
-import EditPage from "../page/edit/edit";
+import PreEditPage from "../page/edit";
 import DesignPage from "../theme/theme1/components/DesignPage";
-import MainPage from "../page/main/main";
+import PreMainPage from "../page/main";
 // View generated site
 import ViewSitePage from "../page/view/ViewSite";
 
@@ -13,11 +13,11 @@ export const Routes = [
     path: "/"
   },
   {
-    component: EditPage,
+    component: PreEditPage,
     path: "/edit"
   },
   {
-    component: MainPage,
+    component: PreMainPage,
     path: "/view"
   },
   {

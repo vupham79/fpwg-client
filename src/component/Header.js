@@ -96,7 +96,7 @@ function CustomizedMenus() {
   );
 }
 
-function ProfileMenu() {
+function ProfileMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = event => {
@@ -129,7 +129,10 @@ function ProfileMenu() {
         </StyledMenuItem>
         <StyledMenuItem>
           <Link to="/">
-            <ListItemText primary="Log Out" onClick={() => setLogin(false)} />
+            <ListItemText
+              primary="Log Out"
+              onClick={() => props.setLogin(false)}
+            />
           </Link>
         </StyledMenuItem>
       </StyledMenu>
@@ -157,7 +160,7 @@ class CustomNavBarEditor extends React.Component {
           justify="flex-end"
         >
           <Grid container item sm={2} xs={12}>
-            <ProfileMenu />
+            <ProfileMenu setLogin={setLogin} />
           </Grid>
           <Grid container item sm={1} xs={6} justify="flex-end">
             <CustomizedMenus />
