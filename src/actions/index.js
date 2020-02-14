@@ -7,6 +7,8 @@ import {
   setShowCustomColor
 } from "./theme";
 import { setLogin } from "./user";
+import { updateTabValue } from "./tab";
+import { getImageUrl } from "./image";
 
 export {
   updateSiteId,
@@ -15,5 +17,7 @@ export {
   changeFontTitle,
   changeFontBody,
   setShowCustomColor,
-  setLogin
+  setLogin,
+  updateTabValue,
+  getImageUrl
 };

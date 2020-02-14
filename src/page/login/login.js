@@ -23,7 +23,7 @@ class LoginPage extends Component {
           <Link to="/view">
             <Button
               className={styles.login_button}
-              onClick={() => setLogin(login)}
+              onClick={() => setLogin(true)}
             >
               <FontAwesomeIcon
                 icon={faFacebookSquare}

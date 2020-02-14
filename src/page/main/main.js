@@ -1,6 +1,4 @@
 import {
-  faHeadphonesAlt,
-  faQuestionCircle,
   faThLarge,
   faChartLine,
   faStoreAlt,
@@ -13,16 +11,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Button,
   Grid,
-  ListItemText,
-  Menu,
   MenuItem,
   MenuList,
-  Typography,
-  withStyles
+  Typography
 } from "@material-ui/core";
 import React, { Component } from "react";
 import styles from "./main.module.css";
 import Link from "../../component/link";
+import Header from "../../component/Header";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -37,72 +33,6 @@ const imgStyles = {
   backgroundRepeat: "no-repeat",
   width: "80%"
 };
-
-const StyledMenu = withStyles({
-  paper: {}
-})(props => (
-  <Menu
-    elevation={0}
-    getContentAnchorEl={null}
-    anchorOrigin={{
-      vertical: "bottom",
-      horizontal: "center"
-    }}
-    transformOrigin={{
-      vertical: "top",
-      horizontal: "center"
-    }}
-    {...props}
-  />
-));
-
-const StyledMenuItem = withStyles(theme => ({
-  root: {
-    "&:focus": {
-      backgroundColor: theme.palette.common.white,
-      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-        color: theme.palette.common.black
-      }
-    }
-  }
-}))(MenuItem);
-
-function CustomizedMenus() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <>
-      <Button className={styles.help_button}>
-        <FontAwesomeIcon
-          className={styles.support_icon}
-          icon={faHeadphonesAlt}
-        />
-        View
-      </Button>
-      <StyledMenu
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <StyledMenuItem>
-          <ListItemText primary="Resource Center" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemText primary="Message Us" />
-        </StyledMenuItem>
-      </StyledMenu>
-    </>
-  );
-}
 
 function WebsiteItem() {
   return (
@@ -152,90 +82,11 @@ function WebsiteItem() {
   );
 }
 
-function ProfileMenu() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <>
-      <Typography
-        variant="body1"
-        onClick={handleClick}
-        className={styles.profile_content}
-      >
-        <img src={imgUrl[3]} alt="logo" className={styles.profile_img} />
-        Dao Quang Thinh <br />
-        (Owner)
-      </Typography>
-      <StyledMenu
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <StyledMenuItem>
-          <ListItemText primary="Message Us" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemText primary="Log Out" />
-        </StyledMenuItem>
-      </StyledMenu>
-    </>
-  );
-}
-
 export default class MainPage extends Component {
   render() {
     return (
       <>
-        <Grid container item justify="space-between" className={styles.header}>
-          <Grid container item sm={3} xs={3} md={2} alignItems="center">
-            <Grid item sm={3} xs={6}>
-              <img src={imgUrl[0]} style={imgStyles} alt="" />
-            </Grid>
-            <Grid item sm={2} xs={6}>
-              <Typography
-                variant="h5"
-                color="textPrimary"
-                className={styles.title}
-              >
-                Sites
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid
-            container
-            item
-            sm={8}
-            xs={6}
-            md={4}
-            alignItems="center"
-            spacing={3}
-          >
-            <Grid container item sm={5} xs={12}>
-              <ProfileMenu />
-            </Grid>
-            <Grid container item sm={3} xs={6}>
-              <CustomizedMenus />
-            </Grid>
-            <Grid container item sm={3} xs={6}>
-              <Button className={styles.help_button}>
-                <FontAwesomeIcon
-                  className={styles.help_icon}
-                  icon={faQuestionCircle}
-                />
-                Help
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
+        <Header />
         <Grid container item className={styles.body}>
           <Grid
             container

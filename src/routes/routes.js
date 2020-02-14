@@ -1,5 +1,4 @@
 import EditPage from "../page/edit/edit";
-import LoginPage from "../page/login/login";
 import DesignPage from "../theme/theme1/components/DesignPage";
 import MainPage from "../page/main/main";
 // View generated site
