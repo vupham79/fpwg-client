@@ -1,5 +1,6 @@
 const defaultState = {
-  isLogin: false
+  isLogin: true,
+  isEdit: false
 };
 
 const UserReducer = (state = defaultState, action) => {
@@ -8,6 +9,11 @@ const UserReducer = (state = defaultState, action) => {
       return {
         ...state,
         isLogin: action.payload
+      };
+    case "SET_EDIT":
+      return {
+        ...state,
+        isEdit: action.payload
       };
     default:
       return state;

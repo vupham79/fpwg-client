@@ -4,7 +4,6 @@ import { pages } from "../../constant/constant";
 class PreLoginPage extends Component {
   render() {
     const { isLogin } = this.props;
-    console.log("PreLogin: " + isLogin);
     const loginPage = pages.find(element => element.name === "Login");
     const preMainPage = pages.find(element => element.name === "PreMain");
     return <>{isLogin ? preMainPage.component : loginPage.component} </>;

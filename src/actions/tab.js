@@ -6,3 +6,12 @@ export function updateTabValue(value) {
     });
   };
 }
+
+export function updateNavItemValue(value) {
+  return dispatch => {
+    dispatch({
+      type: "UPDATE_NAVITEM_VALUE",
+      payload: value
+    });
+  };
+}

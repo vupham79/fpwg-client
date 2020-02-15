@@ -4,7 +4,6 @@ import { pages } from "../../constant/constant";
 class PreEditPage extends Component {
   render() {
     const { isLogin } = this.props;
-    console.log(isLogin);
     const loginPage = pages.find(element => element.name === "Login");
     const editPage = pages.find(element => element.name === "Edit");
     return <>{isLogin ? editPage.component : loginPage.component} </>;

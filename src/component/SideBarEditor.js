@@ -1,19 +1,16 @@
-import React from "react";
 import {
   AppBar,
   CssBaseline,
   Drawer,
-  Tabs,
+  Grid,
   Tab,
-  Paper,
-  Grid
+  Tabs
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import React from "react";
 import { connect } from "react-redux";
-import DesignTab from "./DesignEditorTab";
-import PagesTab from "./PagesEditorTab";
-import SettingTab from "./SettingEditorTab";
 import { updateTabValue } from "../actions";
+import DesignTab from "./DesignEditorTab";
 import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
 

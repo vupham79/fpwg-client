@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import SiteBarEditor from "../component/SideBarEditor";
 import Header from "../component/Header";
 
-export default class componentName extends Component {
+export default class EditLayout extends Component {
   render() {
     return (
       <>

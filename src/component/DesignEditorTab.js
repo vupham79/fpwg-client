@@ -29,6 +29,7 @@ const useStyles = theme => ({
     paddingTop: 90
   },
   title: {
+    marginTop: theme.spacing(2),
     marginBottom: theme.spacing(1),
     fontWeight: "bold"
   },
@@ -173,6 +174,7 @@ class DesignEditorTab extends React.Component {
             <img
               style={imgStyles}
               src={img}
+              alt=""
               key={i}
               onClick={() => getImageUrl(img)}
             />

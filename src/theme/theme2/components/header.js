@@ -1,15 +1,38 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-import { AppBar } from "@material-ui/core";
+import { AppBar, Tab, Tabs } from "@material-ui/core";
 import styles from "./index.module.css";
 import { connect } from "react-redux";
 import Link from "../../../component/link";
+import { updateNavItemValue } from "../../../actions";
+
+const tabStyles = {
+  textTransform: "none",
+  minWidth: 100,
+  "&:hover": {
+    color: "#40a9ff",
+    opacity: 1
+  },
+  "&$selected": {
+    color: "#1890ff"
+  },
+  "&:focus": {
+    color: "#40a9ff"
+  }
+};
 
 class Header extends Component {
   render() {
     const navItems = ["Home", "About", "Gallery", "Event", "Contact", "New"];
-    const { siteId, themeFontTitle, themeColor } = this.props;
-    const currentPage = "";
+    const {
+      siteId,
+      themeFontTitle,
+      themeColor,
+      isEdit,
+      tabValue,
+      updateNavItemValue
+    } = this.props;
+    // const currentPage = "";
 
     const changeStyle = {
       fontFamily: themeFontTitle,
@@ -26,23 +49,33 @@ class Header extends Component {
           </Grid>
           <Grid item xs={12} sm={10}>
             <Grid container justify="flex-end">
-              {navItems.map((item, index) => (
-                <Grid
-                  className={styles.nav_item}
-                  item
-                  xs={2}
-                  sm={1}
-                  key={index}
+              {isEdit ? (
+                <Tabs
+                  value={tabValue}
+                  textColor="primary"
+                  indicatorColor="primary"
+                  centered
+                  onChange={(e, newValue) => updateNavItemValue(newValue)}
                 >
-                  {currentPage ? (
-                    <Link className={styles.links}>{item}</Link>
-                  ) : (
+                  {navItems.map((item, index) => (
+                    <Tab style={tabStyles} label={item} key={index} />
+                  ))}
+                </Tabs>
+              ) : (
+                navItems.map((item, index) => (
+                  <Grid
+                    className={styles.nav_item}
+                    item
+                    xs={2}
+                    sm={1}
+                    key={index}
+                  >
                     <Link className={styles.links} to={`/${siteId}/${item}`}>
                       {item}
                     </Link>
-                  )}
-                </Grid>
-              ))}
+                  </Grid>
+                ))
+              )}
             </Grid>
           </Grid>
         </Grid>
@@ -52,9 +85,12 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-  siteId: state.site.id,
-  themeFontTitle: state.theme.fontTitle,
-  themeColor: state.theme.color
+  tabValue: state.tab.navItemValue,
+  isEdit: state.user.isEdit
 });
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = dispatch => ({
+  updateNavItemValue: value => dispatch(updateNavItemValue(value))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

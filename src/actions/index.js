@@ -6,8 +6,8 @@ import {
   changeColor,
   setShowCustomColor
 } from "./theme";
-import { setLogin } from "./user";
-import { updateTabValue } from "./tab";
+import { setLogin, setEdit } from "./user";
+import { updateTabValue, updateNavItemValue } from "./tab";
 import { getImageUrl } from "./image";
 
 export {
@@ -19,5 +19,7 @@ export {
   setShowCustomColor,
   setLogin,
   updateTabValue,
-  getImageUrl
+  getImageUrl,
+  setEdit,
+  updateNavItemValue
 };

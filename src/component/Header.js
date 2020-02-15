@@ -1,23 +1,22 @@
-import React from "react";
-import styles from "./index.module.css";
 import {
-  faQuestionCircle,
-  faHeadphonesAlt
+  faHeadphonesAlt,
+  faQuestionCircle
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Button,
   Grid,
-  Typography,
-  MenuItem,
+  ListItemText,
   Menu,
-  withStyles,
-  ListItemText
+  MenuItem,
+  Typography,
+  withStyles
 } from "@material-ui/core";
+import React from "react";
 import { connect } from "react-redux";
-
 import { setLogin } from "../actions";
 import Link from "../component/link";
+import styles from "./index.module.css";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -77,7 +76,7 @@ function CustomizedMenus() {
           className={styles.support_icon}
           icon={faHeadphonesAlt}
         />
-        View
+        Support
       </Button>
       <StyledMenu
         anchorEl={anchorEl}
@@ -146,7 +145,7 @@ class CustomNavBarEditor extends React.Component {
     return (
       <Grid container item justify="space-between" className={styles.header}>
         <Grid container item sm={2} xs={12} md={2} alignItems="center">
-          <img style={imgStyles} src={imgUrl} />
+          <img style={imgStyles} src={imgUrl} alt="" />
           <Typography variant="h5" color="textPrimary" className={styles.title}>
             FPWG
           </Typography>

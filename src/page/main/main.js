@@ -1,12 +1,4 @@
-import {
-  faThLarge,
-  faChartLine,
-  faStoreAlt,
-  faMoneyCheck,
-  faEnvelopeOpenText,
-  faEye,
-  faCog
-} from "@fortawesome/free-solid-svg-icons";
+import { faCog, faEye, faThLarge } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Button,
@@ -16,9 +8,11 @@ import {
   Typography
 } from "@material-ui/core";
 import React, { Component } from "react";
-import styles from "./main.module.css";
-import Link from "../../component/link";
 import Header from "../../component/Header";
+import Link from "../../component/link";
+import styles from "./main.module.css";
+import { connect } from "react-redux";
+import { setEdit } from "../../actions";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -34,7 +28,7 @@ const imgStyles = {
   width: "80%"
 };
 
-function WebsiteItem() {
+function WebsiteItem(props) {
   return (
     <Grid container justify="space-between" className={styles.web_item}>
       <Grid container item sm={8} xs={12} alignItems="center">
@@ -67,7 +61,10 @@ function WebsiteItem() {
           </Grid>
           <Grid item sm={5}>
             <Link to="/edit">
-              <Button className={styles.help_button}>
+              <Button
+                className={styles.help_button}
+                onClick={() => props.setEdit(true)}
+              >
                 Edit
                 <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
               </Button>
@@ -82,8 +79,9 @@ function WebsiteItem() {
   );
 }
 
-export default class MainPage extends Component {
+class MainPage extends Component {
   render() {
+    const { setEdit } = this.props;
     return (
       <>
         <Header />
@@ -170,7 +168,7 @@ export default class MainPage extends Component {
             <Grid container item sm={10} xs={12} md={6}>
               {[1, 1, 1, 1, 1].map((e, index) => (
                 <Grid item className={styles.siteItem} key={index}>
-                  <WebsiteItem />
+                  <WebsiteItem setEdit={setEdit} />
                 </Grid>
               ))}
             </Grid>
@@ -180,3 +178,9 @@ export default class MainPage extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch => ({
+  setEdit: isEdit => dispatch(setEdit(isEdit))
+});
+
+export default connect(null, mapDispatchToProps)(MainPage);
