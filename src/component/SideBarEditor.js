@@ -1,13 +1,6 @@
-import {
-  AppBar,
-  CssBaseline,
-  Drawer,
-  Grid,
-  Tab,
-  Tabs
-} from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
 import React from "react";
+import { AppBar, CssBaseline, Drawer, Tabs, Tab } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { updateTabValue } from "../actions";
 import DesignTab from "./DesignEditorTab";
@@ -71,22 +64,9 @@ class ClippedDrawer extends React.Component {
             <Tab style={tabStyles} label="Page" />
             <Tab style={tabStyles} label="Setting" />
           </Tabs>
-
-          {tabValue === 0 && (
-            <Grid>
-              <DesignTab />
-            </Grid>
-          )}
-          {tabValue === 1 && (
-            <Grid>
-              <PagesEditorTab />
-            </Grid>
-          )}
-          {tabValue === 2 && (
-            <Grid>
-              <SettingEditorTab />
-            </Grid>
-          )}
+          {tabValue === 0 && <DesignTab />}
+          {tabValue === 1 && <PagesEditorTab />}
+          {tabValue === 2 && <SettingEditorTab />}
         </Drawer>
       </AppBar>
     );

@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { pages } from "../../constant/constant";
+import { Redirect } from "react-router-dom";
+import MainPage from "./main";
 class PreMainPage extends Component {
   render() {
     const { isLogin } = this.props;
-    const loginPage = pages.find(element => element.name === "Login");
-    const mainPage = pages.find(element => element.name === "Main");
-    return <>{isLogin ? mainPage.component : loginPage.component} </>;
+    if (!isLogin) {
+      return <Redirect to="/" />;
+    }
+    return <MainPage />;
   }
 }
 

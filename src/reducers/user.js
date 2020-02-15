@@ -8,7 +8,12 @@ const UserReducer = (state = defaultState, action) => {
     case "SET_LOGIN":
       return {
         ...state,
-        isLogin: action.payload
+        isLogin: true
+      };
+    case "SET_LOGOUT":
+      return {
+        ...state,
+        isLogin: false
       };
     case "SET_EDIT":
       return {
