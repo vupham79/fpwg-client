@@ -1,7 +1,13 @@
-export function setLogin() {
-  return dispatch => {
+import axios from "../utils/axios";
+
+export function login({ accessToken, profile }) {
+  return async dispatch => {
     dispatch({
-      type: "SET_LOGIN"
+      type: "SET_LOGIN",
+      payload: {
+        accessToken,
+        profile
+      }
     });
   };
 }

@@ -15,8 +15,9 @@ import {
 import React from "react";
 import { connect } from "react-redux";
 import { setLogout } from "../actions";
-import Link from "../component/link";
 import styles from "./index.module.css";
+import { firebaseAppAuth } from "../utils/firebase";
+import { Redirect } from "react-router-dom";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -105,7 +106,7 @@ function ProfileMenu(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const { profile, logout } = props;
   return (
     <>
       <Typography
@@ -113,9 +114,12 @@ function ProfileMenu(props) {
         onClick={handleClick}
         className={styles.profile_content}
       >
-        <img src={imgUrl[3]} alt="logo" className={styles.profile_img} />
-        Dao Quang Thinh <br />
-        (Owner)
+        <img
+          src={profile.picture.data.url}
+          alt="logo"
+          className={styles.profile_img}
+        />
+        {profile.name}
       </Typography>
       <StyledMenu
         anchorEl={anchorEl}
@@ -127,9 +131,12 @@ function ProfileMenu(props) {
           <ListItemText primary="Message Us" />
         </StyledMenuItem>
         <StyledMenuItem>
-          <Link to="/">
-            <ListItemText primary="Log Out" onClick={() => props.setLogout()} />
-          </Link>
+          <ListItemText
+            primary="Log Out"
+            onClick={() => {
+              logout();
+            }}
+          />
         </StyledMenuItem>
       </StyledMenu>
     </>
@@ -137,8 +144,22 @@ function ProfileMenu(props) {
 }
 
 class CustomNavBarEditor extends React.Component {
+  logout = () => {
+    const { setLogout } = this.props;
+    firebaseAppAuth
+      .signOut()
+      .then(function() {
+        setLogout();
+        return <Redirect to="/" />;
+      })
+      .catch(function(error) {
+        console.log("Logout: ", error);
+      });
+  };
+
   render() {
-    const { imgUrl, setLogout } = this.props;
+    const { imgUrl, profile } = this.props;
+    console.log(profile);
     return (
       <Grid container item justify="space-between" className={styles.header}>
         <Grid container item sm={2} xs={12} md={2} alignItems="center">
@@ -156,7 +177,7 @@ class CustomNavBarEditor extends React.Component {
           justify="flex-end"
         >
           <Grid container item sm={2} xs={12}>
-            <ProfileMenu setLogout={setLogout} />
+            <ProfileMenu profile={profile} logout={this.logout} />
           </Grid>
           <Grid container item sm={1} xs={6} justify="flex-end">
             <CustomizedMenus />
@@ -177,7 +198,8 @@ class CustomNavBarEditor extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  imgUrl: state.imageUrl.url
+  imgUrl: state.imageUrl.url,
+  profile: state.user.profile
 });
 
 const mapDispatchToProps = dispatch => ({

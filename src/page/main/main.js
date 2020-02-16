@@ -166,11 +166,9 @@ class MainPage extends Component {
               </Grid>
             </Grid>
             <Grid container item sm={10} xs={12} md={6}>
-              {[1, 1, 1, 1, 1].map((e, index) => (
-                <Grid item className={styles.siteItem} key={index}>
-                  <WebsiteItem setEdit={setEdit} />
-                </Grid>
-              ))}
+              <Grid item className={styles.siteItem}>
+                <WebsiteItem setEdit={setEdit} />
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

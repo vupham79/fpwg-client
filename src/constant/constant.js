@@ -49,10 +49,10 @@ export const themes = [
 export const pages = [
   { name: "PreMain", component: <PreMainPage /> },
   { name: "PreLogin", component: <PreLoginPage /> },
-  { name: "PreEdit", component: <PreEditPage /> },
+  { name: "PreEdit", component: PreEditPage },
   { name: "Login", component: <LoginPage /> },
   { name: "Main", component: <MainPage /> },
-  { name: "Edit", component: <EditPage /> }
+  { name: "Edit", component: EditPage }
 ];
 
 export const theme2Pages = [

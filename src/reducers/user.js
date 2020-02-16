@@ -1,4 +1,6 @@
 const defaultState = {
+  profile: {},
+  accessToken: "",
   isLogin: false,
   isEdit: false
 };
@@ -8,12 +10,13 @@ const UserReducer = (state = defaultState, action) => {
     case "SET_LOGIN":
       return {
         ...state,
+        profile: action.payload.profile,
+        accessToken: action.payload.accessToken,
         isLogin: true
       };
     case "SET_LOGOUT":
       return {
-        ...state,
-        isLogin: false
+        ...defaultState
       };
     case "SET_EDIT":
       return {

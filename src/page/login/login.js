@@ -5,16 +5,38 @@ import Link from "../../component/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { connect } from "react-redux";
-import { setLogin } from "../../actions";
+import { login } from "../../actions";
 import { Redirect } from "react-router-dom";
+import { firebaseAppAuth, provider } from "../../utils/firebase";
+import withFirebaseAuth from "react-with-firebase-auth";
+
 class LoginPage extends Component {
   handleLogin = () => {
-    const { setLogin } = this.props;
-    setLogin();
-    return <Redirect to={"/view"} />;
+    const { login } = this.props;
+    firebaseAppAuth
+      .signInWithPopup(provider)
+      .then(async function(result) {
+        // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+        var accessToken = result.credential.accessToken;
+        // The signed-in user info.
+        var profile = result.additionalUserInfo.profile;
+        login({ accessToken, profile });
+        return <Redirect to={"/view"} />;
+      })
+      .catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+      });
   };
 
   render() {
+    console.log(this.props.user);
     return (
       <Grid container justify="center" className={styles.body}>
         <Grid item xs={12}>
@@ -44,8 +66,15 @@ class LoginPage extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  setLogin: () => dispatch(setLogin())
+const mapStateToProps = state => ({
+  user: state.user
 });
 
-export default connect(null, mapDispatchToProps)(LoginPage);
+const mapDispatchToProps = dispatch => ({
+  login: ({ accessToken, profile }) => dispatch(login({ accessToken, profile }))
+});
+
+export default withFirebaseAuth({
+  provider,
+  firebaseAppAuth
+})(connect(mapStateToProps, mapDispatchToProps)(LoginPage));

@@ -8,7 +8,7 @@ import {
   openLoading,
   closeLoading
 } from "./theme";
-import { setLogin, setEdit, setLogout } from "./user";
+import { setEdit, setLogout, login } from "./user";
 import { updateTabValue, updateNavItemValue } from "./tab";
 import { getImageUrl } from "./image";
 
@@ -19,12 +19,12 @@ export {
   changeFontTitle,
   changeFontBody,
   setShowCustomColor,
-  setLogin,
   setLogout,
   updateTabValue,
   getImageUrl,
   setEdit,
   updateNavItemValue,
   openLoading,
-  closeLoading
+  closeLoading,
+  login
 };
