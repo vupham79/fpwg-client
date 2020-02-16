@@ -11,6 +11,7 @@ import {
 import { setEdit, setLogout, login } from "./user";
 import { updateTabValue, updateNavItemValue } from "./tab";
 import { getImageUrl } from "./image";
+import { closeCreateNewSite, openCreateNewSite } from "./dialog";
 
 export {
   updateSiteId,
@@ -26,5 +27,8 @@ export {
   updateNavItemValue,
   openLoading,
   closeLoading,
-  login
+  login,
+  //dialog
+  closeCreateNewSite,
+  openCreateNewSite
 };

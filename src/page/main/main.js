@@ -5,14 +5,21 @@ import {
   Grid,
   MenuItem,
   MenuList,
-  Typography
+  Typography,
+  Dialog,
+  List,
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  DialogTitle
 } from "@material-ui/core";
 import React, { Component } from "react";
 import Header from "../../component/Header";
 import Link from "../../component/link";
 import styles from "./main.module.css";
 import { connect } from "react-redux";
-import { setEdit } from "../../actions";
+import { setEdit, openCreateNewSite, closeCreateNewSite } from "../../actions";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -81,7 +88,9 @@ function WebsiteItem(props) {
 
 class MainPage extends Component {
   render() {
-    const { setEdit } = this.props;
+    const emails = ["username@gmail.com", "user02@gmail.com"];
+
+    const { setEdit, closeCreateNewSite, openCreateNewSite, open } = this.props;
     return (
       <>
         <Header />
@@ -159,9 +168,50 @@ class MainPage extends Component {
                   <Button className={styles.manage_button}>Manage Site</Button>
                 </Grid>
                 <Grid container item sm={6}>
-                  <Button className={styles.create_button}>
+                  <Button
+                    className={styles.create_button}
+                    onClick={openCreateNewSite}
+                  >
                     Create A New Site
                   </Button>
+                  <Dialog
+                    onClose={closeCreateNewSite}
+                    aria-labelledby="simple-dialog-title"
+                    open={open}
+                  >
+                    <DialogTitle id="simple-dialog-title">
+                      Set backup account
+                    </DialogTitle>
+                    <List>
+                      {emails.map(email => (
+                        <ListItem
+                          button
+                          // onClick={() => handleListItemClick(email)}
+                          key={email}
+                        >
+                          <ListItemAvatar>
+                            <Avatar
+                            // className={classes.avatar}
+                            >
+                              {/* <PersonIcon /> */}
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText primary={email} />
+                        </ListItem>
+                      ))}
+
+                      <ListItem
+                        autoFocus
+                        button
+                        // onClick={() => handleListItemClick("addAccount")}
+                      >
+                        <ListItemAvatar>
+                          <Avatar>{/* <AddIcon /> */}</Avatar>
+                        </ListItemAvatar>
+                        <ListItemText primary="Add account" />
+                      </ListItem>
+                    </List>
+                  </Dialog>
                 </Grid>
               </Grid>
             </Grid>
@@ -177,8 +227,14 @@ class MainPage extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  setEdit: isEdit => dispatch(setEdit(isEdit))
+const mapStateToProps = state => ({
+  open: state.dialog.open
 });
 
-export default connect(null, mapDispatchToProps)(MainPage);
+const mapDispatchToProps = dispatch => ({
+  setEdit: isEdit => dispatch(setEdit(isEdit)),
+  closeCreateNewSite: () => dispatch(closeCreateNewSite()),
+  openCreateNewSite: () => dispatch(openCreateNewSite())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

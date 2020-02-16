@@ -7,34 +7,29 @@ import { Grid } from "@material-ui/core";
 
 class PreHomePage extends Component {
   componentDidMount() {
-    this.startTime();
+    this.props.openLoading();
   }
 
   startTime = () => {
-    this.timer = setTimeout(() => {
-      closeLoading();
-    }, 4000);
+    setTimeout(this.props.closeLoading, 2000);
   };
 
-  componentWillUnmount() {
-    clearInterval(this.timer);
-  }
-
   render() {
-    const { openLoading, closeLoading, loading } = this.props;
+    const { loading } = this.props;
     const progessStyles = {
       margin: "30vh 0vh"
     };
-    openLoading();
-    if (loading) {
-      return (
-        <Grid container justify="center">
-          <CircularProgress color="primary" style={progessStyles} />
-        </Grid>
-      );
-    } else {
-      return <HomePage />;
-    }
+    this.startTime();
+    return (
+      <>
+        {loading && (
+          <Grid container justify="center">
+            <CircularProgress color="primary" style={progessStyles} />
+          </Grid>
+        )}
+        {!loading && <HomePage />}
+      </>
+    );
   }
 }
 

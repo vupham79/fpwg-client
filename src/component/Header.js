@@ -159,7 +159,6 @@ class CustomNavBarEditor extends React.Component {
 
   render() {
     const { imgUrl, profile } = this.props;
-    console.log(profile);
     return (
       <Grid container item justify="space-between" className={styles.header}>
         <Grid container item sm={2} xs={12} md={2} alignItems="center">
