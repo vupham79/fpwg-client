@@ -20,23 +20,15 @@ class LoginPage extends Component {
         var accessToken = result.credential.accessToken;
         // The signed-in user info.
         var profile = result.additionalUserInfo.profile;
-        login({ accessToken, profile });
+        await login({ accessToken, profile });
         return <Redirect to={"/view"} />;
       })
       .catch(function(error) {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        // The email of the user's account used.
-        var email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        var credential = error.credential;
-        // ...
+        console.log(error);
       });
   };
 
   render() {
-    console.log(this.props.user);
     return (
       <Grid container justify="center" className={styles.body}>
         <Grid item xs={12}>

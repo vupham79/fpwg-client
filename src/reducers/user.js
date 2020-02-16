@@ -2,7 +2,8 @@ const defaultState = {
   profile: {},
   accessToken: "",
   isLogin: false,
-  isEdit: false
+  isEdit: false,
+  pages: []
 };
 
 const UserReducer = (state = defaultState, action) => {
@@ -22,6 +23,11 @@ const UserReducer = (state = defaultState, action) => {
       return {
         ...state,
         isEdit: action.payload
+      };
+    case "SET_USER_PAGES":
+      return {
+        ...state,
+        pages: action.payload
       };
     default:
       return state;

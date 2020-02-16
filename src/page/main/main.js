@@ -12,7 +12,7 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
-  DialogTitle
+  TextField
 } from "@material-ui/core";
 import React, { Component } from "react";
 import Header from "../../component/Header";
@@ -87,10 +87,25 @@ function WebsiteItem(props) {
 }
 
 class MainPage extends Component {
-  render() {
-    const emails = ["username@gmail.com", "user02@gmail.com"];
+  state = {
+    pageUrl: ""
+  };
 
-    const { setEdit, closeCreateNewSite, openCreateNewSite, open } = this.props;
+  handleSelectPage = link => {
+    this.setState({
+      pageUrl: link
+    });
+  };
+
+  render() {
+    const {
+      setEdit,
+      closeCreateNewSite,
+      openCreateNewSite,
+      open,
+      pages
+    } = this.props;
+    const { pageUrl } = this.state;
     return (
       <>
         <Header />
@@ -179,24 +194,24 @@ class MainPage extends Component {
                     aria-labelledby="simple-dialog-title"
                     open={open}
                   >
-                    <DialogTitle id="simple-dialog-title">
-                      Set backup account
-                    </DialogTitle>
                     <List>
-                      {emails.map(email => (
+                      {pages.map(page => (
                         <ListItem
                           button
-                          // onClick={() => handleListItemClick(email)}
-                          key={email}
+                          onClick={() => this.handleSelectPage(page.link)}
+                          key={page.id}
                         >
                           <ListItemAvatar>
                             <Avatar
                             // className={classes.avatar}
                             >
-                              {/* <PersonIcon /> */}
+                              <img src={page.picture.data.url} alt="" />
                             </Avatar>
                           </ListItemAvatar>
-                          <ListItemText primary={email} />
+                          <ListItemText
+                            primary={page.name}
+                            secondary={page.category}
+                          />
                         </ListItem>
                       ))}
 
@@ -205,10 +220,20 @@ class MainPage extends Component {
                         button
                         // onClick={() => handleListItemClick("addAccount")}
                       >
-                        <ListItemAvatar>
-                          <Avatar>{/* <AddIcon /> */}</Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary="Add account" />
+                        <TextField
+                          fullWidth
+                          label="Facebook Page Url"
+                          value={pageUrl ? pageUrl : ""}
+                        />
+                      </ListItem>
+                      <ListItem
+                        autoFocus
+                        button
+                        // onClick={() => handleListItemClick("addAccount")}
+                      >
+                        <Button variant={"outlined"} fullWidth>
+                          Confirm
+                        </Button>
                       </ListItem>
                     </List>
                   </Dialog>
@@ -228,7 +253,8 @@ class MainPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  open: state.dialog.open
+  open: state.dialog.open,
+  pages: state.user.pages
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -2,13 +2,26 @@ import axios from "../utils/axios";
 
 export function login({ accessToken, profile }) {
   return async dispatch => {
-    dispatch({
-      type: "SET_LOGIN",
-      payload: {
-        accessToken,
-        profile
+    const data = await axios({
+      method: "post",
+      url: "/auth",
+      data: {
+        accessToken: accessToken,
+        id: profile.id,
+        name: profile.name,
+        email: profile.email,
+        picture: profile.picture.data.url
       }
     });
+    if (data.status === 200) {
+      dispatch({
+        type: "SET_LOGIN",
+        payload: {
+          accessToken,
+          profile
+        }
+      });
+    }
   };
 }
 
@@ -25,6 +38,21 @@ export function setEdit(isEdit) {
     dispatch({
       type: "SET_EDIT",
       payload: isEdit
+    });
+  };
+}
+
+export function getUserPages(accessToken) {
+  return async dispatch => {
+    const data = await axios({
+      url: "/facebook/pages",
+      params: {
+        access_token: accessToken
+      }
+    });
+    dispatch({
+      type: "SET_USER_PAGES",
+      payload: data.data
     });
   };
 }
