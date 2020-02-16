@@ -4,7 +4,9 @@ import {
   changeFontBody,
   changeFontTitle,
   changeColor,
-  setShowCustomColor
+  setShowCustomColor,
+  openLoading,
+  closeLoading
 } from "./theme";
 import { setLogin, setEdit, setLogout } from "./user";
 import { updateTabValue, updateNavItemValue } from "./tab";
@@ -22,5 +24,7 @@ export {
   updateTabValue,
   getImageUrl,
   setEdit,
-  updateNavItemValue
+  updateNavItemValue,
+  openLoading,
+  closeLoading
 };

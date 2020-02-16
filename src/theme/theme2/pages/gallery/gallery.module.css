@@ -5,9 +5,7 @@
 }
 
 .title {
-  color: #646464 !important;
   font-weight: 700 !important;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
   padding-bottom: 5vh;
 }
 
@@ -34,7 +32,6 @@
 .btn_content {
   color: black !important;
   font-weight: 800 !important;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
 }
 
 .btn_view :hover {

@@ -25,7 +25,7 @@ const useStyles = theme => ({
 
 const tabStyles = {
   textTransform: "none",
-  minWidth: 100,
+  minWidth: "5vh",
   "&:hover": {
     color: "#40a9ff",
     opacity: 1

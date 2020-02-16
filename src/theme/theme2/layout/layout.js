@@ -8,12 +8,12 @@ import { theme2Pages } from "../../../constant/constant";
 function TabItem(props) {
   return (
     <>
-      {props.tabValue === 0 && <Grid>{props.home}</Grid>},
-      {props.tabValue === 1 && <Grid>{props.about}</Grid>},
-      {props.tabValue === 2 && <Grid>{props.gallery}</Grid>},
-      {props.tabValue === 3 && <Grid>{props.event}</Grid>},
-      {props.tabValue === 4 && <Grid>{props.contact}</Grid>},
-      {props.tabValue === 5 && <Grid>{props.news}</Grid>},
+      {props.tabValue === 0 && <Grid>{props.home}</Grid>}
+      {props.tabValue === 1 && <Grid>{props.about}</Grid>}
+      {props.tabValue === 2 && <Grid>{props.gallery}</Grid>}
+      {props.tabValue === 3 && <Grid>{props.event}</Grid>}
+      {props.tabValue === 4 && <Grid>{props.contact}</Grid>}
+      {props.tabValue === 5 && <Grid>{props.news}</Grid>}
     </>
   );
 }

@@ -3,7 +3,8 @@ const defaultState = {
   color: "",
   fontTitle: "",
   fontBody: "",
-  isShow: false
+  isShow: false,
+  loading: false
 };
 
 const ThemeReducer = (state = defaultState, action) => {
@@ -32,6 +33,16 @@ const ThemeReducer = (state = defaultState, action) => {
       return {
         ...state,
         isShow: action.payload
+      };
+    case "OPEN_LOADING":
+      return {
+        ...state,
+        loading: true
+      };
+    case "CLOSE_LOADING":
+      return {
+        ...state,
+        loading: false
       };
     default:
       return state;

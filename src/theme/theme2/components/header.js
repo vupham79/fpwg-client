@@ -6,24 +6,8 @@ import { connect } from "react-redux";
 import Link from "../../../component/link";
 import { updateNavItemValue } from "../../../actions";
 
-const tabStyles = {
-  textTransform: "none",
-  minWidth: 100,
-  "&:hover": {
-    color: "#40a9ff",
-    opacity: 1
-  },
-  "&$selected": {
-    color: "#1890ff"
-  },
-  "&:focus": {
-    color: "#40a9ff"
-  }
-};
-
 class Header extends Component {
   render() {
-    const navItems = ["Home", "About", "Gallery", "Event", "Contact", "New"];
     const {
       siteId,
       themeFontTitle,
@@ -32,6 +16,24 @@ class Header extends Component {
       tabValue,
       updateNavItemValue
     } = this.props;
+    const navItems = ["Home", "About", "Gallery", "Event", "Contact", "New"];
+    const tabStyles = {
+      textTransform: "none",
+      fontFamily: themeFontTitle,
+      color: themeColor,
+      minWidth: "10vh",
+      "&:hover": {
+        color: "#40a9ff",
+        opacity: 1
+      },
+      "&$selected": {
+        color: "#1890ff"
+      },
+      "&:focus": {
+        color: "#40a9ff"
+      }
+    };
+
     // const currentPage = "";
 
     const changeStyle = {
@@ -86,7 +88,9 @@ class Header extends Component {
 
 const mapStateToProps = state => ({
   tabValue: state.tab.navItemValue,
-  isEdit: state.user.isEdit
+  isEdit: state.user.isEdit,
+  themeFontTitle: state.theme.fontTitle,
+  themeColor: state.theme.color
 });
 
 const mapDispatchToProps = dispatch => ({

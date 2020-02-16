@@ -1,5 +1,5 @@
 const defaultState = {
-  isLogin: true,
+  isLogin: false,
   isEdit: false
 };
 

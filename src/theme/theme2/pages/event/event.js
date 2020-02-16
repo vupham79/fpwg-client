@@ -2,6 +2,7 @@ import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Divider, Grid, Typography } from "@material-ui/core";
 import React from "react";
+import { connect } from "react-redux";
 import styles from "./event.module.css";
 
 const imgUrl = [
@@ -19,6 +20,12 @@ const imgStyles = {
 
 class EventPage extends React.Component {
   render() {
+    const { themeFontTitle, themeColor } = this.props;
+    const changeTitleStyle = {
+      fontFamily: themeFontTitle,
+      color: themeColor
+    };
+
     return (
       <Grid
         container
@@ -32,6 +39,7 @@ class EventPage extends React.Component {
             variant="h4"
             align="center"
             gutterBottom
+            style={changeTitleStyle}
           >
             Events
           </Typography>
@@ -93,4 +101,10 @@ class EventPage extends React.Component {
   }
 }
 
-export default EventPage;
+const mapStateToProps = state => ({
+  themeFontTitle: state.theme.fontTitle,
+  themeFontBody: state.theme.fontBody,
+  themeColor: state.theme.color
+});
+
+export default connect(mapStateToProps, null)(EventPage);
