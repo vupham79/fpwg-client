@@ -43,6 +43,7 @@ export function setEdit(isEdit) {
 }
 
 export function getUserPages(accessToken) {
+  console.log("abc");
   return async dispatch => {
     const data = await axios({
       url: "/facebook/pages",
@@ -53,6 +54,19 @@ export function getUserPages(accessToken) {
     dispatch({
       type: "SET_USER_PAGES",
       payload: data.data
+    });
+  };
+}
+
+export function confirmPage(pageUrl) {
+  return async dispatch => {
+    console.log("Page Url: " + pageUrl);
+    await axios({
+      method: "POST",
+      url: "/facebook/confirmPage",
+      data: {
+        pageUrl: pageUrl
+      }
     });
   };
 }

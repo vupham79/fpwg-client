@@ -19,7 +19,12 @@ import Header from "../../component/Header";
 import Link from "../../component/link";
 import styles from "./main.module.css";
 import { connect } from "react-redux";
-import { setEdit, openCreateNewSite, closeCreateNewSite } from "../../actions";
+import {
+  setEdit,
+  openCreateNewSite,
+  closeCreateNewSite,
+  confirmPage
+} from "../../actions";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -96,6 +101,13 @@ class MainPage extends Component {
       pageUrl: link
     });
   };
+
+  confirmPage = pageUrl => {
+    const { confirmPage } = this.props;
+    confirmPage(pageUrl);
+  };
+
+  //hàm nằm trong class trước render()
 
   render() {
     const {
@@ -231,7 +243,11 @@ class MainPage extends Component {
                         button
                         // onClick={() => handleListItemClick("addAccount")}
                       >
-                        <Button variant={"outlined"} fullWidth>
+                        <Button
+                          variant={"outlined"}
+                          onClick={() => this.confirmPage(this.state.pageUrl)}
+                          fullWidth
+                        >
                           Confirm
                         </Button>
                       </ListItem>
@@ -260,7 +276,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setEdit: isEdit => dispatch(setEdit(isEdit)),
   closeCreateNewSite: () => dispatch(closeCreateNewSite()),
-  openCreateNewSite: () => dispatch(openCreateNewSite())
+  openCreateNewSite: () => dispatch(openCreateNewSite()),
+  confirmPage: pageUrl => dispatch(confirmPage(pageUrl))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
