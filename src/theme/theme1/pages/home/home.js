@@ -15,7 +15,7 @@ import { Parallax, Background } from 'react-parallax';
 import {withGoogleMap,GoogleMap,Marker,withScriptjs} from "react-google-maps";
 
 
-const Theme1Home = ({themeFont, themeFontBody, themeColor, mapLat, mapLng}) => { 
+const Theme1Home = ({themeFontTitle, themeFontBody, themeColor, mapLat, mapLng}) => { 
 
   const MapWithAMarker = withScriptjs(withGoogleMap(props =>
     <GoogleMap
@@ -41,7 +41,7 @@ const Theme1Home = ({themeFont, themeFontBody, themeColor, mapLat, mapLng}) => {
   const useStyles = makeStyles(theme => ({
     
     changableTitle: {
-      fontFamily: themeFont,
+      fontFamily: themeFontTitle,
       fontWeight: "bold",
       color: "#212121",
       textAlign: "center",
@@ -53,15 +53,21 @@ const Theme1Home = ({themeFont, themeFontBody, themeColor, mapLat, mapLng}) => {
       color: "#212121",
       textAlign: "center",
       fontSize: 16,
-    },
+    },   
+    changableBody2: {
+      fontFamily: themeFontBody,
+      color: "#212121",
+      textAlign: "left",
+      fontSize: 16,
+    },   
     pageName: {
-      fontFamily: themeFont,
+      fontFamily: themeFontTitle,
       fontWeight: "bold",
       color: "#212121",
       fontSize: 20,
     },
     changableFirst: {
-      fontFamily: themeFont,
+      fontFamily: themeFontTitle,
       fontWeight: "bold",
       color: "#212121",
       textAlign: "center",
@@ -70,7 +76,7 @@ const Theme1Home = ({themeFont, themeFontBody, themeColor, mapLat, mapLng}) => {
       textDecorationColor: themeColor,
     },
     changableLegend: {
-      fontFamily: themeFont,
+      fontFamily: themeFontTitle,
       fontWeight: "bold",
       color: "white",
       zIndex: 5,  
@@ -93,13 +99,22 @@ const Theme1Home = ({themeFont, themeFontBody, themeColor, mapLat, mapLng}) => {
       marginLeft: "auto",
       marginRight: "auto"
     },
+    centerItem2: {
+      display: "block",
+      height: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: 400,
+      marginLeft: "auto",
+      marginRight: "auto"
+
+    },
     changableAppBar: {
       backgroundColor: "white",
       opacity:0.6,
       position: "sticky",
       color: "#535353",
       textAlign: "right",
-      top: 65
     },
   }));
 
@@ -109,46 +124,48 @@ const Theme1Home = ({themeFont, themeFontBody, themeColor, mapLat, mapLng}) => {
 
    
 
-    <Grid container spacing={3} id={'aboutSection'} >
+    <Grid container id={'aboutSection'} >
 
-    <AppBar className={classes.changableAppBar}>
-      <Toolbar>
-        <IconButton onClick={handleMenuClick} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-        <MenuIcon />
-        </IconButton>
+        <AppBar className={classes.changableAppBar}>
+          <Toolbar>
+            <IconButton onClick={handleMenuClick} edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+            <MenuIcon />
+            </IconButton>
 
-        <Menu
-        id="simple-menu"
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleMenuClose}
-        >
-        <MenuItem onClick={handleMenuClose}><a href='#aboutSection'>About</a></MenuItem>
-        <MenuItem onClick={handleMenuClose}><a href='#newsSection'>News</a></MenuItem>
-        <MenuItem onClick={handleMenuClose}><a href='#gallerySection'>Gallery</a></MenuItem>
-        <MenuItem onClick={handleMenuClose}><a href='#eventSection'>Event</a></MenuItem>
-        <MenuItem onClick={handleMenuClose}><a href='#contactSection'>Contact</a></MenuItem>
-        </Menu>
+            <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+            >
+            <MenuItem onClick={handleMenuClose}><a href='#aboutSection'>About</a></MenuItem>
+            <MenuItem onClick={handleMenuClose}><a href='#newsSection'>News</a></MenuItem>
+            <MenuItem onClick={handleMenuClose}><a href='#gallerySection'>Gallery</a></MenuItem>
+            <MenuItem onClick={handleMenuClose}><a href='#eventSection'>Event</a></MenuItem>
+            <MenuItem onClick={handleMenuClose}><a href='#contactSection'>Contact</a></MenuItem>
+            </Menu>
 
-        <Typography variant="h6" className={classes.pageName}>Page Name</Typography>
-    </Toolbar>
-  </AppBar>
+            <Typography variant="h6" className={classes.pageName}>Page Name</Typography>
+        </Toolbar>
+      </AppBar>
 
-    <Carousel showArrows={false} showStatus={false} showThumbs={false} autoPlay={true} stopOnHover={true} infiniteLoop={true}>
-              <div>
-                  <img src="./images/theme1-banner1.jpg" />
-                  <p className={classes.changableLegend}>Title 1</p>
-              </div>
-              <div>
-                  <img src="./images/theme1-banner2.jpg" />
-                  <p className={classes.changableLegend}>Title 2</p>
-              </div>
-              <div>
-                  <img src="./images/theme1-banner1.jpg" />
-                  <p className={classes.changableLegend}>Title 3</p>
-              </div>
-     </Carousel>
+      <Grid item xs={12}>
+      <Carousel showArrows={false} showStatus={false} showThumbs={false} autoPlay={true} stopOnHover={true} infiniteLoop={true}>
+                <div>
+                    <img src="./images/theme1-banner1.jpg" />
+                    <p className={classes.changableLegend}>Title 1</p>
+                </div>
+                <div>
+                    <img src="./images/theme1-banner2.jpg" />
+                    <p className={classes.changableLegend}>Title 2</p>
+                </div>
+                <div>
+                    <img src="./images/theme1-banner1.jpg" />
+                    <p className={classes.changableLegend}>Title 3</p>
+                </div>
+      </Carousel>
+      </Grid>
 
       <Grid item xs={12}>
       <p className={classes.changableTitle}><span className={classes.changableFirst}>A</span>BOUT</p> 
@@ -239,7 +256,14 @@ const Theme1Home = ({themeFont, themeFontBody, themeColor, mapLat, mapLng}) => {
       </Grid>
 
       <Grid item xs={12} id={'contactSection'}>
-          
+      <div className={classes.centerItem2} >
+
+      <p className={classes.changableBody2}><span><img src="./images/phone-icon.png" style={{ height: `30px`, width: '30px' }}/></span>0909133349</p>
+      
+      <p className={classes.changableBody2}><span><img src="./images/address-icon.png" style={{ height: `30px`, width: '30px' }}/></span>112 Đường Hồng Hà, P.12, Q.Tân Bình</p>
+      
+      </div>
+
       </Grid>
 
       </Grid>

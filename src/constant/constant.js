@@ -1,3 +1,4 @@
+import Theme1 from "../theme/theme1";
 import Theme2 from "../theme/theme2";
 import Theme3 from "../theme/theme3";
 import Theme4 from "../theme/theme4";
@@ -18,10 +19,10 @@ import PreEventPage from "../theme/theme2/pages/event";
 export const themes = [
   {
     name: "theme1",
-    component: <Theme3 />,
-    fontTitle: "Lora",
-    fontBody: "Oswald",
-    color: "#191818"
+    component: <Theme1 />,
+    fontTitle: "Arial",
+    fontBody: "Arial",
+    color: "#FF6900"
   },
   {
     name: "theme2",
