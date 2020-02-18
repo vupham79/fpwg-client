@@ -3,6 +3,32 @@ const defaultState = {
   color: "",
   fontTitle: "",
   fontBody: "",
+  navItems: [
+    {
+      name: "Home",
+      order: 1
+    },
+    {
+      name: "About",
+      order: 2
+    },
+    {
+      name: "Gallery",
+      order: 3
+    },
+    {
+      name: "Event",
+      order: 4
+    },
+    {
+      name: "Contact",
+      order: 5
+    },
+    {
+      name: "News",
+      order: 6
+    }
+  ],
   isShow: false,
   loading: false
 };

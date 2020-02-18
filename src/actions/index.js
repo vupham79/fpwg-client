@@ -6,7 +6,8 @@ import {
   changeColor,
   setShowCustomColor,
   openLoading,
-  closeLoading
+  closeLoading,
+  changeNavItems
 } from "./theme";
 import { setEdit, setLogout, login, getUserPages, confirmPage } from "./user";
 import { updateTabValue, updateNavItemValue } from "./tab";
@@ -32,5 +33,6 @@ export {
   //dialog
   closeCreateNewSite,
   openCreateNewSite,
-  confirmPage
+  confirmPage,
+  changeNavItems
 };

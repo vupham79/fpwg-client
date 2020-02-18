@@ -93,21 +93,39 @@ function WebsiteItem(props) {
 
 class MainPage extends Component {
   state = {
-    pageUrl: ""
+    pageUrl: "",
+    pageId: ""
   };
 
-  handleSelectPage = link => {
+  handleSelectPage = ({ id, link }) => {
     this.setState({
-      pageUrl: link
+      pageUrl: link,
+      pageId: id
     });
   };
 
-  confirmPage = pageUrl => {
-    const { confirmPage } = this.props;
-    confirmPage(pageUrl);
+  handleConfirm = () => {
+    const {
+      confirmPage,
+      accessToken,
+      color,
+      fontBody,
+      fontTitle,
+      name,
+      navItems
+    } = this.props;
+    const { pageId, pageUrl } = this.state;
+    confirmPage({
+      pageId,
+      pageUrl,
+      accessToken,
+      color,
+      fontBody,
+      fontTitle,
+      name,
+      navItems
+    });
   };
-
-  //hàm nằm trong class trước render()
 
   render() {
     const {
@@ -209,31 +227,30 @@ class MainPage extends Component {
                     fullWidth
                   >
                     <List>
-                      <ListItem>
-                        <Typography variant="h6" color="primary">
-                          Choose an Facebook Page
-                        </Typography>
-                      </ListItem>
-                      {pages &&
-                        pages.map(page => (
-                          <ListItem
-                            button
-                            onClick={() => this.handleSelectPage(page.link)}
-                            key={page.id}
-                          >
-                            <ListItemAvatar>
-                              <Avatar
-                              // className={classes.avatar}
-                              >
-                                <img src={page.picture.data.url} alt="" />
-                              </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                              primary={page.name}
-                              secondary={page.category}
-                            />
-                          </ListItem>
-                        ))}
+                      {pages.map(page => (
+                        <ListItem
+                          button
+                          onClick={() =>
+                            this.handleSelectPage({
+                              id: page.id,
+                              link: page.link
+                            })
+                          }
+                          key={page.id}
+                        >
+                          <ListItemAvatar>
+                            <Avatar
+                            // className={classes.avatar}
+                            >
+                              <img src={page.picture.data.url} alt="" />
+                            </Avatar>
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={page.name}
+                            secondary={page.category}
+                          />
+                        </ListItem>
+                      ))}
 
                       <ListItem
                         autoFocus
@@ -252,8 +269,8 @@ class MainPage extends Component {
                         // onClick={() => handleListItemClick("addAccount")}
                       >
                         <Button
-                          variant="outlined"
-                          onClick={() => this.confirmPage(this.state.pageUrl)}
+                          variant={"outlined"}
+                          onClick={() => this.handleConfirm()}
                           fullWidth
                         >
                           Confirm
@@ -278,14 +295,20 @@ class MainPage extends Component {
 
 const mapStateToProps = state => ({
   open: state.dialog.open,
-  pages: state.user.pages
+  pages: state.user.pages,
+  accessToken: state.user.accessToken,
+  name: state.theme.name,
+  color: state.theme.color,
+  fontBody: state.theme.fontBody,
+  fontTitle: state.theme.fontTitle,
+  navItems: state.theme.navItems
 });
 
 const mapDispatchToProps = dispatch => ({
   setEdit: isEdit => dispatch(setEdit(isEdit)),
   closeCreateNewSite: () => dispatch(closeCreateNewSite()),
   openCreateNewSite: () => dispatch(openCreateNewSite()),
-  confirmPage: pageUrl => dispatch(confirmPage(pageUrl))
+  confirmPage: data => dispatch(confirmPage(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

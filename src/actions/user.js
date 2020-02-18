@@ -58,14 +58,27 @@ export function getUserPages(accessToken) {
   };
 }
 
-export function confirmPage(pageUrl) {
+export function confirmPage({
+  pageUrl,
+  pageId,
+  accessToken,
+  color,
+  fontBody,
+  fontTitle,
+  navItems
+}) {
   return async dispatch => {
-    console.log("Page Url: " + pageUrl);
     await axios({
       method: "POST",
       url: "/facebook/confirmPage",
       data: {
-        pageUrl: pageUrl
+        pageUrl,
+        pageId,
+        accessToken,
+        color,
+        fontBody,
+        fontTitle,
+        navItems
       }
     });
   };
