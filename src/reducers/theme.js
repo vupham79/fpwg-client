@@ -44,6 +44,10 @@ const ThemeReducer = (state = defaultState, action) => {
         ...state,
         loading: false
       };
+    case "SET_LOGOUT":
+      return {
+        ...defaultState
+      };
     default:
       return state;
   }

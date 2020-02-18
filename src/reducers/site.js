@@ -9,6 +9,10 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         id: action.payload
       };
+    case "SET_LOGOUT":
+      return {
+        ...defaultState
+      };
     default:
       return state;
   }

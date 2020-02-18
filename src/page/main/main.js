@@ -205,27 +205,35 @@ class MainPage extends Component {
                     onClose={closeCreateNewSite}
                     aria-labelledby="simple-dialog-title"
                     open={open}
+                    maxWidth="xs"
+                    fullWidth
                   >
                     <List>
-                      {pages.map(page => (
-                        <ListItem
-                          button
-                          onClick={() => this.handleSelectPage(page.link)}
-                          key={page.id}
-                        >
-                          <ListItemAvatar>
-                            <Avatar
-                            // className={classes.avatar}
-                            >
-                              <img src={page.picture.data.url} alt="" />
-                            </Avatar>
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={page.name}
-                            secondary={page.category}
-                          />
-                        </ListItem>
-                      ))}
+                      <ListItem>
+                        <Typography variant="h6" color="primary">
+                          Choose an Facebook Page
+                        </Typography>
+                      </ListItem>
+                      {pages &&
+                        pages.map(page => (
+                          <ListItem
+                            button
+                            onClick={() => this.handleSelectPage(page.link)}
+                            key={page.id}
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                              // className={classes.avatar}
+                              >
+                                <img src={page.picture.data.url} alt="" />
+                              </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={page.name}
+                              secondary={page.category}
+                            />
+                          </ListItem>
+                        ))}
 
                       <ListItem
                         autoFocus
@@ -244,7 +252,7 @@ class MainPage extends Component {
                         // onClick={() => handleListItemClick("addAccount")}
                       >
                         <Button
-                          variant={"outlined"}
+                          variant="outlined"
                           onClick={() => this.confirmPage(this.state.pageUrl)}
                           fullWidth
                         >

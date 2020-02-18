@@ -109,11 +109,11 @@ function ProfileMenu(props) {
         className={styles.profile_content}
       >
         <img
-          src={profile.picture.data.url}
+          src={!!profile && profile.picture.data.url}
           alt="logo"
           className={styles.profile_img}
         />
-        {profile.name}
+        {!!profile && profile.name}
       </Typography>
       <StyledMenu
         anchorEl={anchorEl}
