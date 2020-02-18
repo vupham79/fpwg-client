@@ -57,3 +57,12 @@ export function closeLoading() {
     });
   };
 }
+
+export function changeNavItems(navItems) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_NAV_ITEMS",
+      payload: navItems
+    });
+  };
+}
