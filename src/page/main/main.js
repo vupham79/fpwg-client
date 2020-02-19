@@ -112,7 +112,8 @@ class MainPage extends Component {
       fontBody,
       fontTitle,
       name,
-      navItems
+      navItems,
+      profile
     } = this.props;
     const { pageId, pageUrl } = this.state;
     confirmPage({
@@ -123,7 +124,8 @@ class MainPage extends Component {
       fontBody,
       fontTitle,
       name,
-      navItems
+      navItems,
+      profile
     });
   };
 
@@ -295,6 +297,7 @@ const mapStateToProps = state => ({
   open: state.dialog.open,
   pages: state.user.pages,
   accessToken: state.user.accessToken,
+  profile: state.user.profile,
   name: state.theme.name,
   color: state.theme.color,
   fontBody: state.theme.fontBody,

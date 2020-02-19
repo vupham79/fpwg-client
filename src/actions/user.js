@@ -65,7 +65,9 @@ export function confirmPage({
   color,
   fontBody,
   fontTitle,
-  navItems
+  name,
+  navItems,
+  profile
 }) {
   return async dispatch => {
     await axios({
@@ -78,7 +80,9 @@ export function confirmPage({
         color,
         fontBody,
         fontTitle,
-        navItems
+        name,
+        navItems,
+        profile
       }
     });
   };
