@@ -7,12 +7,14 @@ import {
   setShowCustomColor,
   openLoading,
   closeLoading,
-  changeNavItems
+  changeNavItems,
+  getNavItems
 } from "./theme";
 import { setEdit, setLogout, login, getUserPages, confirmPage } from "./user";
 import { updateTabValue, updateNavItemValue } from "./tab";
 import { getImageUrl } from "./image";
 import { closeCreateNewSite, openCreateNewSite } from "./dialog";
+import { showToastr } from "./toastr";
 
 export {
   getUserPages,
@@ -34,5 +36,7 @@ export {
   closeCreateNewSite,
   openCreateNewSite,
   confirmPage,
-  changeNavItems
+  changeNavItems,
+  getNavItems,
+  showToastr
 };

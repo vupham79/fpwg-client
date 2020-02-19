@@ -3,7 +3,7 @@ import Footer from "../components/footer";
 import Header from "../components/header";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
-import { theme2Pages } from "../../../constant/constant";
+import { themes } from "../../../constant/constant";
 
 function TabItem(props) {
   return (
@@ -20,13 +20,14 @@ function TabItem(props) {
 
 class Layout extends Component {
   render() {
-    const { isEdit, navItemValue } = this.props;
-    const home = theme2Pages.find(element => element.name === "home");
-    const event = theme2Pages.find(element => element.name === "event");
-    const about = theme2Pages.find(element => element.name === "about");
-    const contact = theme2Pages.find(element => element.name === "contact");
-    const gallery = theme2Pages.find(element => element.name === "gallery");
-    const news = theme2Pages.find(element => element.name === "new");
+    const { isEdit, navItemValue, themeName } = this.props;
+    const pages = themes.find(element => (element.name = themeName)).pages;
+    const home = pages.find(element => element.name === "home");
+    const event = pages.find(element => element.name === "event");
+    const about = pages.find(element => element.name === "about");
+    const contact = pages.find(element => element.name === "contact");
+    const gallery = pages.find(element => element.name === "gallery");
+    const news = pages.find(element => element.name === "new");
 
     return (
       <>
@@ -52,7 +53,8 @@ class Layout extends Component {
 
 const mapStateToProps = state => ({
   isEdit: state.user.isEdit,
-  navItemValue: state.tab.navItemValue
+  navItemValue: state.tab.navItemValue,
+  themeName: state.theme.name
 });
 
 export default connect(mapStateToProps, null)(Layout);
