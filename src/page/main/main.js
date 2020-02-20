@@ -27,6 +27,9 @@ import {
   confirmPage
 } from "../../actions";
 
+
+
+
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
   "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
@@ -41,19 +44,44 @@ const imgStyles = {
   width: "80%"
 };
 
+// const test = [
+//   {
+//     id: "1",
+//     isActive: true,
+//     title: "page 1",
+//     category: "Books",
+//     logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3"
+//   },
+//   {
+//     id: "2",
+//     isActive: true,
+//     title: "page 2",
+//     category: "Food",
+//     logo: "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E"
+//   },
+//   {
+//     id: "3",
+//     isActive: false,
+//     title: "page 3",
+//     category: "Toys",
+//     logo: ""
+//   }
+
+// ]
+
 function WebsiteItem(props) {
   return (
     <Grid container justify="space-between" className={styles.web_item}>
       <Grid container item sm={8} xs={12} alignItems="center">
         <Grid item sm={4} md={4} xs={4} className={styles.web_logo}>
-          <img src={imgUrl[3]} alt="logo" style={imgStyles} />
+          <img src={props.logo} alt="logo" style={imgStyles} />
         </Grid>
         <Grid item sm={8} xs={8} md={6}>
           <Typography variant="h5" className={styles.web_content}>
-            Foody
+            {props.title}
           </Typography>
           <Typography variant="body2" className={styles.web_content}>
-            Food and Beverage (other)
+            {props.category}
           </Typography>
         </Grid>
       </Grid>
@@ -98,6 +126,8 @@ class MainPage extends Component {
     pageId: ""
   };
 
+
+
   handleSelectPage = ({ id, link }) => {
     this.setState({
       pageUrl: link,
@@ -134,9 +164,11 @@ class MainPage extends Component {
       closeCreateNewSite,
       openCreateNewSite,
       open,
-      pages
+      pages,
+      data
     } = this.props;
     const { pageUrl } = this.state;
+
     return (
       <>
         <Header />
@@ -257,7 +289,7 @@ class MainPage extends Component {
                       <ListItem
                         autoFocus
                         button
-                        // onClick={() => handleListItemClick("addAccount")}
+                      // onClick={() => handleListItemClick("addAccount")}
                       >
                         <TextField
                           fullWidth
@@ -268,7 +300,7 @@ class MainPage extends Component {
                       <ListItem
                         autoFocus
                         button
-                        // onClick={() => handleListItemClick("addAccount")}
+                      // onClick={() => handleListItemClick("addAccount")}
                       >
                         <Button
                           variant={"outlined"}
@@ -283,11 +315,22 @@ class MainPage extends Component {
                 </Grid>
               </Grid>
             </Grid>
+
             <Grid container item sm={10} xs={12} md={6}>
-              <Grid item className={styles.siteItem}>
-                <WebsiteItem setEdit={setEdit} />
-              </Grid>
+              {!data && (
+                <Grid container justify="center">
+                  <p style={{ fontStyle: "italic", textAlign: "center", color: "#121212", marginTop: 50 }}>No site to show.</p>
+                </Grid>
+              )}
+              <List>
+                {data && data.map(item => (
+                  <ListItem key={item.id}>
+                    <WebsiteItem setEdit={setEdit} title={item.title} category={item.category} logo={item.logo} />
+                  </ListItem>
+                ))}
+              </List>
             </Grid>
+
           </Grid>
         </Grid>
       </>
@@ -303,7 +346,8 @@ const mapStateToProps = state => ({
   color: state.theme.color,
   fontBody: state.theme.fontBody,
   fontTitle: state.theme.fontTitle,
-  navItems: state.theme.navItems
+  navItems: state.theme.navItems,
+  data: state.site.data,
 });
 
 const mapDispatchToProps = dispatch => ({

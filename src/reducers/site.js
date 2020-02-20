@@ -3,15 +3,10 @@ const defaultState = {
   data: [
     {
       id: "",
-      isActive: false
-    },
-    {
-      id: "",
-      isActive: false
-    },
-    {
-      id: "",
-      isActive: false
+      isActive: false,
+      title: "",
+      category: "",
+      logo: ""
     }
   ]
 };
