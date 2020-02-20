@@ -5,6 +5,7 @@ import user from "./user";
 import tab from "./tab";
 import imageUrl from "./image";
 import dialog from "./dialog";
+import toastr from "./toastr";
 
 export default combineReducers({
   site,
@@ -12,5 +13,6 @@ export default combineReducers({
   user,
   tab,
   imageUrl,
-  dialog
+  dialog,
+  toastr
 });

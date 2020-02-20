@@ -76,9 +76,9 @@ class DesignEditorTab extends React.Component {
     const {
       themeName,
       changeTheme,
-      changeFontTitle,
       themeFontTitle,
       changeColor,
+      changeFontTitle,
       themeFontBody,
       changeFontBody,
       isShow,
@@ -92,7 +92,7 @@ class DesignEditorTab extends React.Component {
       <>
         <Typography className={classes.title}>Theme</Typography>
         <Select
-          defaultValue={themeName}
+          // defaultValue={themeName}
           autoComplete="true"
           value={themeName}
           fullWidth
@@ -115,7 +115,7 @@ class DesignEditorTab extends React.Component {
               apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
               sort="alphabet"
               activeFontFamily={themeFontTitle}
-              onChange={e => changeFontTitle(e.family)}
+              onChange={font => changeFontTitle(font.family)}
             />
           </List>
           <Divider />
@@ -124,7 +124,7 @@ class DesignEditorTab extends React.Component {
             apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
             sort="alphabet"
             activeFontFamily={themeFontBody}
-            onChange={e => changeFontBody(e.family)}
+            onChange={font => changeFontBody(font.family)}
           />
         </Grid>
         <Divider
@@ -136,7 +136,7 @@ class DesignEditorTab extends React.Component {
           <TwitterPicker
             width={"fit-content"}
             color={themeColor}
-            onChangeComplete={e => changeColor(e.hex)}
+            onChangeComplete={color => changeColor(color.hex)}
           />
           <Divider />
           <Typography className={classes.title2}>Custom Color</Typography>
@@ -160,7 +160,7 @@ class DesignEditorTab extends React.Component {
             >
               <ChromePicker
                 color={themeColor}
-                onChangeComplete={e => changeColor(e.hex)}
+                onChangeComplete={color => changeColor(color.hex)}
               />
             </Grid>
           ) : null}
@@ -193,7 +193,8 @@ const mapStateToProps = state => ({
   themeColor: state.theme.color,
   themeFontTitle: state.theme.fontTitle,
   themeFontBody: state.theme.fontBody,
-  isShow: state.theme.isShow
+  isShow: state.theme.isShow,
+  toast_option: state.toastr.option
 });
 
 const mapDispatchToProps = dispatch => ({

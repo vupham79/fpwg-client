@@ -6,27 +6,33 @@ const defaultState = {
   navItems: [
     {
       name: "Home",
-      order: 1
+      order: 1,
+      isActive: true
     },
     {
       name: "About",
-      order: 2
+      order: 2,
+      isActive: true
     },
     {
       name: "Gallery",
-      order: 3
+      order: 3,
+      isActive: true
     },
     {
       name: "Event",
-      order: 4
+      order: 4,
+      isActive: true
     },
     {
       name: "Contact",
-      order: 5
+      order: 5,
+      isActive: true
     },
     {
       name: "News",
-      order: 6
+      order: 6,
+      isActive: true
     }
   ],
   isShow: false,
@@ -73,6 +79,16 @@ const ThemeReducer = (state = defaultState, action) => {
     case "SET_LOGOUT":
       return {
         ...defaultState
+      };
+    case "GET_NAV_ITEMS":
+      return {
+        ...state,
+        navItems: action.payload
+      };
+    case "CHANGE_NAV_ITEMS":
+      return {
+        ...state,
+        navItems: [...action.payload]
       };
     default:
       return state;

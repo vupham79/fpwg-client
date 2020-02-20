@@ -19,6 +19,7 @@ import Header from "../../component/Header";
 import Link from "../../component/link";
 import styles from "./main.module.css";
 import { connect } from "react-redux";
+import SwitchButton from "../../component/SwitchButton";
 import {
   setEdit,
   openCreateNewSite,
@@ -84,7 +85,7 @@ function WebsiteItem(props) {
           </Grid>
         </Grid>
         <Grid container item justify="flex-end" md={12}>
-          <Button className={styles.create_button}>On</Button>
+          <SwitchButton />
         </Grid>
       </Grid>
     </Grid>
@@ -225,32 +226,35 @@ class MainPage extends Component {
                     onClose={closeCreateNewSite}
                     aria-labelledby="simple-dialog-title"
                     open={open}
+                    maxWidth="xs"
+                    fullWidth
                   >
                     <List>
-                      {pages.map(page => (
-                        <ListItem
-                          button
-                          onClick={() =>
-                            this.handleSelectPage({
-                              id: page.id,
-                              link: page.link
-                            })
-                          }
-                          key={page.id}
-                        >
-                          <ListItemAvatar>
-                            <Avatar
-                            // className={classes.avatar}
-                            >
-                              <img src={page.picture.data.url} alt="" />
-                            </Avatar>
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={page.name}
-                            secondary={page.category}
-                          />
-                        </ListItem>
-                      ))}
+                      {pages &&
+                        pages.map(page => (
+                          <ListItem
+                            button
+                            onClick={() =>
+                              this.handleSelectPage({
+                                id: page.id,
+                                link: page.link
+                              })
+                            }
+                            key={page.id}
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                              // className={classes.avatar}
+                              >
+                                <img src={page.picture.data.url} alt="" />
+                              </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={page.name}
+                              secondary={page.category}
+                            />
+                          </ListItem>
+                        ))}
 
                       <ListItem
                         autoFocus

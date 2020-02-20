@@ -3,7 +3,13 @@ const defaultState = {
   accessToken: "",
   isLogin: false,
   isEdit: false,
-  pages: []
+  pages: [],
+  sites: [
+    {
+      id: 1,
+      isPublish: true
+    }
+  ]
 };
 
 const UserReducer = (state = defaultState, action) => {
