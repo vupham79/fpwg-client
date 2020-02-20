@@ -19,7 +19,13 @@ import Header from "../../component/Header";
 import Link from "../../component/link";
 import styles from "./main.module.css";
 import { connect } from "react-redux";
-import { setEdit, openCreateNewSite, closeCreateNewSite } from "../../actions";
+import SwitchButton from "../../component/SwitchButton";
+import {
+  setEdit,
+  openCreateNewSite,
+  closeCreateNewSite,
+  confirmPage
+} from "../../actions";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -79,7 +85,7 @@ function WebsiteItem(props) {
           </Grid>
         </Grid>
         <Grid container item justify="flex-end" md={12}>
-          <Button className={styles.create_button}>On</Button>
+          <SwitchButton />
         </Grid>
       </Grid>
     </Grid>
@@ -88,12 +94,37 @@ function WebsiteItem(props) {
 
 class MainPage extends Component {
   state = {
-    pageUrl: ""
+    pageUrl: "",
+    pageId: ""
   };
 
-  handleSelectPage = link => {
+  handleSelectPage = ({ id, link }) => {
     this.setState({
-      pageUrl: link
+      pageUrl: link,
+      pageId: id
+    });
+  };
+
+  handleConfirm = () => {
+    const {
+      confirmPage,
+      accessToken,
+      color,
+      fontBody,
+      fontTitle,
+      name,
+      navItems
+    } = this.props;
+    const { pageId, pageUrl } = this.state;
+    confirmPage({
+      pageId,
+      pageUrl,
+      accessToken,
+      color,
+      fontBody,
+      fontTitle,
+      name,
+      navItems
     });
   };
 
@@ -193,27 +224,35 @@ class MainPage extends Component {
                     onClose={closeCreateNewSite}
                     aria-labelledby="simple-dialog-title"
                     open={open}
+                    maxWidth="xs"
+                    fullWidth
                   >
                     <List>
-                      {pages.map(page => (
-                        <ListItem
-                          button
-                          onClick={() => this.handleSelectPage(page.link)}
-                          key={page.id}
-                        >
-                          <ListItemAvatar>
-                            <Avatar
-                            // className={classes.avatar}
-                            >
-                              <img src={page.picture.data.url} alt="" />
-                            </Avatar>
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={page.name}
-                            secondary={page.category}
-                          />
-                        </ListItem>
-                      ))}
+                      {pages &&
+                        pages.map(page => (
+                          <ListItem
+                            button
+                            onClick={() =>
+                              this.handleSelectPage({
+                                id: page.id,
+                                link: page.link
+                              })
+                            }
+                            key={page.id}
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                              // className={classes.avatar}
+                              >
+                                <img src={page.picture.data.url} alt="" />
+                              </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={page.name}
+                              secondary={page.category}
+                            />
+                          </ListItem>
+                        ))}
 
                       <ListItem
                         autoFocus
@@ -231,7 +270,11 @@ class MainPage extends Component {
                         button
                         // onClick={() => handleListItemClick("addAccount")}
                       >
-                        <Button variant={"outlined"} fullWidth>
+                        <Button
+                          variant={"outlined"}
+                          onClick={() => this.handleConfirm()}
+                          fullWidth
+                        >
                           Confirm
                         </Button>
                       </ListItem>
@@ -254,13 +297,20 @@ class MainPage extends Component {
 
 const mapStateToProps = state => ({
   open: state.dialog.open,
-  pages: state.user.pages
+  pages: state.user.pages,
+  accessToken: state.user.accessToken,
+  name: state.theme.name,
+  color: state.theme.color,
+  fontBody: state.theme.fontBody,
+  fontTitle: state.theme.fontTitle,
+  navItems: state.theme.navItems
 });
 
 const mapDispatchToProps = dispatch => ({
   setEdit: isEdit => dispatch(setEdit(isEdit)),
   closeCreateNewSite: () => dispatch(closeCreateNewSite()),
-  openCreateNewSite: () => dispatch(openCreateNewSite())
+  openCreateNewSite: () => dispatch(openCreateNewSite()),
+  confirmPage: data => dispatch(confirmPage(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

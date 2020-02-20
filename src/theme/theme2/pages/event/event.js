@@ -48,18 +48,18 @@ class EventPage extends React.Component {
         <Grid
           item
           sm={3}
-          xs={3}
+          xs={8}
           container
           justify="center"
           className={styles.event_body}
         >
           <Grid item sm={12} container>
-            <Grid item sm={3}>
+            <Grid item sm={3} xs={6}>
               <div className={styles.image_page}>
                 <img alt="" src={imgUrl[1]} style={imgStyles} />
               </div>
             </Grid>
-            <Grid item sm={9} container direction="column">
+            <Grid item sm={9} xs={6} container direction="column">
               <Grid>
                 <Typography variant="h6" className={styles.shop_name}>
                   Foody

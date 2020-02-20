@@ -1,3 +1,5 @@
+import axios from "../utils/axios";
+
 export function changeTheme(name) {
   return dispatch => {
     dispatch({
@@ -54,6 +56,28 @@ export function closeLoading() {
   return dispatch => {
     dispatch({
       type: "CLOSE_LOADING"
+    });
+  };
+}
+
+export function changeNavItems(items) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_NAV_ITEMS",
+      payload: items
+    });
+  };
+}
+
+export function getNavItems() {
+  return async dispatch => {
+    const data = await axios({
+      method: "GET",
+      url: "/navItem/findAll"
+    });
+    dispatch({
+      type: "GET_NAV_ITEMS",
+      payload: data.data
     });
   };
 }

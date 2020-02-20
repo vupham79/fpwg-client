@@ -49,11 +49,11 @@ class FooterPage extends Component {
       <Grid
         container
         direction="row"
-        justify="space-around"
+        // justify="space-around"
         className={styles.footer}
       >
         <Grid item sm={4} xs={12} className={styles.content}>
-          <Typography variant="h5" style={changeTitleStyle}>
+          <Typography variant="h5" style={changeTitleStyle} color="primary">
             ABOUT
           </Typography>
           <Typography component="div" style={changeBodyStyle}>
@@ -66,7 +66,7 @@ class FooterPage extends Component {
           <FontAwesomeIcon style={iconStyles} icon={faFacebookF} size="2x" />
         </Grid>
         <Grid item sm={4} xs={12} className={styles.content}>
-          <Typography variant="h5" style={changeTitleStyle}>
+          <Typography variant="h5" style={changeTitleStyle} color="primary">
             QUICK LINKS
           </Typography>
           <Grid container justify="flex-start" direction="column">
@@ -80,7 +80,7 @@ class FooterPage extends Component {
           </Grid>
         </Grid>
         <Grid item sm={4} xs={12} className={styles.content}>
-          <Typography variant="h5" style={changeTitleStyle}>
+          <Typography variant="h5" style={changeTitleStyle} color="primary">
             SIGN UP FOR OUR NEWSLETTER
           </Typography>
           <Typography variant="body1" style={changeBodyStyle}>

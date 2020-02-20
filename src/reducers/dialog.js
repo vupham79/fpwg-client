@@ -14,6 +14,10 @@ const DialogReducer = (state = defaultState, action) => {
         ...state,
         open: false
       };
+    case "SET_LOGOUT":
+      return {
+        ...defaultState
+      };
     default:
       return state;
   }

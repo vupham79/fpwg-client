@@ -15,6 +15,10 @@ const TabReducer = (state = defaultState, action) => {
         ...state,
         navItemValue: action.payload
       };
+    case "SET_LOGOUT":
+      return {
+        ...defaultState
+      };
     default:
       return state;
   }

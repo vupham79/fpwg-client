@@ -14,14 +14,14 @@ class Header extends Component {
       themeColor,
       isEdit,
       tabValue,
-      updateNavItemValue
+      updateNavItemValue,
+      navItems
     } = this.props;
-    const navItems = ["Home", "About", "Gallery", "Event", "Contact", "New"];
     const tabStyles = {
       textTransform: "none",
       fontFamily: themeFontTitle,
       color: themeColor,
-      minWidth: "10vh",
+      minWidth: "3vh",
       "&:hover": {
         color: "#40a9ff",
         opacity: 1
@@ -42,7 +42,7 @@ class Header extends Component {
     };
 
     return (
-      <AppBar className={styles.app_bar} style={changeStyle} position="sticky">
+      <AppBar className={styles.app_bar} position="sticky">
         <Grid container alignItems="center">
           <Grid item xs={12} sm={2}>
             <p className={styles.shopName} style={changeStyle}>
@@ -56,12 +56,14 @@ class Header extends Component {
                   value={tabValue}
                   textColor="primary"
                   indicatorColor="primary"
-                  centered
+                  variant="scrollable"
                   onChange={(e, newValue) => updateNavItemValue(newValue)}
                 >
-                  {navItems.map((item, index) => (
-                    <Tab style={tabStyles} label={item} key={index} />
-                  ))}
+                  {navItems
+                    // .sort((a, b) => parseInt(a.order) - parseInt(b.order))
+                    .map((item, index) => (
+                      <Tab style={tabStyles} label={item.name} key={index} />
+                    ))}
                 </Tabs>
               ) : (
                 navItems.map((item, index) => (
@@ -73,7 +75,7 @@ class Header extends Component {
                     key={index}
                   >
                     <Link className={styles.links} to={`/${siteId}/${item}`}>
-                      {item}
+                      {item.name}
                     </Link>
                   </Grid>
                 ))
@@ -90,7 +92,8 @@ const mapStateToProps = state => ({
   tabValue: state.tab.navItemValue,
   isEdit: state.user.isEdit,
   themeFontTitle: state.theme.fontTitle,
-  themeColor: state.theme.color
+  themeColor: state.theme.color,
+  navItems: state.theme.navItems
 });
 
 const mapDispatchToProps = dispatch => ({

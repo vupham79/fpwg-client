@@ -10,6 +10,10 @@ const UserReducer = (state = defaultState, action) => {
         ...state,
         url: action.payload
       };
+    case "SET_LOGOUT":
+      return {
+        ...defaultState
+      };
     default:
       return state;
   }
