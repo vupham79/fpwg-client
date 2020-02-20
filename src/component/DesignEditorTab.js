@@ -87,7 +87,6 @@ class DesignEditorTab extends React.Component {
       classes,
       getImageUrl
     } = this.props;
-
     return (
       <>
         <Typography className={classes.title}>Theme</Typography>

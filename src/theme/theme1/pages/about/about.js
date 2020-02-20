@@ -4,12 +4,10 @@ import { Grid } from "@material-ui/core";
 import ExampleComponent from "react-rounded-image";
 
 class Theme1About extends React.Component {
-
   render() {
+    const { themeFontTitle, themeFontBody, themeColor } = this.props;
 
-    const { themeFontTitle, themeFontBody, themeColor, mapLat, mapLng } = this.props;
-
-    const useStyles = theme => ({
+    const useStyles = () => ({
       changableTitle: {
         fontFamily: themeFontTitle,
         fontWeight: "bold",
@@ -22,13 +20,13 @@ class Theme1About extends React.Component {
         fontFamily: themeFontBody,
         color: "#212121",
         textAlign: "justify",
-        fontSize: 16,
+        fontSize: 16
       },
       pageName: {
         fontFamily: themeFontTitle,
         fontWeight: "bold",
         color: "#212121",
-        fontSize: 20,
+        fontSize: 20
       },
       changableFirst: {
         fontFamily: themeFontTitle,
@@ -37,7 +35,7 @@ class Theme1About extends React.Component {
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: themeColor,
+        textDecorationColor: themeColor
       },
       changableLegend: {
         fontFamily: themeFontTitle,
@@ -45,8 +43,8 @@ class Theme1About extends React.Component {
         color: "white",
         zIndex: 5,
         position: "absolute",
-        top: '50%',
-        left: '40%',
+        top: "50%",
+        left: "40%",
         fontSize: 80,
         textAlign: "center"
       },
@@ -67,27 +65,28 @@ class Theme1About extends React.Component {
       centerItem2: {
         display: "block",
         height: 100,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         width: 400,
         marginLeft: "auto",
         marginRight: "auto"
-
       },
       changableAppBar: {
         backgroundColor: "white",
         opacity: 0.6,
         position: "sticky",
         color: "#535353",
-        textAlign: "right",
-      },
+        textAlign: "right"
+      }
     });
     const classes = useStyles();
 
     return (
       <Grid container>
         <Grid item xs={12}>
-          <p style={classes.changableTitle}><span style={classes.changableFirst}>A</span>BOUT</p>
+          <p style={classes.changableTitle}>
+            <span style={classes.changableFirst}>A</span>BOUT
+          </p>
         </Grid>
         <Grid container item xs={12} justify={"center"}>
           <ExampleComponent
@@ -99,20 +98,24 @@ class Theme1About extends React.Component {
           />
         </Grid>
         <Grid item xs={12}>
-          <p style={classes.changableBody}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-            ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-            facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-            gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-            donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-            adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-            Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-            imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-            arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-        donec massa sapien faucibus et molestie ac.</p>
+          <p style={classes.changableBody}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
+            dolor purus non enim praesent elementum facilisis leo vel. Risus at
+            ultrices mi tempus imperdiet. Semper risus in hendrerit gravida
+            rutrum quisque non tellus. Convallis convallis tellus id interdum
+            velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean
+            sed adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
+            integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
+            eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
+            quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
+            vivamus at augue. At augue eget arcu dictum varius duis at
+            consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
+            donec massa sapien faucibus et molestie ac.
+          </p>
         </Grid>
-
       </Grid>
-    )
+    );
   }
 }
 
@@ -120,9 +123,7 @@ const mapStateToProps = state => ({
   siteId: state.site.id,
   themeFontTitle: state.theme.fontTitle,
   themeColor: state.theme.color,
-  themeFontBody: state.theme.fontBody,
-  mapLat: 10.82302,
-  mapLng: 106.62965
+  themeFontBody: state.theme.fontBody
 });
 
 export default connect(mapStateToProps, null)(Theme1About);

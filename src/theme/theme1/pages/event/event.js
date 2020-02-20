@@ -20,13 +20,7 @@ const imgStyles = {
 
 class Theme1Event extends React.Component {
   render() {
-    const {
-      themeFontTitle,
-      themeFontBody,
-      themeColor,
-      mapLat,
-      mapLng
-    } = this.props;
+    const { themeFontTitle, themeFontBody, themeColor } = this.props;
 
     const useStyles = theme => ({
       changableTitle: {
@@ -177,12 +171,9 @@ class Theme1Event extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  siteId: state.site.id,
   themeFontTitle: state.theme.fontTitle,
   themeColor: state.theme.color,
-  themeFontBody: state.theme.fontBody,
-  mapLat: 10.82302,
-  mapLng: 106.62965
+  themeFontBody: state.theme.fontBody
 });
 
 export default connect(mapStateToProps, null)(Theme1Event);

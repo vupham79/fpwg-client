@@ -1,8 +1,8 @@
 const defaultState = {
   name: "theme2",
-  color: "",
-  fontTitle: "",
-  fontBody: "",
+  color: "red",
+  fontTitle: "Arial",
+  fontBody: "Arial",
   navItems: [
     {
       name: "Home",

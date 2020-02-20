@@ -27,29 +27,17 @@ import PreEventPageT1 from "../theme/theme1/pages/event";
 export const themes = [
   {
     name: "theme1",
-    // component: <Theme1 />,
-    // fontTitle: "Arial",
-    // fontBody: "Arial",
-    // color: "#FF6900",
-    // pages: [
-    //   { name: "Home", component: <PreHomePageT1 /> },
-    //   { name: "About", component: <PreAboutPageT1 /> },
-    //   { name: "Contact", component: <PreContactPageT1 /> },
-    //   { name: "Event", component: <PreEventPageT1 /> },
-    //   { name: "Gallery", component: <PreGalleryPageT1 /> },
-    //   { name: "News", component: <PreNewPageT1 /> }
-    // ]
-    component: <Theme3 />,
-    fontTitle: "Cabin",
-    fontBody: "Cabin",
-    color: "#191818",
+    component: <Theme1 />,
+    fontTitle: "Arial",
+    fontBody: "Arial",
+    color: "#FF6900",
     pages: [
-      { name: "home", component: <PreHomePage /> },
-      { name: "About", component: <PreAboutPage /> },
-      { name: "contact", component: <PreContactPage /> },
-      { name: "event", component: <PreEventPage /> },
-      { name: "gallery", component: <PreGalleryPage /> },
-      { name: "new", component: <PreNewPage /> }
+      { name: "Home", component: <PreHomePageT1 /> },
+      { name: "About", component: <PreAboutPageT1 /> },
+      { name: "Contact", component: <PreContactPageT1 /> },
+      { name: "Event", component: <PreEventPageT1 /> },
+      { name: "Gallery", component: <PreGalleryPageT1 /> },
+      { name: "News", component: <PreNewPageT1 /> }
     ]
   },
   {

@@ -33,8 +33,7 @@ const IOSSwitch = withStyles(theme => ({
     opacity: 1,
     transition: theme.transitions.create(["background-color", "border"])
   },
-  checked: {},
-  focusVisible: {}
+  checked: {}
 }))(Switch);
 
 class SwitchButton extends React.Component {

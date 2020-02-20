@@ -2,7 +2,6 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Layout from "../theme1/layout/layout";
 import { Routes } from "./routes/routes";
-
 class Theme1 extends React.Component {
   render() {
     return (

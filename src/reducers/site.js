@@ -4,6 +4,14 @@ const defaultState = {
     {
       id: "",
       isActive: false
+    },
+    {
+      id: "",
+      isActive: false
+    },
+    {
+      id: "",
+      isActive: false
     }
   ]
 };

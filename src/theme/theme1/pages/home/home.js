@@ -11,9 +11,6 @@ import {
 } from "react-google-maps";
 import { Parallax } from "react-parallax";
 import { connect } from "react-redux";
-// import { makeStyles } from '@material-ui/core/styles';
-// import MenuIcon from '@material-ui/icons/Menu';
-// import { AppBar, Toolbar, Grid, Typography, IconButton, Menu, MenuItem } from '@material-ui/core';
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ExampleComponent from "react-rounded-image";
@@ -56,16 +53,7 @@ class Theme1Home extends React.Component {
       mapLng
     } = this.props;
 
-    // handleData = () => {
-
-    //   try {
-
-    //   } catch (error) {
-
-    //   }
-    // };
-
-    const useStyles = theme => ({
+    const useStyles = () => ({
       changableLink: {
         fontFamily: themeFontBody,
         color: themeColor,
@@ -194,27 +182,6 @@ class Theme1Home extends React.Component {
 
     return (
       <Grid container id={"aboutSection"}>
-        {/* <AppBar style={classes.changableAppBar}>
-          <Toolbar>
-            <IconButton onClick={event => this.handleMenuClick(event)} edge="start" style={classes.menuButton} color="inherit" aria-label="menu">
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="simple-menu"
-              anchorEl={this.state.anchorEl}
-              keepMounted
-              open={Boolean(this.state.anchorEl)}
-              onClose={this.handleMenuClose}
-            >
-              <MenuItem onClick={this.handleMenuClose}><a href='#aboutSection'>About</a></MenuItem>
-              <MenuItem onClick={this.handleMenuClose}><a href='#newsSection'>News</a></MenuItem>
-              <MenuItem onClick={this.handleMenuClose}><a href='#gallerySection'>Gallery</a></MenuItem>
-              <MenuItem onClick={this.handleMenuClose}><a href='#eventSection'>Event</a></MenuItem>
-              <MenuItem onClick={this.handleMenuClose}><a href='#contactSection'>Contact</a></MenuItem>
-            </Menu>
-            <Typography variant="h6" style={classes.pageName}>Page Name</Typography>
-          </Toolbar>
-        </AppBar> */}
         <Grid item xs={12}>
           <Carousel
             showArrows={false}
@@ -395,7 +362,7 @@ class Theme1Home extends React.Component {
                 item
                 container
                 sm={12}
-                className={[styles.contain_event, styles.event]}
+                className={(styles.contain_event, styles.event)}
               >
                 <Typography className={styles.event_content}>
                   Page name does not have any upcoming event.

@@ -40,7 +40,6 @@ class Header extends Component {
       fontFamily: themeFontTitle,
       color: themeColor
     };
-    console.log(navItems);
 
     return (
       <AppBar className={styles.app_bar} style={changeStyle} position="sticky">

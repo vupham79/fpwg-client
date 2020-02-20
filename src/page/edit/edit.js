@@ -12,16 +12,13 @@ class EditPage extends Component {
       changeColor,
       changeFontBody
     } = this.props;
-    console.log(themeName);
 
     const theme = themes.find(element => element.name === themeName);
-    console.log(theme);
-
-    // if (theme.name !== themeName) {
-    //   changeColor(theme.color);
-    //   changeFontBody(theme.fontBody);
-    //   changeFontTitle(theme.fontTitle);
-    // }
+    if (theme.name !== themeName) {
+      changeColor(theme.color);
+      changeFontBody(theme.fontBody);
+      changeFontTitle(theme.fontTitle);
+    }
     return <EditLayout>{theme.component}</EditLayout>;
   }
 }

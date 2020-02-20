@@ -19,6 +19,10 @@ const TabReducer = (state = defaultState, action) => {
       return {
         ...defaultState
       };
+    case "CHANGE_THEME":
+      return {
+        ...state
+      };
     default:
       return state;
   }

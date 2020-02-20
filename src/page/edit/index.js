@@ -1,14 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import EditPage from "./edit";
-class PreEditPage extends Component {
+class PreEditPage extends React.Component {
   render() {
     const { isLogin } = this.props;
-    if (!isLogin) {
-      return <Redirect to="/" />;
-    }
-    return <EditPage />;
+    return <>{isLogin ? <EditPage /> : <Redirect to="/" />}</>;
   }
 }
 

@@ -21,11 +21,8 @@ function TabItem(props) {
 class Layout extends Component {
   render() {
     const { isEdit, navItemValue, themeName, navItems } = this.props;
-    console.log(themeName);
 
-    const pages = themes.find(element => (element.name = themeName)).pages;
-    console.log(themes);
-    console.log(pages);
+    const pages = themes.find(element => element.name === themeName).pages;
 
     const pageIndex0 = pages.find(element => element.name === navItems[0].name);
     const pageIndex1 = pages.find(element => element.name === navItems[1].name);
@@ -33,8 +30,6 @@ class Layout extends Component {
     const pageIndex3 = pages.find(element => element.name === navItems[3].name);
     const pageIndex4 = pages.find(element => element.name === navItems[4].name);
     const pageIndex5 = pages.find(element => element.name === navItems[5].name);
-
-    console.log(pageIndex0);
 
     return (
       <>
