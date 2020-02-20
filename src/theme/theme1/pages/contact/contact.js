@@ -1,120 +1,139 @@
 import React from "react";
-import {
-  Grid,
-  Typography,
-  Divider,
-  Box,
-  TextField,
-  Button
-} from "@material-ui/core";
-import styles from "./contact.module.css";
+import { connect } from "react-redux";
+import { Grid } from "@material-ui/core";
+import { withGoogleMap, GoogleMap, Marker, withScriptjs } from "react-google-maps";
+import { faPhone, faAddressBook } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-class ContactPage extends React.Component {
+class Theme1Contact extends React.Component {
+
   render() {
+
+    const { themeFontTitle, themeFontBody, themeColor, mapLat, mapLng } = this.props;
+
+    const useStyles = theme => ({
+      changableTitle: {
+        fontFamily: themeFontTitle,
+        fontWeight: "bold",
+        color: "#212121",
+        textAlign: "center",
+        fontSize: 45,
+        paddingBottom: 20
+      },
+      changableBody: {
+        fontFamily: themeFontBody,
+        color: "#212121",
+        textAlign: "center",
+        fontSize: 16,
+      },
+      changableBody2: {
+        fontFamily: themeFontBody,
+        color: "#212121",
+        textAlign: "left",
+        fontSize: 16,
+      },
+      pageName: {
+        fontFamily: themeFontTitle,
+        fontWeight: "bold",
+        color: "#212121",
+        fontSize: 20,
+      },
+      changableFirst: {
+        fontFamily: themeFontTitle,
+        fontWeight: "bold",
+        color: "#212121",
+        textAlign: "center",
+        fontSize: 45,
+        textDecoration: "underline",
+        textDecorationColor: themeColor,
+      },
+      changableLegend: {
+        fontFamily: themeFontTitle,
+        fontWeight: "bold",
+        color: "white",
+        zIndex: 5,
+        position: "absolute",
+        top: '50%',
+        left: '40%',
+        fontSize: 80,
+        textAlign: "center"
+      },
+      greyDiv: {
+        backgroundColor: "#e1ede4",
+        padding: 30,
+        textAlign: "center",
+        color: "#535353",
+        fontSize: 20
+      },
+      centerItem: {
+        display: "block",
+        width: 150,
+        marginLeft: "auto",
+        marginRight: "auto",
+        paddingTop: 50
+      },
+      centerItem2: {
+        display: "block",
+        height: 100,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 400,
+        marginLeft: "auto",
+        marginRight: "auto"
+
+      },
+      changableAppBar: {
+        backgroundColor: "white",
+        opacity: 0.6,
+        position: "sticky",
+        color: "#535353",
+        textAlign: "right",
+      },
+    });
+    const classes = useStyles();
+
+    const MapWithAMarker = withScriptjs(withGoogleMap(props =>
+      <GoogleMap
+        defaultZoom={8}
+        defaultCenter={{ lat: mapLat, lng: mapLng }}
+      >
+        <Marker
+          position={{ lat: mapLat, lng: mapLng }}
+        />
+      </GoogleMap>
+    ));
     return (
-      <Grid container justify="center" className={styles.contact_page}>
-        <Grid item sm={10} xs={10}>
-          <Typography
-            variant="h4"
-            color="textSecondary"
-            align="center"
-            gutterBottom
-            className={styles.title}
-          >
-            Contacts
-          </Typography>
-          <Divider variant="fullWidth" />
+      <Grid container>
+        <Grid item xs={12}>
+          <p style={classes.changableTitle}><span style={classes.changableFirst}>C</span>ONTACTS</p>
         </Grid>
-        <Grid
-          item
-          sm={5}
-          xs={10}
-          container
-          justify="flex-start"
-          className={styles.child}
-        >
-          <Grid item sm={12} xs={12}>
-            <Typography variant="h4" className={styles.child_title}>
-              <Box lineHeight={3}>Contacts</Box>
-            </Typography>
-            <Divider variant="fullWidth" className={styles.divider} />
-            <Typography variant="h5" className={styles.child_title}>
-              <Box lineHeight={3}>ADDRESS</Box>
-            </Typography>
-            <Typography variant="body1" className={styles.child_content}>
-              43/2 Nguyễn Trãi, Q1, tp.HCM, Ho Chi Minh City , Vietnam
-            </Typography>
-            <Typography variant="h5" className={styles.child_title}>
-              <Box lineHeight={3}>Phone</Box>
-            </Typography>
-            <Typography variant="body1" className={styles.child_content}>
-              01234567987
-            </Typography>
-          </Grid>
+        <Grid container item xs={12} justify="center" >
+          <p style={classes.changableBody2}><FontAwesomeIcon icon={faPhone} size="2x" />0909133349</p>
         </Grid>
-        <Grid
-          item
-          sm={5}
-          xs={10}
-          container
-          justify="flex-start"
-          className={styles.child}
-        >
-          <Grid item sm={12} xs={12}>
-            <Typography variant="h4" className={styles.child_title}>
-              <Box lineHeight={3}>Message</Box>
-            </Typography>
-            <Divider variant="fullWidth" className={styles.divider} />
-          </Grid>
-          <form noValidate autoComplete="off">
-            <TextField
-              className={styles.txtInput}
-              id="outlined-basic"
-              label="Name"
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
-              className={styles.txtInput}
-              id="outlined-basic"
-              label="Email"
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
-              className={styles.txtInput}
-              id="outlined-basic"
-              label="Phone"
-              variant="outlined"
-              fullWidth
-            />
+        <Grid container item xs={12} justify="center" >
+          <p style={classes.changableBody2}><FontAwesomeIcon icon={faAddressBook} size="2x" />112 Đường Hồng Hà, P.12, Q.Tân Bình</p>
+        </Grid>
+        <Grid item xs={12} id={'eventSection'}>
+          <MapWithAMarker
+            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `400px` }} />}
+            mapElement={<div style={{ height: `100%` }} />}
+          />
+        </Grid>
 
-            <TextField
-              className={styles.txtInput}
-              id="outlined-basic"
-              label="Message"
-              variant="outlined"
-              multiline
-              rows="10"
-              fullWidth
-            />
-
-            <div className={styles.btn_send}>
-              <Button>
-                <Typography
-                  align="center"
-                  variant="h6"
-                  className={styles.btn_content}
-                >
-                  Send Message
-                </Typography>
-              </Button>
-            </div>
-          </form>
-        </Grid>
       </Grid>
-    );
+    )
   }
 }
 
-export default ContactPage;
+const mapStateToProps = state => ({
+  siteId: state.site.id,
+  themeFontTitle: state.theme.fontTitle,
+  themeColor: state.theme.color,
+  themeFontBody: state.theme.fontBody,
+  mapLat: 10.82302,
+  mapLng: 106.62965
+});
+
+export default connect(mapStateToProps, null)(Theme1Contact);

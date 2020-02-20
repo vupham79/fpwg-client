@@ -16,6 +16,14 @@ import PreContactPage from "../theme/theme2/pages/contact";
 import PreGalleryPage from "../theme/theme2/pages/gallery";
 import PreNewPage from "../theme/theme2/pages/new";
 import PreEventPage from "../theme/theme2/pages/event";
+
+import PreHomePageT1 from "../theme/theme1/pages/home";
+import PreAboutPageT1 from "../theme/theme1/pages/about";
+import PreContactPageT1 from "../theme/theme1/pages/contact";
+import PreGalleryPageT1 from "../theme/theme1/pages/gallery";
+import PreNewPageT1 from "../theme/theme1/pages/new";
+import PreEventPageT1 from "../theme/theme1/pages/event";
+
 export const themes = [
   {
     name: "theme1",
@@ -54,6 +62,15 @@ export const pages = [
   { name: "Login", component: <LoginPage /> },
   { name: "Main", component: <MainPage /> },
   { name: "Edit", component: EditPage }
+];
+
+export const theme1Pages = [
+  { name: "home", component: <PreHomePageT1 /> },
+  { name: "about", component: <PreAboutPageT1 /> },
+  { name: "contact", component: <PreContactPageT1 /> },
+  { name: "event", component: <PreEventPageT1 /> },
+  { name: "gallery", component: <PreGalleryPageT1 /> },
+  { name: "new", component: <PreNewPageT1 /> }
 ];
 
 export const theme2Pages = [

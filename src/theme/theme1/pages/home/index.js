@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import HomePage from "./home";
 
-class PreHomePage extends Component {
+export default class PreHomePageT1 extends Component {
   render() {
     return <HomePage />;
   }
 }
-
-export default PreHomePage;
