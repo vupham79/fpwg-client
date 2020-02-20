@@ -13,6 +13,7 @@ export function login({ accessToken, profile }) {
         picture: profile.picture.data.url
       }
     });
+
     if (data.status === 200) {
       dispatch({
         type: "SET_LOGIN",
@@ -43,7 +44,6 @@ export function setEdit(isEdit) {
 }
 
 export function getUserPages(accessToken) {
-  console.log("abc");
   return async dispatch => {
     const data = await axios({
       url: "/facebook/pages",

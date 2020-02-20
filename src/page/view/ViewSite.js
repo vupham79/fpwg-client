@@ -15,7 +15,7 @@ class ViewSite extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  siteId: state.site.id
+  siteId: state.site.currentId
 });
 
 const mapDispatchToProps = dispatch => ({

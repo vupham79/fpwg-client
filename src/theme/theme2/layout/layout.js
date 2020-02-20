@@ -8,26 +8,33 @@ import { themes } from "../../../constant/constant";
 function TabItem(props) {
   return (
     <>
-      {props.tabValue === 0 && <Grid>{props.home}</Grid>}
-      {props.tabValue === 1 && <Grid>{props.about}</Grid>}
-      {props.tabValue === 2 && <Grid>{props.gallery}</Grid>}
-      {props.tabValue === 3 && <Grid>{props.event}</Grid>}
-      {props.tabValue === 4 && <Grid>{props.contact}</Grid>}
-      {props.tabValue === 5 && <Grid>{props.news}</Grid>}
+      {props.tabValue === 0 && <Grid>{props.tabValue0}</Grid>}
+      {props.tabValue === 1 && <Grid>{props.tabValue1}</Grid>}
+      {props.tabValue === 2 && <Grid>{props.tabValue2}</Grid>}
+      {props.tabValue === 3 && <Grid>{props.tabValue3}</Grid>}
+      {props.tabValue === 4 && <Grid>{props.tabValue4}</Grid>}
+      {props.tabValue === 5 && <Grid>{props.tabValue5}</Grid>}
     </>
   );
 }
 
 class Layout extends Component {
   render() {
-    const { isEdit, navItemValue, themeName } = this.props;
+    const { isEdit, navItemValue, themeName, navItems } = this.props;
+    console.log(themeName);
+
     const pages = themes.find(element => (element.name = themeName)).pages;
-    const home = pages.find(element => element.name === "home");
-    const event = pages.find(element => element.name === "event");
-    const about = pages.find(element => element.name === "about");
-    const contact = pages.find(element => element.name === "contact");
-    const gallery = pages.find(element => element.name === "gallery");
-    const news = pages.find(element => element.name === "new");
+    console.log(themes);
+    console.log(pages);
+
+    const pageIndex0 = pages.find(element => element.name === navItems[0].name);
+    const pageIndex1 = pages.find(element => element.name === navItems[1].name);
+    const pageIndex2 = pages.find(element => element.name === navItems[2].name);
+    const pageIndex3 = pages.find(element => element.name === navItems[3].name);
+    const pageIndex4 = pages.find(element => element.name === navItems[4].name);
+    const pageIndex5 = pages.find(element => element.name === navItems[5].name);
+
+    console.log(pageIndex0);
 
     return (
       <>
@@ -35,12 +42,12 @@ class Layout extends Component {
         {isEdit ? (
           <TabItem
             tabValue={navItemValue}
-            home={home.component}
-            event={event.component}
-            contact={contact.component}
-            gallery={gallery.component}
-            about={about.component}
-            news={news.component}
+            tabValue0={pageIndex0.component}
+            tabValue1={pageIndex1.component}
+            tabValue2={pageIndex2.component}
+            tabValue3={pageIndex3.component}
+            tabValue4={pageIndex4.component}
+            tabValue5={pageIndex5.component}
           />
         ) : (
           this.props.children
@@ -54,7 +61,8 @@ class Layout extends Component {
 const mapStateToProps = state => ({
   isEdit: state.user.isEdit,
   navItemValue: state.tab.navItemValue,
-  themeName: state.theme.name
+  themeName: state.theme.name,
+  navItems: state.theme.navItems
 });
 
 export default connect(mapStateToProps, null)(Layout);

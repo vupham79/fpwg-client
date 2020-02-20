@@ -27,18 +27,30 @@ import PreEventPageT1 from "../theme/theme1/pages/event";
 export const themes = [
   {
     name: "theme1",
-    component: <Theme1 />,
-    fontTitle: "Arial",
-    fontBody: "Arial",
-    color: "#FF6900"
+    // component: <Theme1 />,
+    // fontTitle: "Arial",
+    // fontBody: "Arial",
+    // color: "#FF6900",
     // pages: [
-    //     { name: "home", component: <PreHomePage /> },
-    //     { name: "about", component: <PreAboutPage /> },
-    //     { name: "contact", component: <PreContactPage /> },
-    //     { name: "event", component: <PreEventPage /> },
-    //     { name: "gallery", component: <PreGalleryPage /> },
-    //     { name: "new", component: <PreNewPage /> }
-    //   ]
+    //   { name: "Home", component: <PreHomePageT1 /> },
+    //   { name: "About", component: <PreAboutPageT1 /> },
+    //   { name: "Contact", component: <PreContactPageT1 /> },
+    //   { name: "Event", component: <PreEventPageT1 /> },
+    //   { name: "Gallery", component: <PreGalleryPageT1 /> },
+    //   { name: "News", component: <PreNewPageT1 /> }
+    // ]
+    component: <Theme3 />,
+    fontTitle: "Cabin",
+    fontBody: "Cabin",
+    color: "#191818",
+    pages: [
+      { name: "home", component: <PreHomePage /> },
+      { name: "About", component: <PreAboutPage /> },
+      { name: "contact", component: <PreContactPage /> },
+      { name: "event", component: <PreEventPage /> },
+      { name: "gallery", component: <PreGalleryPage /> },
+      { name: "new", component: <PreNewPage /> }
+    ]
   },
   {
     name: "theme2",
@@ -47,12 +59,12 @@ export const themes = [
     fontBody: "Oswald",
     color: "#ABB8C3",
     pages: [
-      { name: "home", component: <PreHomePage /> },
-      { name: "about", component: <PreAboutPage /> },
-      { name: "contact", component: <PreContactPage /> },
-      { name: "event", component: <PreEventPage /> },
-      { name: "gallery", component: <PreGalleryPage /> },
-      { name: "new", component: <PreNewPage /> }
+      { name: "Home", component: <PreHomePage /> },
+      { name: "About", component: <PreAboutPage /> },
+      { name: "Contact", component: <PreContactPage /> },
+      { name: "Event", component: <PreEventPage /> },
+      { name: "Gallery", component: <PreGalleryPage /> },
+      { name: "News", component: <PreNewPage /> }
     ]
   },
   {
@@ -63,7 +75,7 @@ export const themes = [
     color: "#191818",
     pages: [
       { name: "home", component: <PreHomePage /> },
-      { name: "about", component: <PreAboutPage /> },
+      { name: "About", component: <PreAboutPage /> },
       { name: "contact", component: <PreContactPage /> },
       { name: "event", component: <PreEventPage /> },
       { name: "gallery", component: <PreGalleryPage /> },
@@ -78,7 +90,7 @@ export const themes = [
     color: "#191818",
     pages: [
       { name: "home", component: <PreHomePage /> },
-      { name: "about", component: <PreAboutPage /> },
+      { name: "About", component: <PreAboutPage /> },
       { name: "contact", component: <PreContactPage /> },
       { name: "event", component: <PreEventPage /> },
       { name: "gallery", component: <PreGalleryPage /> },

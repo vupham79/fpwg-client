@@ -1,10 +1,9 @@
 import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Divider, Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import React from "react";
-import styles from "./event.module.css";
 import { connect } from "react-redux";
-import { Carousel } from 'react-responsive-carousel';
+import styles from "./event.module.css";
 
 const imgUrl = [
   "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
@@ -20,10 +19,14 @@ const imgStyles = {
 };
 
 class Theme1Event extends React.Component {
-
   render() {
-
-    const { themeFontTitle, themeFontBody, themeColor, mapLat, mapLng } = this.props;
+    const {
+      themeFontTitle,
+      themeFontBody,
+      themeColor,
+      mapLat,
+      mapLng
+    } = this.props;
 
     const useStyles = theme => ({
       changableTitle: {
@@ -39,25 +42,25 @@ class Theme1Event extends React.Component {
         fontWeight: "bold",
         color: themeColor,
         textAlign: "left",
-        fontSize: 20,
+        fontSize: 20
       },
       changableBody: {
         fontFamily: themeFontBody,
         color: "#212121",
         textAlign: "center",
-        fontSize: 16,
+        fontSize: 16
       },
       changableBody2: {
         fontFamily: themeFontBody,
         color: "#212121",
         textAlign: "left",
-        fontSize: 16,
+        fontSize: 16
       },
       pageName: {
         fontFamily: themeFontTitle,
         fontWeight: "bold",
         color: "#212121",
-        fontSize: 20,
+        fontSize: 20
       },
       changableFirst: {
         fontFamily: themeFontTitle,
@@ -66,7 +69,7 @@ class Theme1Event extends React.Component {
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: themeColor,
+        textDecorationColor: themeColor
       },
       changableLegend: {
         fontFamily: themeFontTitle,
@@ -74,8 +77,8 @@ class Theme1Event extends React.Component {
         color: "white",
         zIndex: 5,
         position: "absolute",
-        top: '50%',
-        left: '40%',
+        top: "50%",
+        left: "40%",
         fontSize: 80,
         textAlign: "center"
       },
@@ -96,30 +99,30 @@ class Theme1Event extends React.Component {
       centerItem2: {
         display: "block",
         height: 100,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         width: 400,
         marginLeft: "auto",
         marginRight: "auto"
-
       },
       changableAppBar: {
         backgroundColor: "white",
         opacity: 0.6,
         position: "sticky",
         color: "#535353",
-        textAlign: "right",
-      },
+        textAlign: "right"
+      }
     });
     const classes = useStyles();
 
     return (
       <Grid container>
         <Grid item xs={12}>
-          <p style={classes.changableTitle}><span style={classes.changableFirst}>E</span>VENTS</p>
+          <p style={classes.changableTitle}>
+            <span style={classes.changableFirst}>E</span>VENTS
+          </p>
         </Grid>
-        <Grid item xs={12} >
-
+        <Grid item xs={12}>
           <Grid
             container
             alignItems="center"
@@ -144,7 +147,7 @@ class Theme1Event extends React.Component {
                   <Grid>
                     <Typography variant="h6" style={classes.changableName}>
                       Page name
-                      </Typography>
+                    </Typography>
                   </Grid>
                   <Grid>
                     <Button className={styles.btn_like}>
@@ -162,16 +165,14 @@ class Theme1Event extends React.Component {
                 <Grid className={styles.event}>
                   <Typography className={styles.event_content}>
                     Page name does not have any upcoming event.
-                    </Typography>
+                  </Typography>
                 </Grid>
               </Grid>
             </Grid>
           </Grid>
-
         </Grid>
-
       </Grid>
-    )
+    );
   }
 }
 
@@ -185,4 +186,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, null)(Theme1Event);
-

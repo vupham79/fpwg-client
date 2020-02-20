@@ -1,9 +1,6 @@
-import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Divider, Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import { Carousel } from 'react-responsive-carousel';
 
 const imgUrl = [
   "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
@@ -19,10 +16,14 @@ const imgStyles = {
 };
 
 class Theme1News extends React.Component {
-
   render() {
-
-    const { themeFontTitle, themeFontBody, themeColor, mapLat, mapLng } = this.props;
+    const {
+      themeFontTitle,
+      themeFontBody,
+      themeColor,
+      mapLat,
+      mapLng
+    } = this.props;
 
     const useStyles = theme => ({
       changableTitle: {
@@ -45,33 +46,33 @@ class Theme1News extends React.Component {
         fontFamily: themeFontBody,
         color: themeColor,
         textAlign: "left",
-        fontStyle: 'italic',
-        fontSize: 20,
+        fontStyle: "italic",
+        fontSize: 20
       },
       changableBody: {
         fontFamily: themeFontBody,
         color: "#212121",
         textAlign: "left",
-        fontSize: 16,
+        fontSize: 16
       },
       changableBody2: {
         fontFamily: themeFontBody,
         color: "#212121",
         textAlign: "left",
-        fontSize: 16,
+        fontSize: 16
       },
       pageName: {
         fontFamily: themeFontTitle,
         fontWeight: "bold",
         color: "#212121",
-        fontSize: 20,
+        fontSize: 20
       },
       changableFirst: {
         fontFamily: themeFontTitle,
         fontWeight: "bold",
         color: themeColor,
         textAlign: "center",
-        fontSize: 20,
+        fontSize: 20
       },
       changableFirst2: {
         fontFamily: themeFontTitle,
@@ -80,7 +81,7 @@ class Theme1News extends React.Component {
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: themeColor,
+        textDecorationColor: themeColor
       },
       changableLegend: {
         fontFamily: themeFontTitle,
@@ -88,8 +89,8 @@ class Theme1News extends React.Component {
         color: "white",
         zIndex: 5,
         position: "absolute",
-        top: '50%',
-        left: '40%',
+        top: "50%",
+        left: "40%",
         fontSize: 80,
         textAlign: "center"
       },
@@ -104,46 +105,50 @@ class Theme1News extends React.Component {
         display: "block",
         width: 400,
         marginLeft: "auto",
-        marginRight: "auto",
+        marginRight: "auto"
       },
       centerItem2: {
         display: "block",
         height: 100,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         width: 400,
         marginLeft: "auto",
         marginRight: "auto"
-
       },
       changableAppBar: {
         backgroundColor: "white",
         opacity: 0.6,
         position: "sticky",
         color: "#535353",
-        textAlign: "right",
-      },
+        textAlign: "right"
+      }
     });
     const classes = useStyles();
 
     return (
       <Grid container>
-
         <Grid item xs={12}>
-          <p style={classes.changableTitle2}><span style={classes.changableFirst2}>N</span>EWS</p>
+          <p style={classes.changableTitle2}>
+            <span style={classes.changableFirst2}>N</span>EWS
+          </p>
         </Grid>
         <Grid item xs={12}>
           <div style={classes.centerItem}>
-            <img src="./images/theme1-banner3.jpg" alt="" style={{ height: 'auto', width: '100%' }} />
-            <p style={classes.changableTitle}>FEB <span style={classes.changableFirst}>10</span>, 2020</p>
+            <img
+              src="./images/theme1-banner3.jpg"
+              alt=""
+              style={{ height: "auto", width: "100%" }}
+            />
+            <p style={classes.changableTitle}>
+              FEB <span style={classes.changableFirst}>10</span>, 2020
+            </p>
             <p style={classes.changableBody}>post content is here.</p>
             <p style={classes.changableLink}>View On Facebook</p>
           </div>
         </Grid>
-
       </Grid>
-
-    )
+    );
   }
 }
 
@@ -157,4 +162,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, null)(Theme1News);
-
