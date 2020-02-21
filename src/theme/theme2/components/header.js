@@ -56,7 +56,6 @@ class Header extends Component {
                   value={tabValue}
                   textColor="primary"
                   indicatorColor="primary"
-                  variant="scrollable"
                   onChange={(e, newValue) => updateNavItemValue(newValue)}
                 >
                   {navItems

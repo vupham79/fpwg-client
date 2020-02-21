@@ -1,20 +1,24 @@
-import { updateSiteId, unPublishSite, publishSite } from "./site";
+import {
+  updateSiteId,
+  unPublishSite,
+  publishSite,
+  getAllSite,
+  createNewSite
+} from "./site";
 import {
   changeTheme,
   changeFontBody,
   changeFontTitle,
   changeColor,
   setShowCustomColor,
-  openLoading,
-  closeLoading,
   changeNavItems,
   getNavItems
 } from "./theme";
-import { setEdit, setLogout, login, getUserPages, confirmPage } from "./user";
+import { setEdit, setLogout, login, getUserPages } from "./user";
 import { updateTabValue, updateNavItemValue } from "./tab";
 import { getImageUrl } from "./image";
 import { closeCreateNewSite, openCreateNewSite } from "./dialog";
-import { showToastr } from "./toastr";
+import { closeLoading, showLoading } from "./spinner";
 
 export {
   getUserPages,
@@ -29,16 +33,16 @@ export {
   getImageUrl,
   setEdit,
   updateNavItemValue,
-  openLoading,
+  showLoading,
   closeLoading,
   login,
   //dialog
   closeCreateNewSite,
   openCreateNewSite,
-  confirmPage,
+  createNewSite,
   changeNavItems,
   getNavItems,
-  showToastr,
   unPublishSite,
-  publishSite
+  publishSite,
+  getAllSite
 };

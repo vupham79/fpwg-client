@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import HomePage from "./home";
 import { connect } from "react-redux";
-import { openLoading, closeLoading } from "../../../../actions";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import { Grid } from "@material-ui/core";
+import { showLoading, closeLoading } from "../../../../actions";
+import Spinner from "../../../../component/Spinner";
 
 class PreHomePage extends Component {
   componentDidMount() {
-    this.props.openLoading();
+    this.props.showLoading();
   }
 
   startTime = () => {
@@ -16,17 +15,11 @@ class PreHomePage extends Component {
 
   render() {
     const { loading } = this.props;
-    const progessStyles = {
-      margin: "30vh 0vh"
-    };
     this.startTime();
+
     return (
       <>
-        {loading && (
-          <Grid container justify="center">
-            <CircularProgress color="primary" style={progessStyles} />
-          </Grid>
-        )}
+        <Spinner />
         {!loading && <HomePage />}
       </>
     );
@@ -34,11 +27,11 @@ class PreHomePage extends Component {
 }
 
 const mapStateToProps = state => ({
-  loading: state.theme.loading
+  loading: state.spinner.loading
 });
 
 const mapDispatchToProps = dispatch => ({
-  openLoading: () => dispatch(openLoading()),
+  showLoading: () => dispatch(showLoading()),
   closeLoading: () => dispatch(closeLoading())
 });
 

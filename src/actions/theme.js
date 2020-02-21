@@ -44,21 +44,6 @@ export function setShowCustomColor(isShow) {
     });
   };
 }
-export function openLoading() {
-  return dispatch => {
-    dispatch({
-      type: "OPEN_LOADING"
-    });
-  };
-}
-
-export function closeLoading() {
-  return dispatch => {
-    dispatch({
-      type: "CLOSE_LOADING"
-    });
-  };
-}
 
 export function changeNavItems(items) {
   return dispatch => {

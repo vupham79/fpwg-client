@@ -35,8 +35,7 @@ const defaultState = {
       isActive: true
     }
   ],
-  isShow: false,
-  loading: false
+  isShow: false
 };
 
 const ThemeReducer = (state = defaultState, action) => {

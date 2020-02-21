@@ -95,7 +95,10 @@ class DesignEditorTab extends React.Component {
           autoComplete="true"
           value={themeName}
           fullWidth
-          onChange={event => changeTheme(event.target.value)}
+          onChange={
+            event => changeTheme(event.target.value)
+            // console.log(event.target.value)
+          }
         >
           {themes.map((element, index) => (
             <MenuItem value={element.name} key={index}>
@@ -192,8 +195,7 @@ const mapStateToProps = state => ({
   themeColor: state.theme.color,
   themeFontTitle: state.theme.fontTitle,
   themeFontBody: state.theme.fontBody,
-  isShow: state.theme.isShow,
-  toast_option: state.toastr.option
+  isShow: state.theme.isShow
 });
 
 const mapDispatchToProps = dispatch => ({

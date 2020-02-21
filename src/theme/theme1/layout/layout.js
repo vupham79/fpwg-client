@@ -23,7 +23,6 @@ class Layout extends Component {
     const { isEdit, navItemValue, themeName, navItems } = this.props;
 
     const pages = themes.find(element => element.name === themeName).pages;
-
     const pageIndex0 = pages.find(element => element.name === navItems[0].name);
     const pageIndex1 = pages.find(element => element.name === navItems[1].name);
     const pageIndex2 = pages.find(element => element.name === navItems[2].name);

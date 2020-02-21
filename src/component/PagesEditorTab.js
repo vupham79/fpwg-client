@@ -74,6 +74,7 @@ class PagesEditorTab extends React.Component {
         items={navItems}
         onSortEnd={this.onChangeItem}
         useDragHandle
+        // lockToContainerEdges={true}
       />
     );
   }

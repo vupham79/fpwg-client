@@ -24,11 +24,10 @@ import {
   setEdit,
   openCreateNewSite,
   closeCreateNewSite,
-  confirmPage
+  createNewSite
 } from "../../actions";
 
-
-
+import Spinner from "../../component/Spinner";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -71,52 +70,55 @@ const imgStyles = {
 
 function WebsiteItem(props) {
   return (
-    <Grid container justify="space-between" className={styles.web_item}>
-      <Grid container item sm={8} xs={12} alignItems="center">
-        <Grid item sm={4} md={4} xs={4} className={styles.web_logo}>
-          <img src={props.logo} alt="logo" style={imgStyles} />
-        </Grid>
-        <Grid item sm={8} xs={8} md={6}>
-          <Typography variant="h5" className={styles.web_content}>
-            {props.title}
-          </Typography>
-          <Typography variant="body2" className={styles.web_content}>
-            {props.category}
-          </Typography>
-        </Grid>
-      </Grid>
-      <Grid
-        container
-        item
-        sm={4}
-        xs={12}
-        justify="flex-end"
-        alignItems="center"
-      >
-        <Grid container item spacing={6}>
-          <Grid item sm={5}>
-            <Button className={styles.help_button}>
-              View
-              <FontAwesomeIcon className={styles.web_icon} icon={faEye} />
-            </Button>
+    <>
+      <Grid container justify="space-between" className={styles.web_item}>
+        <Grid container item sm={8} xs={12} alignItems="center">
+          <Grid item sm={4} md={4} xs={4} className={styles.web_logo}>
+            <img src={imgUrl[3]} alt="logo" style={imgStyles} />
           </Grid>
-          <Grid item sm={5}>
-            <Link to="/edit">
-              <Button
-                className={styles.help_button}
-                onClick={() => props.setEdit(true)}
-              >
-                Edit
-                <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
+          <Grid item sm={8} xs={8} md={6}>
+            <Typography variant="h5" className={styles.web_content}>
+              Foody
+            </Typography>
+            <Typography variant="body2" className={styles.web_content}>
+              Food and Beverage (other)
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          item
+          sm={4}
+          xs={12}
+          justify="flex-end"
+          alignItems="center"
+        >
+          <Grid container item spacing={6}>
+            <Grid item sm={5}>
+              <Button className={styles.help_button}>
+                View
+                <FontAwesomeIcon className={styles.web_icon} icon={faEye} />
               </Button>
-            </Link>
+            </Grid>
+            <Grid item sm={5}>
+              <Link to="/edit">
+                <Button
+                  className={styles.help_button}
+                  onClick={() => props.setEdit(true)}
+                >
+                  Edit
+                  <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
+                </Button>
+              </Link>
+            </Grid>
+          </Grid>
+          <Grid container item justify="flex-end" md={12}>
+            <SwitchButton />
           </Grid>
         </Grid>
-        <Grid container item justify="flex-end" md={12}>
-          <SwitchButton />
-        </Grid>
       </Grid>
-    </Grid>
+      <Spinner />
+    </>
   );
 }
 
@@ -125,8 +127,6 @@ class MainPage extends Component {
     pageUrl: "",
     pageId: ""
   };
-
-
 
   handleSelectPage = ({ id, link }) => {
     this.setState({
@@ -137,7 +137,7 @@ class MainPage extends Component {
 
   handleConfirm = () => {
     const {
-      confirmPage,
+      createNewSite,
       accessToken,
       color,
       fontBody,
@@ -145,10 +145,13 @@ class MainPage extends Component {
       name,
       navItems,
       profile,
-      pages
+      pages,
+      closeCreateNewSite
     } = this.props;
+
     const { pageId, pageUrl } = this.state;
-    confirmPage({
+
+    createNewSite({
       pageId,
       pageUrl,
       accessToken,
@@ -160,6 +163,7 @@ class MainPage extends Component {
       profile,
       pages
     });
+    closeCreateNewSite();
   };
 
   render() {
@@ -169,7 +173,8 @@ class MainPage extends Component {
       openCreateNewSite,
       open,
       pages,
-      data
+      data,
+      sites
     } = this.props;
     const { pageUrl } = this.state;
 
@@ -293,7 +298,7 @@ class MainPage extends Component {
                       <ListItem
                         autoFocus
                         button
-                      // onClick={() => handleListItemClick("addAccount")}
+                        // onClick={() => handleListItemClick("addAccount")}
                       >
                         <TextField
                           fullWidth
@@ -304,7 +309,7 @@ class MainPage extends Component {
                       <ListItem
                         autoFocus
                         button
-                      // onClick={() => handleListItemClick("addAccount")}
+                        // onClick={() => handleListItemClick("addAccount")}
                       >
                         <Button
                           variant={"outlined"}
@@ -321,20 +326,16 @@ class MainPage extends Component {
             </Grid>
 
             <Grid container item sm={10} xs={12} md={6}>
-              {!data && (
-                <Grid container justify="center">
-                  <p style={{ fontStyle: "italic", textAlign: "center", color: "#121212", marginTop: 50 }}>No site to show.</p>
-                </Grid>
-              )}
-              <List>
-                {data && data.map(item => (
-                  <ListItem key={item.id}>
-                    <WebsiteItem setEdit={setEdit} title={item.title} category={item.category} logo={item.logo} />
-                  </ListItem>
-                ))}
-              </List>
+              <Grid item className={styles.siteItem}>
+                {sites.length === 0 ? (
+                  <h3>You don't have any Website. Please create a new site.</h3>
+                ) : (
+                  sites.map((item, index) => (
+                    <WebsiteItem key={index} setEdit={setEdit} />
+                  ))
+                )}
+              </Grid>
             </Grid>
-
           </Grid>
         </Grid>
       </>
@@ -353,13 +354,14 @@ const mapStateToProps = state => ({
   fontTitle: state.theme.fontTitle,
   navItems: state.theme.navItems,
   data: state.site.data,
+  sites: state.site.data
 });
 
 const mapDispatchToProps = dispatch => ({
   setEdit: isEdit => dispatch(setEdit(isEdit)),
   closeCreateNewSite: () => dispatch(closeCreateNewSite()),
   openCreateNewSite: () => dispatch(openCreateNewSite()),
-  confirmPage: data => dispatch(confirmPage(data))
+  createNewSite: data => dispatch(createNewSite(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
