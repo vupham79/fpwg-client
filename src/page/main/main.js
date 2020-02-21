@@ -114,7 +114,8 @@ class MainPage extends Component {
       fontTitle,
       name,
       navItems,
-      profile
+      profile,
+      pages
     } = this.props;
     const { pageId, pageUrl } = this.state;
     confirmPage({
@@ -126,7 +127,8 @@ class MainPage extends Component {
       fontTitle,
       name,
       navItems,
-      profile
+      profile,
+      pages
     });
   };
 

@@ -9,9 +9,9 @@ class PreMainPage extends Component {
   };
 
   getUserInfo = async () => {
-    const { isLogin, token, getUserPages } = this.props;
+    const { isLogin, accessToken, userId, getUserPages } = this.props;
     if (isLogin) {
-      await getUserPages(token);
+      await getUserPages({ accessToken, userId });
     }
   };
 
@@ -30,7 +30,8 @@ class PreMainPage extends Component {
 
 const mapStateToProps = state => ({
   isLogin: state.user.isLogin,
-  token: state.user.accessToken
+  accessToken: state.user.accessToken,
+  userId: state.user.profile.id
 });
 
 const mapDispatchToProps = dispatch => ({

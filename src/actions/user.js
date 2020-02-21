@@ -42,8 +42,7 @@ export function setEdit(isEdit) {
   };
 }
 
-export function getUserPages(accessToken) {
-  console.log("abc");
+export function getUserPages({ accessToken }) {
   return async dispatch => {
     const data = await axios({
       url: "/facebook/pages",
@@ -67,7 +66,8 @@ export function confirmPage({
   fontTitle,
   name,
   navItems,
-  profile
+  profile,
+  pages
 }) {
   return async dispatch => {
     await axios({
@@ -82,7 +82,9 @@ export function confirmPage({
         fontTitle,
         name,
         navItems,
-        profile
+        userId: profile.id,
+        profile,
+        pages
       }
     });
   };
