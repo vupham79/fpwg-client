@@ -43,7 +43,7 @@ export function setEdit(isEdit) {
   };
 }
 
-export function getUserPages({ accessToken }) {
+export function getUserPages({ accessToken, userId }) {
   return async dispatch => {
     const data = await axios({
       url: "/facebook/pages",
@@ -51,10 +51,15 @@ export function getUserPages({ accessToken }) {
         access_token: accessToken
       }
     });
-    dispatch({
-      type: "SET_USER_PAGES",
-      payload: data.data
-    });
+    if (data.status === 200) {
+      // Check if GET request is success or have data
+      dispatch({
+        type: "SET_USER_PAGES",
+        payload: data.data
+      });
+    } else {
+
+    }
   };
 }
 

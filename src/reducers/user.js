@@ -4,12 +4,6 @@ const defaultState = {
   isLogin: false,
   isEdit: false,
   pages: [],
-  sites: [
-    {
-      id: 1,
-      isPublish: true
-    }
-  ]
 };
 
 const UserReducer = (state = defaultState, action) => {

@@ -1,18 +1,15 @@
 const defaultState = {
   currentId: null,
-  data: [
-    {
-      id: "",
-      isActive: false,
-      title: "",
-      category: "",
-      logo: ""
-    }
-  ]
+  data: []
 };
 
 const SiteReducer = (state = defaultState, action) => {
   switch (action.type) {
+    case "SET_USER_SITES":
+      return {
+        ...state,
+        data: action.payload ? [...action.payload] : []
+      };
     case "UPDATE_SITE_ID":
       return {
         ...state,

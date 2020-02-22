@@ -27,9 +27,6 @@ import {
   confirmPage
 } from "../../actions";
 
-
-
-
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
   "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
@@ -43,31 +40,6 @@ const imgStyles = {
   backgroundRepeat: "no-repeat",
   width: "80%"
 };
-
-// const test = [
-//   {
-//     id: "1",
-//     isActive: true,
-//     title: "page 1",
-//     category: "Books",
-//     logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3"
-//   },
-//   {
-//     id: "2",
-//     isActive: true,
-//     title: "page 2",
-//     category: "Food",
-//     logo: "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E"
-//   },
-//   {
-//     id: "3",
-//     isActive: false,
-//     title: "page 3",
-//     category: "Toys",
-//     logo: ""
-//   }
-
-// ]
 
 function WebsiteItem(props) {
   return (
@@ -125,8 +97,6 @@ class MainPage extends Component {
     pageUrl: "",
     pageId: ""
   };
-
-
 
   handleSelectPage = ({ id, link }) => {
     this.setState({
@@ -278,7 +248,6 @@ class MainPage extends Component {
                           >
                             <ListItemAvatar>
                               <Avatar
-                              // className={classes.avatar}
                               >
                                 <img src={page.picture.data.url} alt="" />
                               </Avatar>
@@ -293,7 +262,6 @@ class MainPage extends Component {
                       <ListItem
                         autoFocus
                         button
-                      // onClick={() => handleListItemClick("addAccount")}
                       >
                         <TextField
                           fullWidth
@@ -304,7 +272,6 @@ class MainPage extends Component {
                       <ListItem
                         autoFocus
                         button
-                      // onClick={() => handleListItemClick("addAccount")}
                       >
                         <Button
                           variant={"outlined"}
@@ -319,7 +286,6 @@ class MainPage extends Component {
                 </Grid>
               </Grid>
             </Grid>
-
             <Grid container item sm={10} xs={12} md={6}>
               {!data && (
                 <Grid container justify="center">
@@ -334,7 +300,6 @@ class MainPage extends Component {
                 ))}
               </List>
             </Grid>
-
           </Grid>
         </Grid>
       </>

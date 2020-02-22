@@ -18,7 +18,6 @@ const useStyles = theme => ({
   drawerPaper: {
     padding: "0.5rem",
     position: "relative",
-    overflowY: "scroll",
     height: "100%"
   }
 });
