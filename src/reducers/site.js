@@ -3,6 +3,8 @@ const defaultState = {
   data: []
 };
 
+let index;
+
 const SiteReducer = (state = defaultState, action) => {
   switch (action.type) {
     case "SET_USER_SITES":
@@ -16,16 +18,18 @@ const SiteReducer = (state = defaultState, action) => {
         currentId: action.payload
       };
     case "PUBLISH_SITE":
-      const index = state.data.indexOf({ id: action.payload.id });
-      state.data[index].isActive = action.payload.isActive;
+      index = state.data.findIndex(site => site.id === action.payload);
+      state.data[index].isPublish = true;
       return {
         ...state,
         data: [...state.data]
       };
     case "UNPUBLISH_SITE":
+      index = state.data.findIndex(site => site.id === action.payload);
+      state.data[index].isPublish = false;
       return {
         ...state,
-        currentId: action.payload
+        data: [...state.data]
       };
     case "SET_LOGOUT":
       return {

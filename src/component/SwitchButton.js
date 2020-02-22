@@ -2,6 +2,8 @@ import React from "react";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 import { withStyles } from "@material-ui/core/styles";
+import { connect } from "react-redux";
+import { publishSite, unPublishSite } from "../actions";
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -37,19 +39,34 @@ const IOSSwitch = withStyles(theme => ({
 }))(Switch);
 
 class SwitchButton extends React.Component {
+  handlePublish = () => {
+    const { siteId, isPublish, publishSite, unPublishSite } = this.props;
+    if (isPublish) {
+      unPublishSite(siteId);
+    } else {
+      publishSite(siteId);
+    }
+  };
+
   render() {
+    const { isPublish } = this.props;
     return (
       <FormControlLabel
         control={
           <IOSSwitch
-            checked={true}
-            // onChange={handleChange("checkedB")}
+            checked={isPublish}
+            onChange={() => this.handlePublish()}
           />
         }
-        label="Publish"
+        label={isPublish ? "Publishing" : "Unpublishing"}
       />
     );
   }
 }
 
-export default SwitchButton;
+const mapDispatchToProps = dispatch => ({
+  publishSite: siteId => dispatch(publishSite(siteId)),
+  unPublishSite: siteId => dispatch(unPublishSite(siteId))
+});
+
+export default connect(null, mapDispatchToProps)(SwitchButton);

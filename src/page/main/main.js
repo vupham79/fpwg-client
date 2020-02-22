@@ -3,7 +3,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Avatar,
   Button,
-  CircularProgress,
   Dialog,
   Grid,
   List,
@@ -19,11 +18,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   closeCreateNewSite,
-  closeLoading,
   confirmPage,
-  getUserSites,
   openCreateNewSite,
-  openLoading,
   setEdit
 } from "../../actions";
 import Header from "../../component/Header";
@@ -45,19 +41,19 @@ const imgStyles = {
   width: "80%"
 };
 
-function WebsiteItem(props) {
+function WebsiteItem({ site, setEdit }) {
   return (
     <Grid container justify="space-between" className={styles.web_item}>
       <Grid container item sm={8} xs={12} alignItems="center">
         <Grid item sm={4} md={4} xs={4} className={styles.web_logo}>
-          <img src={props.logo} alt="logo" style={imgStyles} />
+          <img src={site.logo} alt="logo" style={imgStyles} />
         </Grid>
         <Grid item sm={8} xs={8} md={6}>
           <Typography variant="h5" className={styles.web_content}>
-            {props.title}
+            {site.title}
           </Typography>
           <Typography variant="body2" className={styles.web_content}>
-            {props.category}
+            {site.category}
           </Typography>
         </Grid>
       </Grid>
@@ -80,7 +76,7 @@ function WebsiteItem(props) {
             <Link to="/edit">
               <Button
                 className={styles.help_button}
-                onClick={() => props.setEdit(true)}
+                onClick={() => setEdit(true)}
               >
                 Edit
                 <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
@@ -89,7 +85,7 @@ function WebsiteItem(props) {
           </Grid>
         </Grid>
         <Grid container item justify="flex-end" md={12}>
-          <SwitchButton />
+          <SwitchButton siteId={site.id} isPublish={site.isPublish} />
         </Grid>
       </Grid>
     </Grid>
@@ -102,60 +98,32 @@ class MainPage extends Component {
     pageId: ""
   };
 
-  getAllUserSites = async () => {
-    const { token, userId, getUserSites } = this.props;
-    this.props.openLoading();
-    await getUserSites(userId, token);
-    this.props.closeLoading();
-  };
-
-  componentDidMount() {
-    this.getAllUserSites();
-  }
-
-  handleSelectPage = ({ id, link, category }) => {
+  handleSelectPage = ({ id, link }) => {
     this.setState({
       pageUrl: link,
-      pageId: id,
-      pageCategory: category
+      pageId: id
     });
   };
 
   handleConfirm = () => {
-    const {
-      confirmPage,
-      accessToken,
-      color,
-      fontBody,
-      fontTitle,
-      name,
-      navItems,
-      profile
-    } = this.props;
-    const { pageId, pageUrl, category } = this.state;
+    const { confirmPage, accessToken, profile } = this.props;
+    const { pageId, pageUrl } = this.state;
     confirmPage({
       pageId,
       pageUrl,
       accessToken,
-      color,
-      fontBody,
-      fontTitle,
-      name,
-      navItems,
-      profile,
-      category
+      profile
     });
   };
 
   render() {
     const {
-      setEdit,
+      sites,
       closeCreateNewSite,
       openCreateNewSite,
       open,
       pages,
-      data,
-      loading
+      setEdit
     } = this.props;
     const { pageUrl } = this.state;
     return (
@@ -256,8 +224,7 @@ class MainPage extends Component {
                             onClick={() =>
                               this.handleSelectPage({
                                 id: page.id,
-                                link: page.link,
-                                category: page.category
+                                link: page.link
                               })
                             }
                             key={page.id}
@@ -296,42 +263,15 @@ class MainPage extends Component {
               </Grid>
             </Grid>
             <Grid container item sm={10} xs={12} md={6}>
-              {loading && (
-                <Grid container justify="center">
-                  <CircularProgress
-                    color="primary"
-                    style={{ marginTop: 50, color: "lightgreen" }}
-                  />
-                </Grid>
-              )}
-              {!loading && !data ? (
-                <Grid container justify="center">
-                  <p
-                    style={{
-                      fontStyle: "italic",
-                      textAlign: "center",
-                      color: "#121212",
-                      marginTop: 50
-                    }}
-                  >
-                    No site to show.
-                  </p>
-                </Grid>
-              ) : (
-                <List>
-                  {!loading &&
-                    data.map(item => (
-                      <ListItem key={item.id}>
-                        <WebsiteItem
-                          setEdit={setEdit}
-                          title={item.title}
-                          category={item.category}
-                          logo={item.logo}
-                        />
-                      </ListItem>
-                    ))}
-                </List>
-              )}
+              <Grid item className={styles.siteItem}>
+                {sites.length === 0 ? (
+                  <h3>You don't have any Website. Please create a new site.</h3>
+                ) : (
+                  sites.map((item, index) => (
+                    <WebsiteItem key={index} site={item} setEdit={setEdit} />
+                  ))
+                )}
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -343,16 +283,9 @@ class MainPage extends Component {
 const mapStateToProps = state => ({
   open: state.dialog.open,
   pages: state.user.pages,
-  sites: state.user.sites,
+  sites: state.site.data,
   accessToken: state.user.accessToken,
   profile: state.user.profile,
-  name: state.theme.name,
-  color: state.theme.color,
-  fontBody: state.theme.fontBody,
-  fontTitle: state.theme.fontTitle,
-  navItems: state.theme.navItems,
-  data: state.site.data,
-  loading: state.theme.loading,
   userId: state.user.id,
   token: state.user.accessToken
 });
@@ -361,10 +294,7 @@ const mapDispatchToProps = dispatch => ({
   setEdit: isEdit => dispatch(setEdit(isEdit)),
   closeCreateNewSite: () => dispatch(closeCreateNewSite()),
   openCreateNewSite: () => dispatch(openCreateNewSite()),
-  confirmPage: data => dispatch(confirmPage(data)),
-  openLoading: () => dispatch(openLoading()),
-  closeLoading: () => dispatch(closeLoading()),
-  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
+  confirmPage: data => dispatch(confirmPage(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

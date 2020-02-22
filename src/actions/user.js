@@ -62,18 +62,7 @@ export function getUserPages({ accessToken, userId }) {
   };
 }
 
-export function confirmPage({
-  pageUrl,
-  pageId,
-  accessToken,
-  color,
-  fontBody,
-  fontTitle,
-  name,
-  navItems,
-  profile,
-  category
-}) {
+export function confirmPage({ pageUrl, pageId, accessToken, name, profile }) {
   return async dispatch => {
     await axios({
       method: "POST",
@@ -82,14 +71,9 @@ export function confirmPage({
         pageUrl,
         pageId,
         accessToken,
-        color,
-        fontBody,
-        fontTitle,
         name,
-        navItems,
         userId: profile.id,
-        profile,
-        category
+        profile
       }
     });
   };

@@ -6,7 +6,7 @@ export function getUserSites(userId, accessToken) {
       url: "/site/findAllByUser",
       params: {
         userId: userId,
-        access_token: accessToken
+        accessToken: accessToken
       }
     });
     if (data.status === 200) {
@@ -27,31 +27,39 @@ export const updateSiteId = currentId => {
   };
 };
 
-export const publishSite = id => {
-  return dispatch => {
-    dispatch({
-      type: "PUBLISH_SITE",
-      payload: id
+export const publishSite = siteId => {
+  return async dispatch => {
+    const data = await axios({
+      method: "patch",
+      url: "/site/publish",
+      data: {
+        id: siteId,
+        isPublish: true
+      }
     });
+    if (data.status === 200) {
+      dispatch({
+        type: "PUBLISH_SITE",
+        payload: siteId
+      });
+    }
   };
 };
 
-export const unPublishSite = ({ siteId }) => {
+export const unPublishSite = siteId => {
   return async dispatch => {
     const data = await axios({
-      method: "post",
-      url: "/site/delete",
+      method: "patch",
+      url: "/site/publish",
       data: {
-        id: siteId
+        id: siteId,
+        isPublish: false
       }
     });
-
     if (data.status === 200) {
       dispatch({
         type: "UNPUBLISH_SITE",
-        payload: {
-          siteId
-        }
+        payload: siteId
       });
     }
   };
