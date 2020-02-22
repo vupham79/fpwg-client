@@ -58,7 +58,6 @@ export function getUserPages({ accessToken, userId }) {
         payload: data.data
       });
     } else {
-
     }
   };
 }
@@ -73,12 +72,12 @@ export function confirmPage({
   name,
   navItems,
   profile,
-  pages
+  category
 }) {
   return async dispatch => {
     await axios({
       method: "POST",
-      url: "/facebook/confirmPage",
+      url: "/site/createNewSite",
       data: {
         pageUrl,
         pageId,
@@ -90,7 +89,7 @@ export function confirmPage({
         navItems,
         userId: profile.id,
         profile,
-        pages
+        category
       }
     });
   };

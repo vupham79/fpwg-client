@@ -1,4 +1,4 @@
-import { updateSiteId, unPublishSite, publishSite } from "./site";
+import { updateSiteId, unPublishSite, publishSite, getUserSites } from "./site";
 import {
   changeTheme,
   changeFontBody,
@@ -40,5 +40,6 @@ export {
   getNavItems,
   showToastr,
   unPublishSite,
-  publishSite
+  publishSite,
+  getUserSites
 };

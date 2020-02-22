@@ -1,20 +1,35 @@
 import { faCog, faEye, faThLarge } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Grid, MenuItem, MenuList, Typography, Dialog, List, ListItem, ListItemAvatar, Avatar, ListItemText, TextField, CircularProgress } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  CircularProgress,
+  Dialog,
+  Grid,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  MenuItem,
+  MenuList,
+  TextField,
+  Typography
+} from "@material-ui/core";
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import {
+  closeCreateNewSite,
+  closeLoading,
+  confirmPage,
+  getUserSites,
+  openCreateNewSite,
+  openLoading,
+  setEdit
+} from "../../actions";
 import Header from "../../component/Header";
 import Link from "../../component/link";
-import styles from "./main.module.css";
-import { connect } from "react-redux";
 import SwitchButton from "../../component/SwitchButton";
-import {
-  setEdit,
-  openCreateNewSite,
-  closeCreateNewSite,
-  confirmPage
-} from "../../actions";
-import { openLoading, closeLoading } from "../../actions";
-import { getUserSites } from "../../actions/site";
+import styles from "./main.module.css";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -88,22 +103,21 @@ class MainPage extends Component {
   };
 
   getAllUserSites = async () => {
-    const { isLogin, token, userId, getUserSites } = this.props;
-    if (isLogin) {
-      this.props.openLoading();
-      await getUserSites(userId, token);
-      this.props.closeLoading();
-    }
+    const { token, userId, getUserSites } = this.props;
+    this.props.openLoading();
+    await getUserSites(userId, token);
+    this.props.closeLoading();
   };
 
   componentDidMount() {
     this.getAllUserSites();
   }
 
-  handleSelectPage = ({ id, link }) => {
+  handleSelectPage = ({ id, link, category }) => {
     this.setState({
       pageUrl: link,
-      pageId: id
+      pageId: id,
+      pageCategory: category
     });
   };
 
@@ -116,10 +130,9 @@ class MainPage extends Component {
       fontTitle,
       name,
       navItems,
-      profile,
-      pages
+      profile
     } = this.props;
-    const { pageId, pageUrl } = this.state;
+    const { pageId, pageUrl, category } = this.state;
     confirmPage({
       pageId,
       pageUrl,
@@ -130,7 +143,7 @@ class MainPage extends Component {
       name,
       navItems,
       profile,
-      pages
+      category
     });
   };
 
@@ -145,7 +158,6 @@ class MainPage extends Component {
       loading
     } = this.props;
     const { pageUrl } = this.state;
-
     return (
       <>
         <Header />
@@ -244,14 +256,14 @@ class MainPage extends Component {
                             onClick={() =>
                               this.handleSelectPage({
                                 id: page.id,
-                                link: page.link
+                                link: page.link,
+                                category: page.category
                               })
                             }
                             key={page.id}
                           >
                             <ListItemAvatar>
-                              <Avatar
-                              >
+                              <Avatar>
                                 <img src={page.picture.data.url} alt="" />
                               </Avatar>
                             </ListItemAvatar>
@@ -262,20 +274,14 @@ class MainPage extends Component {
                           </ListItem>
                         ))}
 
-                      <ListItem
-                        autoFocus
-                        button
-                      >
+                      <ListItem autoFocus button>
                         <TextField
                           fullWidth
                           label="Facebook Page Url"
                           value={pageUrl ? pageUrl : ""}
                         />
                       </ListItem>
-                      <ListItem
-                        autoFocus
-                        button
-                      >
+                      <ListItem autoFocus button>
                         <Button
                           variant={"outlined"}
                           onClick={() => this.handleConfirm()}
@@ -292,22 +298,40 @@ class MainPage extends Component {
             <Grid container item sm={10} xs={12} md={6}>
               {loading && (
                 <Grid container justify="center">
-                  <CircularProgress color="primary" style={{ marginTop: 50, color: 'lightgreen' }} />
+                  <CircularProgress
+                    color="primary"
+                    style={{ marginTop: 50, color: "lightgreen" }}
+                  />
                 </Grid>
               )}
-              {!loading && !test ? (
+              {!loading && !data ? (
                 <Grid container justify="center">
-                  <p style={{ fontStyle: "italic", textAlign: "center", color: "#121212", marginTop: 50 }}>No site to show.</p>
+                  <p
+                    style={{
+                      fontStyle: "italic",
+                      textAlign: "center",
+                      color: "#121212",
+                      marginTop: 50
+                    }}
+                  >
+                    No site to show.
+                  </p>
                 </Grid>
-              ) :
+              ) : (
                 <List>
-                  {!loading && test && test.map(item => (
-                    <ListItem key={item.id}>
-                      <WebsiteItem setEdit={setEdit} title={item.title} category={item.category} logo={item.logo} />
-                    </ListItem>
-                  ))}
+                  {!loading &&
+                    data.map(item => (
+                      <ListItem key={item.id}>
+                        <WebsiteItem
+                          setEdit={setEdit}
+                          title={item.title}
+                          category={item.category}
+                          logo={item.logo}
+                        />
+                      </ListItem>
+                    ))}
                 </List>
-              }
+              )}
             </Grid>
           </Grid>
         </Grid>
@@ -330,7 +354,7 @@ const mapStateToProps = state => ({
   data: state.site.data,
   loading: state.theme.loading,
   userId: state.user.id,
-  token: state.user.accessToken,
+  token: state.user.accessToken
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -340,7 +364,7 @@ const mapDispatchToProps = dispatch => ({
   confirmPage: data => dispatch(confirmPage(data)),
   openLoading: () => dispatch(openLoading()),
   closeLoading: () => dispatch(closeLoading()),
-  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
