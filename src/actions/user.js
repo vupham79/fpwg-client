@@ -34,6 +34,15 @@ export function setLogout() {
   };
 }
 
+export function setEdit(isEdit) {
+  return dispatch => {
+    dispatch({
+      type: "SET_EDIT",
+      payload: isEdit
+    });
+  };
+}
+
 export function getUserPages({ accessToken }) {
   return async dispatch => {
     const data = await axios({
@@ -42,25 +51,17 @@ export function getUserPages({ accessToken }) {
         access_token: accessToken
       }
     });
-    dispatch({
-      type: "SET_USER_PAGES",
-      payload: data.data
-    });
+    if (data.status === 200) {
+      dispatch({
+        type: "SET_USER_PAGES",
+        payload: data.data
+      });
+    } else {
+    }
   };
 }
 
-export function confirmPage({
-  pageUrl,
-  pageId,
-  accessToken,
-  color,
-  fontBody,
-  fontTitle,
-  name,
-  navItems,
-  profile,
-  pages
-}) {
+export function confirmPage({ pageUrl, pageId, accessToken, name, profile }) {
   return async dispatch => {
     const site = await axios({
       method: "POST",
@@ -69,14 +70,9 @@ export function confirmPage({
         pageUrl,
         pageId,
         accessToken,
-        color,
-        fontBody,
-        fontTitle,
         name,
-        navItems,
         userId: profile.id,
-        profile,
-        pages
+        profile
       }
     });
     if (site.status === 200) {

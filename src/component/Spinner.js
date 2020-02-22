@@ -10,7 +10,9 @@ class Spinner extends Component {
         in={loading}
         style={{
           zIndex: 99999999,
-          height: "40vh"
+          top: 0,
+          bottom: 0,
+          position: "absolute"
         }}
         unmountOnExit
       >

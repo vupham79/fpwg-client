@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
+import { getUserPages, getUserSites } from "../../actions";
 import MainPage from "./main";
-import { getUserPages, getAllSite } from "../../actions";
-class PreMainPage extends Component {
-  state = {
-    data: []
-  };
 
+class PreMainPage extends Component {
   getUserInfo = async () => {
     const { isLogin, accessToken, userId, getUserPages } = this.props;
     if (isLogin) {
@@ -15,16 +12,21 @@ class PreMainPage extends Component {
     }
   };
 
+  getAllUserSites = async () => {
+    const { accessToken, userId, getUserSites } = this.props;
+    await getUserSites(userId, accessToken);
+  };
+
   componentDidMount() {
     this.getUserInfo();
+    this.getAllUserSites();
   }
 
   render() {
-    const { isLogin, getAllSite, accessToken, userId } = this.props;
+    const { isLogin } = this.props;
     if (!isLogin) {
       return <Redirect to="/" />;
     }
-    getAllSite(accessToken, userId);
     return <MainPage />;
   }
 }
@@ -36,8 +38,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUserPages: accessToken => dispatch(getUserPages(accessToken)),
-  getAllSite: (token, id) => dispatch(getAllSite(token, id))
+  getUserPages: ({ accessToken, userId }) =>
+    dispatch(getUserPages({ accessToken, userId })),
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreMainPage);

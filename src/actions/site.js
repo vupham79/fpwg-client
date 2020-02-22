@@ -1,5 +1,23 @@
-import axios from "../utils/axios";
 import toastr from "toastr";
+import axios from "../utils/axios";
+
+export function getUserSites(userId, accessToken) {
+  return async dispatch => {
+    const data = await axios({
+      url: "/site/findAllByUser",
+      params: {
+        userId: userId,
+        accessToken: accessToken
+      }
+    });
+    if (data.status === 200) {
+      dispatch({
+        type: "SET_USER_SITES",
+        payload: data.data
+      });
+    }
+  };
+}
 
 export const updateSiteId = currentId => {
   return dispatch => {
@@ -10,74 +28,49 @@ export const updateSiteId = currentId => {
   };
 };
 
-export const publishSite = (id, isPublish) => {
-  // return async dispatch => {
-  //   const data = await axios({
-  //     method: "post",
-  //     url: "/site/delete",
-  //     data: {
-  //       id: id,
-  //       isPublish: isPublish
-  //     }
-  //   });
-  //   if (data.status === 200) {
-  toastr.success("Your website has been publish", "Success");
-  return dispatch => {
-    dispatch({
-      type: "PUBLISH_SITE",
-      payload: {
-        id,
-        isPublish
-      }
-    });
-  };
-  //   } else {
-  //     toastr.error("There are something wrong when publish your site", "Error");
-  //   }
-  // };
-};
-
-export const unPublishSite = (id, isPublish) => {
-  // return async dispatch => {
-  //   const data = await axios({
-  //     method: "post",
-  //     url: "/site/delete",
-  //     data: {
-  //       id: siteId
-  //     }
-  //   });
-
-  //   if (data.status === 200) {
-  toastr.success("Your site has been unpublish", "Success");
-  return dispatch => {
-    dispatch({
-      type: "UNPUBLISH_SITE",
-      payload: {
-        id,
-        isPublish
-      }
-    });
-  };
-  //   } else {
-  //     toastr.error("There are something wrong when publish your site", "Error");
-  //   }
-  // };
-};
-
-export const getAllSite = (token, id) => {
+export const unPublishSite = siteId => {
   return async dispatch => {
     const data = await axios({
-      url: "/site/findAllByUser",
-      params: {
-        accessToken: token,
-        userId: id
+      method: "patch",
+      url: "/site/publish",
+      data: {
+        id: siteId,
+        isPublish: false
       }
     });
-    if (data.data) {
+    if (data.status === 200) {
       dispatch({
-        type: "GET_ALL_SITE",
-        payload: data.data
+        type: "UNPUBLISH_SITE",
+        payload: siteId
       });
+      toastr.success(`Unpublish site ${siteId} success`, "Sucess");
+    } else {
+      toastr.error(
+        "There are something wrong when unpublish your site",
+        "Error"
+      );
+    }
+  };
+};
+
+export const publishSite = siteId => {
+  return async dispatch => {
+    const data = await axios({
+      method: "patch",
+      url: "/site/publish",
+      data: {
+        id: siteId,
+        isPublish: true
+      }
+    });
+    if (data.status === 200) {
+      dispatch({
+        type: "PUBLISH_SITE",
+        payload: siteId
+      });
+      toastr.success(`Publish site ${siteId} sucess`, "Success");
+    } else {
+      toastr.error("There are something wrong when publish your site", "Error");
     }
   };
 };

@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
 import { AppBar, Tab, Tabs } from "@material-ui/core";
-import styles from "./index.module.css";
+import Grid from "@material-ui/core/Grid";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import Link from "../../../component/link";
 import { updateNavItemValue } from "../../../actions";
+import Link from "../../../component/link";
+import styles from "./index.module.css";
 
 class Header extends Component {
   render() {
     const { isEdit, tabValue, updateNavItemValue, siteEdit } = this.props;
-    console.log(siteEdit.color);
     const tabStyles = {
       textTransform: "none",
       fontFamily: siteEdit.fontTitle,
@@ -26,8 +25,6 @@ class Header extends Component {
         color: "#40a9ff"
       }
     };
-
-    // const currentPage = "";
 
     const changeStyle = {
       fontFamily: siteEdit.fontTitle,

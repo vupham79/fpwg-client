@@ -1,10 +1,9 @@
-/*eslint no-lone-blocks: "error"*/
-import React from "react";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 import { withStyles } from "@material-ui/core/styles";
-import { publishSite, unPublishSite } from "../actions";
+import Switch from "@material-ui/core/Switch";
+import React from "react";
 import { connect } from "react-redux";
+import { publishSite, unPublishSite } from "../actions";
 
 const IOSSwitch = withStyles(theme => ({
   root: {
@@ -40,32 +39,33 @@ const IOSSwitch = withStyles(theme => ({
 }))(Switch);
 
 class SwitchButton extends React.Component {
-  handleChange = () => {
-    const { status, unPublishSite, publishSite } = this.props;
-    const id = this.props.pageId;
-
-    status ? unPublishSite(id, false) : publishSite(id, true);
+  handlePublish = () => {
+    const { siteId, isPublish, publishSite, unPublishSite } = this.props;
+    if (isPublish) {
+      unPublishSite(siteId);
+    } else {
+      publishSite(siteId);
+    }
   };
   render() {
-    const { status } = this.props;
-
+    const { isPublish } = this.props;
     return (
       <FormControlLabel
-        control={<IOSSwitch checked={status} onChange={this.handleChange} />}
-        label={status ? "Publish" : "UnPublish"}
+        control={
+          <IOSSwitch
+            checked={isPublish}
+            onChange={() => this.handlePublish()}
+          />
+        }
+        label={isPublish ? "Publishing" : "Unpublishing"}
       />
     );
   }
 }
 
-const mapStateToProps = state => ({
-  status: state.site.data[0].isPublish,
-  id: state.site.data[0].id
-});
-
 const mapDispatchToProps = dispatch => ({
-  publishSite: (id, isPublish) => dispatch(publishSite(id, isPublish)),
-  unPublishSite: (id, isPublish) => dispatch(unPublishSite(id, isPublish))
+  publishSite: siteId => dispatch(publishSite(siteId)),
+  unPublishSite: siteId => dispatch(unPublishSite(siteId))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SwitchButton);
+export default connect(null, mapDispatchToProps)(SwitchButton);

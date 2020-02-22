@@ -102,102 +102,101 @@ class DesignEditorTab extends React.Component {
 
     return (
       <>
-        <Typography className={classes.title}>Theme</Typography>
-        <Select
-          // defaultValue={themeName}
-          autoComplete="true"
-          value={themeName.name}
-          fullWidth
-          onChange={
-            event => changeTheme(event.target.value)
-            // console.log(event.target.value)
-          }
-        >
-          {themes.map((element, index) => (
-            <MenuItem value={element.name} key={index}>
-              {element.name}
-            </MenuItem>
-          ))}
-        </Select>
-        <Divider
-          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
-        />
-        <Typography className={classes.title}>Font</Typography>
-        <Grid className={classes.sideBarBox}>
-          <Typography className={classes.title2}>Font Title</Typography>
-          <List>
+        <div style={{ overflowY: "scroll" }}>
+          <Typography className={classes.title}>Theme</Typography>
+          <Select
+            // defaultValue={themeName}
+            autoComplete="true"
+            value={themeName.name}
+            fullWidth
+            onChange={event => changeTheme(event.target.value)}
+          >
+            {themes.map((element, index) => (
+              <MenuItem value={element.name} key={index}>
+                {element.name}
+              </MenuItem>
+            ))}
+          </Select>
+          <Divider
+            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          />
+          <Typography className={classes.title}>Font</Typography>
+          <Grid className={classes.sideBarBox}>
+            <Typography className={classes.title2}>Font Title</Typography>
+            <List>
+              <FontPicker
+                apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
+                sort="alphabet"
+                activeFontFamily={site.fontTitle}
+                onChange={this.handleChangeTitle}
+              />
+            </List>
+            <Divider />
+            <Typography className={classes.title2}>Font Body</Typography>
             <FontPicker
               apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
               sort="alphabet"
-              activeFontFamily={site.fontTitle}
-              onChange={this.handleChangeTitle}
+              activeFontFamily={site.fontBody}
+              onChange={this.handleChangeFontBody}
             />
-          </List>
-          <Divider />
-          <Typography className={classes.title2}>Font Body</Typography>
-          <FontPicker
-            apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
-            sort="alphabet"
-            activeFontFamily={site.fontBody}
-            onChange={this.handleChangeFontBody}
+          </Grid>
+          <Divider
+            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
           />
-        </Grid>
-        <Divider
-          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
-        />
-        <Typography className={classes.title}>Color</Typography>
-        <Grid className={classes.sideBarBox}>
-          <Typography className={classes.title2}>Suggested Color</Typography>
-          <TwitterPicker
-            width={"fit-content"}
-            color={red}
-            onChangeComplete={this.handleChangeColor}
-          />
-          <Divider />
-          <Typography className={classes.title2}>Custom Color</Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setShowCustomColor(!isShow)}
-          >
-            Select custom color
-          </Button>
-          {isShow === true ? (
-            <Grid
-              style={{
-                left: drawerWidth - 30,
-                width: 220,
-                color: "white",
-                borderRadius: 3,
-                zIndex: 1000,
-                top: "50%"
-              }}
+          <Typography className={classes.title}>Color</Typography>
+          <Grid className={classes.sideBarBox}>
+            <Typography className={classes.title2}>Suggested Color</Typography>
+            <TwitterPicker
+              width={"fit-content"}
+              color={red}
+              onChangeComplete={this.handleChangeColor}
+            />
+            <Divider />
+            <Typography className={classes.title2}>Custom Color</Typography>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setShowCustomColor(!isShow)}
             >
-              <ChromePicker
-                color={red}
-                onChangeComplete={this.handleChangeColor}
+              Select custom color
+            </Button>
+            {isShow === true ? (
+              <Grid
+                style={{
+                  left: drawerWidth - 30,
+                  width: 220,
+                  color: "white",
+                  borderRadius: 3,
+                  zIndex: 1000,
+                  top: "50%"
+                }}
+              >
+                <ChromePicker
+                  color={red}
+                  onChangeComplete={this.handleChangeColor}
+                />
+              </Grid>
+            ) : null}
+          </Grid>
+          <Divider
+            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          />
+          <Typography className={classes.title}>Logo</Typography>
+          <Grid className={classes.sideBarBox}>
+            {images.map((img, i) => (
+              <img
+                style={imgStyles}
+                src={img}
+                alt=""
+                key={i}
+                onClick={() => getImageUrl(img)}
               />
-            </Grid>
-          ) : null}
-        </Grid>
-        <Divider
-          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
-        />
-        <Typography className={classes.title}>Logo</Typography>
-        <Grid className={classes.sideBarBox}>
-          {images.map((img, i) => (
-            <img
-              style={imgStyles}
-              src={img}
-              alt=""
-              key={i}
-              onClick={() => getImageUrl(img)}
-            />
-          ))}
-        </Grid>
-        <Divider
-          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
-        />
+            ))}
+          </Grid>
+          <Divider
+            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          />
+        </div>
       </>
     );
   }

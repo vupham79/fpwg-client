@@ -1,25 +1,25 @@
+import { closeCreateNewSite, openCreateNewSite } from "./dialog";
+import { getImageUrl } from "./image";
 import {
-  updateSiteId,
-  unPublishSite,
-  publishSite,
-  getAllSite,
+  changeColor,
   changeFontBody,
   changeFontTitle,
-  changeColor,
+  changeNavItems,
+  getUserSites,
+  publishSite,
   setSiteIsEdit,
-  changeNavItems
+  unPublishSite,
+  updateSiteId
 } from "./site";
+import { closeLoading, showLoading } from "./spinner";
+import { updateNavItemValue, updateTabValue } from "./tab";
 import {
   changeTheme,
-  setShowCustomColor,
+  getAllThemes,
   getNavItems,
-  getAllThemes
+  setShowCustomColor
 } from "./theme";
-import { setLogout, login, getUserPages, confirmPage } from "./user";
-import { updateTabValue, updateNavItemValue } from "./tab";
-import { getImageUrl } from "./image";
-import { closeCreateNewSite, openCreateNewSite } from "./dialog";
-import { closeLoading, showLoading } from "./spinner";
+import { confirmPage, getUserPages, login, setLogout } from "./user";
 
 export {
   getUserPages,
@@ -43,8 +43,8 @@ export {
   getNavItems,
   unPublishSite,
   publishSite,
-  getAllSite,
   confirmPage,
   getAllThemes,
-  setSiteIsEdit
+  setSiteIsEdit,
+  getUserSites
 };

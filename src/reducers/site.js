@@ -5,27 +5,30 @@ const defaultState = {
   siteEdit: {}
 };
 
+let index;
+
 const SiteReducer = (state = defaultState, action) => {
   switch (action.type) {
+    case "SET_USER_SITES":
+      return {
+        ...state,
+        data: action.payload ? [...action.payload] : []
+      };
     case "UPDATE_SITE_ID":
       return {
         ...state,
         currentId: action.payload
       };
     case "PUBLISH_SITE":
-      const publishIndex = state.data.findIndex(
-        e => e.id === action.payload.id
-      );
-      state.data[publishIndex].isPublish = action.payload.isPublish;
+      index = state.data.findIndex(site => site.id === action.payload);
+      state.data[index].isPublish = true;
       return {
         ...state,
         data: [...state.data]
       };
     case "UNPUBLISH_SITE":
-      const unPublishIndex = state.data.findIndex(
-        e => e.id === action.payload.id
-      );
-      state.data[unPublishIndex].isPublish = action.payload.isPublish;
+      index = state.data.findIndex(site => site.id === action.payload);
+      state.data[index].isPublish = false;
       return {
         ...state,
         data: [...state.data]

@@ -41,56 +41,54 @@ const imgStyles = {
   width: "80%"
 };
 
-function WebsiteItem(props) {
+function WebsiteItem({ setSiteIsEdit, site }) {
   return (
-    <>
-      <Grid container justify="space-between" className={styles.web_item}>
-        <Grid container item sm={8} xs={12} alignItems="center">
-          <Grid item sm={4} md={4} xs={4} className={styles.web_logo}>
-            <img src={imgUrl[3]} alt="logo" style={imgStyles} />
-          </Grid>
-          <Grid item sm={8} xs={8} md={6}>
-            <Typography variant="h5" className={styles.web_content}>
-              {props.siteInfo.title}
-            </Typography>
-            <Typography variant="body2" className={styles.web_content}>
-              Food and Beverage (other)
-            </Typography>
-          </Grid>
+    <Grid container justify="space-between" className={styles.web_item}>
+      <Grid container item sm={8} xs={12} alignItems="center">
+        <Grid item sm={4} md={4} xs={4} className={styles.web_logo}>
+          <img src={site.logo} alt="logo" style={imgStyles} />
         </Grid>
-        <Grid
-          container
-          item
-          sm={4}
-          xs={12}
-          justify="flex-end"
-          alignItems="center"
-        >
-          <Grid container item spacing={6}>
-            <Grid item sm={5}>
-              <Button className={styles.help_button}>
-                View
-                <FontAwesomeIcon className={styles.web_icon} icon={faEye} />
-              </Button>
-            </Grid>
-            <Grid item sm={5}>
-              <Link to="/edit">
-                <Button
-                  className={styles.help_button}
-                  onClick={() => props.setSiteIsEdit(true, props.siteInfo)}
-                >
-                  Edit
-                  <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
-                </Button>
-              </Link>
-            </Grid>
-          </Grid>
-          <Grid container item justify="flex-end" md={12}>
-            <SwitchButton pageId={props.siteInfo.id} />
-          </Grid>
+        <Grid item sm={8} xs={8} md={6}>
+          <Typography variant="h5" className={styles.web_content}>
+            {site.title}
+          </Typography>
+          <Typography variant="body2" className={styles.web_content}>
+            {site.category}
+          </Typography>
         </Grid>
       </Grid>
-    </>
+      <Grid
+        container
+        item
+        sm={4}
+        xs={12}
+        justify="flex-end"
+        alignItems="center"
+      >
+        <Grid container item spacing={6}>
+          <Grid item sm={5}>
+            <Button className={styles.help_button}>
+              View
+              <FontAwesomeIcon className={styles.web_icon} icon={faEye} />
+            </Button>
+          </Grid>
+          <Grid item sm={5}>
+            <Link to="/edit">
+              <Button
+                className={styles.help_button}
+                onClick={() => setSiteIsEdit(true, site)}
+              >
+                Edit
+                <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
+              </Button>
+            </Link>
+          </Grid>
+        </Grid>
+        <Grid container item justify="flex-end" md={12}>
+          <SwitchButton siteId={site.id} isPublish={site.isPublish} />
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
 
@@ -108,32 +106,14 @@ class MainPage extends Component {
   };
 
   handleConfirm = () => {
-    const {
-      confirmPage,
-      accessToken,
-      color,
-      fontBody,
-      fontTitle,
-      name,
-      navItems,
-      profile,
-      pages,
-      closeCreateNewSite
-    } = this.props;
-
+    const { confirmPage, accessToken, profile } = this.props;
     const { pageId, pageUrl } = this.state;
 
     confirmPage({
       pageId,
       pageUrl,
       accessToken,
-      color,
-      fontBody,
-      fontTitle,
-      name,
-      navItems,
-      profile,
-      pages
+      profile
     });
     closeCreateNewSite();
   };
@@ -148,7 +128,6 @@ class MainPage extends Component {
       sites
     } = this.props;
     const { pageUrl } = this.state;
-
     return (
       <>
         <Header />
@@ -253,9 +232,7 @@ class MainPage extends Component {
                             key={page.id}
                           >
                             <ListItemAvatar>
-                              <Avatar
-                              // className={classes.avatar}
-                              >
+                              <Avatar>
                                 <img src={page.picture.data.url} alt="" />
                               </Avatar>
                             </ListItemAvatar>
@@ -266,22 +243,14 @@ class MainPage extends Component {
                           </ListItem>
                         ))}
 
-                      <ListItem
-                        autoFocus
-                        button
-                        // onClick={() => handleListItemClick("addAccount")}
-                      >
+                      <ListItem autoFocus button>
                         <TextField
                           fullWidth
                           label="Facebook Page Url"
                           value={pageUrl ? pageUrl : ""}
                         />
                       </ListItem>
-                      <ListItem
-                        autoFocus
-                        button
-                        // onClick={() => handleListItemClick("addAccount")}
-                      >
+                      <ListItem autoFocus button>
                         <Button
                           variant={"outlined"}
                           onClick={() => this.handleConfirm()}
@@ -295,7 +264,6 @@ class MainPage extends Component {
                 </Grid>
               </Grid>
             </Grid>
-
             <Grid container item sm={10} xs={12} md={6}>
               <Grid item className={styles.siteItem}>
                 {sites.length === 0 ? (
@@ -305,7 +273,7 @@ class MainPage extends Component {
                     <WebsiteItem
                       key={index}
                       setSiteIsEdit={setSiteIsEdit}
-                      siteInfo={item}
+                      site={item}
                     />
                   ))
                 )}
@@ -321,15 +289,11 @@ class MainPage extends Component {
 const mapStateToProps = state => ({
   open: state.dialog.open,
   pages: state.user.pages,
+  sites: state.site.data,
   accessToken: state.user.accessToken,
   profile: state.user.profile,
-  name: state.theme.name,
-  color: state.theme.color,
-  fontBody: state.theme.fontBody,
-  fontTitle: state.theme.fontTitle,
-  navItems: state.theme.navItems,
-  data: state.site.data,
-  sites: state.site.data
+  userId: state.user.id,
+  token: state.user.accessToken
 });
 
 const mapDispatchToProps = dispatch => ({
