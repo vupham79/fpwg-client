@@ -1,19 +1,6 @@
 import { faCog, faEye, faThLarge } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Button,
-  Grid,
-  MenuItem,
-  MenuList,
-  Typography,
-  Dialog,
-  List,
-  ListItem,
-  ListItemAvatar,
-  Avatar,
-  ListItemText,
-  TextField
-} from "@material-ui/core";
+import { Button, Grid, MenuItem, MenuList, Typography, Dialog, List, ListItem, ListItemAvatar, Avatar, ListItemText, TextField, CircularProgress } from "@material-ui/core";
 import React, { Component } from "react";
 import Header from "../../component/Header";
 import Link from "../../component/link";
@@ -26,6 +13,8 @@ import {
   closeCreateNewSite,
   confirmPage
 } from "../../actions";
+import { openLoading, closeLoading } from "../../actions";
+import { getUserSites } from "../../actions/site";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -98,6 +87,19 @@ class MainPage extends Component {
     pageId: ""
   };
 
+  getAllUserSites = async () => {
+    const { isLogin, token, userId, getUserSites } = this.props;
+    if (isLogin) {
+      this.props.openLoading();
+      await getUserSites(userId, token);
+      this.props.closeLoading();
+    }
+  };
+
+  componentDidMount() {
+    this.getAllUserSites();
+  }
+
   handleSelectPage = ({ id, link }) => {
     this.setState({
       pageUrl: link,
@@ -139,7 +141,8 @@ class MainPage extends Component {
       openCreateNewSite,
       open,
       pages,
-      data
+      data,
+      loading
     } = this.props;
     const { pageUrl } = this.state;
 
@@ -287,18 +290,24 @@ class MainPage extends Component {
               </Grid>
             </Grid>
             <Grid container item sm={10} xs={12} md={6}>
-              {!data && (
+              {loading && (
+                <Grid container justify="center">
+                  <CircularProgress color="primary" style={{ marginTop: 50, color: 'lightgreen' }} />
+                </Grid>
+              )}
+              {!loading && !test ? (
                 <Grid container justify="center">
                   <p style={{ fontStyle: "italic", textAlign: "center", color: "#121212", marginTop: 50 }}>No site to show.</p>
                 </Grid>
-              )}
-              <List>
-                {data && data.map(item => (
-                  <ListItem key={item.id}>
-                    <WebsiteItem setEdit={setEdit} title={item.title} category={item.category} logo={item.logo} />
-                  </ListItem>
-                ))}
-              </List>
+              ) :
+                <List>
+                  {!loading && test && test.map(item => (
+                    <ListItem key={item.id}>
+                      <WebsiteItem setEdit={setEdit} title={item.title} category={item.category} logo={item.logo} />
+                    </ListItem>
+                  ))}
+                </List>
+              }
             </Grid>
           </Grid>
         </Grid>
@@ -310,6 +319,7 @@ class MainPage extends Component {
 const mapStateToProps = state => ({
   open: state.dialog.open,
   pages: state.user.pages,
+  sites: state.user.sites,
   accessToken: state.user.accessToken,
   profile: state.user.profile,
   name: state.theme.name,
@@ -318,13 +328,19 @@ const mapStateToProps = state => ({
   fontTitle: state.theme.fontTitle,
   navItems: state.theme.navItems,
   data: state.site.data,
+  loading: state.theme.loading,
+  userId: state.user.id,
+  token: state.user.accessToken,
 });
 
 const mapDispatchToProps = dispatch => ({
   setEdit: isEdit => dispatch(setEdit(isEdit)),
   closeCreateNewSite: () => dispatch(closeCreateNewSite()),
   openCreateNewSite: () => dispatch(openCreateNewSite()),
-  confirmPage: data => dispatch(confirmPage(data))
+  confirmPage: data => dispatch(confirmPage(data)),
+  openLoading: () => dispatch(openLoading()),
+  closeLoading: () => dispatch(closeLoading()),
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
