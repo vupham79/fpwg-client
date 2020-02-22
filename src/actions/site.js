@@ -64,94 +64,68 @@ export const unPublishSite = (id, isPublish) => {
   // };
 };
 
-export const getAllSite = () => {
+export const getAllSite = (token, id) => {
   return async dispatch => {
     const data = await axios({
-      url: "/site/findAll"
-      // params: {
-      //   access_token: accessToken,
-      //   id: id
-      // }
+      url: "/site/findAllByUser",
+      params: {
+        accessToken: token,
+        userId: id
+      }
     });
-    dispatch({
-      type: "GET_ALL_SITE",
-      payload: data.data
-    });
+    if (data.data) {
+      dispatch({
+        type: "GET_ALL_SITE",
+        payload: data.data
+      });
+    }
   };
 };
 
-export function createNewSite({
-  pageUrl,
-  pageId,
-  accessToken,
-  color,
-  fontBody,
-  fontTitle,
-  navItems
-}) {
-  return async dispatch => {
-    const data = await axios({
-      method: "POST",
-      url: "/facebook/confirmPage",
-      data: {
-        pageUrl,
-        pageId,
-        accessToken,
-        color,
-        fontBody,
-        fontTitle,
-        navItems
-      }
+export function changeColor(site) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_COLOR",
+      payload: site
     });
-    if (data.status !== 500) {
-      dispatch({
-        type: "CREATE_NEW_SITE",
-        payload: data.data
-      });
-      toastr.success("Your new site has been create.", "Success");
-    } else {
-      toastr.error(
-        "There are something wrong when you create website. Please try again.",
-        "Fail"
-      );
-    }
   };
 }
 
-export function saveDesignSite({
-  pageId,
-  color,
-  fontBody,
-  fontTitle,
-  logo,
-  navItems
-}) {
-  return async dispatch => {
-    const data = await axios({
-      method: "POST",
-      url: "/site/update",
-      params: {
-        id: pageId
-      },
-      data: {
-        fontTitle,
-        fontBody,
-        color,
-        logo,
-        navItems
+export function changeFontTitle(site) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_FONT_TITLE",
+      payload: site
+    });
+  };
+}
+
+export function changeFontBody(site) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_FONT_BODY",
+      payload: site
+    });
+  };
+}
+
+export function setSiteIsEdit(isEdit, site) {
+  return dispatch => {
+    dispatch({
+      type: "SET_SITE_IS_EDIT",
+      payload: {
+        isEdit,
+        site
       }
     });
-    if (data.status === 200) {
-      dispatch({
-        type: "EDIT_SITE",
-        payload: data.data
-      });
-      toastr.success("Your new site has been create.", "Success");
-    } else {
-      toastr.error(
-        "There are something wrong when you create website. Please try again.",
-        "Fail"
-      );
-    }
+  };
+}
+
+export function changeNavItems(items) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_NAV_ITEMS",
+      payload: items
+    });
   };
 }

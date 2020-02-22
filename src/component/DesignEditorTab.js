@@ -1,25 +1,25 @@
-import React from "react";
-import { ChromePicker, TwitterPicker } from "react-color";
-import { themes } from "../constant/constant";
-import FontPicker from "font-picker-react";
 import {
   Button,
-  Grid,
   Divider,
+  Grid,
   List,
   MenuItem,
-  Typography,
-  Select
+  Select,
+  Typography
 } from "@material-ui/core";
+import { red } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
+import FontPicker from "font-picker-react";
+import React from "react";
+import { ChromePicker, TwitterPicker } from "react-color";
 import { connect } from "react-redux";
 import {
-  changeTheme,
-  changeFontTitle,
-  changeFontBody,
   changeColor,
-  setShowCustomColor,
-  getImageUrl
+  changeFontBody,
+  changeFontTitle,
+  changeTheme,
+  getImageUrl,
+  setShowCustomColor
 } from "../actions";
 
 const useStyles = theme => ({
@@ -71,29 +71,42 @@ const imgStyles = {
 };
 
 class DesignEditorTab extends React.Component {
+  handleChangeTitle = font => {
+    const { site, changeFontTitle } = this.props;
+    site.fontTitle = font.family;
+    changeFontTitle(site);
+  };
+  handleChangeColor = color => {
+    const { site, changeColor } = this.props;
+    site.color = color.hex;
+    changeColor(site);
+  };
+  handleChangeFontBody = font => {
+    const { site, changeFontBody } = this.props;
+    site.fontBody = font.family;
+    changeFontBody(site);
+  };
   render() {
     const drawerWidth = 280;
     const {
-      themeName,
       changeTheme,
-      themeFontTitle,
-      changeColor,
-      changeFontTitle,
-      themeFontBody,
-      changeFontBody,
       isShow,
-      themeColor,
       setShowCustomColor,
       classes,
-      getImageUrl
+      getImageUrl,
+      themes,
+      site
     } = this.props;
+
+    const themeName = themes.find(e => e._id === site.themeId);
+
     return (
       <>
         <Typography className={classes.title}>Theme</Typography>
         <Select
           // defaultValue={themeName}
           autoComplete="true"
-          value={themeName}
+          value={themeName.name}
           fullWidth
           onChange={
             event => changeTheme(event.target.value)
@@ -116,8 +129,8 @@ class DesignEditorTab extends React.Component {
             <FontPicker
               apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
               sort="alphabet"
-              activeFontFamily={themeFontTitle}
-              onChange={font => changeFontTitle(font.family)}
+              activeFontFamily={site.fontTitle}
+              onChange={this.handleChangeTitle}
             />
           </List>
           <Divider />
@@ -125,8 +138,8 @@ class DesignEditorTab extends React.Component {
           <FontPicker
             apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
             sort="alphabet"
-            activeFontFamily={themeFontBody}
-            onChange={font => changeFontBody(font.family)}
+            activeFontFamily={site.fontBody}
+            onChange={this.handleChangeFontBody}
           />
         </Grid>
         <Divider
@@ -137,8 +150,8 @@ class DesignEditorTab extends React.Component {
           <Typography className={classes.title2}>Suggested Color</Typography>
           <TwitterPicker
             width={"fit-content"}
-            color={themeColor}
-            onChangeComplete={color => changeColor(color.hex)}
+            color={red}
+            onChangeComplete={this.handleChangeColor}
           />
           <Divider />
           <Typography className={classes.title2}>Custom Color</Typography>
@@ -161,8 +174,8 @@ class DesignEditorTab extends React.Component {
               }}
             >
               <ChromePicker
-                color={themeColor}
-                onChangeComplete={color => changeColor(color.hex)}
+                color={red}
+                onChangeComplete={this.handleChangeColor}
               />
             </Grid>
           ) : null}
@@ -191,18 +204,16 @@ class DesignEditorTab extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  themeName: state.theme.name,
-  themeColor: state.theme.color,
-  themeFontTitle: state.theme.fontTitle,
-  themeFontBody: state.theme.fontBody,
-  isShow: state.theme.isShow
+  themes: state.theme.data,
+  isShow: state.theme.isShow,
+  site: state.site.siteEdit
 });
 
 const mapDispatchToProps = dispatch => ({
   changeTheme: name => dispatch(changeTheme(name)),
-  changeColor: color => dispatch(changeColor(color)),
-  changeFontTitle: fontTitle => dispatch(changeFontTitle(fontTitle)),
-  changeFontBody: fontBody => dispatch(changeFontBody(fontBody)),
+  changeColor: site => dispatch(changeColor(site)),
+  changeFontTitle: site => dispatch(changeFontTitle(site)),
+  changeFontBody: site => dispatch(changeFontBody(site)),
   setShowCustomColor: isShow => dispatch(setShowCustomColor(isShow)),
   getImageUrl: url => dispatch(getImageUrl(url))
 });

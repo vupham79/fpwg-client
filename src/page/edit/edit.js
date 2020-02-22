@@ -1,20 +1,22 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { themes } from "../../constant/constant";
+import { themes as themesConstant } from "../../constant/constant";
 import EditLayout from "../../layout/editor";
 
 class EditPage extends Component {
   render() {
-    const { themeName } = this.props;
+    const { themes, siteEdit } = this.props;
+    const themeName = themes.find(e => e._id === siteEdit.themeId);
 
-    const theme = themes.find(element => element.name === themeName);
+    const theme = themesConstant.find(e => e.name === themeName.name);
 
     return <EditLayout>{theme.component}</EditLayout>;
   }
 }
 
 const mapStateToProps = state => ({
-  themeName: state.theme.name
+  themes: state.theme.data,
+  siteEdit: state.site.siteEdit
 });
 
 const mapDispatchToProps = dispatch => ({});

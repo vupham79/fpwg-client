@@ -74,13 +74,12 @@ class PagesEditorTab extends React.Component {
         items={navItems}
         onSortEnd={this.onChangeItem}
         useDragHandle
-        // lockToContainerEdges={true}
       />
     );
   }
 }
 const mapStateToProps = state => ({
-  navItems: state.theme.navItems
+  navItems: state.site.siteEdit.navItems
 });
 
 const mapDispatchToProps = dispatch => ({

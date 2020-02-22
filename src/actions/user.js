@@ -34,15 +34,6 @@ export function setLogout() {
   };
 }
 
-export function setEdit(isEdit) {
-  return dispatch => {
-    dispatch({
-      type: "SET_EDIT",
-      payload: isEdit
-    });
-  };
-}
-
 export function getUserPages({ accessToken }) {
   return async dispatch => {
     const data = await axios({
@@ -71,9 +62,9 @@ export function confirmPage({
   pages
 }) {
   return async dispatch => {
-    await axios({
+    const site = await axios({
       method: "POST",
-      url: "/facebook/confirmPage",
+      url: "/site/createNewSite",
       data: {
         pageUrl,
         pageId,
@@ -88,5 +79,12 @@ export function confirmPage({
         pages
       }
     });
+    if (site.status === 200) {
+      dispatch({ type: "CREATE_NEW_SITE_SUCCESS", payload: site.data });
+    } else {
+      dispatch({
+        type: "CREATE_NEW_SITE_FAIL"
+      });
+    }
   };
 }

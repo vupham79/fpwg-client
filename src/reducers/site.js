@@ -1,14 +1,8 @@
 const defaultState = {
   currentId: null,
-  data: [
-    {
-      id: "",
-      isActive: false,
-      title: "",
-      category: "",
-      logo: ""
-    }
-  ]
+  data: [],
+  isEdit: false,
+  siteEdit: {}
 };
 
 const SiteReducer = (state = defaultState, action) => {
@@ -36,21 +30,46 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         data: [...state.data]
       };
-    case "CREATE_NEW_SITE":
-      return {
-        ...state,
-        data: [...action.payload]
-      };
     case "GET_ALL_SITE":
       return {
         ...state,
         data: [...action.payload]
       };
-    case "EDIT_SITE":
-      const editIndex = state.data.findIndex(e => e.id === action.payload.id);
-      state.data[editIndex] = action.payload;
+    case "GET_SITE_BY_ID":
       return {
+        ...state,
         data: [...action.payload]
+      };
+    case "CREATE_NEW_SITE_SUCCESS":
+      return {
+        ...state,
+        data: [action.payload]
+      };
+    case "CHANGE_COLOR":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
+    case "CHANGE_FONT_TITLE":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
+    case "CHANGE_FONT_BODY":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
+    case "SET_SITE_IS_EDIT":
+      return {
+        ...state,
+        isEdit: action.payload.isEdit,
+        siteEdit: action.payload.site
+      };
+    case "CHANGE_NAV_ITEMS":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
       };
     case "SET_LOGOUT":
       return {

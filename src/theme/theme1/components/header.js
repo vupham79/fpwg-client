@@ -8,18 +8,10 @@ import { updateNavItemValue } from "../../../actions";
 
 class Header extends Component {
   render() {
-    const {
-      siteId,
-      themeFontTitle,
-      themeColor,
-      isEdit,
-      tabValue,
-      updateNavItemValue,
-      navItems
-    } = this.props;
+    const { siteEdit, isEdit, tabValue, updateNavItemValue } = this.props;
     const tabStyles = {
       textTransform: "none",
-      fontFamily: themeFontTitle,
+      fontFamily: siteEdit.fontTitle,
       color: "#212121",
       minWidth: "3vh",
       "&:hover": {
@@ -35,10 +27,9 @@ class Header extends Component {
     };
 
     // const currentPage = "";
-
     const changeStyle = {
-      fontFamily: themeFontTitle,
-      color: themeColor
+      fontFamily: siteEdit.fontTitle,
+      color: siteEdit.color
     };
 
     return (
@@ -54,12 +45,12 @@ class Header extends Component {
                   centered
                   onChange={(e, newValue) => updateNavItemValue(newValue)}
                 >
-                  {navItems.map((item, index) => (
+                  {siteEdit.navItems.map((item, index) => (
                     <Tab style={tabStyles} label={item.name} key={index} />
                   ))}
                 </Tabs>
               ) : (
-                navItems.map((item, index) => (
+                siteEdit.navItems.map((item, index) => (
                   <Grid
                     className={styles.nav_item}
                     item
@@ -67,7 +58,10 @@ class Header extends Component {
                     sm={1}
                     key={index}
                   >
-                    <Link className={styles.links} to={`/${siteId}/${item}`}>
+                    <Link
+                      className={styles.links}
+                      to={`/${siteEdit.id}/${item}`}
+                    >
                       {item}
                     </Link>
                   </Grid>
@@ -89,9 +83,7 @@ class Header extends Component {
 const mapStateToProps = state => ({
   tabValue: state.tab.navItemValue,
   isEdit: state.user.isEdit,
-  themeFontTitle: state.theme.fontTitle,
-  themeColor: state.theme.color,
-  navItems: state.theme.navItems
+  siteEdit: state.site.siteEdit
 });
 
 const mapDispatchToProps = dispatch => ({

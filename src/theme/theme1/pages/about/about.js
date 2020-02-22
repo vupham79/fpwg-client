@@ -5,11 +5,11 @@ import ExampleComponent from "react-rounded-image";
 
 class Theme1About extends React.Component {
   render() {
-    const { themeFontTitle, themeFontBody, themeColor } = this.props;
+    const { siteEdit } = this.props;
 
     const useStyles = () => ({
       changableTitle: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
@@ -17,28 +17,28 @@ class Theme1About extends React.Component {
         paddingBottom: 20
       },
       changableBody: {
-        fontFamily: themeFontBody,
+        fontFamily: siteEdit.fontBody,
         color: "#212121",
         textAlign: "justify",
         fontSize: 16
       },
       pageName: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "#212121",
         fontSize: 20
       },
       changableFirst: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: themeColor
+        textDecorationColor: siteEdit.color
       },
       changableLegend: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "white",
         zIndex: 5,
@@ -91,7 +91,7 @@ class Theme1About extends React.Component {
         <Grid container item xs={12} justify={"center"}>
           <ExampleComponent
             image="./images/theme1-banner3.jpg"
-            roundedColor={themeColor}
+            roundedColor={siteEdit.color}
             imageWidth="150"
             imageHeight="150"
             roundedSize="5"
@@ -120,10 +120,7 @@ class Theme1About extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  siteId: state.site.id,
-  themeFontTitle: state.theme.fontTitle,
-  themeColor: state.theme.color,
-  themeFontBody: state.theme.fontBody
+  siteEdit: state.site.siteEdit
 });
 
 export default connect(mapStateToProps, null)(Theme1About);

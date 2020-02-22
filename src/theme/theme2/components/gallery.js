@@ -22,11 +22,11 @@ class Gallery extends Component {
   }
 
   render() {
-    const { themeFontTitle, themeColor } = this.props;
+    const { siteEdit } = this.props;
 
     const changeStyle = {
-      fontFamily: themeFontTitle,
-      color: themeColor
+      fontFamily: siteEdit.fontTitle,
+      color: siteEdit.color
     };
 
     return (
@@ -59,8 +59,7 @@ class Gallery extends Component {
 }
 
 const mapStateToProps = state => ({
-  themeFontTitle: state.theme.fontTitle,
-  themeColor: state.theme.color
+  siteEdit: state.site.siteEdit
 });
 
 export default connect(mapStateToProps, null)(Gallery);

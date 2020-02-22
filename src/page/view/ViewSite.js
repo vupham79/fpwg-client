@@ -1,5 +1,5 @@
 import React from "react";
-import { themes } from "../../constant/constant";
+import { themes as themesConstant } from "../../constant/constant";
 import { connect } from "react-redux";
 import { updateSiteId } from "../../actions";
 
@@ -10,7 +10,7 @@ class ViewSite extends React.Component {
   }
 
   render() {
-    return themes[1].component;
+    return themesConstant[1].component;
   }
 }
 

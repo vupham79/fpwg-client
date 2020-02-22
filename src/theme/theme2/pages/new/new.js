@@ -89,12 +89,12 @@ class NewPage extends Component {
   }
 
   render() {
-    const { themeFontTitle, themeColor } = this.props;
-
+    const { siteEdit } = this.props;
     const changeStyle = {
-      fontFamily: themeFontTitle,
-      color: themeColor
+      fontFamily: siteEdit.fontTitle,
+      color: siteEdit.color
     };
+
     return (
       <Container className={styles.news}>
         <Grid container>
@@ -125,8 +125,7 @@ class NewPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  themeFontTitle: state.theme.fontTitle,
-  themeColor: state.theme.color
+  siteEdit: state.site.siteEdit
 });
 
 export default connect(mapStateToProps, null)(NewPage);

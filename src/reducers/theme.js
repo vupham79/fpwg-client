@@ -1,41 +1,5 @@
 const defaultState = {
-  name: "theme2",
-  color: "red",
-  fontTitle: "Arial",
-  fontBody: "Arial",
-  navItems: [
-    {
-      name: "Home",
-      order: 1,
-      isActive: true
-    },
-    {
-      name: "About",
-      order: 2,
-      isActive: true
-    },
-    {
-      name: "Gallery",
-      order: 3,
-      isActive: true
-    },
-    {
-      name: "Event",
-      order: 4,
-      isActive: true
-    },
-    {
-      name: "Contact",
-      order: 5,
-      isActive: true
-    },
-    {
-      name: "News",
-      order: 6,
-      isActive: true
-    }
-  ],
-  isShow: false
+  data: []
 };
 
 const ThemeReducer = (state = defaultState, action) => {
@@ -44,21 +8,6 @@ const ThemeReducer = (state = defaultState, action) => {
       return {
         ...state,
         name: action.payload
-      };
-    case "CHANGE_COLOR":
-      return {
-        ...state,
-        color: action.payload
-      };
-    case "CHANGE_FONT_TITLE":
-      return {
-        ...state,
-        fontTitle: action.payload
-      };
-    case "CHANGE_FONT_BODY":
-      return {
-        ...state,
-        fontBody: action.payload
       };
     case "SET_SHOW_CUSTOM_COLOR":
       return {
@@ -84,11 +33,12 @@ const ThemeReducer = (state = defaultState, action) => {
         ...state,
         navItems: action.payload
       };
-    case "CHANGE_NAV_ITEMS":
+    case "GET_ALL_THEME":
       return {
         ...state,
-        navItems: [...action.payload]
+        data: [...action.payload]
       };
+
     default:
       return state;
   }

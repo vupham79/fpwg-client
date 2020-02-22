@@ -69,10 +69,10 @@ class CarouselImages extends Component {
   }
 
   render() {
-    const { themeFontBody } = this.props;
+    const { siteEdit } = this.props;
 
     const changeStyle = {
-      fontFamily: themeFontBody
+      fontFamily: siteEdit.fontBody
     };
     return (
       <Grid container alignItems="center">
@@ -111,7 +111,7 @@ class CarouselImages extends Component {
 }
 
 const mapStateToProps = state => ({
-  themeFontBody: state.theme.fontBody
+  siteEdit: state.site.siteEdit
 });
 
 export default connect(mapStateToProps, null)(CarouselImages);

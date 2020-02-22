@@ -41,11 +41,14 @@ const IOSSwitch = withStyles(theme => ({
 
 class SwitchButton extends React.Component {
   handleChange = () => {
-    const { status, id, unPublishSite, publishSite } = this.props;
+    const { status, unPublishSite, publishSite } = this.props;
+    const id = this.props.pageId;
+
     status ? unPublishSite(id, false) : publishSite(id, true);
   };
   render() {
     const { status } = this.props;
+
     return (
       <FormControlLabel
         control={<IOSSwitch checked={status} onChange={this.handleChange} />}

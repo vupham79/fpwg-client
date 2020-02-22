@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import MainPage from "./main";
-import { getUserPages } from "../../actions";
+import { getUserPages, getAllSite } from "../../actions";
 class PreMainPage extends Component {
   state = {
     data: []
@@ -20,10 +20,11 @@ class PreMainPage extends Component {
   }
 
   render() {
-    const { isLogin } = this.props;
+    const { isLogin, getAllSite, accessToken, userId } = this.props;
     if (!isLogin) {
       return <Redirect to="/" />;
     }
+    getAllSite(accessToken, userId);
     return <MainPage />;
   }
 }
@@ -35,7 +36,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUserPages: accessToken => dispatch(getUserPages(accessToken))
+  getUserPages: accessToken => dispatch(getUserPages(accessToken)),
+  getAllSite: (token, id) => dispatch(getAllSite(token, id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreMainPage);

@@ -2,14 +2,7 @@ const defaultState = {
   profile: {},
   accessToken: "",
   isLogin: false,
-  isEdit: false,
-  pages: [],
-  sites: [
-    {
-      id: 1,
-      isPublish: true
-    }
-  ]
+  pages: []
 };
 
 const UserReducer = (state = defaultState, action) => {
@@ -24,11 +17,6 @@ const UserReducer = (state = defaultState, action) => {
     case "SET_LOGOUT":
       return {
         ...defaultState
-      };
-    case "SET_EDIT":
-      return {
-        ...state,
-        isEdit: action.payload
       };
     case "SET_USER_PAGES":
       return {

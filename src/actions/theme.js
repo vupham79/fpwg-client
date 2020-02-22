@@ -9,33 +9,6 @@ export function changeTheme(name) {
   };
 }
 
-export function changeColor(color) {
-  return dispatch => {
-    dispatch({
-      type: "CHANGE_COLOR",
-      payload: color
-    });
-  };
-}
-
-export function changeFontTitle(fontTitle) {
-  return dispatch => {
-    dispatch({
-      type: "CHANGE_FONT_TITLE",
-      payload: fontTitle
-    });
-  };
-}
-
-export function changeFontBody(fontBody) {
-  return dispatch => {
-    dispatch({
-      type: "CHANGE_FONT_BODY",
-      payload: fontBody
-    });
-  };
-}
-
 export function setShowCustomColor(isShow) {
   return dispatch => {
     dispatch({
@@ -45,23 +18,25 @@ export function setShowCustomColor(isShow) {
   };
 }
 
-export function changeNavItems(items) {
-  return dispatch => {
-    dispatch({
-      type: "CHANGE_NAV_ITEMS",
-      payload: items
-    });
-  };
-}
-
 export function getNavItems() {
   return async dispatch => {
     const data = await axios({
-      method: "GET",
       url: "/navItem/findAll"
     });
     dispatch({
       type: "GET_NAV_ITEMS",
+      payload: data.data
+    });
+  };
+}
+
+export function getAllThemes() {
+  return async dispatch => {
+    const data = await axios({
+      url: "/theme/findAll"
+    });
+    dispatch({
+      type: "GET_ALL_THEME",
       payload: data.data
     });
   };

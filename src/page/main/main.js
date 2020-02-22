@@ -1,33 +1,31 @@
 import { faCog, faEye, faThLarge } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  Avatar,
   Button,
-  Grid,
-  MenuItem,
-  MenuList,
-  Typography,
   Dialog,
+  Grid,
   List,
   ListItem,
   ListItemAvatar,
-  Avatar,
   ListItemText,
-  TextField
+  MenuItem,
+  MenuList,
+  TextField,
+  Typography
 } from "@material-ui/core";
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import {
+  closeCreateNewSite,
+  confirmPage,
+  openCreateNewSite,
+  setSiteIsEdit
+} from "../../actions";
 import Header from "../../component/Header";
 import Link from "../../component/link";
-import styles from "./main.module.css";
-import { connect } from "react-redux";
 import SwitchButton from "../../component/SwitchButton";
-import {
-  setEdit,
-  openCreateNewSite,
-  closeCreateNewSite,
-  createNewSite
-} from "../../actions";
-
-import Spinner from "../../component/Spinner";
+import styles from "./main.module.css";
 
 const imgUrl = [
   "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
@@ -43,31 +41,6 @@ const imgStyles = {
   width: "80%"
 };
 
-// const test = [
-//   {
-//     id: "1",
-//     isActive: true,
-//     title: "page 1",
-//     category: "Books",
-//     logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3"
-//   },
-//   {
-//     id: "2",
-//     isActive: true,
-//     title: "page 2",
-//     category: "Food",
-//     logo: "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E"
-//   },
-//   {
-//     id: "3",
-//     isActive: false,
-//     title: "page 3",
-//     category: "Toys",
-//     logo: ""
-//   }
-
-// ]
-
 function WebsiteItem(props) {
   return (
     <>
@@ -78,7 +51,7 @@ function WebsiteItem(props) {
           </Grid>
           <Grid item sm={8} xs={8} md={6}>
             <Typography variant="h5" className={styles.web_content}>
-              Foody
+              {props.siteInfo.title}
             </Typography>
             <Typography variant="body2" className={styles.web_content}>
               Food and Beverage (other)
@@ -104,7 +77,7 @@ function WebsiteItem(props) {
               <Link to="/edit">
                 <Button
                   className={styles.help_button}
-                  onClick={() => props.setEdit(true)}
+                  onClick={() => props.setSiteIsEdit(true, props.siteInfo)}
                 >
                   Edit
                   <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
@@ -113,11 +86,10 @@ function WebsiteItem(props) {
             </Grid>
           </Grid>
           <Grid container item justify="flex-end" md={12}>
-            <SwitchButton />
+            <SwitchButton pageId={props.siteInfo.id} />
           </Grid>
         </Grid>
       </Grid>
-      <Spinner />
     </>
   );
 }
@@ -137,7 +109,7 @@ class MainPage extends Component {
 
   handleConfirm = () => {
     const {
-      createNewSite,
+      confirmPage,
       accessToken,
       color,
       fontBody,
@@ -151,7 +123,7 @@ class MainPage extends Component {
 
     const { pageId, pageUrl } = this.state;
 
-    createNewSite({
+    confirmPage({
       pageId,
       pageUrl,
       accessToken,
@@ -168,12 +140,11 @@ class MainPage extends Component {
 
   render() {
     const {
-      setEdit,
+      setSiteIsEdit,
       closeCreateNewSite,
       openCreateNewSite,
       open,
       pages,
-      data,
       sites
     } = this.props;
     const { pageUrl } = this.state;
@@ -331,7 +302,11 @@ class MainPage extends Component {
                   <h3>You don't have any Website. Please create a new site.</h3>
                 ) : (
                   sites.map((item, index) => (
-                    <WebsiteItem key={index} setEdit={setEdit} />
+                    <WebsiteItem
+                      key={index}
+                      setSiteIsEdit={setSiteIsEdit}
+                      siteInfo={item}
+                    />
                   ))
                 )}
               </Grid>
@@ -358,10 +333,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setEdit: isEdit => dispatch(setEdit(isEdit)),
+  setSiteIsEdit: (isEdit, site) => dispatch(setSiteIsEdit(isEdit, site)),
   closeCreateNewSite: () => dispatch(closeCreateNewSite()),
   openCreateNewSite: () => dispatch(openCreateNewSite()),
-  createNewSite: data => dispatch(createNewSite(data))
+  confirmPage: data => dispatch(confirmPage(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

@@ -34,15 +34,15 @@ class FooterPage extends Component {
   }
 
   render() {
-    const { themeFontBody, themeFontTitle, themeColor } = this.props;
+    const { siteEdit } = this.props;
 
     const changeTitleStyle = {
-      fontFamily: themeFontTitle,
-      color: themeColor
+      fontFamily: siteEdit.fontTitle,
+      color: siteEdit.color
     };
 
     const changeBodyStyle = {
-      fontFamily: themeFontBody
+      fontFamily: siteEdit.fontBody
     };
 
     return (
@@ -111,10 +111,7 @@ class FooterPage extends Component {
   }
 }
 const mapStateToProps = state => ({
-  siteId: state.site.id,
-  themeFontTitle: state.theme.fontTitle,
-  themeColor: state.theme.color,
-  themeFontBody: state.theme.fontBody
+  siteEdit: state.site.siteEdit
 });
 
 export default connect(mapStateToProps, null)(FooterPage);

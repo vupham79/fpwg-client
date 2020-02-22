@@ -8,19 +8,12 @@ import { updateNavItemValue } from "../../../actions";
 
 class Header extends Component {
   render() {
-    const {
-      siteId,
-      themeFontTitle,
-      themeColor,
-      isEdit,
-      tabValue,
-      updateNavItemValue,
-      navItems
-    } = this.props;
+    const { isEdit, tabValue, updateNavItemValue, siteEdit } = this.props;
+    console.log(siteEdit.color);
     const tabStyles = {
       textTransform: "none",
-      fontFamily: themeFontTitle,
-      color: themeColor,
+      fontFamily: siteEdit.fontTitle,
+      color: siteEdit.color,
       minWidth: "3vh",
       "&:hover": {
         color: "#40a9ff",
@@ -37,9 +30,11 @@ class Header extends Component {
     // const currentPage = "";
 
     const changeStyle = {
-      fontFamily: themeFontTitle,
-      color: themeColor
+      fontFamily: siteEdit.fontTitle,
+      color: siteEdit.color
     };
+
+    const navItems = siteEdit.navItems;
 
     return (
       <AppBar className={styles.app_bar} position="sticky">
@@ -73,7 +68,10 @@ class Header extends Component {
                     sm={1}
                     key={index}
                   >
-                    <Link className={styles.links} to={`/${siteId}/${item}`}>
+                    <Link
+                      className={styles.links}
+                      to={`/${siteEdit.id}/${item}`}
+                    >
                       {item.name}
                     </Link>
                   </Grid>
@@ -89,10 +87,8 @@ class Header extends Component {
 
 const mapStateToProps = state => ({
   tabValue: state.tab.navItemValue,
-  isEdit: state.user.isEdit,
-  themeFontTitle: state.theme.fontTitle,
-  themeColor: state.theme.color,
-  navItems: state.theme.navItems
+  siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -3,18 +3,19 @@ import {
   unPublishSite,
   publishSite,
   getAllSite,
-  createNewSite
-} from "./site";
-import {
-  changeTheme,
   changeFontBody,
   changeFontTitle,
   changeColor,
+  setSiteIsEdit,
+  changeNavItems
+} from "./site";
+import {
+  changeTheme,
   setShowCustomColor,
-  changeNavItems,
-  getNavItems
+  getNavItems,
+  getAllThemes
 } from "./theme";
-import { setEdit, setLogout, login, getUserPages } from "./user";
+import { setLogout, login, getUserPages, confirmPage } from "./user";
 import { updateTabValue, updateNavItemValue } from "./tab";
 import { getImageUrl } from "./image";
 import { closeCreateNewSite, openCreateNewSite } from "./dialog";
@@ -31,7 +32,6 @@ export {
   setLogout,
   updateTabValue,
   getImageUrl,
-  setEdit,
   updateNavItemValue,
   showLoading,
   closeLoading,
@@ -39,10 +39,12 @@ export {
   //dialog
   closeCreateNewSite,
   openCreateNewSite,
-  createNewSite,
   changeNavItems,
   getNavItems,
   unPublishSite,
   publishSite,
-  getAllSite
+  getAllSite,
+  confirmPage,
+  getAllThemes,
+  setSiteIsEdit
 };
