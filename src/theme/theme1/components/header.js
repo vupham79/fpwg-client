@@ -26,7 +26,6 @@ class Header extends Component {
       }
     };
 
-    // const currentPage = "";
     const changeStyle = {
       fontFamily: siteEdit.fontTitle,
       color: siteEdit.color
@@ -83,7 +82,8 @@ class Header extends Component {
 const mapStateToProps = state => ({
   tabValue: state.tab.navItemValue,
   isEdit: state.user.isEdit,
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit
 });
 
 const mapDispatchToProps = dispatch => ({

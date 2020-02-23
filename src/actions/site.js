@@ -135,7 +135,8 @@ export function saveDesignSite(site) {
         navItems: site.navItems,
         themeId: site.themeId,
         pageId: site.id,
-        name: site.title
+        name: site.title,
+        color: site.color
       }
     });
     if (data.status === 200) {

@@ -56,32 +56,45 @@ export function getUserPages({ accessToken }) {
         type: "SET_USER_PAGES",
         payload: data.data
       });
-    } else {
     }
   };
 }
 
 export function confirmPage({ pageUrl, pageId, accessToken, name, profile }) {
   return async dispatch => {
-    const site = await axios({
-      method: "POST",
-      url: "/site/createNewSite",
-      data: {
-        pageUrl,
-        pageId,
-        accessToken,
-        name,
-        userId: profile.id,
-        profile
-      }
+    dispatch({
+      type: "SHOW_LOADING"
     });
-    if (site.status === 200) {
-      dispatch({ type: "CREATE_NEW_SITE_SUCCESS", payload: site.data });
-      toastr.success(`Create new site ${name} success`, "Sucess");
-    } else {
-      dispatch({
-        type: "CREATE_NEW_SITE_FAIL"
+    try {
+      const site = await axios({
+        method: "POST",
+        url: "/site/createNewSite",
+        data: {
+          pageUrl,
+          pageId,
+          accessToken,
+          name,
+          userId: profile.id,
+          profile
+        }
       });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (site.status === 200) {
+        dispatch({ type: "CREATE_NEW_SITE_SUCCESS", payload: site.data });
+        toastr.success(`Create new site ${name} success`, "Sucess");
+        return true;
+      } else {
+        toastr.error(`Create new site ${name} failed`, "Error");
+      }
+      return true;
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Create new site ${name} failed`, "Error");
+      return true;
     }
   };
 }

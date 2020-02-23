@@ -5,11 +5,9 @@ import { getUserPages, getUserSites } from "../../actions";
 import MainPage from "./main";
 
 class PreMainPage extends Component {
-  getUserInfo = async () => {
-    const { isLogin, accessToken, userId, getUserPages } = this.props;
-    if (isLogin) {
-      await getUserPages({ accessToken, userId });
-    }
+  getUserPages = async () => {
+    const { accessToken, userId, getUserPages } = this.props;
+    await getUserPages({ accessToken, userId });
   };
 
   getAllUserSites = async () => {
@@ -18,7 +16,7 @@ class PreMainPage extends Component {
   };
 
   componentDidMount() {
-    this.getUserInfo();
+    this.getUserPages();
     this.getAllUserSites();
   }
 

@@ -113,9 +113,8 @@ class DesignEditorTab extends React.Component {
         <div style={{ overflowY: "scroll" }}>
           <Typography className={classes.title}>Theme</Typography>
           <Select
-            // defaultValue={themeName}
             autoComplete="true"
-            value={themeName.name}
+            value={themeName && themeName.name}
             fullWidth
             onChange={this.handleChangeTheme}
           >

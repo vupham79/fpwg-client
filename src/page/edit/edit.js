@@ -6,11 +6,10 @@ import EditLayout from "../../layout/editor";
 class EditPage extends Component {
   render() {
     const { themes, siteEdit } = this.props;
-    const themeName = themes.find(e => e._id === siteEdit.themeId);
-
-    const theme = themesConstant.find(e => e.name === themeName.name);
-
-    return <EditLayout>{theme.component}</EditLayout>;
+    const themeName = themes && themes.find(e => e._id === siteEdit.themeId);
+    const theme =
+      themeName && themesConstant.find(e => e.name === themeName.name);
+    return <EditLayout>{theme && theme.component}</EditLayout>;
   }
 }
 

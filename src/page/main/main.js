@@ -20,7 +20,8 @@ import {
   closeCreateNewSite,
   confirmPage,
   openCreateNewSite,
-  setSiteIsEdit
+  setSiteIsEdit,
+  getUserSites
 } from "../../actions";
 import Header from "../../component/Header";
 import Link from "../../component/link";
@@ -95,27 +96,94 @@ function WebsiteItem({ setSiteIsEdit, site }) {
 class MainPage extends Component {
   state = {
     pageUrl: "",
-    pageId: ""
+    pageId: "",
+    pageName: ""
   };
 
-  handleSelectPage = ({ id, link }) => {
+  handleSelectPage = ({ id, link, name }) => {
     this.setState({
       pageUrl: link,
-      pageId: id
+      pageId: id,
+      pageName: name
     });
   };
 
-  handleConfirm = () => {
-    const { confirmPage, accessToken, profile } = this.props;
-    const { pageId, pageUrl } = this.state;
-
-    confirmPage({
+  handleConfirm = async () => {
+    const {
+      confirmPage,
+      accessToken,
+      profile,
+      closeCreateNewSite,
+      userId,
+      getUserSites
+    } = this.props;
+    const { pageId, pageUrl, pageName } = this.state;
+    const confirm = await confirmPage({
       pageId,
       pageUrl,
       accessToken,
-      profile
+      profile,
+      name: pageName
     });
+    confirm && (await getUserSites(userId, accessToken));
     closeCreateNewSite();
+  };
+
+  renderPagesNotGenerated = () => {
+    const { pages, sites } = this.props;
+    if (pages) {
+      return sites
+        ? sites.map(site =>
+            pages.map(
+              page =>
+                page.id != site.id && (
+                  <ListItem
+                    button
+                    onClick={() =>
+                      this.handleSelectPage({
+                        id: page.id,
+                        link: page.link,
+                        name: page.name
+                      })
+                    }
+                    key={page.id}
+                  >
+                    <ListItemAvatar>
+                      <Avatar>
+                        <img src={page.picture.data.url} alt="" />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={page.name}
+                      secondary={page.category}
+                    />
+                  </ListItem>
+                )
+            )
+          )
+        : pages.map(page => (
+            <ListItem
+              button
+              onClick={() =>
+                this.handleSelectPage({
+                  id: page.id,
+                  link: page.link,
+                  name: page.name
+                })
+              }
+              key={page.id}
+            >
+              <ListItemAvatar>
+                <Avatar>
+                  <img src={page.picture.data.url} alt="" />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={page.name} secondary={page.category} />
+            </ListItem>
+          ));
+    } else {
+      return <h3>No pages existing or You haven't authorize any page</h3>;
+    }
   };
 
   render() {
@@ -124,7 +192,6 @@ class MainPage extends Component {
       closeCreateNewSite,
       openCreateNewSite,
       open,
-      pages,
       sites
     } = this.props;
     const { pageUrl } = this.state;
@@ -219,30 +286,7 @@ class MainPage extends Component {
                     fullWidth
                   >
                     <List>
-                      {pages &&
-                        pages.map(page => (
-                          <ListItem
-                            button
-                            onClick={() =>
-                              this.handleSelectPage({
-                                id: page.id,
-                                link: page.link
-                              })
-                            }
-                            key={page.id}
-                          >
-                            <ListItemAvatar>
-                              <Avatar>
-                                <img src={page.picture.data.url} alt="" />
-                              </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                              primary={page.name}
-                              secondary={page.category}
-                            />
-                          </ListItem>
-                        ))}
-
+                      {this.renderPagesNotGenerated()}
                       <ListItem autoFocus button>
                         <TextField
                           fullWidth
@@ -292,7 +336,7 @@ const mapStateToProps = state => ({
   sites: state.site.data,
   accessToken: state.user.accessToken,
   profile: state.user.profile,
-  userId: state.user.id,
+  userId: state.user.profile.id,
   token: state.user.accessToken
 });
 
@@ -300,7 +344,8 @@ const mapDispatchToProps = dispatch => ({
   setSiteIsEdit: (isEdit, site) => dispatch(setSiteIsEdit(isEdit, site)),
   closeCreateNewSite: () => dispatch(closeCreateNewSite()),
   openCreateNewSite: () => dispatch(openCreateNewSite()),
-  confirmPage: data => dispatch(confirmPage(data))
+  confirmPage: data => dispatch(confirmPage(data)),
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

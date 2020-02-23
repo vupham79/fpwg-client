@@ -84,8 +84,10 @@ class ClippedDrawer extends React.Component {
             <Button
               style={{ marginTop: "1rem" }}
               variant="contained"
+              size="large"
               color="primary"
               onClick={() => saveDesignSite(site)}
+              fullWidth
             >
               Save
             </Button>

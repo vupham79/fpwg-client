@@ -4,13 +4,16 @@ import { Redirect } from "react-router-dom";
 import EditPage from "./edit";
 import { getAllThemes } from "../../actions";
 class PreEditPage extends React.Component {
-  start = () => {
+  componentDidMount() {
     this.props.getAllThemes();
-  };
+  }
+
   render() {
-    this.start();
     const { isLogin } = this.props;
-    return <>{isLogin ? <EditPage /> : <Redirect to="/" />}</>;
+    if (!isLogin) {
+      return <Redirect to="/" />;
+    }
+    return <EditPage />;
   }
 }
 
