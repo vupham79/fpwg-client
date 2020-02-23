@@ -4,11 +4,6 @@ const defaultState = {
 
 const ThemeReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case "CHANGE_THEME":
-      return {
-        ...state,
-        name: action.payload
-      };
     case "SET_SHOW_CUSTOM_COLOR":
       return {
         ...state,

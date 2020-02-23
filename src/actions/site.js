@@ -122,3 +122,38 @@ export function changeNavItems(items) {
     });
   };
 }
+
+export function saveDesignSite(site) {
+  return async dispatch => {
+    const data = await axios({
+      method: "patch",
+      url: "/site/saveDesign",
+      data: {
+        logo: site.logo,
+        fontBody: site.fontBody,
+        fontTitle: site.fontTitle,
+        navItems: site.navItems,
+        themeId: site.themeId,
+        pageId: site.id,
+        name: site.title
+      }
+    });
+    if (data.status === 200) {
+      // dispatch({
+      //   type: "SAVE_DESIGN_SITE"
+      // });
+      toastr.success(`Save site ${site.title} sucess`, "Success");
+    } else {
+      toastr.error("There are something wrong when save your site", "Error");
+    }
+  };
+}
+
+export function changeTheme(site) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_THEME",
+      payload: site
+    });
+  };
+}

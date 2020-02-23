@@ -71,6 +71,15 @@ const imgStyles = {
 };
 
 class DesignEditorTab extends React.Component {
+  handleChangeTheme = event => {
+    const { changeTheme, themes, site } = this.props;
+    const theme = themes.find(e => e.name === event.target.value);
+    site.themeId = theme._id;
+    site.fontTitle = theme.fontTitle;
+    site.fontBody = theme.fontBody;
+    site.color = theme.mainColor;
+    changeTheme(site);
+  };
   handleChangeTitle = font => {
     const { site, changeFontTitle } = this.props;
     site.fontTitle = font.family;
@@ -89,7 +98,6 @@ class DesignEditorTab extends React.Component {
   render() {
     const drawerWidth = 280;
     const {
-      changeTheme,
       isShow,
       setShowCustomColor,
       classes,
@@ -109,7 +117,7 @@ class DesignEditorTab extends React.Component {
             autoComplete="true"
             value={themeName.name}
             fullWidth
-            onChange={event => changeTheme(event.target.value)}
+            onChange={this.handleChangeTheme}
           >
             {themes.map((element, index) => (
               <MenuItem value={element.name} key={index}>
@@ -209,7 +217,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeTheme: name => dispatch(changeTheme(name)),
+  changeTheme: site => dispatch(changeTheme(site)),
   changeColor: site => dispatch(changeColor(site)),
   changeFontTitle: site => dispatch(changeFontTitle(site)),
   changeFontBody: site => dispatch(changeFontBody(site)),

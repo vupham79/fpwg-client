@@ -1,14 +1,5 @@
 import axios from "../utils/axios";
 
-export function changeTheme(name) {
-  return dispatch => {
-    dispatch({
-      type: "CHANGE_THEME",
-      payload: name
-    });
-  };
-}
-
 export function setShowCustomColor(isShow) {
   return dispatch => {
     dispatch({

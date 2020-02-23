@@ -1,8 +1,16 @@
 import React from "react";
-import { AppBar, CssBaseline, Drawer, Tabs, Tab } from "@material-ui/core";
+import {
+  AppBar,
+  CssBaseline,
+  Drawer,
+  Tabs,
+  Tab,
+  Grid,
+  Button
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { updateTabValue } from "../actions";
+import { updateTabValue, saveDesignSite } from "../actions";
 import DesignTab from "./DesignEditorTab";
 import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
@@ -39,7 +47,13 @@ const tabStyles = {
 
 class ClippedDrawer extends React.Component {
   render() {
-    const { classes, tabValue, updateTabValue } = this.props;
+    const {
+      classes,
+      tabValue,
+      updateTabValue,
+      saveDesignSite,
+      site
+    } = this.props;
 
     return (
       <AppBar className={classes.root} position="sticky">
@@ -66,6 +80,16 @@ class ClippedDrawer extends React.Component {
           {tabValue === 0 && <DesignTab />}
           {tabValue === 1 && <PagesEditorTab />}
           {tabValue === 2 && <SettingEditorTab />}
+          <Grid container justify="center">
+            <Button
+              style={{ marginTop: "1rem" }}
+              variant="contained"
+              color="primary"
+              onClick={() => saveDesignSite(site)}
+            >
+              Save
+            </Button>
+          </Grid>
         </Drawer>
       </AppBar>
     );
@@ -73,10 +97,12 @@ class ClippedDrawer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tabValue: state.tab.value
+  tabValue: state.tab.value,
+  site: state.site.siteEdit
 });
 
 const mapDispatchToProps = dispatch => ({
+  saveDesignSite: site => dispatch(saveDesignSite(site)),
   updateTabValue: value => dispatch(updateTabValue(value))
 });
 

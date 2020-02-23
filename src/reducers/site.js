@@ -74,6 +74,16 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         siteEdit: { ...action.payload }
       };
+    case "SET_THEME_TO_SITE":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
+    case "CHANGE_THEME":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
     case "SET_LOGOUT":
       return {
         ...defaultState

@@ -1,5 +1,5 @@
 import axios from "../utils/axios";
-
+import toastr from "../component/Toastr";
 export function login({ accessToken, profile }) {
   return async dispatch => {
     const data = await axios({
@@ -77,6 +77,7 @@ export function confirmPage({ pageUrl, pageId, accessToken, name, profile }) {
     });
     if (site.status === 200) {
       dispatch({ type: "CREATE_NEW_SITE_SUCCESS", payload: site.data });
+      toastr.success(`Create new site ${name} success`, "Sucess");
     } else {
       dispatch({
         type: "CREATE_NEW_SITE_FAIL"

@@ -7,18 +7,15 @@ import {
   changeNavItems,
   getUserSites,
   publishSite,
+  saveDesignSite,
   setSiteIsEdit,
   unPublishSite,
-  updateSiteId
+  updateSiteId,
+  changeTheme
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
-import {
-  changeTheme,
-  getAllThemes,
-  getNavItems,
-  setShowCustomColor
-} from "./theme";
+import { getAllThemes, getNavItems, setShowCustomColor } from "./theme";
 import { confirmPage, getUserPages, login, setLogout } from "./user";
 
 export {
@@ -46,5 +43,6 @@ export {
   confirmPage,
   getAllThemes,
   setSiteIsEdit,
-  getUserSites
+  getUserSites,
+  saveDesignSite
 };
