@@ -5,7 +5,8 @@ import {
   List,
   MenuItem,
   Select,
-  Typography
+  Typography,
+  Input
 } from "@material-ui/core";
 import { red } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
@@ -112,40 +113,44 @@ class DesignEditorTab extends React.Component {
       <>
         <div style={{ overflowY: "scroll" }}>
           <Typography className={classes.title}>Theme</Typography>
-          <Select
-            autoComplete="true"
-            value={themeName && themeName.name}
-            fullWidth
-            onChange={this.handleChangeTheme}
-          >
-            {themes.map((element, index) => (
-              <MenuItem value={element.name} key={index}>
-                {element.name}
-              </MenuItem>
-            ))}
-          </Select>
+          <Grid className={classes.sideBarBox}>
+            <Select
+              autoComplete="true"
+              value={themeName && themeName.name}
+              fullWidth
+              onChange={this.handleChangeTheme}
+            >
+              {themes.map((element, index) => (
+                <MenuItem value={element.name} key={index}>
+                  {element.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
           <Divider
             style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
           />
           <Typography className={classes.title}>Font</Typography>
-          <Grid className={classes.sideBarBox}>
+          <Grid container className={classes.sideBarBox}>
             <Typography className={classes.title2}>Font Title</Typography>
-            <List>
+            <Grid item container>
               <FontPicker
                 apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
                 sort="alphabet"
                 activeFontFamily={site.fontTitle}
                 onChange={this.handleChangeTitle}
               />
-            </List>
+            </Grid>
             <Divider />
             <Typography className={classes.title2}>Font Body</Typography>
-            <FontPicker
-              apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
-              sort="alphabet"
-              activeFontFamily={site.fontBody}
-              onChange={this.handleChangeFontBody}
-            />
+            <Grid container>
+              <FontPicker
+                apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
+                sort="alphabet"
+                activeFontFamily={site.fontBody}
+                onChange={this.handleChangeFontBody}
+              />
+            </Grid>
           </Grid>
           <Divider
             style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
@@ -199,6 +204,12 @@ class DesignEditorTab extends React.Component {
                 onClick={() => getImageUrl(img)}
               />
             ))}
+          </Grid>
+          <Divider
+            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          />
+          <Grid className={classes.sideBarBox}>
+            <Input type="file" name="Logo" />
           </Grid>
           <Divider
             style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
