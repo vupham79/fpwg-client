@@ -82,8 +82,7 @@ class Header extends Component {
 const mapStateToProps = state => ({
   tabValue: state.tab.navItemValue,
   isEdit: state.user.isEdit,
-  siteEdit: state.site.siteEdit,
-  isEdit: state.site.isEdit
+  siteEdit: state.site.siteEdit
 });
 
 const mapDispatchToProps = dispatch => ({

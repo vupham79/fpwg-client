@@ -77,7 +77,7 @@ function WebsiteItem({ setSiteIsEdit, site }) {
             <Link to="/edit">
               <Button
                 className={styles.help_button}
-                onClick={() => setSiteIsEdit(true, site)}
+                onClick={() => setSiteIsEdit(site)}
               >
                 Edit
                 <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
@@ -108,6 +108,12 @@ class MainPage extends Component {
     });
   };
 
+  handleEditSite = async site => {
+    const { setSiteIsEdit } = this.props;
+    await setSiteIsEdit(true, site);
+    return <Link to="/edit" />;
+  };
+
   handleConfirm = async () => {
     const {
       confirmPage,
@@ -132,11 +138,11 @@ class MainPage extends Component {
   renderPagesNotGenerated = () => {
     const { pages, sites } = this.props;
     if (pages) {
-      return sites
+      return sites && sites.length > 0
         ? sites.map(site =>
             pages.map(
               page =>
-                page.id != site.id && (
+                page.id !== site.id && (
                   <ListItem
                     button
                     onClick={() =>
@@ -161,39 +167,35 @@ class MainPage extends Component {
                 )
             )
           )
-        : pages.map(page => (
-            <ListItem
-              button
-              onClick={() =>
-                this.handleSelectPage({
-                  id: page.id,
-                  link: page.link,
-                  name: page.name
-                })
-              }
-              key={page.id}
-            >
-              <ListItemAvatar>
-                <Avatar>
-                  <img src={page.picture.data.url} alt="" />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={page.name} secondary={page.category} />
-            </ListItem>
-          ));
+        : pages.map(page => {
+            return (
+              <ListItem
+                button
+                onClick={() =>
+                  this.handleSelectPage({
+                    id: page.id,
+                    link: page.link,
+                    name: page.name
+                  })
+                }
+                key={page.id}
+              >
+                <ListItemAvatar>
+                  <Avatar>
+                    <img src={page.picture.data.url} alt="" />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={page.name} secondary={page.category} />
+              </ListItem>
+            );
+          });
     } else {
       return <h3>No pages existing or You haven't authorize any page</h3>;
     }
   };
 
   render() {
-    const {
-      setSiteIsEdit,
-      closeCreateNewSite,
-      openCreateNewSite,
-      open,
-      sites
-    } = this.props;
+    const { closeCreateNewSite, openCreateNewSite, open, sites } = this.props;
     const { pageUrl } = this.state;
     return (
       <>
@@ -316,7 +318,7 @@ class MainPage extends Component {
                   sites.map((item, index) => (
                     <WebsiteItem
                       key={index}
-                      setSiteIsEdit={setSiteIsEdit}
+                      setSiteIsEdit={this.handleEditSite}
                       site={item}
                     />
                   ))

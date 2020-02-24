@@ -140,9 +140,6 @@ export function saveDesignSite(site) {
       }
     });
     if (data.status === 200) {
-      // dispatch({
-      //   type: "SAVE_DESIGN_SITE"
-      // });
       toastr.success(`Save site ${site.title} sucess`, "Success");
     } else {
       toastr.error("There are something wrong when save your site", "Error");
