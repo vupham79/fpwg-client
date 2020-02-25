@@ -13,7 +13,9 @@ class Header extends Component {
       tabValue,
       updateNavItemValue,
       siteEdit,
-      siteView
+      siteView,
+      titleEdit,
+      titleView
     } = this.props;
     const tabStyles = {
       textTransform: "none",
@@ -32,22 +34,15 @@ class Header extends Component {
       }
     };
 
-    const changeStyle = {
-      fontFamily: siteEdit.fontTitle,
-      color: siteEdit.color
-    };
-
-    const siteStyle = {
-      color: siteView.color,
-      fontFamily: siteView.fontTitle
-    };
-
     return (
       <AppBar className={styles.app_bar} position="sticky">
         <Grid container alignItems="center">
           <Grid item xs={12} sm={2}>
-            <p className={styles.shopName} style={changeStyle}>
-              {siteView && siteView.title}
+            <p
+              className={styles.shopName}
+              style={isEdit ? titleEdit : titleView}
+            >
+              {siteView && siteView.data.title}
             </p>
           </Grid>
           <Grid item xs={12} sm={10}>
@@ -60,26 +55,20 @@ class Header extends Component {
                     indicatorColor="primary"
                     onChange={(e, newValue) => updateNavItemValue(newValue)}
                   >
-                    {siteEdit.navItems.map((item, index) => (
-                      <Tab style={tabStyles} label={item.name} key={index} />
+                    {siteEdit.data.navItems.map((item, index) => (
+                      <Tab
+                        style={titleEdit && tabStyles}
+                        label={item.name}
+                        key={index}
+                      />
                     ))}
                   </Tabs>
                 </>
               ) : (
-                siteView.navItems &&
-                siteView.navItems.map((item, index) => (
-                  <Grid
-                    className={styles.nav_item}
-                    style={siteStyle}
-                    item
-                    xs={2}
-                    sm={1}
-                    key={index}
-                  >
-                    <Link
-                      className={styles.links}
-                      to={`/${siteView.id}/${item.name}`}
-                    >
+                siteView.data.navItems &&
+                siteView.data.navItems.map((item, index) => (
+                  <Grid item xs={2} sm={1} key={index} style={titleView}>
+                    <Link to={`/${siteView.data.id}/${item.name}`}>
                       {item.name}
                     </Link>
                   </Grid>
@@ -97,7 +86,9 @@ const mapStateToProps = state => ({
   tabValue: state.tab.navItemValue,
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
-  siteView: state.site.siteView
+  siteView: state.site.siteView,
+  titleEdit: state.site.titleEdit,
+  titleView: state.site.titleView
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -21,7 +21,7 @@ import {
   confirmPage,
   getUserSites,
   openCreateNewSite,
-  setSiteIsEdit
+  setCurrentEditId
 } from "../../actions";
 import Header from "../../component/Header";
 import Link from "../../component/link";
@@ -42,7 +42,7 @@ const imgStyles = {
   width: "80%"
 };
 
-function WebsiteItem({ setSiteIsEdit, site }) {
+function WebsiteItem({ site, setCurrentEditId }) {
   return (
     <Grid container justify="space-between" className={styles.web_item}>
       <Grid container item sm={8} xs={12} alignItems="center">
@@ -68,7 +68,7 @@ function WebsiteItem({ setSiteIsEdit, site }) {
       >
         <Grid container item spacing={6}>
           <Grid item sm={5}>
-            <Link to={`/${site.id}`}>
+            <Link to={`/${site._id}`}>
               <Button className={styles.help_button}>
                 View
                 <FontAwesomeIcon className={styles.web_icon} icon={faEye} />
@@ -79,7 +79,7 @@ function WebsiteItem({ setSiteIsEdit, site }) {
             <Link to="/edit">
               <Button
                 className={styles.help_button}
-                onClick={() => setSiteIsEdit(site)}
+                onClick={() => setCurrentEditId(site._id)}
               >
                 Edit
                 <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
@@ -112,12 +112,6 @@ class MainPage extends Component {
       pageId: id,
       pageName: name
     });
-  };
-
-  handleEditSite = async site => {
-    const { setSiteIsEdit } = this.props;
-    await setSiteIsEdit(true, site);
-    return <Link to="/edit" />;
   };
 
   handleConfirm = async () => {
@@ -201,7 +195,13 @@ class MainPage extends Component {
   };
 
   render() {
-    const { closeCreateNewSite, openCreateNewSite, open, sites } = this.props;
+    const {
+      closeCreateNewSite,
+      openCreateNewSite,
+      open,
+      sites,
+      setCurrentEditId
+    } = this.props;
     const { pageUrl } = this.state;
     return (
       <>
@@ -324,8 +324,8 @@ class MainPage extends Component {
                   sites.map((item, index) => (
                     <WebsiteItem
                       key={index}
-                      setSiteIsEdit={this.handleEditSite}
                       site={item}
+                      setCurrentEditId={setCurrentEditId}
                     />
                   ))
                 )}
@@ -345,16 +345,15 @@ const mapStateToProps = state => ({
   accessToken: state.user.accessToken,
   profile: state.user.profile,
   userId: state.user.profile.id,
-  token: state.user.accessToken,
-  isEdit: state.site.isEdit
+  token: state.user.accessToken
 });
 
 const mapDispatchToProps = dispatch => ({
-  setSiteIsEdit: (isEdit, site) => dispatch(setSiteIsEdit(isEdit, site)),
   closeCreateNewSite: () => dispatch(closeCreateNewSite()),
   openCreateNewSite: () => dispatch(openCreateNewSite()),
   confirmPage: data => dispatch(confirmPage(data)),
-  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
+  setCurrentEditId: id => dispatch(setCurrentEditId(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

@@ -11,7 +11,7 @@ const images = [
 const imageStyle = {
   backgroundSize: "cover",
   backgroundRepeat: "no-repeat",
-  width: "100%",
+  width: "80%",
   height: "25vh"
 };
 
@@ -22,16 +22,16 @@ class Gallery extends Component {
   }
 
   render() {
-    const { siteEdit } = this.props;
-
-    const changeStyle = {
-      fontFamily: siteEdit.fontTitle,
-      color: siteEdit.color
-    };
-
+    const { titleEdit, titleView, isEdit } = this.props;
     return (
       <Grid container justify="center" className={styles.gallery} spacing={0}>
-        <Grid item sm={12} xs={12} className={styles.title} style={changeStyle}>
+        <Grid
+          item
+          sm={12}
+          xs={12}
+          className={styles.title}
+          style={isEdit ? titleEdit : titleView}
+        >
           Gallery
         </Grid>
         <Grid item sm={12} xs={12} container justify="center">
@@ -59,7 +59,10 @@ class Gallery extends Component {
 }
 
 const mapStateToProps = state => ({
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  titleEdit: state.site.titleEdit,
+  titleView: state.site.titleView,
+  isEdit: state.site.isEdit
 });
 
 export default connect(mapStateToProps, null)(Gallery);

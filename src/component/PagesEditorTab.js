@@ -38,7 +38,7 @@ const DragHandle = sortableHandle(() => (
   <MenuIcon style={{ paddingRight: "0.4rem" }} />
 ));
 
-const SortableItem = sortableElement(({ value }) => (
+const SortableItem = sortableElement(({ value, index }) => (
   <Grid container alignItems="center" style={gridItem}>
     <DragHandle />
     {value}
@@ -64,6 +64,7 @@ class PagesEditorTab extends React.Component {
     let temp = site.navItems[oldIndex];
     site.navItems[oldIndex] = site.navItems[newIndex];
     site.navItems[newIndex] = temp;
+    site.map((item, index) => (item[index].order = index));
     changeNavItems(site);
   };
 

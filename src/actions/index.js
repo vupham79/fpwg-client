@@ -8,11 +8,13 @@ import {
   getUserSites,
   publishSite,
   saveDesignSite,
-  setSiteIsEdit,
   unPublishSite,
   updateSiteId,
   changeTheme,
-  getSiteById
+  getSiteById,
+  setSiteEdit,
+  setSiteView,
+  setCurrentEditId
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -43,8 +45,10 @@ export {
   publishSite,
   confirmPage,
   getAllThemes,
-  setSiteIsEdit,
   getUserSites,
   saveDesignSite,
-  getSiteById
+  getSiteById,
+  setSiteEdit,
+  setSiteView,
+  setCurrentEditId
 };

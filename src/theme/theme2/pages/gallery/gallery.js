@@ -18,14 +18,8 @@ const imgStyles = {
 
 class GalleryPage extends React.Component {
   render() {
-    const { siteEdit } = this.props;
-    const changeTitleStyle = {
-      fontFamily: siteEdit.fontTitle,
-      color: siteEdit.color
-    };
-    const changeBodyStyle = {
-      fontFamily: siteEdit.fontBody
-    };
+    const { isEdit, titleEdit, bodyEdit, titleView, bodyView } = this.props;
+
     return (
       <Grid
         container
@@ -39,20 +33,20 @@ class GalleryPage extends React.Component {
             variant="h4"
             align="center"
             gutterBottom
-            style={changeTitleStyle}
+            style={isEdit ? titleEdit : titleView}
           >
             Gallery
           </Typography>
           <Divider variant="middle" />
         </Grid>
-        <Grid item sm={6} xs={12}>
+        <Grid item sm={5} xs={12}>
           <img src={imgUrl[1]} style={imgStyles} alt="" />
         </Grid>
         <Grid item sm={4} xs={12} className={styles.anh_dai_dien}>
           <Typography
             variant="h5"
             className={styles.child_title}
-            style={changeBodyStyle}
+            style={isEdit ? bodyEdit : bodyView}
           >
             Ảnh đại diện Photos
           </Typography>
@@ -62,7 +56,7 @@ class GalleryPage extends React.Component {
                 align="center"
                 variant="h6"
                 className={styles.btn_content}
-                style={changeBodyStyle}
+                style={isEdit ? bodyEdit : bodyView}
               >
                 View Photos
               </Typography>
@@ -73,7 +67,7 @@ class GalleryPage extends React.Component {
           <Typography
             variant="h5"
             className={styles.child_title}
-            style={changeBodyStyle}
+            style={isEdit ? bodyEdit : bodyView}
           >
             Ảnh bìa Photos
           </Typography>
@@ -83,7 +77,7 @@ class GalleryPage extends React.Component {
                 align="center"
                 variant="h6"
                 className={styles.btn_content}
-                style={changeBodyStyle}
+                style={isEdit ? bodyEdit : bodyView}
               >
                 View Photos
               </Typography>
@@ -99,7 +93,12 @@ class GalleryPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit,
+  titleEdit: state.site.titleEdit,
+  bodyEdit: state.site.bodyEdit,
+  titleView: state.site.titleView,
+  bodyView: state.site.bodyView
 });
 
 export default connect(mapStateToProps, null)(GalleryPage);

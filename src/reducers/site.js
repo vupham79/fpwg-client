@@ -2,9 +2,13 @@ const defaultState = {
   currentId: null,
   data: [],
   isEdit: false,
-  isView: false,
   siteEdit: {},
-  siteView: {}
+  siteView: {},
+  currentEditId: null,
+  titleEdit: {},
+  bodyEdit: {},
+  titleView: {},
+  bodyView: {}
 };
 
 let index;
@@ -46,32 +50,35 @@ const SiteReducer = (state = defaultState, action) => {
         data: [action.payload]
       };
     case "CHANGE_COLOR":
+      const color = {
+        fontFamily: action.payload.fontTitle,
+        color: action.payload.color
+      };
       return {
         ...state,
-        siteEdit: { ...action.payload }
+        siteEdit: { ...action.payload },
+        titleEdit: { ...color }
       };
     case "CHANGE_FONT_TITLE":
+      const fontTitle = {
+        fontFamily: action.payload.fontTitle,
+        color: action.payload.color
+      };
       return {
         ...state,
-        siteEdit: { ...action.payload }
+        siteEdit: { ...action.payload },
+        titleEdit: { ...fontTitle }
       };
     case "CHANGE_FONT_BODY":
-      return {
-        ...state,
-        siteEdit: { ...action.payload }
+      const fontBody = {
+        fontFamily: action.payload.fontBody
       };
-    case "SET_SITE_IS_EDIT":
       return {
         ...state,
-        isEdit: action.payload.isEdit,
-        siteEdit: action.payload.site
+        siteEdit: { ...action.payload },
+        bodyEdit: { ...fontBody }
       };
     case "CHANGE_NAV_ITEMS":
-      return {
-        ...state,
-        siteEdit: { ...action.payload }
-      };
-    case "SET_THEME_TO_SITE":
       return {
         ...state,
         siteEdit: { ...action.payload }
@@ -85,12 +92,26 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...defaultState
       };
-    case "GET_SITE_BY_ID":
+    case "SET_SITE_EDIT":
       return {
         ...state,
-        // isView: action.payload.isView,
-        siteView: { ...action.payload }
-        // siteEdit: { ...action.payload }
+        isEdit: true,
+        siteEdit: { ...action.payload.data },
+        titleEdit: { ...action.payload.titleEdit },
+        bodyEdit: { ...action.payload.bodyEdit }
+      };
+    case "SET_SITE_VIEW":
+      return {
+        ...state,
+        isEdit: false,
+        siteView: { ...action.payload },
+        titleView: { ...action.payload.titleView },
+        bodyView: { ...action.payload.bodyView }
+      };
+    case "SET_CURRENT_EDIT_ID":
+      return {
+        ...state,
+        currentEditId: action.payload
       };
     default:
       return state;

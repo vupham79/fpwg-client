@@ -89,11 +89,7 @@ class NewPage extends Component {
   }
 
   render() {
-    const { siteEdit } = this.props;
-    const changeStyle = {
-      fontFamily: siteEdit.fontTitle,
-      color: siteEdit.color
-    };
+    const { isEdit, titleEdit, titleView } = this.props;
 
     return (
       <Container className={styles.news}>
@@ -103,7 +99,7 @@ class NewPage extends Component {
             sm={12}
             xs={12}
             className={styles.title}
-            style={changeStyle}
+            style={isEdit ? titleEdit : titleView}
           >
             News
           </Grid>
@@ -125,7 +121,10 @@ class NewPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit,
+  titleView: state.site.titleView,
+  titleEdit: state.site.titleEdit
 });
 
 export default connect(mapStateToProps, null)(NewPage);

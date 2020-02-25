@@ -102,18 +102,6 @@ export function changeFontBody(site) {
   };
 }
 
-export function setSiteIsEdit(isEdit, site) {
-  return dispatch => {
-    dispatch({
-      type: "SET_SITE_IS_EDIT",
-      payload: {
-        isEdit,
-        site
-      }
-    });
-  };
-}
-
 export function changeNavItems(items) {
   return dispatch => {
     dispatch({
@@ -163,7 +151,42 @@ export function getSiteById(id) {
       url: "/site/find/" + id
     });
     if (data.status === 200) {
-      dispatch({ type: "GET_SITE_BY_ID", payload: data.data });
+      return data.data;
     }
+  };
+}
+
+export function setSiteEdit(data, titleStyle, bodyStyle) {
+  return async dispatch => {
+    dispatch({
+      type: "SET_SITE_EDIT",
+      payload: {
+        data: data,
+        titleEdit: titleStyle,
+        bodyEdit: bodyStyle
+      }
+    });
+  };
+}
+
+export function setSiteView(data, titleStyle, bodyStyle) {
+  return async dispatch => {
+    dispatch({
+      type: "SET_SITE_VIEW",
+      payload: {
+        data: data,
+        titleView: titleStyle,
+        bodyView: bodyStyle
+      }
+    });
+  };
+}
+
+export function setCurrentEditId(id) {
+  return dispatch => {
+    dispatch({
+      type: "SET_CURRENT_EDIT_ID",
+      payload: id
+    });
   };
 }

@@ -12,14 +12,7 @@ import { connect } from "react-redux";
 
 class ContactPage extends React.Component {
   render() {
-    const { siteEdit } = this.props;
-    const changeTitleStyle = {
-      fontFamily: siteEdit.fontTitle,
-      color: siteEdit.color
-    };
-    const changeBodyStyle = {
-      fontFamily: siteEdit.fontBody
-    };
+    const { isEdit, titleEdit, bodyEdit, titleView, bodyView } = this.props;
     return (
       <Grid container justify="center" className={styles.contact_page}>
         <Grid item sm={10} xs={10}>
@@ -29,7 +22,7 @@ class ContactPage extends React.Component {
             align="center"
             gutterBottom
             className={styles.title}
-            style={changeTitleStyle}
+            style={isEdit ? titleEdit : titleView}
           >
             Contacts
           </Typography>
@@ -47,7 +40,7 @@ class ContactPage extends React.Component {
             <Typography
               variant="h4"
               className={styles.child_title}
-              style={changeBodyStyle}
+              style={isEdit ? bodyEdit : bodyView}
             >
               <Box lineHeight={3}>Contacts</Box>
             </Typography>
@@ -55,28 +48,28 @@ class ContactPage extends React.Component {
             <Typography
               variant="h5"
               className={styles.child_title}
-              style={changeBodyStyle}
+              style={isEdit ? bodyEdit : bodyView}
             >
               <Box lineHeight={3}>ADDRESS</Box>
             </Typography>
             <Typography
               variant="body1"
               className={styles.child_content}
-              style={changeBodyStyle}
+              style={isEdit ? bodyEdit : bodyView}
             >
               43/2 Nguyễn Trãi, Q1, tp.HCM, Ho Chi Minh City , Vietnam
             </Typography>
             <Typography
               variant="h5"
               className={styles.child_title}
-              style={changeBodyStyle}
+              style={isEdit ? bodyEdit : bodyView}
             >
               <Box lineHeight={3}>Phone</Box>
             </Typography>
             <Typography
               variant="body1"
               className={styles.child_content}
-              style={changeBodyStyle}
+              style={isEdit ? bodyEdit : bodyView}
             >
               01234567987
             </Typography>
@@ -94,7 +87,7 @@ class ContactPage extends React.Component {
             <Typography
               variant="h4"
               className={styles.child_title}
-              style={changeBodyStyle}
+              style={isEdit ? bodyEdit : bodyView}
             >
               <Box lineHeight={3}>Message</Box>
             </Typography>
@@ -139,7 +132,7 @@ class ContactPage extends React.Component {
                   align="center"
                   variant="h6"
                   className={styles.btn_content}
-                  style={changeBodyStyle}
+                  style={isEdit ? bodyEdit : bodyView}
                 >
                   Send Message
                 </Typography>
@@ -153,7 +146,12 @@ class ContactPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit,
+  titleEdit: state.site.titleEdit,
+  bodyEdit: state.site.bodyEdit,
+  titleView: state.site.titleView,
+  bodyView: state.site.bodyView
 });
 
 export default connect(mapStateToProps, null)(ContactPage);

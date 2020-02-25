@@ -2,7 +2,7 @@ import PreEditPage from "../page/edit";
 import DesignPage from "../theme/theme1/components/DesignPage";
 import PreMainPage from "../page/main";
 // View generated site
-import ViewSitePage from "../page/view/ViewSite";
+import ViewSitePage from "../page/view";
 
 import PreLoginPage from "../page/login";
 

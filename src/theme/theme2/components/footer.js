@@ -34,29 +34,18 @@ class FooterPage extends Component {
   }
 
   render() {
-    const { siteEdit } = this.props;
-
-    const changeTitleStyle = {
-      fontFamily: siteEdit.fontTitle,
-      color: siteEdit.color
-    };
-
-    const changeBodyStyle = {
-      fontFamily: siteEdit.fontBody
-    };
-
+    const { isEdit, titleEdit, bodyEdit, titleView, bodyView } = this.props;
     return (
-      <Grid
-        container
-        direction="row"
-        // justify="space-around"
-        className={styles.footer}
-      >
+      <Grid container direction="row" className={styles.footer}>
         <Grid item sm={4} xs={12} className={styles.content}>
-          <Typography variant="h5" style={changeTitleStyle} color="primary">
+          <Typography
+            variant="h5"
+            style={isEdit ? titleEdit : titleView}
+            color="primary"
+          >
             ABOUT
           </Typography>
-          <Typography component="div" style={changeBodyStyle}>
+          <Typography component="div" style={isEdit ? bodyEdit : bodyView}>
             Welcome to our website!
             <br />
             <br />
@@ -66,13 +55,17 @@ class FooterPage extends Component {
           <FontAwesomeIcon style={iconStyles} icon={faFacebookF} size="2x" />
         </Grid>
         <Grid item sm={4} xs={12} className={styles.content}>
-          <Typography variant="h5" style={changeTitleStyle} color="primary">
+          <Typography
+            variant="h5"
+            style={isEdit ? titleEdit : titleView}
+            color="primary"
+          >
             QUICK LINKS
           </Typography>
           <Grid container justify="flex-start" direction="column">
             {this.state.links.map((link, index) => (
               <Grid item xs={2} sm={1} key={index}>
-                <Box style={changeBodyStyle} lineHeight={2}>
+                <Box style={isEdit ? bodyEdit : bodyView} lineHeight={2}>
                   {link}
                 </Box>
               </Grid>
@@ -80,10 +73,14 @@ class FooterPage extends Component {
           </Grid>
         </Grid>
         <Grid item sm={4} xs={12} className={styles.content}>
-          <Typography variant="h5" style={changeTitleStyle} color="primary">
+          <Typography
+            variant="h5"
+            style={isEdit ? titleEdit : titleView}
+            color="primary"
+          >
             SIGN UP FOR OUR NEWSLETTER
           </Typography>
-          <Typography variant="body1" style={changeBodyStyle}>
+          <Typography variant="body1" style={isEdit ? bodyEdit : bodyView}>
             Get exclusive updates and promotions straight to your email.
           </Typography>
           <Input
@@ -111,7 +108,13 @@ class FooterPage extends Component {
   }
 }
 const mapStateToProps = state => ({
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  siteView: state.site.siteView,
+  isEdit: state.site.isEdit,
+  titleEdit: state.site.titleEdit,
+  bodyEdit: state.site.bodyEdit,
+  titleView: state.site.titleView,
+  bodyView: state.site.bodyView
 });
 
 export default connect(mapStateToProps, null)(FooterPage);
