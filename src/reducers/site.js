@@ -2,7 +2,9 @@ const defaultState = {
   currentId: null,
   data: [],
   isEdit: false,
-  siteEdit: {}
+  isView: false,
+  siteEdit: {},
+  siteView: {}
 };
 
 let index;
@@ -34,11 +36,6 @@ const SiteReducer = (state = defaultState, action) => {
         data: [...state.data]
       };
     case "GET_ALL_SITE":
-      return {
-        ...state,
-        data: [...action.payload]
-      };
-    case "GET_SITE_BY_ID":
       return {
         ...state,
         data: [...action.payload]
@@ -87,6 +84,13 @@ const SiteReducer = (state = defaultState, action) => {
     case "SET_LOGOUT":
       return {
         ...defaultState
+      };
+    case "GET_SITE_BY_ID":
+      return {
+        ...state,
+        // isView: action.payload.isView,
+        siteView: { ...action.payload }
+        // siteEdit: { ...action.payload }
       };
     default:
       return state;

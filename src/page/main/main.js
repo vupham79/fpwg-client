@@ -19,9 +19,9 @@ import { connect } from "react-redux";
 import {
   closeCreateNewSite,
   confirmPage,
+  getUserSites,
   openCreateNewSite,
-  setSiteIsEdit,
-  getUserSites
+  setSiteIsEdit
 } from "../../actions";
 import Header from "../../component/Header";
 import Link from "../../component/link";
@@ -68,10 +68,12 @@ function WebsiteItem({ setSiteIsEdit, site }) {
       >
         <Grid container item spacing={6}>
           <Grid item sm={5}>
-            <Button className={styles.help_button}>
-              View
-              <FontAwesomeIcon className={styles.web_icon} icon={faEye} />
-            </Button>
+            <Link to={`/${site.id}`}>
+              <Button className={styles.help_button}>
+                View
+                <FontAwesomeIcon className={styles.web_icon} icon={faEye} />
+              </Button>
+            </Link>
           </Grid>
           <Grid item sm={5}>
             <Link to="/edit">
@@ -339,7 +341,8 @@ const mapStateToProps = state => ({
   accessToken: state.user.accessToken,
   profile: state.user.profile,
   userId: state.user.profile.id,
-  token: state.user.accessToken
+  token: state.user.accessToken,
+  isEdit: state.site.isEdit
 });
 
 const mapDispatchToProps = dispatch => ({

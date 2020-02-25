@@ -81,7 +81,7 @@ class Header extends Component {
 
 const mapStateToProps = state => ({
   tabValue: state.tab.navItemValue,
-  isEdit: state.user.isEdit,
+  isEdit: state.site.isEdit,
   siteEdit: state.site.siteEdit
 });
 

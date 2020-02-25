@@ -11,7 +11,8 @@ import {
   setSiteIsEdit,
   unPublishSite,
   updateSiteId,
-  changeTheme
+  changeTheme,
+  getSiteById
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -44,5 +45,6 @@ export {
   getAllThemes,
   setSiteIsEdit,
   getUserSites,
-  saveDesignSite
+  saveDesignSite,
+  getSiteById
 };

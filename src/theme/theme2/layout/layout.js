@@ -21,29 +21,39 @@ function TabItem(props) {
 class Layout extends Component {
   render() {
     const { isEdit, navItemValue, siteEdit, themes } = this.props;
-    const themeName = themes.find(e => e._id === siteEdit.themeId);
-    const pages = themesConstant.find(
-      element => element.name === themeName.name
-    ).pages;
+    let {
+      pageIndex0,
+      pageIndex1,
+      pageIndex2,
+      pageIndex3,
+      pageIndex4,
+      pageIndex5
+    } = "";
+    if (isEdit) {
+      const themeName = themes.find(e => e._id === siteEdit.themeId);
+      const pages = themesConstant.find(
+        element => element.name === themeName.name
+      ).pages;
 
-    const pageIndex0 = pages.find(
-      element => element.name === siteEdit.navItems[0].name
-    );
-    const pageIndex1 = pages.find(
-      element => element.name === siteEdit.navItems[1].name
-    );
-    const pageIndex2 = pages.find(
-      element => element.name === siteEdit.navItems[2].name
-    );
-    const pageIndex3 = pages.find(
-      element => element.name === siteEdit.navItems[3].name
-    );
-    const pageIndex4 = pages.find(
-      element => element.name === siteEdit.navItems[4].name
-    );
-    const pageIndex5 = pages.find(
-      element => element.name === siteEdit.navItems[5].name
-    );
+      pageIndex0 = pages.find(
+        element => element.name === siteEdit.navItems[0].name
+      );
+      pageIndex1 = pages.find(
+        element => element.name === siteEdit.navItems[1].name
+      );
+      pageIndex2 = pages.find(
+        element => element.name === siteEdit.navItems[2].name
+      );
+      pageIndex3 = pages.find(
+        element => element.name === siteEdit.navItems[3].name
+      );
+      pageIndex4 = pages.find(
+        element => element.name === siteEdit.navItems[4].name
+      );
+      pageIndex5 = pages.find(
+        element => element.name === siteEdit.navItems[5].name
+      );
+    }
 
     return (
       <>

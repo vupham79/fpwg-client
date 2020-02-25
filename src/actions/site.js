@@ -155,3 +155,15 @@ export function changeTheme(site) {
     });
   };
 }
+
+export function getSiteById(id) {
+  return async dispatch => {
+    const data = await axios({
+      method: "get",
+      url: "/site/find/" + id
+    });
+    if (data.status === 200) {
+      dispatch({ type: "GET_SITE_BY_ID", payload: data.data });
+    }
+  };
+}

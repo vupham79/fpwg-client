@@ -2,13 +2,11 @@ import {
   Button,
   Divider,
   Grid,
-  List,
+  Input,
   MenuItem,
   Select,
-  Typography,
-  Input
+  Typography
 } from "@material-ui/core";
-import { red } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
 import FontPicker from "font-picker-react";
 import React from "react";
@@ -107,7 +105,7 @@ class DesignEditorTab extends React.Component {
       site
     } = this.props;
 
-    const themeName = themes.find(e => e._id === site.themeId);
+    const themeName = themes && themes.find(e => e._id === site.themeId);
 
     return (
       <>
@@ -160,7 +158,7 @@ class DesignEditorTab extends React.Component {
             <Typography className={classes.title2}>Suggested Color</Typography>
             <TwitterPicker
               width={"fit-content"}
-              color={red}
+              color={site.color}
               onChangeComplete={this.handleChangeColor}
             />
             <Divider />
@@ -184,7 +182,7 @@ class DesignEditorTab extends React.Component {
                 }}
               >
                 <ChromePicker
-                  color={red}
+                  color={site.color}
                   onChangeComplete={this.handleChangeColor}
                 />
               </Grid>
