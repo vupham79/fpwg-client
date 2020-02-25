@@ -5,11 +5,11 @@ import { Carousel } from "react-responsive-carousel";
 
 class Theme1Gallery extends React.Component {
   render() {
-    const { themeFontTitle, themeFontBody, themeColor } = this.props;
+    const { siteEdit } = this.props;
 
     const useStyles = theme => ({
       changableTitle: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
@@ -17,34 +17,34 @@ class Theme1Gallery extends React.Component {
         paddingBottom: 20
       },
       changableBody: {
-        fontFamily: themeFontBody,
+        fontFamily: siteEdit.fontBody,
         color: "#212121",
         textAlign: "center",
         fontSize: 16
       },
       changableBody2: {
-        fontFamily: themeFontBody,
+        fontFamily: siteEdit.fontBody,
         color: "#212121",
         textAlign: "left",
         fontSize: 16
       },
       pageName: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "#212121",
         fontSize: 20
       },
       changableFirst: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: themeColor
+        textDecorationColor: siteEdit.color
       },
       changableLegend: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "white",
         zIndex: 5,
@@ -116,9 +116,7 @@ class Theme1Gallery extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  themeFontTitle: state.theme.fontTitle,
-  themeColor: state.theme.color,
-  themeFontBody: state.theme.fontBody
+  siteEdit: state.site.siteEdit
 });
 
 export default connect(mapStateToProps, null)(Theme1Gallery);

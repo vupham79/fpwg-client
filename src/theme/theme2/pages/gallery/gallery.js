@@ -18,13 +18,13 @@ const imgStyles = {
 
 class GalleryPage extends React.Component {
   render() {
-    const { themeFontTitle, themeFontBody, themeColor } = this.props;
+    const { siteEdit } = this.props;
     const changeTitleStyle = {
-      fontFamily: themeFontTitle,
-      color: themeColor
+      fontFamily: siteEdit.fontTitle,
+      color: siteEdit.color
     };
     const changeBodyStyle = {
-      fontFamily: themeFontBody
+      fontFamily: siteEdit.fontBody
     };
     return (
       <Grid
@@ -99,9 +99,7 @@ class GalleryPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  themeFontTitle: state.theme.fontTitle,
-  themeFontBody: state.theme.fontBody,
-  themeColor: state.theme.color
+  siteEdit: state.site.siteEdit
 });
 
 export default connect(mapStateToProps, null)(GalleryPage);

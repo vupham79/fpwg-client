@@ -20,10 +20,10 @@ const imgStyles = {
 
 class EventPage extends React.Component {
   render() {
-    const { themeFontTitle, themeColor } = this.props;
+    const { siteEdit } = this.props;
     const changeTitleStyle = {
-      fontFamily: themeFontTitle,
-      color: themeColor
+      fontFamily: siteEdit.fontTitle,
+      color: siteEdit.color
     };
 
     return (
@@ -102,9 +102,7 @@ class EventPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  themeFontTitle: state.theme.fontTitle,
-  themeFontBody: state.theme.fontBody,
-  themeColor: state.theme.color
+  siteEdit: state.site.siteEdit
 });
 
 export default connect(mapStateToProps, null)(EventPage);

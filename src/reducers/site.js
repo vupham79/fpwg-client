@@ -1,7 +1,13 @@
 const defaultState = {
   currentId: null,
-  data: []
+  data: [],
+  isEdit: false,
+  isView: false,
+  siteEdit: {},
+  siteView: {}
 };
+
+let index;
 
 const SiteReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -16,20 +22,75 @@ const SiteReducer = (state = defaultState, action) => {
         currentId: action.payload
       };
     case "PUBLISH_SITE":
-      const index = state.data.indexOf({ id: action.payload.id });
-      state.data[index].isActive = action.payload.isActive;
+      index = state.data.findIndex(site => site.id === action.payload);
+      state.data[index].isPublish = true;
       return {
         ...state,
         data: [...state.data]
       };
     case "UNPUBLISH_SITE":
+      index = state.data.findIndex(site => site.id === action.payload);
+      state.data[index].isPublish = false;
       return {
         ...state,
-        currentId: action.payload
+        data: [...state.data]
+      };
+    case "GET_ALL_SITE":
+      return {
+        ...state,
+        data: [...action.payload]
+      };
+    case "CREATE_NEW_SITE_SUCCESS":
+      return {
+        ...state,
+        data: [action.payload]
+      };
+    case "CHANGE_COLOR":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
+    case "CHANGE_FONT_TITLE":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
+    case "CHANGE_FONT_BODY":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
+    case "SET_SITE_IS_EDIT":
+      return {
+        ...state,
+        isEdit: action.payload.isEdit,
+        siteEdit: action.payload.site
+      };
+    case "CHANGE_NAV_ITEMS":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
+    case "SET_THEME_TO_SITE":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
+    case "CHANGE_THEME":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
       };
     case "SET_LOGOUT":
       return {
         ...defaultState
+      };
+    case "GET_SITE_BY_ID":
+      return {
+        ...state,
+        // isView: action.payload.isView,
+        siteView: { ...action.payload }
+        // siteEdit: { ...action.payload }
       };
     default:
       return state;

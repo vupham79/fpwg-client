@@ -60,18 +60,18 @@ const SortableList = sortableContainer(({ items }) => {
 
 class PagesEditorTab extends React.Component {
   onChangeItem = ({ oldIndex, newIndex }) => {
-    const { navItems, changeNavItems } = this.props;
-    let temp = navItems[oldIndex];
-    navItems[oldIndex] = navItems[newIndex];
-    navItems[newIndex] = temp;
-    changeNavItems(navItems);
+    const { site, changeNavItems } = this.props;
+    let temp = site.navItems[oldIndex];
+    site.navItems[oldIndex] = site.navItems[newIndex];
+    site.navItems[newIndex] = temp;
+    changeNavItems(site);
   };
 
   render() {
-    const { navItems } = this.props;
+    const { site } = this.props;
     return (
       <SortableList
-        items={navItems}
+        items={site.navItems}
         onSortEnd={this.onChangeItem}
         useDragHandle
       />
@@ -79,7 +79,7 @@ class PagesEditorTab extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  navItems: state.theme.navItems
+  site: state.site.siteEdit
 });
 
 const mapDispatchToProps = dispatch => ({

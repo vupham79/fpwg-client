@@ -45,31 +45,25 @@ class Theme1Home extends React.Component {
     this.setAnchorEl(null);
   };
   render() {
-    const {
-      themeFontTitle,
-      themeFontBody,
-      themeColor,
-      mapLat,
-      mapLng
-    } = this.props;
+    const { siteEdit, mapLat, mapLng } = this.props;
 
     const useStyles = () => ({
       changableLink: {
-        fontFamily: themeFontBody,
-        color: themeColor,
+        fontFamily: siteEdit.fontBody,
+        color: siteEdit.color,
         textAlign: "center",
         fontStyle: "italic",
         fontSize: 20
       },
       changableFirst2: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
-        color: themeColor,
+        color: siteEdit.color,
         textAlign: "center",
         fontSize: 20
       },
       changableTitle: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
@@ -77,7 +71,7 @@ class Theme1Home extends React.Component {
         paddingBottom: 20
       },
       changableTitle2: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
@@ -85,47 +79,47 @@ class Theme1Home extends React.Component {
         paddingBottom: 20
       },
       changableName: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
-        color: themeColor,
+        color: siteEdit.color,
         textAlign: "left",
         fontSize: 20
       },
       changableBody: {
-        fontFamily: themeFontBody,
+        fontFamily: siteEdit.fontBody,
         color: "#212121",
         fontSize: 16,
         textAlign: "justify"
       },
       changableBody2: {
-        fontFamily: themeFontBody,
+        fontFamily: siteEdit.fontBody,
         color: "#212121",
         textAlign: "left",
         fontSize: 16
       },
       changableBody3: {
-        fontFamily: themeFontBody,
+        fontFamily: siteEdit.fontBody,
         color: "black",
         textAlign: "center",
         fontSize: 16
       },
       pageName: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "#212121",
         fontSize: 20
       },
       changableFirst: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: themeColor
+        textDecorationColor: siteEdit.color
       },
       changableLegend: {
-        fontFamily: themeFontTitle,
+        fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
         color: "white",
         zIndex: 5,
@@ -213,7 +207,7 @@ class Theme1Home extends React.Component {
         <Grid container item xs={12} justify={"center"}>
           <ExampleComponent
             image="./images/theme1-banner3.jpg"
-            roundedColor={themeColor}
+            roundedColor={siteEdit.color}
             imageWidth="150"
             imageHeight="150"
             roundedSize="5"
@@ -403,10 +397,7 @@ class Theme1Home extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  siteId: state.site.id,
-  themeFontTitle: state.theme.fontTitle,
-  themeColor: state.theme.color,
-  themeFontBody: state.theme.fontBody,
+  siteEdit: state.site.siteEdit,
   mapLat: 10.82302,
   mapLng: 106.62965
 });

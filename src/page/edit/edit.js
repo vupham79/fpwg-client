@@ -1,36 +1,23 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { changeColor, changeFontBody, changeFontTitle } from "../../actions";
-import { themes } from "../../constant/constant";
+import { themes as themesConstant } from "../../constant/constant";
 import EditLayout from "../../layout/editor";
 
 class EditPage extends Component {
   render() {
-    const {
-      themeName,
-      changeFontTitle,
-      changeColor,
-      changeFontBody
-    } = this.props;
-
-    const theme = themes.find(element => element.name === themeName);
-    if (theme.name !== themeName) {
-      changeColor(theme.color);
-      changeFontBody(theme.fontBody);
-      changeFontTitle(theme.fontTitle);
-    }
-    return <EditLayout>{theme.component}</EditLayout>;
+    const { themes, siteEdit } = this.props;
+    const themeName = themes && themes.find(e => e._id === siteEdit.themeId);
+    const theme =
+      themeName && themesConstant.find(e => e.name === themeName.name);
+    return <EditLayout>{theme && theme.component}</EditLayout>;
   }
 }
 
 const mapStateToProps = state => ({
-  themeName: state.theme.name
+  themes: state.theme.data,
+  siteEdit: state.site.siteEdit
 });
 
-const mapDispatchToProps = dispatch => ({
-  changeColor: color => dispatch(changeColor(color)),
-  changeFontTitle: fontTitle => dispatch(changeFontTitle(fontTitle)),
-  changeFontBody: fontBody => dispatch(changeFontBody(fontBody))
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditPage);

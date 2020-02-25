@@ -1,80 +1,88 @@
 import { faCog, faEye, faThLarge } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Grid, MenuItem, MenuList, Typography, Dialog, List, ListItem, ListItemAvatar, Avatar, ListItemText, TextField, CircularProgress } from "@material-ui/core";
+import {
+  Avatar,
+  Button,
+  Dialog,
+  Grid,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  MenuItem,
+  MenuList,
+  TextField,
+  Typography
+} from "@material-ui/core";
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import {
+  closeCreateNewSite,
+  confirmPage,
+  getUserSites,
+  openCreateNewSite,
+  setSiteIsEdit
+} from "../../actions";
 import Header from "../../component/Header";
 import Link from "../../component/link";
-import styles from "./main.module.css";
-import { connect } from "react-redux";
 import SwitchButton from "../../component/SwitchButton";
-import {
-  setEdit,
-  openCreateNewSite,
-  closeCreateNewSite,
-  confirmPage
-} from "../../actions";
-import { openLoading, closeLoading } from "../../actions";
-import { getUserSites } from "../../actions/site";
+import styles from "./main.module.css";
 
-const imgUrl = [
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
-  "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
-  "https://scontent.xx.fbcdn.net/v/t1.0-9/84357702_100161708215284_6628528314745094144_n.jpg?_nc_cat=111&_nc_ohc=j0bhRaMn6QIAX-D2JrZ&_nc_ht=scontent.xx&oh=00c77acfe89ec5953a9b1689b85308cb&oe=5EDA3199",
-  "https://graph.facebook.com/100160931548695/picture?type=large"
-];
-
-const imgStyles = {
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  width: "80%"
-};
-
-function WebsiteItem(props) {
+function WebsiteItem({ setSiteIsEdit, site }) {
   return (
     <Grid container justify="space-between" className={styles.web_item}>
       <Grid container item sm={8} xs={12} alignItems="center">
-        <Grid item sm={4} md={4} xs={4} className={styles.web_logo}>
-          <img src={props.logo} alt="logo" style={imgStyles} />
-        </Grid>
+        <Grid
+          item
+          sm={4}
+          md={4}
+          xs={4}
+          className={styles.web_logo}
+          style={{
+            backgroundImage: `url(${site.logo})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            height: "100%"
+          }}
+        />
         <Grid item sm={8} xs={8} md={6}>
           <Typography variant="h5" className={styles.web_content}>
-            {props.title}
+            {site.title}
           </Typography>
           <Typography variant="body2" className={styles.web_content}>
-            {props.category}
+            {site.category}
           </Typography>
         </Grid>
       </Grid>
-      <Grid
-        container
-        item
-        sm={4}
-        xs={12}
-        justify="flex-end"
-        alignItems="center"
-      >
-        <Grid container item spacing={6}>
+      <Grid container item sm={4} xs={12}>
+        <Grid container item justify="flex-end" alignItems="center">
           <Grid item sm={5}>
-            <Button className={styles.help_button}>
-              View
-              <FontAwesomeIcon className={styles.web_icon} icon={faEye} />
-            </Button>
+            <Link to={`/${site.id}`}>
+              <Button className={styles.help_button}>
+                View
+                {/* <FontAwesomeIcon className={styles.web_icon} icon={faEye} /> */}
+              </Button>
+            </Link>
           </Grid>
           <Grid item sm={5}>
             <Link to="/edit">
               <Button
                 className={styles.help_button}
-                onClick={() => props.setEdit(true)}
+                onClick={() => setSiteIsEdit(site)}
               >
                 Edit
-                <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
+                {/* <FontAwesomeIcon icon={faCog} className={styles.web_icon} /> */}
               </Button>
             </Link>
           </Grid>
         </Grid>
         <Grid container item justify="flex-end" md={12}>
-          <SwitchButton />
+          <SwitchButton
+            siteId={site.id}
+            siteName={site.title}
+            isPublish={site.isPublish}
+          />
         </Grid>
       </Grid>
     </Grid>
@@ -84,68 +92,125 @@ function WebsiteItem(props) {
 class MainPage extends Component {
   state = {
     pageUrl: "",
-    pageId: ""
+    pageId: "",
+    pageName: ""
   };
 
-  getAllUserSites = async () => {
-    const { isLogin, token, userId, getUserSites } = this.props;
-    if (isLogin) {
-      this.props.openLoading();
-      await getUserSites(userId, token);
-      this.props.closeLoading();
-    }
-  };
-
-  componentDidMount() {
-    this.getAllUserSites();
-  }
-
-  handleSelectPage = ({ id, link }) => {
+  handleSelectPage = ({ id, link, name }) => {
     this.setState({
       pageUrl: link,
-      pageId: id
+      pageId: id,
+      pageName: name
     });
   };
 
-  handleConfirm = () => {
+  handleEditSite = async site => {
+    const { setSiteIsEdit } = this.props;
+    await setSiteIsEdit(true, site);
+    return <Link to="/edit" />;
+  };
+
+  handleConfirm = async () => {
     const {
       confirmPage,
       accessToken,
-      color,
-      fontBody,
-      fontTitle,
-      name,
-      navItems,
       profile,
-      pages
+      closeCreateNewSite,
+      userId,
+      getUserSites
     } = this.props;
-    const { pageId, pageUrl } = this.state;
-    confirmPage({
+    const { pageId, pageUrl, pageName } = this.state;
+    const confirm = await confirmPage({
       pageId,
       pageUrl,
       accessToken,
-      color,
-      fontBody,
-      fontTitle,
-      name,
-      navItems,
       profile,
-      pages
+      name: pageName
     });
+    confirm && (await getUserSites(userId, accessToken));
+    closeCreateNewSite();
+  };
+
+  renderPagesNotGenerated = () => {
+    const { pages, sites } = this.props;
+    const nonGenerated = [];
+    sites.map(site => {
+      pages.map(page => {
+        if (site.id !== page.id) {
+          if (!nonGenerated.includes(page.id)) {
+            nonGenerated.push(page.id);
+          }
+        }
+      });
+    });
+
+    if (pages) {
+      if (sites && sites.length > 0) {
+        if (pages.length === sites.length) {
+          return (
+            <>
+              <ListItemText
+                primary={"Please add create new Facebook Page"}
+                secondary={"And Authorize your new page to generate"}
+              />
+            </>
+          );
+        } else {
+          return pages.map(page => {
+            if (nonGenerated.includes(page.id)) {
+              return (
+                <ListItem
+                  button
+                  onClick={() =>
+                    this.handleSelectPage({
+                      id: page.id,
+                      link: page.link,
+                      name: page.name
+                    })
+                  }
+                  key={page.id}
+                >
+                  <ListItemAvatar>
+                    <Avatar>
+                      <img src={page.picture.data.url} alt="" />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={page.name} secondary={page.category} />
+                </ListItem>
+              );
+            }
+          });
+        }
+      } else {
+        return pages.map(page => (
+          <ListItem
+            button
+            onClick={() =>
+              this.handleSelectPage({
+                id: page.id,
+                link: page.link,
+                name: page.name
+              })
+            }
+            key={page.id}
+          >
+            <ListItemAvatar>
+              <Avatar>
+                <img src={page.picture.data.url} alt="" />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={page.name} secondary={page.category} />
+          </ListItem>
+        ));
+      }
+    } else {
+      return <h3>No pages existing or You haven't authorize any page</h3>;
+    }
   };
 
   render() {
-    const {
-      setEdit,
-      closeCreateNewSite,
-      openCreateNewSite,
-      open,
-      pages,
-      data,
-      loading
-    } = this.props;
+    const { closeCreateNewSite, openCreateNewSite, open, sites } = this.props;
     const { pageUrl } = this.state;
-
     return (
       <>
         <Header />
@@ -155,7 +220,6 @@ class MainPage extends Component {
             item
             direction="column"
             sm={3}
-            xs={5}
             md={2}
             className={styles.navigation}
           >
@@ -166,7 +230,14 @@ class MainPage extends Component {
               </MenuItem>
             </MenuList>
           </Grid>
-          <Grid container item sm={9} xs={7} md={10} className={styles.righter}>
+          <Grid
+            container
+            item
+            sm={9}
+            xs={12}
+            md={10}
+            className={styles.righter}
+          >
             <Grid container item className={styles.current_edit}>
               <Grid container item xs sm md>
                 <Grid
@@ -189,9 +260,6 @@ class MainPage extends Component {
                   className={styles.info}
                   alignItems="center"
                 >
-                  <Grid item sm={5} md={3} xs={2}>
-                    <img src={imgUrl[3]} alt="logo" style={imgStyles} />
-                  </Grid>
                   <Grid item sm={2}>
                     <Typography variant="body1" className={styles.info_content}>
                       Foody
@@ -237,45 +305,15 @@ class MainPage extends Component {
                     fullWidth
                   >
                     <List>
-                      {pages &&
-                        pages.map(page => (
-                          <ListItem
-                            button
-                            onClick={() =>
-                              this.handleSelectPage({
-                                id: page.id,
-                                link: page.link
-                              })
-                            }
-                            key={page.id}
-                          >
-                            <ListItemAvatar>
-                              <Avatar
-                              >
-                                <img src={page.picture.data.url} alt="" />
-                              </Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                              primary={page.name}
-                              secondary={page.category}
-                            />
-                          </ListItem>
-                        ))}
-
-                      <ListItem
-                        autoFocus
-                        button
-                      >
+                      {this.renderPagesNotGenerated()}
+                      <ListItem autoFocus button>
                         <TextField
                           fullWidth
                           label="Facebook Page Url"
                           value={pageUrl ? pageUrl : ""}
                         />
                       </ListItem>
-                      <ListItem
-                        autoFocus
-                        button
-                      >
+                      <ListItem autoFocus button>
                         <Button
                           variant={"outlined"}
                           onClick={() => this.handleConfirm()}
@@ -289,25 +327,22 @@ class MainPage extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid container item sm={10} xs={12} md={6}>
-              {loading && (
-                <Grid container justify="center">
-                  <CircularProgress color="primary" style={{ marginTop: 50, color: 'lightgreen' }} />
-                </Grid>
-              )}
-              {!loading && !test ? (
-                <Grid container justify="center">
-                  <p style={{ fontStyle: "italic", textAlign: "center", color: "#121212", marginTop: 50 }}>No site to show.</p>
-                </Grid>
-              ) :
-                <List>
-                  {!loading && test && test.map(item => (
-                    <ListItem key={item.id}>
-                      <WebsiteItem setEdit={setEdit} title={item.title} category={item.category} logo={item.logo} />
-                    </ListItem>
-                  ))}
-                </List>
-              }
+            <Grid container item sm={12} xs={12} md={12}>
+              <Grid item className={styles.siteItem}>
+                {sites.length === 0 ? (
+                  <h3>You don't have any Website. Please create a new site.</h3>
+                ) : (
+                  sites.map((item, index) => (
+                    <div key={index}>
+                      <WebsiteItem
+                        setSiteIsEdit={this.handleEditSite}
+                        site={item}
+                      />
+                      <br />
+                    </div>
+                  ))
+                )}
+              </Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -319,28 +354,20 @@ class MainPage extends Component {
 const mapStateToProps = state => ({
   open: state.dialog.open,
   pages: state.user.pages,
-  sites: state.user.sites,
+  sites: state.site.data,
   accessToken: state.user.accessToken,
   profile: state.user.profile,
-  name: state.theme.name,
-  color: state.theme.color,
-  fontBody: state.theme.fontBody,
-  fontTitle: state.theme.fontTitle,
-  navItems: state.theme.navItems,
-  data: state.site.data,
-  loading: state.theme.loading,
-  userId: state.user.id,
+  userId: state.user.profile.id,
   token: state.user.accessToken,
+  isEdit: state.site.isEdit
 });
 
 const mapDispatchToProps = dispatch => ({
-  setEdit: isEdit => dispatch(setEdit(isEdit)),
+  setSiteIsEdit: (isEdit, site) => dispatch(setSiteIsEdit(isEdit, site)),
   closeCreateNewSite: () => dispatch(closeCreateNewSite()),
   openCreateNewSite: () => dispatch(openCreateNewSite()),
   confirmPage: data => dispatch(confirmPage(data)),
-  openLoading: () => dispatch(openLoading()),
-  closeLoading: () => dispatch(closeLoading()),
-  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
