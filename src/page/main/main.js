@@ -86,7 +86,11 @@ function WebsiteItem({ setSiteIsEdit, site }) {
           </Grid>
         </Grid>
         <Grid container item justify="flex-end" md={12}>
-          <SwitchButton siteId={site.id} isPublish={site.isPublish} />
+          <SwitchButton
+            siteId={site.id}
+            siteName={site.title}
+            isPublish={site.isPublish}
+          />
         </Grid>
       </Grid>
     </Grid>
