@@ -40,32 +40,39 @@ const IOSSwitch = withStyles(theme => ({
 
 class SwitchButton extends React.Component {
   handlePublish = () => {
-    const { siteId, isPublish, publishSite, unPublishSite } = this.props;
+    const {
+      siteId,
+      isPublish,
+      publishSite,
+      unPublishSite,
+      siteName
+    } = this.props;
     if (isPublish) {
-      unPublishSite(siteId);
+      unPublishSite({ siteId, siteName });
     } else {
-      publishSite(siteId);
+      publishSite({ siteId, siteName });
     }
   };
   render() {
-    const { isPublish } = this.props;
     return (
       <FormControlLabel
         control={
           <IOSSwitch
-            checked={isPublish}
+            checked={this.props.isPublish}
             onChange={() => this.handlePublish()}
           />
         }
-        label={isPublish ? "Publishing" : "Unpublishing"}
+        label={this.props.isPublish ? "Publishing" : "Unpublishing"}
       />
     );
   }
 }
 
 const mapDispatchToProps = dispatch => ({
-  publishSite: siteId => dispatch(publishSite(siteId)),
-  unPublishSite: siteId => dispatch(unPublishSite(siteId))
+  publishSite: ({ siteId, siteName }) =>
+    dispatch(publishSite({ siteId, siteName })),
+  unPublishSite: ({ siteId, siteName }) =>
+    dispatch(unPublishSite({ siteId, siteName }))
 });
 
 export default connect(null, mapDispatchToProps)(SwitchButton);

@@ -28,7 +28,7 @@ export const updateSiteId = currentId => {
   };
 };
 
-export const unPublishSite = siteId => {
+export const unPublishSite = ({ siteId, siteName }) => {
   return async dispatch => {
     const data = await axios({
       method: "patch",
@@ -43,7 +43,7 @@ export const unPublishSite = siteId => {
         type: "UNPUBLISH_SITE",
         payload: siteId
       });
-      toastr.success(`Unpublish site ${siteId} success`, "Sucess");
+      toastr.success(`Unpublish site ${siteName} success`, "Sucess");
     } else {
       toastr.error(
         "There are something wrong when unpublish your site",
@@ -53,7 +53,7 @@ export const unPublishSite = siteId => {
   };
 };
 
-export const publishSite = siteId => {
+export const publishSite = ({ siteId, siteName }) => {
   return async dispatch => {
     const data = await axios({
       method: "patch",
@@ -68,7 +68,7 @@ export const publishSite = siteId => {
         type: "PUBLISH_SITE",
         payload: siteId
       });
-      toastr.success(`Publish site ${siteId} sucess`, "Success");
+      toastr.success(`Publish site ${siteName} sucess`, "Success");
     } else {
       toastr.error("There are something wrong when publish your site", "Error");
     }
