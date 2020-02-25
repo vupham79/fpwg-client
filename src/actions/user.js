@@ -1,5 +1,5 @@
 import axios from "../utils/axios";
-
+import toastr from "../component/Toastr";
 export function login({ accessToken, profile }) {
   return async dispatch => {
     const data = await axios({
@@ -43,7 +43,47 @@ export function setEdit(isEdit) {
   };
 }
 
-export function getUserPages({ accessToken, userId }) {
+export function getAllUsers({ id, accessToken }) {
+  return async dispatch => {
+
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      const data = await axios({
+        url: "/user/findAll",
+        params: {
+          id: id,
+          access_token: accessToken
+        }
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "SET_ALL_USERS",
+          payload: data.data
+        });
+        toastr.success(`Users successfully retrieved`, "Success");
+        return true;
+      } else {
+        toastr.error(`Unable to retrieve users`, "Error");
+      }
+      return true;
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Unable to retrieve users`, "Error");
+      return true;
+    }
+
+
+  };
+}
+
+export function getUserPages({ accessToken }) {
   return async dispatch => {
     const data = await axios({
       url: "/facebook/pages",
@@ -52,46 +92,49 @@ export function getUserPages({ accessToken, userId }) {
       }
     });
     if (data.status === 200) {
-      // Check if GET request is success or have data
       dispatch({
         type: "SET_USER_PAGES",
         payload: data.data
       });
-    } else {
-
     }
   };
 }
 
-export function confirmPage({
-  pageUrl,
-  pageId,
-  accessToken,
-  color,
-  fontBody,
-  fontTitle,
-  name,
-  navItems,
-  profile,
-  pages
-}) {
+export function confirmPage({ pageUrl, pageId, accessToken, name, profile }) {
   return async dispatch => {
-    await axios({
-      method: "POST",
-      url: "/facebook/confirmPage",
-      data: {
-        pageUrl,
-        pageId,
-        accessToken,
-        color,
-        fontBody,
-        fontTitle,
-        name,
-        navItems,
-        userId: profile.id,
-        profile,
-        pages
-      }
+    dispatch({
+      type: "SHOW_LOADING"
     });
+    try {
+      const site = await axios({
+        method: "POST",
+        url: "/site/createNewSite",
+        data: {
+          pageUrl,
+          pageId,
+          accessToken,
+          name,
+          userId: profile.id,
+          profile
+        }
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (site.status === 200) {
+        dispatch({ type: "CREATE_NEW_SITE_SUCCESS", payload: site.data });
+        toastr.success(`Create new site ${name} success`, "Sucess");
+        return true;
+      } else {
+        toastr.error(`Create new site ${name} failed`, "Error");
+      }
+      return true;
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Create new site ${name} failed`, "Error");
+      return true;
+    }
   };
 }

@@ -1,6 +1,7 @@
 import PreEditPage from "../page/edit";
 import DesignPage from "../theme/theme1/components/DesignPage";
 import PreMainPage from "../page/main";
+import PreDashboardPage from "../page/dashboard";
 // View generated site
 import ViewSitePage from "../page/view/ViewSite";
 
@@ -25,7 +26,12 @@ export const Routes = [
     path: "/design"
   },
   {
+    component: PreDashboardPage,
+    exact: true,
+    path: "/admin"
+  },
+  {
     component: ViewSitePage,
     path: "/:id"
-  }
+  },
 ];
