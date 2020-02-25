@@ -1,5 +1,5 @@
-import axios from "../utils/axios";
 import toastr from "../component/Toastr";
+import axios from "../utils/axios";
 export function login({ accessToken, profile }) {
   return async dispatch => {
     const data = await axios({
@@ -45,7 +45,6 @@ export function setEdit(isEdit) {
 
 export function getAllUsers({ id, accessToken }) {
   return async dispatch => {
-
     dispatch({
       type: "SHOW_LOADING"
     });
@@ -65,21 +64,15 @@ export function getAllUsers({ id, accessToken }) {
           type: "SET_ALL_USERS",
           payload: data.data
         });
-        toastr.success(`Users successfully retrieved`, "Success");
-        return true;
       } else {
         toastr.error(`Unable to retrieve users`, "Error");
       }
-      return true;
     } catch (error) {
       dispatch({
         type: "CLOSE_LOADING"
       });
       toastr.error(`Unable to retrieve users`, "Error");
-      return true;
     }
-
-
   };
 }
 

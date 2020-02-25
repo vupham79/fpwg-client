@@ -1,26 +1,15 @@
-import React, { Component } from 'react';
-import Link from '@material-ui/core/Link';
-import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Title from './Title';
+import React, { Component } from "react";
+import { withStyles } from "@material-ui/core/styles";
+import {
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Table,
+  Link
+} from "@material-ui/core";
+import Title from "./Title";
 import { connect } from "react-redux";
-
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(0, '1', 'Elvis Presley', 'Tupelo, MS', 'VISA ⠀•••• 3719', 312.44),
-  createData(1, '2', 'Paul McCartney', 'London, UK', 'VISA ⠀•••• 2574', 866.99),
-  createData(2, '3', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-  createData(3, '4', 'Michael Jackson', 'Gary, IN', 'AMEX ⠀•••• 2000', 654.39),
-  createData(4, '5', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79),
-];
 
 function preventDefault(event) {
   event.preventDefault();
@@ -28,43 +17,49 @@ function preventDefault(event) {
 
 const useStyles = theme => ({
   seeMore: {
-    marginTop: theme.spacing(3),
-  },
+    marginTop: theme.spacing(3)
+  }
 });
 
 class TableUser extends Component {
-
   render() {
     const { classes, users } = this.props;
     return (
       <React.Fragment>
         <Title>Users</Title>
         {users && users.length === 0 ? (
-          <p style={{ fontStyle: 'italic' }}>No existing user</p>
+          <p style={{ fontStyle: "italic" }}>No existing user</p>
         ) : (
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Picture</TableCell>
-                  <TableCell>Display Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Phone</TableCell>
-                  <TableCell align="right">Unknown</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {users.map(row => (
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Picture</TableCell>
+                <TableCell>Display Name</TableCell>
+                <TableCell>Email</TableCell>
+                <TableCell>Phone</TableCell>
+                <TableCell align="right">Unknown</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {users &&
+                users.map(row => (
                   <TableRow key={row.id}>
-                    <TableCell><img style={{ height: 30, width: 30 }} src={row.picture} alt="" /></TableCell>
+                    <TableCell>
+                      <img
+                        style={{ height: 30, width: 30 }}
+                        src={row.picture}
+                        alt=""
+                      />
+                    </TableCell>
                     <TableCell>{row.displayName}</TableCell>
                     <TableCell>{row.email}</TableCell>
                     <TableCell>{row.phone}</TableCell>
                     <TableCell align="right">{row.amount}</TableCell>
                   </TableRow>
                 ))}
-              </TableBody>
-            </Table>
-          )}
+            </TableBody>
+          </Table>
+        )}
         <div className={classes.seeMore}>
           <Link color="primary" href="#" onClick={preventDefault}>
             See more
@@ -75,11 +70,12 @@ class TableUser extends Component {
   }
 }
 const mapStateToProps = state => ({
-  users: state.user.users,
+  users: state.user.users
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({});
 
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(useStyles)(TableUser));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyles)(TableUser));

@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import { getAllUsers } from "../../actions/user";
-import DashBoardPage from "./dashboard";
 import AdminLayout from "../../layout/adminLayout";
-import userTable from "./userTable";
 import TableUser from "../../component/TableUser";
-
-
 class PreDashboardPage extends Component {
   getAll = async () => {
     const { accessToken, userId, getAllUsers } = this.props;
@@ -23,7 +18,11 @@ class PreDashboardPage extends Component {
     // if (!isLogin || !isAdmin) {
     //   return <Redirect to="/" />;
     // }
-    return <AdminLayout><TableUser /> </AdminLayout>;
+    return (
+      <AdminLayout>
+        <TableUser />{" "}
+      </AdminLayout>
+    );
   }
 }
 
