@@ -28,27 +28,24 @@ import Link from "../../component/link";
 import SwitchButton from "../../component/SwitchButton";
 import styles from "./main.module.css";
 
-const imgUrl = [
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSJZLvDxmOKEfBe-JfqgJ0WQhq808reFgcd0cpAQR1UGjPa6N_3",
-  "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
-  "https://scontent.xx.fbcdn.net/v/t1.0-9/84357702_100161708215284_6628528314745094144_n.jpg?_nc_cat=111&_nc_ohc=j0bhRaMn6QIAX-D2JrZ&_nc_ht=scontent.xx&oh=00c77acfe89ec5953a9b1689b85308cb&oe=5EDA3199",
-  "https://graph.facebook.com/100160931548695/picture?type=large"
-];
-
-const imgStyles = {
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  width: "80%"
-};
-
-function WebsiteItem({ site, setCurrentEditId }) {
+function WebsiteItem({ setCurrentEditId, site }) {
   return (
     <Grid container justify="space-between" className={styles.web_item}>
       <Grid container item sm={8} xs={12} alignItems="center">
-        <Grid item sm={4} md={4} xs={4} className={styles.web_logo}>
-          <img src={site.logo} alt="logo" style={imgStyles} />
-        </Grid>
+        <Grid
+          item
+          sm={4}
+          md={4}
+          xs={4}
+          className={styles.web_logo}
+          style={{
+            backgroundImage: `url(${site.logo})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            height: "100%"
+          }}
+        />
         <Grid item sm={8} xs={8} md={6}>
           <Typography variant="h5" className={styles.web_content}>
             {site.title}
@@ -58,20 +55,13 @@ function WebsiteItem({ site, setCurrentEditId }) {
           </Typography>
         </Grid>
       </Grid>
-      <Grid
-        container
-        item
-        sm={4}
-        xs={12}
-        justify="flex-end"
-        alignItems="center"
-      >
-        <Grid container item spacing={6}>
+      <Grid container item sm={4} xs={12}>
+        <Grid container item justify="flex-end" alignItems="center">
           <Grid item sm={5}>
             <Link to={`/${site._id}`}>
               <Button className={styles.help_button}>
                 View
-                <FontAwesomeIcon className={styles.web_icon} icon={faEye} />
+                {/* <FontAwesomeIcon className={styles.web_icon} icon={faEye} /> */}
               </Button>
             </Link>
           </Grid>
@@ -82,7 +72,7 @@ function WebsiteItem({ site, setCurrentEditId }) {
                 onClick={() => setCurrentEditId(site._id)}
               >
                 Edit
-                <FontAwesomeIcon icon={faCog} className={styles.web_icon} />
+                {/* <FontAwesomeIcon icon={faCog} className={styles.web_icon} /> */}
               </Button>
             </Link>
           </Grid>
@@ -137,58 +127,76 @@ class MainPage extends Component {
 
   renderPagesNotGenerated = () => {
     const { pages, sites } = this.props;
+    const nonGenerated = [];
+    sites.map(site => {
+      pages.map(page => {
+        if (site.id !== page.id) {
+          if (!nonGenerated.includes(page.id)) {
+            nonGenerated.push(page.id);
+          }
+        }
+      });
+    });
+
     if (pages) {
-      return sites && sites.length > 0
-        ? sites.map(site =>
-            pages.map(
-              page =>
-                page.id !== site.id && (
-                  <ListItem
-                    button
-                    onClick={() =>
-                      this.handleSelectPage({
-                        id: page.id,
-                        link: page.link,
-                        name: page.name
-                      })
-                    }
-                    key={page.id}
-                  >
-                    <ListItemAvatar>
-                      <Avatar>
-                        <img src={page.picture.data.url} alt="" />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={page.name}
-                      secondary={page.category}
-                    />
-                  </ListItem>
-                )
-            )
-          )
-        : pages.map(page => {
-            return (
-              <ListItem
-                button
-                onClick={() =>
-                  this.handleSelectPage({
-                    id: page.id,
-                    link: page.link,
-                    name: page.name
-                  })
-                }
-                key={page.id}
-              >
-                <ListItemAvatar>
-                  <Avatar>
-                    <img src={page.picture.data.url} alt="" />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={page.name} secondary={page.category} />
-              </ListItem>
-            );
+      if (sites && sites.length > 0) {
+        if (pages.length === sites.length) {
+          return (
+            <>
+              <ListItemText
+                primary={"Please add create new Facebook Page"}
+                secondary={"And Authorize your new page to generate"}
+              />
+            </>
+          );
+        } else {
+          return pages.map(page => {
+            if (nonGenerated.includes(page.id)) {
+              return (
+                <ListItem
+                  button
+                  onClick={() =>
+                    this.handleSelectPage({
+                      id: page.id,
+                      link: page.link,
+                      name: page.name
+                    })
+                  }
+                  key={page.id}
+                >
+                  <ListItemAvatar>
+                    <Avatar>
+                      <img src={page.picture.data.url} alt="" />
+                    </Avatar>
+                  </ListItemAvatar>
+                  <ListItemText primary={page.name} secondary={page.category} />
+                </ListItem>
+              );
+            }
           });
+        }
+      } else {
+        return pages.map(page => (
+          <ListItem
+            button
+            onClick={() =>
+              this.handleSelectPage({
+                id: page.id,
+                link: page.link,
+                name: page.name
+              })
+            }
+            key={page.id}
+          >
+            <ListItemAvatar>
+              <Avatar>
+                <img src={page.picture.data.url} alt="" />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={page.name} secondary={page.category} />
+          </ListItem>
+        ));
+      }
     } else {
       return <h3>No pages existing or You haven't authorize any page</h3>;
     }
@@ -212,7 +220,6 @@ class MainPage extends Component {
             item
             direction="column"
             sm={3}
-            xs={5}
             md={2}
             className={styles.navigation}
           >
@@ -223,7 +230,14 @@ class MainPage extends Component {
               </MenuItem>
             </MenuList>
           </Grid>
-          <Grid container item sm={9} xs={7} md={10} className={styles.righter}>
+          <Grid
+            container
+            item
+            sm={9}
+            xs={12}
+            md={10}
+            className={styles.righter}
+          >
             <Grid container item className={styles.current_edit}>
               <Grid container item xs sm md>
                 <Grid
@@ -246,9 +260,6 @@ class MainPage extends Component {
                   className={styles.info}
                   alignItems="center"
                 >
-                  <Grid item sm={5} md={3} xs={2}>
-                    <img src={imgUrl[3]} alt="logo" style={imgStyles} />
-                  </Grid>
                   <Grid item sm={2}>
                     <Typography variant="body1" className={styles.info_content}>
                       Foody
@@ -316,7 +327,7 @@ class MainPage extends Component {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid container item sm={10} xs={12} md={6}>
+            <Grid container item sm={12} xs={12} md={12}>
               <Grid item className={styles.siteItem}>
                 {sites.length === 0 ? (
                   <h3>You don't have any Website. Please create a new site.</h3>

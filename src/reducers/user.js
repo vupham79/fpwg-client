@@ -2,7 +2,9 @@ const defaultState = {
   profile: {},
   accessToken: "",
   isLogin: false,
-  pages: []
+  pages: [],
+  isAdmin: true,
+  users: []
 };
 
 const UserReducer = (state = defaultState, action) => {
@@ -22,6 +24,11 @@ const UserReducer = (state = defaultState, action) => {
       return {
         ...state,
         pages: action.payload
+      };
+    case "SET_ALL_USERS":
+      return {
+        ...state,
+        users: action.payload ? [...action.payload] : []
       };
     default:
       return state;

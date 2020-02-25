@@ -1,19 +1,13 @@
 import React from "react";
-import {
-  AppBar,
-  CssBaseline,
-  Drawer,
-  Tabs,
-  Tab,
-  Grid,
-  Button
-} from "@material-ui/core";
+import { AppBar, CssBaseline, Drawer, Tabs, Tab } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { updateTabValue, saveDesignSite } from "../actions";
+import { updateTabValue } from "../actions";
 import DesignTab from "./DesignEditorTab";
 import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
+import { Button } from "@material-ui/core";
+
 
 const useStyles = theme => ({
   root: {
@@ -47,13 +41,7 @@ const tabStyles = {
 
 class ClippedDrawer extends React.Component {
   render() {
-    const {
-      classes,
-      tabValue,
-      updateTabValue,
-      saveDesignSite,
-      site
-    } = this.props;
+    const { classes, tabValue, updateTabValue } = this.props;
 
     return (
       <AppBar className={classes.root} position="sticky">
@@ -65,6 +53,7 @@ class ClippedDrawer extends React.Component {
             paper: classes.drawerPaper
           }}
         >
+
           <Tabs
             value={tabValue}
             textColor="primary"
@@ -80,18 +69,7 @@ class ClippedDrawer extends React.Component {
           {tabValue === 0 && <DesignTab />}
           {tabValue === 1 && <PagesEditorTab />}
           {tabValue === 2 && <SettingEditorTab />}
-          <Grid container justify="center">
-            <Button
-              style={{ marginTop: "1rem" }}
-              variant="contained"
-              size="large"
-              color="primary"
-              onClick={() => saveDesignSite(site)}
-              fullWidth
-            >
-              Save
-            </Button>
-          </Grid>
+          <Button fullWidth="true" color="primary" variant="contained">Save</Button>
         </Drawer>
       </AppBar>
     );
@@ -99,12 +77,10 @@ class ClippedDrawer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tabValue: state.tab.value,
-  site: state.site.siteEdit
+  tabValue: state.tab.value
 });
 
 const mapDispatchToProps = dispatch => ({
-  saveDesignSite: site => dispatch(saveDesignSite(site)),
   updateTabValue: value => dispatch(updateTabValue(value))
 });
 
