@@ -2,12 +2,11 @@ import React from "react";
 import { AppBar, CssBaseline, Drawer, Tabs, Tab } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
-import { updateTabValue } from "../actions";
+import { updateTabValue, saveDesignSite } from "../actions";
 import DesignTab from "./DesignEditorTab";
 import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
 import { Button } from "@material-ui/core";
-
 
 const useStyles = theme => ({
   root: {
@@ -41,7 +40,13 @@ const tabStyles = {
 
 class ClippedDrawer extends React.Component {
   render() {
-    const { classes, tabValue, updateTabValue } = this.props;
+    const {
+      classes,
+      tabValue,
+      updateTabValue,
+      siteEdit,
+      saveDesignSite
+    } = this.props;
 
     return (
       <AppBar className={classes.root} position="sticky">
@@ -53,7 +58,6 @@ class ClippedDrawer extends React.Component {
             paper: classes.drawerPaper
           }}
         >
-
           <Tabs
             value={tabValue}
             textColor="primary"
@@ -69,7 +73,14 @@ class ClippedDrawer extends React.Component {
           {tabValue === 0 && <DesignTab />}
           {tabValue === 1 && <PagesEditorTab />}
           {tabValue === 2 && <SettingEditorTab />}
-          <Button fullWidth="true" color="primary" variant="contained">Save</Button>
+          <Button
+            fullWidth
+            color="primary"
+            variant="contained"
+            onClick={() => saveDesignSite(siteEdit)}
+          >
+            Save
+          </Button>
         </Drawer>
       </AppBar>
     );
@@ -77,11 +88,13 @@ class ClippedDrawer extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  tabValue: state.tab.value
+  tabValue: state.tab.value,
+  siteEdit: state.site.siteEdit
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateTabValue: value => dispatch(updateTabValue(value))
+  updateTabValue: value => dispatch(updateTabValue(value)),
+  saveDesignSite: site => dispatch(saveDesignSite(site))
 });
 
 export default connect(

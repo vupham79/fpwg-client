@@ -105,8 +105,6 @@ class DesignEditorTab extends React.Component {
       site
     } = this.props;
 
-    const themeName = themes && themes.find(e => e._id === site.themeId);
-
     return (
       <>
         <div style={{ overflowY: "scroll" }}>
@@ -114,7 +112,7 @@ class DesignEditorTab extends React.Component {
           <Grid className={classes.sideBarBox}>
             <Select
               autoComplete="true"
-              value={themeName && themeName.name}
+              value={site && site.theme.name}
               fullWidth
               onChange={this.handleChangeTheme}
             >

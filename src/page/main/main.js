@@ -58,7 +58,7 @@ function WebsiteItem({ setCurrentEditId, site }) {
       <Grid container item sm={4} xs={12}>
         <Grid container item justify="flex-end" alignItems="center">
           <Grid item sm={5}>
-            <Link to={`/${site._id}`}>
+            <Link to={`/${site.id}`}>
               <Button className={styles.help_button}>
                 View
                 {/* <FontAwesomeIcon className={styles.web_icon} icon={faEye} /> */}
@@ -69,7 +69,7 @@ function WebsiteItem({ setCurrentEditId, site }) {
             <Link to="/edit">
               <Button
                 className={styles.help_button}
-                onClick={() => setCurrentEditId(site._id)}
+                onClick={() => setCurrentEditId(site.id)}
               >
                 Edit
                 {/* <FontAwesomeIcon icon={faCog} className={styles.web_icon} /> */}

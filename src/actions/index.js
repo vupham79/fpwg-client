@@ -14,7 +14,8 @@ import {
   getSiteById,
   setSiteEdit,
   setSiteView,
-  setCurrentEditId
+  setCurrentEditId,
+  setActiveNavItems
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -50,5 +51,6 @@ export {
   getSiteById,
   setSiteEdit,
   setSiteView,
-  setCurrentEditId
+  setCurrentEditId,
+  setActiveNavItems
 };
