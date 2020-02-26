@@ -9,6 +9,7 @@ import {
   Link
 } from "@material-ui/core";
 import Title from "./Title";
+import SwitchButton from "./SwitchButton";
 import { connect } from "react-redux";
 
 function preventDefault(event) {
@@ -34,21 +35,27 @@ class TableSite extends Component {
               <TableHead>
                 <TableRow>
                   <TableCell>Owner</TableCell>
+                  <TableCell>Title</TableCell>
                   <TableCell>Theme</TableCell>
-                  <TableCell>Published</TableCell>
                   <TableCell>Categories</TableCell>
-                  <TableCell align="right">Unknown</TableCell>
+                  <TableCell align="right">Published</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {sites &&
                   sites.map(row => (
                     <TableRow key={row.id}>
-                      <TableCell>{row.user}</TableCell>
-                      <TableCell>{row.theme}</TableCell>
-                      <TableCell>{row.isPublished}</TableCell>
-                      <TableCell>{row.categories}</TableCell>
-                      <TableCell align="right">{row.amount}</TableCell>
+                      <TableCell>{row.user.displayName}</TableCell>
+                      <TableCell>{row.title}</TableCell>
+                      <TableCell>{row.theme.name}</TableCell>
+                      <TableCell>{row.categories.map(c => (c.name + ', '))}</TableCell>
+                      <TableCell align="right">
+                        <SwitchButton
+                          siteId={row.id}
+                          siteName={row.title}
+                          isPublish={row.isPublish}
+                        />
+                      </TableCell>
                     </TableRow>
                   ))}
               </TableBody>

@@ -14,9 +14,9 @@ export function getAllSites({ id, accessToken }) {
           access_token: accessToken
         }
       });
-      dispatch({
-        type: "CLOSE_LOADING"
-      });
+      // dispatch({
+      //   type: "CLOSE_LOADING" để đây bị loading bất tận??
+      // });
       if (data.status === 200) {
         dispatch({
           type: "SET_ALL_SITES",
@@ -25,6 +25,9 @@ export function getAllSites({ id, accessToken }) {
       } else {
         toastr.error(`Unable to retrieve sites`, "Error");
       }
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
     } catch (error) {
       dispatch({
         type: "CLOSE_LOADING"

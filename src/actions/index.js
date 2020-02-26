@@ -1,4 +1,3 @@
-import { updateAdminTabIndex } from "./adminTab";
 import { closeCreateNewSite, openCreateNewSite } from "./dialog";
 import { getImageUrl } from "./image";
 import {
@@ -22,13 +21,8 @@ import {
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
 import { getAllThemes, getNavItems, setShowCustomColor } from "./theme";
-import {
-  confirmPage,
-  getAllUsers,
-  getUserPages,
-  login,
-  setLogout
-} from "./user";
+import { confirmPage, getUserPages, login, setLogout, getAllUsers, activateUser, deactivateUser } from "./user";
+import { updateAdminTabIndex } from "./adminTab";
 
 export {
   getUserPages,
@@ -63,5 +57,7 @@ export {
   setActiveNavItems,
   updateAdminTabIndex,
   getAllUsers,
-  getAllSites
+  getAllSites,
+  activateUser,
+  deactivateUser
 };
