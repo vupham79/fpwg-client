@@ -1,21 +1,35 @@
 import React from "react";
 import { themes as themesConstant } from "../../constant/constant";
 import { connect } from "react-redux";
-import { updateSiteId, getSiteById, setSiteView } from "../../actions";
+import {
+  updateSiteId,
+  getSiteById,
+  setSiteView,
+  showLoading,
+  closeLoading
+} from "../../actions";
 import { Grid } from "@material-ui/core";
 
 class PreViewSite extends React.Component {
   state = {
     currentSiteId: ""
   };
+
   async componentDidMount() {
-    const { updateSiteId, getSiteById, setSiteView } = this.props;
+    const {
+      updateSiteId,
+      getSiteById,
+      setSiteView,
+      showLoading,
+      closeLoading
+    } = this.props;
+    showLoading();
     const currentSiteId = await this.props.location.pathname.split("/")[1];
     this.setState({
       currentSiteId: currentSiteId
     });
 
-    updateSiteId(this.state.currentSiteId);
+    await updateSiteId(this.state.currentSiteId);
     const data = await getSiteById(this.state.currentSiteId);
     const fontTitle = {
       fontFamily: data.fontTitle,
@@ -24,7 +38,8 @@ class PreViewSite extends React.Component {
     const fontBody = {
       fontFamily: data.fontBody
     };
-    setSiteView(data, fontTitle, fontBody);
+    await setSiteView(data, fontTitle, fontBody);
+    closeLoading();
   }
 
   render() {
@@ -39,8 +54,7 @@ class PreViewSite extends React.Component {
       }
       return themesConstant.find(e => e.name === siteView.theme.name).component;
     }
-
-    return null;
+    return <></>;
   }
 }
 
@@ -52,6 +66,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   updateSiteId: id => dispatch(updateSiteId(id)),
   getSiteById: id => dispatch(getSiteById(id)),
-  setSiteView: (site, title, body) => dispatch(setSiteView(site, title, body))
+  setSiteView: (site, title, body) => dispatch(setSiteView(site, title, body)),
+  closeLoading: () => dispatch(closeLoading()),
+  showLoading: () => dispatch(showLoading())
 });
 export default connect(mapStateToProps, mapDispatchToProps)(PreViewSite);

@@ -12,6 +12,7 @@ import FontPicker from "font-picker-react";
 import React from "react";
 import { ChromePicker, TwitterPicker } from "react-color";
 import { connect } from "react-redux";
+import toastr from "./Toastr";
 import {
   changeColor,
   changeFontBody,
@@ -71,6 +72,10 @@ const imgStyles = {
 };
 
 class DesignEditorTab extends React.Component {
+  state = {
+    file: null
+  };
+
   handleChangeTheme = event => {
     const { changeTheme, themes, site } = this.props;
     const theme = themes.find(e => e.name === event.target.value);
@@ -95,6 +100,32 @@ class DesignEditorTab extends React.Component {
     site.fontBody = font.family;
     changeFontBody(site);
   };
+
+  handleUpload = async e => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    //validating the file
+    //check if the file is exists
+    if (file === null) {
+      toastr.error("No image is selected!", "Error");
+      return;
+    }
+    //check if the image size is larger than 1MB
+    if (file.size > 1048576) {
+      toastr.error("Image size must be less than 1MB!", "Error");
+      return;
+    }
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/jpg"
+    ) {
+      this.setState({ file });
+    } else {
+      toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
+    }
+  };
+
   render() {
     const drawerWidth = 280;
     const {
@@ -210,8 +241,14 @@ class DesignEditorTab extends React.Component {
             <Input
               type="file"
               name="Logo"
-              onChange={e => uploadLogo(e, site.id)}
+              onChange={e => this.handleUpload(e)}
             />
+            <Button
+              variant={"contained"}
+              onClick={() => uploadLogo(this.state.file, site.id)}
+            >
+              Upload
+            </Button>
           </Grid>
           <Divider
             style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}

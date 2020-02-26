@@ -43,10 +43,9 @@ class PreEditPage extends React.Component {
     if (!isLogin) {
       return <Redirect to="/" />;
     }
-    if (siteEdit && !loading) {
+    if (siteEdit) {
       return <EditPage />;
     }
-    return <></>;
   }
 }
 

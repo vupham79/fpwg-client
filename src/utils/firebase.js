@@ -1,11 +1,6 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
-const { Storage } = require("@google-cloud/storage");
-
-const storage = new Storage({
-  keyFilename: "./src/utils/service_account.json"
-});
-
+import "firebase/storage";
 const firebaseConfig = {
   apiKey: "AIzaSyCGLgfQPGsGe6c1dTall8WpghnSYtps2J8",
   authDomain: "capstoneproject1-26a40.firebaseapp.com",
@@ -19,7 +14,7 @@ const firebaseConfig = {
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 firebase.auth().languageCode = "en_EN";
-
+firebase.storage().ref();
 const firebaseAppAuth = firebaseApp.auth();
 const provider = new firebase.auth.FacebookAuthProvider();
 provider.addScope("public_profile,manage_pages,pages_show_list");
@@ -27,4 +22,4 @@ provider.setCustomParameters({
   display: "popup"
 });
 
-export { provider, firebaseAppAuth, storage };
+export { provider, firebaseAppAuth, firebase };

@@ -1,6 +1,6 @@
 import toastr from "toastr";
 import axios from "../utils/axios";
-import { storage } from "../utils/firebase";
+import { firebase } from "../utils/firebase";
 
 export function getAllSites({ id, accessToken }) {
   return async dispatch => {
@@ -235,23 +235,34 @@ export function setActiveNavItems(site) {
 }
 
 export function uploadLogo(path, name) {
-  return dispatch => {
+  return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
     });
-    storage
-      .bucket("gs://capstoneproject1-26a40.appspot.com")
-      .upload(path, { destination: name })
-      .then(() => {
-        toastr.success("Upload new logo successful", "Success");
-      })
-      .catch(error => {
-        toastr.error("Upload new logo failed", "Error");
-      })
-      .finally(() => {
-        dispatch({
-          type: "CLOSE_LOADING"
+    try {
+      firebase
+        .storage()
+        .ref()
+        .child(`${name}`)
+        .put(path, {
+          contentType: "image/jpeg"
+        })
+        .then(() => {
+          toastr.success("Upload new logo successful", "Success");
+        })
+        .catch(error => {
+          toastr.error(`Upload new logo failed`, "Error");
+        })
+        .finally(() => {
+          dispatch({
+            type: "CLOSE_LOADING"
+          });
         });
+    } catch (error) {
+      toastr.error(`Upload new logo failed`, "Error");
+      dispatch({
+        type: "CLOSE_LOADING"
       });
+    }
   };
 }
