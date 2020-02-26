@@ -18,7 +18,8 @@ import {
   changeFontTitle,
   changeTheme,
   getImageUrl,
-  setShowCustomColor
+  setShowCustomColor,
+  uploadLogo
 } from "../actions";
 
 const useStyles = theme => ({
@@ -102,7 +103,8 @@ class DesignEditorTab extends React.Component {
       classes,
       getImageUrl,
       themes,
-      site
+      site,
+      uploadLogo
     } = this.props;
 
     return (
@@ -205,7 +207,11 @@ class DesignEditorTab extends React.Component {
             style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
           />
           <Grid className={classes.sideBarBox}>
-            <Input type="file" name="Logo" />
+            <Input
+              type="file"
+              name="Logo"
+              onChange={e => uploadLogo(e, site.id)}
+            />
           </Grid>
           <Divider
             style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
@@ -228,7 +234,8 @@ const mapDispatchToProps = dispatch => ({
   changeFontTitle: site => dispatch(changeFontTitle(site)),
   changeFontBody: site => dispatch(changeFontBody(site)),
   setShowCustomColor: isShow => dispatch(setShowCustomColor(isShow)),
-  getImageUrl: url => dispatch(getImageUrl(url))
+  getImageUrl: url => dispatch(getImageUrl(url)),
+  uploadLogo: (path, name) => dispatch(uploadLogo(path, name))
 });
 
 export default connect(

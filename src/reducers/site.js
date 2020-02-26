@@ -10,8 +10,8 @@ const defaultState = {
   titleView: {},
   bodyView: {},
   isView: false,
-  siteEdit: {},
-  siteView: {},
+  // siteEdit: {},
+  // siteView: {},
   adminData: []
 };
 

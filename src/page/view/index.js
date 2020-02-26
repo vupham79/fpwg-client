@@ -29,9 +29,6 @@ class PreViewSite extends React.Component {
 
   render() {
     const { siteView } = this.props;
-
-    // console.log(siteView);
-
     if (siteView) {
       if (!siteView.isPublish) {
         return (

@@ -7,8 +7,6 @@ import AdminLayout from "../../layout/adminLayout";
 import TableUser from "../../component/TableUser";
 import TableSite from "../../component/TableSite";
 import TableTheme from "../../component/TableTheme";
-// import userTable from "./userTable";
-
 
 class PreDashboardPage extends Component {
   getUsers = async () => {
@@ -22,16 +20,14 @@ class PreDashboardPage extends Component {
   };
 
   getThemes = async () => {
-    const { accessToken, userId, getAllThemesAdmin } = this.props;
+    const { getAllThemesAdmin } = this.props;
     await getAllThemesAdmin();
   };
 
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
 
   render() {
-    const { isLogin, isAdmin, selectedAdminIndex } = this.props;
+    const { selectedAdminIndex } = this.props;
     // if (!isLogin || !isAdmin) {
     //   return <Redirect to="/" />;
     // }
@@ -39,28 +35,24 @@ class PreDashboardPage extends Component {
     let component = null;
     switch (selectedAdminIndex) {
       case 0:
-        component = <TableUser />
+        component = <TableUser />;
         this.getUsers();
         break;
       case 1:
-        component = <TableSite />
+        component = <TableSite />;
         //this.getSites();
         break;
       case 2:
-        component = <TableTheme />
+        component = <TableTheme />;
         this.getThemes();
         break;
       default:
-        component = <TableUser />
+        component = <TableUser />;
         this.getUsers();
         break;
     }
 
-    return (
-      <AdminLayout>
-        {!selectedAdminIndex && component}
-      </AdminLayout>
-    );
+    return <AdminLayout>{!selectedAdminIndex && component}</AdminLayout>;
   }
 }
 
@@ -76,7 +68,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getAllUsers: (id, accessToken) => dispatch(getAllUsers(id, accessToken)),
   getAllSites: (id, accessToken) => dispatch(getAllSites(id, accessToken)),
-  getAllThemesAdmin: () => dispatch(getAllThemes()),
+  getAllThemesAdmin: () => dispatch(getAllThemes())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreDashboardPage);

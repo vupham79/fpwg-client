@@ -1,5 +1,10 @@
 import * as firebase from "firebase/app";
 import "firebase/auth";
+const { Storage } = require("@google-cloud/storage");
+
+const storage = new Storage({
+  keyFilename: "./src/utils/service_account.json"
+});
 
 const firebaseConfig = {
   apiKey: "AIzaSyCGLgfQPGsGe6c1dTall8WpghnSYtps2J8",
@@ -22,4 +27,4 @@ provider.setCustomParameters({
   display: "popup"
 });
 
-export { provider, firebaseAppAuth };
+export { provider, firebaseAppAuth, storage };

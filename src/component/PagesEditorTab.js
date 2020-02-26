@@ -45,7 +45,6 @@ function handleChangeActive(item, site, setActiveNavItems) {
   } else {
     index.isActive = true;
   }
-  console.log(site.navItems)
   setActiveNavItems(site);
 }
 

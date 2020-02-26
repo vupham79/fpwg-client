@@ -17,7 +17,8 @@ import {
   setSiteEdit,
   setSiteView,
   unPublishSite,
-  updateSiteId
+  updateSiteId,
+  uploadLogo
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -63,5 +64,6 @@ export {
   setActiveNavItems,
   updateAdminTabIndex,
   getAllUsers,
-  getAllSites
+  getAllSites,
+  uploadLogo
 };
