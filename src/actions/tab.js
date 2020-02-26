@@ -8,6 +8,7 @@ export function updateTabValue(value) {
 }
 
 export function updateNavItemValue(value) {
+  console.log("value", value);
   return dispatch => {
     dispatch({
       type: "UPDATE_NAVITEM_VALUE",

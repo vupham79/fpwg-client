@@ -121,7 +121,7 @@ export function saveDesignSite(site) {
         fontBody: site.fontBody,
         fontTitle: site.fontTitle,
         navItems: site.navItems,
-        themeId: site.themeId,
+        theme: site.theme.id,
         pageId: site.id,
         name: site.title,
         color: site.color
@@ -187,6 +187,15 @@ export function setCurrentEditId(id) {
     dispatch({
       type: "SET_CURRENT_EDIT_ID",
       payload: id
+    });
+  };
+}
+
+export function setActiveNavItems(site) {
+  return dispatch => {
+    dispatch({
+      type: "SET_ACTIVE_NAV_ITEMS",
+      payload: site
     });
   };
 }

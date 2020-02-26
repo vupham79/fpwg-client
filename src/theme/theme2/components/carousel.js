@@ -60,10 +60,6 @@ class CarouselImages extends Component {
 
   render() {
     const { siteEdit } = this.props;
-
-    const changeStyle = {
-      fontFamily: siteEdit.fontBody
-    };
     return (
       <Grid
         container
@@ -78,7 +74,7 @@ class CarouselImages extends Component {
             style={imgStyles}
           />
         </Grid>
-        <Grid item sm={10} xs={12} className={styles.info} style={changeStyle}>
+        <Grid item sm={10} xs={12} className={styles.info}>
           Welcome to our website! Take a look around and feel free to contact us
           for more information.
         </Grid>

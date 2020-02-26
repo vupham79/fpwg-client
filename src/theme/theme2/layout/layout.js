@@ -30,10 +30,10 @@ class Layout extends Component {
       pageIndex5
     } = "";
     if (isEdit) {
-      const themeName = themes.find(e => e._id === siteEdit.themeId);
-      const pages = themesConstant.find(
-        element => element.name === themeName.name
-      ).pages;
+      const pages =
+        siteEdit &&
+        themesConstant.find(element => element.name === siteEdit.theme.name)
+          .pages;
 
       pageIndex0 = pages.find(
         element => element.name === siteEdit.navItems[0].name

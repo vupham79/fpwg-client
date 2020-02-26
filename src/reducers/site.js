@@ -2,8 +2,8 @@ const defaultState = {
   currentId: null,
   data: [],
   isEdit: false,
-  siteEdit: {},
-  siteView: {},
+  siteEdit: null,
+  siteView: null,
   currentEditId: null,
   titleEdit: {},
   bodyEdit: {},
@@ -104,7 +104,7 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         isEdit: false,
-        siteView: { ...action.payload },
+        siteView: { ...action.payload.data },
         titleView: { ...action.payload.titleView },
         bodyView: { ...action.payload.bodyView }
       };
@@ -112,6 +112,11 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         currentEditId: action.payload
+      };
+    case "SET_ACTIVE_NAV_ITEMS":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
       };
     default:
       return state;

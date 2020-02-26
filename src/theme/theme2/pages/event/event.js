@@ -20,12 +20,7 @@ const imgStyles = {
 
 class EventPage extends React.Component {
   render() {
-    const { siteEdit } = this.props;
-    const changeTitleStyle = {
-      fontFamily: siteEdit.fontTitle,
-      color: siteEdit.color
-    };
-
+    const { titleEdit, titleView, isEdit } = this.props;
     return (
       <Grid
         container
@@ -39,7 +34,7 @@ class EventPage extends React.Component {
             variant="h4"
             align="center"
             gutterBottom
-            style={changeTitleStyle}
+            style={isEdit ? titleEdit : titleView}
           >
             Events
           </Typography>
@@ -102,7 +97,10 @@ class EventPage extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit,
+  titleEdit: state.site.titleEdit,
+  titleView: state.site.titleView
 });
 
 export default connect(mapStateToProps, null)(EventPage);

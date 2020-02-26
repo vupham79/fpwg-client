@@ -6,8 +6,7 @@ import { Grid } from "@material-ui/core";
 
 class PreViewSite extends React.Component {
   state = {
-    currentSiteId: "",
-    data: ""
+    currentSiteId: ""
   };
   async componentDidMount() {
     const { updateSiteId, getSiteById, setSiteView } = this.props;
@@ -30,15 +29,21 @@ class PreViewSite extends React.Component {
 
   render() {
     const { siteView } = this.props;
-    if (siteView.data.length === 0) {
-      return (
-        <Grid container justify="center">
-          <h1 style={{ color: "red" }}>404 Not Found</h1>
-        </Grid>
-      );
+
+    // console.log(siteView);
+
+    if (siteView) {
+      if (!siteView.isPublish) {
+        return (
+          <Grid container justify="center">
+            <h1 style={{ color: "red" }}>404 Not Found</h1>
+          </Grid>
+        );
+      }
+      return themesConstant.find(e => e.name === siteView.theme.name).component;
     }
-    return themesConstant.find(e => e.name === siteView.data.themeId.name)
-      .component;
+
+    return null;
   }
 }
 

@@ -28,17 +28,21 @@ class PreEditPage extends React.Component {
   };
 
   render() {
-    const { isLogin } = this.props;
+    const { isLogin, siteEdit } = this.props;
     if (!isLogin) {
       return <Redirect to="/" />;
     }
-    return <EditPage />;
+    if (siteEdit) {
+      return <EditPage />;
+    }
+    return null;
   }
 }
 
 const mapStateToProps = state => ({
   isLogin: state.user.isLogin,
-  currentEditId: state.site.currentEditId
+  currentEditId: state.site.currentEditId,
+  siteEdit: state.site.siteEdit
 });
 
 const mapDispatchToProps = dispatch => ({
