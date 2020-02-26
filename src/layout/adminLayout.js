@@ -17,7 +17,13 @@ import Paper from "@material-ui/core/Paper";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { secondaryListItems, mainListItems } from "../component/listItems";
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import PeopleIcon from '@material-ui/icons/People';
+import LayersIcon from '@material-ui/icons/Layers';
+import { updateAdminTabIndex } from "../actions/adminTab";
 import { connect } from "react-redux";
 
 const drawerWidth = 240;
@@ -115,8 +121,12 @@ class Dashboard extends Component {
   handleDrawerClose = () => {
     this.setOpen(false);
   };
+
+
+
   render() {
-    const { classes } = this.props;
+    const { classes, selectedAdminIndex, updateAdminTabIndex } = this.props;
+
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -172,9 +182,28 @@ class Dashboard extends Component {
             </IconButton>
           </div>
           <Divider />
-          <List>{mainListItems}</List>
-          <Divider />
-          <List>{secondaryListItems}</List>
+          <List>
+            <ListItem button selected={selectedAdminIndex === 0} onClick={(e, newValue) => updateAdminTabIndex(0)}>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Users" />
+            </ListItem>
+            <ListItem button selected={selectedAdminIndex === 1} onClick={(e, newValue) => updateAdminTabIndex(1)}>
+              <ListItemIcon>
+                <LayersIcon />
+              </ListItemIcon>
+              <ListItemText primary="Sites" />
+            </ListItem>
+            <ListItem button selected={selectedAdminIndex === 2} onClick={(e, newValue) => updateAdminTabIndex(2)}>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Themes" />
+            </ListItem>
+          </List>
+          {/* <Divider />
+          <List>{secondaryListItems}</List> */}
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
@@ -194,9 +223,13 @@ class Dashboard extends Component {
     );
   }
 }
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  selectedAdminIndex: state.adminTab.selectedAdminIndex
+});
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  updateAdminTabIndex: (index) => dispatch(updateAdminTabIndex(index))
+});
 
 export default connect(
   mapStateToProps,

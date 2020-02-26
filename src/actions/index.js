@@ -12,12 +12,14 @@ import {
   unPublishSite,
   updateSiteId,
   changeTheme,
-  getSiteById
+  getSiteById,
+  getAllSites
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
 import { getAllThemes, getNavItems, setShowCustomColor } from "./theme";
-import { confirmPage, getUserPages, login, setLogout } from "./user";
+import { confirmPage, getUserPages, login, setLogout, getAllUsers } from "./user";
+import { updateAdminTabIndex } from "./adminTab";
 
 export {
   getUserPages,
@@ -46,5 +48,8 @@ export {
   setSiteIsEdit,
   getUserSites,
   saveDesignSite,
-  getSiteById
+  getSiteById,
+  updateAdminTabIndex,
+  getAllUsers,
+  getAllSites
 };

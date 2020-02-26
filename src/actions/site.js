@@ -1,6 +1,39 @@
 import toastr from "toastr";
 import axios from "../utils/axios";
 
+export function getAllSites({ id, accessToken }) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      const data = await axios({
+        url: "/site/findAll",
+        params: {
+          id: id,
+          access_token: accessToken
+        }
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "SET_ALL_SITES",
+          payload: data.data
+        });
+      } else {
+        toastr.error(`Unable to retrieve sites`, "Error");
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Unable to retrieve sites`, "Error");
+    }
+  };
+}
+
 export function getUserSites(userId, accessToken) {
   return async dispatch => {
     const data = await axios({

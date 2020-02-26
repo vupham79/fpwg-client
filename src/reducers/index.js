@@ -6,6 +6,7 @@ import tab from "./tab";
 import imageUrl from "./image";
 import dialog from "./dialog";
 import spinner from "./spinner";
+import adminTab from "./adminTab";
 
 export default combineReducers({
   site,
@@ -14,5 +15,6 @@ export default combineReducers({
   tab,
   imageUrl,
   dialog,
-  spinner
+  spinner,
+  adminTab
 });
