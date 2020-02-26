@@ -8,7 +8,6 @@ import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
 import { Button } from "@material-ui/core";
 
-
 const useStyles = theme => ({
   root: {
     height: "100vh"
@@ -42,7 +41,6 @@ const tabStyles = {
 class ClippedDrawer extends React.Component {
   render() {
     const { classes, tabValue, updateTabValue } = this.props;
-
     return (
       <AppBar className={classes.root} position="sticky">
         <CssBaseline />
@@ -53,7 +51,6 @@ class ClippedDrawer extends React.Component {
             paper: classes.drawerPaper
           }}
         >
-
           <Tabs
             value={tabValue}
             textColor="primary"
@@ -69,7 +66,9 @@ class ClippedDrawer extends React.Component {
           {tabValue === 0 && <DesignTab />}
           {tabValue === 1 && <PagesEditorTab />}
           {tabValue === 2 && <SettingEditorTab />}
-          <Button fullWidth="true" color="primary" variant="contained">Save</Button>
+          <Button fullWidth color="primary" variant="contained">
+            Save
+          </Button>
         </Drawer>
       </AppBar>
     );
