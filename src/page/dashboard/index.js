@@ -1,26 +1,64 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAllUsers } from "../../actions/user";
+import { getAllSites } from "../../actions/site";
+import { getAllThemes } from "../../actions/theme";
 import AdminLayout from "../../layout/adminLayout";
 import TableUser from "../../component/TableUser";
+import TableSite from "../../component/TableSite";
+import TableTheme from "../../component/TableTheme";
+// import userTable from "./userTable";
+
+
 class PreDashboardPage extends Component {
-  getAll = async () => {
+  getUsers = async () => {
     const { accessToken, userId, getAllUsers } = this.props;
     await getAllUsers({ accessToken, userId });
   };
 
+  getSites = async () => {
+    const { accessToken, userId, getAllSites } = this.props;
+    await getAllSites({ accessToken, userId });
+  };
+
+  getThemes = async () => {
+    const { accessToken, userId, getAllThemesAdmin } = this.props;
+    await getAllThemesAdmin();
+  };
+
   componentDidMount() {
-    this.getAll();
+
   }
 
   render() {
-    const { isLogin, isAdmin } = this.props;
+    const { isLogin, isAdmin, selectedAdminIndex } = this.props;
     // if (!isLogin || !isAdmin) {
     //   return <Redirect to="/" />;
     // }
+
+    let component = null;
+    switch (selectedAdminIndex) {
+      case 0:
+        component = <TableUser />
+        this.getUsers();
+        break;
+      case 1:
+        component = <TableSite />
+        //this.getSites();
+        break;
+      case 2:
+        component = <TableTheme />
+        this.getThemes();
+        break;
+      default:
+        component = <TableUser />
+        this.getUsers();
+        break;
+    }
+
     return (
       <AdminLayout>
-        <TableUser />{" "}
+        {!selectedAdminIndex && component}
       </AdminLayout>
     );
   }
@@ -30,11 +68,15 @@ const mapStateToProps = state => ({
   isLogin: state.user.isLogin,
   isAdmin: state.user.isAdmin,
   accessToken: state.user.accessToken,
-  userId: state.user.profile.id
+  userId: state.user.profile.id,
+  selectedAdminIndex: state.adminTab.selectedAdminIndex,
+  sites: state.site.adminData
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllUsers: (id, accessToken) => dispatch(getAllUsers(id, accessToken))
+  getAllUsers: (id, accessToken) => dispatch(getAllUsers(id, accessToken)),
+  getAllSites: (id, accessToken) => dispatch(getAllSites(id, accessToken)),
+  getAllThemesAdmin: () => dispatch(getAllThemes()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreDashboardPage);

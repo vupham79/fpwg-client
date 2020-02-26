@@ -8,7 +8,11 @@ const defaultState = {
   titleEdit: {},
   bodyEdit: {},
   titleView: {},
-  bodyView: {}
+  bodyView: {},
+  isView: false,
+  siteEdit: {},
+  siteView: {},
+  adminData: []
 };
 
 let index;
@@ -19,6 +23,11 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         data: action.payload ? [...action.payload] : []
+      };
+    case "SET_ALL_SITES":
+      return {
+        ...state,
+        adminData: action.payload ? [...action.payload] : []
       };
     case "UPDATE_SITE_ID":
       return {
