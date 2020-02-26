@@ -48,7 +48,7 @@ class TableTheme extends Component {
                       <TableCell>{row.fontBody}</TableCell>
                       <TableCell>{row.fontTitle}</TableCell>
                       <TableCell>{row.mainColor}</TableCell>
-                      <TableCell align="right">{row.categories.map(c => (c.name + ','))}</TableCell>
+                      <TableCell align="right">{row.categories.map(c => (c.name + ', '))}</TableCell>
                     </TableRow>
                   ))}
               </TableBody>

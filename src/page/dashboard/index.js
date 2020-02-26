@@ -40,7 +40,7 @@ class PreDashboardPage extends Component {
         break;
       case 1:
         component = <TableSite />;
-        //this.getSites();
+        this.getSites();
         break;
       case 2:
         component = <TableTheme />;
