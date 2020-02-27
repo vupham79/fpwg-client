@@ -1,5 +1,42 @@
 import toastr from "toastr";
 import axios from "../utils/axios";
+import { firebase } from "../utils/firebase";
+
+export function getAllSites({ id, accessToken }) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      const data = await axios({
+        url: "/site/findAll",
+        params: {
+          id: id,
+          access_token: accessToken
+        }
+      });
+      // dispatch({
+      //   type: "CLOSE_LOADING" để đây bị loading bất tận??
+      // });
+      if (data.status === 200) {
+        dispatch({
+          type: "SET_ALL_SITES",
+          payload: data.data
+        });
+      } else {
+        toastr.error(`Unable to retrieve sites`, "Error");
+      }
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Unable to retrieve sites`, "Error");
+    }
+  };
+}
 
 export function getUserSites(userId, accessToken) {
   return async dispatch => {
@@ -197,5 +234,38 @@ export function setActiveNavItems(site) {
       type: "SET_ACTIVE_NAV_ITEMS",
       payload: site
     });
+  };
+}
+
+export function uploadLogo(path, name) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      firebase
+        .storage()
+        .ref()
+        .child(`${name}`)
+        .put(path, {
+          contentType: "image/jpeg"
+        })
+        .then(() => {
+          toastr.success("Upload new logo successful", "Success");
+        })
+        .catch(error => {
+          toastr.error(`Upload new logo failed`, "Error");
+        })
+        .finally(() => {
+          dispatch({
+            type: "CLOSE_LOADING"
+          });
+        });
+    } catch (error) {
+      toastr.error(`Upload new logo failed`, "Error");
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+    }
   };
 }

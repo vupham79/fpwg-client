@@ -1,4 +1,4 @@
-import { faCog, faEye, faThLarge } from "@fortawesome/free-solid-svg-icons";
+import { faThLarge } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Avatar,
@@ -127,78 +127,39 @@ class MainPage extends Component {
 
   renderPagesNotGenerated = () => {
     const { pages, sites } = this.props;
-    const nonGenerated = [];
-    sites.map(site => {
-      pages.map(page => {
-        if (site.id !== page.id) {
-          if (!nonGenerated.includes(page.id)) {
-            nonGenerated.push(page.id);
-          }
+    let nonGenerated = pages.map(page => page.id);
+    let index = -1;
+    sites.forEach(site => {
+      index = nonGenerated.indexOf(site.id);
+      if (index >= 0) {
+        nonGenerated.splice(index, 1);
+      }
+    });
+    if (nonGenerated) {
+      return pages.map(page => {
+        if (nonGenerated.includes(page.id)) {
+          return (
+            <ListItem
+              button
+              onClick={() =>
+                this.handleSelectPage({
+                  id: page.id,
+                  link: page.link,
+                  name: page.name
+                })
+              }
+              key={page.id}
+            >
+              <ListItemAvatar>
+                <Avatar>
+                  <img src={page.picture.data.url} alt="" />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={page.name} secondary={page.category} />
+            </ListItem>
+          );
         }
       });
-    });
-
-    if (pages) {
-      if (sites && sites.length > 0) {
-        if (pages.length === sites.length) {
-          return (
-            <>
-              <ListItemText
-                primary={"Please add create new Facebook Page"}
-                secondary={"And Authorize your new page to generate"}
-              />
-            </>
-          );
-        } else {
-          return pages.map(page => {
-            if (nonGenerated.includes(page.id)) {
-              return (
-                <ListItem
-                  button
-                  onClick={() =>
-                    this.handleSelectPage({
-                      id: page.id,
-                      link: page.link,
-                      name: page.name
-                    })
-                  }
-                  key={page.id}
-                >
-                  <ListItemAvatar>
-                    <Avatar>
-                      <img src={page.picture.data.url} alt="" />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText primary={page.name} secondary={page.category} />
-                </ListItem>
-              );
-            }
-          });
-        }
-      } else {
-        return pages.map(page => (
-          <ListItem
-            button
-            onClick={() =>
-              this.handleSelectPage({
-                id: page.id,
-                link: page.link,
-                name: page.name
-              })
-            }
-            key={page.id}
-          >
-            <ListItemAvatar>
-              <Avatar>
-                <img src={page.picture.data.url} alt="" />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText primary={page.name} secondary={page.category} />
-          </ListItem>
-        ));
-      }
-    } else {
-      return <h3>No pages existing or You haven't authorize any page</h3>;
     }
   };
 

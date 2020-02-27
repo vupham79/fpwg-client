@@ -20,7 +20,7 @@ function TabItem(props) {
 
 class Layout extends Component {
   render() {
-    const { isEdit, navItemValue, siteEdit, themes } = this.props;
+    const { isEdit, navItemValue, siteEdit } = this.props;
     let {
       pageIndex0,
       pageIndex1,

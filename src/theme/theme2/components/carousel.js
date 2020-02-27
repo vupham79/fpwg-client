@@ -59,7 +59,7 @@ class CarouselImages extends Component {
   }
 
   render() {
-    const { siteEdit } = this.props;
+    // const { siteEdit } = this.props;
     return (
       <Grid
         container

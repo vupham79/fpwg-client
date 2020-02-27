@@ -9,8 +9,8 @@ import {
   Link
 } from "@material-ui/core";
 import Title from "./Title";
+import SwitchButton from "./SwitchButton";
 import { connect } from "react-redux";
-import ActivateButton from "./ActivateButton";
 
 function preventDefault(event) {
   event.preventDefault();
@@ -22,43 +22,38 @@ const useStyles = theme => ({
   }
 });
 
-class TableUser extends Component {
+class TableSite extends Component {
   render() {
-    const { classes, users } = this.props;
+    const { classes, sites } = this.props;
     return (
       <React.Fragment>
-        <Title>Users</Title>
-        {users && users.length === 0 ? (
-          <p style={{ fontStyle: "italic" }}>No existing user</p>
+        <Title>Sites</Title>
+        {sites && sites.length === 0 ? (
+          <p style={{ fontStyle: "italic" }}>No existing site</p>
         ) : (
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>Picture</TableCell>
-                  <TableCell>Display Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Phone</TableCell>
-                  <TableCell align="right">Activation</TableCell>
+                  <TableCell>Owner</TableCell>
+                  <TableCell>Title</TableCell>
+                  <TableCell>Theme</TableCell>
+                  <TableCell>Categories</TableCell>
+                  <TableCell align="right">Published</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {users &&
-                  users.map(row => (
+                {sites &&
+                  sites.map(row => (
                     <TableRow key={row.id}>
-                      <TableCell>
-                        <img
-                          style={{ height: 30, width: 30 }}
-                          src={row.picture}
-                          alt=""
-                        />
-                      </TableCell>
-                      <TableCell>{row.displayName}</TableCell>
-                      <TableCell>{row.email}</TableCell>
-                      <TableCell>{row.phone}</TableCell>
+                      <TableCell>{row.user.displayName}</TableCell>
+                      <TableCell>{row.title}</TableCell>
+                      <TableCell>{row.theme.name}</TableCell>
+                      <TableCell>{row.categories.map(c => (c.name + ', '))}</TableCell>
                       <TableCell align="right">
-                        <ActivateButton
-                          userId={row.id}
-                          isActivated={row.isActivated}
+                        <SwitchButton
+                          siteId={row.id}
+                          siteName={row.title}
+                          isPublish={row.isPublish}
                         />
                       </TableCell>
                     </TableRow>
@@ -76,7 +71,7 @@ class TableUser extends Component {
   }
 }
 const mapStateToProps = state => ({
-  users: state.user.users
+  sites: state.site.adminData
 });
 
 const mapDispatchToProps = dispatch => ({});
@@ -84,4 +79,4 @@ const mapDispatchToProps = dispatch => ({});
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(useStyles)(TableUser));
+)(withStyles(useStyles)(TableSite));

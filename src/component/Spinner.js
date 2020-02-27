@@ -12,7 +12,8 @@ class Spinner extends Component {
           zIndex: 99999999,
           top: 0,
           bottom: 0,
-          position: "absolute"
+          position: "fixed",
+          backgroundColor: "currentColor"
         }}
         unmountOnExit
       >

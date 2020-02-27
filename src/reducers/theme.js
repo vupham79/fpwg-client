@@ -33,7 +33,11 @@ const ThemeReducer = (state = defaultState, action) => {
         ...state,
         data: [...action.payload]
       };
-
+    case "SET_ALL_THEMES":
+      return {
+        ...state,
+        data: action.payload ? [...action.payload] : []
+      };
     default:
       return state;
   }

@@ -131,3 +131,66 @@ export function confirmPage({ pageUrl, pageId, accessToken, name, profile }) {
     }
   };
 }
+
+export function activateUser({ id }) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      const data = await axios({
+        method: "PATCH",
+        url: "/user/activate/",
+        params: {
+          id: id,
+        }
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({ type: "SET_USER_ACTIVATED", payload: id });
+        toastr.success(`User acitvated`, "Sucess");
+      } else {
+        toastr.error(`Activation failed`, "Error");
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Activation failed`, "Error");
+      return true;
+    }
+  };
+}
+
+export function deactivateUser({ id }) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      const data = await axios({
+        method: "PATCH",
+        url: "/user/deactivate/",
+        params: {
+          id: id,
+        }
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({ type: "SET_USER_DEACTIVATED", payload: id });
+        toastr.success(`User deacitvated`, "Sucess");
+      } else {
+        toastr.error(`Deactivation failed`, "Error");
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Deactivation failed`, "Error");
+    }
+  };
+}

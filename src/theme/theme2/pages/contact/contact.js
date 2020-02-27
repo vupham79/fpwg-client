@@ -96,21 +96,18 @@ class ContactPage extends React.Component {
           <form noValidate autoComplete="off">
             <TextField
               className={styles.txtInput}
-              id="outlined-basic"
               label="Name"
               variant="outlined"
               fullWidth
             />
             <TextField
               className={styles.txtInput}
-              id="outlined-basic"
               label="Email"
               variant="outlined"
               fullWidth
             />
             <TextField
               className={styles.txtInput}
-              id="outlined-basic"
               label="Phone"
               variant="outlined"
               fullWidth
@@ -118,7 +115,6 @@ class ContactPage extends React.Component {
 
             <TextField
               className={styles.txtInput}
-              id="outlined-basic"
               label="Message"
               variant="outlined"
               multiline
