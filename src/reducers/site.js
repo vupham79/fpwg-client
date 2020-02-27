@@ -48,6 +48,20 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         data: [...state.data]
       };
+    case "PUBLISH_SITE_ADMIN":
+      index = state.adminData.findIndex(site => site.id === action.payload);
+      state.adminData[index].isPublish = true;
+      return {
+        ...state,
+        adminData: [...state.adminData]
+      };
+    case "UNPUBLISH_SITE_ADMIN":
+      index = state.adminData.findIndex(site => site.id === action.payload);
+      state.adminData[index].isPublish = false;
+      return {
+        ...state,
+        adminData: [...state.adminData]
+      };
     case "GET_ALL_SITE":
       return {
         ...state,

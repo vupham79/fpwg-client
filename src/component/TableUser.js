@@ -11,10 +11,13 @@ import {
 import Title from "./Title";
 import { connect } from "react-redux";
 import ActivateButton from "./ActivateButton";
+import { getAllUsers } from "../actions";
 
 function preventDefault(event) {
   event.preventDefault();
-}
+};
+
+
 
 const useStyles = theme => ({
   seeMore: {
@@ -23,6 +26,14 @@ const useStyles = theme => ({
 });
 
 class TableUser extends Component {
+  getUsers = async () => {
+    const { accessToken, userId, getAllUsers } = this.props;
+    await getAllUsers({ userId, accessToken });
+  };
+
+  componentDidMount() {
+    this.getUsers();
+  }
   render() {
     const { classes, users } = this.props;
     return (
@@ -34,11 +45,11 @@ class TableUser extends Component {
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>Picture</TableCell>
-                  <TableCell>Display Name</TableCell>
-                  <TableCell>Email</TableCell>
-                  <TableCell>Phone</TableCell>
-                  <TableCell align="right">Activation</TableCell>
+                  <TableCell><p style={{ fontWeight: 'bold' }}>Picture</p></TableCell>
+                  <TableCell><p style={{ fontWeight: 'bold' }}>Display Name</p></TableCell>
+                  <TableCell><p style={{ fontWeight: 'bold' }}>Email</p></TableCell>
+                  <TableCell><p style={{ fontWeight: 'bold' }}>Phone</p></TableCell>
+                  <TableCell align="right"><p style={{ fontWeight: 'bold' }}>Activation</p></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -66,20 +77,24 @@ class TableUser extends Component {
               </TableBody>
             </Table>
           )}
-        <div className={classes.seeMore}>
+        {/* <div className={classes.seeMore}>
           <Link color="primary" href="#" onClick={preventDefault}>
             See more
           </Link>
-        </div>
+        </div> */}
       </React.Fragment>
     );
   }
 }
 const mapStateToProps = state => ({
-  users: state.user.users
+  users: state.user.users,
+  accessToken: state.user.accessToken,
+  userId: state.user.profile.id,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  getAllUsers: (id, accessToken) => dispatch(getAllUsers(id, accessToken)),
+});
 
 export default connect(
   mapStateToProps,

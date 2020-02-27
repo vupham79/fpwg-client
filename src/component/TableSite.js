@@ -9,8 +9,9 @@ import {
   Link
 } from "@material-ui/core";
 import Title from "./Title";
-import SwitchButton from "./SwitchButton";
+import PublishButtonAdmin from "./PublishButtonAdmin";
 import { connect } from "react-redux";
+import { getAllSites } from "../actions";
 
 function preventDefault(event) {
   event.preventDefault();
@@ -23,6 +24,16 @@ const useStyles = theme => ({
 });
 
 class TableSite extends Component {
+
+  getSites = async () => {
+    const { accessToken, userId, getAllSites } = this.props;
+    await getAllSites({ accessToken, userId });
+  };
+
+  componentDidMount() {
+    this.getSites();
+  }
+
   render() {
     const { classes, sites } = this.props;
     return (
@@ -34,23 +45,23 @@ class TableSite extends Component {
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>Owner</TableCell>
-                  <TableCell>Title</TableCell>
-                  <TableCell>Theme</TableCell>
-                  <TableCell>Categories</TableCell>
-                  <TableCell align="right">Published</TableCell>
+                  <TableCell><p style={{ fontWeight: 'bold' }}>Owner</p></TableCell>
+                  <TableCell><p style={{ fontWeight: 'bold' }}>Title</p></TableCell>
+                  <TableCell><p style={{ fontWeight: 'bold' }}>Theme</p></TableCell>
+                  <TableCell><p style={{ fontWeight: 'bold' }}>Categories</p></TableCell>
+                  <TableCell align="right"><p style={{ fontWeight: 'bold' }}>Published</p></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {sites &&
                   sites.map(row => (
                     <TableRow key={row.id}>
-                      <TableCell>{row.user.displayName}</TableCell>
+                      <TableCell></TableCell>
                       <TableCell>{row.title}</TableCell>
                       <TableCell>{row.theme.name}</TableCell>
                       <TableCell>{row.categories.map(c => (c.name + ', '))}</TableCell>
                       <TableCell align="right">
-                        <SwitchButton
+                        <PublishButtonAdmin
                           siteId={row.id}
                           siteName={row.title}
                           isPublish={row.isPublish}
@@ -71,10 +82,14 @@ class TableSite extends Component {
   }
 }
 const mapStateToProps = state => ({
-  sites: state.site.adminData
+  sites: state.site.adminData,
+  accessToken: state.user.accessToken,
+  userId: state.user.profile.id,
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  getAllSites: (id, accessToken) => dispatch(getAllSites(id, accessToken)),
+});
 
 export default connect(
   mapStateToProps,

@@ -64,6 +64,53 @@ export const updateSiteId = currentId => {
   };
 };
 
+export const unPublishSiteAdmin = ({ siteId, siteName }) => {
+  return async dispatch => {
+    const data = await axios({
+      method: "patch",
+      url: "/site/publish",
+      data: {
+        id: siteId,
+        isPublish: false
+      }
+    });
+    if (data.status === 200) {
+      dispatch({
+        type: "UNPUBLISH_SITE_ADMIN",
+        payload: siteId
+      });
+      toastr.success(`Unpublish site ${siteName} success`, "Sucess");
+    } else {
+      toastr.error(
+        "There are something wrong when unpublish your site",
+        "Error"
+      );
+    }
+  };
+};
+
+export const publishSiteAdmin = ({ siteId, siteName }) => {
+  return async dispatch => {
+    const data = await axios({
+      method: "patch",
+      url: "/site/publish",
+      data: {
+        id: siteId,
+        isPublish: true
+      }
+    });
+    if (data.status === 200) {
+      dispatch({
+        type: "PUBLISH_SITE_ADMIN",
+        payload: siteId
+      });
+      toastr.success(`Publish site ${siteName} sucess`, "Success");
+    } else {
+      toastr.error("There are something wrong when publish your site", "Error");
+    }
+  };
+};
+
 export const unPublishSite = ({ siteId, siteName }) => {
   return async dispatch => {
     const data = await axios({
