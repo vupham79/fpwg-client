@@ -256,8 +256,8 @@ export function uploadLogo(path, siteId) {
             .ref()
             .child(`${siteId}`)
             .getDownloadURL()
-            .then(url => {
-              axios({
+            .then(async url => {
+              await axios({
                 method: "PATCH",
                 url: "/site/logo",
                 data: {

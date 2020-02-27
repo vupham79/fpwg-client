@@ -12,7 +12,6 @@ import FontPicker from "font-picker-react";
 import React from "react";
 import { ChromePicker, TwitterPicker } from "react-color";
 import { connect } from "react-redux";
-import toastr from "./Toastr";
 import {
   changeColor,
   changeFontBody,
@@ -22,6 +21,7 @@ import {
   setShowCustomColor,
   uploadLogo
 } from "../actions";
+import toastr from "./Toastr";
 
 const useStyles = theme => ({
   content: {
@@ -67,8 +67,8 @@ const imgStyles = {
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-  width: "20%",
-  marginRight: "1rem"
+  width: "6rem",
+  height: "6rem"
 };
 
 class DesignEditorTab extends React.Component {
@@ -82,16 +82,19 @@ class DesignEditorTab extends React.Component {
     site.theme = theme;
     changeTheme(site);
   };
+
   handleChangeTitle = font => {
     const { site, changeFontTitle } = this.props;
     site.fontTitle = font.family;
     changeFontTitle(site);
   };
+
   handleChangeColor = color => {
     const { site, changeColor } = this.props;
     site.color = color.hex;
     changeColor(site);
   };
+
   handleChangeFontBody = font => {
     const { site, changeFontBody } = this.props;
     site.fontBody = font.family;
@@ -117,6 +120,8 @@ class DesignEditorTab extends React.Component {
       file.type === "image/png" ||
       file.type === "image/jpg"
     ) {
+      var output = document.getElementById("preview");
+      output.src = URL.createObjectURL(e.target.files[0]);
       this.setState({ file });
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
@@ -136,122 +141,143 @@ class DesignEditorTab extends React.Component {
     } = this.props;
 
     return (
-      <>
-        <div style={{ overflowY: "scroll" }}>
-          <Typography className={classes.title}>Theme</Typography>
-          <Grid className={classes.sideBarBox}>
-            <Select
-              autoComplete="true"
-              value={site && site.theme.name}
-              fullWidth
-              onChange={this.handleChangeTheme}
-            >
-              {themes.map((element, index) => (
-                <MenuItem value={element.name} key={index}>
-                  {element.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </Grid>
-          <Divider
-            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
-          />
-          <Typography className={classes.title}>Font</Typography>
-          <Grid container className={classes.sideBarBox}>
-            <Typography className={classes.title2}>Font Title</Typography>
-            <Grid item container>
-              <FontPicker
-                apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
-                sort="alphabet"
-                activeFontFamily={site.fontTitle}
-                onChange={this.handleChangeTitle}
-              />
-            </Grid>
-            <Divider />
-            <Typography className={classes.title2}>Font Body</Typography>
-            <Grid container>
-              <FontPicker
-                apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
-                sort="alphabet"
-                activeFontFamily={site.fontBody}
-                onChange={this.handleChangeFontBody}
-              />
-            </Grid>
-          </Grid>
-          <Divider
-            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
-          />
-          <Typography className={classes.title}>Color</Typography>
-          <Grid className={classes.sideBarBox}>
-            <Typography className={classes.title2}>Suggested Color</Typography>
-            <TwitterPicker
-              width={"fit-content"}
-              color={site.color}
-              onChangeComplete={this.handleChangeColor}
-            />
-            <Divider />
-            <Typography className={classes.title2}>Custom Color</Typography>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => setShowCustomColor(!isShow)}
-            >
-              Select custom color
-            </Button>
-            {isShow === true ? (
-              <Grid
-                style={{
-                  left: drawerWidth - 30,
-                  width: 220,
-                  color: "white",
-                  borderRadius: 3,
-                  zIndex: 1000,
-                  top: "50%"
-                }}
-              >
-                <ChromePicker
-                  color={site.color}
-                  onChangeComplete={this.handleChangeColor}
-                />
-              </Grid>
-            ) : null}
-          </Grid>
-          <Divider
-            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
-          />
-          <Typography className={classes.title}>Logo</Typography>
-          <Grid className={classes.sideBarBox}>
-            {images.map((img, i) => (
-              <img
-                style={imgStyles}
-                src={img}
-                alt=""
-                key={i}
-                onClick={() => getImageUrl(img)}
-              />
+      <div style={{ overflowY: "scroll" }}>
+        <Typography className={classes.title}>Theme</Typography>
+        <Grid className={classes.sideBarBox}>
+          <Select
+            autoComplete="true"
+            value={site && site.theme.name}
+            fullWidth
+            onChange={this.handleChangeTheme}
+          >
+            {themes.map((element, index) => (
+              <MenuItem value={element.name} key={index}>
+                {element.name}
+              </MenuItem>
             ))}
+          </Select>
+        </Grid>
+        <Divider
+          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+        />
+        <Typography className={classes.title}>Font</Typography>
+        <Grid container className={classes.sideBarBox}>
+          <Typography className={classes.title2}>Font Title</Typography>
+          <Grid item container>
+            <FontPicker
+              apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
+              sort="alphabet"
+              activeFontFamily={site.fontTitle}
+              onChange={this.handleChangeTitle}
+            />
           </Grid>
-          <Divider
-            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          <Divider />
+          <Typography className={classes.title2}>Font Body</Typography>
+          <Grid container>
+            <FontPicker
+              apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
+              sort="alphabet"
+              activeFontFamily={site.fontBody}
+              onChange={this.handleChangeFontBody}
+            />
+          </Grid>
+        </Grid>
+        <Divider
+          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+        />
+        <Typography className={classes.title}>Color</Typography>
+        <Grid className={classes.sideBarBox}>
+          <Typography className={classes.title2}>Suggested Color</Typography>
+          <TwitterPicker
+            width={"fit-content"}
+            color={site.color}
+            onChangeComplete={this.handleChangeColor}
           />
-          <Grid className={classes.sideBarBox}>
+          <Divider />
+          <Typography className={classes.title2}>Custom Color</Typography>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setShowCustomColor(!isShow)}
+          >
+            Select custom color
+          </Button>
+          {isShow === true ? (
+            <Grid
+              style={{
+                left: drawerWidth - 30,
+                width: 220,
+                color: "white",
+                borderRadius: 3,
+                zIndex: 1000,
+                top: "50%"
+              }}
+            >
+              <ChromePicker
+                color={site.color}
+                onChangeComplete={this.handleChangeColor}
+              />
+            </Grid>
+          ) : null}
+        </Grid>
+        <Divider
+          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+        />
+        <Typography className={classes.title}>Homepage Images</Typography>
+        <Grid container className={classes.sideBarBox}>
+          {images.map((img, i) => (
+            <Grid
+              item
+              key={i}
+              md={4}
+              sm={6}
+              xs={6}
+              style={{ ...imgStyles, backgroundImage: `url(${img})` }}
+            />
+          ))}
+        </Grid>
+        <Divider
+          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+        />
+        <Typography className={classes.title}>Logo</Typography>
+        <Grid
+          container
+          className={classes.sideBarBox}
+          justify={"center"}
+          alignItems={"center"}
+          direction={"column"}
+        >
+          <Grid item>
             <Input
               type="file"
-              name="Logo"
+              id="selectedFile"
               onChange={e => this.handleUpload(e)}
+              style={{ display: "none" }}
             />
-            <Button
-              variant={"contained"}
-              onClick={() => uploadLogo(this.state.file, site.id)}
-            >
-              Upload
-            </Button>
+            <img style={imgStyles} alt="" id={"preview"} />
           </Grid>
-          <Divider
-            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
-          />
-        </div>
-      </>
+          <Grid container item spacing={2} justify={"center"}>
+            <Grid item>
+              <Button
+                variant={"contained"}
+                color={"secondary"}
+                onClick={() => document.getElementById("selectedFile").click()}
+              >
+                Browse
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant={"contained"}
+                color={"primary"}
+                onClick={() => uploadLogo(this.state.file, site.id)}
+              >
+                Upload
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+      </div>
     );
   }
 }
@@ -269,7 +295,7 @@ const mapDispatchToProps = dispatch => ({
   changeFontBody: site => dispatch(changeFontBody(site)),
   setShowCustomColor: isShow => dispatch(setShowCustomColor(isShow)),
   getImageUrl: url => dispatch(getImageUrl(url)),
-  uploadLogo: (path, name) => dispatch(uploadLogo(path, name))
+  uploadLogo: (path, id) => dispatch(uploadLogo(path, id))
 });
 
 export default connect(
