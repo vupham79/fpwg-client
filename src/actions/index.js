@@ -19,6 +19,7 @@ import {
   updateSiteId,
   publishSiteAdmin,
   unPublishSiteAdmin,
+  uploadLogo,
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -60,6 +61,7 @@ export {
   updateAdminTabIndex,
   getAllUsers,
   getAllSites,
+  uploadLogo,
   activateUser,
   deactivateUser,
   getAllThemesAdmin,

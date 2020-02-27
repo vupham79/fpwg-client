@@ -18,6 +18,7 @@ import { setLogout } from "../actions";
 import styles from "./index.module.css";
 import { firebaseAppAuth } from "../utils/firebase";
 import { Redirect } from "react-router-dom";
+import toastr from "./Toastr";
 
 const StyledMenu = withStyles({
   paper: {}
@@ -147,7 +148,7 @@ class CustomNavBarEditor extends React.Component {
         return <Redirect to="/" />;
       })
       .catch(function(error) {
-        console.log("Logout: ", error);
+        toastr.error(`Logout failed: ${error}`, "Error");
       });
   };
 

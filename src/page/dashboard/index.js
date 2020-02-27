@@ -1,14 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getAllUsers } from "../../actions/user";
-import { getAllSites } from "../../actions/site";
-import { getAllThemes } from "../../actions/theme";
 import AdminLayout from "../../layout/adminLayout";
 import TableUser from "../../component/TableUser";
 import TableSite from "../../component/TableSite";
 import TableTheme from "../../component/TableTheme";
-// import userTable from "./userTable";
-
 
 class PreDashboardPage extends Component {
 
@@ -27,7 +22,7 @@ class PreDashboardPage extends Component {
   // }
 
   render() {
-    const { isLogin, isAdmin, selectedAdminIndex } = this.props;
+    const { selectedAdminIndex } = this.props;
     // if (!isLogin || !isAdmin) {
     //   return <Redirect to="/" />;
     // }

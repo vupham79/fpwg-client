@@ -2,11 +2,22 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import EditPage from "./edit";
-import { getAllThemes, getSiteById, setSiteEdit } from "../../actions";
+import {
+  getAllThemes,
+  getSiteById,
+  setSiteEdit,
+  showLoading,
+  closeLoading
+} from "../../actions";
 class PreEditPage extends React.Component {
   componentDidMount() {
-    this.getAllThemes();
-    this.getSite();
+    const { isLogin, showLoading, closeLoading } = this.props;
+    if (isLogin) {
+      showLoading();
+      this.getAllThemes();
+      this.getSite();
+      closeLoading();
+    }
   }
 
   getAllThemes = async () => {
@@ -24,32 +35,34 @@ class PreEditPage extends React.Component {
     const bodyStyle = {
       fontFamily: data.fontBody
     };
-    setSiteEdit(data, titleStyle, bodyStyle);
+    await setSiteEdit(data, titleStyle, bodyStyle);
   };
 
   render() {
-    const { isLogin, siteEdit } = this.props;
+    const { isLogin, siteEdit, loading } = this.props;
     if (!isLogin) {
       return <Redirect to="/" />;
     }
     if (siteEdit) {
       return <EditPage />;
     }
-    return null;
   }
 }
 
 const mapStateToProps = state => ({
   isLogin: state.user.isLogin,
   currentEditId: state.site.currentEditId,
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  loading: state.spinner.loading
 });
 
 const mapDispatchToProps = dispatch => ({
   getAllThemes: () => dispatch(getAllThemes()),
   getSiteById: id => dispatch(getSiteById(id)),
   setSiteEdit: (site, titleStyle, bodyStyle) =>
-    dispatch(setSiteEdit(site, titleStyle, bodyStyle))
+    dispatch(setSiteEdit(site, titleStyle, bodyStyle)),
+  closeLoading: () => dispatch(closeLoading()),
+  showLoading: () => dispatch(showLoading())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreEditPage);
