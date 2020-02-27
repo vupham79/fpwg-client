@@ -16,13 +16,11 @@ import {
   setSiteEdit,
   setSiteView,
   unPublishSite,
-  updateSiteId,
-  publishSiteAdmin,
-  unPublishSiteAdmin,
+  updateSiteId
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
-import { getAllThemes, getAllThemesAdmin, getNavItems, setShowCustomColor } from "./theme";
+import { getAllThemes, getNavItems, setShowCustomColor } from "./theme";
 import { confirmPage, getUserPages, login, setLogout, getAllUsers, activateUser, deactivateUser } from "./user";
 import { updateAdminTabIndex } from "./adminTab";
 
@@ -61,8 +59,5 @@ export {
   getAllUsers,
   getAllSites,
   activateUser,
-  deactivateUser,
-  getAllThemesAdmin,
-  publishSiteAdmin,
-  unPublishSiteAdmin,
+  deactivateUser
 };

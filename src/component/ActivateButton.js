@@ -68,8 +68,10 @@ class ActivateButton extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  activateUser: ({ userId }) => dispatch(activateUser({ userId })),
-  deactivateUser: ({ userId }) => dispatch(deactivateUser({ userId }))
+  activateUser: ({ userId }) =>
+    dispatch(activateUser({ userId })),
+  deactivateUser: ({ userId }) =>
+    dispatch(deactivateUser({ userId }))
 });
 
 export default connect(null, mapDispatchToProps)(ActivateButton);

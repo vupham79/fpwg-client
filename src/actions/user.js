@@ -132,7 +132,7 @@ export function confirmPage({ pageUrl, pageId, accessToken, name, profile }) {
   };
 }
 
-export function activateUser({ userId }) {
+export function activateUser({ id }) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -140,13 +140,16 @@ export function activateUser({ userId }) {
     try {
       const data = await axios({
         method: "PATCH",
-        url: "/user/activate/${userId}",
+        url: "/user/activate/",
+        params: {
+          id: id,
+        }
       });
       dispatch({
         type: "CLOSE_LOADING"
       });
       if (data.status === 200) {
-        dispatch({ type: "SET_USER_ACTIVATED", payload: userId });
+        dispatch({ type: "SET_USER_ACTIVATED", payload: id });
         toastr.success(`User acitvated`, "Sucess");
       } else {
         toastr.error(`Activation failed`, "Error");
@@ -161,7 +164,7 @@ export function activateUser({ userId }) {
   };
 }
 
-export function deactivateUser({ userId }) {
+export function deactivateUser({ id }) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -169,13 +172,16 @@ export function deactivateUser({ userId }) {
     try {
       const data = await axios({
         method: "PATCH",
-        url: "/user/deactivate/" + userId,
+        url: "/user/deactivate/",
+        params: {
+          id: id,
+        }
       });
       dispatch({
         type: "CLOSE_LOADING"
       });
       if (data.status === 200) {
-        dispatch({ type: "SET_USER_DEACTIVATED", payload: userId });
+        dispatch({ type: "SET_USER_DEACTIVATED", payload: id });
         toastr.success(`User deacitvated`, "Sucess");
       } else {
         toastr.error(`Deactivation failed`, "Error");

@@ -10,7 +10,6 @@ import {
 } from "@material-ui/core";
 import Title from "./Title";
 import { connect } from "react-redux";
-import { getAllThemesAdmin } from "../actions";
 
 function preventDefault(event) {
   event.preventDefault();
@@ -23,16 +22,6 @@ const useStyles = theme => ({
 });
 
 class TableTheme extends Component {
-
-  getThemes = async () => {
-    const { getAllThemesAdmin } = this.props;
-    await getAllThemesAdmin();
-  };
-
-  componentDidMount() {
-    this.getThemes();
-  }
-
   render() {
     const { classes, themes } = this.props;
     return (
@@ -44,11 +33,11 @@ class TableTheme extends Component {
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell><p style={{ fontWeight: 'bold' }}>Name</p></TableCell>
-                  <TableCell><p style={{ fontWeight: 'bold' }}>F.Body</p></TableCell>
-                  <TableCell><p style={{ fontWeight: 'bold' }}>F.Title</p></TableCell>
-                  <TableCell><p style={{ fontWeight: 'bold' }}>Main Color</p></TableCell>
-                  <TableCell align="right"><p style={{ fontWeight: 'bold' }}>Categories</p></TableCell>
+                  <TableCell>Name</TableCell>
+                  <TableCell>F.Body</TableCell>
+                  <TableCell>F.Title</TableCell>
+                  <TableCell>Main Color</TableCell>
+                  <TableCell align="right">Categories</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -64,26 +53,21 @@ class TableTheme extends Component {
                   ))}
               </TableBody>
             </Table>
-          )
-        }
+          )}
         <div className={classes.seeMore}>
           <Link color="primary" href="#" onClick={preventDefault}>
             See more
           </Link>
         </div>
-      </React.Fragment >
+      </React.Fragment>
     );
   }
 }
 const mapStateToProps = state => ({
-  themes: state.theme.data,
-  accessToken: state.user.accessToken,
-  userId: state.user.profile.id,
+  themes: state.theme.data
 });
 
-const mapDispatchToProps = dispatch => ({
-  getAllThemesAdmin: (id, accessToken) => dispatch(getAllThemesAdmin(id, accessToken)),
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(
   mapStateToProps,
