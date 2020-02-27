@@ -5,11 +5,12 @@ import ExampleComponent from "react-rounded-image";
 
 class Theme1About extends React.Component {
   render() {
-    const { siteEdit } = this.props;
+    const { isEdit, siteEdit, siteView, titleEdit, titleView } = this.props;
+    console.log(titleEdit);
 
     const useStyles = () => ({
       changableTitle: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
@@ -17,28 +18,28 @@ class Theme1About extends React.Component {
         paddingBottom: 20
       },
       changableBody: {
-        fontFamily: siteEdit.fontBody,
+        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#212121",
         textAlign: "justify",
         fontSize: 16
       },
       pageName: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         fontSize: 20
       },
       changableFirst: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: siteEdit.color
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color
       },
       changableLegend: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "white",
         zIndex: 5,
@@ -91,7 +92,7 @@ class Theme1About extends React.Component {
         <Grid container item xs={12} justify={"center"}>
           <ExampleComponent
             image="./images/theme1-banner3.jpg"
-            roundedColor={siteEdit.color}
+            roundedColor={isEdit ? titleEdit.color : titleView.color}
             imageWidth="150"
             imageHeight="150"
             roundedSize="5"
@@ -120,7 +121,11 @@ class Theme1About extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit,
+  siteView: state.site.siteView,
+  titleEdit: state.site.titleEdit,
+  titleView: state.site.titleView
 });
 
 export default connect(mapStateToProps, null)(Theme1About);

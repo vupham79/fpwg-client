@@ -4,10 +4,10 @@ import styles from "./index.module.css";
 
 export default class link extends Component {
   render() {
-    const { to } = this.props;
+    const { to, style } = this.props;
 
     return (
-      <Link className={styles.links} to={to}>
+      <Link className={styles.links} to={to} style={style}>
         {this.props.children}
       </Link>
     );

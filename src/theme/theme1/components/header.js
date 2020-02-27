@@ -8,11 +8,20 @@ import { updateNavItemValue } from "../../../actions";
 
 class Header extends Component {
   render() {
-    const { siteEdit, isEdit, tabValue, updateNavItemValue } = this.props;
+    const {
+      isEdit,
+      tabValue,
+      updateNavItemValue,
+      siteEdit,
+      siteView,
+      titleEdit,
+      titleView
+    } = this.props;
+
     const tabStyles = {
       textTransform: "none",
-      fontFamily: siteEdit.fontTitle,
-      color: "#212121",
+      fontFamily: titleEdit.fontFamily,
+      color: titleEdit.color,
       minWidth: "3vh",
       "&:hover": {
         color: "#40a9ff",
@@ -26,13 +35,8 @@ class Header extends Component {
       }
     };
 
-    const changeStyle = {
-      fontFamily: siteEdit.fontTitle,
-      color: siteEdit.color
-    };
-
     return (
-      <AppBar className={styles.app_bar} style={changeStyle} position="sticky">
+      <AppBar className={styles.app_bar} position="sticky">
         <Grid container alignItems="center">
           <Grid item xs={12} sm={10}>
             <Grid container justify="flex-start">
@@ -41,36 +45,43 @@ class Header extends Component {
                   value={tabValue}
                   textColor="primary"
                   indicatorColor="primary"
-                  centered
                   onChange={(e, newValue) => updateNavItemValue(newValue)}
                 >
-                  {siteEdit.navItems.map((item, index) => (
-                    <Tab style={tabStyles} label={item.name} key={index} />
-                  ))}
+                  {siteEdit.navItems.map((item, index) =>
+                    item.isActive ? (
+                      <Tab style={tabStyles} label={item.name} key={index} />
+                    ) : null
+                  )}
                 </Tabs>
               ) : (
-                siteEdit.navItems.map((item, index) => (
-                  <Grid
-                    className={styles.nav_item}
-                    item
-                    xs={2}
-                    sm={1}
-                    key={index}
-                  >
-                    <Link
-                      className={styles.links}
-                      to={`/${siteEdit.id}/${item}`}
+                siteEdit.navItems.map((item, index) =>
+                  item.isActive ? (
+                    <Grid
+                      className={styles.nav_item}
+                      item
+                      xs={2}
+                      sm={1}
+                      key={index}
                     >
-                      {item}
-                    </Link>
-                  </Grid>
-                ))
+                      <Link
+                        className={styles.links}
+                        style={titleView}
+                        to={`/${siteEdit.id}/${item.name}`}
+                      >
+                        {item}
+                      </Link>
+                    </Grid>
+                  ) : null
+                )
               )}
             </Grid>
           </Grid>
           <Grid item xs={12} sm={2}>
-            <p className={styles.shopName} style={changeStyle}>
-              Page Name
+            <p
+              className={styles.shopName}
+              style={isEdit ? titleEdit : titleView}
+            >
+              {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
             </p>
           </Grid>
         </Grid>
@@ -81,8 +92,11 @@ class Header extends Component {
 
 const mapStateToProps = state => ({
   tabValue: state.tab.navItemValue,
+  siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
-  siteEdit: state.site.siteEdit
+  siteView: state.site.siteView,
+  titleEdit: state.site.titleEdit,
+  titleView: state.site.titleView
 });
 
 const mapDispatchToProps = dispatch => ({

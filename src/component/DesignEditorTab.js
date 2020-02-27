@@ -73,10 +73,7 @@ class DesignEditorTab extends React.Component {
   handleChangeTheme = event => {
     const { changeTheme, themes, site } = this.props;
     const theme = themes.find(e => e.name === event.target.value);
-    site.themeId = theme._id;
-    site.fontTitle = theme.fontTitle;
-    site.fontBody = theme.fontBody;
-    site.color = theme.mainColor;
+    site.theme = theme;
     changeTheme(site);
   };
   handleChangeTitle = font => {

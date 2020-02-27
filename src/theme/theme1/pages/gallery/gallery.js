@@ -5,11 +5,11 @@ import { Carousel } from "react-responsive-carousel";
 
 class Theme1Gallery extends React.Component {
   render() {
-    const { siteEdit } = this.props;
+    const { isEdit, siteEdit, siteView, titleEdit, titleView } = this.props;
 
     const useStyles = theme => ({
       changableTitle: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
@@ -17,34 +17,34 @@ class Theme1Gallery extends React.Component {
         paddingBottom: 20
       },
       changableBody: {
-        fontFamily: siteEdit.fontBody,
+        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#212121",
         textAlign: "center",
         fontSize: 16
       },
       changableBody2: {
-        fontFamily: siteEdit.fontBody,
+        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#212121",
         textAlign: "left",
         fontSize: 16
       },
       pageName: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         fontSize: 20
       },
       changableFirst: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: siteEdit.color
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color
       },
       changableLegend: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "white",
         zIndex: 5,
@@ -116,7 +116,11 @@ class Theme1Gallery extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit,
+  siteView: state.site.siteView,
+  titleEdit: state.site.titleEdit,
+  titleView: state.site.titleView
 });
 
 export default connect(mapStateToProps, null)(Theme1Gallery);
