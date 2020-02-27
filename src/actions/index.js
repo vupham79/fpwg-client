@@ -17,7 +17,9 @@ import {
   setSiteView,
   unPublishSite,
   updateSiteId,
-  uploadLogo
+  uploadLogo,
+  changeSiteTitle,
+  syncDataFromFB
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -69,5 +71,7 @@ export {
   getAllSites,
   uploadLogo,
   activateUser,
-  deactivateUser
+  deactivateUser,
+  changeSiteTitle,
+  syncDataFromFB
 };

@@ -56,28 +56,31 @@ const useStyles = makeStyles({
   }
 });
 
-function MyCard(props) {
+function MyCard({ site }) {
   const classes = useStyles();
-  return (
-    <Card className={classes.card}>
-      <CardActionArea>
-        <CardMedia className={classes.media} image={props.imageUrl} />
-        <CardContent>
-          <Typography gutterBottom variant="h5">
-            {props.date}
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            {props.name}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Read More
-        </Button>
-      </CardActions>
-    </Card>
-  );
+  if (site.posts > 0) {
+    return site.posts.map(
+      (item, index) =>
+        item.attachments.media_type === "photo" && (
+          <Card key={index} className={classes.card}>
+            <CardActionArea>
+              <CardMedia className={classes.media} image={item.images} />
+              <CardContent>
+                <Typography variant="body2" color="textSecondary">
+                  {site.message}
+                </Typography>
+              </CardContent>
+            </CardActionArea>
+            <CardActions>
+              <Button size="small" color="primary">
+                Read More
+              </Button>
+            </CardActions>
+          </Card>
+        )
+    );
+  }
+  return null;
 }
 
 class NewPage extends Component {
@@ -89,7 +92,7 @@ class NewPage extends Component {
   }
 
   render() {
-    const { isEdit, titleEdit, titleView } = this.props;
+    const { isEdit, titleEdit, titleView, siteEdit } = this.props;
 
     return (
       <Container className={styles.news}>
@@ -106,11 +109,7 @@ class NewPage extends Component {
           <Grid item sm={12} xs={12} container justify="center" spacing={2}>
             {this.state.cards.map((card, index) => (
               <Grid container item sm={3} xs={6} key={index}>
-                <MyCard
-                  imageUrl={card.imageUrl}
-                  date={card.date}
-                  name={card.name}
-                />
+                <MyCard site={siteEdit} />
               </Grid>
             ))}
           </Grid>
@@ -124,7 +123,8 @@ const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   titleView: state.site.titleView,
-  titleEdit: state.site.titleEdit
+  titleEdit: state.site.titleEdit,
+  siteView: state.site.siteView
 });
 
 export default connect(mapStateToProps, null)(NewPage);

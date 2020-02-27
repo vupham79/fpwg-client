@@ -21,14 +21,15 @@ import {
   confirmPage,
   getUserSites,
   openCreateNewSite,
-  setCurrentEditId
+  setCurrentEditId,
+  syncDataFromFB
 } from "../../actions";
 import Header from "../../component/Header";
 import Link from "../../component/link";
 import SwitchButton from "../../component/SwitchButton";
 import styles from "./main.module.css";
 
-function WebsiteItem({ setCurrentEditId, site }) {
+function WebsiteItem({ setCurrentEditId, site, fetchDataFromFB }) {
   return (
     <Grid container justify="space-between" className={styles.web_item}>
       <Grid container item sm={8} xs={12} alignItems="center">
@@ -77,13 +78,22 @@ function WebsiteItem({ setCurrentEditId, site }) {
             </Link>
           </Grid>
         </Grid>
-        <Grid container item justify="flex-end" md={12}>
-          <SwitchButton
-            siteId={site.id}
-            siteName={site.title}
-            isPublish={site.isPublish}
-          />
+        <Grid container item sm={11} justify="flex-end">
+          <Button
+            className={styles.help_button}
+            style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}
+            onClick={() => fetchDataFromFB()}
+          >
+            Sync
+          </Button>
         </Grid>
+      </Grid>
+      <Grid container item justify="flex-end" md={12}>
+        <SwitchButton
+          siteId={site.id}
+          siteName={site.title}
+          isPublish={site.isPublish}
+        />
       </Grid>
     </Grid>
   );
@@ -123,6 +133,11 @@ class MainPage extends Component {
     });
     confirm && (await getUserSites(userId, accessToken));
     closeCreateNewSite();
+  };
+
+  handleFetchData = async pageId => {
+    const { fetchDataFromFB, accessToken } = this.props;
+    fetchDataFromFB(pageId, accessToken);
   };
 
   handleChangeURL = e => {
@@ -312,6 +327,7 @@ class MainPage extends Component {
                     <WebsiteItem
                       site={item}
                       setCurrentEditId={setCurrentEditId}
+                      fetchDataFromFB={() => this.handleFetchData(item.id)}
                     />
                   </Grid>
                 ))
@@ -339,7 +355,9 @@ const mapDispatchToProps = dispatch => ({
   openCreateNewSite: () => dispatch(openCreateNewSite()),
   confirmPage: data => dispatch(confirmPage(data)),
   getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
-  setCurrentEditId: id => dispatch(setCurrentEditId(id))
+  setCurrentEditId: id => dispatch(setCurrentEditId(id)),
+  fetchDataFromFB: (pageId, accessToken) =>
+    dispatch(syncDataFromFB(pageId, accessToken))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

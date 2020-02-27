@@ -284,3 +284,33 @@ export function uploadLogo(path, siteId) {
     }
   };
 }
+
+export function changeSiteTitle(site) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_SITE_TITLE",
+      payload: site
+    });
+  };
+}
+
+export function syncDataFromFB(pageId, access_token) {
+  return async dispatch => {
+    const data = await axios({
+      method: "patch",
+      url: "/site/syncData",
+      data: {
+        pageId: pageId,
+        accessToken: access_token
+      }
+    });
+    if (data.status === 200) {
+      toastr.success("You fetch data from FB success.", "Success");
+    } else {
+      toastr.error(
+        "There are something wrong when fetch data from your FB",
+        "Error"
+      );
+    }
+  };
+}

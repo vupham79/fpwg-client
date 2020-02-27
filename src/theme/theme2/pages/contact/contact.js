@@ -12,7 +12,15 @@ import { connect } from "react-redux";
 
 class ContactPage extends React.Component {
   render() {
-    const { isEdit, titleEdit, bodyEdit, titleView, bodyView } = this.props;
+    const {
+      isEdit,
+      titleEdit,
+      bodyEdit,
+      titleView,
+      bodyView,
+      profile
+    } = this.props;
+
     return (
       <Grid container justify="center" className={styles.contact_page}>
         <Grid item sm={10} xs={10}>
@@ -147,7 +155,8 @@ const mapStateToProps = state => ({
   titleEdit: state.site.titleEdit,
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
+  profile: state.user.profile
 });
 
 export default connect(mapStateToProps, null)(ContactPage);

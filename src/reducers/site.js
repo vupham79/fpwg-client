@@ -127,6 +127,11 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         siteEdit: { ...action.payload }
       };
+    case "CHANGE_SITE_TITLE":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
     default:
       return state;
   }
