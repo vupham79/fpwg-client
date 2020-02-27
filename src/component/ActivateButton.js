@@ -40,12 +40,7 @@ const IOSSwitch = withStyles(theme => ({
 
 class ActivateButton extends React.Component {
   handleActivate = () => {
-    const {
-      userId,
-      isActivated,
-      activateUser,
-      deactivateUser,
-    } = this.props;
+    const { userId, isActivated, activateUser, deactivateUser } = this.props;
     if (!isActivated) {
       activateUser({ userId });
     } else {
@@ -68,10 +63,8 @@ class ActivateButton extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  activateUser: ({ userId }) =>
-    dispatch(activateUser({ userId })),
-  deactivateUser: ({ userId }) =>
-    dispatch(deactivateUser({ userId }))
+  activateUser: ({ userId }) => dispatch(activateUser({ userId })),
+  deactivateUser: ({ userId }) => dispatch(deactivateUser({ userId }))
 });
 
 export default connect(null, mapDispatchToProps)(ActivateButton);

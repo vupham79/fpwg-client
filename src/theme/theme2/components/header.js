@@ -41,8 +41,6 @@ class Header extends Component {
       backgroundRepeat: "no-repeat",
       width: "80%",
       paddingTop: "0.5rem"
-      // marginRight: "0.5rem",
-      // marginLeft: "0.5rem"
     };
 
     return (
@@ -58,7 +56,7 @@ class Header extends Component {
           >
             <Grid item sm={7} xs={3}>
               <img
-                src="https://s3.amazonaws.com/pv-featured-images/restaurant-cafe/alcohol-1869282_1920.jpg"
+                src={isEdit ? siteEdit.logo : siteView.logo}
                 style={imgStyles}
                 alt=""
               />
