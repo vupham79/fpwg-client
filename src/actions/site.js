@@ -40,17 +40,17 @@ export function getAllSites({ id, accessToken }) {
 
 export function getUserSites(userId, accessToken) {
   return async dispatch => {
-    const data = await axios({
+    const req = await axios({
       url: "/site/findAllByUser",
       params: {
         userId: userId,
         accessToken: accessToken
       }
     });
-    if (data.status === 200) {
+    if (req.status === 200) {
       dispatch({
         type: "SET_USER_SITES",
-        payload: data.data
+        payload: req.data.sites
       });
     }
   };
