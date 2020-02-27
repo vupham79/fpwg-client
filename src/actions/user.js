@@ -140,7 +140,10 @@ export function activateUser({ userId }) {
     try {
       const data = await axios({
         method: "PATCH",
-        url: "/user/activate/${userId}",
+        url: `/user/activate/${userId}`,
+        params: {
+          id: userId
+        }
       });
       dispatch({
         type: "CLOSE_LOADING"
@@ -169,7 +172,7 @@ export function deactivateUser({ userId }) {
     try {
       const data = await axios({
         method: "PATCH",
-        url: "/user/deactivate/" + userId,
+        url: `/user/deactivate/${userId}`
       });
       dispatch({
         type: "CLOSE_LOADING"

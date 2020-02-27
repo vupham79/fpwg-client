@@ -7,20 +7,6 @@ import TableTheme from "../../component/TableTheme";
 
 class PreDashboardPage extends Component {
 
-  // renderSwitch(param) {
-  //   switch (param) {
-  //     case 0:
-  //       this.getUsers();
-  //       return <TableUser />;
-  //     case 1:
-  //       return <TableSite />;
-  //     case 2:
-  //       return <TableTheme />
-  //     default:
-  //       return <TableUser />;
-  //   }
-  // }
-
   render() {
     const { selectedAdminIndex } = this.props;
     // if (!isLogin || !isAdmin) {
@@ -29,7 +15,6 @@ class PreDashboardPage extends Component {
 
     return (
       <AdminLayout>
-        {/* {!selectedAdminIndex && this.renderSwitch(selectedAdminIndex)}{selectedAdminIndex} */}
         {{
           0: (
             <TableUser />

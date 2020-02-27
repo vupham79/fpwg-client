@@ -1,5 +1,12 @@
 import React from "react";
-import { AppBar, CssBaseline, Drawer, Tabs, Tab } from "@material-ui/core";
+import {
+  AppBar,
+  CssBaseline,
+  Drawer,
+  Tabs,
+  Tab,
+  Divider
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { updateTabValue, saveDesignSite } from "../actions";
@@ -73,8 +80,12 @@ class ClippedDrawer extends React.Component {
           {tabValue === 0 && <DesignTab />}
           {tabValue === 1 && <PagesEditorTab />}
           {tabValue === 2 && <SettingEditorTab />}
+          <Divider
+            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          />
           <Button
             fullWidth
+            style={{ height: "5rem" }}
             color="primary"
             variant="contained"
             onClick={() => saveDesignSite(siteEdit)}

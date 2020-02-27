@@ -20,10 +20,9 @@ function TabItem(props) {
 
 class Layout extends Component {
   render() {
-    const { isEdit, navItemValue, siteEdit, themes } = this.props;
-    const themeName = themes.find(e => e._id === siteEdit.themeId);
+    const { isEdit, navItemValue, siteEdit } = this.props;
     const pages = themesConstant.find(
-      element => element.name === themeName.name
+      element => element.name === siteEdit.theme.name
     ).pages;
 
     const pageIndex0 = pages.find(
@@ -70,8 +69,7 @@ class Layout extends Component {
 const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
   siteEdit: state.site.siteEdit,
-  navItemValue: state.tab.navItemValue,
-  themes: state.theme.data
+  navItemValue: state.tab.navItemValue
 });
 
 export default connect(mapStateToProps, null)(Layout);

@@ -12,46 +12,54 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Theme1Contact extends React.Component {
   render() {
-    const { siteEdit, mapLat, mapLng } = this.props;
+    const {
+      isEdit,
+      siteEdit,
+      siteView,
+      titleEdit,
+      titleView,
+      mapLat,
+      mapLng
+    } = this.props;
 
     const useStyles = theme => ({
       changableTitle: {
         fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
-        color: "#212121",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
         fontSize: 45,
         paddingBottom: 20
       },
       changableBody: {
-        fontFamily: siteEdit.fontBody,
+        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#212121",
         textAlign: "center",
         fontSize: 16
       },
       changableBody2: {
-        fontFamily: siteEdit.fontBody,
+        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#212121",
         textAlign: "left",
         fontSize: 16
       },
       pageName: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         fontSize: 20
       },
       changableFirst: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: siteEdit.color
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color
       },
       changableLegend: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "white",
         zIndex: 5,
@@ -135,6 +143,10 @@ class Theme1Contact extends React.Component {
 
 const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit,
+  siteView: state.site.siteView,
+  titleEdit: state.site.titleEdit,
+  titleView: state.site.titleView,
   mapLat: 10.82302,
   mapLng: 106.62965
 });

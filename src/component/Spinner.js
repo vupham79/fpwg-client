@@ -13,7 +13,7 @@ class Spinner extends Component {
           top: 0,
           bottom: 0,
           position: "fixed",
-          backgroundColor: "currentColor"
+          backgroundColor: "rgba(268, 268, 268, 0.3)"
         }}
         unmountOnExit
       >

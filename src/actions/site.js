@@ -284,7 +284,7 @@ export function setActiveNavItems(site) {
   };
 }
 
-export function uploadLogo(path, name) {
+export function uploadLogo(path, siteId) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -293,11 +293,26 @@ export function uploadLogo(path, name) {
       firebase
         .storage()
         .ref()
-        .child(`${name}`)
+        .child(`${siteId}`)
         .put(path, {
           contentType: "image/jpeg"
         })
-        .then(() => {
+        .then(async () => {
+          await firebase
+            .storage()
+            .ref()
+            .child(`${siteId}`)
+            .getDownloadURL()
+            .then(async url => {
+              await axios({
+                method: "PATCH",
+                url: "/site/logo",
+                data: {
+                  logo: url,
+                  id: siteId
+                }
+              });
+            });
           toastr.success("Upload new logo successful", "Success");
         })
         .catch(error => {

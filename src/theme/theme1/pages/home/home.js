@@ -45,25 +45,33 @@ class Theme1Home extends React.Component {
     this.setAnchorEl(null);
   };
   render() {
-    const { siteEdit, mapLat, mapLng } = this.props;
+    const {
+      isEdit,
+      siteEdit,
+      siteView,
+      titleEdit,
+      titleView,
+      mapLat,
+      mapLng
+    } = this.props;
 
     const useStyles = () => ({
       changableLink: {
-        fontFamily: siteEdit.fontBody,
-        color: siteEdit.color,
+        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         textAlign: "center",
         fontStyle: "italic",
         fontSize: 20
       },
       changableFirst2: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: siteEdit.color,
+        color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         textAlign: "center",
         fontSize: 20
       },
       changableTitle: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
@@ -71,7 +79,7 @@ class Theme1Home extends React.Component {
         paddingBottom: 20
       },
       changableTitle2: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
@@ -79,47 +87,47 @@ class Theme1Home extends React.Component {
         paddingBottom: 20
       },
       changableName: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: siteEdit.color,
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "left",
         fontSize: 20
       },
       changableBody: {
-        fontFamily: siteEdit.fontBody,
+        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#212121",
         fontSize: 16,
         textAlign: "justify"
       },
       changableBody2: {
-        fontFamily: siteEdit.fontBody,
+        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#212121",
         textAlign: "left",
         fontSize: 16
       },
       changableBody3: {
-        fontFamily: siteEdit.fontBody,
+        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "black",
         textAlign: "center",
         fontSize: 16
       },
       pageName: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         fontSize: 20
       },
       changableFirst: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: siteEdit.color
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color
       },
       changableLegend: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "white",
         zIndex: 5,
@@ -207,7 +215,7 @@ class Theme1Home extends React.Component {
         <Grid container item xs={12} justify={"center"}>
           <ExampleComponent
             image="./images/theme1-banner3.jpg"
-            roundedColor={siteEdit.color}
+            roundedColor={isEdit ? titleEdit.fontFamily : titleView.fontFamily}
             imageWidth="150"
             imageHeight="150"
             roundedSize="5"
@@ -398,6 +406,10 @@ class Theme1Home extends React.Component {
 
 const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit,
+  siteView: state.site.siteView,
+  titleEdit: state.site.titleEdit,
+  titleView: state.site.titleView,
   mapLat: 10.82302,
   mapLng: 106.62965
 });

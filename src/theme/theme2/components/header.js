@@ -1,4 +1,4 @@
-import { AppBar, Tab, Tabs } from "@material-ui/core";
+import { AppBar, Tab, Tabs, Container } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -41,41 +41,41 @@ class Header extends Component {
       backgroundRepeat: "no-repeat",
       width: "80%",
       paddingTop: "0.5rem"
-      // marginRight: "0.5rem",
-      // marginLeft: "0.5rem"
     };
 
     return (
       <AppBar className={styles.app_bar} position="sticky">
-        <Grid container alignItems="center">
-          <Grid
-            container
-            item
-            xs={12}
-            sm={2}
-            alignItems="center"
-            justify="center"
-          >
-            <Grid item sm={7} xs={3}>
-              <img
-                src="https://s3.amazonaws.com/pv-featured-images/restaurant-cafe/alcohol-1869282_1920.jpg"
-                style={imgStyles}
-                alt=""
-              />
-            </Grid>
+        <Container>
+          <Grid container alignItems="center">
             <Grid
+              container
               item
-              sm={3}
-              className={styles.shopName}
-              style={isEdit ? titleEdit : titleView}
+              xs={12}
+              sm={2}
+              alignItems="center"
+              justify="center"
             >
-              {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
+              <Grid item sm={7} xs={3}>
+                <img
+                  src={isEdit ? siteEdit.logo : siteView.logo}
+                  style={imgStyles}
+                  alt=""
+                />
+              </Grid>
+              <Grid
+                item
+                sm={3}
+                className={styles.shopName}
+                style={isEdit ? titleEdit : titleView}
+              >
+                {isEdit
+                  ? siteEdit && siteEdit.title
+                  : siteView && siteView.title}
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12} sm={10}>
-            <Grid container justify="flex-end">
-              {isEdit ? (
-                <>
+            <Grid item xs={12} sm={10}>
+              <Grid container justify="flex-end">
+                {isEdit ? (
                   <Tabs
                     value={tabValue}
                     textColor="primary"
@@ -88,22 +88,25 @@ class Header extends Component {
                       ) : null
                     )}
                   </Tabs>
-                </>
-              ) : (
-                siteView.navItems &&
-                siteView.navItems.map((item, index) =>
-                  item.isActive ? (
-                    <Grid item xs={2} sm={1} key={index} style={titleView}>
-                      <Link to={`/${siteView.id}/${item.name}`}>
-                        {item.name}
-                      </Link>
-                    </Grid>
-                  ) : null
-                )
-              )}
+                ) : (
+                  siteView.navItems &&
+                  siteView.navItems.map((item, index) =>
+                    item.isActive ? (
+                      <Grid item xs={2} sm={1} key={index}>
+                        <Link
+                          style={titleView}
+                          to={`/${siteView.id}/${item.name}`}
+                        >
+                          {item.name}
+                        </Link>
+                      </Grid>
+                    ) : null
+                  )
+                )}
+              </Grid>
             </Grid>
           </Grid>
-        </Grid>
+        </Container>
       </AppBar>
     );
   }

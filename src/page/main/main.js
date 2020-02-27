@@ -125,6 +125,12 @@ class MainPage extends Component {
     closeCreateNewSite();
   };
 
+  handleChangeURL = e => {
+    this.setState({
+      pageUrl: e.target.value
+    });
+  };
+
   renderPagesNotGenerated = () => {
     const { pages, sites } = this.props;
     let nonGenerated = pages.map(page => page.id);
@@ -137,8 +143,8 @@ class MainPage extends Component {
     });
     if (nonGenerated) {
       return pages.map(page => {
-        if (nonGenerated.includes(page.id)) {
-          return (
+        return (
+          nonGenerated.includes(page.id) && (
             <ListItem
               button
               onClick={() =>
@@ -157,9 +163,11 @@ class MainPage extends Component {
               </ListItemAvatar>
               <ListItemText primary={page.name} secondary={page.category} />
             </ListItem>
-          );
-        }
+          )
+        );
       });
+    } else {
+      return <ListItemText>No pages left</ListItemText>;
     }
   };
 
@@ -271,6 +279,7 @@ class MainPage extends Component {
                         <TextField
                           fullWidth
                           label="Facebook Page Url"
+                          onChange={e => this.handleChangeURL(e)}
                           value={pageUrl ? pageUrl : ""}
                         />
                       </ListItem>
@@ -289,19 +298,24 @@ class MainPage extends Component {
               </Grid>
             </Grid>
             <Grid container item sm={12} xs={12} md={12}>
-              <Grid item className={styles.siteItem}>
-                {sites.length === 0 ? (
-                  <h3>You don't have any Website. Please create a new site.</h3>
-                ) : (
-                  sites.map((item, index) => (
+              {sites.length === 0 ? (
+                <h3>You don't have any Website. Please create a new site.</h3>
+              ) : (
+                sites.map((item, index) => (
+                  <Grid
+                    item
+                    md={6}
+                    sm={12}
+                    key={index}
+                    className={styles.siteItem}
+                  >
                     <WebsiteItem
-                      key={index}
                       site={item}
                       setCurrentEditId={setCurrentEditId}
                     />
-                  ))
-                )}
-              </Grid>
+                  </Grid>
+                ))
+              )}
             </Grid>
           </Grid>
         </Grid>

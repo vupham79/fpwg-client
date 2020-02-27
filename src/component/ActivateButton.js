@@ -40,12 +40,7 @@ const IOSSwitch = withStyles(theme => ({
 
 class ActivateButton extends React.Component {
   handleActivate = () => {
-    const {
-      userId,
-      isActivated,
-      activateUser,
-      deactivateUser,
-    } = this.props;
+    const { userId, isActivated, activateUser, deactivateUser } = this.props;
     if (!isActivated) {
       activateUser({ userId });
     } else {
