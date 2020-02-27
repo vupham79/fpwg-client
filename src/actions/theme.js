@@ -34,7 +34,7 @@ export function getAllThemes() {
   };
 }
 
-export function getAllThemesAdmin({ id, accessToken }) {
+export function getAllThemesAdmin() {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -42,10 +42,10 @@ export function getAllThemesAdmin({ id, accessToken }) {
     try {
       const data = await axios({
         url: "/theme/findAll",
-        params: {
-          id: id,
-          access_token: accessToken
-        }
+        // params: {
+        //   id: id,
+        //   access_token: accessToken
+        // }
       });
       dispatch({
         type: "CLOSE_LOADING"
