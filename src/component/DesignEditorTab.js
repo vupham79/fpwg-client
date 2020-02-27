@@ -5,7 +5,8 @@ import {
   Input,
   MenuItem,
   Select,
-  Typography
+  Typography,
+  TextField
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import FontPicker from "font-picker-react";
@@ -20,7 +21,8 @@ import {
   changeTheme,
   getImageUrl,
   setShowCustomColor,
-  uploadLogo
+  uploadLogo,
+  changeSiteTitle
 } from "../actions";
 
 const useStyles = theme => ({
@@ -123,6 +125,11 @@ class DesignEditorTab extends React.Component {
     }
   };
 
+  handleChangeSiteTitle = e => {
+    const { site, changeSiteTitle } = this.props;
+    site.title = e.target.value;
+    changeSiteTitle(site);
+  };
   render() {
     const drawerWidth = 280;
     const {
@@ -250,6 +257,21 @@ class DesignEditorTab extends React.Component {
           <Divider
             style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
           />
+          <Divider
+            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          />
+          <Grid className={classes.sideBarBox}>
+            <TextField
+              id="standard-multiline-static"
+              label="Your Title"
+              rows="4"
+              value={site.title}
+              onChange={e => this.handleChangeSiteTitle(e)}
+            />
+          </Grid>
+          <Divider
+            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          />
         </div>
       </>
     );
@@ -269,7 +291,8 @@ const mapDispatchToProps = dispatch => ({
   changeFontBody: site => dispatch(changeFontBody(site)),
   setShowCustomColor: isShow => dispatch(setShowCustomColor(isShow)),
   getImageUrl: url => dispatch(getImageUrl(url)),
-  uploadLogo: (path, name) => dispatch(uploadLogo(path, name))
+  uploadLogo: (path, name) => dispatch(uploadLogo(path, name)),
+  changeSiteTitle: site => dispatch(changeSiteTitle(site))
 });
 
 export default connect(

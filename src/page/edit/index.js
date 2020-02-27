@@ -40,6 +40,7 @@ class PreEditPage extends React.Component {
 
   render() {
     const { isLogin, siteEdit, loading } = this.props;
+    console.log(siteEdit);
     if (!isLogin) {
       return <Redirect to="/" />;
     } else if (siteEdit && !loading) {

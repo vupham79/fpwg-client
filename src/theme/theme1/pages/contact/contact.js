@@ -26,7 +26,7 @@ class Theme1Contact extends React.Component {
       changableTitle: {
         fontFamily: siteEdit.fontTitle,
         fontWeight: "bold",
-        color: isEdit ? titleEdit.color : titleView.color,
+        color: "#212121",
         textAlign: "center",
         fontSize: 45,
         paddingBottom: 20
