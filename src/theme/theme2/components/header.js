@@ -75,26 +75,27 @@ class Header extends Component {
           <Grid item xs={12} sm={10}>
             <Grid container justify="flex-end">
               {isEdit ? (
-                <>
-                  <Tabs
-                    value={tabValue}
-                    textColor="primary"
-                    indicatorColor="primary"
-                    onChange={(e, newValue) => updateNavItemValue(newValue)}
-                  >
-                    {siteEdit.navItems.map((item, index) =>
-                      item.isActive ? (
-                        <Tab style={tabStyles} label={item.name} key={index} />
-                      ) : null
-                    )}
-                  </Tabs>
-                </>
+                <Tabs
+                  value={tabValue}
+                  textColor="primary"
+                  indicatorColor="primary"
+                  onChange={(e, newValue) => updateNavItemValue(newValue)}
+                >
+                  {siteEdit.navItems.map((item, index) =>
+                    item.isActive ? (
+                      <Tab style={tabStyles} label={item.name} key={index} />
+                    ) : null
+                  )}
+                </Tabs>
               ) : (
                 siteView.navItems &&
                 siteView.navItems.map((item, index) =>
                   item.isActive ? (
-                    <Grid item xs={2} sm={1} key={index} style={titleView}>
-                      <Link to={`/${siteView.id}/${item.name}`}>
+                    <Grid item xs={2} sm={1} key={index}>
+                      <Link
+                        style={titleView}
+                        to={`/${siteView.id}/${item.name}`}
+                      >
                         {item.name}
                       </Link>
                     </Grid>
