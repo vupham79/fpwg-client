@@ -1,3 +1,4 @@
+import { updateAdminTabIndex } from "./adminTab";
 import { closeCreateNewSite, openCreateNewSite } from "./dialog";
 import { getImageUrl } from "./image";
 import {
@@ -5,35 +6,41 @@ import {
   changeFontBody,
   changeFontTitle,
   changeNavItems,
+  changeSiteTitle,
   changeTheme,
   getAllSites,
   getSiteById,
   getUserSites,
   publishSite,
+  publishSiteAdmin,
   saveDesignSite,
   setActiveNavItems,
   setCurrentEditId,
   setSiteEdit,
   setSiteView,
+  syncDataFromFB,
   unPublishSite,
+  unPublishSiteAdmin,
   updateSiteId,
-  uploadLogo,
-  changeSiteTitle,
-  syncDataFromFB
+  uploadLogo
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
-import { getAllThemes, getNavItems, setShowCustomColor } from "./theme";
 import {
+  getAllThemes,
+  getAllThemesAdmin,
+  getNavItems,
+  setShowCustomColor
+} from "./theme";
+import {
+  activateUser,
   confirmPage,
+  deactivateUser,
+  getAllUsers,
   getUserPages,
   login,
-  setLogout,
-  getAllUsers,
-  activateUser,
-  deactivateUser
+  setLogout
 } from "./user";
-import { updateAdminTabIndex } from "./adminTab";
 
 export {
   getUserPages,
@@ -73,5 +80,8 @@ export {
   activateUser,
   deactivateUser,
   changeSiteTitle,
-  syncDataFromFB
+  syncDataFromFB,
+  getAllThemesAdmin,
+  publishSiteAdmin,
+  unPublishSiteAdmin
 };
