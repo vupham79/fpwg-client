@@ -14,30 +14,29 @@ import Title from "./Title";
 import PublishButtonAdmin from "./PublishButtonAdmin";
 import { connect } from "react-redux";
 import { getAllSites } from "../actions";
-import PaginationList from 'react-pagination-list';
-import SearchIcon from '@material-ui/icons/Search';
+// import PaginationList from 'react-pagination-list';
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = theme => ({
   seeMore: {
     marginTop: theme.spacing(3)
   },
   root: {
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
-    width: 400,
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    width: 400
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1,
+    flex: 1
   },
   iconButton: {
-    padding: 10,
-  },
+    padding: 10
+  }
 });
 
 class TableSite extends Component {
-
   state = {
     filteredData: []
   };
@@ -58,10 +57,12 @@ class TableSite extends Component {
     this.setListData(this.props.sites);
   }
 
-  handleSearch = (keyword) => {
-    this.setListData(this.props.sites.filter(function (site) {
-      return site.title.toLowerCase().indexOf(keyword.toLowerCase()) > -1
-    }));
+  handleSearch = keyword => {
+    this.setListData(
+      this.props.sites.filter(function(site) {
+        return site.title.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
+      })
+    );
   };
 
   render() {
@@ -70,30 +71,50 @@ class TableSite extends Component {
       <React.Fragment>
         <Title>Sites</Title>
         <Paper component="form" className={classes.root}>
-          <InputBase id="searchBox"
+          <InputBase
+            id="searchBox"
             className={classes.input}
             placeholder="Search by title..."
-            onChange={() => this.handleSearch(document.getElementById('searchBox').value)}
+            onChange={() =>
+              this.handleSearch(document.getElementById("searchBox").value)
+            }
           />
-          <IconButton className={classes.iconButton} color="primary" aria-label="search" onClick={() => this.handleSearch(document.getElementById('searchBox').value)} >
+          <IconButton
+            className={classes.iconButton}
+            color="primary"
+            aria-label="search"
+            onClick={() =>
+              this.handleSearch(document.getElementById("searchBox").value)
+            }
+          >
             <SearchIcon />
           </IconButton>
         </Paper>
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-            <Table size="small">
-              <TableHead>
-                <Grid container direction="row">
-                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Owner</p></Grid>
-                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Title</p></Grid>
-                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Theme</p></Grid>
-                  <Grid item xs={4}><p style={{ fontWeight: 'bold' }}>Categories</p></Grid>
-                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Published</p></Grid>
+          <Table size="small">
+            <TableHead>
+              <Grid container direction="row">
+                <Grid item xs={2}>
+                  <p style={{ fontWeight: "bold" }}>Owner</p>
                 </Grid>
-              </TableHead>
-              <TableBody>
-                <PaginationList
+                <Grid item xs={2}>
+                  <p style={{ fontWeight: "bold" }}>Title</p>
+                </Grid>
+                <Grid item xs={2}>
+                  <p style={{ fontWeight: "bold" }}>Theme</p>
+                </Grid>
+                <Grid item xs={4}>
+                  <p style={{ fontWeight: "bold" }}>Categories</p>
+                </Grid>
+                <Grid item xs={2}>
+                  <p style={{ fontWeight: "bold" }}>Published</p>
+                </Grid>
+              </Grid>
+            </TableHead>
+            <TableBody>
+              {/* <PaginationList
                   data={this.state.filteredData}
                   pageSize={5}
                   renderItem={(row, key) => (
@@ -114,10 +135,10 @@ class TableSite extends Component {
                       <Divider />
                     </div>
                   )}
-                />
-              </TableBody>
-            </Table>
-          )}
+                /> */}
+            </TableBody>
+          </Table>
+        )}
       </React.Fragment>
     );
   }
@@ -125,11 +146,11 @@ class TableSite extends Component {
 const mapStateToProps = state => ({
   sites: state.site.adminData,
   accessToken: state.user.accessToken,
-  userId: state.user.profile.id,
+  userId: state.user.profile.id
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllSites: (id, accessToken) => dispatch(getAllSites(id, accessToken)),
+  getAllSites: (id, accessToken) => dispatch(getAllSites(id, accessToken))
 });
 
 export default connect(

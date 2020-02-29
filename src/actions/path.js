@@ -8,11 +8,7 @@ export function getAllPaths() {
     });
     try {
       const data = await axios({
-        url: "/sitePath/findAll",
-        // params: {
-        //   id: id,
-        //   access_token: accessToken
-        // }
+        url: "/sitePath/findAll"
       });
       dispatch({
         type: "CLOSE_LOADING"

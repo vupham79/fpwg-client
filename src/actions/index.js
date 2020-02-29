@@ -1,6 +1,5 @@
 import { updateAdminTabIndex } from "./adminTab";
 import { closeCreateNewSite, openCreateNewSite } from "./dialog";
-import { getImageUrl } from "./image";
 import {
   changeColor,
   changeFontBody,
@@ -26,8 +25,21 @@ import {
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
-import { getAllThemes, getAllThemesAdmin, getNavItems, setShowCustomColor } from "./theme";
-import { confirmPage, getUserPages, login, setLogout, getAllUsers, activateUser, deactivateUser } from "./user";
+import {
+  getAllThemes,
+  getAllThemesAdmin,
+  getNavItems,
+  setShowCustomColor
+} from "./theme";
+import {
+  confirmPage,
+  getUserPages,
+  login,
+  setLogout,
+  getAllUsers,
+  activateUser,
+  deactivateUser
+} from "./user";
 import { loginAdmin, setLogoutAdmin } from "./admin";
 import { getAllPaths } from "./path";
 
@@ -41,7 +53,6 @@ export {
   setShowCustomColor,
   setLogout,
   updateTabValue,
-  getImageUrl,
   updateNavItemValue,
   showLoading,
   closeLoading,

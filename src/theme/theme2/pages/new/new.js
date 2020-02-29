@@ -58,7 +58,7 @@ const useStyles = makeStyles({
 
 function MyCard({ site }) {
   const classes = useStyles();
-  if (site.posts > 0) {
+  if (site && site.posts > 0) {
     return site.posts.map(
       (item, index) =>
         item.attachments.media_type === "photo" && (

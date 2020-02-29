@@ -65,24 +65,16 @@ function WebsiteItem({ setCurrentEditId, site, fetchDataFromFB }) {
         >
           <Grid item md={4} sm={6}>
             <Link to={`/${site.id}`}>
-              <Button
-                variant={"outlined"}
-                // className={styles.help_button}
-              >
-                View
-                {/* <FontAwesomeIcon className={styles.web_icon} icon={faEye} /> */}
-              </Button>
+              <Button variant={"outlined"}>View</Button>
             </Link>
           </Grid>
           <Grid item md={4} sm={6}>
             <Link to="/edit">
               <Button
                 variant={"outlined"}
-                // className={styles.help_button}
                 onClick={() => setCurrentEditId(site.id)}
               >
                 Edit
-                {/* <FontAwesomeIcon icon={faCog} className={styles.web_icon} /> */}
               </Button>
             </Link>
           </Grid>
@@ -210,14 +202,7 @@ class MainPage extends Component {
       <>
         <Header />
         <Grid container item className={styles.body}>
-          <Grid
-            container
-            item
-            direction="column"
-            sm={3}
-            md={2}
-            className={styles.navigation}
-          >
+          <Grid container item sm={3} md={2} className={styles.navigation}>
             <MenuList className={styles.menu_list}>
               <MenuItem>
                 <FontAwesomeIcon className={styles.nav_icon} icon={faThLarge} />
@@ -238,39 +223,11 @@ class MainPage extends Component {
                 <Grid
                   container
                   item
-                  sm={6}
-                  md={4}
                   className={styles.info}
                   alignItems="center"
                 >
                   <Typography variant="body1" className={styles.info_content}>
-                    CURRENTLY EDITING
-                  </Typography>
-                </Grid>
-                <Grid
-                  container
-                  item
-                  sm={6}
-                  md={4}
-                  className={styles.info}
-                  alignItems="center"
-                >
-                  <Grid item sm={2}>
-                    <Typography variant="body1" className={styles.info_content}>
-                      Foody
-                    </Typography>
-                  </Grid>
-                </Grid>
-                <Grid
-                  container
-                  item
-                  sm={10}
-                  md={4}
-                  className={styles.info}
-                  alignItems="center"
-                >
-                  <Typography variant="body1" className={styles.info_content}>
-                    Last Logged in: 06-02-2020
+                    CURRENT SITES
                   </Typography>
                 </Grid>
               </Grid>
@@ -282,9 +239,6 @@ class MainPage extends Component {
                 alignItems="center"
                 justify="flex-end"
               >
-                <Grid container item sm={6}>
-                  <Button className={styles.manage_button}>Manage Site</Button>
-                </Grid>
                 <Grid container item sm={6}>
                   <Button
                     className={styles.create_button}

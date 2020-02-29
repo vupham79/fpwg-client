@@ -7,7 +7,7 @@ export function loginAdmin({ username, password }) {
         url: "/admin/login",
         data: {
           username: username,
-          password: password,
+          password: password
         }
       });
 
@@ -25,7 +25,6 @@ export function loginAdmin({ username, password }) {
     } catch (error) {
       toastr.error(`Incorrect username or password`, "Error");
     }
-
   };
 }
 

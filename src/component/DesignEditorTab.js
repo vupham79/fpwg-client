@@ -19,7 +19,6 @@ import {
   changeFontTitle,
   changeSiteTitle,
   changeTheme,
-  getImageUrl,
   setShowCustomColor,
   uploadLogo
 } from "../actions";
@@ -310,7 +309,6 @@ const mapDispatchToProps = dispatch => ({
   changeFontTitle: site => dispatch(changeFontTitle(site)),
   changeFontBody: site => dispatch(changeFontBody(site)),
   setShowCustomColor: isShow => dispatch(setShowCustomColor(isShow)),
-  getImageUrl: url => dispatch(getImageUrl(url)),
   uploadLogo: (path, id) => dispatch(uploadLogo(path, id)),
   changeSiteTitle: site => dispatch(changeSiteTitle(site))
 });

@@ -8,7 +8,6 @@ import TableTheme from "../../component/TableTheme";
 import TablePath from "../../component/TablePath";
 
 class PreDashboardPage extends Component {
-
   render() {
     const { selectedAdminIndex, username, password } = this.props;
     // if (!username || !password) {
@@ -17,23 +16,15 @@ class PreDashboardPage extends Component {
 
     return (
       <AdminLayout>
-        {{
-          0: (
-            <TableUser />
-          ),
-          1: (
-            <TableSite />
-          ),
-          2: (
-            <TableTheme />
-          ),
-          3: (
-            <TablePath />
-          ),
-          default: (
-            <TableUser />
-          )
-        }[selectedAdminIndex]}
+        {
+          {
+            0: <TableUser />,
+            1: <TableSite />,
+            2: <TableTheme />,
+            3: <TablePath />,
+            default: <TableUser />
+          }[selectedAdminIndex]
+        }
       </AdminLayout>
     );
   }
@@ -44,10 +35,9 @@ const mapStateToProps = state => ({
   userId: state.user.profile.id,
   selectedAdminIndex: state.adminTab.selectedAdminIndex,
   username: state.admin.username,
-  password: state.admin.password,
+  password: state.admin.password
 });
 
-const mapDispatchToProps = dispatch => ({
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreDashboardPage);

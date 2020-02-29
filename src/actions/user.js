@@ -78,6 +78,9 @@ export function getAllUsers({ id, accessToken }) {
 
 export function getUserPages({ accessToken }) {
   return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
     const data = await axios({
       url: "/facebook/pages",
       params: {
@@ -90,6 +93,9 @@ export function getUserPages({ accessToken }) {
         payload: data.data
       });
     }
+    dispatch({
+      type: "CLOSE_LOADING"
+    });
   };
 }
 
