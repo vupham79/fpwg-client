@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import Title from "./Title";
 import { connect } from "react-redux";
-import { getAllThemesAdmin } from "../actions";
+import { getAllPaths } from "../actions";
 import PaginationList from 'react-pagination-list';
 import SearchIcon from '@material-ui/icons/Search';
 
@@ -35,7 +35,7 @@ const useStyles = theme => ({
   },
 });
 
-class TableTheme extends Component {
+class TablePath extends Component {
 
   state = {
     filteredData: []
@@ -48,27 +48,27 @@ class TableTheme extends Component {
     });
   };
 
-  getThemes = async () => {
-    const { getAllThemesAdmin } = this.props;
-    await getAllThemesAdmin();
+  getPaths = async () => {
+    const { getAllPaths } = this.props;
+    await getAllPaths();
   };
 
   componentDidMount() {
-    this.getThemes();
-    this.setListData(this.props.themes);
+    this.getPaths();
+    this.setListData(this.props.paths);
   }
 
   handleSearch = (keyword) => {
-    this.setListData(this.props.themes.filter(function (theme) {
-      return theme.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1
+    this.setListData(this.props.paths.filter(function (path) {
+      return path.pathName.toLowerCase().indexOf(keyword.toLowerCase()) > -1
     }));
   };
 
   render() {
-    const { classes, themes } = this.props;
+    const { classes, paths } = this.props;
     return (
       <React.Fragment>
-        <Title>Themes</Title>
+        <Title>Paths</Title>
         <Paper component="form" className={classes.root}>
           <InputBase id="searchBox"
             className={classes.input}
@@ -79,17 +79,14 @@ class TableTheme extends Component {
             <SearchIcon />
           </IconButton>
         </Paper>
-        {themes && themes.length === 0 ? (
-          <p style={{ fontStyle: "italic" }}>No existing theme.</p>
+        {paths && paths.length === 0 ? (
+          <p style={{ fontStyle: "italic" }}>No existing path.</p>
         ) : (
             <Table size="small">
               <TableHead>
                 <Grid container direction="row">
-                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Name</p></Grid>
-                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>F.Body</p></Grid>
-                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>F.Title</p></Grid>
-                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Main Color</p></Grid>
-                  <Grid item xs={4}><p style={{ fontWeight: 'bold' }}>Categories</p></Grid>
+                  <Grid item xs={3}><p style={{ fontWeight: 'bold' }}>Path Name</p></Grid>
+                  <Grid item xs={3}><p style={{ fontWeight: 'bold' }}>Site</p></Grid>
                 </Grid>
               </TableHead>
               <TableBody>
@@ -99,11 +96,8 @@ class TableTheme extends Component {
                   renderItem={(row, key) => (
                     <div>
                       <Grid container direction="row" key={row.id}>
-                        <Grid item xs={2}>{row.name}<div style={{ height: 20 }} /></Grid>
-                        <Grid item xs={2}>{row.fontBody}</Grid>
-                        <Grid item xs={2}>{row.fontTitle}</Grid>
-                        <Grid item xs={2}>{row.mainColor}</Grid>
-                        <Grid item xs={4}>{row.categories.map(c => (c.name + ', '))}</Grid>
+                        <Grid item xs={3}>{row.pathName}<div style={{ height: 20 }} /></Grid>
+                        <Grid item xs={3}></Grid>
                       </Grid>
                       <Divider />
                     </div>
@@ -118,16 +112,16 @@ class TableTheme extends Component {
   }
 }
 const mapStateToProps = state => ({
-  themes: state.theme.data,
+  paths: state.path.data,
   accessToken: state.user.accessToken,
   userId: state.user.profile.id,
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllThemesAdmin: (id, accessToken) => dispatch(getAllThemesAdmin(id, accessToken)),
+  getAllPaths: () => dispatch(getAllPaths()),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(useStyles)(TableTheme));
+)(withStyles(useStyles)(TablePath));

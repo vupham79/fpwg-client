@@ -2,28 +2,51 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
   TableBody,
-  TableCell,
   TableHead,
-  TableRow,
   Table,
-  Link
+  Grid,
+  Divider,
+  IconButton,
+  InputBase,
+  Paper
 } from "@material-ui/core";
 import Title from "./Title";
 import PublishButtonAdmin from "./PublishButtonAdmin";
 import { connect } from "react-redux";
 import { getAllSites } from "../actions";
-
-function preventDefault(event) {
-  event.preventDefault();
-}
+import PaginationList from 'react-pagination-list';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = theme => ({
   seeMore: {
     marginTop: theme.spacing(3)
-  }
+  },
+  root: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    width: 400,
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+  },
+  iconButton: {
+    padding: 10,
+  },
 });
 
 class TableSite extends Component {
+
+  state = {
+    filteredData: []
+  };
+
+  setListData = searchData => {
+    this.setState({
+      filteredData: searchData
+    });
+  };
 
   getSites = async () => {
     const { accessToken, userId, getAllSites } = this.props;
@@ -32,51 +55,69 @@ class TableSite extends Component {
 
   componentDidMount() {
     this.getSites();
+    this.setListData(this.props.sites);
   }
+
+  handleSearch = (keyword) => {
+    this.setListData(this.props.sites.filter(function (site) {
+      return site.title.toLowerCase().indexOf(keyword.toLowerCase()) > -1
+    }));
+  };
 
   render() {
     const { classes, sites } = this.props;
     return (
       <React.Fragment>
         <Title>Sites</Title>
+        <Paper component="form" className={classes.root}>
+          <InputBase id="searchBox"
+            className={classes.input}
+            placeholder="Search by title..."
+            onChange={() => this.handleSearch(document.getElementById('searchBox').value)}
+          />
+          <IconButton className={classes.iconButton} color="primary" aria-label="search" onClick={() => this.handleSearch(document.getElementById('searchBox').value)} >
+            <SearchIcon />
+          </IconButton>
+        </Paper>
         {sites && sites.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No existing site</p>
         ) : (
             <Table size="small">
               <TableHead>
-                <TableRow>
-                  <TableCell><p style={{ fontWeight: 'bold' }}>Owner</p></TableCell>
-                  <TableCell><p style={{ fontWeight: 'bold' }}>Title</p></TableCell>
-                  <TableCell><p style={{ fontWeight: 'bold' }}>Theme</p></TableCell>
-                  <TableCell><p style={{ fontWeight: 'bold' }}>Categories</p></TableCell>
-                  <TableCell align="right"><p style={{ fontWeight: 'bold' }}>Published</p></TableCell>
-                </TableRow>
+                <Grid container direction="row">
+                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Owner</p></Grid>
+                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Title</p></Grid>
+                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Theme</p></Grid>
+                  <Grid item xs={4}><p style={{ fontWeight: 'bold' }}>Categories</p></Grid>
+                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Published</p></Grid>
+                </Grid>
               </TableHead>
               <TableBody>
-                {sites &&
-                  sites.map(row => (
-                    <TableRow key={row.id}>
-                      <TableCell></TableCell>
-                      <TableCell>{row.title}</TableCell>
-                      <TableCell>{row.theme.name}</TableCell>
-                      <TableCell>{row.categories.map(c => (c.name + ', '))}</TableCell>
-                      <TableCell align="right">
-                        <PublishButtonAdmin
-                          siteId={row.id}
-                          siteName={row.title}
-                          isPublish={row.isPublish}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                <PaginationList
+                  data={this.state.filteredData}
+                  pageSize={5}
+                  renderItem={(row, key) => (
+                    <div>
+                      <Grid container direction="row" key={row.id}>
+                        <Grid item xs={2}></Grid>
+                        <Grid item xs={2}>{row.title}</Grid>
+                        <Grid item xs={2}>{row.theme.name}</Grid>
+                        <Grid item xs={4}>{row.categories.map(c => (c.name + ', '))}</Grid>
+                        <Grid item xs={2}>
+                          <PublishButtonAdmin
+                            siteId={row.id}
+                            siteName={row.title}
+                            isPublish={row.isPublish}
+                          />
+                        </Grid>
+                      </Grid>
+                      <Divider />
+                    </div>
+                  )}
+                />
               </TableBody>
             </Table>
           )}
-        <div className={classes.seeMore}>
-          <Link color="primary" href="#" onClick={preventDefault}>
-            See more
-          </Link>
-        </div>
       </React.Fragment>
     );
   }

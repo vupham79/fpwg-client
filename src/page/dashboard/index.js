@@ -4,13 +4,15 @@ import AdminLayout from "../../layout/adminLayout";
 import TableUser from "../../component/TableUser";
 import TableSite from "../../component/TableSite";
 import TableTheme from "../../component/TableTheme";
+// import LoginPage from "./loginAdmin";
+import TablePath from "../../component/TablePath";
 
 class PreDashboardPage extends Component {
 
   render() {
-    const { selectedAdminIndex } = this.props;
-    // if (!isLogin || !isAdmin) {
-    //   return <Redirect to="/" />;
+    const { selectedAdminIndex, username, password } = this.props;
+    // if (!username || !password) {
+    //   return <LoginPage />;
     // }
 
     return (
@@ -25,6 +27,9 @@ class PreDashboardPage extends Component {
           2: (
             <TableTheme />
           ),
+          3: (
+            <TablePath />
+          ),
           default: (
             <TableUser />
           )
@@ -35,12 +40,11 @@ class PreDashboardPage extends Component {
 }
 
 const mapStateToProps = state => ({
-  isLogin: state.user.isLogin,
-  isAdmin: state.user.isAdmin,
   accessToken: state.user.accessToken,
   userId: state.user.profile.id,
   selectedAdminIndex: state.adminTab.selectedAdminIndex,
-  sites: state.site.adminData
+  username: state.admin.username,
+  password: state.admin.password,
 });
 
 const mapDispatchToProps = dispatch => ({

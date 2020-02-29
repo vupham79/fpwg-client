@@ -2,30 +2,53 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import {
   TableBody,
-  TableCell,
   TableHead,
-  TableRow,
   Table,
-  Link
+  Grid,
+  Divider,
+  IconButton,
+  InputBase,
+  Paper
 } from "@material-ui/core";
 import Title from "./Title";
 import { connect } from "react-redux";
 import ActivateButton from "./ActivateButton";
 import { getAllUsers } from "../actions";
-
-function preventDefault(event) {
-  event.preventDefault();
-};
-
-
+import PaginationList from 'react-pagination-list';
+import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = theme => ({
   seeMore: {
     marginTop: theme.spacing(3)
-  }
+  },
+  root: {
+    padding: '2px 4px',
+    display: 'flex',
+    alignItems: 'center',
+    width: 400,
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1,
+  },
+  iconButton: {
+    padding: 10,
+  },
 });
 
 class TableUser extends Component {
+
+  state = {
+    filteredData: []
+  };
+
+
+  setListData = searchData => {
+    this.setState({
+      filteredData: searchData
+    });
+  };
+
   getUsers = async () => {
     const { accessToken, userId, getAllUsers } = this.props;
     await getAllUsers({ userId, accessToken });
@@ -33,55 +56,76 @@ class TableUser extends Component {
 
   componentDidMount() {
     this.getUsers();
+    this.setListData(this.props.users);
   }
+
+  handleSearch = (keyword) => {
+    this.setListData(this.props.users.filter(function (user) {
+      return user.displayName.toLowerCase().indexOf(keyword.toLowerCase()) > -1
+    }));
+  };
+
   render() {
     const { classes, users } = this.props;
+
     return (
       <React.Fragment>
         <Title>Users</Title>
+        <Paper component="form" className={classes.root}>
+          <InputBase id="searchBox"
+            className={classes.input}
+            placeholder="Search by name..."
+            onChange={() => this.handleSearch(document.getElementById('searchBox').value)}
+          />
+          <IconButton className={classes.iconButton} color="primary" aria-label="search" onClick={() => this.handleSearch(document.getElementById('searchBox').value)} >
+            <SearchIcon />
+          </IconButton>
+        </Paper>
         {users && users.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No existing user</p>
         ) : (
             <Table size="small">
               <TableHead>
-                <TableRow>
-                  <TableCell><p style={{ fontWeight: 'bold' }}>Picture</p></TableCell>
-                  <TableCell><p style={{ fontWeight: 'bold' }}>Display Name</p></TableCell>
-                  <TableCell><p style={{ fontWeight: 'bold' }}>Email</p></TableCell>
-                  <TableCell><p style={{ fontWeight: 'bold' }}>Phone</p></TableCell>
-                  <TableCell align="right"><p style={{ fontWeight: 'bold' }}>Activation</p></TableCell>
-                </TableRow>
+                <Grid container direction="row">
+                  <Grid item xs={1}><p style={{ fontWeight: 'bold' }}>Picture</p></Grid>
+                  <Grid item xs={3}><p style={{ fontWeight: 'bold' }}>Display Name</p></Grid>
+                  <Grid item xs={3}><p style={{ fontWeight: 'bold' }}>Email</p></Grid>
+                  <Grid item xs={3}><p style={{ fontWeight: 'bold' }}>Phone</p></Grid>
+                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Activation</p></Grid>
+                </Grid>
               </TableHead>
               <TableBody>
-                {users &&
-                  users.map(row => (
-                    <TableRow key={row.id}>
-                      <TableCell>
-                        <img
-                          style={{ height: 30, width: 30 }}
-                          src={row.picture}
-                          alt=""
-                        />
-                      </TableCell>
-                      <TableCell>{row.displayName}</TableCell>
-                      <TableCell>{row.email}</TableCell>
-                      <TableCell>{row.phone}</TableCell>
-                      <TableCell align="right">
-                        <ActivateButton
-                          userId={row.id}
-                          isActivated={row.isActivated}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                <PaginationList
+                  data={this.state.filteredData}
+                  pageSize={5}
+                  renderItem={(row, key) => (
+                    <div>
+                      <Grid container direction="row" key={row.id}>
+                        <Grid item xs={1}>
+                          <img
+                            style={{ height: 30, width: 30 }}
+                            src={row.picture}
+                            alt=""
+                          />
+                        </Grid>
+                        <Grid item xs={3}>{row.displayName}</Grid>
+                        <Grid item xs={3}>{row.email}</Grid>
+                        <Grid item xs={3}>{row.phone}</Grid>
+                        <Grid item xs={2}>
+                          <ActivateButton
+                            userId={row.id}
+                            isActivated={row.isActivated}
+                          />
+                        </Grid>
+                      </Grid>
+                      <Divider />
+                    </div>
+                  )}
+                />
               </TableBody>
             </Table>
           )}
-        {/* <div className={classes.seeMore}>
-          <Link color="primary" href="#" onClick={preventDefault}>
-            See more
-          </Link>
-        </div> */}
+
       </React.Fragment>
     );
   }

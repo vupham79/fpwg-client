@@ -23,6 +23,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
 import LayersIcon from '@material-ui/icons/Layers';
+import DomainIcon from '@material-ui/icons/Domain';
 import { updateAdminTabIndex } from "../actions/adminTab";
 import { connect } from "react-redux";
 
@@ -200,6 +201,12 @@ class Dashboard extends Component {
                 <DashboardIcon />
               </ListItemIcon>
               <ListItemText primary="Themes" />
+            </ListItem>
+            <ListItem button selected={selectedAdminIndex === 3} onClick={(e, newValue) => updateAdminTabIndex(3)}>
+              <ListItemIcon>
+                <DomainIcon />
+              </ListItemIcon>
+              <ListItemText primary="Paths" />
             </ListItem>
           </List>
           {/* <Divider />

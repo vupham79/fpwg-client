@@ -26,21 +26,11 @@ import {
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
-import {
-  getAllThemes,
-  getAllThemesAdmin,
-  getNavItems,
-  setShowCustomColor
-} from "./theme";
-import {
-  activateUser,
-  confirmPage,
-  deactivateUser,
-  getAllUsers,
-  getUserPages,
-  login,
-  setLogout
-} from "./user";
+import { getAllThemes, getAllThemesAdmin, getNavItems, setShowCustomColor } from "./theme";
+import { confirmPage, getUserPages, login, setLogout, getAllUsers, activateUser, deactivateUser } from "./user";
+import { updateAdminTabIndex } from "./adminTab";
+import { loginAdmin, setLogoutAdmin } from "./admin";
+import { getAllPaths } from "./path";
 
 export {
   getUserPages,
@@ -83,5 +73,8 @@ export {
   syncDataFromFB,
   getAllThemesAdmin,
   publishSiteAdmin,
-  unPublishSiteAdmin
+  unPublishSiteAdmin,
+  loginAdmin,
+  setLogoutAdmin,
+  getAllPaths
 };
