@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { getAllUsers } from "../actions";
 import ActivateButton from "./ActivateButton";
 import Title from "./Title";
+import './adminStyleSheet.css'
 
 const useStyles = theme => ({
   root: {

@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import { getAllThemesAdmin } from "../actions";
 import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
+import './adminStyleSheet.css'
 
 const useStyles = theme => ({
   seeMore: {

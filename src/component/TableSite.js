@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { getAllSites } from "../actions";
 import PublishButtonAdmin from "./PublishButtonAdmin";
 import Title from "./Title";
+import './adminStyleSheet.css'
 
 const useStyles = theme => ({
   root: {
