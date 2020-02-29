@@ -18,22 +18,21 @@ const useStyles = theme => ({
     marginTop: theme.spacing(3)
   },
   root: {
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
-    width: 400,
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    width: 400
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1,
+    flex: 1
   },
   iconButton: {
-    padding: 10,
-  },
+    padding: 10
+  }
 });
 
 class TablePath extends Component {
-
   state = {
     filteredData: [],
     pageCount: 1,
@@ -57,12 +56,12 @@ class TablePath extends Component {
   getPaths = async () => {
     const { getAllPaths } = this.props;
     await getAllPaths();
+    this.setListData(this.props.paths.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
+    this.setPageCount(this.props.paths);
   };
 
   componentDidMount() {
     this.getPaths();
-    this.setListData(this.props.paths.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
-    this.setPageCount(this.props.paths);
   }
 
   handlePageClick = data => {
@@ -88,12 +87,22 @@ class TablePath extends Component {
       <React.Fragment>
         <Title>Paths</Title>
         <Paper component="form" className={classes.root}>
-          <InputBase id="searchBox"
+          <InputBase
+            id="searchBox"
             className={classes.input}
             placeholder="Search by name..."
-            onChange={() => this.handleSearch(document.getElementById('searchBox').value)}
+            onChange={() =>
+              this.handleSearch(document.getElementById("searchBox").value)
+            }
           />
-          <IconButton className={classes.iconButton} color="primary" aria-label="search" onClick={() => this.handleSearch(document.getElementById('searchBox').value)} >
+          <IconButton
+            className={classes.iconButton}
+            color="primary"
+            aria-label="search"
+            onClick={() =>
+              this.handleSearch(document.getElementById("searchBox").value)
+            }
+          >
             <SearchIcon />
           </IconButton>
         </Paper>
@@ -135,11 +144,11 @@ class TablePath extends Component {
 const mapStateToProps = state => ({
   paths: state.path.data,
   accessToken: state.user.accessToken,
-  userId: state.user.profile.id,
+  userId: state.user.profile.id
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllPaths: () => dispatch(getAllPaths()),
+  getAllPaths: () => dispatch(getAllPaths())
 });
 
 export default connect(

@@ -18,22 +18,21 @@ const useStyles = theme => ({
     marginTop: theme.spacing(3)
   },
   root: {
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
-    width: 400,
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    width: 400
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1,
+    flex: 1
   },
   iconButton: {
-    padding: 10,
-  },
+    padding: 10
+  }
 });
 
 class TableTheme extends Component {
-
   state = {
     filteredData: [],
     pageCount: 1,
@@ -57,12 +56,12 @@ class TableTheme extends Component {
   getThemes = async () => {
     const { getAllThemesAdmin } = this.props;
     await getAllThemesAdmin();
+    this.setListData(this.props.themes.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
+    this.setPageCount(this.props.themes);
   };
 
   componentDidMount() {
     this.getThemes();
-    this.setListData(this.props.themes.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
-    this.setPageCount(this.props.themes);
   }
 
   handlePageClick = data => {
@@ -88,12 +87,22 @@ class TableTheme extends Component {
       <React.Fragment>
         <Title>Themes</Title>
         <Paper component="form" className={classes.root}>
-          <InputBase id="searchBox"
+          <InputBase
+            id="searchBox"
             className={classes.input}
             placeholder="Search by name..."
-            onChange={() => this.handleSearch(document.getElementById('searchBox').value)}
+            onChange={() =>
+              this.handleSearch(document.getElementById("searchBox").value)
+            }
           />
-          <IconButton className={classes.iconButton} color="primary" aria-label="search" onClick={() => this.handleSearch(document.getElementById('searchBox').value)} >
+          <IconButton
+            className={classes.iconButton}
+            color="primary"
+            aria-label="search"
+            onClick={() =>
+              this.handleSearch(document.getElementById("searchBox").value)
+            }
+          >
             <SearchIcon />
           </IconButton>
         </Paper>
@@ -141,11 +150,12 @@ class TableTheme extends Component {
 const mapStateToProps = state => ({
   themes: state.theme.data,
   accessToken: state.user.accessToken,
-  userId: state.user.profile.id,
+  userId: state.user.profile.id
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllThemesAdmin: (id, accessToken) => dispatch(getAllThemesAdmin(id, accessToken)),
+  getAllThemesAdmin: (id, accessToken) =>
+    dispatch(getAllThemesAdmin(id, accessToken))
 });
 
 export default connect(

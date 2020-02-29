@@ -11,22 +11,21 @@ import Title from "./Title";
 
 const useStyles = theme => ({
   root: {
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
-    width: 400,
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    width: 400
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1,
+    flex: 1
   },
   iconButton: {
-    padding: 10,
-  },
+    padding: 10
+  }
 });
 
 class TableUser extends Component {
-
   state = {
     filteredData: [],
     pageCount: 1,
@@ -50,12 +49,12 @@ class TableUser extends Component {
   getUsers = async () => {
     const { accessToken, userId, getAllUsers } = this.props;
     await getAllUsers({ userId, accessToken });
+    this.setListData(this.props.users.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
+    this.setPageCount(this.props.users);
   };
 
   componentDidMount() {
     this.getUsers();
-    this.setListData(this.props.users.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
-    this.setPageCount(this.props.users);
   }
 
 
@@ -83,12 +82,22 @@ class TableUser extends Component {
       <React.Fragment>
         <Title>Users</Title>
         <Paper component="form" className={classes.root}>
-          <InputBase id="searchBox"
+          <InputBase
+            id="searchBox"
             className={classes.input}
             placeholder="Search by name..."
-            onChange={() => this.handleSearch(document.getElementById('searchBox').value)}
+            onChange={() =>
+              this.handleSearch(document.getElementById("searchBox").value)
+            }
           />
-          <IconButton className={classes.iconButton} color="primary" aria-label="search" onClick={() => this.handleSearch(document.getElementById('searchBox').value)} >
+          <IconButton
+            className={classes.iconButton}
+            color="primary"
+            aria-label="search"
+            onClick={() =>
+              this.handleSearch(document.getElementById("searchBox").value)
+            }
+          >
             <SearchIcon />
           </IconButton>
         </Paper>
@@ -148,11 +157,11 @@ class TableUser extends Component {
 const mapStateToProps = state => ({
   users: state.user.users,
   accessToken: state.user.accessToken,
-  userId: state.user.profile.id,
+  userId: state.user.profile.id
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllUsers: (id, accessToken) => dispatch(getAllUsers(id, accessToken)),
+  getAllUsers: (id, accessToken) => dispatch(getAllUsers(id, accessToken))
 });
 
 export default connect(

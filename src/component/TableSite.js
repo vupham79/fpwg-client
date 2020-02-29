@@ -16,22 +16,21 @@ import SearchIcon from '@material-ui/icons/Search';
 
 const useStyles = theme => ({
   root: {
-    padding: '2px 4px',
-    display: 'flex',
-    alignItems: 'center',
-    width: 400,
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    width: 400
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1,
+    flex: 1
   },
   iconButton: {
-    padding: 10,
-  },
+    padding: 10
+  }
 });
 
 class TableSite extends Component {
-
   state = {
     filteredData: [],
     pageCount: 1,
@@ -55,12 +54,12 @@ class TableSite extends Component {
   getSites = async () => {
     const { accessToken, userId, getAllSites } = this.props;
     await getAllSites({ accessToken, userId });
+    this.setListData(this.props.sites.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
+    this.setPageCount(this.props.sites);
   };
 
   componentDidMount() {
     this.getSites();
-    this.setListData(this.props.sites.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
-    this.setPageCount(this.props.sites);
   }
 
   handlePageClick = data => {
@@ -86,12 +85,22 @@ class TableSite extends Component {
       <React.Fragment>
         <Title>Sites</Title>
         <Paper component="form" className={classes.root}>
-          <InputBase id="searchBox"
+          <InputBase
+            id="searchBox"
             className={classes.input}
             placeholder="Search by title..."
-            onChange={() => this.handleSearch(document.getElementById('searchBox').value)}
+            onChange={() =>
+              this.handleSearch(document.getElementById("searchBox").value)
+            }
           />
-          <IconButton className={classes.iconButton} color="primary" aria-label="search" onClick={() => this.handleSearch(document.getElementById('searchBox').value)} >
+          <IconButton
+            className={classes.iconButton}
+            color="primary"
+            aria-label="search"
+            onClick={() =>
+              this.handleSearch(document.getElementById("searchBox").value)
+            }
+          >
             <SearchIcon />
           </IconButton>
         </Paper>
@@ -146,11 +155,11 @@ class TableSite extends Component {
 const mapStateToProps = state => ({
   sites: state.site.adminData,
   accessToken: state.user.accessToken,
-  userId: state.user.profile.id,
+  userId: state.user.profile.id
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllSites: (id, accessToken) => dispatch(getAllSites(id, accessToken)),
+  getAllSites: (id, accessToken) => dispatch(getAllSites(id, accessToken))
 });
 
 export default connect(
