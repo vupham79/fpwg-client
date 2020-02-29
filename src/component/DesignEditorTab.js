@@ -164,7 +164,18 @@ class DesignEditorTab extends React.Component {
           </Select>
         </Grid>
         <Divider
-          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
+        />
+        <Grid className={classes.sideBarBox}>
+          <TextField
+            id="standard-multiline-static"
+            label="Your Title"
+            value={site.title}
+            onChange={e => this.handleChangeSiteTitle(e)}
+          />
+        </Grid>
+        <Divider
+          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
         <Typography className={classes.title}>Font</Typography>
         <Grid container className={classes.sideBarBox}>
@@ -189,7 +200,7 @@ class DesignEditorTab extends React.Component {
           </Grid>
         </Grid>
         <Divider
-          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
         <Typography className={classes.title}>Color</Typography>
         <Grid className={classes.sideBarBox}>
@@ -227,7 +238,7 @@ class DesignEditorTab extends React.Component {
           ) : null}
         </Grid>
         <Divider
-          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
         <Typography className={classes.title}>Homepage Images</Typography>
         <Grid container className={classes.sideBarBox}>
@@ -243,7 +254,7 @@ class DesignEditorTab extends React.Component {
           ))}
         </Grid>
         <Divider
-          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
         <Typography className={classes.title}>Logo</Typography>
         <Grid
@@ -280,15 +291,6 @@ class DesignEditorTab extends React.Component {
               >
                 Upload
               </Button>
-            </Grid>
-            <Grid className={classes.sideBarBox}>
-              <TextField
-                id="standard-multiline-static"
-                label="Your Title"
-                rows="4"
-                value={site.title}
-                onChange={e => this.handleChangeSiteTitle(e)}
-              />
             </Grid>
           </Grid>
         </Grid>
