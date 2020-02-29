@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import { Divider, Grid, IconButton, InputBase, Paper } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Divider, IconButton, InputBase, Paper } from "@material-ui/core";
-import Title from "./Title";
-import PublishButtonAdmin from "./PublishButtonAdmin";
+import SearchIcon from "@material-ui/icons/Search";
+import React, { Component } from "react";
+import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import { getAllSites } from "../actions";
-import ReactPaginate from "react-paginate";
-import SearchIcon from "@material-ui/icons/Search";
+import PublishButtonAdmin from "./PublishButtonAdmin";
+import Title from "./Title";
 
 const useStyles = theme => ({
   root: {

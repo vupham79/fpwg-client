@@ -58,11 +58,7 @@ function WebsiteItem({ setCurrentEditId, site, fetchDataFromFB }) {
         </Grid>
       </Grid>
       <Grid container item sm={4} xs={12}>
-        <Grid
-          container
-          item
-          // justify="flex-end" alignItems="center"
-        >
+        <Grid container item>
           <Grid item md={4} sm={6}>
             <Link to={`/${site.id}`}>
               <Button variant={"outlined"}>View</Button>
