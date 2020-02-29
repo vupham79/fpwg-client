@@ -16,10 +16,12 @@ import Link from "./link";
 import toastr from "./Toastr";
 
 const StyledMenu = withStyles({
-  paper: {}
+  paper: {
+    border: "1px solid #d3d4d5"
+  }
 })(props => (
   <Menu
-    elevation={0}
+    elevation={1}
     getContentAnchorEl={null}
     anchorOrigin={{
       vertical: "bottom",
@@ -53,39 +55,6 @@ const StyledMenuItem = withStyles(theme => ({
   }
 }))(MenuItem);
 
-function CustomizedMenus() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <>
-      <Button className={styles.help_button}>
-        <FontAwesomeIcon
-          className={styles.support_icon}
-          icon={faHeadphonesAlt}
-        />
-        Support
-      </Button>
-      <StyledMenu
-        anchorEl={anchorEl}
-        keepMounted
-        open={Boolean(anchorEl)}
-        onClose={handleClose}
-      >
-        <StyledMenuItem>
-          <ListItemText primary="Resource Center" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemText primary="Message Us" />
-        </StyledMenuItem>
-      </StyledMenu>
-    </>
-  );
-}
-
 function ProfileMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -117,17 +86,7 @@ function ProfileMenu(props) {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <StyledMenuItem>
-          <ListItemText primary="Message Us" />
-        </StyledMenuItem>
-        <StyledMenuItem>
-          <ListItemText
-            primary="Log Out"
-            onClick={() => {
-              logout();
-            }}
-          />
-        </StyledMenuItem>
+        <StyledMenuItem onClick={() => logout()}>Log Out</StyledMenuItem>
       </StyledMenu>
     </>
   );
@@ -177,18 +136,6 @@ class CustomNavBarEditor extends React.Component {
             <Grid container item sm={2} xs={12}>
               <ProfileMenu profile={profile} logout={this.logout} />
             </Grid>
-          </Grid>
-          <Grid container item sm={1} xs={6} justify="flex-end">
-            <CustomizedMenus />
-          </Grid>
-          <Grid container item sm={1} xs={6} justify="flex-end">
-            <Button className={styles.help_button}>
-              <FontAwesomeIcon
-                className={styles.help_icon}
-                icon={faQuestionCircle}
-              />
-              Help
-            </Button>
           </Grid>
         </Grid>
       </Container>
