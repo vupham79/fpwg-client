@@ -32,44 +32,53 @@ import styles from "./main.module.css";
 function WebsiteItem({ setCurrentEditId, site, fetchDataFromFB }) {
   return (
     <Grid container justify="space-between" className={styles.web_item}>
-      <Grid container item sm={8} xs={12} alignItems="center">
+      <Grid container item sm={8} xs={12}>
         <Grid
           item
           sm={4}
           md={4}
           xs={4}
-          className={styles.web_logo}
+          container
           style={{
             backgroundImage: `url(${site.logo})`,
-            backgroundSize: "cover",
+            backgroundSize: "contain",
             backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            height: "100%"
+            backgroundRepeat: "no-repeat"
           }}
         />
-        <Grid item sm={8} xs={8} md={6}>
-          <Typography variant="h5" className={styles.web_content}>
-            {site.title}
-          </Typography>
-          <Typography variant="body2" className={styles.web_content}>
-            {site.category}
-          </Typography>
+        <Grid item container sm={8} xs={8} md={6}>
+          <Typography variant="h5">{site.title}</Typography>
+          <Grid item>
+            {site.categories.map(category => (
+              <Typography variant="body2" key={category.name}>
+                {category.name}
+              </Typography>
+            ))}
+          </Grid>
         </Grid>
       </Grid>
       <Grid container item sm={4} xs={12}>
-        <Grid container item justify="flex-end" alignItems="center">
-          <Grid item sm={5}>
+        <Grid
+          container
+          item
+          // justify="flex-end" alignItems="center"
+        >
+          <Grid item md={4} sm={6}>
             <Link to={`/${site.id}`}>
-              <Button className={styles.help_button}>
+              <Button
+                variant={"outlined"}
+                // className={styles.help_button}
+              >
                 View
                 {/* <FontAwesomeIcon className={styles.web_icon} icon={faEye} /> */}
               </Button>
             </Link>
           </Grid>
-          <Grid item sm={5}>
+          <Grid item md={4} sm={6}>
             <Link to="/edit">
               <Button
-                className={styles.help_button}
+                variant={"outlined"}
+                // className={styles.help_button}
                 onClick={() => setCurrentEditId(site.id)}
               >
                 Edit
@@ -77,23 +86,25 @@ function WebsiteItem({ setCurrentEditId, site, fetchDataFromFB }) {
               </Button>
             </Link>
           </Grid>
+          <Grid item md={4} sm={6}>
+            <Button
+              variant={"outlined"}
+              // className={styles.help_button}
+              onClick={() => fetchDataFromFB()}
+            >
+              Sync
+            </Button>
+          </Grid>
         </Grid>
-        <Grid container item sm={11} justify="flex-end">
-          <Button
-            className={styles.help_button}
-            style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}
-            onClick={() => fetchDataFromFB()}
-          >
-            Sync
-          </Button>
+        <Grid item container md={6}>
+          <Grid item>
+            <SwitchButton
+              siteId={site.id}
+              siteName={site.title}
+              isPublish={site.isPublish}
+            />
+          </Grid>
         </Grid>
-      </Grid>
-      <Grid container item justify="flex-end" md={12}>
-        <SwitchButton
-          siteId={site.id}
-          siteName={site.title}
-          isPublish={site.isPublish}
-        />
       </Grid>
     </Grid>
   );
