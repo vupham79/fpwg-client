@@ -1,13 +1,7 @@
 import React from "react";
 import { themes as themesConstant } from "../../constant/constant";
 import { connect } from "react-redux";
-import {
-  updateSiteId,
-  getSiteById,
-  setSiteView,
-  showLoading,
-  closeLoading
-} from "../../actions";
+import { updateSiteId, getSiteById, setSiteView } from "../../actions";
 import { Grid } from "@material-ui/core";
 
 class PreViewSite extends React.Component {
@@ -16,14 +10,7 @@ class PreViewSite extends React.Component {
   };
 
   async componentDidMount() {
-    const {
-      updateSiteId,
-      getSiteById,
-      setSiteView,
-      showLoading,
-      closeLoading
-    } = this.props;
-    showLoading();
+    const { updateSiteId, getSiteById, setSiteView } = this.props;
     const currentSiteId = await this.props.location.pathname.split("/")[1];
     this.setState({
       currentSiteId: currentSiteId
@@ -39,7 +26,6 @@ class PreViewSite extends React.Component {
       fontFamily: data.fontBody
     };
     await setSiteView(data, fontTitle, fontBody);
-    closeLoading();
   }
 
   render() {
@@ -54,7 +40,11 @@ class PreViewSite extends React.Component {
       }
       return themesConstant.find(e => e.name === siteView.theme.name).component;
     }
-    return <></>;
+    return (
+      <Grid container justify="center">
+        <h1 style={{ color: "red" }}>404 Not Found</h1>
+      </Grid>
+    );
   }
 }
 
@@ -66,8 +56,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   updateSiteId: id => dispatch(updateSiteId(id)),
   getSiteById: id => dispatch(getSiteById(id)),
-  setSiteView: (site, title, body) => dispatch(setSiteView(site, title, body)),
-  closeLoading: () => dispatch(closeLoading()),
-  showLoading: () => dispatch(showLoading())
+  setSiteView: (site, title, body) => dispatch(setSiteView(site, title, body))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(PreViewSite);

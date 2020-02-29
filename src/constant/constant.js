@@ -19,16 +19,11 @@ import PreEventPage from "../theme/theme2/pages/event";
 import PreGalleryPage from "../theme/theme2/pages/gallery";
 import PreHomePage from "../theme/theme2/pages/home";
 import PreNewPage from "../theme/theme2/pages/new";
-import Theme3 from "../theme/theme3";
-import Theme4 from "../theme/theme4";
 
 export const themes = [
   {
     name: "theme1",
     component: <Theme1 />,
-    fontTitle: "Arial",
-    fontBody: "Arial",
-    color: "#FF6900",
     pages: [
       { name: "Home", component: <PreHomePageT1 /> },
       { name: "About", component: <PreAboutPageT1 /> },
@@ -41,9 +36,6 @@ export const themes = [
   {
     name: "theme2",
     component: <Theme2 />,
-    fontTitle: "Lora",
-    fontBody: "Oswald",
-    color: "#ABB8C3",
     pages: [
       { name: "Home", component: <PreHomePage /> },
       { name: "About", component: <PreAboutPage /> },
@@ -51,36 +43,6 @@ export const themes = [
       { name: "Event", component: <PreEventPage /> },
       { name: "Gallery", component: <PreGalleryPage /> },
       { name: "News", component: <PreNewPage /> }
-    ]
-  },
-  {
-    name: "theme3",
-    component: <Theme3 />,
-    fontTitle: "Cabin",
-    fontBody: "Cabin",
-    color: "#191818",
-    pages: [
-      { name: "home", component: <PreHomePage /> },
-      { name: "About", component: <PreAboutPage /> },
-      { name: "contact", component: <PreContactPage /> },
-      { name: "event", component: <PreEventPage /> },
-      { name: "gallery", component: <PreGalleryPage /> },
-      { name: "new", component: <PreNewPage /> }
-    ]
-  },
-  {
-    name: "theme4",
-    component: <Theme4 />,
-    fontTitle: "Barlow",
-    fontBody: "Barlow",
-    color: "#191818",
-    pages: [
-      { name: "home", component: <PreHomePage /> },
-      { name: "About", component: <PreAboutPage /> },
-      { name: "contact", component: <PreContactPage /> },
-      { name: "event", component: <PreEventPage /> },
-      { name: "gallery", component: <PreGalleryPage /> },
-      { name: "new", component: <PreNewPage /> }
     ]
   }
 ];

@@ -28,14 +28,16 @@ class PreEditPage extends React.Component {
   getSite = async () => {
     const { getSiteById, setSiteEdit, currentEditId } = this.props;
     const data = await getSiteById(currentEditId);
-    const titleStyle = {
-      fontFamily: data.fontTitle,
-      color: data.color
-    };
-    const bodyStyle = {
-      fontFamily: data.fontBody
-    };
-    await setSiteEdit(data, titleStyle, bodyStyle);
+    if (data) {
+      const titleStyle = {
+        fontFamily: data.fontTitle,
+        color: data.color
+      };
+      const bodyStyle = {
+        fontFamily: data.fontBody
+      };
+      await setSiteEdit(data, titleStyle, bodyStyle);
+    }
   };
 
   render() {
@@ -45,7 +47,8 @@ class PreEditPage extends React.Component {
       return <Redirect to="/" />;
     } else if (siteEdit && !loading) {
       return <EditPage />;
-    } else return <></>;
+    }
+    return <h1 style={{ color: "red", textAlign: "center" }}>404 Not Found</h1>;
   }
 }
 

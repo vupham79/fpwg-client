@@ -1,18 +1,12 @@
-import React, { Component } from "react";
+import { Divider, Grid, IconButton, InputBase, Paper } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import {
-  Grid,
-  Divider,
-  IconButton,
-  InputBase,
-  Paper
-} from "@material-ui/core";
-import Title from "./Title";
-import PublishButtonAdmin from "./PublishButtonAdmin";
+import SearchIcon from "@material-ui/icons/Search";
+import React, { Component } from "react";
+import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import { getAllSites } from "../actions";
-import ReactPaginate from 'react-paginate';
-import SearchIcon from '@material-ui/icons/Search';
+import PublishButtonAdmin from "./PublishButtonAdmin";
+import Title from "./Title";
 
 const useStyles = theme => ({
   root: {
@@ -38,10 +32,9 @@ class TableSite extends Component {
     itemPerPage: 2 // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
   };
 
-
   setListData = listData => {
     this.setState({
-      filteredData: listData,
+      filteredData: listData
     });
   };
 
@@ -54,12 +47,24 @@ class TableSite extends Component {
   getSites = async () => {
     const { accessToken, userId, getAllSites } = this.props;
     await getAllSites({ accessToken, userId });
-    this.setListData(this.props.sites.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
+    this.setListData(
+      this.props.sites.slice(
+        this.state.offset,
+        this.state.itemPerPage + this.state.offset
+      )
+    );
     this.setPageCount(this.props.sites);
   };
 
   componentDidMount() {
     this.getSites();
+    this.setListData(
+      this.props.sites.slice(
+        this.state.offset,
+        this.state.itemPerPage + this.state.offset
+      )
+    );
+    this.setPageCount(this.props.sites);
   }
 
   handlePageClick = data => {
@@ -67,16 +72,21 @@ class TableSite extends Component {
     let offset = Math.ceil(selected * this.state.itemPerPage);
 
     this.setState({ offset: offset }, () => {
-      this.setListData(this.props.sites.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
+      this.setListData(
+        this.props.sites.slice(
+          this.state.offset,
+          this.state.itemPerPage + this.state.offset
+        )
+      );
     });
   };
 
-  handleSearch = (keyword) => {
+  handleSearch = keyword => {
     let searchResult = this.props.sites.filter(function (site) {
-      return site.title.toLowerCase().includes(keyword.toLowerCase())
-    })
+      return site.title.toLowerCase().includes(keyword.toLowerCase());
+    });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
-    this.setPageCount(searchResult)
+    this.setPageCount(searchResult);
   };
 
   render() {
@@ -105,11 +115,21 @@ class TableSite extends Component {
           </IconButton>
         </Paper>
         <Grid container direction="row">
-          <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Owner</p></Grid>
-          <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Title</p></Grid>
-          <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Theme</p></Grid>
-          <Grid item xs={4}><p style={{ fontWeight: 'bold' }}>Categories</p></Grid>
-          <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Published</p></Grid>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>Owner</p>
+          </Grid>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>Title</p>
+          </Grid>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>Theme</p>
+          </Grid>
+          <Grid item xs={4}>
+            <p style={{ fontWeight: "bold" }}>Categories</p>
+          </Grid>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>Published</p>
+          </Grid>
         </Grid>
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
@@ -118,9 +138,15 @@ class TableSite extends Component {
               <div key={row.id}>
                 <Grid container direction="row">
                   <Grid item xs={2}></Grid>
-                  <Grid item xs={2}>{row.title}</Grid>
-                  <Grid item xs={2}>{row.theme.name}</Grid>
-                  <Grid item xs={4}>{row.categories.map(c => (c.name + ', '))}</Grid>
+                  <Grid item xs={2}>
+                    {row.title}
+                  </Grid>
+                  <Grid item xs={2}>
+                    {row.theme.name}
+                  </Grid>
+                  <Grid item xs={4}>
+                    {row.categories.map(c => c.name + ", ")}
+                  </Grid>
                   <Grid item xs={2}>
                     <PublishButtonAdmin
                       siteId={row.id}
@@ -131,21 +157,22 @@ class TableSite extends Component {
                 </Grid>
                 <Divider />
               </div>
-            )))}
+            ))
+          )}
 
         <div className="commentBox">
           <ReactPaginate
-            previousLabel={'previous'}
-            nextLabel={'next'}
-            breakLabel={'...'}
-            breakClassName={'break-me'}
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
             pageCount={this.state.pageCount}
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}
             onPageChange={this.handlePageClick}
-            containerClassName={'pagination'}
-            subContainerClassName={'pages pagination'}
-            activeClassName={'active'}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
           />
         </div>
       </React.Fragment>

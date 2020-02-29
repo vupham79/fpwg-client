@@ -57,8 +57,8 @@ function WebsiteItem({ setCurrentEditId, site, fetchDataFromFB }) {
         </Grid>
       </Grid>
       <Grid container item sm={4} xs={12}>
-        <Grid container item justify="flex-end" alignItems="center">
-          <Grid item sm={5}>
+        <Grid container item>
+          <Grid item md={4} sm={6}>
             <Link to={`/${site.id}`}>
               <Button className={styles.help_button}>
                 View
@@ -316,22 +316,22 @@ class MainPage extends Component {
               {sites.length === 0 ? (
                 <h3>You don't have any Website. Please create a new site.</h3>
               ) : (
-                sites.map((item, index) => (
-                  <Grid
-                    item
-                    md={6}
-                    sm={12}
-                    key={index}
-                    className={styles.siteItem}
-                  >
-                    <WebsiteItem
-                      site={item}
-                      setCurrentEditId={setCurrentEditId}
-                      fetchDataFromFB={() => this.handleFetchData(item.id)}
-                    />
-                  </Grid>
-                ))
-              )}
+                  sites.map((item, index) => (
+                    <Grid
+                      item
+                      md={6}
+                      sm={12}
+                      key={index}
+                      className={styles.siteItem}
+                    >
+                      <WebsiteItem
+                        site={item}
+                        setCurrentEditId={setCurrentEditId}
+                        fetchDataFromFB={() => this.handleFetchData(item.id)}
+                      />
+                    </Grid>
+                  ))
+                )}
             </Grid>
           </Grid>
         </Grid>

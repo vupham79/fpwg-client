@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import {
-  Grid,
-  Divider,
-  IconButton,
-  InputBase,
-  Paper
-} from "@material-ui/core";
+import { Grid, Divider, IconButton, InputBase, Paper } from "@material-ui/core";
 import Title from "./Title";
 import { connect } from "react-redux";
 import { getAllThemesAdmin } from "../actions";
-import ReactPaginate from 'react-paginate';
-import SearchIcon from '@material-ui/icons/Search';
+import ReactPaginate from "react-paginate";
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = theme => ({
   seeMore: {
@@ -40,10 +34,9 @@ class TableTheme extends Component {
     itemPerPage: 1 // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
   };
 
-
   setListData = listData => {
     this.setState({
-      filteredData: listData,
+      filteredData: listData
     });
   };
 
@@ -56,7 +49,12 @@ class TableTheme extends Component {
   getThemes = async () => {
     const { getAllThemesAdmin } = this.props;
     await getAllThemesAdmin();
-    this.setListData(this.props.themes.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
+    this.setListData(
+      this.props.themes.slice(
+        this.state.offset,
+        this.state.itemPerPage + this.state.offset
+      )
+    );
     this.setPageCount(this.props.themes);
   };
 
@@ -69,16 +67,21 @@ class TableTheme extends Component {
     let offset = Math.ceil(selected * this.state.itemPerPage);
 
     this.setState({ offset: offset }, () => {
-      this.setListData(this.props.themes.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
+      this.setListData(
+        this.props.themes.slice(
+          this.state.offset,
+          this.state.itemPerPage + this.state.offset
+        )
+      );
     });
   };
 
-  handleSearch = (keyword) => {
+  handleSearch = keyword => {
     let searchResult = this.props.themes.filter(function (theme) {
-      return theme.name.toLowerCase().includes(keyword.toLowerCase())
-    })
+      return theme.name.toLowerCase().includes(keyword.toLowerCase());
+    });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
-    this.setPageCount(searchResult)
+    this.setPageCount(searchResult);
   };
 
   render() {
@@ -107,11 +110,21 @@ class TableTheme extends Component {
           </IconButton>
         </Paper>
         <Grid container direction="row">
-          <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Name</p></Grid>
-          <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>F.Body</p></Grid>
-          <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>F.Title</p></Grid>
-          <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Main Color</p></Grid>
-          <Grid item xs={4}><p style={{ fontWeight: 'bold' }}>Categories</p></Grid>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>Name</p>
+          </Grid>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>F.Body</p>
+          </Grid>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>F.Title</p>
+          </Grid>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>Main Color</p>
+          </Grid>
+          <Grid item xs={4}>
+            <p style={{ fontWeight: "bold" }}>Categories</p>
+          </Grid>
         </Grid>
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
@@ -119,31 +132,43 @@ class TableTheme extends Component {
             this.state.filteredData.map((row, index) => (
               <div key={row.id}>
                 <Grid container direction="row">
-                  <Grid item xs={2}>{row.name}<div style={{ height: 20 }} /></Grid>
-                  <Grid item xs={2}>{row.fontBody}</Grid>
-                  <Grid item xs={2}>{row.fontTitle}</Grid>
-                  <Grid item xs={2}>{row.mainColor}</Grid>
-                  <Grid item xs={4}>{row.categories.map(c => (c.name + ', '))}</Grid>
+                  <Grid item xs={2}>
+                    {row.name}
+                    <div style={{ height: 20 }} />
+                  </Grid>
+                  <Grid item xs={2}>
+                    {row.fontBody}
+                  </Grid>
+                  <Grid item xs={2}>
+                    {row.fontTitle}
+                  </Grid>
+                  <Grid item xs={2}>
+                    {row.mainColor}
+                  </Grid>
+                  <Grid item xs={4}>
+                    {row.categories.map(c => c.name + ", ")}
+                  </Grid>
                 </Grid>
                 <Divider />
               </div>
-            )))}
+            ))
+          )}
         <div className="commentBox">
           <ReactPaginate
-            previousLabel={'previous'}
-            nextLabel={'next'}
-            breakLabel={'...'}
-            breakClassName={'break-me'}
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
             pageCount={this.state.pageCount}
             marginPagesDisplayed={2}
             pageRangeDisplayed={5}
             onPageChange={this.handlePageClick}
-            containerClassName={'pagination'}
-            subContainerClassName={'pages pagination'}
-            activeClassName={'active'}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
           />
         </div>
-      </React.Fragment >
+      </React.Fragment>
     );
   }
 }
