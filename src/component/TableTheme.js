@@ -1,19 +1,10 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import {
-  TableBody,
-  TableHead,
-  Table,
-  Grid,
-  Divider,
-  IconButton,
-  InputBase,
-  Paper
-} from "@material-ui/core";
+import { Grid, Divider, IconButton, InputBase, Paper } from "@material-ui/core";
 import Title from "./Title";
 import { connect } from "react-redux";
 import { getAllThemesAdmin } from "../actions";
-// import PaginationList from 'react-pagination-list';
+import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = theme => ({
@@ -37,12 +28,21 @@ const useStyles = theme => ({
 
 class TableTheme extends Component {
   state = {
-    filteredData: []
+    filteredData: [],
+    pageCount: 1,
+    offset: 0,
+    itemPerPage: 1 // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
   };
 
-  setListData = searchData => {
+  setListData = listData => {
     this.setState({
-      filteredData: searchData
+      filteredData: listData
+    });
+  };
+
+  setPageCount = listData => {
+    this.setState({
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
     });
   };
 
@@ -53,15 +53,35 @@ class TableTheme extends Component {
 
   componentDidMount() {
     this.getThemes();
-    this.setListData(this.props.themes);
+    this.setListData(
+      this.props.themes.slice(
+        this.state.offset,
+        this.state.itemPerPage + this.state.offset
+      )
+    );
+    this.setPageCount(this.props.themes);
   }
 
+  handlePageClick = data => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.state.itemPerPage);
+
+    this.setState({ offset: offset }, () => {
+      this.setListData(
+        this.props.themes.slice(
+          this.state.offset,
+          this.state.itemPerPage + this.state.offset
+        )
+      );
+    });
+  };
+
   handleSearch = keyword => {
-    this.setListData(
-      this.props.themes.filter(function(theme) {
-        return theme.name.toLowerCase().indexOf(keyword.toLowerCase()) > -1;
-      })
-    );
+    let searchResult = this.props.themes.filter(function(theme) {
+      return theme.name.toLowerCase().includes(keyword.toLowerCase());
+    });
+    this.setListData(searchResult.slice(0, this.state.itemPerPage));
+    this.setPageCount(searchResult);
   };
 
   render() {
@@ -89,49 +109,65 @@ class TableTheme extends Component {
             <SearchIcon />
           </IconButton>
         </Paper>
+        <Grid container direction="row">
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>Name</p>
+          </Grid>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>F.Body</p>
+          </Grid>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>F.Title</p>
+          </Grid>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>Main Color</p>
+          </Grid>
+          <Grid item xs={4}>
+            <p style={{ fontWeight: "bold" }}>Categories</p>
+          </Grid>
+        </Grid>
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-          <Table size="small">
-            <TableHead>
+          this.state.filteredData.map((row, index) => (
+            <div key={row.id}>
               <Grid container direction="row">
                 <Grid item xs={2}>
-                  <p style={{ fontWeight: "bold" }}>Name</p>
+                  {row.name}
+                  <div style={{ height: 20 }} />
                 </Grid>
                 <Grid item xs={2}>
-                  <p style={{ fontWeight: "bold" }}>F.Body</p>
+                  {row.fontBody}
                 </Grid>
                 <Grid item xs={2}>
-                  <p style={{ fontWeight: "bold" }}>F.Title</p>
+                  {row.fontTitle}
                 </Grid>
                 <Grid item xs={2}>
-                  <p style={{ fontWeight: "bold" }}>Main Color</p>
+                  {row.mainColor}
                 </Grid>
                 <Grid item xs={4}>
-                  <p style={{ fontWeight: "bold" }}>Categories</p>
+                  {row.categories.map(c => c.name + ", ")}
                 </Grid>
               </Grid>
-            </TableHead>
-            <TableBody>
-              {/* <PaginationList
-                  data={this.state.filteredData}
-                  pageSize={5}
-                  renderItem={(row, key) => (
-                    <div>
-                      <Grid container direction="row" key={row.id}>
-                        <Grid item xs={2}>{row.name}<div style={{ height: 20 }} /></Grid>
-                        <Grid item xs={2}>{row.fontBody}</Grid>
-                        <Grid item xs={2}>{row.fontTitle}</Grid>
-                        <Grid item xs={2}>{row.mainColor}</Grid>
-                        <Grid item xs={4}>{row.categories.map(c => (c.name + ', '))}</Grid>
-                      </Grid>
-                      <Divider />
-                    </div>
-                  )}
-                /> */}
-            </TableBody>
-          </Table>
+              <Divider />
+            </div>
+          ))
         )}
+        <div className="commentBox">
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+          />
+        </div>
       </React.Fragment>
     );
   }
