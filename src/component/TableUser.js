@@ -81,8 +81,8 @@ class TableUser extends Component {
             <SearchIcon />
           </IconButton>
         </Paper>
-        {users && users.length === 0 ? (
-          <p style={{ fontStyle: "italic" }}>No existing user</p>
+        {this.state.filteredData.length === 0 ? (
+          <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
             <Table size="small">
               <TableHead>

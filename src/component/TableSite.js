@@ -79,8 +79,8 @@ class TableSite extends Component {
             <SearchIcon />
           </IconButton>
         </Paper>
-        {sites && sites.length === 0 ? (
-          <p style={{ fontStyle: "italic" }}>No existing site</p>
+        {this.state.filteredData.length === 0 ? (
+          <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
             <Table size="small">
               <TableHead>

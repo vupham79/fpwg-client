@@ -79,8 +79,8 @@ class TableTheme extends Component {
             <SearchIcon />
           </IconButton>
         </Paper>
-        {themes && themes.length === 0 ? (
-          <p style={{ fontStyle: "italic" }}>No existing theme.</p>
+        {this.state.filteredData.length === 0 ? (
+          <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
             <Table size="small">
               <TableHead>

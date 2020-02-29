@@ -79,8 +79,8 @@ class TablePath extends Component {
             <SearchIcon />
           </IconButton>
         </Paper>
-        {paths && paths.length === 0 ? (
-          <p style={{ fontStyle: "italic" }}>No existing path.</p>
+        {this.state.filteredData.length === 0 ? (
+          <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
             <Table size="small">
               <TableHead>
