@@ -1,26 +1,15 @@
-import React, { Component } from "react";
+import { Divider, Grid, IconButton, InputBase, Paper } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import {
-  TableBody,
-  TableHead,
-  Table,
-  Grid,
-  Divider,
-  IconButton,
-  InputBase,
-  Paper
-} from "@material-ui/core";
-import Title from "./Title";
-import { connect } from "react-redux";
-import ActivateButton from "./ActivateButton";
-import { getAllUsers } from "../actions";
-import PaginationList from 'react-pagination-list';
 import SearchIcon from '@material-ui/icons/Search';
+import React, { Component } from "react";
+import ReactPaginate from 'react-paginate';
+import { connect } from "react-redux";
+import { getAllUsers } from "../actions";
+import ActivateButton from "./ActivateButton";
+import Title from "./Title";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 const useStyles = theme => ({
-  seeMore: {
-    marginTop: theme.spacing(3)
-  },
   root: {
     padding: '2px 4px',
     display: 'flex',
@@ -39,13 +28,22 @@ const useStyles = theme => ({
 class TableUser extends Component {
 
   state = {
-    filteredData: []
+    filteredData: [],
+    pageCount: 1,
+    offset: 0,
+    itemPerPage: 2 // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
   };
 
 
-  setListData = searchData => {
+  setListData = listData => {
     this.setState({
-      filteredData: searchData
+      filteredData: listData,
+    });
+  };
+
+  setPageCount = listData => {
+    this.setState({
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
     });
   };
 
@@ -56,13 +54,26 @@ class TableUser extends Component {
 
   componentDidMount() {
     this.getUsers();
-    this.setListData(this.props.users);
+    this.setListData(this.props.users.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
+    this.setPageCount(this.props.users);
   }
 
+
+  handlePageClick = data => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.state.itemPerPage);
+
+    this.setState({ offset: offset }, () => {
+      this.setListData(this.props.users.slice(this.state.offset, this.state.itemPerPage + this.state.offset));
+    });
+  };
+
   handleSearch = (keyword) => {
-    this.setListData(this.props.users.filter(function (user) {
-      return user.displayName.toLowerCase().indexOf(keyword.toLowerCase()) > -1
-    }));
+    let searchResult = this.props.users.filter(function (user) {
+      return user.displayName.toLowerCase().includes(keyword.toLowerCase())
+    })
+    this.setListData(searchResult.slice(0, this.state.itemPerPage));
+    this.setPageCount(searchResult)
   };
 
   render() {
@@ -81,50 +92,54 @@ class TableUser extends Component {
             <SearchIcon />
           </IconButton>
         </Paper>
+        <Grid container direction="row">
+          <Grid item xs={1}><p style={{ fontWeight: 'bold' }}>Picture</p></Grid>
+          <Grid item xs={3}><p style={{ fontWeight: 'bold' }}>Display Name</p></Grid>
+          <Grid item xs={3}><p style={{ fontWeight: 'bold' }}>Email</p></Grid>
+          <Grid item xs={3}><p style={{ fontWeight: 'bold' }}>Phone</p></Grid>
+          <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Activation</p></Grid>
+        </Grid>
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-            <Table size="small">
-              <TableHead>
+            this.state.filteredData.map((row, index) => (
+              <div key={row.id}>
                 <Grid container direction="row">
-                  <Grid item xs={1}><p style={{ fontWeight: 'bold' }}>Picture</p></Grid>
-                  <Grid item xs={3}><p style={{ fontWeight: 'bold' }}>Display Name</p></Grid>
-                  <Grid item xs={3}><p style={{ fontWeight: 'bold' }}>Email</p></Grid>
-                  <Grid item xs={3}><p style={{ fontWeight: 'bold' }}>Phone</p></Grid>
-                  <Grid item xs={2}><p style={{ fontWeight: 'bold' }}>Activation</p></Grid>
+                  <Grid item xs={1}>
+                    <img
+                      style={{ height: 30, width: 30 }}
+                      src={row.picture}
+                      alt=""
+                    />
+                  </Grid>
+                  <Grid item xs={3}>{row.displayName}</Grid>
+                  <Grid item xs={3}>{row.email}</Grid>
+                  <Grid item xs={3}>{row.phone}</Grid>
+                  <Grid item xs={2}>
+                    <ActivateButton
+                      userId={row.id}
+                      isActivated={row.isActivated}
+                    />
+                  </Grid>
                 </Grid>
-              </TableHead>
-              <TableBody>
-                <PaginationList
-                  data={this.state.filteredData}
-                  pageSize={5}
-                  renderItem={(row, key) => (
-                    <div>
-                      <Grid container direction="row" key={row.id}>
-                        <Grid item xs={1}>
-                          <img
-                            style={{ height: 30, width: 30 }}
-                            src={row.picture}
-                            alt=""
-                          />
-                        </Grid>
-                        <Grid item xs={3}>{row.displayName}</Grid>
-                        <Grid item xs={3}>{row.email}</Grid>
-                        <Grid item xs={3}>{row.phone}</Grid>
-                        <Grid item xs={2}>
-                          <ActivateButton
-                            userId={row.id}
-                            isActivated={row.isActivated}
-                          />
-                        </Grid>
-                      </Grid>
-                      <Divider />
-                    </div>
-                  )}
-                />
-              </TableBody>
-            </Table>
-          )}
+                <Divider />
+              </div>
+            )))}
+        <div className="commentBox">
+          <ReactPaginate
+            previousLabel={'previous'}
+            nextLabel={'next'}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={'pagination'}
+            subContainerClassName={'pages pagination'}
+            activeClassName={'active'}
+          />
+        </div>
 
       </React.Fragment>
     );
