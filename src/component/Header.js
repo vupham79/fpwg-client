@@ -97,11 +97,11 @@ class CustomNavBarEditor extends React.Component {
     const { setLogout } = this.props;
     firebaseAppAuth
       .signOut()
-      .then(function () {
+      .then(function() {
         setLogout();
         return <Redirect to="/" />;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         toastr.error(`Logout failed: ${error}`, "Error");
       });
   };

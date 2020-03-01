@@ -15,9 +15,9 @@ export function getAllSites({ id, accessToken }) {
           access_token: accessToken
         }
       });
-      // dispatch({
-      //   type: "CLOSE_LOADING" để đây bị loading bất tận??
-      // });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
       if (data.status === 200) {
         dispatch({
           type: "SET_ALL_SITES",
@@ -26,9 +26,6 @@ export function getAllSites({ id, accessToken }) {
       } else {
         toastr.error(`Unable to retrieve sites`, "Error");
       }
-      dispatch({
-        type: "CLOSE_LOADING"
-      });
     } catch (error) {
       dispatch({
         type: "CLOSE_LOADING"
@@ -40,17 +37,29 @@ export function getAllSites({ id, accessToken }) {
 
 export function getUserSites(userId, accessToken) {
   return async dispatch => {
-    const req = await axios({
-      url: "/site/findAllByUser",
-      params: {
-        userId: userId,
-        accessToken: accessToken
-      }
+    dispatch({
+      type: "SHOW_LOADING"
     });
-    if (req.status === 200) {
+    try {
+      const req = await axios({
+        url: "/site/findAllByUser",
+        params: {
+          userId: userId,
+          accessToken: accessToken
+        }
+      });
       dispatch({
-        type: "SET_USER_SITES",
-        payload: req.data.sites
+        type: "CLOSE_LOADING"
+      });
+      if (req.status === 200) {
+        dispatch({
+          type: "SET_USER_SITES",
+          payload: req.data.sites
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
       });
     }
   };
@@ -59,29 +68,51 @@ export function getUserSites(userId, accessToken) {
 export const updateSiteId = currentId => {
   return dispatch => {
     dispatch({
+      type: "SHOW_LOADING"
+    });
+    dispatch({
       type: "UPDATE_SITE_ID",
       payload: currentId
+    });
+    dispatch({
+      type: "CLOSE_LOADING"
     });
   };
 };
 
 export const unPublishSiteAdmin = ({ siteId, siteName }) => {
   return async dispatch => {
-    const data = await axios({
-      method: "patch",
-      url: "/site/publish",
-      data: {
-        id: siteId,
-        isPublish: false
-      }
-    });
-    if (data.status === 200) {
+    try {
       dispatch({
-        type: "UNPUBLISH_SITE_ADMIN",
-        payload: siteId
+        type: "SHOW_LOADING"
       });
-      toastr.success(`Unpublish site ${siteName} success`, "Sucess");
-    } else {
+      const data = await axios({
+        method: "patch",
+        url: "/site/publish",
+        data: {
+          id: siteId,
+          isPublish: false
+        }
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "UNPUBLISH_SITE_ADMIN",
+          payload: siteId
+        });
+        toastr.success(`Unpublish site ${siteName} success`, "Sucess");
+      } else {
+        toastr.error(
+          "There are something wrong when unpublish your site",
+          "Error"
+        );
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
       toastr.error(
         "There are something wrong when unpublish your site",
         "Error"
@@ -92,21 +123,37 @@ export const unPublishSiteAdmin = ({ siteId, siteName }) => {
 
 export const publishSiteAdmin = ({ siteId, siteName }) => {
   return async dispatch => {
-    const data = await axios({
-      method: "patch",
-      url: "/site/publish",
-      data: {
-        id: siteId,
-        isPublish: true
-      }
+    dispatch({
+      type: "SHOW_LOADING"
     });
-    if (data.status === 200) {
-      dispatch({
-        type: "PUBLISH_SITE_ADMIN",
-        payload: siteId
+    try {
+      const data = await axios({
+        method: "patch",
+        url: "/site/publish",
+        data: {
+          id: siteId,
+          isPublish: true
+        }
       });
-      toastr.success(`Publish site ${siteName} sucess`, "Success");
-    } else {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "PUBLISH_SITE_ADMIN",
+          payload: siteId
+        });
+        toastr.success(`Publish site ${siteName} sucess`, "Success");
+      } else {
+        toastr.error(
+          "There are something wrong when publish your site",
+          "Error"
+        );
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
       toastr.error("There are something wrong when publish your site", "Error");
     }
   };
@@ -114,21 +161,37 @@ export const publishSiteAdmin = ({ siteId, siteName }) => {
 
 export const unPublishSite = ({ siteId, siteName }) => {
   return async dispatch => {
-    const data = await axios({
-      method: "patch",
-      url: "/site/publish",
-      data: {
-        id: siteId,
-        isPublish: false
-      }
+    dispatch({
+      type: "SHOW_LOADING"
     });
-    if (data.status === 200) {
-      dispatch({
-        type: "UNPUBLISH_SITE",
-        payload: siteId
+    try {
+      const data = await axios({
+        method: "patch",
+        url: "/site/publish",
+        data: {
+          id: siteId,
+          isPublish: false
+        }
       });
-      toastr.success(`Unpublish site ${siteName} success`, "Sucess");
-    } else {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "UNPUBLISH_SITE",
+          payload: siteId
+        });
+        toastr.success(`Unpublish site ${siteName} success`, "Sucess");
+      } else {
+        toastr.error(
+          "There are something wrong when unpublish your site",
+          "Error"
+        );
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
       toastr.error(
         "There are something wrong when unpublish your site",
         "Error"
@@ -139,21 +202,37 @@ export const unPublishSite = ({ siteId, siteName }) => {
 
 export const publishSite = ({ siteId, siteName }) => {
   return async dispatch => {
-    const data = await axios({
-      method: "patch",
-      url: "/site/publish",
-      data: {
-        id: siteId,
-        isPublish: true
-      }
+    dispatch({
+      type: "SHOW_LOADING"
     });
-    if (data.status === 200) {
-      dispatch({
-        type: "PUBLISH_SITE",
-        payload: siteId
+    try {
+      const data = await axios({
+        method: "patch",
+        url: "/site/publish",
+        data: {
+          id: siteId,
+          isPublish: true
+        }
       });
-      toastr.success(`Publish site ${siteName} sucess`, "Success");
-    } else {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "PUBLISH_SITE",
+          payload: siteId
+        });
+        toastr.success(`Publish site ${siteName} sucess`, "Success");
+      } else {
+        toastr.error(
+          "There are something wrong when publish your site",
+          "Error"
+        );
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
       toastr.error("There are something wrong when publish your site", "Error");
     }
   };
@@ -197,23 +276,36 @@ export function changeNavItems(items) {
 
 export function saveDesignSite(site) {
   return async dispatch => {
-    const data = await axios({
-      method: "patch",
-      url: "/site/saveDesign",
-      data: {
-        logo: site.logo,
-        fontBody: site.fontBody,
-        fontTitle: site.fontTitle,
-        navItems: site.navItems,
-        theme: site.theme.id,
-        pageId: site.id,
-        name: site.title,
-        color: site.color
-      }
+    dispatch({
+      type: "SHOW_LOADING"
     });
-    if (data.status === 200) {
-      toastr.success(`Save site ${site.title} sucess`, "Success");
-    } else {
+    try {
+      const data = await axios({
+        method: "patch",
+        url: "/site/saveDesign",
+        data: {
+          logo: site.logo,
+          fontBody: site.fontBody,
+          fontTitle: site.fontTitle,
+          navItems: site.navItems,
+          theme: site.theme.id,
+          pageId: site.id,
+          name: site.title,
+          color: site.color
+        }
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        toastr.success(`Save site ${site.title} sucess`, "Success");
+      } else {
+        toastr.error("There are something wrong when save your site", "Error");
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
       toastr.error("There are something wrong when save your site", "Error");
     }
   };
@@ -222,20 +314,39 @@ export function saveDesignSite(site) {
 export function changeTheme(site) {
   return dispatch => {
     dispatch({
+      type: "SHOW_LOADING"
+    });
+    dispatch({
       type: "CHANGE_THEME",
       payload: site
+    });
+    dispatch({
+      type: "CLOSE_LOADING"
     });
   };
 }
 
 export function getSiteById(id) {
   return async dispatch => {
-    const data = await axios({
-      method: "get",
-      url: "/site/find/" + id
+    dispatch({
+      type: "SHOW_LOADING"
     });
-    if (data.status === 200) {
-      return data.data;
+    try {
+      const data = await axios({
+        method: "get",
+        url: "/site/find/" + id
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        return data.data;
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error("Get site data failed!", "Error");
     }
   };
 }
@@ -313,21 +424,22 @@ export function uploadLogo(path, siteId) {
                 }
               });
             });
-          toastr.success("Upload new logo successful", "Success");
-        })
-        .catch(error => {
-          toastr.error(`Upload new logo failed`, "Error");
-        })
-        .finally(() => {
           dispatch({
             type: "CLOSE_LOADING"
           });
+          toastr.success("Upload new logo successful", "Success");
+        })
+        .catch(error => {
+          dispatch({
+            type: "CLOSE_LOADING"
+          });
+          toastr.error(`Upload new logo failed`, "Error");
         });
     } catch (error) {
-      toastr.error(`Upload new logo failed`, "Error");
       dispatch({
         type: "CLOSE_LOADING"
       });
+      toastr.error(`Upload new logo failed`, "Error");
     }
   };
 }
@@ -343,17 +455,33 @@ export function changeSiteTitle(site) {
 
 export function syncDataFromFB(pageId, access_token) {
   return async dispatch => {
-    const data = await axios({
-      method: "patch",
-      url: "/site/syncData",
-      data: {
-        pageId: pageId,
-        accessToken: access_token
-      }
+    dispatch({
+      type: "SHOW_LOADING"
     });
-    if (data.status === 200) {
-      toastr.success("You fetch data from FB success.", "Success");
-    } else {
+    try {
+      const data = await axios({
+        method: "patch",
+        url: "/site/syncData",
+        data: {
+          pageId: pageId,
+          accessToken: access_token
+        }
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        toastr.success("You fetch data from FB success.", "Success");
+      } else {
+        toastr.error(
+          "There are something wrong when fetch data from your FB",
+          "Error"
+        );
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
       toastr.error(
         "There are something wrong when fetch data from your FB",
         "Error"

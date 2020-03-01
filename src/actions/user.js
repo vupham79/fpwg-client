@@ -2,6 +2,9 @@ import toastr from "../component/Toastr";
 import axios from "../utils/axios";
 export function login({ accessToken, profile }) {
   return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
     const data = await axios({
       method: "post",
       url: "/auth",
@@ -13,7 +16,9 @@ export function login({ accessToken, profile }) {
         picture: profile.picture.data.url
       }
     });
-
+    dispatch({
+      type: "CLOSE_LOADING"
+    });
     if (data.status === 200) {
       dispatch({
         type: "SET_LOGIN",
@@ -22,6 +27,8 @@ export function login({ accessToken, profile }) {
           profile
         }
       });
+    } else {
+      toastr.error("Login failed! Please try again.", "Error");
     }
   };
 }
@@ -78,17 +85,25 @@ export function getAllUsers({ id, accessToken }) {
 
 export function getUserPages({ accessToken }) {
   return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
     const data = await axios({
       url: "/facebook/pages",
       params: {
         access_token: accessToken
       }
     });
+    dispatch({
+      type: "CLOSE_LOADING"
+    });
     if (data.status === 200) {
       dispatch({
         type: "SET_USER_PAGES",
         payload: data.data
       });
+    } else {
+      toastr.error("Get your pages failed!", "Error");
     }
   };
 }

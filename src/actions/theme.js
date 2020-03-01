@@ -12,25 +12,51 @@ export function setShowCustomColor(isShow) {
 
 export function getNavItems() {
   return async dispatch => {
-    const data = await axios({
-      url: "/navItem/findAll"
-    });
     dispatch({
-      type: "GET_NAV_ITEMS",
-      payload: data.data
+      type: "SHOW_LOADING"
     });
+    try {
+      const data = await axios({
+        url: "/navItem/findAll"
+      });
+      dispatch({
+        type: "GET_NAV_ITEMS",
+        payload: data.data
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Unable to get nav items`, "Error");
+    }
   };
 }
 
 export function getAllThemes() {
   return async dispatch => {
-    const data = await axios({
-      url: "/theme/findAll"
-    });
     dispatch({
-      type: "GET_ALL_THEME",
-      payload: data.data
+      type: "SHOW_LOADING"
     });
+    try {
+      const data = await axios({
+        url: "/theme/findAll"
+      });
+      dispatch({
+        type: "GET_ALL_THEME",
+        payload: data.data
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Unable to get themes`, "Error");
+    }
   };
 }
 
@@ -41,11 +67,7 @@ export function getAllThemesAdmin() {
     });
     try {
       const data = await axios({
-        url: "/theme/findAll",
-        // params: {
-        //   id: id,
-        //   access_token: accessToken
-        // }
+        url: "/theme/findAll"
       });
       dispatch({
         type: "CLOSE_LOADING"
@@ -56,13 +78,13 @@ export function getAllThemesAdmin() {
           payload: data.data
         });
       } else {
-        toastr.error(`Unable to retrieve themes`, "Error");
+        toastr.error(`Unable to get themes`, "Error");
       }
     } catch (error) {
       dispatch({
         type: "CLOSE_LOADING"
       });
-      toastr.error(`Unable to retrieve themes`, "Error");
+      toastr.error(`Unable to get themes`, "Error");
     }
   };
 }
