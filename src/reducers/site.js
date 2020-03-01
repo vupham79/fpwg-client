@@ -10,7 +10,7 @@ const defaultState = {
   titleView: {},
   bodyView: {},
   isView: false,
-  adminData: []
+  adminData: [],
 };
 
 let index;

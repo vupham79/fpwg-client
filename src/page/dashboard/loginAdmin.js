@@ -3,7 +3,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { Button, Typography, Container, Box, Grid, TextField, CssBaseline, Avatar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { loginAdmin } from "../../actions";
-import PreDashBoardPage from "./index";
+import { Redirect } from "react-router-dom";
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 const useStyles = theme => ({
@@ -49,7 +49,7 @@ class LoginPageAdmin extends Component {
     const { username, password } = this.state;
     const login = await loginAdmin({ username, password });
     if (login) {
-      return <PreDashBoardPage />;
+      return <Redirect to={"/admin"} />;
     }
   };
 
@@ -114,8 +114,6 @@ class LoginPageAdmin extends Component {
   }
 }
 const mapStateToProps = state => ({
-  username: state.admin.username,
-  password: state.admin.password
 });
 
 const mapDispatchToProps = dispatch => ({

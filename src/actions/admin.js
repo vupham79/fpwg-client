@@ -44,7 +44,7 @@ export function loginAdmin({ username, password }) {
 export function setLogoutAdmin() {
   return dispatch => {
     dispatch({
-      type: "SET_LOGOUT"
+      type: "SET_LOGOUT_ADMIN"
     });
   };
 }

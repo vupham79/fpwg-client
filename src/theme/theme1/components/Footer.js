@@ -6,6 +6,11 @@ import { faFacebook } from "@fortawesome/free-brands-svg-icons";
 
 class Footer extends React.Component {
   render() {
+    const {
+      isEdit,
+      siteEdit,
+      siteView
+    } = this.props;
     return (
       <Grid container style={{ backgroundColor: "#212121", marginTop: 50 }}>
         <Grid container item xs={12} justify="center">
@@ -14,13 +19,17 @@ class Footer extends React.Component {
           </IconButton>
         </Grid>
         <Grid container item xs={12} justify="center">
-          <p style={{ color: "white" }}>@PageName</p>
+          <p style={{ color: "white" }}>@{isEdit ? siteEdit.title : siteView.title}</p>
         </Grid>
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  isEdit: state.site.isEdit,
+  siteView: state.site.siteView,
+  siteEdit: state.site.siteEdit,
+});
 
 export default connect(mapStateToProps, null)(Footer);

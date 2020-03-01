@@ -1,10 +1,18 @@
-import React, { Component } from "react";
+import { AppBar, Tab, Tabs, Container } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import { AppBar, Tab, Tabs } from "@material-ui/core";
-import styles from "./index.module.css";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-import Link from "../../../component/link";
 import { updateNavItemValue } from "../../../actions";
+import Link from "../../../component/link";
+import styles from "./index.module.css";
+
+const imgStyles = {
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  width: "80%",
+  paddingTop: "0.5rem"
+};
 
 class Header extends Component {
   render() {
@@ -18,10 +26,27 @@ class Header extends Component {
       titleView
     } = this.props;
 
-    const tabStyles = {
+    const tabStylesEdit = {
       textTransform: "none",
       fontFamily: titleEdit.fontFamily,
-      color: titleEdit.color,
+      color: "#212121",
+      minWidth: "3vh",
+      "&:hover": {
+        color: "#40a9ff",
+        opacity: 1
+      },
+      "&$selected": {
+        color: "#1890ff"
+      },
+      "&:focus": {
+        color: "#40a9ff"
+      }
+    };
+
+    const tabStylesView = {
+      textTransform: "none",
+      fontFamily: titleView.fontFamily,
+      color: "#212121",
       minWidth: "3vh",
       "&:hover": {
         color: "#40a9ff",
@@ -37,56 +62,61 @@ class Header extends Component {
 
     return (
       <AppBar className={styles.app_bar} position="sticky">
-        <Grid container alignItems="center">
-          <Grid item xs={12} sm={10}>
-            <Grid container justify="flex-start">
-              {isEdit ? (
-                <Tabs
-                  value={tabValue}
-                  textColor="primary"
-                  indicatorColor="primary"
-                  onChange={(e, newValue) => updateNavItemValue(newValue)}
-                >
-                  {siteEdit.navItems &&
-                    siteEdit.navItems.map((item, index) =>
+        <Container>
+          <Grid container alignItems="center">
+            <Grid item xs={12} sm={10}>
+              <Grid container justify="flex-start">
+                {isEdit ? (
+                  <Tabs
+                    value={tabValue}
+                    textColor="primary"
+                    indicatorColor="primary"
+                    onChange={(e, newValue) => updateNavItemValue(newValue)}
+                  >
+                    {siteEdit.navItems.map((item, index) =>
                       item.isActive ? (
-                        <Tab style={tabStyles} label={item.name} key={index} />
+                        <Tab style={tabStylesEdit} label={item.name} key={index} />
                       ) : null
                     )}
-                </Tabs>
-              ) : (
-                siteView.navItems &&
-                siteEdit.navItems.map((item, index) =>
-                  item.isActive ? (
-                    <Grid
-                      className={styles.nav_item}
-                      item
-                      xs={2}
-                      sm={1}
-                      key={index}
-                    >
-                      <Link
-                        className={styles.links}
-                        style={titleView}
-                        to={`/${siteEdit.id}/${item.name}`}
-                      >
-                        {item}
-                      </Link>
-                    </Grid>
-                  ) : null
-                )
-              )}
+                  </Tabs>
+                ) : (
+                    siteView.navItems &&
+                    siteView.navItems.map((item, index) =>
+                      item.isActive ? (
+                        <Grid item xs={2} sm={1} key={index}>
+                          <Link
+                            style={tabStylesView}
+                            to={`/${siteView.id}/${item.name}`}
+                          >
+                            {item.name}
+                          </Link>
+                        </Grid>
+                      ) : null
+                    )
+                  )}
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid item xs={12} sm={2}>
-            <p
-              className={styles.shopName}
-              style={isEdit ? titleEdit : titleView}
+            <Grid
+              item
+              xs={12}
+              sm={2}
+              alignItems="center"
+              justify="center"
             >
-              {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
-            </p>
+              <Grid
+                item
+                sm={3}
+                className={styles.shopName}
+                style={isEdit ? titleEdit : titleView}
+              >
+                {isEdit
+                  ? siteEdit && siteEdit.title
+                  : siteView && siteView.title}
+              </Grid>
+            </Grid>
+            <div style={{ height: "10vh" }} />
           </Grid>
-        </Grid>
+        </Container>
       </AppBar>
     );
   }

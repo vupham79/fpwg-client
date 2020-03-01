@@ -18,8 +18,6 @@ class Theme1Contact extends React.Component {
       siteView,
       titleEdit,
       titleView,
-      mapLat,
-      mapLng
     } = this.props;
 
     const useStyles = theme => ({
@@ -104,8 +102,8 @@ class Theme1Contact extends React.Component {
 
     const MapWithAMarker = withScriptjs(
       withGoogleMap(props => (
-        <GoogleMap defaultZoom={8} defaultCenter={{ lat: mapLat, lng: mapLng }}>
-          <Marker position={{ lat: mapLat, lng: mapLng }} />
+        <GoogleMap defaultZoom={15} defaultCenter={{ lat: isEdit ? parseFloat(siteEdit.latitude) : parseFloat(siteView.latitude), lng: isEdit ? parseFloat(siteEdit.longitude) : parseFloat(siteView.longitude) }}>
+          <Marker position={{ lat: isEdit ? parseFloat(siteEdit.latitude) : parseFloat(siteView.latitude), lng: isEdit ? parseFloat(siteEdit.longitude) : parseFloat(siteView.longitude) }} />
         </GoogleMap>
       ))
     );
@@ -116,18 +114,38 @@ class Theme1Contact extends React.Component {
             <span style={classes.changableFirst}>C</span>ONTACTS
           </p>
         </Grid>
-        <Grid container item xs={12} justify="center">
-          <p style={classes.changableBody2}>
-            <FontAwesomeIcon icon={faPhone} size="2x" />
-            0909133349
-          </p>
-        </Grid>
-        <Grid container item xs={12} justify="center">
-          <p style={classes.changableBody2}>
-            <FontAwesomeIcon icon={faAddressBook} size="2x" />
-            112 Đường Hồng Hà, P.12, Q.Tân Bình
-          </p>
-        </Grid>
+        {isEdit && siteEdit.phone && (
+          <Grid container item xs={12} justify="center">
+            <p style={classes.changableBody2}>
+              <FontAwesomeIcon icon={faPhone} size="2x" />
+              {siteEdit.phone}
+            </p>
+          </Grid>
+        )}
+        {!isEdit && siteView.phone && (
+          <Grid container item xs={12} justify="center">
+            <p style={classes.changableBody2}>
+              <FontAwesomeIcon icon={faPhone} size="2x" />
+              {siteView.phone}
+            </p>
+          </Grid>
+        )}
+        {isEdit && siteEdit.address && siteEdit.adress !== "" && (
+          <Grid container item xs={12} justify="center">
+            <p style={classes.changableBody2}>
+              <FontAwesomeIcon icon={faAddressBook} size="2x" />
+              {siteEdit.address}
+            </p>
+          </Grid>
+        )}
+        {!isEdit && siteView.address && siteView.adress !== "" && (
+          <Grid container item xs={12} justify="center">
+            <p style={classes.changableBody2}>
+              <FontAwesomeIcon icon={faAddressBook} size="2x" />
+              {siteView.address}
+            </p>
+          </Grid>
+        )}
         <Grid item xs={12} id={"eventSection"}>
           <MapWithAMarker
             googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
@@ -144,11 +162,9 @@ class Theme1Contact extends React.Component {
 const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
-  siteView: state.site.siteView,
-  titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
-  mapLat: 10.82302,
-  mapLng: 106.62965
+  titleEdit: state.site.titleEdit,
+  siteView: state.site.siteView,
 });
 
 export default connect(mapStateToProps, null)(Theme1Contact);

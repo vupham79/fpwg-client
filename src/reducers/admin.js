@@ -1,6 +1,5 @@
 const defaultState = {
-  username: "",
-  password: "",
+  isLoginAdmin: false,
 };
 
 let index;
@@ -10,8 +9,7 @@ const AdminReducer = (state = defaultState, action) => {
     case "SET_LOGIN_ADMIN":
       return {
         ...state,
-        username: action.payload.username,
-        password: action.payload.password,
+        isLoginAdmin: true
       };
     case "SET_LOGOUT_ADMIN":
       return {

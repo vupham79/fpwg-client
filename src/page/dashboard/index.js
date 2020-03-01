@@ -9,8 +9,8 @@ import TablePath from "../../component/TablePath";
 
 class PreDashboardPage extends Component {
   render() {
-    const { selectedAdminIndex, username, password } = this.props;
-    if (!username || !password) {
+    const { selectedAdminIndex, isLoginAdmin } = this.props;
+    if (!isLoginAdmin) {
       return <LoginPage />;
     }
     return (
@@ -33,8 +33,7 @@ const mapStateToProps = state => ({
   accessToken: state.user.accessToken,
   userId: state.user.profile.id,
   selectedAdminIndex: state.adminTab.selectedAdminIndex,
-  username: state.admin.username,
-  password: state.admin.password
+  isLoginAdmin: state.admin.isLoginAdmin,
 });
 
 const mapDispatchToProps = dispatch => ({});
