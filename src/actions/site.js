@@ -284,7 +284,7 @@ export function setActiveNavItems(site) {
   };
 }
 
-export function uploadLogo(path, siteId) {
+export function uploadLogo(path, site) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -293,7 +293,7 @@ export function uploadLogo(path, siteId) {
       firebase
         .storage()
         .ref()
-        .child(`${siteId}`)
+        .child(`${site.id}`)
         .put(path, {
           contentType: "image/jpeg"
         })
@@ -301,7 +301,7 @@ export function uploadLogo(path, siteId) {
           await firebase
             .storage()
             .ref()
-            .child(`${siteId}`)
+            .child(`${site.id}`)
             .getDownloadURL()
             .then(async url => {
               await axios({
@@ -309,8 +309,13 @@ export function uploadLogo(path, siteId) {
                 url: "/site/logo",
                 data: {
                   logo: url,
-                  id: siteId
+                  id: site.id
                 }
+              });
+              site.log = url;
+              dispatch({
+                type: "UPLOAD_LOGO",
+                payload: site
               });
             });
           toastr.success("Upload new logo successful", "Success");

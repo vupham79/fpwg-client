@@ -18,7 +18,8 @@ class ContactPage extends React.Component {
       bodyEdit,
       titleView,
       bodyView,
-      profile
+      siteEdit,
+      siteView
     } = this.props;
 
     return (
@@ -64,9 +65,7 @@ class ContactPage extends React.Component {
               variant="body1"
               className={styles.child_content}
               style={isEdit ? bodyEdit : bodyView}
-            >
-              43/2 Nguyễn Trãi, Q1, tp.HCM, Ho Chi Minh City , Vietnam
-            </Typography>
+            ></Typography>
             <Typography
               variant="h5"
               className={styles.child_title}
@@ -79,7 +78,7 @@ class ContactPage extends React.Component {
               className={styles.child_content}
               style={isEdit ? bodyEdit : bodyView}
             >
-              01234567987
+              {isEdit ? siteEdit.phone : siteView.phone}
             </Typography>
           </Grid>
         </Grid>
@@ -151,6 +150,7 @@ class ContactPage extends React.Component {
 
 const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
+  siteView: state.site.siteView,
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
   bodyEdit: state.site.bodyEdit,

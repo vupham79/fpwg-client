@@ -146,6 +146,11 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         siteEdit: { ...action.payload }
       };
+    case "UPLOAD_LOGO":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
     default:
       return state;
   }

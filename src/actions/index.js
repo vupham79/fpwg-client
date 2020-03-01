@@ -1,5 +1,5 @@
 import { updateAdminTabIndex } from "./adminTab";
-import { closeCreateNewSite, openCreateNewSite } from "./dialog";
+import { closeDialog, openDialog } from "./dialog";
 import { getImageUrl } from "./image";
 import {
   changeColor,
@@ -41,6 +41,7 @@ import {
   login,
   setLogout
 } from "./user";
+import { getAllPost } from "./post";
 
 export {
   getUserPages,
@@ -58,8 +59,8 @@ export {
   closeLoading,
   login,
   //dialog
-  closeCreateNewSite,
-  openCreateNewSite,
+  closeDialog,
+  openDialog,
   changeNavItems,
   getNavItems,
   unPublishSite,
@@ -83,5 +84,6 @@ export {
   syncDataFromFB,
   getAllThemesAdmin,
   publishSiteAdmin,
-  unPublishSiteAdmin
+  unPublishSiteAdmin,
+  getAllPost
 };

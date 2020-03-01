@@ -1,6 +1,19 @@
-import { Grid, IconButton } from "@material-ui/core";
+import {
+  Grid,
+  IconButton,
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  Typography,
+  Button,
+  Dialog,
+  List,
+  ListItem
+} from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
+import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
 import React from "react";
 import { connect } from "react-redux";
 import {
@@ -8,7 +21,13 @@ import {
   sortableElement,
   sortableHandle
 } from "react-sortable-hoc";
-import { changeNavItems, setActiveNavItems } from "../actions";
+import {
+  changeNavItems,
+  setActiveNavItems,
+  openDialog,
+  closeDialog
+} from "../actions";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 
 const gridContainer = {
   borderStyle: "solid",
@@ -19,24 +38,19 @@ const gridContainer = {
 };
 
 const viewButton = {
-  color: "black",
-  position: "absolute",
-  right: "1rem"
+  color: "black"
 };
 
 const gridItem = {
-  width: "auto",
   borderStyle: "solid",
   borderColor: "#2a2e2a",
   borderWidth: 1.5,
-  padding: "0.5rem",
+  padding: "0.2rem 0.5rem",
   margin: "0.7rem",
   zIndex: "99999999"
 };
 
-const DragHandle = sortableHandle(() => (
-  <MenuIcon style={{ paddingRight: "0.4rem" }} />
-));
+const DragHandle = sortableHandle(() => <MenuIcon />);
 
 function handleChangeActive(item, site, setActiveNavItems) {
   const index = site.navItems.find(e => e._id === item._id);
@@ -50,22 +64,30 @@ function handleChangeActive(item, site, setActiveNavItems) {
 
 const SortableItem = sortableElement(
   ({ value, site, item, setActiveNavItems }) => (
-    <Grid container alignItems="center" style={gridItem}>
-      <DragHandle />
-      {value}
-      <IconButton
-        style={viewButton}
-        onClick={() => handleChangeActive(item, site, setActiveNavItems)}
-      >
-        <VisibilityIcon />
-      </IconButton>
+    <Grid container style={gridItem}>
+      <Grid container item alignItems="center" sm={5}>
+        <DragHandle />
+        {value}
+      </Grid>
+      <Grid container item justify="flex-end" sm={7}>
+        <IconButton
+          style={viewButton}
+          onClick={() => handleChangeActive(item, site, setActiveNavItems)}
+        >
+          {item.isActive ? (
+            <VisibilityOutlinedIcon />
+          ) : (
+            <VisibilityOffOutlinedIcon />
+          )}
+        </IconButton>
+      </Grid>
     </Grid>
   )
 );
 
 const SortableList = sortableContainer(({ items, site, setActiveNavItems }) => {
   return (
-    <Grid container direction="column" style={gridContainer}>
+    <Grid container style={gridContainer} alignItems="center">
       {items.map((value, index) => (
         <SortableItem
           key={index}
@@ -80,6 +102,63 @@ const SortableList = sortableContainer(({ items, site, setActiveNavItems }) => {
   );
 });
 
+const expanStyle = {
+  marginTop: "1rem"
+};
+
+const imageStyle = {
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  width: "60%"
+};
+
+function PostsList({ site }) {
+  return (
+    <>
+      {site ? (
+        site.posts.map((item, index) =>
+          item.attachments.media_type === "photo" ? (
+            <Grid container style={gridItem} key={index}>
+              <Grid container item sm={2} xs={4}>
+                <img src={item.attachments.images} style={imageStyle} />
+              </Grid>
+              <Grid
+                container
+                item
+                sm={8}
+                xs={6}
+                direction="column"
+                justify="flex-start"
+              >
+                <Grid item>
+                  <Typography color="primary" variant="h6">
+                    {item.message}
+                  </Typography>
+                </Grid>
+                <Grid item>{item.createdAt}</Grid>
+              </Grid>
+              <Grid container justify="flex-end" item sm={2} xs={2}>
+                <IconButton style={viewButton}>
+                  {item.isActive ? (
+                    <VisibilityOutlinedIcon />
+                  ) : (
+                    <VisibilityOffOutlinedIcon />
+                  )}
+                </IconButton>
+              </Grid>
+            </Grid>
+          ) : null
+        )
+      ) : (
+        <Grid container justify="center" style={{ padding: "1rem" }}>
+          <Typography> You don have any post</Typography>
+        </Grid>
+      )}
+    </>
+  );
+}
+
 class PagesEditorTab extends React.Component {
   onChangeItem = ({ oldIndex, newIndex }) => {
     const { site, changeNavItems } = this.props;
@@ -91,25 +170,88 @@ class PagesEditorTab extends React.Component {
   };
 
   render() {
-    const { site, setActiveNavItems } = this.props;
+    const {
+      site,
+      setActiveNavItems,
+      openDialog,
+      closeDialog,
+      open
+    } = this.props;
     return (
-      <SortableList
-        items={site.navItems}
-        onSortEnd={this.onChangeItem}
-        useDragHandle
-        site={site}
-        setActiveNavItems={setActiveNavItems}
-      />
+      <>
+        <ExpansionPanel style={expanStyle}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography variant="body1" color="primary">
+              Pages
+            </Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <SortableList
+              items={site.navItems}
+              onSortEnd={this.onChangeItem}
+              useDragHandle
+              site={site}
+              setActiveNavItems={setActiveNavItems}
+            />
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+        <ExpansionPanel style={expanStyle}>
+          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography variant="body1" color="primary">
+              News
+            </Typography>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Grid container style={gridContainer}>
+              <Grid container style={gridItem} alignItems="center">
+                <Grid item>
+                  <Typography
+                    variant="body1"
+                    color="textPrimary"
+                    style={{ paddingRight: "2rem" }}
+                  >
+                    News Setting:
+                  </Typography>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={openDialog}
+                  >
+                    Setting
+                  </Button>
+                </Grid>
+
+                <Dialog
+                  onClose={closeDialog}
+                  aria-labelledby="simple-dialog-title"
+                  open={open}
+                  maxWidth="sm"
+                  fullWidth
+                >
+                  <Grid container alignItems="center">
+                    <PostsList site={site} />
+                  </Grid>
+                </Dialog>
+              </Grid>
+            </Grid>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+      </>
     );
   }
 }
 const mapStateToProps = state => ({
-  site: state.site.siteEdit
+  site: state.site.siteEdit,
+  open: state.dialog.open
 });
 
 const mapDispatchToProps = dispatch => ({
   changeNavItems: value => dispatch(changeNavItems(value)),
-  setActiveNavItems: site => dispatch(setActiveNavItems(site))
+  setActiveNavItems: site => dispatch(setActiveNavItems(site)),
+  openDialog: () => dispatch(openDialog()),
+  closeDialog: () => dispatch(closeDialog())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesEditorTab);

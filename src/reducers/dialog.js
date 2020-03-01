@@ -4,12 +4,12 @@ const defaultState = {
 
 const DialogReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case "OPEN_CREATE_NEW_SITE":
+    case "OPEN_DIALOG":
       return {
         ...state,
         open: true
       };
-    case "CLOSE_CREATE_NEW_SITE":
+    case "CLOSE_DIALOG":
       return {
         ...state,
         open: false

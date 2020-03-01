@@ -1,15 +1,15 @@
-export function openCreateNewSite() {
+export function openDialog() {
   return dispatch => {
     dispatch({
-      type: "OPEN_CREATE_NEW_SITE"
+      type: "OPEN_DIALOG"
     });
   };
 }
 
-export function closeCreateNewSite() {
+export function closeDialog() {
   return dispatch => {
     dispatch({
-      type: "CLOSE_CREATE_NEW_SITE"
+      type: "CLOSE_DIALOG"
     });
   };
 }

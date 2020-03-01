@@ -277,7 +277,7 @@ class DesignEditorTab extends React.Component {
               <Button
                 variant={"contained"}
                 color={"primary"}
-                onClick={() => uploadLogo(this.state.file, site.id)}
+                onClick={() => uploadLogo(this.state.file, site)}
               >
                 Upload
               </Button>
@@ -311,7 +311,7 @@ const mapDispatchToProps = dispatch => ({
   changeFontBody: site => dispatch(changeFontBody(site)),
   setShowCustomColor: isShow => dispatch(setShowCustomColor(isShow)),
   getImageUrl: url => dispatch(getImageUrl(url)),
-  uploadLogo: (path, id) => dispatch(uploadLogo(path, id)),
+  uploadLogo: (path, site) => dispatch(uploadLogo(path, site)),
   changeSiteTitle: site => dispatch(changeSiteTitle(site))
 });
 
