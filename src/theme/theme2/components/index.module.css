@@ -98,14 +98,13 @@ h5 {
 /*Gallery*/
 .gallery {
   text-align: center;
-  position: relative;
 }
 
 .view_gallery {
   position: relative;
   background: rgba(24, 20, 20, 0.5);
   height: 25vh;
-  top: -25.5vh;
+  top: -25.6vh;
 }
 
 .title {
@@ -120,19 +119,17 @@ h5 {
 }
 
 .view_button {
-  position: absolute;
-  top: 20vh;
+  top: 10vh;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
   font-weight: 700 !important;
   background-color: white !important;
   border-radius: 1vh !important;
 }
 
-.view_button :hover {
+/* .view_button :hover {
   color: white;
   transition-duration: 1s;
-  position: absolute;
   height: 100%;
-  background-color: #616161 !important;
+  background: #616161 !important;
   border-radius: 1vh !important;
-}
+} */

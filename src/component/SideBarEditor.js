@@ -85,7 +85,7 @@ class ClippedDrawer extends React.Component {
           />
           <Button
             fullWidth
-            style={{ height: "5rem" }}
+            style={{ minHeight: "3rem" }}
             color="primary"
             variant="contained"
             onClick={() => saveDesignSite(siteEdit)}

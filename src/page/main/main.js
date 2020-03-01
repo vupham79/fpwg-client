@@ -17,10 +17,10 @@ import {
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
-  closeCreateNewSite,
+  closeDialog,
   confirmPage,
   getUserSites,
-  openCreateNewSite,
+  openDialog,
   setCurrentEditId,
   syncDataFromFB
 } from "../../actions";
@@ -114,7 +114,7 @@ class MainPage extends Component {
       confirmPage,
       accessToken,
       profile,
-      closeCreateNewSite,
+      closeDialog,
       userId,
       getUserSites
     } = this.props;
@@ -127,7 +127,7 @@ class MainPage extends Component {
       name: pageName
     });
     confirm && (await getUserSites(userId, accessToken));
-    closeCreateNewSite();
+    closeDialog();
   };
 
   handleFetchData = async pageId => {
@@ -183,8 +183,8 @@ class MainPage extends Component {
 
   render() {
     const {
-      closeCreateNewSite,
-      openCreateNewSite,
+      closeDialog,
+      openDialog,
       open,
       sites,
       setCurrentEditId
@@ -239,14 +239,11 @@ class MainPage extends Component {
                 justify="flex-end"
               >
                 <Grid container item sm={6}>
-                  <Button
-                    className={styles.create_button}
-                    onClick={openCreateNewSite}
-                  >
+                  <Button className={styles.create_button} onClick={openDialog}>
                     Create A New Site
                   </Button>
                   <Dialog
-                    onClose={closeCreateNewSite}
+                    onClose={closeDialog}
                     aria-labelledby="simple-dialog-title"
                     open={open}
                     maxWidth="xs"
@@ -315,8 +312,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  closeCreateNewSite: () => dispatch(closeCreateNewSite()),
-  openCreateNewSite: () => dispatch(openCreateNewSite()),
+  closeDialog: () => dispatch(closeDialog()),
+  openDialog: () => dispatch(openDialog()),
   confirmPage: data => dispatch(confirmPage(data)),
   getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
   setCurrentEditId: id => dispatch(setCurrentEditId(id)),

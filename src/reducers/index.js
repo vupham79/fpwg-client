@@ -9,6 +9,7 @@ import spinner from "./spinner";
 import adminTab from "./adminTab";
 import admin from "./admin";
 import path from "./path";
+import post from "./post";
 
 export default combineReducers({
   site,
@@ -20,5 +21,6 @@ export default combineReducers({
   spinner,
   adminTab,
   admin,
-  path
+  path,
+  post
 });

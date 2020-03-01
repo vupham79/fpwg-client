@@ -3,6 +3,7 @@ import { themes as themesConstant } from "../../constant/constant";
 import { connect } from "react-redux";
 import { updateSiteId, getSiteById, setSiteView } from "../../actions";
 import { Grid } from "@material-ui/core";
+import { withRouter } from "react-router-dom";
 
 class PreViewSite extends React.Component {
   state = {
@@ -15,17 +16,20 @@ class PreViewSite extends React.Component {
     this.setState({
       currentSiteId: currentSiteId
     });
-
     await updateSiteId(this.state.currentSiteId);
     const data = await getSiteById(this.state.currentSiteId);
-    const fontTitle = {
-      fontFamily: data.fontTitle,
-      color: data.color
-    };
-    const fontBody = {
-      fontFamily: data.fontBody
-    };
-    await setSiteView(data, fontTitle, fontBody);
+    if (data) {
+      const fontTitle = {
+        fontFamily: data.fontTitle,
+        color: data.color
+      };
+      const fontBody = {
+        fontFamily: data.fontBody
+      };
+      await setSiteView(data, fontTitle, fontBody);
+    } else {
+      return this.props.history.push("/");
+    }
   }
 
   render() {
@@ -58,4 +62,6 @@ const mapDispatchToProps = dispatch => ({
   getSiteById: id => dispatch(getSiteById(id)),
   setSiteView: (site, title, body) => dispatch(setSiteView(site, title, body))
 });
-export default connect(mapStateToProps, mapDispatchToProps)(PreViewSite);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(PreViewSite)
+);

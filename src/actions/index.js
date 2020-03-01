@@ -1,5 +1,7 @@
+import { loginAdmin, setLogoutAdmin } from "./admin";
 import { updateAdminTabIndex } from "./adminTab";
-import { closeCreateNewSite, openCreateNewSite } from "./dialog";
+import { getAllPaths } from "./path";
+import { getAllPost } from "./post";
 import {
   changeColor,
   changeFontBody,
@@ -32,16 +34,15 @@ import {
   setShowCustomColor
 } from "./theme";
 import {
+  activateUser,
   confirmPage,
+  deactivateUser,
+  getAllUsers,
   getUserPages,
   login,
-  setLogout,
-  getAllUsers,
-  activateUser,
-  deactivateUser
+  setLogout
 } from "./user";
-import { loginAdmin, setLogoutAdmin } from "./admin";
-import { getAllPaths } from "./path";
+import { closeDialog, openDialog } from "./dialog";
 
 export {
   getUserPages,
@@ -58,8 +59,8 @@ export {
   closeLoading,
   login,
   //dialog
-  closeCreateNewSite,
-  openCreateNewSite,
+  closeDialog,
+  openDialog,
   changeNavItems,
   getNavItems,
   unPublishSite,
@@ -86,5 +87,6 @@ export {
   unPublishSiteAdmin,
   loginAdmin,
   setLogoutAdmin,
-  getAllPaths
+  getAllPaths,
+  getAllPost
 };
