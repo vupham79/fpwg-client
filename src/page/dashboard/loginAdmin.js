@@ -7,50 +7,68 @@ import PreDashBoardPage from "./index";
 
 const useStyles = theme => ({
   root: {
-    marginLeft: 'auto',
-    marginRight: 'auto',
+    marginLeft: "auto",
+    marginRight: "auto",
     marginTop: 150,
-    display: 'flex',
-    alignItems: 'center',
-    width: 400,
+    display: "flex",
+    alignItems: "center",
+    width: 400
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1,
-  },
+    flex: 1
+  }
 });
 
 class LoginPageAdmin extends Component {
+  state = {
+    username: "",
+    password: ""
+  };
 
-  handleLogin = async (user, pass) => {
-    const { username, password, loginAdmin } = this.props;
-    await loginAdmin({ user, pass });
-    if (username && password) {
+  handleChangeUsername = e => {
+    this.setState({
+      username: e.target.value
+    });
+  };
+
+  handleChangePassword = e => {
+    this.setState({
+      password: e.target.value
+    });
+  };
+
+  handleLogin = async () => {
+    const { loginAdmin } = this.props;
+    const { username, password } = this.state;
+    const login = await loginAdmin({ username, password });
+    if (login) {
       return <PreDashBoardPage />;
     }
   };
 
-  componentDidMount() {
-
-  }
+  componentDidMount() {}
 
   render() {
     const { classes } = this.props;
 
     return (
       <React.Fragment>
-
-        <Paper component="form" className={classes.root}>
-          <InputBase id="usernameInput"
+        <Paper className={classes.root}>
+          <InputBase
             className={classes.input}
             placeholder="username"
+            onChange={this.handleChangeUsername}
           />
-          <InputBase id="passwordInput"
+          <InputBase
             className={classes.input}
             placeholder="password"
             type="password"
+            onChange={this.handleChangePassword}
           />
-          <Button color="primary" aria-label="login" onClick={() => this.handleLogin(document.getElementById('usernameInput').value, document.getElementById('passwordInput').value)} >Login</Button>
+          <Button color="primary" onClick={() => this.handleLogin()}>
+            Login
+          </Button>
         </Paper>
       </React.Fragment>
     );
@@ -58,11 +76,11 @@ class LoginPageAdmin extends Component {
 }
 const mapStateToProps = state => ({
   username: state.admin.username,
-  password: state.admin.password,
+  password: state.admin.password
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginAdmin: (username, password) => dispatch(loginAdmin(username, password)),
+  loginAdmin: (username, password) => dispatch(loginAdmin(username, password))
 });
 
 export default connect(
