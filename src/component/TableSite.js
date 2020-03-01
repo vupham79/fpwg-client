@@ -125,8 +125,11 @@ class TableSite extends Component {
           <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Theme</p>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Categories</p>
+          </Grid>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>Path</p>
           </Grid>
           <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Published</p>
@@ -138,15 +141,18 @@ class TableSite extends Component {
             this.state.filteredData.map((row, index) => (
               <div key={row.id}>
                 <Grid container direction="row">
-                  <Grid item xs={2}></Grid>
+                  <Grid item xs={2}>{row.displayName}</Grid>
                   <Grid item xs={2}>
                     {row.title}
                   </Grid>
                   <Grid item xs={2}>
                     {row.theme.name}
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={2}>
                     {row.categories.map(c => c.name + ", ")}
+                  </Grid>
+                  <Grid item xs={2}>
+                    {row.sitePath}
                   </Grid>
                   <Grid item xs={2}>
                     <PublishButtonAdmin

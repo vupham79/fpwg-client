@@ -9,10 +9,10 @@ export function getAllSites({ id, accessToken }) {
     });
     try {
       const data = await axios({
-        url: "/site/findAll",
-        params: {
-          id: id,
-          access_token: accessToken
+        url: "/site/findAllByAdmin",
+        data: {
+          username: "hoang",
+          password: "123456"
         }
       });
       // dispatch({
@@ -33,7 +33,7 @@ export function getAllSites({ id, accessToken }) {
       dispatch({
         type: "CLOSE_LOADING"
       });
-      toastr.error(`Unable to retrieve sites`, "Error");
+      toastr.error(error, "Error");
     }
   };
 }
