@@ -98,7 +98,9 @@ class MainPage extends Component {
   state = {
     pageUrl: "",
     pageId: "",
-    pageName: ""
+    pageName: "",
+    sitepath: "",
+    isPublish: false
   };
 
   handleSelectPage = ({ id, link, name }) => {
@@ -118,13 +120,15 @@ class MainPage extends Component {
       userId,
       getUserSites
     } = this.props;
-    const { pageId, pageUrl, pageName } = this.state;
+    const { pageId, pageUrl, pageName, sitepath, isPublish } = this.state;
     const confirm = await confirmPage({
       pageId,
       pageUrl,
       accessToken,
       profile,
-      name: pageName
+      name: pageName,
+      sitepath,
+      isPublish
     });
     confirm && (await getUserSites(userId, accessToken));
     closeDialog();
@@ -138,6 +142,12 @@ class MainPage extends Component {
   handleChangeURL = e => {
     this.setState({
       pageUrl: e.target.value
+    });
+  };
+
+  handleChangeSitepath = e => {
+    this.setState({
+      sitepath: e.target.value
     });
   };
 
@@ -189,7 +199,7 @@ class MainPage extends Component {
       sites,
       setCurrentEditId
     } = this.props;
-    const { pageUrl } = this.state;
+    const { pageUrl, sitepath, isPublish } = this.state;
     return (
       <>
         <Header />
@@ -251,15 +261,34 @@ class MainPage extends Component {
                   >
                     <List>
                       {this.renderPagesNotGenerated()}
-                      <ListItem autoFocus button>
+                      <ListItem>
+                        <TextField
+                          variant={"outlined"}
+                          fullWidth
+                          required
+                          label="Sitepath"
+                          onChange={e => this.handleChangeSitepath(e)}
+                          value={sitepath ? sitepath : ""}
+                        />
+                        <SwitchButton
+                          value={isPublish}
+                          style={{ marginLeft: 0 }}
+                          onChange={() =>
+                            this.setState({ isPublish: !isPublish })
+                          }
+                        />
+                      </ListItem>
+                      <ListItem>
                         <TextField
                           fullWidth
+                          required
+                          variant={"outlined"}
                           label="Facebook Page Url"
                           onChange={e => this.handleChangeURL(e)}
                           value={pageUrl ? pageUrl : ""}
                         />
                       </ListItem>
-                      <ListItem autoFocus button>
+                      <ListItem>
                         <Button
                           variant={"outlined"}
                           onClick={() => this.handleConfirm()}

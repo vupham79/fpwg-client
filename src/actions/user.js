@@ -108,7 +108,15 @@ export function getUserPages({ accessToken }) {
   };
 }
 
-export function confirmPage({ pageUrl, pageId, accessToken, name, profile }) {
+export function confirmPage({
+  pageUrl,
+  pageId,
+  accessToken,
+  name,
+  profile,
+  sitepath,
+  isPublish
+}) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -123,7 +131,9 @@ export function confirmPage({ pageUrl, pageId, accessToken, name, profile }) {
           accessToken,
           name,
           userId: profile.id,
-          profile
+          profile,
+          sitepath,
+          isPublish
         }
       });
       dispatch({
