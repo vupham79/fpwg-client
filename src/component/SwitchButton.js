@@ -54,14 +54,14 @@ class SwitchButton extends React.Component {
     }
   };
   render() {
-    const { style, disabled, onChange } = this.props;
+    const { style, onChange } = this.props;
     return (
       <FormControlLabel
         style={style}
         control={
           <IOSSwitch
             checked={this.props.isPublish}
-            onChange={() => (onChange ? onChange : this.handlePublish())}
+            onChange={() => (onChange ? onChange() : this.handlePublish())}
           />
         }
         label={this.props.isPublish ? "Publishing" : "Unpublishing"}

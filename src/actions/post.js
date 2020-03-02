@@ -26,7 +26,7 @@ export const unActivePost = postId => {
   };
 };
 
-export const activePost = postId => {
+export const setActivePost = postId => {
   return async dispatch => {
     const data = await axios({
       method: "patch",
