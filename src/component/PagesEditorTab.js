@@ -1,19 +1,17 @@
 import {
-  Grid,
-  IconButton,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  Typography,
   Button,
   Dialog,
-  List,
-  ListItem
+  ExpansionPanel,
+  ExpansionPanelSummary,
+  Grid,
+  IconButton,
+  Typography
 } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
-import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
+import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
+import MenuIcon from "@material-ui/icons/Menu";
+import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
+import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import React from "react";
 import { connect } from "react-redux";
 import {
@@ -23,11 +21,12 @@ import {
 } from "react-sortable-hoc";
 import {
   changeNavItems,
-  setActiveNavItems,
+  closeDialog,
   openDialog,
-  closeDialog
+  setActiveNavItems,
+  setActivePost,
+  updateNavItemValue
 } from "../actions";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 
 const gridContainer = {
   borderStyle: "solid",
@@ -52,10 +51,11 @@ const gridItem = {
 
 const DragHandle = sortableHandle(() => <MenuIcon />);
 
-function handleChangeActive(item, site, setActiveNavItems) {
+function handleChangeActive(item, site, setActiveNavItems, updateNavItemValue) {
   const index = site.navItems.find(e => e._id === item._id);
   if (index.isActive) {
     index.isActive = false;
+    updateNavItemValue(0);
   } else {
     index.isActive = true;
   }
@@ -63,7 +63,7 @@ function handleChangeActive(item, site, setActiveNavItems) {
 }
 
 const SortableItem = sortableElement(
-  ({ value, site, item, setActiveNavItems }) => (
+  ({ value, site, item, setActiveNavItems, updateNavItemValue }) => (
     <Grid container style={gridItem}>
       <Grid container item alignItems="center" sm={5}>
         <DragHandle />
@@ -72,7 +72,14 @@ const SortableItem = sortableElement(
       <Grid container item justify="flex-end" sm={7}>
         <IconButton
           style={viewButton}
-          onClick={() => handleChangeActive(item, site, setActiveNavItems)}
+          onClick={() =>
+            handleChangeActive(
+              item,
+              site,
+              setActiveNavItems,
+              updateNavItemValue
+            )
+          }
         >
           {item.isActive ? (
             <VisibilityOutlinedIcon />
@@ -85,22 +92,25 @@ const SortableItem = sortableElement(
   )
 );
 
-const SortableList = sortableContainer(({ items, site, setActiveNavItems }) => {
-  return (
-    <Grid container style={gridContainer} alignItems="center">
-      {items.map((value, index) => (
-        <SortableItem
-          key={index}
-          index={index}
-          value={value.name}
-          item={value}
-          site={site}
-          setActiveNavItems={setActiveNavItems}
-        />
-      ))}
-    </Grid>
-  );
-});
+const SortableList = sortableContainer(
+  ({ items, site, setActiveNavItems, updateNavItemValue }) => {
+    return (
+      <Grid container style={gridContainer} alignItems="center">
+        {items.map((value, index) => (
+          <SortableItem
+            key={index}
+            index={index}
+            value={value.name}
+            item={value}
+            site={site}
+            setActiveNavItems={setActiveNavItems}
+            updateNavItemValue={updateNavItemValue}
+          />
+        ))}
+      </Grid>
+    );
+  }
+);
 
 const expanStyle = {
   marginTop: "1rem"
@@ -113,11 +123,21 @@ const imageStyle = {
   width: "60%"
 };
 
-function PostsList({ site }) {
+function handleActivePost(posts, setActivePost, item) {
+  const index = posts.find(e => e._id === item._id);
+  if (index.isActive) {
+    index.isActive = false;
+  } else {
+    index.isActive = true;
+  }
+  setActivePost(posts);
+}
+
+function PostsList({ posts, setActivePost, item }) {
   return (
     <>
-      {site ? (
-        site.posts.map((item, index) =>
+      {posts ? (
+        posts.map((item, index) =>
           item.attachments.media_type === "photo" ? (
             <Grid container style={gridItem} key={index}>
               <Grid container item sm={2} xs={4}>
@@ -139,7 +159,10 @@ function PostsList({ site }) {
                 <Grid item>{item.createdAt}</Grid>
               </Grid>
               <Grid container justify="flex-end" item sm={2} xs={2}>
-                <IconButton style={viewButton}>
+                <IconButton
+                  style={viewButton}
+                  onClick={() => handleActivePost(posts, setActivePost, item)}
+                >
                   {item.isActive ? (
                     <VisibilityOutlinedIcon />
                   ) : (
@@ -151,6 +174,11 @@ function PostsList({ site }) {
           ) : null
         )
       ) : (
+        <Grid container justify="center" style={{ padding: "1rem" }}>
+          <Typography> You don have any post</Typography>
+        </Grid>
+      )}
+      {posts.length === 0 && (
         <Grid container justify="center" style={{ padding: "1rem" }}>
           <Typography> You don have any post</Typography>
         </Grid>
@@ -175,7 +203,10 @@ class PagesEditorTab extends React.Component {
       setActiveNavItems,
       openDialog,
       closeDialog,
-      open
+      open,
+      posts,
+      setActivePost,
+      updateNavItemValue
     } = this.props;
     return (
       <>
@@ -192,6 +223,7 @@ class PagesEditorTab extends React.Component {
               useDragHandle
               site={site}
               setActiveNavItems={setActiveNavItems}
+              updateNavItemValue={updateNavItemValue}
             />
           </ExpansionPanelDetails>
         </ExpansionPanel>
@@ -231,7 +263,7 @@ class PagesEditorTab extends React.Component {
                   fullWidth
                 >
                   <Grid container alignItems="center">
-                    <PostsList site={site} />
+                    <PostsList posts={posts} setActivePost={setActivePost} />
                   </Grid>
                 </Dialog>
               </Grid>
@@ -244,14 +276,17 @@ class PagesEditorTab extends React.Component {
 }
 const mapStateToProps = state => ({
   site: state.site.siteEdit,
-  open: state.dialog.open
+  open: state.dialog.open,
+  posts: state.post.posts
 });
 
 const mapDispatchToProps = dispatch => ({
   changeNavItems: value => dispatch(changeNavItems(value)),
   setActiveNavItems: site => dispatch(setActiveNavItems(site)),
   openDialog: () => dispatch(openDialog()),
-  closeDialog: () => dispatch(closeDialog())
+  closeDialog: () => dispatch(closeDialog()),
+  setActivePost: posts => dispatch(setActivePost(posts)),
+  updateNavItemValue: value => dispatch(updateNavItemValue(value))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesEditorTab);
