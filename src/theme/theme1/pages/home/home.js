@@ -46,13 +46,11 @@ class Theme1Home extends React.Component {
   };
   render() {
     const {
-      isEdit,
       siteEdit,
-      siteView,
-      titleEdit,
+      isEdit,
       titleView,
-      mapLat,
-      mapLng
+      titleEdit,
+      siteView,
     } = this.props;
 
     const useStyles = () => ({
@@ -126,6 +124,13 @@ class Theme1Home extends React.Component {
         textDecoration: "underline",
         textDecorationColor: isEdit ? titleEdit.color : titleView.color
       },
+      changableFirst2: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        fontWeight: "bold",
+        color: isEdit ? titleEdit.color : titleView.color,
+        textAlign: "center",
+        fontSize: 20,
+      },
       changableLegend: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
@@ -176,8 +181,8 @@ class Theme1Home extends React.Component {
     const classes = useStyles();
     const MapWithAMarker = withScriptjs(
       withGoogleMap(props => (
-        <GoogleMap defaultZoom={8} defaultCenter={{ lat: mapLat, lng: mapLng }}>
-          <Marker position={{ lat: mapLat, lng: mapLng }} />
+        <GoogleMap defaultZoom={15} defaultCenter={{ lat: isEdit ? parseFloat(siteEdit.latitude) : parseFloat(siteView.latitude), lng: isEdit ? parseFloat(siteEdit.longitude) : parseFloat(siteView.longitude) }}>
+          <Marker position={{ lat: isEdit ? parseFloat(siteEdit.latitude) : parseFloat(siteView.latitude), lng: isEdit ? parseFloat(siteEdit.longitude) : parseFloat(siteView.longitude) }} />
         </GoogleMap>
       ))
     );
@@ -214,8 +219,9 @@ class Theme1Home extends React.Component {
         </Grid>
         <Grid container item xs={12} justify={"center"}>
           <ExampleComponent
-            image="./images/theme1-banner3.jpg"
-            roundedColor={isEdit ? titleEdit.fontFamily : titleView.fontFamily}
+            image={isEdit ? siteEdit.logo : siteView.logo}
+            imageAlt="./images/theme1-banner3.jpg"
+            roundedColor={isEdit ? titleEdit.color : titleView.color}
             imageWidth="150"
             imageHeight="150"
             roundedSize="5"
@@ -223,19 +229,8 @@ class Theme1Home extends React.Component {
         </Grid>
         <Grid item xs={12}>
           <p style={classes.changableBody}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-            dolor purus non enim praesent elementum facilisis leo vel. Risus at
-            ultrices mi tempus imperdiet. Semper risus in hendrerit gravida
-            rutrum quisque non tellus. Convallis convallis tellus id interdum
-            velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean
-            sed adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-            integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-            eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-            quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-            vivamus at augue. At augue eget arcu dictum varius duis at
-            consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-            donec massa sapien faucibus et molestie ac.
+            {isEdit ? siteEdit.about : siteView.about}
+            {!siteView.about && !siteEdit.about && (<p style={classes.changableBody3}>Welcome to our website.</p>)}
           </p>
         </Grid>
         <Grid item xs={12} style={classes.greyDiv}>
@@ -254,6 +249,21 @@ class Theme1Home extends React.Component {
             stopOnHover={true}
             infiniteLoop={false}
           >
+            {isEdit && siteEdit.posts && siteEdit.posts.map((row, index) => (
+              <Grid item xs={12} style={classes.centerItem3} key={row.id}>
+                <img
+                  src="./images/theme1-banner3.jpg"
+                  alt=""
+                  style={{ height: 200, width: 200 }}
+                />
+                <p style={classes.changableTitle2}>
+                  {row.createdTime.getMonth()} <span style={classes.changableFirst2}>{row.createdTime.getDate()}</span>, {row.createdTime.getYear()}
+                </p>
+                <p style={classes.changableBody3}>{row.message}</p>
+                <p style={classes.changableLink}>Read more...</p>
+              </Grid>
+            ))
+            }
             <Grid item xs={12} style={classes.centerItem3}>
               <img
                 src="./images/theme1-banner3.jpg"
@@ -317,7 +327,8 @@ class Theme1Home extends React.Component {
         <Grid item xs={12}>
           <Parallax
             blur={0}
-            bgImage="./images/theme1-banner1.jpg"
+            bgImage={isEdit ? siteEdit.cover : siteView.cover}
+            bgImageAlt="./images/theme1-banner2.jpg"
             strength={300}
             style={{ height: 250, width: "100%" }}
           />
@@ -348,7 +359,7 @@ class Theme1Home extends React.Component {
                 </Grid>
                 <Grid item sm={9} container direction="column">
                   <Typography variant="h6" style={classes.changableName}>
-                    Page name
+                    {isEdit ? siteEdit.title : siteView.title}
                   </Typography>
                   <Button className={styles.btn_like}>
                     <FontAwesomeIcon
@@ -368,6 +379,7 @@ class Theme1Home extends React.Component {
               >
                 <Typography className={styles.event_content}>
                   Page name does not have any upcoming event.
+
                 </Typography>
               </Grid>
             </Grid>
@@ -379,18 +391,38 @@ class Theme1Home extends React.Component {
             <span style={classes.changableFirst}>C</span>ONTACTS
           </p>
         </Grid>
-        <Grid container item xs={12} justify="center">
-          <p style={classes.changableBody2}>
-            <FontAwesomeIcon icon={faPhone} size="2x" />
-            0909133349
-          </p>
-        </Grid>
-        <Grid container item xs={12} justify="center">
-          <p style={classes.changableBody2}>
-            <FontAwesomeIcon icon={faAddressBook} size="2x" />
-            112 Đường Hồng Hà, P.12, Q.Tân Bình
-          </p>
-        </Grid>
+        {isEdit && siteEdit.phone && (
+          <Grid container item xs={12} justify="center">
+            <p style={classes.changableBody2}>
+              <FontAwesomeIcon icon={faPhone} size="2x" />
+              {siteEdit.phone}
+            </p>
+          </Grid>
+        )}
+        {!isEdit && siteView.phone && (
+          <Grid container item xs={12} justify="center">
+            <p style={classes.changableBody2}>
+              <FontAwesomeIcon icon={faPhone} size="2x" />
+              {siteView.phone}
+            </p>
+          </Grid>
+        )}
+        {isEdit && siteEdit.address && siteEdit.adress !== "" && (
+          <Grid container item xs={12} justify="center">
+            <p style={classes.changableBody2}>
+              <FontAwesomeIcon icon={faAddressBook} size="2x" />
+              {siteEdit.address}
+            </p>
+          </Grid>
+        )}
+        {!isEdit && siteView.address && siteView.adress !== "" && (
+          <Grid container item xs={12} justify="center">
+            <p style={classes.changableBody2}>
+              <FontAwesomeIcon icon={faAddressBook} size="2x" />
+              {siteView.address}
+            </p>
+          </Grid>
+        )}
         <Grid item xs={12} id={"eventSection"}>
           <MapWithAMarker
             googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
@@ -407,11 +439,9 @@ class Theme1Home extends React.Component {
 const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
-  siteView: state.site.siteView,
-  titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
-  mapLat: 10.82302,
-  mapLng: 106.62965
+  titleEdit: state.site.titleEdit,
+  siteView: state.site.siteView,
 });
 
 export default connect(mapStateToProps, null)(Theme1Home);

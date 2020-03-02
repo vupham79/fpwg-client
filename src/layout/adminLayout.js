@@ -1,24 +1,14 @@
 import React, { Component } from "react";
 import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Drawer from "@material-ui/core/Drawer";
-import Box from "@material-ui/core/Box";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
+import { Button, Typography, Container, Box, Grid, CssBaseline, ListItemIcon, Drawer, AppBar, Toolbar } from "@material-ui/core";
 import List from "@material-ui/core/List";
-import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
-import Badge from "@material-ui/core/Badge";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import PeopleIcon from '@material-ui/icons/People';
@@ -26,6 +16,8 @@ import LayersIcon from '@material-ui/icons/Layers';
 import DomainIcon from '@material-ui/icons/Domain';
 import { updateAdminTabIndex } from "../actions/adminTab";
 import { connect } from "react-redux";
+import { setLogoutAdmin } from "../actions";
+import { Redirect } from "react-router-dom";
 
 const drawerWidth = 240;
 const useStyles = theme => ({
@@ -122,8 +114,9 @@ class Dashboard extends Component {
   handleDrawerClose = () => {
     this.setOpen(false);
   };
-
-
+  handleLogout = () => {
+    this.props.setLogoutAdmin();
+  };
 
   render() {
     const { classes, selectedAdminIndex, updateAdminTabIndex } = this.props;
@@ -160,11 +153,14 @@ class Dashboard extends Component {
             >
               Dashboard
             </Typography>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              onClick={() => this.handleLogout()}
+            >
+              Logout
+           </Button>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -231,11 +227,12 @@ class Dashboard extends Component {
   }
 }
 const mapStateToProps = state => ({
-  selectedAdminIndex: state.adminTab.selectedAdminIndex
+  selectedAdminIndex: state.adminTab.selectedAdminIndex,
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateAdminTabIndex: (index) => dispatch(updateAdminTabIndex(index))
+  updateAdminTabIndex: (index) => dispatch(updateAdminTabIndex(index)),
+  setLogoutAdmin: (index) => dispatch(setLogoutAdmin()),
 });
 
 export default connect(

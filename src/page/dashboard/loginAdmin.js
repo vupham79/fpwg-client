@@ -1,23 +1,29 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { InputBase, Paper, Button } from "@material-ui/core";
+import { Button, Typography, Container, Box, Grid, TextField, CssBaseline, Avatar } from "@material-ui/core";
 import { connect } from "react-redux";
 import { loginAdmin } from "../../actions";
-import PreDashBoardPage from "./index";
+import { Redirect } from "react-router-dom";
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 const useStyles = theme => ({
-  root: {
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: 150,
-    display: "flex",
-    alignItems: "center",
-    width: 400
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
   },
-  input: {
-    marginLeft: theme.spacing(1),
-    flex: 1
-  }
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: theme.palette.secondary.main,
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
 });
 
 class LoginPageAdmin extends Component {
@@ -43,40 +49,71 @@ class LoginPageAdmin extends Component {
     const { username, password } = this.state;
     const login = await loginAdmin({ username, password });
     if (login) {
-      return <PreDashBoardPage />;
+      return <Redirect to={"/admin"} />;
     }
   };
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   render() {
     const { classes } = this.props;
 
     return (
-      <React.Fragment>
-        <Paper className={classes.root}>
-          <InputBase
-            className={classes.input}
-            placeholder="username"
-            onChange={this.handleChangeUsername}
-          />
-          <InputBase
-            className={classes.input}
-            placeholder="password"
-            type="password"
-            onChange={this.handleChangePassword}
-          />
-          <Button color="primary" onClick={() => this.handleLogin()}>
-            Login
-          </Button>
-        </Paper>
-      </React.Fragment>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Admin
+         </Typography>
+          <form className={classes.form} noValidate>
+            <Grid container spacing={2}>
+
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Username"
+                  name="password"
+                  autoComplete="email"
+                  onChange={this.handleChangeUsername}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  autoComplete="current-password"
+                  onChange={this.handleChangePassword}
+                />
+              </Grid>
+            </Grid>
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={() => this.handleLogin()}
+            >
+              Login
+           </Button>
+
+          </form>
+        </div>
+        <Box mt={5}>
+        </Box>
+      </Container>
     );
   }
 }
 const mapStateToProps = state => ({
-  username: state.admin.username,
-  password: state.admin.password
 });
 
 const mapDispatchToProps = dispatch => ({

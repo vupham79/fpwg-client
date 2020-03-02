@@ -23,6 +23,12 @@ class Theme1About extends React.Component {
         textAlign: "justify",
         fontSize: 16
       },
+      changableBody3: {
+        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        color: "black",
+        textAlign: "center",
+        fontSize: 16
+      },
       pageName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
@@ -91,7 +97,8 @@ class Theme1About extends React.Component {
         </Grid>
         <Grid container item xs={12} justify={"center"}>
           <ExampleComponent
-            image="./images/theme1-banner3.jpg"
+            image={isEdit ? siteEdit.logo : siteView.logo}
+            imageAlt="./images/theme1-banner3.jpg"
             roundedColor={isEdit ? titleEdit.color : titleView.color}
             imageWidth="150"
             imageHeight="150"
@@ -99,21 +106,8 @@ class Theme1About extends React.Component {
           />
         </Grid>
         <Grid item xs={12}>
-          <p style={classes.changableBody}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-            dolor purus non enim praesent elementum facilisis leo vel. Risus at
-            ultrices mi tempus imperdiet. Semper risus in hendrerit gravida
-            rutrum quisque non tellus. Convallis convallis tellus id interdum
-            velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean
-            sed adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-            integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-            eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-            quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-            vivamus at augue. At augue eget arcu dictum varius duis at
-            consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-            donec massa sapien faucibus et molestie ac.
-          </p>
+          {isEdit ? siteEdit.about : siteView.about}
+          {!siteView.about && !siteEdit.about && (<p style={classes.changableBody3}>Welcome to our website.</p>)}
         </Grid>
       </Grid>
     );

@@ -9,10 +9,10 @@ export function getAllSites({ id, accessToken }) {
     });
     try {
       const data = await axios({
-        url: "/site/findAllByAdmin",
+        url: "/site/findAll",
         data: {
-          username: "hoang",
-          password: "123456"
+          id: id,
+          access_token: accessToken
         }
       });
       dispatch({
