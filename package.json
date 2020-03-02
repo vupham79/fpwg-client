@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@bit/take2.components.google-font-picker": "0.0.4",
     "@fortawesome/fontawesome-free": "^5.12.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-brands-svg-icons": "^5.12.0",
@@ -17,7 +18,6 @@
     "axios": "^0.19.2",
     "dotenv": "^8.2.0",
     "firebase": "^7.8.2",
-    "font-picker-react": "^3.5.0",
     "react": "^16.12.0",
     "react-color": "^2.18.0",
     "react-dom": "^16.12.0",

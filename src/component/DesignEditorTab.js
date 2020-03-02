@@ -9,7 +9,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import FontPicker from "font-picker-react";
+import GoogleFontPicker from "@bit/take2.components.google-font-picker";
 import React from "react";
 import { ChromePicker, TwitterPicker } from "react-color";
 import { connect } from "react-redux";
@@ -84,7 +84,7 @@ class DesignEditorTab extends React.Component {
     changeTheme(site);
   };
 
-  handleChangeTitle = font => {
+  handleChangeFontTitle = font => {
     const { site, changeFontTitle } = this.props;
     site.fontTitle = font.family;
     changeFontTitle(site);
@@ -181,21 +181,23 @@ class DesignEditorTab extends React.Component {
         <Grid container className={classes.sideBarBox}>
           <Typography className={classes.title2}>Font Title</Typography>
           <Grid item container>
-            <FontPicker
-              apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
-              sort="alphabet"
-              activeFontFamily={site.fontTitle}
-              onChange={this.handleChangeTitle}
+            <GoogleFontPicker
+              searchable
+              buttonColor={"default"}
+              buttonVariant={"outlined"}
+              defaultFont={site.fontTitle}
+              onFontSelected={this.handleChangeFontTitle}
             />
           </Grid>
           <Divider />
           <Typography className={classes.title2}>Font Body</Typography>
           <Grid container>
-            <FontPicker
-              apiKey="AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4"
-              sort="alphabet"
-              activeFontFamily={site.fontBody}
-              onChange={this.handleChangeFontBody}
+            <GoogleFontPicker
+              searchable
+              buttonColor={"default"}
+              buttonVariant={"outlined"}
+              defaultFont={site.fontBody}
+              onFontSelected={this.handleChangeFontBody}
             />
           </Grid>
         </Grid>
