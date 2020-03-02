@@ -76,8 +76,15 @@ function NewsCard({ post, site }) {
 
 class NewPage extends Component {
   render() {
-    const { isEdit, titleEdit, titleView, siteEdit } = this.props;
-
+    const {
+      isEdit,
+      titleEdit,
+      titleView,
+      siteEdit,
+      siteView,
+      posts
+    } = this.props;
+    console.log(siteEdit);
     return (
       <Grid container style={{ marginBottom: "5rem" }}>
         <Grid
@@ -90,14 +97,39 @@ class NewPage extends Component {
           News
         </Grid>
         <Grid item sm={12} xs={12} container spacing={3}>
-          {siteEdit.posts.map(
-            (item, index) =>
-              item.attachments.media_type === "photo" && (
-                <Grid container item sm={3} xs={6} key={index} justify="center">
-                  <NewsCard post={item} site={siteEdit} />
-                </Grid>
-              )
-          )}
+          {posts
+            ? isEdit
+              ? posts.map(
+                  (item, index) =>
+                    item.attachments.media_type === "photo" && (
+                      <Grid
+                        container
+                        item
+                        sm={3}
+                        xs={6}
+                        key={index}
+                        justify="center"
+                      >
+                        <NewsCard post={item} site={siteEdit} />
+                      </Grid>
+                    )
+                )
+              : posts.map(
+                  (item, index) =>
+                    item.attachments.media_type === "photo" && (
+                      <Grid
+                        container
+                        item
+                        sm={3}
+                        xs={6}
+                        key={index}
+                        justify="center"
+                      >
+                        <NewsCard post={item} site={siteView} />
+                      </Grid>
+                    )
+                )
+            : null}
         </Grid>
       </Grid>
     );
@@ -109,7 +141,8 @@ const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
   titleView: state.site.titleView,
   titleEdit: state.site.titleEdit,
-  siteView: state.site.siteView
+  siteView: state.site.siteView,
+  posts: state.post.posts
 });
 
 export default connect(mapStateToProps, null)(NewPage);
