@@ -1,11 +1,15 @@
 const defaultState = {
-  isActive: true,
   posts: null
 };
 
 const PostReducer = (state = defaultState, action) => {
   switch (action.type) {
-    case "GET_ALL_POST":
+    case "SET_POSTS_EDIT":
+      return {
+        ...state,
+        posts: [...action.payload]
+      };
+    case "SET_ACTIVE_POST":
       return {
         ...state,
         posts: [...action.payload]
