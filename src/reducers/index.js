@@ -10,6 +10,7 @@ import adminTab from "./adminTab";
 import admin from "./admin";
 import path from "./path";
 import post from "./post";
+import snackBar from "./snackbar";
 
 export default combineReducers({
   site,
@@ -22,5 +23,6 @@ export default combineReducers({
   adminTab,
   admin,
   path,
-  post
+  post,
+  snackBar
 });

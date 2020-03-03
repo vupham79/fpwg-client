@@ -423,7 +423,7 @@ export function uploadLogo(path, site) {
                   id: site.id
                 }
               });
-              site.log = url;
+              site.logo = url;
               dispatch({
                 type: "UPLOAD_LOGO",
                 payload: site

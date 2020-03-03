@@ -43,6 +43,7 @@ import {
   setLogout
 } from "./user";
 import { closeDialog, openDialog } from "./dialog";
+import { openSnackBar, closeSnackBar } from "./snackbar";
 
 export {
   getUserPages,
@@ -89,5 +90,7 @@ export {
   setLogoutAdmin,
   getAllPaths,
   getAllPost,
-  setActivePost
+  setActivePost,
+  openSnackBar,
+  closeSnackBar
 };
