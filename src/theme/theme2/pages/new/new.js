@@ -84,7 +84,6 @@ class NewPage extends Component {
       siteView,
       posts
     } = this.props;
-    console.log(siteEdit);
     return (
       <Grid container style={{ marginBottom: "5rem" }}>
         <Grid

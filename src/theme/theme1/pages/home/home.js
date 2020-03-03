@@ -213,18 +213,9 @@ class Theme1Home extends React.Component {
             stopOnHover={true}
             infiniteLoop={true}
           >
-            <div>
-              <img src="./images/theme1-banner1.jpg" alt="" />
-              <p style={classes.changableLegend}>Title 1</p>
-            </div>
-            <div>
-              <img src="./images/theme1-banner2.jpg" alt="" />
-              <p style={classes.changableLegend}>Title 2</p>
-            </div>
-            <div>
-              <img src="./images/theme1-banner1.jpg" alt="" />
-              <p style={classes.changableLegend}>Title 3</p>
-            </div>
+            <img src="./images/theme1-banner1.jpg" alt="" />
+            <img src="./images/theme1-banner2.jpg" alt="" />
+            <img src="./images/theme1-banner1.jpg" alt="" />
           </Carousel>
         </Grid>
         <Grid item xs={12}>
