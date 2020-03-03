@@ -84,7 +84,7 @@ class TableUser extends Component {
   };
 
   render() {
-    const { classes, users } = this.props;
+    const { classes } = this.props;
 
     return (
       <React.Fragment>

@@ -86,7 +86,7 @@ class TableTheme extends Component {
   };
 
   render() {
-    const { classes, themes } = this.props;
+    const { classes } = this.props;
     return (
       <React.Fragment>
         <Title>Themes</Title>

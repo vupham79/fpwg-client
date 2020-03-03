@@ -51,21 +51,17 @@ class Theme1Home extends React.Component {
       titleView,
       titleEdit,
       siteView,
+      posts,
+      bodyEdit,
+      bodyView,
     } = this.props;
-
+    console.log(bodyEdit);
     const useStyles = () => ({
       changableLink: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         textAlign: "center",
         fontStyle: "italic",
-        fontSize: 20
-      },
-      changableFirst2: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        textAlign: "center",
         fontSize: 20
       },
       changableTitle: {
@@ -92,19 +88,19 @@ class Theme1Home extends React.Component {
         fontSize: 20
       },
       changableBody: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         fontSize: 16,
         textAlign: "justify"
       },
       changableBody2: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         textAlign: "left",
         fontSize: 16
       },
       changableBody3: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "black",
         textAlign: "center",
         fontSize: 16
@@ -188,7 +184,8 @@ class Theme1Home extends React.Component {
     );
 
     return (
-      <Grid container id={"aboutSection"}>
+
+      <Grid container>
         <Grid item xs={12}>
           <Carousel
             showArrows={false}
@@ -228,43 +225,45 @@ class Theme1Home extends React.Component {
           />
         </Grid>
         <Grid item xs={12}>
-          <p style={classes.changableBody}>
-            {isEdit ? siteEdit.about : siteView.about}
-            {!siteView.about && !siteEdit.about && (<p style={classes.changableBody3}>Welcome to our website.</p>)}
+          <p style={classes.changableBody3}>
+            {isEdit && siteEdit && siteEdit.about}
+            {!isEdit && siteView && siteView.about}
           </p>
         </Grid>
         <Grid item xs={12} style={classes.greyDiv}>
           <p style={classes.changableTitle}>
             <span style={classes.changableFirst}>N</span>EWS
           </p>
-          {/* <p style={classes.changableBody3}>Currently there are no news.</p> */}
+          {!posts && (<p style={classes.changableBody3}>Currently there are no news.</p>)}
+          {posts && posts.length == 0 && (<p style={classes.changableBody3}>Currently there are no news.</p>)}
         </Grid>
-        <Grid item xs={12}>
-          <Carousel
-            showArrows={true}
-            showIndicators={false}
-            showStatus={false}
-            showThumbs={false}
-            autoPlay={false}
-            stopOnHover={true}
-            infiniteLoop={false}
-          >
-            {isEdit && siteEdit.posts && siteEdit.posts.map((row, index) => (
-              <Grid item xs={12} style={classes.centerItem3} key={row.id}>
-                <img
-                  src="./images/theme1-banner3.jpg"
-                  alt=""
-                  style={{ height: 200, width: 200 }}
-                />
-                <p style={classes.changableTitle2}>
-                  {row.createdTime.getMonth()} <span style={classes.changableFirst2}>{row.createdTime.getDate()}</span>, {row.createdTime.getYear()}
-                </p>
-                <p style={classes.changableBody3}>{row.message}</p>
-                <p style={classes.changableLink}>Read more...</p>
-              </Grid>
-            ))
-            }
-            <Grid item xs={12} style={classes.centerItem3}>
+        {posts && posts.length > 0 && (
+          <Grid item xs={12}>
+            <Carousel
+              showArrows={true}
+              showIndicators={false}
+              showStatus={false}
+              showThumbs={false}
+              autoPlay={false}
+              stopOnHover={true}
+              infiniteLoop={false}
+            >
+              {posts.map((row, index) => (
+                <Grid item xs={12} style={classes.centerItem3} key={row.id}>
+                  <img
+                    src={row.attachments.images[0]}
+                    alt=""
+                    style={{ height: 200, width: 200 }}
+                  />
+                  <p style={classes.changableTitle2}>
+                    {/* {row.createdTime.getMonth()} <span style={classes.changableFirst2}>{row.createdTime.getDate()}</span>, {row.createdTime.getYear()} */}
+                  </p>
+                  <p style={classes.changableBody3}>{row.message ? row.message : ""}</p>
+                  <p style={classes.changableLink}>Read more...</p>
+                </Grid>
+              ))
+              }
+              {/* <Grid item xs={12} style={classes.centerItem3}>
               <img
                 src="./images/theme1-banner3.jpg"
                 alt=""
@@ -299,9 +298,10 @@ class Theme1Home extends React.Component {
               </p>
               <p style={classes.changableBody3}>post content is here.</p>
               <p style={classes.changableLink}>Read more...</p>
-            </Grid>
-          </Carousel>
-        </Grid>
+            </Grid> */}
+            </Carousel>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
             <span style={classes.changableFirst}>G</span>ALLERY
@@ -442,6 +442,9 @@ const mapStateToProps = state => ({
   titleView: state.site.titleView,
   titleEdit: state.site.titleEdit,
   siteView: state.site.siteView,
+  posts: state.post.posts,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(Theme1Home);

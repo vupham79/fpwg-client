@@ -6,14 +6,6 @@ import { updateNavItemValue } from "../../../actions";
 import Link from "../../../component/link";
 import styles from "./index.module.css";
 
-const imgStyles = {
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  width: "80%",
-  paddingTop: "0.5rem"
-};
-
 class Header extends Component {
   render() {
     const {
@@ -64,7 +56,7 @@ class Header extends Component {
       <AppBar className={styles.app_bar} position="sticky">
         <Container>
           <Grid container alignItems="center">
-            <Grid item xs={12} sm={10}>
+            <Grid item xs={8}>
               <Grid container justify="flex-start">
                 {isEdit ? (
                   <Tabs
@@ -98,20 +90,16 @@ class Header extends Component {
             </Grid>
             <Grid
               item
-              xs={12}
-              sm={2}
+              xs={4}
               alignItems="center"
               justify="center"
             >
               <Grid
                 item
-                sm={3}
                 className={styles.shopName}
                 style={isEdit ? titleEdit : titleView}
               >
-                {isEdit
-                  ? siteEdit && siteEdit.title
-                  : siteView && siteView.title}
+                {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
               </Grid>
             </Grid>
             <div style={{ height: "10vh" }} />

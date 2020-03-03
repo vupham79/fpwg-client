@@ -5,7 +5,7 @@ import ExampleComponent from "react-rounded-image";
 
 class Theme1About extends React.Component {
   render() {
-    const { isEdit, siteEdit, siteView, titleEdit, titleView } = this.props;
+    const { isEdit, siteEdit, siteView, titleEdit, titleView, bodyEdit, bodyView } = this.props;
     console.log(titleEdit);
 
     const useStyles = () => ({
@@ -18,13 +18,13 @@ class Theme1About extends React.Component {
         paddingBottom: 20
       },
       changableBody: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         textAlign: "justify",
         fontSize: 16
       },
       changableBody3: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "black",
         textAlign: "center",
         fontSize: 16
@@ -106,8 +106,10 @@ class Theme1About extends React.Component {
           />
         </Grid>
         <Grid item xs={12}>
-          {isEdit ? siteEdit.about : siteView.about}
-          {!siteView.about && !siteEdit.about && (<p style={classes.changableBody3}>Welcome to our website.</p>)}
+          <p style={classes.changableBody3}>
+            {isEdit && siteEdit && siteEdit.about}
+            {!isEdit && siteView && siteView.about}
+          </p>
         </Grid>
       </Grid>
     );
@@ -119,7 +121,9 @@ const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
-  titleView: state.site.titleView
+  titleView: state.site.titleView,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(Theme1About);

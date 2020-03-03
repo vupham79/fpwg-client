@@ -14,7 +14,7 @@ class Footer extends React.Component {
     return (
       <Grid container style={{ backgroundColor: "#212121", marginTop: 50 }}>
         <Grid container item xs={12} justify="center">
-          <IconButton aria-label="" color="primary">
+          <IconButton aria-label="" color="primary" href={isEdit ? siteEdit.url : siteView.url}>
             <FontAwesomeIcon icon={faFacebook} color="white" size="2x" />
           </IconButton>
         </Grid>

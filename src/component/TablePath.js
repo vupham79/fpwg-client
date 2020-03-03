@@ -86,7 +86,7 @@ class TablePath extends Component {
   };
 
   render() {
-    const { classes, paths } = this.props;
+    const { classes } = this.props;
     return (
       <React.Fragment>
         <Title>Paths</Title>

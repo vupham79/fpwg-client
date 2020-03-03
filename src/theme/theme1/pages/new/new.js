@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 class Theme1News extends React.Component {
   render() {
-    const { isEdit, siteEdit, siteView, titleEdit, titleView } = this.props;
+    const { isEdit, siteEdit, siteView, titleEdit, titleView, posts, bodyEdit, bodyView } = this.props;
 
     const useStyles = () => ({
       changableTitle: {
@@ -23,22 +23,28 @@ class Theme1News extends React.Component {
         paddingBottom: 20
       },
       changableLink: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "left",
         fontStyle: "italic",
         fontSize: 20
       },
       changableBody: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         textAlign: "left",
         fontSize: 16
       },
       changableBody2: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         textAlign: "left",
+        fontSize: 16
+      },
+      changableBody3: {
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+        color: "black",
+        textAlign: "center",
         fontSize: 16
       },
       pageName: {
@@ -113,20 +119,24 @@ class Theme1News extends React.Component {
             <span style={classes.changableFirst2}>N</span>EWS
           </p>
         </Grid>
-        <Grid item xs={12}>
-          <div style={classes.centerItem}>
-            <img
-              src="./images/theme1-banner3.jpg"
-              alt=""
-              style={{ height: "auto", width: "100%" }}
-            />
-            <p style={classes.changableTitle}>
-              FEB <span style={classes.changableFirst}>10</span>, 2020
+        {!posts && (<Grid item xs={12}><p style={classes.changableBody3}>Currently there are no news.</p></Grid>)}
+        {posts && posts.length == 0 && (<Grid item xs={12}><p style={classes.changableBody3}>Currently there are no news.</p></Grid>)}
+        {posts && posts.lengh > 0 && (
+          <Grid item xs={12}>
+            <div style={classes.centerItem}>
+              <img
+                src={posts[0].attachments.images[0]}
+                alt=""
+                style={{ height: "auto", width: "100%" }}
+              />
+              <p style={classes.changableTitle}>
+                FEB <span style={classes.changableFirst}>10</span>, 2020
             </p>
-            <p style={classes.changableBody}>post content is here.</p>
-            <p style={classes.changableLink}>View On Facebook</p>
-          </div>
-        </Grid>
+              <p style={classes.changableBody}>{posts[0].message ? posts[0].message : ""}</p>
+              <p style={classes.changableLink}>View On Facebook</p>
+            </div>
+          </Grid>
+        )}
       </Grid>
     );
   }
@@ -137,7 +147,10 @@ const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
-  titleView: state.site.titleView
+  titleView: state.site.titleView,
+  posts: state.post.posts,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(Theme1News);
