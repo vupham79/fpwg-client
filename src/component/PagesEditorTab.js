@@ -141,7 +141,7 @@ function PostsList({ posts, setActivePost, item }) {
           item.attachments.media_type === "photo" ? (
             <Grid container style={gridItem} key={index}>
               <Grid container item sm={2} xs={4}>
-                <img src={item.attachments.images} style={imageStyle} />
+                <img src={item.attachments.images} style={imageStyle} alt="" />
               </Grid>
               <Grid
                 container

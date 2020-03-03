@@ -48,7 +48,7 @@ function NewsCard({ post, site }) {
         <CardHeader
           avatar={
             <Avatar aria-label="recipe" className={classes.avatar}>
-              <img src={site.logo} className={classes.imgStyle} />
+              <img src={site.logo} className={classes.imgStyle} alt="" />
             </Avatar>
           }
           title={site.title}

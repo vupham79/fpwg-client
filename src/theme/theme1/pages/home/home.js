@@ -53,7 +53,7 @@ class Theme1Home extends React.Component {
       siteView,
       posts,
       bodyEdit,
-      bodyView,
+      bodyView
     } = this.props;
     console.log(bodyEdit);
     const useStyles = () => ({
@@ -125,7 +125,7 @@ class Theme1Home extends React.Component {
         fontWeight: "bold",
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 20,
+        fontSize: 20
       },
       changableLegend: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -177,14 +177,32 @@ class Theme1Home extends React.Component {
     const classes = useStyles();
     const MapWithAMarker = withScriptjs(
       withGoogleMap(props => (
-        <GoogleMap defaultZoom={15} defaultCenter={{ lat: isEdit ? parseFloat(siteEdit.latitude) : parseFloat(siteView.latitude), lng: isEdit ? parseFloat(siteEdit.longitude) : parseFloat(siteView.longitude) }}>
-          <Marker position={{ lat: isEdit ? parseFloat(siteEdit.latitude) : parseFloat(siteView.latitude), lng: isEdit ? parseFloat(siteEdit.longitude) : parseFloat(siteView.longitude) }} />
+        <GoogleMap
+          defaultZoom={15}
+          defaultCenter={{
+            lat: isEdit
+              ? parseFloat(siteEdit.latitude)
+              : parseFloat(siteView.latitude),
+            lng: isEdit
+              ? parseFloat(siteEdit.longitude)
+              : parseFloat(siteView.longitude)
+          }}
+        >
+          <Marker
+            position={{
+              lat: isEdit
+                ? parseFloat(siteEdit.latitude)
+                : parseFloat(siteView.latitude),
+              lng: isEdit
+                ? parseFloat(siteEdit.longitude)
+                : parseFloat(siteView.longitude)
+            }}
+          />
         </GoogleMap>
       ))
     );
 
     return (
-
       <Grid container>
         <Grid item xs={12}>
           <Carousel
@@ -234,8 +252,12 @@ class Theme1Home extends React.Component {
           <p style={classes.changableTitle}>
             <span style={classes.changableFirst}>N</span>EWS
           </p>
-          {!posts && (<p style={classes.changableBody3}>Currently there are no news.</p>)}
-          {posts && posts.length == 0 && (<p style={classes.changableBody3}>Currently there are no news.</p>)}
+          {!posts && (
+            <p style={classes.changableBody3}>Currently there are no news.</p>
+          )}
+          {posts && posts.length === 0 && (
+            <p style={classes.changableBody3}>Currently there are no news.</p>
+          )}
         </Grid>
         {posts && posts.length > 0 && (
           <Grid item xs={12}>
@@ -258,11 +280,12 @@ class Theme1Home extends React.Component {
                   <p style={classes.changableTitle2}>
                     {/* {row.createdTime.getMonth()} <span style={classes.changableFirst2}>{row.createdTime.getDate()}</span>, {row.createdTime.getYear()} */}
                   </p>
-                  <p style={classes.changableBody3}>{row.message ? row.message : ""}</p>
+                  <p style={classes.changableBody3}>
+                    {row.message ? row.message : ""}
+                  </p>
                   <p style={classes.changableLink}>Read more...</p>
                 </Grid>
-              ))
-              }
+              ))}
               {/* <Grid item xs={12} style={classes.centerItem3}>
               <img
                 src="./images/theme1-banner3.jpg"
@@ -379,7 +402,6 @@ class Theme1Home extends React.Component {
               >
                 <Typography className={styles.event_content}>
                   Page name does not have any upcoming event.
-
                 </Typography>
               </Grid>
             </Grid>
@@ -444,7 +466,7 @@ const mapStateToProps = state => ({
   siteView: state.site.siteView,
   posts: state.post.posts,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView,
+  bodyView: state.site.bodyView
 });
 
 export default connect(mapStateToProps, null)(Theme1Home);

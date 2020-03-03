@@ -5,7 +5,7 @@ import { Carousel } from "react-responsive-carousel";
 
 class Theme1Gallery extends React.Component {
   render() {
-    const { isEdit, siteEdit, siteView, titleEdit, titleView } = this.props;
+    const { isEdit, titleEdit, titleView } = this.props;
 
     const useStyles = theme => ({
       changableTitle: {

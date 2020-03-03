@@ -1,23 +1,33 @@
 import React, { Component } from "react";
 import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
-import { Button, Typography, Container, Box, Grid, CssBaseline, ListItemIcon, Drawer, AppBar, Toolbar } from "@material-ui/core";
+import {
+  Button,
+  Typography,
+  Container,
+  Box,
+  Grid,
+  CssBaseline,
+  ListItemIcon,
+  Drawer,
+  AppBar,
+  Toolbar
+} from "@material-ui/core";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Paper from "@material-ui/core/Paper";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import DashboardIcon from '@material-ui/icons/Dashboard';
-import PeopleIcon from '@material-ui/icons/People';
-import LayersIcon from '@material-ui/icons/Layers';
-import DomainIcon from '@material-ui/icons/Domain';
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import PeopleIcon from "@material-ui/icons/People";
+import LayersIcon from "@material-ui/icons/Layers";
+import DomainIcon from "@material-ui/icons/Domain";
 import { updateAdminTabIndex } from "../actions/adminTab";
 import { connect } from "react-redux";
 import { setLogoutAdmin } from "../actions";
-import { Redirect } from "react-router-dom";
 
 const drawerWidth = 240;
 const useStyles = theme => ({
@@ -160,7 +170,7 @@ class Dashboard extends Component {
               onClick={() => this.handleLogout()}
             >
               Logout
-           </Button>
+            </Button>
           </Toolbar>
         </AppBar>
         <Drawer
@@ -180,25 +190,41 @@ class Dashboard extends Component {
           </div>
           <Divider />
           <List>
-            <ListItem button selected={selectedAdminIndex === 0} onClick={(e, newValue) => updateAdminTabIndex(0)}>
+            <ListItem
+              button
+              selected={selectedAdminIndex === 0}
+              onClick={(e, newValue) => updateAdminTabIndex(0)}
+            >
               <ListItemIcon>
                 <PeopleIcon />
               </ListItemIcon>
               <ListItemText primary="Users" />
             </ListItem>
-            <ListItem button selected={selectedAdminIndex === 1} onClick={(e, newValue) => updateAdminTabIndex(1)}>
+            <ListItem
+              button
+              selected={selectedAdminIndex === 1}
+              onClick={(e, newValue) => updateAdminTabIndex(1)}
+            >
               <ListItemIcon>
                 <LayersIcon />
               </ListItemIcon>
               <ListItemText primary="Sites" />
             </ListItem>
-            <ListItem button selected={selectedAdminIndex === 2} onClick={(e, newValue) => updateAdminTabIndex(2)}>
+            <ListItem
+              button
+              selected={selectedAdminIndex === 2}
+              onClick={(e, newValue) => updateAdminTabIndex(2)}
+            >
               <ListItemIcon>
                 <DashboardIcon />
               </ListItemIcon>
               <ListItemText primary="Themes" />
             </ListItem>
-            <ListItem button selected={selectedAdminIndex === 3} onClick={(e, newValue) => updateAdminTabIndex(3)}>
+            <ListItem
+              button
+              selected={selectedAdminIndex === 3}
+              onClick={(e, newValue) => updateAdminTabIndex(3)}
+            >
               <ListItemIcon>
                 <DomainIcon />
               </ListItemIcon>
@@ -227,12 +253,12 @@ class Dashboard extends Component {
   }
 }
 const mapStateToProps = state => ({
-  selectedAdminIndex: state.adminTab.selectedAdminIndex,
+  selectedAdminIndex: state.adminTab.selectedAdminIndex
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateAdminTabIndex: (index) => dispatch(updateAdminTabIndex(index)),
-  setLogoutAdmin: (index) => dispatch(setLogoutAdmin()),
+  updateAdminTabIndex: index => dispatch(updateAdminTabIndex(index)),
+  setLogoutAdmin: index => dispatch(setLogoutAdmin())
 });
 
 export default connect(

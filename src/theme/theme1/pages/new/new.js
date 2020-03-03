@@ -3,7 +3,14 @@ import React from "react";
 import { connect } from "react-redux";
 class Theme1News extends React.Component {
   render() {
-    const { isEdit, siteEdit, siteView, titleEdit, titleView, posts, bodyEdit, bodyView } = this.props;
+    const {
+      isEdit,
+      titleEdit,
+      titleView,
+      posts,
+      bodyEdit,
+      bodyView
+    } = this.props;
 
     const useStyles = () => ({
       changableTitle: {
@@ -119,8 +126,16 @@ class Theme1News extends React.Component {
             <span style={classes.changableFirst2}>N</span>EWS
           </p>
         </Grid>
-        {!posts && (<Grid item xs={12}><p style={classes.changableBody3}>Currently there are no news.</p></Grid>)}
-        {posts && posts.length == 0 && (<Grid item xs={12}><p style={classes.changableBody3}>Currently there are no news.</p></Grid>)}
+        {!posts && (
+          <Grid item xs={12}>
+            <p style={classes.changableBody3}>Currently there are no news.</p>
+          </Grid>
+        )}
+        {posts && posts.length === 0 && (
+          <Grid item xs={12}>
+            <p style={classes.changableBody3}>Currently there are no news.</p>
+          </Grid>
+        )}
         {posts && posts.lengh > 0 && (
           <Grid item xs={12}>
             <div style={classes.centerItem}>
@@ -131,8 +146,10 @@ class Theme1News extends React.Component {
               />
               <p style={classes.changableTitle}>
                 FEB <span style={classes.changableFirst}>10</span>, 2020
-            </p>
-              <p style={classes.changableBody}>{posts[0].message ? posts[0].message : ""}</p>
+              </p>
+              <p style={classes.changableBody}>
+                {posts[0].message ? posts[0].message : ""}
+              </p>
               <p style={classes.changableLink}>View On Facebook</p>
             </div>
           </Grid>
@@ -150,7 +167,7 @@ const mapStateToProps = state => ({
   titleView: state.site.titleView,
   posts: state.post.posts,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView,
+  bodyView: state.site.bodyView
 });
 
 export default connect(mapStateToProps, null)(Theme1News);

@@ -1,8 +1,6 @@
 const defaultState = {
-  isLoginAdmin: false,
+  isLoginAdmin: false
 };
-
-let index;
 
 const AdminReducer = (state = defaultState, action) => {
   switch (action.type) {
