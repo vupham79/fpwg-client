@@ -5,22 +5,22 @@ import { openSnackBar, closeSnackBar } from "../../../../actions/snackbar";
 
 class PreAboutPage extends Component {
   render() {
-    const { site, openSnackBar, closeSnackBar } = this.props;
-    if (site) {
+    const { site, openSnackBar, closeSnackBar, isEdit } = this.props;
+    if (site && !isEdit) {
       const navItem = site.navItems.find(e => e.name === "About");
       if (!navItem.isActive) {
-        openSnackBar("This page had been UnActive.", "warning");
+        openSnackBar("This page is currently inactive.", "info");
       } else {
         closeSnackBar();
       }
-      return <AboutPage />;
     }
     return <AboutPage />;
   }
 }
 
 const mapStateToProps = state => ({
-  site: state.site.siteView
+  site: state.site.siteView,
+  isEdit: state.site.isEdit
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,3 +1,4 @@
+import GoogleFontPicker from "@bit/take2.components.google-font-picker";
 import {
   Button,
   Divider,
@@ -9,9 +10,10 @@ import {
   Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import GoogleFontPicker from "@bit/take2.components.google-font-picker";
 import React from "react";
-import { ChromePicker, TwitterPicker } from "react-color";
+import { ChromePicker, CirclePicker } from "react-color";
+import onecolor from "onecolor";
+import ColorThief from "color-thief";
 import { connect } from "react-redux";
 import {
   changeColor,
@@ -74,7 +76,27 @@ const imgStyles = {
 
 class DesignEditorTab extends React.Component {
   state = {
-    file: null
+    file: null,
+    pallete: []
+  };
+
+  async componentDidUpdate() {
+    const { site } = this.props;
+    const colorThief = new ColorThief();
+    var img = new Image();
+    img.src = site.logo;
+    img.crossOrigin = "Anonymous";
+    let colors = [];
+    const paletteArray = await colorThief.getPalette(img, 10);
+    colors = await paletteArray.map(
+      rgb => "rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")"
+    );
+    console.log(colors);
+  }
+  handleSetColors = colors => {
+    this.setState({
+      pallete: colors
+    });
   };
 
   handleChangeTheme = event => {
@@ -145,7 +167,7 @@ class DesignEditorTab extends React.Component {
       site,
       uploadLogo
     } = this.props;
-
+    console.log(this.state.pallete);
     return (
       <div style={{ overflowY: "scroll" }}>
         <Typography className={classes.title}>Theme</Typography>
@@ -204,15 +226,67 @@ class DesignEditorTab extends React.Component {
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
+        <Typography className={classes.title}>Logo</Typography>
+        <Grid
+          container
+          className={classes.sideBarBox}
+          justify={"center"}
+          alignItems={"center"}
+          direction={"column"}
+        >
+          <Grid item>
+            <Input
+              type="file"
+              id="selectedFile"
+              onChange={e => this.handleUpload(e)}
+              style={{ display: "none" }}
+            />
+            <img style={imgStyles} alt="" id={"preview"} src={site.logo} />
+          </Grid>
+          <Grid container item spacing={2} justify={"center"}>
+            <Grid item>
+              <Button
+                variant={"contained"}
+                color={"secondary"}
+                onClick={() => document.getElementById("selectedFile").click()}
+              >
+                Browse
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                variant={"contained"}
+                color={"primary"}
+                onClick={() => uploadLogo(this.state.file, site)}
+              >
+                Upload
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Divider
+          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
+        />
         <Typography className={classes.title}>Color</Typography>
         <Grid className={classes.sideBarBox}>
           <Typography className={classes.title2}>Suggested Color</Typography>
-          <TwitterPicker
+          <CirclePicker
             width={"fit-content"}
             color={site.color}
+            colors={[
+              "#FF6900",
+              "#FCB900",
+              "#7BDCB5",
+              "#00D084"
+              // "#8ED1FC",
+              // "#0693E3",
+              // "#ABB8C3",
+              // "#EB144C",
+              // "#F78DA7",
+              // "#9900EF"
+            ]}
             onChangeComplete={this.handleChangeColor}
           />
-          <Divider />
           <Typography className={classes.title2}>Custom Color</Typography>
           <Button
             variant="contained"
@@ -254,47 +328,6 @@ class DesignEditorTab extends React.Component {
               style={{ ...imgStyles, backgroundImage: `url(${img})` }}
             />
           ))}
-        </Grid>
-        <Divider
-          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
-        />
-        <Typography className={classes.title}>Logo</Typography>
-        <Grid
-          container
-          className={classes.sideBarBox}
-          justify={"center"}
-          alignItems={"center"}
-          direction={"column"}
-        >
-          <Grid item>
-            <Input
-              type="file"
-              id="selectedFile"
-              onChange={e => this.handleUpload(e)}
-              style={{ display: "none" }}
-            />
-            <img style={imgStyles} alt="" id={"preview"} />
-          </Grid>
-          <Grid container item spacing={2} justify={"center"}>
-            <Grid item>
-              <Button
-                variant={"contained"}
-                color={"secondary"}
-                onClick={() => document.getElementById("selectedFile").click()}
-              >
-                Browse
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                variant={"contained"}
-                color={"primary"}
-                onClick={() => uploadLogo(this.state.file, site)}
-              >
-                Upload
-              </Button>
-            </Grid>
-          </Grid>
         </Grid>
       </div>
     );

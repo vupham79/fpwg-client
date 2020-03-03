@@ -17,7 +17,7 @@ class SnackBar extends Component {
     closeSnackBar();
   };
   render() {
-    const { isOpen, message, closeSnackBar, typeAlert } = this.props;
+    const { isOpen, message, typeAlert } = this.props;
     return (
       <Snackbar
         open={isOpen}
