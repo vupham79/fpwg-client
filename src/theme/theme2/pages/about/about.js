@@ -5,7 +5,15 @@ import styles from "./about.module.css";
 
 class AboutPage extends React.Component {
   render() {
-    const { isEdit, titleEdit, bodyEdit, titleView, bodyView } = this.props;
+    const {
+      isEdit,
+      titleEdit,
+      bodyEdit,
+      titleView,
+      bodyView,
+      siteEdit,
+      siteView
+    } = this.props;
     return (
       <Grid container justify="center" className={styles.about_page}>
         <Grid item sm={10} xs={10}>
@@ -26,9 +34,13 @@ class AboutPage extends React.Component {
             color="textPrimary"
             style={isEdit ? bodyEdit : bodyView}
           >
-            Welcome to our website!
-            <br />
-            Take a look around and feel free to contact us for more information.
+            {isEdit
+              ? siteEdit && siteEdit.length > 0
+                ? siteEdit.about
+                : "  Welcome to our website! Take a look around and feel free to contact us for more information."
+              : siteView && siteView.length > 0
+              ? siteView.about
+              : "  Welcome to our website! Take a look around and feel free to contact us for more information."}
           </Typography>
         </Grid>
       </Grid>
@@ -37,6 +49,7 @@ class AboutPage extends React.Component {
 }
 const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
+  siteView: state.site.siteView,
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
   bodyEdit: state.site.bodyEdit,

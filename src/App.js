@@ -3,6 +3,7 @@ import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { Routes } from "./routes/routes";
 import Spinner from "./component/Spinner";
+import Snackbar from "./component/snackBar";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           ))}
         </Switch>
         <Spinner />
+        <Snackbar />
       </BrowserRouter>
     </>
   );

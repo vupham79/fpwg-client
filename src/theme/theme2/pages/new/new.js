@@ -113,7 +113,7 @@ class NewPage extends Component {
                       </Grid>
                     )
                 )
-              : posts.map(
+              : siteView.posts.map(
                   (item, index) =>
                     item.attachments.media_type === "photo" && (
                       <Grid

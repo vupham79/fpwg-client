@@ -79,7 +79,9 @@ class Header extends Component {
                   <Tabs
                     value={tabValue}
                     textColor="primary"
-                    indicatorColor="primary"
+                    TabIndicatorProps={{
+                      style: { background: siteEdit.color }
+                    }}
                     onChange={(e, newValue) => updateNavItemValue(newValue)}
                   >
                     {siteEdit.navItems.map((item, index) =>
