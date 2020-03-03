@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {
+  getAllPost,
   getAllThemes,
   getSiteById,
-  setSiteEdit,
-  getAllPost
+  setSiteEdit
 } from "../../actions";
 import EditPage from "./edit";
 class PreEditPage extends React.Component {

@@ -55,7 +55,6 @@ class Theme1Home extends React.Component {
       bodyEdit,
       bodyView
     } = this.props;
-    console.log(bodyEdit);
     const useStyles = () => ({
       changableLink: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,

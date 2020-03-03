@@ -67,39 +67,40 @@ class Header extends Component {
                   >
                     {siteEdit.navItems.map((item, index) =>
                       item.isActive ? (
-                        <Tab style={tabStylesEdit} label={item.name} key={index} />
+                        <Tab
+                          style={tabStylesEdit}
+                          label={item.name}
+                          key={index}
+                        />
                       ) : null
                     )}
                   </Tabs>
                 ) : (
-                    siteView.navItems &&
-                    siteView.navItems.map((item, index) =>
-                      item.isActive ? (
-                        <Grid item xs={2} sm={1} key={index}>
-                          <Link
-                            style={tabStylesView}
-                            to={`/${siteView.id}/${item.name}`}
-                          >
-                            {item.name}
-                          </Link>
-                        </Grid>
-                      ) : null
-                    )
-                  )}
+                  siteView.navItems &&
+                  siteView.navItems.map((item, index) =>
+                    item.isActive ? (
+                      <Grid item xs={2} sm={1} key={index}>
+                        <Link
+                          style={tabStylesView}
+                          to={`/${siteView.id}/${item.name}`}
+                        >
+                          {item.name}
+                        </Link>
+                      </Grid>
+                    ) : null
+                  )
+                )}
               </Grid>
             </Grid>
-            <Grid
-              item
-              xs={4}
-              alignItems="center"
-              justify="center"
-            >
+            <Grid item container xs={4} alignItems="center" justify="center">
               <Grid
                 item
                 className={styles.shopName}
                 style={isEdit ? titleEdit : titleView}
               >
-                {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
+                {isEdit
+                  ? siteEdit && siteEdit.title
+                  : siteView && siteView.title}
               </Grid>
             </Grid>
             <div style={{ height: "10vh" }} />
