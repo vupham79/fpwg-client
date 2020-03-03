@@ -23,7 +23,10 @@ import {
   unPublishSite,
   unPublishSiteAdmin,
   updateSiteId,
-  uploadLogo
+  uploadLogo,
+  setEditOff,
+  setEditOn,
+  clearSiteView
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -92,5 +95,8 @@ export {
   getAllPost,
   setActivePost,
   openSnackBar,
-  closeSnackBar
+  closeSnackBar,
+  setEditOn,
+  setEditOff,
+  clearSiteView
 };

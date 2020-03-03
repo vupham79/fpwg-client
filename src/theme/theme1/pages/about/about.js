@@ -5,8 +5,15 @@ import ExampleComponent from "react-rounded-image";
 
 class Theme1About extends React.Component {
   render() {
-    const { isEdit, siteEdit, siteView, titleEdit, titleView, bodyEdit, bodyView } = this.props;
-    console.log(titleEdit);
+    const {
+      isEdit,
+      siteEdit,
+      siteView,
+      titleEdit,
+      titleView,
+      bodyEdit,
+      bodyView
+    } = this.props;
 
     const useStyles = () => ({
       changableTitle: {
@@ -123,7 +130,7 @@ const mapStateToProps = state => ({
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView,
+  bodyView: state.site.bodyView
 });
 
 export default connect(mapStateToProps, null)(Theme1About);

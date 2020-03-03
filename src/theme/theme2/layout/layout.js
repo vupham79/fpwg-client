@@ -8,39 +8,44 @@ import { themes as themesConstant } from "../../../constant/constant";
 function TabItem({ pages, navItems, tabValue }) {
   return (
     <>
-      {navItems.map(
-        (item, index) =>
-          tabValue === index && (
-            <Grid key={index}>
-              {pages.find(e => e.name === item.name).component}
-            </Grid>
-          )
-      )}
+      {navItems &&
+        navItems.map(
+          (item, index) =>
+            tabValue === index && (
+              <Grid key={index}>
+                {pages.find(e => e.name === item.name).component}
+              </Grid>
+            )
+        )}
     </>
   );
 }
 
 class Layout extends Component {
-  render() {
-    const { isEdit, navItemValue, siteEdit } = this.props;
-
+  renderTabItem = () => {
+    const { navItemValue, siteEdit } = this.props;
     const pages =
       siteEdit &&
       themesConstant.find(element => element.name === siteEdit.theme.name)
         .pages;
+    return (
+      <TabItem
+        tabValue={navItemValue && navItemValue}
+        pages={pages}
+        navItems={
+          siteEdit.navItems && siteEdit.navItems.filter(item => item.isActive)
+        }
+      />
+    );
+  };
+
+  render() {
+    const { isEdit } = this.props;
 
     return (
       <>
         <Header />
-        {isEdit ? (
-          <TabItem
-            tabValue={navItemValue}
-            pages={pages}
-            navItems={siteEdit.navItems.filter(item => item.isActive)}
-          />
-        ) : (
-          this.props.children
-        )}
+        {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
       </>
     );

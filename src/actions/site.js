@@ -494,3 +494,27 @@ export function syncDataFromFB(pageId, access_token) {
     }
   };
 }
+
+export function setEditOn() {
+  return dispatch => {
+    dispatch({
+      type: "SET_EDIT_ON"
+    });
+  };
+}
+
+export function setEditOff() {
+  return dispatch => {
+    dispatch({
+      type: "SET_EDIT_OFF"
+    });
+  };
+}
+
+export function clearSiteView() {
+  return dispatch => {
+    dispatch({
+      type: "CLEAR_SITE_VIEW"
+    });
+  };
+}

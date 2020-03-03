@@ -12,7 +12,7 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { ChromePicker, CirclePicker } from "react-color";
-import onecolor from "onecolor";
+// import onecolor from "onecolor";
 import ColorThief from "color-thief";
 import { connect } from "react-redux";
 import {
@@ -81,17 +81,17 @@ class DesignEditorTab extends React.Component {
   };
 
   async componentDidUpdate() {
-    const { site } = this.props;
-    const colorThief = new ColorThief();
-    var img = new Image();
-    img.src = site.logo;
-    img.crossOrigin = "Anonymous";
-    let colors = [];
-    const paletteArray = await colorThief.getPalette(img, 10);
-    colors = await paletteArray.map(
-      rgb => "rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")"
-    );
-    console.log(colors);
+    // const { site } = this.props;
+    // const colorThief = new ColorThief();
+    // var img = new Image();
+    // img.src = site.logo;
+    // img.crossOrigin = "Anonymous";
+    // let colors = [];
+    // const paletteArray = await colorThief.getPalette(img, 10);
+    // colors = await paletteArray.map(
+    //   rgb => "rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")"
+    // );
+    // console.log(colors);
   }
   handleSetColors = colors => {
     this.setState({
@@ -167,7 +167,6 @@ class DesignEditorTab extends React.Component {
       site,
       uploadLogo
     } = this.props;
-    console.log(this.state.pallete);
     return (
       <div style={{ overflowY: "scroll" }}>
         <Typography className={classes.title}>Theme</Typography>

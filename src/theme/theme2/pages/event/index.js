@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import EventPage from "./event";
-import { openSnackBar, closeSnackBar } from "../../../../actions/snackbar";
+import { openSnackBar, closeSnackBar } from "../../../../actions";
 import { connect } from "react-redux";
 
 class PreEventPage extends Component {
   render() {
     const { site, openSnackBar, closeSnackBar, isEdit } = this.props;
     if (site && !isEdit) {
-      const navItem = site.navItems.find(e => e.name === "Event");
-      if (!navItem.isActive) {
-        openSnackBar("This page is currently inactive.", "info");
+      if (site.navItems) {
+        const navItem = site.navItems.find(e => e.name === "Event");
+        if (!navItem.isActive) {
+          openSnackBar("This page is currently inactive.", "info");
+        } else {
+          closeSnackBar();
+        }
       } else {
-        closeSnackBar();
+        openSnackBar("This page is currently inactive.", "info");
       }
     }
     return <EventPage />;

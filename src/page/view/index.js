@@ -1,7 +1,14 @@
 import React from "react";
 import { themes as themesConstant } from "../../constant/constant";
 import { connect } from "react-redux";
-import { updateSiteId, getSiteById, setSiteView } from "../../actions";
+import {
+  updateSiteId,
+  getSiteById,
+  setSiteView,
+  setEditOff,
+  clearSiteView,
+  closeSnackBar
+} from "../../actions";
 import { Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 
@@ -11,7 +18,17 @@ class PreViewSite extends React.Component {
   };
 
   async componentDidMount() {
-    const { updateSiteId, getSiteById, setSiteView } = this.props;
+    const {
+      updateSiteId,
+      getSiteById,
+      setSiteView,
+      setEditOff,
+      clearSiteView,
+      closeSnackBar
+    } = this.props;
+    closeSnackBar();
+    clearSiteView();
+    setEditOff();
     const currentSiteId = await this.props.location.pathname.split("/")[1];
     this.setState({
       currentSiteId: currentSiteId
@@ -34,6 +51,7 @@ class PreViewSite extends React.Component {
 
   render() {
     const { siteView } = this.props;
+    clearSiteView();
     if (siteView) {
       if (!siteView.isPublish) {
         return (
@@ -60,7 +78,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   updateSiteId: id => dispatch(updateSiteId(id)),
   getSiteById: id => dispatch(getSiteById(id)),
-  setSiteView: (site, title, body) => dispatch(setSiteView(site, title, body))
+  setSiteView: (site, title, body) => dispatch(setSiteView(site, title, body)),
+  setEditOff: () => dispatch(setEditOff()),
+  clearSiteView: () => dispatch(clearSiteView()),
+  closeSnackBar: () => dispatch(closeSnackBar())
 });
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(PreViewSite)

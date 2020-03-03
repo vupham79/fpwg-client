@@ -21,26 +21,35 @@ function TabItem({ pages, navItems, tabValue }) {
 }
 
 class Layout extends Component {
-  render() {
-    const { isEdit, navItemValue, siteEdit } = this.props;
-
+  renderTabItem = () => {
+    const { navItemValue, siteEdit } = this.props;
     const pages =
       siteEdit &&
       themesConstant.find(element => element.name === siteEdit.theme.name)
         .pages;
 
+    if (navItemValue) {
+      return (
+        <TabItem
+          tabValue={navItemValue && navItemValue}
+          pages={pages}
+          navItems={
+            siteEdit.navItems && siteEdit.navItems.filter(item => item.isActive)
+          }
+        />
+      );
+    } else {
+      return;
+    }
+  };
+
+  render() {
+    const { isEdit } = this.props;
+
     return (
       <>
         <Header />
-        {isEdit ? (
-          <TabItem
-            tabValue={navItemValue}
-            pages={pages}
-            navItems={siteEdit.navItems.filter(item => item.isActive)}
-          />
-        ) : (
-            this.props.children
-          )}
+        {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
       </>
     );

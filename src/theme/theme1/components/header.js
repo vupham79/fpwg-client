@@ -7,21 +7,12 @@ import Link from "../../../component/link";
 import styles from "./index.module.css";
 
 class Header extends Component {
-  render() {
-    const {
-      isEdit,
-      tabValue,
-      updateNavItemValue,
-      siteEdit,
-      siteView,
-      titleEdit,
-      titleView
-    } = this.props;
-
-    const tabStylesEdit = {
+  renderTabItems = () => {
+    const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
+    const tabStyles = {
       textTransform: "none",
       fontFamily: titleEdit.fontFamily,
-      color: "#212121",
+      color: titleEdit.color,
       minWidth: "3vh",
       "&:hover": {
         color: "#40a9ff",
@@ -34,6 +25,28 @@ class Header extends Component {
         color: "#40a9ff"
       }
     };
+    if (tabValue) {
+      return (
+        <Tabs
+          value={tabValue}
+          textColor="primary"
+          TabIndicatorProps={{
+            style: { background: siteEdit.color }
+          }}
+          onChange={(e, newValue) => updateNavItemValue(newValue)}
+        >
+          {siteEdit.navItems.map((item, index) =>
+            item.isActive ? (
+              <Tab style={tabStyles} label={item.name} key={index} />
+            ) : null
+          )}
+        </Tabs>
+      );
+    }
+  };
+
+  render() {
+    const { isEdit, siteEdit, siteView, titleEdit, titleView } = this.props;
 
     const tabStylesView = {
       textTransform: "none",
@@ -58,38 +71,21 @@ class Header extends Component {
           <Grid container alignItems="center">
             <Grid item xs={8}>
               <Grid container justify="flex-start">
-                {isEdit ? (
-                  <Tabs
-                    value={tabValue}
-                    textColor="primary"
-                    indicatorColor="primary"
-                    onChange={(e, newValue) => updateNavItemValue(newValue)}
-                  >
-                    {siteEdit.navItems.map((item, index) =>
+                {isEdit
+                  ? this.renderTabItems()
+                  : siteView.navItems &&
+                    siteView.navItems.map((item, index) =>
                       item.isActive ? (
-                        <Tab
-                          style={tabStylesEdit}
-                          label={item.name}
-                          key={index}
-                        />
+                        <Grid item xs={2} sm={1} key={index}>
+                          <Link
+                            style={tabStylesView}
+                            to={`/${siteView.id}/${item.name}`}
+                          >
+                            {item.name}
+                          </Link>
+                        </Grid>
                       ) : null
                     )}
-                  </Tabs>
-                ) : (
-                  siteView.navItems &&
-                  siteView.navItems.map((item, index) =>
-                    item.isActive ? (
-                      <Grid item xs={2} sm={1} key={index}>
-                        <Link
-                          style={tabStylesView}
-                          to={`/${siteView.id}/${item.name}`}
-                        >
-                          {item.name}
-                        </Link>
-                      </Grid>
-                    ) : null
-                  )
-                )}
               </Grid>
             </Grid>
             <Grid item container xs={4} alignItems="center" justify="center">

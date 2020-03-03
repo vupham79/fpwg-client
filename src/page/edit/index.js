@@ -5,15 +5,19 @@ import {
   getAllPost,
   getAllThemes,
   getSiteById,
-  setSiteEdit
+  setSiteEdit,
+  setEditOn,
+  closeSnackBar
 } from "../../actions";
 import EditPage from "./edit";
 class PreEditPage extends React.Component {
   componentDidMount() {
-    const { isLogin } = this.props;
+    const { isLogin, setEditOn, closeSnackBar } = this.props;
+    closeSnackBar();
     if (isLogin) {
       this.getAllThemes();
       this.getSite();
+      setEditOn();
     }
   }
 
@@ -39,10 +43,10 @@ class PreEditPage extends React.Component {
   };
 
   render() {
-    const { isLogin, siteEdit } = this.props;
+    const { isLogin, siteEdit, isEdit } = this.props;
     if (!isLogin) {
       return <Redirect to="/" />;
-    } else if (siteEdit) {
+    } else if (siteEdit && isEdit) {
       return <EditPage />;
     } else return <></>;
   }
@@ -52,7 +56,8 @@ const mapStateToProps = state => ({
   isLogin: state.user.isLogin,
   currentEditId: state.site.currentEditId,
   siteEdit: state.site.siteEdit,
-  posts: state.post.posts
+  posts: state.post.posts,
+  isEdit: state.site.isEdit
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -60,7 +65,9 @@ const mapDispatchToProps = dispatch => ({
   getSiteById: id => dispatch(getSiteById(id)),
   setSiteEdit: (site, titleStyle, bodyStyle) =>
     dispatch(setSiteEdit(site, titleStyle, bodyStyle)),
-  getAllPost: posts => dispatch(getAllPost(posts))
+  getAllPost: posts => dispatch(getAllPost(posts)),
+  setEditOn: () => dispatch(setEditOn()),
+  closeSnackBar: () => dispatch(closeSnackBar())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreEditPage);

@@ -1,16 +1,20 @@
 import React, { Component } from "react";
 import ContactPage from "./contact";
-import { closeSnackBar, openSnackBar } from "../../../../actions/snackbar";
+import { closeSnackBar, openSnackBar } from "../../../../actions";
 import { connect } from "react-redux";
 class PreContactPage extends Component {
   render() {
     const { site, openSnackBar, closeSnackBar, isEdit } = this.props;
     if (site && !isEdit) {
-      const navItem = site.navItems.find(e => e.name === "Contact");
-      if (!navItem.isActive) {
-        openSnackBar("This page is currently inactive.", "info");
+      if (site.navItems) {
+        const navItem = site.navItems.find(e => e.name === "Contact");
+        if (!navItem.isActive) {
+          openSnackBar("This page is currently inactive.", "info");
+        } else {
+          closeSnackBar();
+        }
       } else {
-        closeSnackBar();
+        openSnackBar("This page is currently inactive.", "info");
       }
     }
     return <ContactPage />;

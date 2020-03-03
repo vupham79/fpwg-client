@@ -94,21 +94,24 @@ const SortableItem = sortableElement(
 
 const SortableList = sortableContainer(
   ({ items, site, setActiveNavItems, updateNavItemValue }) => {
-    return (
-      <Grid container style={gridContainer} alignItems="center">
-        {items.map((value, index) => (
-          <SortableItem
-            key={index}
-            index={index}
-            value={value.name}
-            item={value}
-            site={site}
-            setActiveNavItems={setActiveNavItems}
-            updateNavItemValue={updateNavItemValue}
-          />
-        ))}
-      </Grid>
-    );
+    if (items) {
+      return (
+        <Grid container style={gridContainer} alignItems="center">
+          {items.map((value, index) => (
+            <SortableItem
+              key={index}
+              index={index}
+              value={value.name}
+              item={value}
+              site={site}
+              setActiveNavItems={setActiveNavItems}
+              updateNavItemValue={updateNavItemValue}
+            />
+          ))}
+        </Grid>
+      );
+    }
+    return <></>;
   }
 );
 

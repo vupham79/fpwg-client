@@ -49,11 +49,12 @@ function WebsiteItem({ setCurrentEditId, site, fetchDataFromFB }) {
         <Grid item container sm={8} xs={8} md={8}>
           <Typography variant="h5">{site.title}</Typography>
           <Grid item>
-            {site.categories.map(category => (
-              <Typography variant="body2" key={category.name}>
-                {category.name}
-              </Typography>
-            ))}
+            {site.categories &&
+              site.categories.map(category => (
+                <Typography variant="body2" key={category.name}>
+                  {category.name}
+                </Typography>
+              ))}
           </Grid>
         </Grid>
       </Grid>

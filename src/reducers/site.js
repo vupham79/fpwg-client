@@ -10,13 +10,28 @@ const defaultState = {
   titleView: {},
   bodyView: {},
   isView: false,
-  adminData: [],
+  adminData: []
 };
 
 let index;
 
 const SiteReducer = (state = defaultState, action) => {
   switch (action.type) {
+    case "SET_EDIT_ON":
+      return {
+        ...state,
+        isEdit: true
+      };
+    case "SET_EDIT_OFF":
+      return {
+        ...state,
+        isEdit: false
+      };
+    case "CLEAR_SITE_VIEW":
+      return {
+        ...state,
+        siteView: null
+      };
     case "SET_USER_SITES":
       return {
         ...state,

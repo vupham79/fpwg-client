@@ -33,7 +33,7 @@ const mapStateToProps = state => ({
   accessToken: state.user.accessToken,
   userId: state.user.profile.id,
   selectedAdminIndex: state.adminTab.selectedAdminIndex,
-  isLoginAdmin: state.admin.isLoginAdmin,
+  isLoginAdmin: state.admin.isLoginAdmin
 });
 
 const mapDispatchToProps = dispatch => ({});
