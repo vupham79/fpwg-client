@@ -8,7 +8,6 @@ import Typography from "@material-ui/core/Typography";
 import { Grid, Card, makeStyles, Avatar, CardHeader } from "@material-ui/core";
 import styles from "./new.module.css";
 import { connect } from "react-redux";
-import { red } from "@material-ui/core/colors";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -18,25 +17,6 @@ const useStyles = makeStyles(theme => ({
     height: 0,
     paddingTop: "56.25%",
     backgroundSize: "contain"
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest
-    })
-  },
-  expandOpen: {
-    transform: "rotate(180deg)"
-  },
-  avatar: {
-    backgroundColor: red[500]
-  },
-  imgStyle: {
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    width: "150%"
   }
 }));
 
@@ -47,9 +27,11 @@ function NewsCard({ post, site }) {
       <CardActionArea>
         <CardHeader
           avatar={
-            <Avatar aria-label="recipe" className={classes.avatar}>
-              <img src={site.logo} className={classes.imgStyle} alt="" />
-            </Avatar>
+            <Avatar
+              aria-label="recipe"
+              className={classes.avatar}
+              src={site.logo}
+            />
           }
           title={site.title}
           subheader={post.createdAt}

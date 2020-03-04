@@ -64,7 +64,7 @@ class SwitchButton extends React.Component {
             onChange={() => (onChange ? onChange() : this.handlePublish())}
           />
         }
-        label={this.props.isPublish ? "Publishing" : "Unpublishing"}
+        label={this.props.isPublish ? "Published" : "Unpublished"}
       />
     );
   }

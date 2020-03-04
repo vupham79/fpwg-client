@@ -32,8 +32,7 @@ const gridContainer = {
   borderStyle: "solid",
   borderRadius: 10,
   borderWidth: 1,
-  borderColor: "#2a2e2a",
-  marginTop: "2rem"
+  borderColor: "#2a2e2a"
 };
 
 const viewButton = {
@@ -216,7 +215,7 @@ class PagesEditorTab extends React.Component {
         <ExpansionPanel style={expanStyle}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="body1" color="primary">
-              Pages
+              Navigation
             </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
