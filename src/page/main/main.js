@@ -203,15 +203,8 @@ class MainPage extends Component {
     return (
       <>
         <Header />
-        <Grid container item className={styles.body}>
-          <Grid
-            container
-            item
-            direction="column"
-            sm={3}
-            md={2}
-            className={styles.navigation}
-          >
+        <Grid container item className={styles.body} md={12}>
+          <Grid container item sm={3} md={2} className={styles.navigation}>
             <MenuList className={styles.menu_list}>
               <MenuItem>
                 <FontAwesomeIcon className={styles.nav_icon} icon={faThLarge} />

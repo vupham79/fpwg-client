@@ -55,7 +55,7 @@ class PreViewSite extends React.Component {
       if (!siteView.isPublish) {
         return (
           <Grid container justify="center">
-            <h1 style={{ color: "red" }}>404 Not Found</h1>
+            <h1 style={{ color: "red" }}>Site is currently not published</h1>
           </Grid>
         );
       }
