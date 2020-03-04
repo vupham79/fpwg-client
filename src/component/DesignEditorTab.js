@@ -12,7 +12,7 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { ChromePicker, CirclePicker } from "react-color";
-// import onecolor from "onecolor";
+import onecolor from "onecolor";
 import ColorThief from "color-thief";
 import { connect } from "react-redux";
 import {
@@ -22,7 +22,8 @@ import {
   changeSiteTitle,
   changeTheme,
   setShowCustomColor,
-  uploadLogo
+  uploadLogo,
+  setColorPallete
 } from "../actions";
 import toastr from "./Toastr";
 
@@ -80,19 +81,21 @@ class DesignEditorTab extends React.Component {
     pallete: []
   };
 
-  async componentDidUpdate() {
-    // const { site } = this.props;
-    // const colorThief = new ColorThief();
-    // var img = new Image();
-    // img.src = site.logo;
-    // img.crossOrigin = "Anonymous";
-    // let colors = [];
-    // const paletteArray = await colorThief.getPalette(img, 10);
-    // colors = await paletteArray.map(
-    //   rgb => "rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")"
-    // );
-    // console.log(colors);
+  async componentDidMount() {
+    const { setColorPallete, site } = this.props;
+    const colorThief = new ColorThief();
+    const img = document.getElementById("preview");
+    img.crossOrigin = "Anonymous";
+    img.src = site.logo;
+    img.addEventListener("load", async function() {
+      const color = await colorThief.getPalette(img);
+      const colors = await color.map(rgb =>
+        onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
+      );
+      setColorPallete(colors);
+    });
   }
+
   handleSetColors = colors => {
     this.setState({
       pallete: colors
@@ -165,7 +168,8 @@ class DesignEditorTab extends React.Component {
       classes,
       themes,
       site,
-      uploadLogo
+      uploadLogo,
+      colorPallete
     } = this.props;
     return (
       <div style={{ overflowY: "scroll" }}>
@@ -268,24 +272,19 @@ class DesignEditorTab extends React.Component {
         />
         <Typography className={classes.title}>Color</Typography>
         <Grid className={classes.sideBarBox}>
-          <Typography className={classes.title2}>Suggested Color</Typography>
-          <CirclePicker
-            width={"fit-content"}
-            color={site.color}
-            colors={[
-              "#FF6900",
-              "#FCB900",
-              "#7BDCB5",
-              "#00D084"
-              // "#8ED1FC",
-              // "#0693E3",
-              // "#ABB8C3",
-              // "#EB144C",
-              // "#F78DA7",
-              // "#9900EF"
-            ]}
-            onChangeComplete={this.handleChangeColor}
-          />
+          {colorPallete && (
+            <>
+              <Typography className={classes.title2}>
+                Suggested Color
+              </Typography>
+              <CirclePicker
+                width={"fit-content"}
+                color={site.color}
+                colors={colorPallete}
+                onChangeComplete={this.handleChangeColor}
+              />
+            </>
+          )}
           <Typography className={classes.title2}>Custom Color</Typography>
           <Button
             variant="contained"
@@ -336,7 +335,8 @@ class DesignEditorTab extends React.Component {
 const mapStateToProps = state => ({
   themes: state.theme.data,
   isShow: state.theme.isShow,
-  site: state.site.siteEdit
+  site: state.site.siteEdit,
+  colorPallete: state.site.colorPallete
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -346,7 +346,8 @@ const mapDispatchToProps = dispatch => ({
   changeFontBody: site => dispatch(changeFontBody(site)),
   setShowCustomColor: isShow => dispatch(setShowCustomColor(isShow)),
   uploadLogo: (path, site) => dispatch(uploadLogo(path, site)),
-  changeSiteTitle: site => dispatch(changeSiteTitle(site))
+  changeSiteTitle: site => dispatch(changeSiteTitle(site)),
+  setColorPallete: pallete => dispatch(setColorPallete(pallete))
 });
 
 export default connect(

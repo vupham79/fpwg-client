@@ -10,7 +10,8 @@ const defaultState = {
   titleView: {},
   bodyView: {},
   isView: false,
-  adminData: []
+  adminData: [],
+  colorPallete: null
 };
 
 let index;
@@ -163,6 +164,11 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         siteEdit: { ...action.payload }
+      };
+    case "SET_COLOR_PALLETE":
+      return {
+        ...state,
+        colorPallete: action.payload
       };
     default:
       return state;

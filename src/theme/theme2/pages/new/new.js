@@ -43,7 +43,7 @@ function NewsCard({ post, site }) {
         />
         <CardContent>
           <Typography variant="h6" color="textPrimary" component="p">
-            {post.message ? post.message : "hello"}
+            {post.message && post.message}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -78,39 +78,44 @@ class NewPage extends Component {
           News
         </Grid>
         <Grid item sm={12} xs={12} container spacing={3}>
-          {posts
-            ? isEdit
-              ? posts.map(
-                  (item, index) =>
-                    item.attachments.media_type === "photo" && (
-                      <Grid
-                        container
-                        item
-                        sm={3}
-                        xs={6}
-                        key={index}
-                        justify="center"
-                      >
-                        <NewsCard post={item} site={siteEdit} />
-                      </Grid>
-                    )
-                )
-              : siteView.posts.map(
-                  (item, index) =>
-                    item.attachments.media_type === "photo" && (
-                      <Grid
-                        container
-                        item
-                        sm={3}
-                        xs={6}
-                        key={index}
-                        justify="center"
-                      >
-                        <NewsCard post={item} site={siteView} />
-                      </Grid>
-                    )
-                )
-            : null}
+          {posts ? (
+            isEdit ? (
+              posts.map(
+                (item, index) =>
+                  item.attachments.media_type === "photo" && (
+                    <Grid
+                      container
+                      item
+                      sm={3}
+                      xs={6}
+                      key={index}
+                      justify="center"
+                    >
+                      <NewsCard post={item} site={siteEdit} />
+                    </Grid>
+                  )
+              )
+            ) : (
+              siteView.posts &&
+              siteView.posts.map(
+                (item, index) =>
+                  item.attachments.media_type === "photo" && (
+                    <Grid
+                      container
+                      item
+                      sm={3}
+                      xs={6}
+                      key={index}
+                      justify="center"
+                    >
+                      <NewsCard post={item} site={siteView} />
+                    </Grid>
+                  )
+              )
+            )
+          ) : (
+            <></>
+          )}
         </Grid>
       </Grid>
     );

@@ -3,8 +3,10 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { getUserPages, getUserSites, closeSnackBar } from "../../actions";
 import MainPage from "./main";
-
 class PreMainPage extends Component {
+  state = {
+    isEdit: false
+  };
   getUserPages = async () => {
     const { accessToken, userId, getUserPages } = this.props;
     await getUserPages({ accessToken, userId });

@@ -34,11 +34,12 @@ class Header extends Component {
         }}
         onChange={(e, newValue) => updateNavItemValue(newValue)}
       >
-        {siteEdit.navItems.map((item, index) =>
-          item.isActive ? (
-            <Tab style={tabStyles} label={item.name} key={index} />
-          ) : null
-        )}
+        {siteEdit.navItems &&
+          siteEdit.navItems.map((item, index) =>
+            item.isActive ? (
+              <Tab style={tabStyles} label={item.name} key={index} />
+            ) : null
+          )}
       </Tabs>
     );
   };

@@ -8,14 +8,15 @@ import { themes as themesConstant } from "../../../constant/constant";
 function TabItem({ pages, navItems, tabValue }) {
   return (
     <>
-      {navItems.map(
-        (item, index) =>
-          tabValue === index && (
-            <Grid key={index}>
-              {pages.find(e => e.name === item.name).component}
-            </Grid>
-          )
-      )}
+      {navItems &&
+        navItems.map(
+          (item, index) =>
+            tabValue === index && (
+              <Grid key={index}>
+                {pages.find(e => e.name === item.name).component}
+              </Grid>
+            )
+        )}
     </>
   );
 }

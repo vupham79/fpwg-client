@@ -48,6 +48,7 @@ import {
 } from "./user";
 import { closeDialog, openDialog } from "./dialog";
 import { openSnackBar, closeSnackBar } from "./snackbar";
+import { setColorPallete } from "./color";
 
 export {
   getUserPages,
@@ -101,5 +102,6 @@ export {
   setEditOff,
   clearSiteView,
   updateSitepath,
-  getSiteBySitepath
+  getSiteBySitepath,
+  setColorPallete
 };

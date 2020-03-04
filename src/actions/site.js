@@ -334,7 +334,10 @@ export function getSiteById(id) {
     try {
       const data = await axios({
         method: "get",
-        url: "/site/find/" + id
+        url: "/site/find/",
+        params: {
+          id: id
+        }
       });
       dispatch({
         type: "CLOSE_LOADING"

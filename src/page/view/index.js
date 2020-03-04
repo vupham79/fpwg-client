@@ -15,7 +15,8 @@ import { withRouter } from "react-router-dom";
 import WebFont from "webfontloader";
 class PreViewSite extends React.Component {
   state = {
-    sitepath: ""
+    sitepath: "",
+    isLoading: true
   };
 
   async componentDidMount() {
@@ -37,6 +38,7 @@ class PreViewSite extends React.Component {
     await updateSitepath(this.state.sitepath);
     const data = await getSiteBySitepath(this.state.sitepath);
     if (data) {
+      console.log(data);
       const fontTitle = {
         fontFamily: data.fontTitle,
         color: data.color
@@ -46,31 +48,40 @@ class PreViewSite extends React.Component {
       };
       await setSiteView(data, fontTitle, fontBody);
     }
+    this.setState({
+      isLoading: false
+    });
   }
 
   render() {
     const { siteView } = this.props;
+    const { isLoading } = this.state;
     clearSiteView();
-    if (siteView) {
-      if (!siteView.isPublish) {
-        return (
-          <Grid container justify="center">
-            <h1 style={{ color: "red" }}>Site is currently not published</h1>
-          </Grid>
-        );
-      }
-      WebFont.load({
-        google: {
-          families: [siteView.fontTitle, siteView.fontBody]
+    if (!isLoading) {
+      if (siteView) {
+        if (!siteView.isPublish) {
+          return (
+            <Grid container justify="center">
+              <h1 style={{ color: "red" }}>Site is currently not published</h1>
+            </Grid>
+          );
         }
-      });
-      return themesConstant.find(e => e.name === siteView.theme.name).component;
+        WebFont.load({
+          google: {
+            families: [siteView.fontTitle, siteView.fontBody]
+          }
+        });
+        return themesConstant.find(e => e.name === siteView.theme.name)
+          .component;
+      }
+      return (
+        <Grid container justify="center">
+          <h1 style={{ color: "red" }}>404 Not Found</h1>
+        </Grid>
+      );
+    } else {
+      return <></>;
     }
-    return (
-      <Grid container justify="center">
-        <h1 style={{ color: "red" }}>404 Not Found</h1>
-      </Grid>
-    );
   }
 }
 

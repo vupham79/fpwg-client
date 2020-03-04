@@ -39,7 +39,7 @@ class PreEditPage extends React.Component {
         fontFamily: data.fontBody
       };
       await setSiteEdit(data, titleStyle, bodyStyle);
-      getAllPost(data.posts);
+      data.posts && getAllPost(data.posts);
     }
   };
 
