@@ -18,6 +18,8 @@ class Theme1Contact extends React.Component {
       siteView,
       titleEdit,
       titleView,
+      bodyEdit,
+      bodyView
     } = this.props;
 
     const useStyles = theme => ({
@@ -39,6 +41,12 @@ class Theme1Contact extends React.Component {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#212121",
         textAlign: "left",
+        fontSize: 16
+      },
+      changableBody3: {
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+        color: "black",
+        textAlign: "center",
         fontSize: 16
       },
       pageName: {
@@ -146,13 +154,29 @@ class Theme1Contact extends React.Component {
             </p>
           </Grid>
         )}
-        <Grid item xs={12} id={"eventSection"}>
-          <MapWithAMarker
-            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-            loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={<div style={{ height: `400px` }} />}
-            mapElement={<div style={{ height: `100%` }} />}
-          />
+        <Grid item xs={12}>
+          {isEdit && siteEdit.latitude && siteEdit.longitude && (
+            <MapWithAMarker
+              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+              loadingElement={<div style={{ height: `100%` }} />}
+              containerElement={<div style={{ height: `400px` }} />}
+              mapElement={<div style={{ height: `100%` }} />}
+            />
+          )}
+          {!isEdit && siteView.latitude && siteView.longitude && (
+            <MapWithAMarker
+              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+              loadingElement={<div style={{ height: `100%` }} />}
+              containerElement={<div style={{ height: `400px` }} />}
+              mapElement={<div style={{ height: `100%` }} />}
+            />
+          )}
+          {isEdit && !siteEdit.phone && !siteEdit.address && (
+            <p style={classes.changableBody3}>Currently setting up our location.</p>
+          )}
+          {!isEdit && !siteView.phone && !siteView.address && (
+            <p style={classes.changableBody3}>Currently setting up our location.</p>
+          )}
         </Grid>
       </Grid>
     );
@@ -165,6 +189,8 @@ const mapStateToProps = state => ({
   titleView: state.site.titleView,
   titleEdit: state.site.titleEdit,
   siteView: state.site.siteView,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView
 });
 
 export default connect(mapStateToProps, null)(Theme1Contact);

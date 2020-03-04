@@ -1,6 +1,9 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
+import Moment from 'react-moment';
+import { Carousel } from "react-responsive-carousel";
+
 class Theme1News extends React.Component {
   render() {
     const {
@@ -13,15 +16,14 @@ class Theme1News extends React.Component {
     } = this.props;
 
     const useStyles = () => ({
-      changableTitle: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        textAlign: "left",
-        fontSize: 20,
-        paddingBottom: 20
+      changableLink: {
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+        color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        textAlign: "center",
+        fontStyle: "italic",
+        fontSize: 20
       },
-      changableTitle2: {
+      changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
@@ -29,18 +31,26 @@ class Theme1News extends React.Component {
         fontSize: 45,
         paddingBottom: 20
       },
-      changableLink: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+      changableTitle2: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        fontWeight: "bold",
+        color: "#212121",
+        textAlign: "center",
+        fontSize: 20,
+        paddingBottom: 20
+      },
+      changableName: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        fontWeight: "bold",
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "left",
-        fontStyle: "italic",
         fontSize: 20
       },
       changableBody: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
-        textAlign: "left",
-        fontSize: 16
+        fontSize: 16,
+        textAlign: "justify"
       },
       changableBody2: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -49,6 +59,12 @@ class Theme1News extends React.Component {
         fontSize: 16
       },
       changableBody3: {
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+        color: "black",
+        textAlign: "center",
+        fontSize: 16
+      },
+      changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "black",
         textAlign: "center",
@@ -63,59 +79,26 @@ class Theme1News extends React.Component {
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: isEdit ? titleEdit.color : titleView.color,
-        textAlign: "center",
-        fontSize: 20
-      },
-      changableFirst2: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
         textDecorationColor: isEdit ? titleEdit.color : titleView.color
       },
-      changableLegend: {
+      changableFirst2: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: "white",
-        zIndex: 5,
-        position: "absolute",
-        top: "50%",
-        left: "40%",
-        fontSize: 80,
-        textAlign: "center"
-      },
-      greyDiv: {
-        backgroundColor: "#e1ede4",
-        padding: 30,
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        color: "#535353",
         fontSize: 20
       },
-      centerItem: {
+      centerItem3: {
         display: "block",
-        width: 400,
         marginLeft: "auto",
-        marginRight: "auto"
+        marginRight: "auto",
+        height: "100%",
+        backgroundColor: "white"
       },
-      centerItem2: {
-        display: "block",
-        height: 100,
-        justifyContent: "center",
-        alignItems: "center",
-        width: 400,
-        marginLeft: "auto",
-        marginRight: "auto"
-      },
-      changableAppBar: {
-        backgroundColor: "white",
-        opacity: 0.6,
-        position: "sticky",
-        color: "#535353",
-        textAlign: "right"
-      }
     });
     const classes = useStyles();
 
@@ -136,22 +119,34 @@ class Theme1News extends React.Component {
             <p style={classes.changableBody3}>Currently there are no news.</p>
           </Grid>
         )}
-        {posts && posts.lengh > 0 && (
+        {posts && posts.length > 0 && (
           <Grid item xs={12}>
-            <div style={classes.centerItem}>
-              <img
-                src={posts[0].attachments.images[0]}
-                alt=""
-                style={{ height: "auto", width: "100%" }}
-              />
-              <p style={classes.changableTitle}>
-                FEB <span style={classes.changableFirst}>10</span>, 2020
-              </p>
-              <p style={classes.changableBody}>
-                {posts[0].message ? posts[0].message : ""}
-              </p>
-              <p style={classes.changableLink}>View On Facebook</p>
-            </div>
+            <Carousel
+              showArrows={true}
+              showIndicators={false}
+              showStatus={false}
+              showThumbs={false}
+              autoPlay={false}
+              stopOnHover={true}
+              infiniteLoop={false}
+            >
+              {posts && posts.map((row) => (
+                <Grid item xs={12} style={classes.centerItem3} key={row.id}>
+                  <img
+                    src={row.attachments.images[0]}
+                    alt=""
+                    style={{ height: 200, width: 200 }}
+                  />
+                  <p style={classes.changableTitle2}>
+                    <Moment format="MMMM">{row.createdTime}</Moment> <span style={classes.changableFirst2}><Moment format="DD">{row.createdTime}</Moment> </span>, <Moment format="YYYY">{row.createdTime}</Moment>
+                  </p>
+                  <p style={classes.changableBody3}>
+                    {row.message ? row.message : ""}
+                  </p>
+                  <p style={classes.changableLink}>Read more...</p>
+                </Grid>
+              ))}
+            </Carousel>
           </Grid>
         )}
       </Grid>

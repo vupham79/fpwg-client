@@ -17,7 +17,7 @@ export const Routes = [
   },
   {
     component: NewPage,
-    path: "/:id/New"
+    path: "/:id/News"
   },
   {
     component: AboutPage,
