@@ -29,3 +29,18 @@ export function getAllPaths() {
     }
   };
 }
+
+export const updateSitepath = sitepath => {
+  return dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    dispatch({
+      type: "UPDATE_SITE_PATH",
+      payload: sitepath
+    });
+    dispatch({
+      type: "CLOSE_LOADING"
+    });
+  };
+};

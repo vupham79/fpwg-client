@@ -1,5 +1,6 @@
 const defaultState = {
-  data: []
+  data: [],
+  currentSitepath: null
 };
 
 const PathReducer = (state = defaultState, action) => {
@@ -18,6 +19,11 @@ const PathReducer = (state = defaultState, action) => {
       return {
         ...state,
         data: action.payload ? [...action.payload] : []
+      };
+    case "UPDATE_SITE_PATH":
+      return {
+        ...state,
+        currentSitepath: action.payload
       };
     default:
       return state;

@@ -25,24 +25,22 @@ class Header extends Component {
         color: "#40a9ff"
       }
     };
-    if (tabValue) {
-      return (
-        <Tabs
-          value={tabValue}
-          textColor="primary"
-          TabIndicatorProps={{
-            style: { background: siteEdit.color }
-          }}
-          onChange={(e, newValue) => updateNavItemValue(newValue)}
-        >
-          {siteEdit.navItems.map((item, index) =>
-            item.isActive ? (
-              <Tab style={tabStyles} label={item.name} key={index} />
-            ) : null
-          )}
-        </Tabs>
-      );
-    }
+    return (
+      <Tabs
+        value={tabValue}
+        textColor="primary"
+        TabIndicatorProps={{
+          style: { background: siteEdit.color }
+        }}
+        onChange={(e, newValue) => updateNavItemValue(newValue)}
+      >
+        {siteEdit.navItems.map((item, index) =>
+          item.isActive ? (
+            <Tab style={tabStyles} label={item.name} key={index} />
+          ) : null
+        )}
+      </Tabs>
+    );
   };
 
   render() {
@@ -79,7 +77,7 @@ class Header extends Component {
                         <Grid item xs={2} sm={1} key={index}>
                           <Link
                             style={tabStylesView}
-                            to={`/${siteView.id}/${item.name}`}
+                            to={`/${siteView.sitePath}/${item.name}`}
                           >
                             {item.name}
                           </Link>

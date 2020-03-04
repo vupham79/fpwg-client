@@ -3,38 +3,39 @@ import { themes as themesConstant } from "../../constant/constant";
 import { connect } from "react-redux";
 import {
   updateSiteId,
-  getSiteById,
   setSiteView,
   setEditOff,
   clearSiteView,
-  closeSnackBar
+  closeSnackBar,
+  updateSitepath,
+  getSiteBySitepath
 } from "../../actions";
 import { Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 
 class PreViewSite extends React.Component {
   state = {
-    currentSiteId: ""
+    sitepath: ""
   };
 
   async componentDidMount() {
     const {
-      updateSiteId,
-      getSiteById,
+      updateSitepath,
       setSiteView,
       setEditOff,
       clearSiteView,
-      closeSnackBar
+      closeSnackBar,
+      getSiteBySitepath
     } = this.props;
     closeSnackBar();
     clearSiteView();
     setEditOff();
-    const currentSiteId = await this.props.location.pathname.split("/")[1];
+    const sitepath = await this.props.location.pathname.split("/")[1];
     this.setState({
-      currentSiteId: currentSiteId
+      sitepath: sitepath
     });
-    await updateSiteId(this.state.currentSiteId);
-    const data = await getSiteById(this.state.currentSiteId);
+    await updateSitepath(this.state.sitepath);
+    const data = await getSiteBySitepath(this.state.sitepath);
     if (data) {
       const fontTitle = {
         fontFamily: data.fontTitle,
@@ -44,8 +45,6 @@ class PreViewSite extends React.Component {
         fontFamily: data.fontBody
       };
       await setSiteView(data, fontTitle, fontBody);
-    } else {
-      return this.props.history.push("/");
     }
   }
 
@@ -71,17 +70,17 @@ class PreViewSite extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  siteId: state.site.currentId,
   siteView: state.site.siteView
 });
 
 const mapDispatchToProps = dispatch => ({
   updateSiteId: id => dispatch(updateSiteId(id)),
-  getSiteById: id => dispatch(getSiteById(id)),
   setSiteView: (site, title, body) => dispatch(setSiteView(site, title, body)),
   setEditOff: () => dispatch(setEditOff()),
   clearSiteView: () => dispatch(clearSiteView()),
-  closeSnackBar: () => dispatch(closeSnackBar())
+  closeSnackBar: () => dispatch(closeSnackBar()),
+  updateSitepath: () => dispatch(updateSitepath()),
+  getSiteBySitepath: sitepath => dispatch(getSiteBySitepath(sitepath))
 });
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(PreViewSite)

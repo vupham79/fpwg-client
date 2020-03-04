@@ -518,3 +518,29 @@ export function clearSiteView() {
     });
   };
 }
+
+export function getSiteBySitepath(sitepath) {
+  return async dispatch => {
+    console.log(sitepath);
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      const data = await axios({
+        method: "get",
+        url: "/site/find/" + sitepath
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        return data.data;
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error("Get site data failed!", "Error");
+    }
+  };
+}

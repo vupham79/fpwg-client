@@ -1,6 +1,6 @@
 import { loginAdmin, setLogoutAdmin } from "./admin";
 import { updateAdminTabIndex } from "./adminTab";
-import { getAllPaths } from "./path";
+import { getAllPaths, updateSitepath } from "./path";
 import { getAllPost, setActivePost } from "./post";
 import {
   changeColor,
@@ -26,7 +26,8 @@ import {
   uploadLogo,
   setEditOff,
   setEditOn,
-  clearSiteView
+  clearSiteView,
+  getSiteBySitepath
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -98,5 +99,7 @@ export {
   closeSnackBar,
   setEditOn,
   setEditOff,
-  clearSiteView
+  clearSiteView,
+  updateSitepath,
+  getSiteBySitepath
 };

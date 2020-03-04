@@ -144,7 +144,7 @@ export function confirmPage({
         toastr.success(`Create new site ${name} success`, "Sucess");
         return true;
       } else {
-        toastr.error(`Create new site ${name} failed`, "Error");
+        toastr.error(`Create new site ${site.error} failed`, "Error");
       }
       return true;
     } catch (error) {

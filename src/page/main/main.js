@@ -61,7 +61,7 @@ function WebsiteItem({ setCurrentEditId, site, fetchDataFromFB }) {
       <Grid container item sm={4} xs={4}>
         <Grid container item>
           <Grid item md={4} sm={6}>
-            <Link to={`/${site.id}`}>
+            <Link to={`/${site.sitePath}`}>
               <Button variant={"outlined"}>View</Button>
             </Link>
           </Grid>
@@ -131,8 +131,7 @@ class MainPage extends Component {
       sitepath,
       isPublish
     });
-    confirm && (await getUserSites(userId, accessToken));
-    closeDialog();
+    confirm && (await getUserSites(userId, accessToken)) && closeDialog();
   };
 
   handleFetchData = async pageId => {

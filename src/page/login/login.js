@@ -9,7 +9,6 @@ import { login } from "../../actions";
 import { Redirect } from "react-router-dom";
 import { firebaseAppAuth, provider } from "../../utils/firebase";
 import withFirebaseAuth from "react-with-firebase-auth";
-
 class LoginPage extends Component {
   handleLogin = () => {
     const { login } = this.props;

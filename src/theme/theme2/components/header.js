@@ -93,7 +93,7 @@ class Header extends Component {
                         <Grid item xs={2} sm={1} key={index}>
                           <Link
                             style={titleView}
-                            to={`/${siteView.id}/${item.name}`}
+                            to={`/${siteView.sitePath}/${item.name}`}
                           >
                             {item.name}
                           </Link>

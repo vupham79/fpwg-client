@@ -28,19 +28,15 @@ class Layout extends Component {
       themesConstant.find(element => element.name === siteEdit.theme.name)
         .pages;
 
-    if (navItemValue) {
-      return (
-        <TabItem
-          tabValue={navItemValue && navItemValue}
-          pages={pages}
-          navItems={
-            siteEdit.navItems && siteEdit.navItems.filter(item => item.isActive)
-          }
-        />
-      );
-    } else {
-      return;
-    }
+    return (
+      <TabItem
+        tabValue={navItemValue && navItemValue}
+        pages={pages}
+        navItems={
+          siteEdit.navItems && siteEdit.navItems.filter(item => item.isActive)
+        }
+      />
+    );
   };
 
   render() {
