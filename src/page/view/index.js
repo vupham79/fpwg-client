@@ -12,7 +12,7 @@ import {
 } from "../../actions";
 import { Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-
+import WebFont from "webfontloader";
 class PreViewSite extends React.Component {
   state = {
     sitepath: ""
@@ -59,6 +59,11 @@ class PreViewSite extends React.Component {
           </Grid>
         );
       }
+      WebFont.load({
+        google: {
+          families: [siteView.fontTitle, siteView.fontBody]
+        }
+      });
       return themesConstant.find(e => e.name === siteView.theme.name).component;
     }
     return (

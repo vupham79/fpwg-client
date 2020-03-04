@@ -521,7 +521,6 @@ export function clearSiteView() {
 
 export function getSiteBySitepath(sitepath) {
   return async dispatch => {
-    console.log(sitepath);
     dispatch({
       type: "SHOW_LOADING"
     });
