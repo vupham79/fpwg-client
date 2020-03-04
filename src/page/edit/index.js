@@ -10,6 +10,7 @@ import {
   closeSnackBar
 } from "../../actions";
 import EditPage from "./edit";
+import WebFont from "webfontloader";
 class PreEditPage extends React.Component {
   componentDidMount() {
     const { isLogin, setEditOn, closeSnackBar } = this.props;
@@ -47,6 +48,11 @@ class PreEditPage extends React.Component {
     if (!isLogin) {
       return <Redirect to="/" />;
     } else if (siteEdit && isEdit) {
+      WebFont.load({
+        google: {
+          families: [siteEdit.fontTitle, siteEdit.fontBody]
+        }
+      });
       return <EditPage />;
     } else return <></>;
   }
