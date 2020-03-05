@@ -284,7 +284,6 @@ export function saveDesignSite(site) {
         method: "patch",
         url: "/site/saveDesign",
         data: {
-          logo: site.logo,
           fontBody: site.fontBody,
           fontTitle: site.fontTitle,
           navItems: site.navItems,

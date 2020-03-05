@@ -70,6 +70,7 @@ class Header extends Component {
                   src={isEdit ? siteEdit.logo : siteView.logo}
                   style={imgStyles}
                   alt=""
+                  id="editLogo"
                 />
               </Grid>
               <Grid

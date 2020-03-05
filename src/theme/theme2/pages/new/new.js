@@ -50,12 +50,9 @@ function Album({ posts }) {
                   </Typography>
                   <Typography>{card.message}</Typography>
                 </CardContent>
-                <CardActions>
+                <CardActions style={{ justifyContent: "flex-end" }}>
                   <Button size="small" color="primary">
-                    View
-                  </Button>
-                  <Button size="small" color="primary">
-                    Edit
+                    View more
                   </Button>
                 </CardActions>
               </Card>
