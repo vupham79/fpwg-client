@@ -5,7 +5,7 @@ import { Carousel } from "react-responsive-carousel";
 
 class Theme1Gallery extends React.Component {
   render() {
-    const { isEdit, titleEdit, titleView } = this.props;
+    const { isEdit, titleEdit, titleView, siteEdit, siteView, bodyEdit, bodyView } = this.props;
 
     const useStyles = theme => ({
       changableTitle: {
@@ -26,6 +26,12 @@ class Theme1Gallery extends React.Component {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#212121",
         textAlign: "left",
+        fontSize: 16
+      },
+      changableBody4: {
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+        color: "black",
+        textAlign: "center",
         fontSize: 16
       },
       pageName: {
@@ -94,6 +100,16 @@ class Theme1Gallery extends React.Component {
             <span style={classes.changableFirst}>G</span>ALLERY
           </p>
         </Grid>
+        {isEdit && !siteEdit.galleries && (
+          <Grid item xs={12}>
+            <p style={classes.changableBody4}>Currently there are no images.</p>
+          </Grid>
+        )}
+        {!isEdit && !siteView.galleries && (
+          <Grid item xs={12}>
+            <p style={classes.changableBody4}>Currently there are no images.</p>
+          </Grid>
+        )}
         <Grid item xs={12}>
           <Carousel
             showArrows={true}
@@ -104,10 +120,12 @@ class Theme1Gallery extends React.Component {
             autoPlay={false}
             showIndicators={false}
           >
-            <img src="./images/theme1-banner1.jpg" alt="" />
-            <img src="./images/theme1-banner2.jpg" alt="" />
-            <img src="./images/theme1-banner1.jpg" alt="" />
-            <img src="./images/theme1-banner2.jpg" alt="" />
+            {isEdit ? siteEdit.galleries && siteEdit.galleries.map((row) => (
+              <img style={{ height: '50vh' }} src={row} alt="./images/theme1-banner1.jpg" />
+            )) : (
+                siteView.galleries && siteView.galleries.map((row) => (
+                  <img style={{ height: '50vh' }} src={row} alt="./images/theme1-banner1.jpg" />
+                )))}
           </Carousel>
         </Grid>
       </Grid>
@@ -120,7 +138,9 @@ const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
-  titleView: state.site.titleView
+  titleView: state.site.titleView,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView
 });
 
 export default connect(mapStateToProps, null)(Theme1Gallery);

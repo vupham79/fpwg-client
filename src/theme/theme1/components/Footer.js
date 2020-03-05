@@ -12,7 +12,7 @@ class Footer extends React.Component {
       siteView
     } = this.props;
     return (
-      <Grid container style={{ backgroundColor: "#212121", marginTop: 50 }}>
+      <Grid container style={{ backgroundColor: "#212121", marginTop: 50, height: 300, postion: 'absolute', bottom: 0 }}>
         <Grid container item xs={12} justify="center">
           <IconButton aria-label="" color="primary" href={isEdit ? siteEdit.url : siteView.url}>
             <FontAwesomeIcon icon={faFacebook} color="white" size="2x" />

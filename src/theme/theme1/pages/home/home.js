@@ -15,6 +15,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ExampleComponent from "react-rounded-image";
 import styles from "./home.module.css";
+// import Moment from 'react-moment';
 
 const imgUrl = [
   "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
@@ -99,6 +100,12 @@ class Theme1Home extends React.Component {
         fontSize: 16
       },
       changableBody3: {
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+        color: "black",
+        textAlign: "center",
+        fontSize: 16
+      },
+      changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "black",
         textAlign: "center",
@@ -212,9 +219,23 @@ class Theme1Home extends React.Component {
             stopOnHover={true}
             infiniteLoop={true}
           >
-            <img src="./images/theme1-banner1.jpg" alt="" />
-            <img src="./images/theme1-banner2.jpg" alt="" />
-            <img src="./images/theme1-banner1.jpg" alt="" />
+            {isEdit
+              ? siteEdit.cover &&
+                siteEdit.cover.map(row => (
+                  <img
+                    style={{ height: "50vh" }}
+                    src={row}
+                    alt="./images/theme1-banner1.jpg"
+                  />
+                ))
+              : siteView.cover &&
+                siteView.cover.map(row => (
+                  <img
+                    style={{ height: "50vh" }}
+                    src={row}
+                    alt="./images/theme1-banner1.jpg"
+                  />
+                ))}
           </Carousel>
         </Grid>
         <Grid item xs={12}>
@@ -233,9 +254,21 @@ class Theme1Home extends React.Component {
           />
         </Grid>
         <Grid item xs={12}>
+          {isEdit && !siteEdit && (
+            <p style={classes.changableBody3}>Welcome!</p>
+          )}
+          {!isEdit && !siteView && (
+            <p style={classes.changableBody3}>Welcome!</p>
+          )}
           <p style={classes.changableBody3}>
             {isEdit && siteEdit && siteEdit.about}
             {!isEdit && siteView && siteView.about}
+            {isEdit && !siteEdit.about && (
+              <p style={classes.changableBody4}>Welcome to our website!</p>
+            )}
+            {!isEdit && !siteView.about && (
+              <p style={classes.changableBody4}>Welcome to our website!</p>
+            )}
           </p>
         </Grid>
         <Grid item xs={12} style={classes.greyDiv}>
@@ -260,58 +293,27 @@ class Theme1Home extends React.Component {
               stopOnHover={true}
               infiniteLoop={false}
             >
-              {posts.map((row, index) => (
-                <Grid item xs={12} style={classes.centerItem3} key={row.id}>
-                  <img
-                    src={row.attachments.images[0]}
-                    alt=""
-                    style={{ height: 200, width: 200 }}
-                  />
-                  <p style={classes.changableTitle2}>
-                    {/* {row.createdTime.getMonth()} <span style={classes.changableFirst2}>{row.createdTime.getDate()}</span>, {row.createdTime.getYear()} */}
-                  </p>
-                  <p style={classes.changableBody3}>
-                    {row.message ? row.message : ""}
-                  </p>
-                  <p style={classes.changableLink}>Read more...</p>
-                </Grid>
-              ))}
-              {/* <Grid item xs={12} style={classes.centerItem3}>
-              <img
-                src="./images/theme1-banner3.jpg"
-                alt=""
-                style={{ height: 200, width: 200 }}
-              />
-              <p style={classes.changableTitle2}>
-                FEB <span style={classes.changableFirst2}>10</span>, 2020
-              </p>
-              <p style={classes.changableBody3}>post content is here.</p>
-              <p style={classes.changableLink}>Read more...</p>
-            </Grid>
-            <Grid item xs={12} style={classes.centerItem3}>
-              <img
-                src="./images/theme1-banner2.jpg"
-                alt=""
-                style={{ height: 200, width: 200 }}
-              />
-              <p style={classes.changableTitle2}>
-                FEB <span style={classes.changableFirst2}>10</span>, 2020
-              </p>
-              <p style={classes.changableBody3}>post content is here.</p>
-              <p style={classes.changableLink}>Read more...</p>
-            </Grid>
-            <Grid item xs={12} style={classes.centerItem3}>
-              <img
-                src="./images/theme1-banner1.jpg"
-                alt=""
-                style={{ height: 200, width: 200 }}
-              />
-              <p style={classes.changableTitle2}>
-                FEB <span style={classes.changableFirst2}>10</span>, 2020
-              </p>
-              <p style={classes.changableBody3}>post content is here.</p>
-              <p style={classes.changableLink}>Read more...</p>
-            </Grid> */}
+              {posts &&
+                posts.map(row => (
+                  <Grid item xs={12} style={classes.centerItem3} key={row.id}>
+                    <img
+                      src={row.attachments.images[0]}
+                      alt=""
+                      style={{ height: 200, width: 200 }}
+                    />
+                    <p style={classes.changableTitle2}>
+                      {/* <Moment format="MMMM">{row.createdTime}</Moment>{" "} */}
+                      <span style={classes.changableFirst2}>
+                        {/* <Moment format="DD">{row.createdTime}</Moment>{" "} */}
+                      </span>
+                      {/* , <Moment format="YYYY">{row.createdTime}</Moment> */}
+                    </p>
+                    <p style={classes.changableBody3}>
+                      {row.message ? row.message : ""}
+                    </p>
+                    <p style={classes.changableLink}>Read more...</p>
+                  </Grid>
+                ))}
             </Carousel>
           </Grid>
         )}
@@ -320,7 +322,17 @@ class Theme1Home extends React.Component {
             <span style={classes.changableFirst}>G</span>ALLERY
           </p>
         </Grid>
-        <Grid item xs={12} id={"gallerySection"}>
+        {isEdit && !siteEdit.galleries && (
+          <Grid item xs={12}>
+            <p style={classes.changableBody4}>Currently there are no images.</p>
+          </Grid>
+        )}
+        {!isEdit && !siteView.galleries && (
+          <Grid item xs={12}>
+            <p style={classes.changableBody4}>Currently there are no images.</p>
+          </Grid>
+        )}
+        <Grid item xs={12}>
           <Carousel
             showArrows={true}
             centerMode={true}
@@ -330,20 +342,37 @@ class Theme1Home extends React.Component {
             autoPlay={false}
             showIndicators={false}
           >
-            <img src="./images/theme1-banner1.jpg" alt="" />
-            <img src="./images/theme1-banner2.jpg" alt="" />
-            <img src="./images/theme1-banner1.jpg" alt="" />
-            <img src="./images/theme1-banner2.jpg" alt="" />
+            {isEdit
+              ? siteEdit.galleries &&
+                siteEdit.galleries.map(row => (
+                  <img
+                    style={{ height: "50vh" }}
+                    src={row}
+                    alt="./images/theme1-banner1.jpg"
+                  />
+                ))
+              : siteView.galleries &&
+                siteView.galleries.map(row => (
+                  <img
+                    style={{ height: "50vh" }}
+                    src={row}
+                    alt="./images/theme1-banner1.jpg"
+                  />
+                ))}
           </Carousel>
         </Grid>
         <div style={{ height: 100, width: "100%" }} />
         <Grid item xs={12}>
           <Parallax
             blur={0}
-            bgImage={isEdit ? siteEdit.cover : siteView.cover}
+            bgImage={
+              isEdit
+                ? siteEdit.cover && siteEdit.cover[0]
+                : siteView.cover && siteView.cover[0]
+            }
             bgImageAlt="./images/theme1-banner2.jpg"
             strength={300}
-            style={{ height: 250, width: "100%" }}
+            style={{ height: "30vh", width: "100%" }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -435,13 +464,34 @@ class Theme1Home extends React.Component {
             </p>
           </Grid>
         )}
-        <Grid item xs={12} id={"eventSection"}>
-          <MapWithAMarker
-            googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-            loadingElement={<div style={{ height: `100%` }} />}
-            containerElement={<div style={{ height: `400px` }} />}
-            mapElement={<div style={{ height: `100%` }} />}
-          />
+
+        <Grid item xs={12}>
+          {isEdit && siteEdit.latitude && siteEdit.longitude && (
+            <MapWithAMarker
+              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+              loadingElement={<div style={{ height: `100%` }} />}
+              containerElement={<div style={{ height: `400px` }} />}
+              mapElement={<div style={{ height: `100%` }} />}
+            />
+          )}
+          {!isEdit && siteView.latitude && siteView.longitude && (
+            <MapWithAMarker
+              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+              loadingElement={<div style={{ height: `100%` }} />}
+              containerElement={<div style={{ height: `400px` }} />}
+              mapElement={<div style={{ height: `100%` }} />}
+            />
+          )}
+          {isEdit && !siteEdit.phone && !siteEdit.address && (
+            <p style={classes.changableBody3}>
+              Currently setting up our location.
+            </p>
+          )}
+          {!isEdit && !siteView.phone && !siteView.address && (
+            <p style={classes.changableBody3}>
+              Currently setting up our location.
+            </p>
+          )}
         </Grid>
       </Grid>
     );
