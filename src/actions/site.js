@@ -545,3 +545,19 @@ export function getSiteBySitepath(sitepath) {
     }
   };
 }
+
+export function setNavItemInActive() {
+  return async dispatch => {
+    dispatch({
+      type: "SET_NAV_ITEM_INACTIVE"
+    });
+  };
+}
+
+export function setNavItemActive() {
+  return async dispatch => {
+    dispatch({
+      type: "SET_NAV_ITEM_ACTIVE"
+    });
+  };
+}

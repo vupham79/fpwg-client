@@ -27,7 +27,9 @@ import {
   setEditOff,
   setEditOn,
   clearSiteView,
-  getSiteBySitepath
+  getSiteBySitepath,
+  setNavItemActive,
+  setNavItemInActive
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -103,5 +105,7 @@ export {
   clearSiteView,
   updateSitepath,
   getSiteBySitepath,
-  setColorPallete
+  setColorPallete,
+  setNavItemActive,
+  setNavItemInActive
 };

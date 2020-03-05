@@ -147,9 +147,11 @@ class DesignEditorTab extends React.Component {
       file.type === "image/jpg"
     ) {
       var output = document.getElementById("preview");
-      var siteEditLogo = document.getElementById("editLogo");
+      var siteEditLogo = document.getElementById("siteLogo");
       output.src = URL.createObjectURL(e.target.files[0]);
-      siteEditLogo.src = URL.createObjectURL(e.target.files[0]);
+      siteEditLogo.style.backgroundImage = `url('${URL.createObjectURL(
+        e.target.files[0]
+      )}')`;
       this.setState({ file });
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");

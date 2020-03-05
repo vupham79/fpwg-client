@@ -45,18 +45,10 @@ function WebsiteItem({ setCurrentEditId, site, fetchDataFromFB }) {
           backgroundRepeat: "no-repeat"
         }}
       />
-      <Grid container item sm={4} xs={4} direction={"column"}>
-        <Grid item container sm={8} xs={8} md={8}>
-          <Typography variant="h5">{site.title}</Typography>
-          <Grid item>
-            {site.categories &&
-              site.categories.map(category => (
-                <Typography variant="body2" key={category.name}>
-                  {category.name}
-                </Typography>
-              ))}
-          </Grid>
-        </Grid>
+      <Grid container item sm={4} xs={4}>
+        <Typography variant="subtitle1" style={{ fontWeight: "bolder" }}>
+          {site.title}
+        </Typography>
       </Grid>
       <Grid container item sm={4} xs={4}>
         <Grid container item>

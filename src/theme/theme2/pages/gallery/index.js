@@ -1,21 +1,19 @@
 import React, { Component } from "react";
-import GalleryPage from "./gallery";
-import { openSnackBar, closeSnackBar } from "../../../../actions";
 import { connect } from "react-redux";
+import { setNavItemActive, setNavItemInActive } from "../../../../actions";
+import GalleryPage from "./gallery";
 
 class PreGalleryPage extends Component {
   render() {
-    const { site, openSnackBar, closeSnackBar, isEdit } = this.props;
+    const { site, isEdit, setNavItemActive, setNavItemInActive } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
         const navItem = site.navItems.find(e => e.name === "Gallery");
         if (!navItem.isActive) {
-          openSnackBar("This page is currently inactive.", "info");
+          setNavItemInActive();
         } else {
-          closeSnackBar();
+          setNavItemActive();
         }
-      } else {
-        openSnackBar("This page is currently inactive.", "info");
       }
     }
     return <GalleryPage />;
@@ -28,8 +26,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  openSnackBar: (message, type) => dispatch(openSnackBar(message, type)),
-  closeSnackBar: () => dispatch(closeSnackBar())
+  setNavItemInActive: () => dispatch(setNavItemInActive()),
+  setNavItemActive: () => dispatch(setNavItemActive())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreGalleryPage);

@@ -1,11 +1,20 @@
-import { AppBar, Tab, Tabs, Container } from "@material-ui/core";
-import Grid from "@material-ui/core/Grid";
+import {
+  AppBar,
+  Button,
+  Container,
+  Grid,
+  Tab,
+  Tabs,
+  Tooltip,
+  Zoom
+} from "@material-ui/core";
+import { faExclamation } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateNavItemValue } from "../../../actions";
 import Link from "../../../component/link";
 import styles from "./index.module.css";
-
 class Header extends Component {
   renderTabItems = () => {
     const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
@@ -44,13 +53,19 @@ class Header extends Component {
   };
 
   render() {
-    const { isEdit, siteEdit, siteView, titleEdit, titleView } = this.props;
+    const {
+      isEdit,
+      siteEdit,
+      siteView,
+      titleEdit,
+      titleView,
+      navItemIsActive
+    } = this.props;
     const imgStyles = {
-      backgroundSize: "cover",
+      backgroundSize: "contain",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
-      width: "80%",
-      paddingTop: "0.5rem"
+      height: "5rem"
     };
 
     return (
@@ -61,21 +76,23 @@ class Header extends Component {
               container
               item
               xs={12}
-              sm={2}
+              sm={4}
               alignItems="center"
               justify="center"
             >
-              <Grid item sm={7} xs={3}>
-                <img
-                  src={isEdit ? siteEdit.logo : siteView.logo}
-                  style={imgStyles}
-                  alt=""
-                  id="editLogo"
-                />
-              </Grid>
+              <Grid
+                id={"siteLogo"}
+                item
+                sm={2}
+                xs={3}
+                style={{
+                  ...imgStyles,
+                  backgroundImage: `url('${siteEdit.logo}')`
+                }}
+              />
               <Grid
                 item
-                sm={3}
+                sm={8}
                 className={styles.shopName}
                 style={isEdit ? titleEdit : titleView}
               >
@@ -83,8 +100,20 @@ class Header extends Component {
                   ? siteEdit && siteEdit.title
                   : siteView && siteView.title}
               </Grid>
+              <Grid>
+                {!navItemIsActive && (
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title="This page is currently inactive"
+                  >
+                    <Button>
+                      <FontAwesomeIcon color={"orange"} icon={faExclamation} />
+                    </Button>
+                  </Tooltip>
+                )}
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={10}>
+            <Grid item xs={12} sm={8}>
               <Grid container justify="flex-end">
                 {isEdit
                   ? this.renderTabItems()
@@ -116,7 +145,8 @@ const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
-  titleView: state.site.titleView
+  titleView: state.site.titleView,
+  navItemIsActive: state.site.navItemIsActive
 });
 
 const mapDispatchToProps = dispatch => ({

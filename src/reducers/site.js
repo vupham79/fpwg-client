@@ -11,7 +11,8 @@ const defaultState = {
   bodyView: {},
   isView: false,
   adminData: [],
-  colorPallete: null
+  colorPallete: null,
+  navItemIsActive: false
 };
 
 let index;
@@ -169,6 +170,16 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         colorPallete: action.payload
+      };
+    case "SET_NAV_ITEM_INACTIVE":
+      return {
+        ...state,
+        navItemIsActive: false
+      };
+    case "SET_NAV_ITEM_ACTIVE":
+      return {
+        ...state,
+        navItemIsActive: true
       };
     default:
       return state;
