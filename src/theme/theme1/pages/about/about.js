@@ -36,6 +36,12 @@ class Theme1About extends React.Component {
         textAlign: "center",
         fontSize: 16
       },
+      changableBody4: {
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+        color: "black",
+        textAlign: "center",
+        fontSize: 16
+      },
       pageName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
@@ -116,6 +122,8 @@ class Theme1About extends React.Component {
           <p style={classes.changableBody3}>
             {isEdit && siteEdit && siteEdit.about}
             {!isEdit && siteView && siteView.about}
+            {isEdit && !siteEdit.about && (<p style={classes.changableBody4}>Welcome to our website!</p>)}
+            {!isEdit && !siteView.about && (<p style={classes.changableBody4}>Welcome to our website!</p>)}
           </p>
         </Grid>
       </Grid>
