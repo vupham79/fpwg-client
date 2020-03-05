@@ -59,7 +59,7 @@ class ContactPage extends React.Component {
               className={styles.child_title}
               style={isEdit ? bodyEdit : bodyView}
             >
-              <Box lineHeight={3}>ADDRESS</Box>
+              <Box lineHeight={3}>Address</Box>
             </Typography>
             <Typography
               variant="body1"
@@ -68,11 +68,6 @@ class ContactPage extends React.Component {
             >
               {isEdit ? siteEdit.address : siteView.address}
             </Typography>
-            <Typography
-              variant="body1"
-              className={styles.child_content}
-              style={isEdit ? bodyEdit : bodyView}
-            ></Typography>
             <Typography
               variant="h5"
               className={styles.child_title}

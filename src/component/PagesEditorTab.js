@@ -45,7 +45,8 @@ const gridItem = {
   borderWidth: 1.5,
   padding: "0.2rem 0.5rem",
   margin: "0.7rem",
-  zIndex: "99999999"
+  zIndex: "99999999",
+  height: "3.5rem"
 };
 
 const DragHandle = sortableHandle(() => <MenuIcon />);
@@ -70,9 +71,7 @@ const SortableItem = sortableElement(
       </Grid>
       <Grid container item justify="flex-end" sm={7}>
         {item.name === "Home" ? (
-          <IconButton style={viewButton} disabled>
-            <VisibilityOutlinedIcon />
-          </IconButton>
+          <></>
         ) : (
           <IconButton
             style={viewButton}
