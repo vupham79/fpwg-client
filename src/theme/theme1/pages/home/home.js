@@ -15,7 +15,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ExampleComponent from "react-rounded-image";
 import styles from "./home.module.css";
-// import Moment from 'react-moment';
+import moment from 'moment';
 
 const imgUrl = [
   "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
@@ -221,21 +221,21 @@ class Theme1Home extends React.Component {
           >
             {isEdit
               ? siteEdit.cover &&
-                siteEdit.cover.map(row => (
-                  <img
-                    style={{ height: "50vh" }}
-                    src={row}
-                    alt="./images/theme1-banner1.jpg"
-                  />
-                ))
+              siteEdit.cover.map(row => (
+                <img
+                  style={{ height: "50vh" }}
+                  src={row}
+                  alt="./images/theme1-banner1.jpg"
+                />
+              ))
               : siteView.cover &&
-                siteView.cover.map(row => (
-                  <img
-                    style={{ height: "50vh" }}
-                    src={row}
-                    alt="./images/theme1-banner1.jpg"
-                  />
-                ))}
+              siteView.cover.map(row => (
+                <img
+                  style={{ height: "50vh" }}
+                  src={row}
+                  alt="./images/theme1-banner1.jpg"
+                />
+              ))}
           </Carousel>
         </Grid>
         <Grid item xs={12}>
@@ -294,7 +294,7 @@ class Theme1Home extends React.Component {
               infiniteLoop={false}
             >
               {posts &&
-                posts.map(row => (
+                posts.slice(0, 5).map(row => (
                   <Grid item xs={12} style={classes.centerItem3} key={row.id}>
                     <img
                       src={row.attachments.images[0]}
@@ -302,11 +302,11 @@ class Theme1Home extends React.Component {
                       style={{ height: 200, width: 200 }}
                     />
                     <p style={classes.changableTitle2}>
-                      {/* <Moment format="MMMM">{row.createdTime}</Moment>{" "} */}
+                      {moment(row.createdTime).format('MMMM') + " "}
                       <span style={classes.changableFirst2}>
-                        {/* <Moment format="DD">{row.createdTime}</Moment>{" "} */}
+                        {moment(row.createdTime).format('DD') + " "}
                       </span>
-                      {/* , <Moment format="YYYY">{row.createdTime}</Moment> */}
+                      {moment(row.createdTime).format('YYYY')}
                     </p>
                     <p style={classes.changableBody3}>
                       {row.message ? row.message : ""}
@@ -344,21 +344,21 @@ class Theme1Home extends React.Component {
           >
             {isEdit
               ? siteEdit.galleries &&
-                siteEdit.galleries.map(row => (
-                  <img
-                    style={{ height: "50vh" }}
-                    src={row}
-                    alt="./images/theme1-banner1.jpg"
-                  />
-                ))
+              siteEdit.galleries.map(row => (
+                <img
+                  style={{ height: "50vh" }}
+                  src={row}
+                  alt="./images/theme1-banner1.jpg"
+                />
+              ))
               : siteView.galleries &&
-                siteView.galleries.map(row => (
-                  <img
-                    style={{ height: "50vh" }}
-                    src={row}
-                    alt="./images/theme1-banner1.jpg"
-                  />
-                ))}
+              siteView.galleries.map(row => (
+                <img
+                  style={{ height: "50vh" }}
+                  src={row}
+                  alt="./images/theme1-banner1.jpg"
+                />
+              ))}
           </Carousel>
         </Grid>
         <div style={{ height: 100, width: "100%" }} />
