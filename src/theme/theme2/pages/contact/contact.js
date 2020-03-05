@@ -65,6 +65,13 @@ class ContactPage extends React.Component {
               variant="body1"
               className={styles.child_content}
               style={isEdit ? bodyEdit : bodyView}
+            >
+              {isEdit ? siteEdit.address : siteView.address}
+            </Typography>
+            <Typography
+              variant="body1"
+              className={styles.child_content}
+              style={isEdit ? bodyEdit : bodyView}
             ></Typography>
             <Typography
               variant="h5"

@@ -69,23 +69,29 @@ const SortableItem = sortableElement(
         {value}
       </Grid>
       <Grid container item justify="flex-end" sm={7}>
-        <IconButton
-          style={viewButton}
-          onClick={() =>
-            handleChangeActive(
-              item,
-              site,
-              setActiveNavItems,
-              updateNavItemValue
-            )
-          }
-        >
-          {item.isActive ? (
+        {item.name === "Home" ? (
+          <IconButton style={viewButton} disabled>
             <VisibilityOutlinedIcon />
-          ) : (
-            <VisibilityOffOutlinedIcon />
-          )}
-        </IconButton>
+          </IconButton>
+        ) : (
+          <IconButton
+            style={viewButton}
+            onClick={() =>
+              handleChangeActive(
+                item,
+                site,
+                setActiveNavItems,
+                updateNavItemValue
+              )
+            }
+          >
+            {item.isActive && item.name !== "Home" ? (
+              <VisibilityOutlinedIcon />
+            ) : (
+              <VisibilityOffOutlinedIcon />
+            )}
+          </IconButton>
+        )}
       </Grid>
     </Grid>
   )

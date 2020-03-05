@@ -5,67 +5,71 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import { Grid, Card, makeStyles, Avatar, CardHeader } from "@material-ui/core";
+import { Grid, Card, makeStyles, CssBaseline } from "@material-ui/core";
 import styles from "./new.module.css";
 import { connect } from "react-redux";
 
+import Container from "@material-ui/core/Container";
+
 const useStyles = makeStyles(theme => ({
-  card: {
-    maxWidth: 345
+  cardGrid: {
+    paddingTop: theme.spacing(8)
   },
-  media: {
-    height: 0,
-    paddingTop: "56.25%",
-    backgroundSize: "contain"
+  card: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column"
+  },
+  cardMedia: {
+    paddingTop: "56.25%" // 16:9
+  },
+  cardContent: {
+    flexGrow: 1
   }
 }));
 
-function NewsCard({ post, site }) {
+function Album({ posts }) {
   const classes = useStyles();
+
   return (
-    <Card className={classes.card}>
-      <CardActionArea>
-        <CardHeader
-          avatar={
-            <Avatar
-              aria-label="recipe"
-              className={classes.avatar}
-              src={site.logo}
-            />
-          }
-          title={site.title}
-          subheader={post.createdAt}
-        />
-        <CardMedia
-          className={classes.media}
-          image={post.attachments.images[0]}
-          title=""
-        />
-        <CardContent>
-          <Typography variant="h6" color="textPrimary" component="p">
-            {post.message && post.message}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="medium" color="primary" variant="contained">
-          Read More
-        </Button>
-      </CardActions>
-    </Card>
+    <React.Fragment>
+      <CssBaseline />
+      <Container className={classes.cardGrid} maxWidth="md">
+        <Grid container spacing={4}>
+          {posts.map((card, index) => (
+            <Grid item xs={12} key={index} sm={6} md={4}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image={card.attachments.images[0]}
+                  title="Image title"
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    Heading
+                  </Typography>
+                  <Typography>{card.message}</Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small" color="primary">
+                    View
+                  </Button>
+                  <Button size="small" color="primary">
+                    Edit
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+    </React.Fragment>
   );
 }
 
 class NewPage extends Component {
   render() {
-    const {
-      isEdit,
-      titleEdit,
-      titleView,
-      siteEdit,
-      siteView,
-      posts
-    } = this.props;
+    const { isEdit, titleEdit, titleView, siteView, posts } = this.props;
     return (
       <Grid container style={{ marginBottom: "5rem" }}>
         <Grid
@@ -80,41 +84,20 @@ class NewPage extends Component {
         <Grid item sm={12} xs={12} container spacing={3}>
           {posts ? (
             isEdit ? (
-              posts.map(
-                (item, index) =>
-                  item.attachments.media_type === "photo" && (
-                    <Grid
-                      container
-                      item
-                      sm={3}
-                      xs={6}
-                      key={index}
-                      justify="center"
-                    >
-                      <NewsCard post={item} site={siteEdit} />
-                    </Grid>
-                  )
-              )
+              <Grid container justify="center">
+                <Album posts={posts} />
+              </Grid>
             ) : (
-              siteView.posts &&
-              siteView.posts.map(
-                (item, index) =>
-                  item.attachments.media_type === "photo" && (
-                    <Grid
-                      container
-                      item
-                      sm={3}
-                      xs={6}
-                      key={index}
-                      justify="center"
-                    >
-                      <NewsCard post={item} site={siteView} />
-                    </Grid>
-                  )
+              siteView.posts && (
+                <Grid container justify="center">
+                  <Album posts={siteView.posts} />
+                </Grid>
               )
             )
           ) : (
-            <></>
+            <Grid container justify="center">
+              <Typography variant="body1">You don't have any news.</Typography>
+            </Grid>
           )}
         </Grid>
       </Grid>
