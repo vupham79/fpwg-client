@@ -1,12 +1,6 @@
 /*New*/
 .title {
-  text-align: center;
-  font-size: 5.5vh;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
-  font-weight: 700;
-  color: #646464;
-  padding-top: 10vh;
+  font-weight: 700 !important;
   padding-bottom: 5vh;
 }
 

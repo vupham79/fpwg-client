@@ -332,6 +332,7 @@ class DesignEditorTab extends React.Component {
               style={{ ...imgStyles, backgroundImage: `url(${img})` }}
             />
           ))}
+          <Grid item md={4} sm={6} xs={6} style={{ ...imgStyles }} />
         </Grid>
       </div>
     );

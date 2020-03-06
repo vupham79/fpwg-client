@@ -1,5 +1,4 @@
-import { Grid } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import { Grid, Typography, Divider } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./new.module.css";
@@ -9,15 +8,19 @@ class NewPage extends Component {
   render() {
     const { isEdit, titleEdit, titleView, siteView, posts } = this.props;
     return (
-      <Grid container style={{ marginBottom: "5rem" }}>
-        <Grid
-          item
-          sm={12}
-          xs={12}
-          className={styles.title}
-          style={isEdit ? titleEdit : titleView}
-        >
-          News
+      <Grid container justify="center" className={styles.news}>
+        <Grid item sm={10} xs={10}>
+          <Typography
+            variant="h4"
+            color="textSecondary"
+            align="center"
+            gutterBottom
+            className={styles.title}
+            style={isEdit ? titleEdit : titleView}
+          >
+            News
+          </Typography>
+          <Divider variant="fullWidth" />
         </Grid>
         <Grid item sm={12} xs={12} container spacing={3}>
           {isEdit ? (
