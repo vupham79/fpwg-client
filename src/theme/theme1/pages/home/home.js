@@ -14,8 +14,8 @@ import { connect } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ExampleComponent from "react-rounded-image";
-import styles from "./home.module.css";
 import moment from 'moment';
+import EventComponent from "../../../component/eventComponent";
 
 const imgUrl = [
   "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
@@ -381,50 +381,7 @@ class Theme1Home extends React.Component {
           </p>
         </Grid>
         <Grid item xs={12} style={{ marginTop: -80 }}>
-          <Grid
-            container
-            alignItems="center"
-            direction="column"
-            className={styles.event_page}
-          >
-            <Grid
-              item
-              sm={3}
-              xs={3}
-              container
-              justify="center"
-              className={styles.event_body}
-            >
-              <Grid item sm={12} container>
-                <Grid item sm={3} className={styles.image_page}>
-                  <img alt="" src={imgUrl[1]} style={imgStyles} />
-                </Grid>
-                <Grid item sm={9} container direction="column">
-                  <Typography variant="h6" style={classes.changableName}>
-                    {isEdit ? siteEdit.title : siteView.title}
-                  </Typography>
-                  <Button className={styles.btn_like}>
-                    <FontAwesomeIcon
-                      icon={faFacebookSquare}
-                      className={styles.icon}
-                      size-={2}
-                    ></FontAwesomeIcon>
-                    <Typography className={styles.like}>Like Page</Typography>
-                  </Button>
-                </Grid>
-              </Grid>
-              <Grid
-                item
-                container
-                sm={12}
-                className={(styles.contain_event, styles.event)}
-              >
-                <Typography className={styles.event_content}>
-                  Page name does not have any upcoming event.
-                </Typography>
-              </Grid>
-            </Grid>
-          </Grid>
+          <EventComponent />
         </Grid>
 
         <Grid item xs={12}>
