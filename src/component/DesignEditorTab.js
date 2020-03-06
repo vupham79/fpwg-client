@@ -26,7 +26,6 @@ import {
   setColorPallete
 } from "../actions";
 import toastr from "./Toastr";
-import styles from "./index.module.css";
 
 const useStyles = theme => ({
   content: {

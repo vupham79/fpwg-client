@@ -198,7 +198,11 @@ class EventComponent extends React.Component {
 
                     <Grid container direction="row" item xs={4}>
                       <Grid item xs={12} style={{ fontWeight: "bold" }}>
-                        <a href={"https://" + row.url} target="_blank">
+                        <a
+                          href={"https://" + row.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           {" "}
                           {row.name}
                         </a>

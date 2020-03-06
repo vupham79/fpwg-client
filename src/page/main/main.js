@@ -1,4 +1,4 @@
-import { faThLarge } from "@fortawesome/free-solid-svg-icons";
+import { faDatabase, faPalette } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Avatar,
@@ -20,72 +20,13 @@ import {
   closeDialog,
   confirmPage,
   getUserSites,
-  openDialog,
-  setCurrentEditId,
-  syncDataFromFB
+  openDialog
 } from "../../actions";
 import Header from "../../component/Header";
-import Link from "../../component/link";
 import SwitchButton from "../../component/SwitchButton";
+import DesignTab from "./design";
+import DataTab from "./data";
 import styles from "./main.module.css";
-
-function WebsiteItem({ setCurrentEditId, site, fetchDataFromFB }) {
-  return (
-    <Grid container justify="space-between" className={styles.web_item}>
-      <Grid
-        item
-        sm={2}
-        md={2}
-        xs={2}
-        container
-        style={{
-          backgroundImage: `url(${site.logo})`,
-          backgroundSize: "contain",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat"
-        }}
-      />
-      <Grid container item sm={4} xs={4}>
-        <Typography variant="subtitle1" style={{ fontWeight: "bolder" }}>
-          {site.title}
-        </Typography>
-      </Grid>
-      <Grid container item sm={4} xs={4}>
-        <Grid container item>
-          <Grid item md={4} sm={6}>
-            <Link to={`/${site.sitePath}`}>
-              <Button variant={"outlined"}>View</Button>
-            </Link>
-          </Grid>
-          <Grid item md={4} sm={6}>
-            <Link to="/edit">
-              <Button
-                variant={"outlined"}
-                onClick={() => setCurrentEditId(site.id)}
-              >
-                Edit
-              </Button>
-            </Link>
-          </Grid>
-          <Grid item md={4} sm={6}>
-            <Button variant={"outlined"} onClick={() => fetchDataFromFB()}>
-              Sync
-            </Button>
-          </Grid>
-        </Grid>
-        <Grid item container md={6}>
-          <Grid item>
-            <SwitchButton
-              siteId={site.id}
-              siteName={site.title}
-              isPublish={site.isPublish}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-}
 
 class MainPage extends Component {
   state = {
@@ -95,7 +36,8 @@ class MainPage extends Component {
     sitepath: "",
     isPublish: false,
     sitepathError: false,
-    pageUrlError: false
+    pageUrlError: false,
+    tab: 0
   };
 
   handleSelectPage = ({ id, link, name }) => {
@@ -153,11 +95,6 @@ class MainPage extends Component {
     }
   };
 
-  handleFetchData = async pageId => {
-    const { fetchDataFromFB, accessToken } = this.props;
-    fetchDataFromFB(pageId, accessToken);
-  };
-
   handleChangeURL = e => {
     this.setState({
       pageUrl: e.target.value
@@ -210,24 +147,39 @@ class MainPage extends Component {
     }
   };
 
+  handleChangeTab = tab => {
+    this.setState({
+      tab
+    });
+  };
+
   render() {
-    const {
-      closeDialog,
-      openDialog,
-      open,
-      sites,
-      setCurrentEditId
-    } = this.props;
-    const { pageUrl, sitepath, isPublish } = this.state;
+    const { closeDialog, openDialog, open } = this.props;
+    const { pageUrl, sitepath, isPublish, tab } = this.state;
     return (
       <>
         <Header />
         <Grid container item className={styles.body} md={12}>
           <Grid container item sm={3} md={2} className={styles.navigation}>
             <MenuList className={styles.menu_list}>
-              <MenuItem>
-                <FontAwesomeIcon className={styles.nav_icon} icon={faThLarge} />
-                <Typography variant="inherit">Sites</Typography>
+              <MenuItem
+                selected={tab === 0}
+                onClick={() => this.handleChangeTab(0)}
+                style={{ justifyContent: "space-evenly" }}
+              >
+                <FontAwesomeIcon className={styles.nav_icon} icon={faPalette} />
+                <Typography variant="inherit">Design</Typography>
+              </MenuItem>
+              <MenuItem
+                selected={tab === 1}
+                onClick={() => this.handleChangeTab(1)}
+                style={{ justifyContent: "space-evenly" }}
+              >
+                <FontAwesomeIcon
+                  className={styles.nav_icon}
+                  icon={faDatabase}
+                />
+                <Typography variant="inherit">Data</Typography>
               </MenuItem>
             </MenuList>
           </Grid>
@@ -238,8 +190,9 @@ class MainPage extends Component {
             xs={12}
             md={10}
             className={styles.righter}
+            direction={"column"}
           >
-            <Grid container item className={styles.current_edit}>
+            <Grid container md={12} item className={styles.current_edit}>
               <Grid container item xs sm md>
                 <Grid
                   container
@@ -317,25 +270,8 @@ class MainPage extends Component {
               </Grid>
             </Grid>
             <Grid container item sm={12} xs={12} md={12}>
-              {sites.length === 0 ? (
-                <h3>You don't have any Website. Please create a new site.</h3>
-              ) : (
-                sites.map((item, index) => (
-                  <Grid
-                    item
-                    md={6}
-                    sm={12}
-                    key={index}
-                    className={styles.siteItem}
-                  >
-                    <WebsiteItem
-                      site={item}
-                      setCurrentEditId={setCurrentEditId}
-                      fetchDataFromFB={() => this.handleFetchData(item.id)}
-                    />
-                  </Grid>
-                ))
-              )}
+              {tab === 0 && <DesignTab />}
+              {tab === 1 && <DataTab />}
             </Grid>
           </Grid>
         </Grid>
@@ -350,18 +286,14 @@ const mapStateToProps = state => ({
   sites: state.site.data,
   accessToken: state.user.accessToken,
   profile: state.user.profile,
-  userId: state.user.profile.id,
-  token: state.user.accessToken
+  userId: state.user.profile.id
 });
 
 const mapDispatchToProps = dispatch => ({
   closeDialog: () => dispatch(closeDialog()),
   openDialog: () => dispatch(openDialog()),
   confirmPage: data => dispatch(confirmPage(data)),
-  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
-  setCurrentEditId: id => dispatch(setCurrentEditId(id)),
-  fetchDataFromFB: (pageId, accessToken) =>
-    dispatch(syncDataFromFB(pageId, accessToken))
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
