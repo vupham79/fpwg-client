@@ -1,10 +1,10 @@
-import React from "react";
-import { connect } from "react-redux";
 import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Grid, Typography, Divider } from "@material-ui/core";
-import styles from "./event.module.css";
+import { Button, Divider, Grid, Typography } from "@material-ui/core";
 import moment from "moment";
+import React from "react";
+import { connect } from "react-redux";
+import styles from "./event.module.css";
 
 const imgStyles = {
   backgroundSize: "cover",
@@ -154,14 +154,22 @@ class EventComponent extends React.Component {
                   </Grid>
                 </Grid>
               </Grid>
-              {!siteEdit.events && (
+              {isEdit && !siteEdit.events && (
                 <Grid className={styles.event}>
                   <Typography className={styles.event_content}>
                     No upcoming event.
                   </Typography>
                 </Grid>
               )}
-              {siteEdit.events &&
+              {!isEdit && !siteView.events && (
+                <Grid className={styles.event}>
+                  <Typography className={styles.event_content}>
+                    No upcoming event.
+                  </Typography>
+                </Grid>
+              )}
+              {isEdit &&
+                siteEdit.events &&
                 siteEdit.events.map(row => (
                   <Grid
                     item
@@ -179,18 +187,21 @@ class EventComponent extends React.Component {
                       style={{ height: "5rem" }}
                     >
                       <Grid item xs={12} style={classes.changableFirst}>
-                        {moment(row.createdTime)
+                        {moment(row.startTime)
                           .format("MMM")
                           .toUpperCase()}
                       </Grid>
                       <Grid item xs={12} style={classes.changableFirst2}>
-                        {moment(row.createdTime).format("D") + " "}
+                        {moment(row.startTime).format("D") + " "}
                       </Grid>
                     </Grid>
 
                     <Grid container direction="row" item xs={4}>
                       <Grid item xs={12} style={{ fontWeight: "bold" }}>
-                        {row.name}
+                        <a href={"https://" + row.url} target="_blank">
+                          {" "}
+                          {row.name}
+                        </a>
                       </Grid>
                       <Grid item xs={12} style={{ color: "#3578e5" }}>
                         {moment(row.startTime).format("MMMM DD")} -{" "}
@@ -225,6 +236,87 @@ class EventComponent extends React.Component {
                         {row.place.city}
                       </Grid>
                     </Grid>
+
+                    <Grid item xs={12}>
+                      <Divider
+                        color="#212121"
+                        style={{ marginLeft: 10, marginRight: 10 }}
+                      />
+                    </Grid>
+                  </Grid>
+                ))}
+              {!isEdit &&
+                siteView.events &&
+                siteView.events.map(row => (
+                  <Grid
+                    item
+                    container
+                    sm={12}
+                    className={styles.contain_event}
+                    key={row.id}
+                    style={{ marginTop: 10 }}
+                  >
+                    <Grid
+                      container
+                      direction="row"
+                      item
+                      xs={2}
+                      style={{ height: "5rem" }}
+                    >
+                      <Grid item xs={12} style={classes.changableFirst}>
+                        {moment(row.startTime)
+                          .format("MMM")
+                          .toUpperCase()}
+                      </Grid>
+                      <Grid item xs={12} style={classes.changableFirst2}>
+                        {moment(row.startTime).format("D") + " "}
+                      </Grid>
+
+                      <Grid container direction="row" item xs={4}>
+                        <Grid item xs={12} style={{ fontWeight: "bold" }}>
+                          {row.name}
+                        </Grid>
+                        <Grid item xs={12} style={{ color: "#3578e5" }}>
+                          {moment(row.startTime).format("MMMM DD")} -{" "}
+                          {moment(row.endTime).format("MMMM DD")}
+                        </Grid>
+                      </Grid>
+
+                      <Grid container direction="row" item xs={6}>
+                        <Grid
+                          item
+                          xs={12}
+                          style={{
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            display: "inline-block"
+                          }}
+                        >
+                          {row.place.name}
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          style={{
+                            color: "#90949c",
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            display: "inline-block"
+                          }}
+                        >
+                          {row.place.city}
+                        </Grid>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Divider
+                          color="#212121"
+                          style={{ marginLeft: 10, marginRight: 10 }}
+                        />
+                      </Grid>
+                    </Grid>
+
                     <Grid item xs={12}>
                       <Divider
                         color="#212121"
