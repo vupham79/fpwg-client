@@ -67,7 +67,7 @@ function TypeAlbum({ post, openDialog }) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Grid item xs={8} sm={6} md={3}>
+      <Grid item xs={12} sm={6} md={3}>
         <Card className={classes.card}>
           <CardMedia
             className={classes.cardMediaAlbum}
@@ -115,7 +115,7 @@ function TypePhoto({ post, openDialog }) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Grid item xs={8} sm={6} md={3}>
+      <Grid item xs={12} sm={6} md={3}>
         <Card className={classes.card}>
           <CardMedia
             className={classes.cardMedia}
