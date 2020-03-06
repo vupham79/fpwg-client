@@ -125,7 +125,7 @@ class EventComponent extends React.Component {
                     <p style={classes.changableBody}>No upcoming event.</p>
                   </Grid>
                 )}
-              ;
+
               {!isEdit &&
                 siteView.events &&
                 siteView.events.filter(
@@ -136,7 +136,7 @@ class EventComponent extends React.Component {
                     <p style={classes.changableBody}>No upcoming event.</p>
                   </Grid>
                 )}
-              ;
+
               {isEdit &&
                 siteEdit.events &&
                 siteEdit.events.map(row => {
@@ -322,7 +322,7 @@ class EventComponent extends React.Component {
                     <p style={classes.changableBody}>No past event.</p>
                   </Grid>
                 )}
-              ;
+
               {!isEdit &&
                 siteView.events &&
                 siteView.events.filter(
@@ -335,7 +335,7 @@ class EventComponent extends React.Component {
                     <p style={classes.changableBody}>No past event.</p>
                   </Grid>
                 )}
-              ;
+
               {isEdit &&
                 siteEdit.events &&
                 siteEdit.events.map(row => {
