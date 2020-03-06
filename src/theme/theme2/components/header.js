@@ -87,7 +87,9 @@ class Header extends Component {
                 xs={3}
                 style={{
                   ...imgStyles,
-                  backgroundImage: `url('${siteEdit.logo}')`
+                  backgroundImage: isEdit
+                    ? `url('${siteEdit.logo}')`
+                    : `url('${siteView.logo}')`
                 }}
               />
               <Grid
