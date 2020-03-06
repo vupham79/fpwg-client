@@ -1,22 +1,12 @@
-import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Divider, Grid, Typography } from "@material-ui/core";
+import { Divider, Grid } from "@material-ui/core";
 import moment from "moment";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./event.module.css";
 
-const imgStyles = {
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  width: "100%",
-  height: "100%"
-};
-
 class EventComponent extends React.Component {
   render() {
-    const { isEdit, siteEdit, siteView, titleEdit, titleView } = this.props;
+    const { isEdit, siteEdit, siteView, titleEdit, titleView, bodyEdit, bodyView } = this.props;
 
     const useStyles = () => ({
       changableTitle: {
@@ -35,16 +25,18 @@ class EventComponent extends React.Component {
         fontSize: 20
       },
       changableBody: {
-        fontFamily: siteEdit.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         textAlign: "center",
         fontSize: 16
       },
       changableBody2: {
-        fontFamily: siteEdit.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         textAlign: "left",
-        fontSize: 16
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginLeft: 10
       },
       pageName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -56,7 +48,7 @@ class EventComponent extends React.Component {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 15
+        fontSize: 15,
       },
       changableFirst2: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -65,47 +57,6 @@ class EventComponent extends React.Component {
         textAlign: "center",
         fontSize: 30
       },
-      changableLegend: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "white",
-        zIndex: 5,
-        position: "absolute",
-        top: "50%",
-        left: "40%",
-        fontSize: 80,
-        textAlign: "center"
-      },
-      greyDiv: {
-        backgroundColor: "white",
-        padding: 30,
-        textAlign: "center",
-        color: "#535353",
-        fontSize: 20
-      },
-      centerItem: {
-        display: "block",
-        width: 150,
-        marginLeft: "auto",
-        marginRight: "auto",
-        paddingTop: 50
-      },
-      centerItem2: {
-        display: "block",
-        height: 100,
-        justifyContent: "center",
-        alignItems: "center",
-        width: 400,
-        marginLeft: "auto",
-        marginRight: "auto"
-      },
-      changableAppBar: {
-        backgroundColor: "white",
-        opacity: 0.6,
-        position: "sticky",
-        color: "#535353",
-        textAlign: "right"
-      }
     });
     const classes = useStyles();
 
@@ -126,159 +77,107 @@ class EventComponent extends React.Component {
               justify="center"
               className={styles.event_body}
             >
-              <Grid item sm={12} container>
-                <Grid item sm={3}>
-                  <div className={styles.image_page}>
-                    <img
-                      src={isEdit ? siteEdit.logo : siteView.logo}
-                      alt="./images/theme1-banner3.jpg"
-                      style={imgStyles}
-                    />
-                  </div>
-                </Grid>
-                <Grid item sm={9} container direction="column">
-                  <Grid>
-                    <Typography variant="h6" style={classes.changableName}>
-                      {isEdit ? siteEdit.title : siteView.title}
-                    </Typography>
-                  </Grid>
-                  <Grid>
-                    <Button className={styles.btn_like}>
-                      <FontAwesomeIcon
-                        icon={faFacebookSquare}
-                        className={styles.icon}
-                        size-={2}
-                      ></FontAwesomeIcon>
-                      <Typography className={styles.like}>Like Page</Typography>
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Grid>
+
               {isEdit && !siteEdit.events && (
                 <Grid className={styles.event}>
-                  <Typography className={styles.event_content}>
-                    No upcoming event.
-                  </Typography>
+                  <p style={classes.changableBody}>
+                    No event.
+                  </p>
                 </Grid>
               )}
               {!isEdit && !siteView.events && (
                 <Grid className={styles.event}>
-                  <Typography className={styles.event_content}>
-                    No upcoming event.
-                  </Typography>
+                  <p style={classes.changableBody}>
+                    No event.
+                  </p>
                 </Grid>
               )}
+
+              {isEdit && siteEdit.events && (
+                <Grid container item>
+                  <Grid item xs={12}><p style={classes.changableBody2}>Upcoming Events</p></Grid>
+                  <Grid item xs={12}>
+                    <Divider
+                      color="#212121"
+                    />
+                  </Grid>
+                </Grid>
+              )}
+              {!isEdit && siteView.events && (
+                <Grid container item>
+                  <Grid item xs={12}><p style={classes.changableBody2}>Upcoming Events</p></Grid>
+                  <Grid item xs={12}>
+                    <Divider
+                      color="#212121"
+                    />
+                  </Grid>
+                </Grid>
+              )}
+
               {isEdit &&
                 siteEdit.events &&
-                siteEdit.events.map(row => (
-                  <Grid
-                    item
-                    container
-                    sm={12}
-                    className={styles.contain_event}
-                    key={row.id}
-                    style={{ marginTop: 10 }}
-                  >
-                    <Grid
-                      container
-                      direction="row"
-                      item
-                      xs={2}
-                      style={{ height: "5rem" }}
-                    >
-                      <Grid item xs={12} style={classes.changableFirst}>
-                        {moment(row.startTime)
-                          .format("MMM")
-                          .toUpperCase()}
-                      </Grid>
-                      <Grid item xs={12} style={classes.changableFirst2}>
-                        {moment(row.startTime).format("D") + " "}
-                      </Grid>
-                    </Grid>
-
-                    <Grid container direction="row" item xs={4}>
-                      <Grid item xs={12} style={{ fontWeight: "bold" }}>
-                        <a href={"https://" + row.url} target="_blank">
-                          {" "}
-                          {row.name}
-                        </a>
-                      </Grid>
-                      <Grid item xs={12} style={{ color: "#3578e5" }}>
-                        {moment(row.startTime).format("MMMM DD")} -{" "}
-                        {moment(row.endTime).format("MMMM DD")}
-                      </Grid>
-                    </Grid>
-
-                    <Grid container direction="row" item xs={6}>
-                      <Grid
-                        item
-                        xs={12}
-                        style={{
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                          overflow: "hidden",
-                          display: "inline-block"
-                        }}
-                      >
-                        {row.place.name}
-                      </Grid>
-                      <Grid
-                        item
-                        xs={12}
-                        style={{
-                          color: "#90949c",
-                          whiteSpace: "nowrap",
-                          textOverflow: "ellipsis",
-                          overflow: "hidden",
-                          display: "inline-block"
-                        }}
-                      >
-                        {row.place.city}
-                      </Grid>
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Divider
-                        color="#212121"
-                        style={{ marginLeft: 10, marginRight: 10 }}
-                      />
-                    </Grid>
+                siteEdit.events.filter((row) =>
+                  !row.isCancelled && moment(row.endTime).isAfter(moment())).length == 0 &&
+                (
+                  <Grid className={styles.event}>
+                    <p style={classes.changableBody}>
+                      No upcoming event.
+                    </p>
                   </Grid>
-                ))}
+                )
+              };
               {!isEdit &&
                 siteView.events &&
-                siteView.events.map(row => (
-                  <Grid
-                    item
-                    container
-                    sm={12}
-                    className={styles.contain_event}
-                    key={row.id}
-                    style={{ marginTop: 10 }}
-                  >
+                siteView.events.filter((row) =>
+                  !row.isCancelled && moment(row.endTime).isAfter(moment())).length == 0 &&
+                (
+                  <Grid className={styles.event}>
+                    <p style={classes.changableBody}>
+                      No upcoming event.
+                    </p>
+                  </Grid>
+                )
+              };
+
+
+              {isEdit &&
+                siteEdit.events &&
+                siteEdit.events.map(row => {
+                  return !row.isCancelled && moment(row.endTime).isAfter(moment()) && (
                     <Grid
-                      container
-                      direction="row"
                       item
-                      xs={2}
-                      style={{ height: "5rem" }}
+                      container
+                      sm={12}
+                      className={styles.contain_event}
+                      key={row.id}
+                      style={{ marginTop: 10, backgroundColor: 'white' }}
                     >
-                      <Grid item xs={12} style={classes.changableFirst}>
-                        {moment(row.startTime)
-                          .format("MMM")
-                          .toUpperCase()}
-                      </Grid>
-                      <Grid item xs={12} style={classes.changableFirst2}>
-                        {moment(row.startTime).format("D") + " "}
+                      <Grid
+                        container
+                        direction="row"
+                        item
+                        xs={2}
+                        style={{ height: "5rem" }}
+                      >
+                        <Grid item xs={12} style={classes.changableFirst}>
+                          {moment(row.startTime)
+                            .format("MMM")
+                            .toUpperCase()}
+                        </Grid>
+                        <Grid item xs={12} style={classes.changableFirst2}>
+                          {moment(row.startTime).format("D") + " "}
+                        </Grid>
                       </Grid>
 
                       <Grid container direction="row" item xs={4}>
                         <Grid item xs={12} style={{ fontWeight: "bold" }}>
-                          {row.name}
+                          <a href={"https://" + row.url} target="_blank">
+                            {row.name}
+                          </a>
                         </Grid>
                         <Grid item xs={12} style={{ color: "#3578e5" }}>
-                          {moment(row.startTime).format("MMMM DD")} -{" "}
-                          {moment(row.endTime).format("MMMM DD")}
+                          {moment(row.startTime).format("MMMM DD")}
+                          {row.endTime && " - " + moment(row.endTime).format("MMMM DD")}
                         </Grid>
                       </Grid>
 
@@ -295,11 +194,11 @@ class EventComponent extends React.Component {
                         >
                           {row.place.name}
                         </Grid>
+
                         <Grid
                           item
                           xs={12}
                           style={{
-                            color: "#90949c",
                             whiteSpace: "nowrap",
                             textOverflow: "ellipsis",
                             overflow: "hidden",
@@ -308,23 +207,281 @@ class EventComponent extends React.Component {
                         >
                           {row.place.city}
                         </Grid>
-                      </Grid>
-                      <Grid item xs={12}>
-                        <Divider
-                          color="#212121"
-                          style={{ marginLeft: 10, marginRight: 10 }}
-                        />
-                      </Grid>
-                    </Grid>
 
-                    <Grid item xs={12}>
-                      <Divider
-                        color="#212121"
-                        style={{ marginLeft: 10, marginRight: 10 }}
-                      />
+                      </Grid>
                     </Grid>
+                  )
+                })}
+              {!isEdit &&
+                siteView.events &&
+                siteView.events.map(row => {
+                  return !row.isCancelled && moment(row.endTime).isAfter(moment()) && (
+                    <Grid
+                      item
+                      container
+                      sm={12}
+                      className={styles.contain_event}
+                      key={row.id}
+                      style={{ marginTop: 10, backgroundColor: 'white' }}
+                    >
+                      <Grid
+                        container
+                        direction="row"
+                        item
+                        xs={2}
+                        style={{ height: "5rem" }}
+                      >
+                        <Grid item xs={12} style={classes.changableFirst}>
+                          {moment(row.startTime)
+                            .format("MMM")
+                            .toUpperCase()}
+                        </Grid>
+                        <Grid item xs={12} style={classes.changableFirst2}>
+                          {moment(row.startTime).format("D") + " "}
+                        </Grid>
+                      </Grid>
+
+                      <Grid container direction="row" item xs={4}>
+                        <Grid item xs={12} style={{ fontWeight: "bold" }}>
+                          <a href={"https://" + row.url} target="_blank">
+                            {row.name}
+                          </a>
+                        </Grid>
+                        <Grid item xs={12} style={{ color: "#3578e5" }}>
+                          {moment(row.startTime).format("MMMM DD")}
+                          {row.endTime && " - " + moment(row.endTime).format("MMMM DD")}
+                        </Grid>
+                      </Grid>
+
+                      <Grid container direction="row" item xs={6}>
+                        <Grid
+                          item
+                          xs={12}
+                          style={{
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            display: "inline-block"
+                          }}
+                        >
+                          {row.place.name}
+                        </Grid>
+
+                        <Grid
+                          item
+                          xs={12}
+                          style={{
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            display: "inline-block"
+                          }}
+                        >
+                          {row.place.city}
+                        </Grid>
+
+                      </Grid>
+                    </Grid>
+                  )
+                })}
+
+              <Grid item xs={12}>
+                <Divider
+                  color="#212121"
+                />
+              </Grid>
+
+              {isEdit && siteEdit.events && (
+                <Grid container item>
+                  <Grid item xs={12}><p style={classes.changableBody2}>Past Events</p></Grid>
+                  <Grid item xs={12}>
+                    <Divider
+                      color="#212121"
+                    />
                   </Grid>
-                ))}
+                </Grid>
+              )}
+              {!isEdit && siteView.events && (
+                <Grid container item>
+                  <Grid item xs={12}><p style={classes.changableBody2}>Past Events</p></Grid>
+                  <Grid item xs={12}>
+                    <Divider
+                      color="#212121"
+                    />
+                  </Grid>
+                </Grid>
+              )}
+
+              {isEdit &&
+                siteEdit.events &&
+                siteEdit.events.filter((row) =>
+                  row.isCancelled || moment(row.endTime).isSameOrBefore(moment()) || !row.endTime).length == 0 &&
+                (
+                  <Grid className={styles.event}>
+                    <p style={classes.changableBody}>
+                      No past event.
+                    </p>
+                  </Grid>
+                )
+              };
+              {!isEdit &&
+                siteView.events &&
+                siteView.events.filter((row) =>
+                  row.isCancelled || moment(row.endTime).isSameOrBefore(moment()) || !row.endTime).length == 0 &&
+                (
+                  <Grid className={styles.event}>
+                    <p style={classes.changableBody}>
+                      No past event.
+                    </p>
+                  </Grid>
+                )
+              };
+
+              {isEdit &&
+                siteEdit.events &&
+                siteEdit.events.map(row => {
+                  return row.isCancelled || moment(row.endTime).isSameOrBefore(moment()) || !row.endTime && (
+                    <Grid
+                      item
+                      container
+                      sm={12}
+                      className={styles.contain_event}
+                      key={row.id}
+                      style={{ marginTop: 10, backgroundColor: 'white' }}
+                    >
+                      <Grid
+                        container
+                        direction="row"
+                        item
+                        xs={2}
+                        style={{ height: "5rem" }}
+                      >
+                        <Grid item xs={12} style={classes.changableFirst}>
+                          {moment(row.startTime)
+                            .format("MMM")
+                            .toUpperCase()}
+                        </Grid>
+                        <Grid item xs={12} style={classes.changableFirst2}>
+                          {moment(row.startTime).format("D") + " "}
+                        </Grid>
+                      </Grid>
+
+                      <Grid container direction="row" item xs={4}>
+                        <Grid item xs={12} style={{ fontWeight: "bold" }}>
+                          <a href={"https://" + row.url} target="_blank">
+                            {row.name}
+                          </a>
+                        </Grid>
+                        <Grid item xs={12} style={{ color: "#3578e5" }}>
+                          {moment(row.startTime).format("MMMM DD")}
+                          {row.endTime && " - " + moment(row.endTime).format("MMMM DD")}
+                        </Grid>
+                      </Grid>
+
+                      <Grid container direction="row" item xs={6}>
+                        <Grid
+                          item
+                          xs={12}
+                          style={{
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            display: "inline-block"
+                          }}
+                        >
+                          {row.place.name}
+                        </Grid>
+
+                        <Grid
+                          item
+                          xs={12}
+                          style={{
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            display: "inline-block"
+                          }}
+                        >
+                          {row.place.city}
+                        </Grid>
+
+                      </Grid>
+                    </Grid>
+                  )
+                })}
+              {!isEdit &&
+                siteView.events &&
+                siteView.events.map(row => {
+                  return row.isCancelled || moment(row.endTime).isSameOrBefore(moment()) || !row.endTime && (
+                    <Grid
+                      item
+                      container
+                      sm={12}
+                      className={styles.contain_event}
+                      key={row.id}
+                      style={{ marginTop: 10, backgroundColor: 'white' }}
+                    >
+                      <Grid
+                        container
+                        direction="row"
+                        item
+                        xs={2}
+                        style={{ height: "5rem" }}
+                      >
+                        <Grid item xs={12} style={classes.changableFirst}>
+                          {moment(row.startTime)
+                            .format("MMM")
+                            .toUpperCase()}
+                        </Grid>
+                        <Grid item xs={12} style={classes.changableFirst2}>
+                          {moment(row.startTime).format("D") + " "}
+                        </Grid>
+                      </Grid>
+
+                      <Grid container direction="row" item xs={4}>
+                        <Grid item xs={12} style={{ fontWeight: "bold" }}>
+                          <a href={"https://" + row.url} target="_blank">
+                            {row.name}
+                          </a>
+                        </Grid>
+                        <Grid item xs={12} style={{ color: "#3578e5" }}>
+                          {moment(row.startTime).format("MMMM DD")}
+                          {row.endTime && " - " + moment(row.endTime).format("MMMM DD")}
+                        </Grid>
+                      </Grid>
+
+                      <Grid container direction="row" item xs={6}>
+                        <Grid
+                          item
+                          xs={12}
+                          style={{
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            display: "inline-block"
+                          }}
+                        >
+                          {row.place.name}
+                        </Grid>
+
+                        <Grid
+                          item
+                          xs={12}
+                          style={{
+                            whiteSpace: "nowrap",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            display: "inline-block"
+                          }}
+                        >
+                          {row.place.city}
+                        </Grid>
+
+                      </Grid>
+                    </Grid>
+                  )
+                })}
+
             </Grid>
           </Grid>
         </Grid>
