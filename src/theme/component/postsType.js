@@ -10,11 +10,10 @@ import {
   Grid,
   makeStyles,
   Typography,
-  withStyles,
-  GridListTileBar
+  withStyles
 } from "@material-ui/core";
+import FacebookIcon from "@material-ui/icons/Facebook";
 import React from "react";
-import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -25,18 +24,21 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column"
   },
+  cardMediaAlbum: {
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "cover"
+  },
   cardMedia: {
-    paddingTop: "56.25%" // 16:9
+    paddingTop: "60%"
+  },
+  album: {
+    padding: "20%",
+    background: "rgba(24, 20, 20, 0.5)"
   },
   cardContent: {
     flexGrow: 1,
     paddingTop: theme.spacing(3)
-  },
-  readMore: {
-    textDecoration: "underline",
-    "&:hover": {
-      textDecoration: "underline"
-    }
   },
   gridItems: {
     maxHeight: 350
@@ -67,30 +69,39 @@ function TypeAlbum({ post, openDialog }) {
       <CssBaseline />
       <Grid item xs={8} sm={6} md={3}>
         <Card className={classes.card}>
-          <GridListTileBar>
-            <CardMedia
-              className={classes.cardMedia}
-              image={post.attachments.images[0]}
-              title="Image title"
-            />
-          </GridListTileBar>
+          <CardMedia
+            className={classes.cardMediaAlbum}
+            image={post.attachments.images[0]}
+            title="Image title"
+          >
+            <Grid
+              container
+              alignItems="center"
+              justify="center"
+              className={classes.album}
+            >
+              <Typography variant="h4" style={{ color: "white" }}>
+                {post.attachments.images.length} +
+              </Typography>
+            </Grid>
+          </CardMedia>
 
           <CardContent className={classes.cardContent}>
             <Typography gutterBottom variant="h5" component="h2">
               {post.title}
             </Typography>
             <Typography>{post.message && post.message}</Typography>
+          </CardContent>
+          <CardActions>
             <Button
+              variant="outlined"
               color="primary"
-              className={classes.readMore}
               onClick={() => openDialog(post)}
             >
               Read More
             </Button>
-          </CardContent>
-          <CardActions>
-            <Button size="small" color="primary" variant="contained">
-              View More
+            <Button color="primary">
+              <FacebookIcon color="primary" fontSize="large" />
             </Button>
           </CardActions>
         </Card>
@@ -116,17 +127,17 @@ function TypePhoto({ post, openDialog }) {
               {post.title}
             </Typography>
             <Typography>{post.message && post.message}</Typography>
+          </CardContent>
+          <CardActions>
             <Button
+              variant="outlined"
               color="primary"
-              className={classes.readMore}
               onClick={() => openDialog(post)}
             >
               Read More
             </Button>
-          </CardContent>
-          <CardActions>
-            <Button size="small" color="primary" variant="contained">
-              View More
+            <Button color="primary">
+              <FacebookIcon color="primary" fontSize="large" />
             </Button>
           </CardActions>
         </Card>
@@ -161,7 +172,6 @@ class PostTypeComponent extends React.Component {
   render() {
     const { posts, classes } = this.props;
     const post = this.state.postOpen;
-    console.log(post);
     return (
       <Container>
         <Grid
