@@ -16,7 +16,7 @@ class Theme1 extends React.Component {
               component={route.component}
             />
           ))}
-          <Route path="*" exact="true" component={NotFound} />
+          <Route path="*" exact={true} component={NotFound} />
         </Switch>
       </Layout>
     );

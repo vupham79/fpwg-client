@@ -26,6 +26,7 @@ import {
   setColorPallete
 } from "../actions";
 import toastr from "./Toastr";
+import styles from "./index.module.css";
 
 const useStyles = theme => ({
   content: {
@@ -88,7 +89,7 @@ class DesignEditorTab extends React.Component {
     img.crossOrigin = "Anonymous";
     img.src = site.logo;
     img.addEventListener("load", async function() {
-      const color = await colorThief.getPalette(img);
+      const color = await colorThief.getPalette(img, 11);
       const colors = await color.map(rgb =>
         onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
       );
@@ -178,31 +179,19 @@ class DesignEditorTab extends React.Component {
     return (
       <div style={{ overflowY: "scroll" }}>
         <Typography className={classes.title}>Theme</Typography>
-        <Grid className={classes.sideBarBox}>
-          <Select
-            autoComplete="true"
-            value={site && site.theme.name}
-            fullWidth
-            onChange={this.handleChangeTheme}
-          >
-            {themes.map((element, index) => (
-              <MenuItem value={element.name} key={index}>
-                {element.name}
-              </MenuItem>
-            ))}
-          </Select>
-        </Grid>
-        <Divider
-          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
-        />
-        <Grid className={classes.sideBarBox}>
-          <TextField
-            id="standard-multiline-static"
-            label="Your Title"
-            value={site.title}
-            onChange={e => this.handleChangeSiteTitle(e)}
-          />
-        </Grid>
+        <Select
+          autoComplete="true"
+          value={site && site.theme.name}
+          fullWidth
+          variant={"outlined"}
+          onChange={this.handleChangeTheme}
+        >
+          {themes.map((element, index) => (
+            <MenuItem value={element.name} key={index}>
+              {element.name}
+            </MenuItem>
+          ))}
+        </Select>
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
@@ -233,7 +222,17 @@ class DesignEditorTab extends React.Component {
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
-        <Typography className={classes.title}>Logo</Typography>
+        <Typography className={classes.title}>Title & Logo</Typography>
+        <TextField
+          label="Title"
+          variant={"outlined"}
+          fullWidth
+          value={site.title}
+          onChange={e => this.handleChangeSiteTitle(e)}
+        />
+        <Divider
+          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
+        />
         <Grid
           container
           className={classes.sideBarBox}
@@ -292,11 +291,14 @@ class DesignEditorTab extends React.Component {
           <Typography className={classes.title2}>Custom Color</Typography>
           <Button
             variant="contained"
-            color="primary"
+            color="default"
             onClick={() => setShowCustomColor(!isShow)}
           >
             Select custom color
           </Button>
+          <Divider
+            style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
+          />
           {isShow === true ? (
             <Grid
               style={{
