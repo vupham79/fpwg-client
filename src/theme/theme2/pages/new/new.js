@@ -1,67 +1,9 @@
-import React, { Component } from "react";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
+import { Grid } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import { Grid, Card, makeStyles, CssBaseline } from "@material-ui/core";
-import styles from "./new.module.css";
+import React, { Component } from "react";
 import { connect } from "react-redux";
-
-import Container from "@material-ui/core/Container";
-
-const useStyles = makeStyles(theme => ({
-  cardGrid: {
-    paddingTop: theme.spacing(8)
-  },
-  card: {
-    width: "100%",
-    display: "flex",
-    flexDirection: "column"
-  },
-  cardMedia: {
-    paddingTop: "56.25%" // 16:9
-  },
-  cardContent: {
-    flexGrow: 1
-  }
-}));
-
-function Album({ posts }) {
-  const classes = useStyles();
-
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container className={classes.cardGrid} maxWidth="md">
-        <Grid container spacing={4}>
-          {posts.map((card, index) => (
-            <Grid item xs={12} key={index} sm={6} md={4}>
-              <Card className={classes.card}>
-                <CardMedia
-                  className={classes.cardMedia}
-                  image={card.attachments.images[0]}
-                  title="Image title"
-                />
-                <CardContent className={classes.cardContent}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    Heading
-                  </Typography>
-                  <Typography>{card.message}</Typography>
-                </CardContent>
-                <CardActions style={{ justifyContent: "flex-end" }}>
-                  <Button size="small" color="primary">
-                    View more
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    </React.Fragment>
-  );
-}
+import styles from "./new.module.css";
+import PostTypeComponent from "../../../component/postsType";
 
 class NewPage extends Component {
   render() {
@@ -78,17 +20,23 @@ class NewPage extends Component {
           News
         </Grid>
         <Grid item sm={12} xs={12} container spacing={3}>
-          {posts ? (
-            isEdit ? (
-              <Grid container justify="center">
-                <Album posts={posts} />
+          {isEdit ? (
+            posts ? (
+              <Grid container>
+                <PostTypeComponent posts={posts} />
               </Grid>
             ) : (
-              siteView.posts && (
-                <Grid container justify="center">
-                  <Album posts={siteView.posts} />
-                </Grid>
-              )
+              <Grid container justify="center">
+                <Typography variant="body1">
+                  You don't have any news.
+                </Typography>
+              </Grid>
+            )
+          ) : siteView ? (
+            siteView.posts && (
+              <Grid container>
+                <PostTypeComponent posts={siteView.posts} />
+              </Grid>
             )
           ) : (
             <Grid container justify="center">
