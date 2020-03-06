@@ -4,12 +4,7 @@ import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Button, Grid, Typography, Divider } from "@material-ui/core";
 import styles from "./event.module.css";
-import moment from 'moment';
-
-const imgUrl = [
-  "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
-  "https://scontent.xx.fbcdn.net/v/t1.0-9/84357702_100161708215284_6628528314745094144_n.jpg?_nc_cat=111&_nc_ohc=j0bhRaMn6QIAX-D2JrZ&_nc_ht=scontent.xx&oh=00c77acfe89ec5953a9b1689b85308cb&oe=5EDA3199"
-];
+import moment from "moment";
 
 const imgStyles = {
   backgroundSize: "cover",
@@ -21,17 +16,9 @@ const imgStyles = {
 
 class EventComponent extends React.Component {
   render() {
-    const {
-      isEdit,
-      siteEdit,
-      siteView,
-      bodyEdit,
-      bodyView,
-      titleEdit,
-      titleView
-    } = this.props;
+    const { isEdit, siteEdit, siteView, titleEdit, titleView } = this.props;
 
-    const useStyles = theme => ({
+    const useStyles = () => ({
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
@@ -69,14 +56,14 @@ class EventComponent extends React.Component {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 15,
+        fontSize: 15
       },
       changableFirst2: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
-        fontSize: 30,
+        fontSize: 30
       },
       changableLegend: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -90,7 +77,7 @@ class EventComponent extends React.Component {
         textAlign: "center"
       },
       greyDiv: {
-        backgroundColor: 'white',
+        backgroundColor: "white",
         padding: 30,
         textAlign: "center",
         color: "#535353",
@@ -142,7 +129,11 @@ class EventComponent extends React.Component {
               <Grid item sm={12} container>
                 <Grid item sm={3}>
                   <div className={styles.image_page}>
-                    <img src={isEdit ? siteEdit.logo : siteView.logo} alt="./images/theme1-banner3.jpg" style={imgStyles} />
+                    <img
+                      src={isEdit ? siteEdit.logo : siteView.logo}
+                      alt="./images/theme1-banner3.jpg"
+                      style={imgStyles}
+                    />
                   </div>
                 </Grid>
                 <Grid item sm={9} container direction="column">
@@ -167,48 +158,85 @@ class EventComponent extends React.Component {
                 <Grid className={styles.event}>
                   <Typography className={styles.event_content}>
                     No upcoming event.
-                    </Typography>
+                  </Typography>
                 </Grid>
               )}
-              {siteEdit.events && siteEdit.events.map(row => (
-                <Grid item container sm={12} className={styles.contain_event} key={row.id} style={{ marginTop: 10 }}>
-
-                  <Grid container direction="row" item xs={2} style={{ height: '5rem' }} >
-                    <Grid item xs={12} style={classes.changableFirst}>
-                      {moment(row.createdTime).format('MMM').toUpperCase()}
+              {siteEdit.events &&
+                siteEdit.events.map(row => (
+                  <Grid
+                    item
+                    container
+                    sm={12}
+                    className={styles.contain_event}
+                    key={row.id}
+                    style={{ marginTop: 10 }}
+                  >
+                    <Grid
+                      container
+                      direction="row"
+                      item
+                      xs={2}
+                      style={{ height: "5rem" }}
+                    >
+                      <Grid item xs={12} style={classes.changableFirst}>
+                        {moment(row.createdTime)
+                          .format("MMM")
+                          .toUpperCase()}
+                      </Grid>
+                      <Grid item xs={12} style={classes.changableFirst2}>
+                        {moment(row.createdTime).format("D") + " "}
+                      </Grid>
                     </Grid>
-                    <Grid item xs={12} style={classes.changableFirst2}>
-                      {moment(row.createdTime).format('D') + " "}
+
+                    <Grid container direction="row" item xs={4}>
+                      <Grid item xs={12} style={{ fontWeight: "bold" }}>
+                        {row.name}
+                      </Grid>
+                      <Grid item xs={12} style={{ color: "#3578e5" }}>
+                        {moment(row.startTime).format("MMMM DD")} -{" "}
+                        {moment(row.endTime).format("MMMM DD")}
+                      </Grid>
+                    </Grid>
+
+                    <Grid container direction="row" item xs={6}>
+                      <Grid
+                        item
+                        xs={12}
+                        style={{
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          overflow: "hidden",
+                          display: "inline-block"
+                        }}
+                      >
+                        {row.place.name}
+                      </Grid>
+                      <Grid
+                        item
+                        xs={12}
+                        style={{
+                          color: "#90949c",
+                          whiteSpace: "nowrap",
+                          textOverflow: "ellipsis",
+                          overflow: "hidden",
+                          display: "inline-block"
+                        }}
+                      >
+                        {row.place.city}
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Divider
+                        color="#212121"
+                        style={{ marginLeft: 10, marginRight: 10 }}
+                      />
                     </Grid>
                   </Grid>
-
-                  <Grid container direction="row" item xs={4}>
-                    <Grid item xs={12} style={{ fontWeight: 'bold' }}>
-                      {row.name}
-                    </Grid>
-                    <Grid item xs={12} style={{ color: "#3578e5" }}>
-                      {moment(row.startTime).format('MMMM DD')} -  {moment(row.endTime).format('MMMM DD')}
-                    </Grid>
-                  </Grid>
-
-                  <Grid container direction="row" item xs={6} >
-                    <Grid item xs={12} style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', display: 'inline-block' }} >
-                      {row.place.name}
-                    </Grid>
-                    <Grid item xs={12} style={{ color: '#90949c', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', display: 'inline-block' }}>
-                      {row.place.city}
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <Divider color="#212121" style={{ marginLeft: 10, marginRight: 10 }} />
-                  </Grid>
-
-                </Grid>
-              ))}
+                ))}
             </Grid>
           </Grid>
         </Grid>
-      </Grid >
+      </Grid>
     );
   }
 }

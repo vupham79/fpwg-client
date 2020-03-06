@@ -2,6 +2,7 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import Layout from "../theme1/layout/layout";
 import { Routes } from "./routes/routes";
+import NotFound from "./components/NotFound";
 class Theme1 extends React.Component {
   render() {
     return (
@@ -15,6 +16,7 @@ class Theme1 extends React.Component {
               component={route.component}
             />
           ))}
+          <Route path="*" exact="true" component={NotFound} />
         </Switch>
       </Layout>
     );

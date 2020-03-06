@@ -215,6 +215,7 @@ class Theme1Home extends React.Component {
             showArrows={false}
             showStatus={false}
             showThumbs={false}
+            showIndicators={false}
             autoPlay={true}
             stopOnHover={true}
             infiniteLoop={true}

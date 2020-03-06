@@ -34,7 +34,15 @@ class FooterPage extends Component {
   }
 
   render() {
-    const { isEdit, titleEdit, bodyEdit, titleView, bodyView } = this.props;
+    const {
+      isEdit,
+      titleEdit,
+      bodyEdit,
+      titleView,
+      bodyView,
+      siteEdit,
+      siteView
+    } = this.props;
     return (
       <Grid container direction="row" className={styles.footer}>
         <Grid item sm={4} xs={12} className={styles.content}>
@@ -97,10 +105,12 @@ class FooterPage extends Component {
         <Divider className={styles.bot_divider} variant="middle" />
         <Grid item sm={12} xs={12} container className={styles.bot_footer}>
           <Grid item sm={9} container justify="flex-start">
-            <Typography variant="body1">© Foody</Typography>
+            <Typography variant="body1">
+              © {isEdit ? siteEdit.title : siteView.title}
+            </Typography>
           </Grid>
           <Grid item sm={3} container justify="center">
-            <Typography variant="body1">POWERED BY</Typography>
+            <Typography variant="body1">POWERED BY FPWG</Typography>
           </Grid>
         </Grid>
       </Grid>

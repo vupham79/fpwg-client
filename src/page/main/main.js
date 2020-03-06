@@ -93,7 +93,9 @@ class MainPage extends Component {
     pageId: "",
     pageName: "",
     sitepath: "",
-    isPublish: false
+    isPublish: false,
+    sitepathError: false,
+    pageUrlError: false
   };
 
   handleSelectPage = ({ id, link, name }) => {
@@ -114,16 +116,41 @@ class MainPage extends Component {
       getUserSites
     } = this.props;
     const { pageId, pageUrl, pageName, sitepath, isPublish } = this.state;
-    const confirm = await confirmPage({
-      pageId,
-      pageUrl,
-      accessToken,
-      profile,
-      name: pageName,
-      sitepath,
-      isPublish
-    });
-    confirm && (await getUserSites(userId, accessToken)) && closeDialog();
+    if (pageUrl && sitepath) {
+      this.setState({
+        pageUrlError: false,
+        sitepathError: false
+      });
+      const confirm = await confirmPage({
+        pageId,
+        pageUrl,
+        accessToken,
+        profile,
+        name: pageName,
+        sitepath,
+        isPublish
+      });
+      confirm && (await getUserSites(userId, accessToken)) && closeDialog();
+    } else {
+      if (!pageUrl) {
+        this.setState({
+          pageUrlError: true
+        });
+      } else {
+        this.setState({
+          pageUrlError: false
+        });
+      }
+      if (!sitepath) {
+        this.setState({
+          sitepathError: true
+        });
+      } else {
+        this.setState({
+          sitepathError: false
+        });
+      }
+    }
   };
 
   handleFetchData = async pageId => {
@@ -250,6 +277,7 @@ class MainPage extends Component {
                         <TextField
                           variant={"outlined"}
                           fullWidth
+                          error={this.state.sitepathError}
                           required
                           label="Sitepath"
                           onChange={e => this.handleChangeSitepath(e)}
@@ -267,6 +295,7 @@ class MainPage extends Component {
                         <TextField
                           fullWidth
                           required
+                          error={this.state.pageUrlError}
                           variant={"outlined"}
                           label="Facebook Page Url"
                           onChange={e => this.handleChangeURL(e)}
