@@ -2,6 +2,7 @@ import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
+import GalleryComponent from "../../../component/galleryComponent";
 
 class Theme1Gallery extends React.Component {
   render() {
@@ -119,25 +120,11 @@ class Theme1Gallery extends React.Component {
           </Grid>
         )}
         <Grid item xs={12}>
-          <Carousel
-            showArrows={true}
-            centerMode={true}
-            infiniteLoop={true}
-            showStatus={true}
-            showThumbs={false}
-            autoPlay={false}
-            showIndicators={false}
-          >
-            {isEdit
-              ? siteEdit.galleries &&
-                siteEdit.galleries.map(row => (
-                  <img style={{ height: "50vh" }} src={row.url} alt="" />
-                ))
-              : siteView.galleries &&
-                siteView.galleries.map(row => (
-                  <img style={{ height: "50vh" }} src={row.url} alt="" />
-                ))}
-          </Carousel>
+          {isEdit ? (
+            <GalleryComponent galleries={siteEdit.galleries} />
+          ) : (
+              <GalleryComponent galleries={siteView.galleries} />
+            )}
         </Grid>
       </Grid>
     );
