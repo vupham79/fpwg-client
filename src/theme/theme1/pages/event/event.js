@@ -1,10 +1,7 @@
-import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import styles from "./event.module.css";
-import eventComponent from "../../../component/eventComponent";
+import EventComponent from "../../../component/eventComponent";
 
 const imgUrl = [
   "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
@@ -21,91 +18,98 @@ const imgStyles = {
 
 class Theme1Event extends React.Component {
   render() {
-    const { siteEdit } = this.props;
+    const {
+      isEdit,
+      titleEdit,
+      titleView,
+      posts,
+      bodyEdit,
+      bodyView
+    } = this.props;
 
     const useStyles = theme => ({
+      changableLink: {
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+        color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        textAlign: "center",
+        fontStyle: "italic",
+        fontSize: 20
+      },
       changableTitle: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
         fontSize: 45,
         paddingBottom: 20
       },
-      changableName: {
-        fontFamily: siteEdit.fontTitle,
+      changableTitle2: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: siteEdit.color,
+        color: "#212121",
+        textAlign: "center",
+        fontSize: 20,
+        paddingBottom: 20
+      },
+      changableName: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        fontWeight: "bold",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "left",
         fontSize: 20
       },
       changableBody: {
-        fontFamily: siteEdit.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
-        textAlign: "center",
-        fontSize: 16
+        fontSize: 16,
+        textAlign: "justify"
       },
       changableBody2: {
-        fontFamily: siteEdit.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         textAlign: "left",
         fontSize: 16
       },
+      changableBody3: {
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+        color: "black",
+        textAlign: "center",
+        fontSize: 16
+      },
+      changableBody4: {
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+        color: "black",
+        textAlign: "center",
+        fontSize: 16
+      },
       pageName: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         fontSize: 20
       },
       changableFirst: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: siteEdit.color
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color
       },
-      changableLegend: {
-        fontFamily: siteEdit.fontTitle,
+      changableFirst2: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: "white",
-        zIndex: 5,
-        position: "absolute",
-        top: "50%",
-        left: "40%",
-        fontSize: 80,
-        textAlign: "center"
-      },
-      greyDiv: {
-        backgroundColor: "#e1ede4",
-        padding: 30,
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        color: "#535353",
         fontSize: 20
       },
-      centerItem: {
+      centerItem3: {
         display: "block",
-        width: 150,
         marginLeft: "auto",
         marginRight: "auto",
-        paddingTop: 50
-      },
-      centerItem2: {
-        display: "block",
-        height: 100,
-        justifyContent: "center",
-        alignItems: "center",
-        width: 400,
-        marginLeft: "auto",
-        marginRight: "auto"
-      },
-      changableAppBar: {
-        backgroundColor: "white",
-        opacity: 0.6,
-        position: "sticky",
-        color: "#535353",
-        textAlign: "right"
+        height: "100%",
+        backgroundColor: "white"
       }
     });
     const classes = useStyles();
@@ -118,7 +122,7 @@ class Theme1Event extends React.Component {
           </p>
         </Grid>
         <Grid item xs={12}>
-          <eventComponent />
+          <EventComponent />
         </Grid>
       </Grid>
     );
@@ -126,7 +130,14 @@ class Theme1Event extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit,
+  siteView: state.site.siteView,
+  titleEdit: state.site.titleEdit,
+  titleView: state.site.titleView,
+  posts: state.post.posts,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView
 });
 
 export default connect(mapStateToProps, null)(Theme1Event);

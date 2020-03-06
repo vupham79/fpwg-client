@@ -1,7 +1,7 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-// import Moment from 'react-moment';
+import moment from 'moment';
 import { Carousel } from "react-responsive-carousel";
 
 class Theme1News extends React.Component {
@@ -92,21 +92,38 @@ class Theme1News extends React.Component {
         textAlign: "center",
         fontSize: 20
       },
+      changableFirst5: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        fontWeight: "bold",
+        color: "#212121",
+        textAlign: "center",
+        fontSize: 45,
+        textDecoration: "underline",
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color
+      },
       centerItem3: {
         display: "block",
         marginLeft: "auto",
         marginRight: "auto",
         height: "100%",
         backgroundColor: "white"
-      }
+      },
+      changableTitle5: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        fontWeight: "bold",
+        color: "#212121",
+        textAlign: "center",
+        fontSize: 45,
+        paddingBottom: 20
+      },
     });
     const classes = useStyles();
 
     return (
       <Grid container>
         <Grid item xs={12}>
-          <p style={classes.changableTitle2}>
-            <span style={classes.changableFirst2}>N</span>EWS
+          <p style={classes.changableTitle5}>
+            <span style={classes.changableFirst5}>N</span>EWS
           </p>
         </Grid>
         {!posts && (
@@ -139,7 +156,11 @@ class Theme1News extends React.Component {
                       style={{ height: 200, width: 200 }}
                     />
                     <p style={classes.changableTitle2}>
-                      {/* <Moment format="MMMM">{row.createdTime}</Moment> <span style={classes.changableFirst2}><Moment format="DD">{row.createdTime}</Moment> </span>, <Moment format="YYYY">{row.createdTime}</Moment> */}
+                      {moment(row.createdTime).format('MMMM') + " "}
+                      <span style={classes.changableFirst2}>
+                        {moment(row.createdTime).format('DD') + " "}
+                      </span>
+                      {moment(row.createdTime).format('YYYY')}
                     </p>
                     <p style={classes.changableBody3}>
                       {row.message ? row.message : ""}

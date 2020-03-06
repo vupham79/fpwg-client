@@ -2,8 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { faFacebookSquare } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Button, Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Typography, Divider } from "@material-ui/core";
 import styles from "./event.module.css";
+import moment from 'moment';
 
 const imgUrl = [
   "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
@@ -18,17 +19,21 @@ const imgStyles = {
   height: "100%"
 };
 
-class eventComponent extends React.Component {
+class EventComponent extends React.Component {
   render() {
     const {
       isEdit,
       siteEdit,
-      siteView
+      siteView,
+      bodyEdit,
+      bodyView,
+      titleEdit,
+      titleView
     } = this.props;
 
     const useStyles = theme => ({
       changableTitle: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
@@ -36,9 +41,9 @@ class eventComponent extends React.Component {
         paddingBottom: 20
       },
       changableName: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: siteEdit.color,
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "left",
         fontSize: 20
       },
@@ -55,22 +60,26 @@ class eventComponent extends React.Component {
         fontSize: 16
       },
       pageName: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         fontSize: 20
       },
       changableFirst: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        color: isEdit ? titleEdit.color : titleView.color,
+        textAlign: "center",
+        fontSize: 15,
+      },
+      changableFirst2: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
-        fontSize: 45,
-        textDecoration: "underline",
-        textDecorationColor: siteEdit.color
+        fontSize: 30,
       },
       changableLegend: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "white",
         zIndex: 5,
@@ -81,7 +90,7 @@ class eventComponent extends React.Component {
         textAlign: "center"
       },
       greyDiv: {
-        backgroundColor: "#e1ede4",
+        backgroundColor: 'white',
         padding: 30,
         textAlign: "center",
         color: "#535353",
@@ -116,11 +125,6 @@ class eventComponent extends React.Component {
     return (
       <Grid container>
         <Grid item xs={12}>
-          <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>E</span>VENTS
-            </p>
-        </Grid>
-        <Grid item xs={12}>
           <Grid
             container
             alignItems="center"
@@ -138,14 +142,14 @@ class eventComponent extends React.Component {
               <Grid item sm={12} container>
                 <Grid item sm={3}>
                   <div className={styles.image_page}>
-                    <img alt="" src={imgUrl[1]} style={imgStyles} />
+                    <img src={isEdit ? siteEdit.logo : siteView.logo} alt="./images/theme1-banner3.jpg" style={imgStyles} />
                   </div>
                 </Grid>
                 <Grid item sm={9} container direction="column">
                   <Grid>
                     <Typography variant="h6" style={classes.changableName}>
-                      Page name
-                      </Typography>
+                      {isEdit ? siteEdit.title : siteView.title}
+                    </Typography>
                   </Grid>
                   <Grid>
                     <Button className={styles.btn_like}>
@@ -159,25 +163,65 @@ class eventComponent extends React.Component {
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item container sm={12} className={styles.contain_event}>
+              {!siteEdit.events && (
                 <Grid className={styles.event}>
                   <Typography className={styles.event_content}>
-                    Page name does not have any upcoming event.
+                    No upcoming event.
                     </Typography>
                 </Grid>
-              </Grid>
+              )}
+              {siteEdit.events && siteEdit.events.map(row => (
+                <Grid item container sm={12} className={styles.contain_event} key={row.id} style={{ marginTop: 10 }}>
+
+                  <Grid container direction="row" item xs={2} style={{ height: '5rem' }} >
+                    <Grid item xs={12} style={classes.changableFirst}>
+                      {moment(row.createdTime).format('MMM').toUpperCase()}
+                    </Grid>
+                    <Grid item xs={12} style={classes.changableFirst2}>
+                      {moment(row.createdTime).format('D') + " "}
+                    </Grid>
+                  </Grid>
+
+                  <Grid container direction="row" item xs={4}>
+                    <Grid item xs={12} style={{ fontWeight: 'bold' }}>
+                      {row.name}
+                    </Grid>
+                    <Grid item xs={12} style={{ color: "#3578e5" }}>
+                      {moment(row.startTime).format('MMMM DD')} -  {moment(row.endTime).format('MMMM DD')}
+                    </Grid>
+                  </Grid>
+
+                  <Grid container direction="row" item xs={6} >
+                    <Grid item xs={12} style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', display: 'inline-block' }} >
+                      {row.place.name}
+                    </Grid>
+                    <Grid item xs={12} style={{ color: '#90949c', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden', display: 'inline-block' }}>
+                      {row.place.city}
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Divider color="#212121" style={{ marginLeft: 10, marginRight: 10 }} />
+                  </Grid>
+
+                </Grid>
+              ))}
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid >
     );
   }
 }
 
 const mapStateToProps = state => ({
-  isEdit: state.site.isEdit,
-  siteView: state.site.siteView,
   siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit,
+  titleView: state.site.titleView,
+  titleEdit: state.site.titleEdit,
+  siteView: state.site.siteView,
+  posts: state.post.posts,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView
 });
 
-export default connect(mapStateToProps, null)(eventComponent);
+export default connect(mapStateToProps, null)(EventComponent);
