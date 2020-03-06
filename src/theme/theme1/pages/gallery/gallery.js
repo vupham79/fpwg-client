@@ -5,7 +5,15 @@ import { Carousel } from "react-responsive-carousel";
 
 class Theme1Gallery extends React.Component {
   render() {
-    const { isEdit, titleEdit, titleView, siteEdit, siteView, bodyEdit, bodyView } = this.props;
+    const {
+      isEdit,
+      titleEdit,
+      titleView,
+      siteEdit,
+      siteView,
+      bodyEdit,
+      bodyView
+    } = this.props;
 
     const useStyles = theme => ({
       changableTitle: {
@@ -120,12 +128,15 @@ class Theme1Gallery extends React.Component {
             autoPlay={false}
             showIndicators={false}
           >
-            {isEdit ? siteEdit.galleries && siteEdit.galleries.map((row) => (
-              <img style={{ height: '50vh' }} src={row} alt="./images/theme1-banner1.jpg" />
-            )) : (
-                siteView.galleries && siteView.galleries.map((row) => (
-                  <img style={{ height: '50vh' }} src={row} alt="./images/theme1-banner1.jpg" />
-                )))}
+            {isEdit
+              ? siteEdit.galleries &&
+                siteEdit.galleries.map(row => (
+                  <img style={{ height: "50vh" }} src={row.url} alt="" />
+                ))
+              : siteView.galleries &&
+                siteView.galleries.map(row => (
+                  <img style={{ height: "50vh" }} src={row.url} alt="" />
+                ))}
           </Carousel>
         </Grid>
       </Grid>

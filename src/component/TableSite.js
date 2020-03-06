@@ -83,7 +83,7 @@ class TableSite extends Component {
   };
 
   handleSearch = keyword => {
-    let searchResult = this.props.sites.filter(function (site) {
+    let searchResult = this.props.sites.filter(function(site) {
       return site.title.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -138,36 +138,36 @@ class TableSite extends Component {
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-            this.state.filteredData.map((row, index) => (
-              <div key={row.id}>
-                <Grid container direction="row">
-                  <Grid item xs={2}>
-                    {row.displayName}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.title}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.theme.name}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.categories.map(c => c.name + ", ")}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.sitePath}
-                  </Grid>
-                  <Grid item xs={2}>
-                    <PublishButtonAdmin
-                      siteId={row.id}
-                      siteName={row.title}
-                      isPublish={row.isPublish}
-                    />
-                  </Grid>
+          this.state.filteredData.map((row, index) => (
+            <div key={row.id}>
+              <Grid container direction="row">
+                <Grid item xs={2}>
+                  {row.displayName}
                 </Grid>
-                <Divider />
-              </div>
-            ))
-          )}
+                <Grid item xs={2}>
+                  {row.title}
+                </Grid>
+                <Grid item xs={2}>
+                  {row.theme && row.theme.name}
+                </Grid>
+                <Grid item xs={2}>
+                  {row.categories && row.categories.map(c => c.name + ", ")}
+                </Grid>
+                <Grid item xs={2}>
+                  {row.sitePath}
+                </Grid>
+                <Grid item xs={2}>
+                  <PublishButtonAdmin
+                    siteId={row.id}
+                    siteName={row.title}
+                    isPublish={row.isPublish}
+                  />
+                </Grid>
+              </Grid>
+              <Divider />
+            </div>
+          ))
+        )}
 
         <div className="commentBox">
           <ReactPaginate

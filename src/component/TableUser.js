@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { getAllUsers } from "../actions";
 import ActivateButton from "./ActivateButton";
 import Title from "./Title";
-import './adminStyleSheet.css'
+import "./adminStyleSheet.css";
 
 const useStyles = theme => ({
   root: {
@@ -29,8 +29,8 @@ class TableUser extends Component {
   state = {
     filteredData: [],
     pageCount: 1,
-    offset: 0,
-    itemPerPage: 2 // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
+    offset: 1,
+    itemPerPage: 5 // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
   };
 
   setListData = listData => {
@@ -76,7 +76,7 @@ class TableUser extends Component {
   };
 
   handleSearch = keyword => {
-    let searchResult = this.props.users.filter(function (user) {
+    let searchResult = this.props.users.filter(function(user) {
       return user.displayName.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -129,36 +129,36 @@ class TableUser extends Component {
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-            this.state.filteredData.map((row, index) => (
-              <div key={row.id}>
-                <Grid container direction="row">
-                  <Grid item xs={1}>
-                    <img
-                      style={{ height: 30, width: 30 }}
-                      src={row.picture}
-                      alt=""
-                    />
-                  </Grid>
-                  <Grid item xs={3}>
-                    {row.displayName}
-                  </Grid>
-                  <Grid item xs={3}>
-                    {row.email}
-                  </Grid>
-                  <Grid item xs={3}>
-                    {row.phone}
-                  </Grid>
-                  <Grid item xs={2}>
-                    <ActivateButton
-                      userId={row.id}
-                      isActivated={row.isActivated}
-                    />
-                  </Grid>
+          this.state.filteredData.map((row, index) => (
+            <div key={row.id}>
+              <Grid container direction="row">
+                <Grid item xs={1}>
+                  <img
+                    style={{ height: 30, width: 30 }}
+                    src={row.picture}
+                    alt=""
+                  />
                 </Grid>
-                <Divider />
-              </div>
-            ))
-          )}
+                <Grid item xs={3}>
+                  {row.displayName}
+                </Grid>
+                <Grid item xs={3}>
+                  {row.email}
+                </Grid>
+                <Grid item xs={3}>
+                  {row.phone}
+                </Grid>
+                <Grid item xs={2}>
+                  <ActivateButton
+                    userId={row.id}
+                    isActivated={row.isActivated}
+                  />
+                </Grid>
+              </Grid>
+              <Divider />
+            </div>
+          ))
+        )}
         <div className="commentBox">
           <ReactPaginate
             previousLabel={"previous"}
