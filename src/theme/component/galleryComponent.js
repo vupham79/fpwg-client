@@ -48,7 +48,7 @@ class GalleryComponent extends React.Component {
       <React.Fragment>
         <CssBaseline />
         <Container className={classes.root}>
-          <Grid container spacing={3} justify="center">
+          <Grid container spacing={2} justify="center">
             {galleries ? (
               galleries.map((item, index) => (
                 <Grid
@@ -56,7 +56,7 @@ class GalleryComponent extends React.Component {
                   key={index}
                   xs={12}
                   sm={4}
-                  md={2}
+                  md={3}
                   className={classes.gridItems}
                 >
                   <img

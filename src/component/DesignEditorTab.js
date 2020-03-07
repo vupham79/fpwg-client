@@ -26,7 +26,6 @@ import {
   setColorPallete
 } from "../actions";
 import toastr from "./Toastr";
-import styles from "./index.module.css";
 
 const useStyles = theme => ({
   content: {
@@ -150,9 +149,11 @@ class DesignEditorTab extends React.Component {
       var output = document.getElementById("preview");
       var siteEditLogo = document.getElementById("siteLogo");
       output.src = URL.createObjectURL(e.target.files[0]);
-      siteEditLogo.style.backgroundImage = `url('${URL.createObjectURL(
-        e.target.files[0]
-      )}')`;
+      if (siteEditLogo) {
+        siteEditLogo.style.backgroundImage = `url('${URL.createObjectURL(
+          e.target.files[0]
+        )}')`;
+      }
       this.setState({ file });
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
@@ -265,7 +266,7 @@ class DesignEditorTab extends React.Component {
                 color={"primary"}
                 onClick={() => uploadLogo(this.state.file, site)}
               >
-                Save
+                Save Logo
               </Button>
             </Grid>
           </Grid>

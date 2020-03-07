@@ -15,6 +15,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ExampleComponent from "react-rounded-image";
 import moment from "moment";
 import EventComponent from "../../../component/eventComponent";
+import GalleryComponent from "../../../component/galleryComponent";
 
 class Theme1Home extends React.Component {
   state = {
@@ -208,21 +209,21 @@ class Theme1Home extends React.Component {
           >
             {isEdit
               ? siteEdit.cover &&
-                siteEdit.cover.map(row => (
-                  <img
-                    style={{ height: "50vh" }}
-                    src={row}
-                    alt="./images/theme1-banner1.jpg"
-                  />
-                ))
+              siteEdit.cover.map(row => (
+                <img
+                  style={{ height: "50vh" }}
+                  src={row}
+                  alt="./images/theme1-banner1.jpg"
+                />
+              ))
               : siteView.cover &&
-                siteView.cover.map(row => (
-                  <img
-                    style={{ height: "50vh" }}
-                    src={row}
-                    alt="./images/theme1-banner1.jpg"
-                  />
-                ))}
+              siteView.cover.map(row => (
+                <img
+                  style={{ height: "50vh" }}
+                  src={row}
+                  alt="./images/theme1-banner1.jpg"
+                />
+              ))}
           </Carousel>
         </Grid>
         <Grid item xs={12}>
@@ -320,7 +321,7 @@ class Theme1Home extends React.Component {
           </Grid>
         )}
         <Grid item xs={12}>
-          <Carousel
+          {/* <Carousel
             showArrows={true}
             centerMode={true}
             infiniteLoop={true}
@@ -338,7 +339,12 @@ class Theme1Home extends React.Component {
                 siteView.galleries.map(row => (
                   <img style={{ height: "50vh" }} src={row.url} alt="" />
                 ))}
-          </Carousel>
+          </Carousel> */}
+          {isEdit ? (
+            <GalleryComponent galleries={siteEdit.galleries} />
+          ) : (
+              <GalleryComponent galleries={siteView.galleries} />
+            )}
         </Grid>
         <div style={{ height: 100, width: "100%" }} />
         <Grid item xs={12}>

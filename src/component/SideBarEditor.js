@@ -90,7 +90,7 @@ class ClippedDrawer extends React.Component {
             variant="contained"
             onClick={() => saveDesignSite(siteEdit)}
           >
-            Save
+            Save Design
           </Button>
         </Drawer>
       </AppBar>

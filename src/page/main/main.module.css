@@ -24,7 +24,7 @@
 }
 
 .nav_icon {
-  color: rgb(68, 70, 211) !important;
+  /* color: rgb(68, 70, 211) !important; */
   margin-right: 3vh;
   font-size: 3.5vh !important;
 }
@@ -126,6 +126,7 @@
   border: 1px solid black;
   border-radius: 1vh;
   padding: 0.5rem;
+  min-height: 5rem;
 }
 
 .web_icon {
