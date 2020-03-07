@@ -209,18 +209,20 @@ class Theme1Home extends React.Component {
           >
             {isEdit
               ? siteEdit.cover &&
-              siteEdit.cover.map(row => (
+              siteEdit.cover.map((row, i) => (
                 <img
                   style={{ height: "50vh" }}
                   src={row}
+                  key={i}
                   alt="./images/theme1-banner1.jpg"
                 />
               ))
               : siteView.cover &&
-              siteView.cover.map(row => (
+              siteView.cover.map((row, i) => (
                 <img
                   style={{ height: "50vh" }}
                   src={row}
+                  key={i}
                   alt="./images/theme1-banner1.jpg"
                 />
               ))}
