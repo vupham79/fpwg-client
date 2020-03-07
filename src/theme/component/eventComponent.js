@@ -120,7 +120,7 @@ class EventComponent extends React.Component {
                 siteEdit.events.filter(
                   row =>
                     !row.isCancelled && moment(row.endTime).isAfter(moment())
-                ).length == 0 && (
+                ).length === 0 && (
                   <Grid className={styles.event}>
                     <p style={classes.changableBody}>No upcoming event.</p>
                   </Grid>
@@ -131,7 +131,7 @@ class EventComponent extends React.Component {
                 siteView.events.filter(
                   row =>
                     !row.isCancelled && moment(row.endTime).isAfter(moment())
-                ).length == 0 && (
+                ).length === 0 && (
                   <Grid className={styles.event}>
                     <p style={classes.changableBody}>No upcoming event.</p>
                   </Grid>
@@ -317,7 +317,7 @@ class EventComponent extends React.Component {
                     row.isCancelled ||
                     moment(row.endTime).isSameOrBefore(moment()) ||
                     !row.endTime
-                ).length == 0 && (
+                ).length === 0 && (
                   <Grid className={styles.event}>
                     <p style={classes.changableBody}>No past event.</p>
                   </Grid>
@@ -330,7 +330,7 @@ class EventComponent extends React.Component {
                     row.isCancelled ||
                     moment(row.endTime).isSameOrBefore(moment()) ||
                     !row.endTime
-                ).length == 0 && (
+                ).length === 0 && (
                   <Grid className={styles.event}>
                     <p style={classes.changableBody}>No past event.</p>
                   </Grid>
