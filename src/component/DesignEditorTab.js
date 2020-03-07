@@ -105,7 +105,7 @@ class DesignEditorTab extends React.Component {
 
   handleChangeTheme = event => {
     const { changeTheme, themes, site } = this.props;
-    const theme = themes.find(e => e.name === event.target.value);
+    const theme = themes.find(e => e.id === event.target.value);
     site.theme = theme;
     changeTheme(site);
   };
@@ -181,13 +181,13 @@ class DesignEditorTab extends React.Component {
         <Typography className={classes.title}>Theme</Typography>
         <Select
           autoComplete="true"
-          value={site && site.theme.name}
+          value={site && site.theme.id}
           fullWidth
           variant={"outlined"}
           onChange={this.handleChangeTheme}
         >
           {themes.map((element, index) => (
-            <MenuItem value={element.name} key={index}>
+            <MenuItem value={element.id} key={index}>
               {element.name}
             </MenuItem>
           ))}

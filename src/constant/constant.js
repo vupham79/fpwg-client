@@ -22,7 +22,7 @@ import PreNewPage from "../theme/theme2/pages/new";
 
 export const themes = [
   {
-    name: "New York",
+    id: "k5e520ab785bc282f048799ce",
     component: <Theme1 />,
     pages: [
       { name: "Home", component: <PreHomePageT1 /> },
@@ -34,7 +34,7 @@ export const themes = [
     ]
   },
   {
-    name: "Paris",
+    id: "5e50a9d494f9d83350f7398d",
     component: <Theme2 />,
     pages: [
       { name: "Home", component: <PreHomePage /> },

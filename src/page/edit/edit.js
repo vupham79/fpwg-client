@@ -8,7 +8,7 @@ class EditPage extends Component {
     const { siteEdit } = this.props;
     if (siteEdit) {
       const theme = siteEdit
-        ? themesConstant.find(e => e.name === siteEdit.theme.name)
+        ? themesConstant.find(e => e.id === siteEdit.theme.id)
         : null;
       return <EditLayout>{theme && theme.component}</EditLayout>;
     }
