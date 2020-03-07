@@ -416,9 +416,9 @@ class EventComponent extends React.Component {
                 siteView.events &&
                 siteView.events.map(row => {
                   return (
-                    row.isCancelled ||
-                    moment(row.endTime).isSameOrBefore(moment()) ||
-                    (!row.endTime && (
+                    (row.isCancelled ||
+                      moment(row.endTime).isSameOrBefore(moment()) ||
+                      !row.endTime) && (
                       <Grid
                         item
                         container
@@ -485,7 +485,7 @@ class EventComponent extends React.Component {
                           </Grid>
                         </Grid>
                       </Grid>
-                    ))
+                    )
                   );
                 })}
             </Grid>
