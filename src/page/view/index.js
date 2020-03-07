@@ -71,8 +71,7 @@ class PreViewSite extends React.Component {
             families: [siteView.fontTitle, siteView.fontBody]
           }
         });
-        return themesConstant.find(e => e.name === siteView.theme.name)
-          .component;
+        return themesConstant.find(e => e.id === siteView.theme.id).component;
       }
       return (
         <Grid container justify="center">

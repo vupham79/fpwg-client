@@ -26,8 +26,7 @@ class Layout extends Component {
     const { navItemValue, siteEdit } = this.props;
     const pages =
       siteEdit &&
-      themesConstant.find(element => element.name === siteEdit.theme.name)
-        .pages;
+      themesConstant.find(element => element.id === siteEdit.theme.id).pages;
     return (
       <TabItem
         tabValue={navItemValue && navItemValue}

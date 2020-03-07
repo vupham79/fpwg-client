@@ -40,7 +40,8 @@ const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
-  siteView: state.site.siteView
+  siteView: state.site.siteView,
+  titleView: state.site.titleView
 });
 
 export default connect(mapStateToProps, null)(GalleryPage);

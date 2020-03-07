@@ -22,7 +22,16 @@ const useStyles = makeStyles(theme => ({
   card: {
     width: "100%",
     display: "flex",
-    flexDirection: "column"
+    flexDirection: "column",
+    height: "22rem"
+  },
+  message: {
+    overflow: "hidden",
+    height: "3rem"
+  },
+  title: {
+    overflow: "hidden",
+    height: "1.5rem"
   },
   cardMediaAlbum: {
     backgroundRepeat: "no-repeat",
@@ -30,15 +39,18 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: "cover"
   },
   cardMedia: {
-    paddingTop: "60%"
+    paddingTop: "60%",
+    backgroundSize: "contain",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat"
   },
   album: {
-    padding: "20%",
+    padding: "17%",
     background: "rgba(24, 20, 20, 0.5)"
   },
   cardContent: {
     flexGrow: 1,
-    paddingTop: theme.spacing(3)
+    padding: theme.spacing(1)
   },
   gridItems: {
     maxHeight: 350
@@ -80,17 +92,19 @@ function TypeAlbum({ post, openDialog }) {
               justify="center"
               className={classes.album}
             >
-              <Typography variant="h4" style={{ color: "white" }}>
+              <Typography variant="h3" style={{ color: "white" }}>
                 {post.attachments.images.length} +
               </Typography>
             </Grid>
           </CardMedia>
 
           <CardContent className={classes.cardContent}>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography className={classes.title} gutterBottom variant="h6">
               {post.title}
             </Typography>
-            <Typography>{post.message && post.message}</Typography>
+            <Typography className={classes.message}>
+              {post.message && post.message}
+            </Typography>
           </CardContent>
           <CardActions>
             <Button
@@ -123,10 +137,12 @@ function TypePhoto({ post, openDialog }) {
             title="Image title"
           />
           <CardContent className={classes.cardContent}>
-            <Typography gutterBottom variant="h5" component="h2">
+            <Typography className={classes.title} gutterBottom variant="h6">
               {post.title}
             </Typography>
-            <Typography>{post.message && post.message}</Typography>
+            <Typography className={classes.message}>
+              {post.message && post.message}
+            </Typography>
           </CardContent>
           <CardActions>
             <Button

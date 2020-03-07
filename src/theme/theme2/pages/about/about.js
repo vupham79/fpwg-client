@@ -28,19 +28,20 @@ class AboutPage extends React.Component {
           </Typography>
           <Divider className="divider" variant="middle" />
         </Grid>
-        <Grid container item sm={10} xs={10} justify="flex-start">
+        <Grid container item sm={10} xs={10} justify="center">
           <Typography
             variant="body1"
             color="textPrimary"
             style={isEdit ? bodyEdit : bodyView}
+            className={styles.about}
           >
             {isEdit
-              ? siteEdit && siteEdit.length > 0
+              ? siteEdit && siteEdit.about
                 ? siteEdit.about
-                : "  Welcome to our website! Take a look around and feel free to contact us for more information."
-              : siteView && siteView.length > 0
+                : "Welcome to our website! Take a look around and feel free to contact us for more information."
+              : siteView && siteView.about
               ? siteView.about
-              : "  Welcome to our website! Take a look around and feel free to contact us for more information."}
+              : "Welcome to our website! Take a look around and feel free to contact us for more information."}
           </Typography>
         </Grid>
       </Grid>

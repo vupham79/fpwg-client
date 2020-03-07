@@ -59,7 +59,7 @@ class CarouselImages extends Component {
   }
 
   render() {
-    // const { siteEdit } = this.props;
+    const { siteEdit, siteView, bodyEdit, bodyView, isEdit } = this.props;
     return (
       <Grid
         container
@@ -68,15 +68,54 @@ class CarouselImages extends Component {
         className={styles.carousel_wrapper}
       >
         <Grid item sm={12} className={styles.images_slider}>
-          <img
-            src={imgUrl[this.state.currentImageIndex]}
-            alt=""
-            style={imgStyles}
-          />
+          {isEdit ? (
+            siteEdit.cover ? (
+              siteEdit.cover.map((img, index) => (
+                <img
+                  key={index}
+                  src={img[this.state.currentImageIndex]}
+                  alt=""
+                  style={imgStyles}
+                />
+              ))
+            ) : (
+              <img
+                src={imgUrl[this.state.currentImageIndex]}
+                alt=""
+                style={imgStyles}
+              />
+            )
+          ) : siteView.cover ? (
+            siteView.cover.map((img, index) => (
+              <img
+                key={index}
+                src={img[this.state.currentImageIndex]}
+                alt=""
+                style={imgStyles}
+              />
+            ))
+          ) : (
+            <img
+              src={imgUrl[this.state.currentImageIndex]}
+              alt=""
+              style={imgStyles}
+            />
+          )}
         </Grid>
-        <Grid item sm={10} xs={12} className={styles.info}>
-          Welcome to our website! Take a look around and feel free to contact us
-          for more information.
+        <Grid
+          item
+          sm={10}
+          xs={12}
+          className={styles.info}
+          style={isEdit ? bodyEdit : bodyView}
+        >
+          {isEdit
+            ? siteEdit && siteEdit.about
+              ? siteEdit.about
+              : "Welcome to our website! Take a look around and feel free to contact us for more information."
+            : siteView && siteView.about
+            ? siteView.about
+            : "Welcome to our website! Take a look around and feel free to contact us for more information."}
         </Grid>
       </Grid>
     );
@@ -84,7 +123,11 @@ class CarouselImages extends Component {
 }
 
 const mapStateToProps = state => ({
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView,
+  siteView: state.site.siteView,
+  isEdit: state.site.isEdit
 });
 
 export default connect(mapStateToProps, null)(CarouselImages);

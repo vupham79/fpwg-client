@@ -115,14 +115,14 @@ class Header extends Component {
                 )}
               </Grid>
             </Grid>
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={12} md={8}>
               <Grid container justify="flex-end">
                 {isEdit
                   ? this.renderTabItems()
                   : siteView.navItems &&
                     siteView.navItems.map((item, index) =>
                       item.isActive ? (
-                        <Grid item xs={2} sm={1} key={index}>
+                        <Grid item xs={2} sm={2} md={1} key={index}>
                           <Link
                             style={titleView}
                             to={`/${siteView.sitePath}/${item.name}`}
