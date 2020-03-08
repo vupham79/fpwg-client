@@ -19,12 +19,8 @@ class LoginPage extends Component {
         var accessToken = result.credential.accessToken;
         // The signed-in user info.
         var profile = result.additionalUserInfo.profile;
-        if (result.user.emailVerified) {
-          await login({ accessToken, profile });
-          return <Redirect to={"/view"} />;
-        } else {
-          result.user.sendEmailVerification({ url: "http://localhost:3000" });
-        }
+        await login({ accessToken, profile });
+        return <Redirect to={"/view"} />;
       })
       .catch(function(error) {
         console.log(error);
