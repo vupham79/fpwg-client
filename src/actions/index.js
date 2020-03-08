@@ -37,7 +37,8 @@ import {
   getAllThemes,
   getAllThemesAdmin,
   getNavItems,
-  setShowCustomColor
+  setShowCustomColor,
+  updateTheme
 } from "./theme";
 import {
   activateUser,
@@ -107,5 +108,6 @@ export {
   getSiteBySitepath,
   setColorPallete,
   setNavItemActive,
-  setNavItemInActive
+  setNavItemInActive,
+  updateTheme
 };
