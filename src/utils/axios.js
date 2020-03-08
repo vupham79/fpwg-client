@@ -15,6 +15,7 @@ export default ({
     url,
     data,
     params,
-    baseURL
+    baseURL,
+    withCredentials: true
   });
 };

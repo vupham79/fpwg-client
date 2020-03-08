@@ -42,11 +42,7 @@ export function getUserSites(userId, accessToken) {
     });
     try {
       const req = await axios({
-        url: "/site/findAllByUser",
-        params: {
-          userId: userId,
-          accessToken: accessToken
-        }
+        url: "/site/findAllByUser"
       });
       dispatch({
         type: "CLOSE_LOADING"
