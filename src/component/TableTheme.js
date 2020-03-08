@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Divider, IconButton, InputBase, Paper, Button, Dialog, TextField } from "@material-ui/core";
+import { Grid, Divider, IconButton, InputBase, Paper, Button, Dialog, TextField, DialogTitle, DialogContent, DialogActions } from "@material-ui/core";
 import Title from "./Title";
 import { connect } from "react-redux";
 import { getAllThemesAdmin, updateTheme } from "../actions";
@@ -230,63 +230,59 @@ class TableTheme extends Component {
           />
         </div>
         <Dialog open={this.state.showDialog} onClose={() => this.setCloseDialogue()} maxWidth="sm" fullWidth>
+          <DialogTitle>
+            Edit theme
+          </DialogTitle>
 
-          <Grid container xs={12} justify="center" alignContent="center" style={{ padding: 10, overflowY: 'scroll' }}>
+          <DialogContent>
+            <Grid container xs={12} direction="row" >
+              <Grid container item xs={7}>
 
-            <Grid item xs={12}>
-              <p style={{ textAlign: "left", fontWeight: "bold" }}>Name</p>
+                <Grid item xs={12}>
+                  <TextField
+                    label="Name"
+                    color="primary"
+                    value={this.state.updateData.name}
+                    onChange={e => this.handleChangeName(e)}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <GoogleFontPicker
+                    label="Body"
+                    searchable
+                    buttonColor={"primary"}
+                    buttonVariant={"text"}
+                    defaultFont={this.state.updateData.fontBody}
+                    onFontSelected={this.handleChangeFontBody}
+                  />
+                </Grid>
+
+                <Grid item xs={12}>
+                  <GoogleFontPicker
+                    label="Title"
+                    searchable
+                    buttonColor={"primary"}
+                    buttonVariant={"text"}
+                    defaultFont={this.state.updateData.fontTitle}
+                    onFontSelected={this.handleChangeFontTitle}
+                  />
+                </Grid>
+
+              </Grid>
+              <Grid item xs={4}>
+                <ChromePicker
+                  color={this.state.updateData.mainColor}
+                  onChangeComplete={this.handleChangeColor}
+                />
+              </Grid>
             </Grid>
+          </DialogContent>
 
-            <Grid item xs={5}>
-              <TextField
-                variant="outlined"
-                required
-                value={this.state.updateData.name}
-                onChange={e => this.handleChangeName(e)}
-              />
-            </Grid>
+          <DialogActions>
+            <Button autoFocus variant="contained" color="primary" onClick={() => this.handleUpdate(this.state.updateData)}>Update</Button>
+          </DialogActions>
 
-            <Grid item xs={12}>
-              <p style={{ textAlign: "left", fontWeight: "bold" }}>Font Body</p>
-            </Grid>
-
-            <Grid item xs={5}>
-              <GoogleFontPicker
-                searchable
-                buttonColor={"default"}
-                buttonVariant={"outlined"}
-                defaultFont={this.state.updateData.fontBody}
-                onFontSelected={this.handleChangeFontBody}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <p style={{ textAlign: "left", fontWeight: "bold" }}>Font Title</p>
-            </Grid>
-
-            <Grid item xs={5}>
-              <GoogleFontPicker
-                searchable
-                buttonColor={"default"}
-                buttonVariant={"outlined"}
-                defaultFont={this.state.updateData.fontTitle}
-                onFontSelected={this.handleChangeFontTitle}
-              />
-            </Grid>
-
-            <Grid item xs={12}>
-              <p style={{ textAlign: "left", fontWeight: "bold" }}>Main color</p>
-            </Grid>
-
-            <Grid item xs={5}>
-              <ChromePicker
-                color={this.state.updateData.mainColor}
-                onChangeComplete={this.handleChangeColor}
-              />
-            </Grid>
-
-          </Grid>
-          <Button fullWidth color="primary" variant="contained" style={{ postion: 'fixed' }} onClick={() => this.handleUpdate(this.state.updateData)}>Update</Button>
         </Dialog>
       </React.Fragment>
     );
