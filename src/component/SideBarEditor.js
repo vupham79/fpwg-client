@@ -1,19 +1,19 @@
-import React from "react";
 import {
   AppBar,
+  Button,
   CssBaseline,
+  Divider,
   Drawer,
-  Tabs,
   Tab,
-  Divider
+  Tabs
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import React from "react";
 import { connect } from "react-redux";
-import { updateTabValue, saveDesignSite } from "../actions";
+import { saveDesignSite, updateTabValue } from "../actions";
 import DesignTab from "./DesignEditorTab";
 import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
-import { Button } from "@material-ui/core";
 
 const useStyles = theme => ({
   root: {
@@ -52,7 +52,9 @@ class ClippedDrawer extends React.Component {
       tabValue,
       updateTabValue,
       siteEdit,
-      saveDesignSite
+      saveDesignSite,
+      newLogo,
+      newCover
     } = this.props;
 
     return (
@@ -88,7 +90,9 @@ class ClippedDrawer extends React.Component {
             style={{ minHeight: "3rem" }}
             color="primary"
             variant="contained"
-            onClick={() => saveDesignSite(siteEdit)}
+            onClick={() =>
+              saveDesignSite({ site: siteEdit, logo: newLogo, cover: newCover })
+            }
           >
             Save Design
           </Button>
@@ -100,12 +104,15 @@ class ClippedDrawer extends React.Component {
 
 const mapStateToProps = state => ({
   tabValue: state.tab.value,
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  newLogo: state.site.newLogo,
+  newCover: state.site.newCover
 });
 
 const mapDispatchToProps = dispatch => ({
   updateTabValue: value => dispatch(updateTabValue(value)),
-  saveDesignSite: site => dispatch(saveDesignSite(site))
+  saveDesignSite: ({ site, logo, cover }) =>
+    dispatch(saveDesignSite({ site, logo, cover }))
 });
 
 export default connect(

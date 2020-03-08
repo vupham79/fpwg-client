@@ -6,7 +6,6 @@ import {
   setSiteView,
   setEditOff,
   clearSiteView,
-  closeSnackBar,
   updateSitepath,
   getSiteBySitepath
 } from "../../actions";
@@ -25,10 +24,8 @@ class PreViewSite extends React.Component {
       setSiteView,
       setEditOff,
       clearSiteView,
-      closeSnackBar,
       getSiteBySitepath
     } = this.props;
-    closeSnackBar();
     clearSiteView();
     setEditOff();
     const sitepath = await this.props.location.pathname.split("/")[1];
@@ -93,7 +90,6 @@ const mapDispatchToProps = dispatch => ({
   setSiteView: (site, title, body) => dispatch(setSiteView(site, title, body)),
   setEditOff: () => dispatch(setEditOff()),
   clearSiteView: () => dispatch(clearSiteView()),
-  closeSnackBar: () => dispatch(closeSnackBar()),
   updateSitepath: () => dispatch(updateSitepath()),
   getSiteBySitepath: sitepath => dispatch(getSiteBySitepath(sitepath))
 });

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { getUserPages, getUserSites, closeSnackBar } from "../../actions";
+import { getUserPages, getUserSites } from "../../actions";
 import MainPage from "./main";
 class PreMainPage extends Component {
   state = {
@@ -18,8 +18,7 @@ class PreMainPage extends Component {
   };
 
   async componentDidMount() {
-    const { isLogin, closeSnackBar } = this.props;
-    closeSnackBar();
+    const { isLogin } = this.props;
     if (isLogin) {
       await this.getUserPages();
       await this.getAllUserSites();
@@ -44,8 +43,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getUserPages: ({ accessToken, userId }) =>
     dispatch(getUserPages({ accessToken, userId })),
-  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
-  closeSnackBar: () => dispatch(closeSnackBar())
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreMainPage);

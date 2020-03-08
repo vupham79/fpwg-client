@@ -29,7 +29,9 @@ import {
   clearSiteView,
   getSiteBySitepath,
   setNavItemActive,
-  setNavItemInActive
+  setNavItemInActive,
+  setNewCover,
+  setNewLogo
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -50,7 +52,6 @@ import {
   setLogout
 } from "./user";
 import { closeDialog, openDialog } from "./dialog";
-import { openSnackBar, closeSnackBar } from "./snackbar";
 import { setColorPallete } from "./color";
 
 export {
@@ -99,8 +100,6 @@ export {
   getAllPaths,
   getAllPost,
   setActivePost,
-  openSnackBar,
-  closeSnackBar,
   setEditOn,
   setEditOff,
   clearSiteView,
@@ -109,5 +108,7 @@ export {
   setColorPallete,
   setNavItemActive,
   setNavItemInActive,
-  updateTheme
+  updateTheme,
+  setNewCover,
+  setNewLogo
 };

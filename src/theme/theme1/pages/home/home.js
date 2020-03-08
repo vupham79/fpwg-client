@@ -12,10 +12,10 @@ import { Parallax } from "react-parallax";
 import { connect } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import ExampleComponent from "react-rounded-image";
 import moment from "moment";
 import EventComponent from "../../../component/eventComponent";
 import GalleryComponent from "../../../component/galleryComponent";
+import RoundedImage from "react-rounded-image";
 
 class Theme1Home extends React.Component {
   state = {
@@ -31,6 +31,15 @@ class Theme1Home extends React.Component {
   };
   handleMenuClose = () => {
     this.setAnchorEl(null);
+  };
+  renderImage = () => {
+    const { isEdit, siteEdit, siteView, newLogo } = this.props;
+    if (isEdit) {
+      if (typeof newLogo === "object" && newLogo.size > 0) {
+        return URL.createObjectURL(newLogo);
+      } else return siteEdit.logo;
+    }
+    return siteView.logo;
   };
   render() {
     const {
@@ -194,7 +203,6 @@ class Theme1Home extends React.Component {
         </GoogleMap>
       ))
     );
-
     return (
       <Grid container>
         <Grid item xs={12}>
@@ -209,23 +217,23 @@ class Theme1Home extends React.Component {
           >
             {isEdit
               ? siteEdit.cover &&
-              siteEdit.cover.map((row, i) => (
-                <img
-                  style={{ height: "50vh" }}
-                  src={row}
-                  key={i}
-                  alt="./images/theme1-banner1.jpg"
-                />
-              ))
+                siteEdit.cover.map((row, i) => (
+                  <img
+                    style={{ height: "50vh" }}
+                    src={row}
+                    key={i}
+                    alt="./images/theme1-banner1.jpg"
+                  />
+                ))
               : siteView.cover &&
-              siteView.cover.map((row, i) => (
-                <img
-                  style={{ height: "50vh" }}
-                  src={row}
-                  key={i}
-                  alt="./images/theme1-banner1.jpg"
-                />
-              ))}
+                siteView.cover.map((row, i) => (
+                  <img
+                    style={{ height: "50vh" }}
+                    src={row}
+                    key={i}
+                    alt="./images/theme1-banner1.jpg"
+                  />
+                ))}
           </Carousel>
         </Grid>
         <Grid item xs={12}>
@@ -234,9 +242,8 @@ class Theme1Home extends React.Component {
           </p>
         </Grid>
         <Grid container item xs={12} justify={"center"}>
-          <ExampleComponent
-            image={isEdit ? siteEdit.logo : siteView.logo}
-            imageAlt="./images/theme1-banner3.jpg"
+          <RoundedImage
+            image={this.renderImage()}
             roundedColor={isEdit ? titleEdit.color : titleView.color}
             imageWidth="150"
             imageHeight="150"
@@ -345,8 +352,8 @@ class Theme1Home extends React.Component {
           {isEdit ? (
             <GalleryComponent galleries={siteEdit.galleries} />
           ) : (
-              <GalleryComponent galleries={siteView.galleries} />
-            )}
+            <GalleryComponent galleries={siteView.galleries} />
+          )}
         </Grid>
         <div style={{ height: 100, width: "100%" }} />
         <Grid item xs={12}>
@@ -450,7 +457,8 @@ const mapStateToProps = state => ({
   siteView: state.site.siteView,
   posts: state.post.posts,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
+  newLogo: state.site.newLogo
 });
 
 export default connect(mapStateToProps, null)(Theme1Home);

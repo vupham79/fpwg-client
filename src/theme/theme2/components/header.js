@@ -16,6 +16,15 @@ import { updateNavItemValue } from "../../../actions";
 import Link from "../../../component/link";
 import styles from "./index.module.css";
 class Header extends Component {
+  renderImage = () => {
+    const { isEdit, siteEdit, siteView, newLogo } = this.props;
+    if (isEdit) {
+      if (typeof newLogo === "object" && newLogo.size > 0) {
+        return `url('${URL.createObjectURL(newLogo)}'`;
+      } else return `url('${siteEdit.logo}')`;
+    }
+    return `url('${siteView.logo}')`;
+  };
   renderTabItems = () => {
     const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
     const tabStyles = {
@@ -67,7 +76,7 @@ class Header extends Component {
       backgroundRepeat: "no-repeat",
       height: "5rem"
     };
-
+    console.log(navItemIsActive);
     return (
       <AppBar className={styles.app_bar} position="sticky">
         <Container>
@@ -87,9 +96,7 @@ class Header extends Component {
                 xs={3}
                 style={{
                   ...imgStyles,
-                  backgroundImage: isEdit
-                    ? `url('${siteEdit.logo}')`
-                    : `url('${siteView.logo}')`
+                  backgroundImage: this.renderImage()
                 }}
               />
               <Grid
@@ -148,7 +155,8 @@ const mapStateToProps = state => ({
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
-  navItemIsActive: state.site.navItemIsActive
+  navItemIsActive: state.site.navItemIsActive,
+  newLogo: state.site.newLogo
 });
 
 const mapDispatchToProps = dispatch => ({

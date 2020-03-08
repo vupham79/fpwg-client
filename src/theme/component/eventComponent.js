@@ -170,13 +170,22 @@ class EventComponent extends React.Component {
 
                         <Grid container direction="row" item xs={4}>
                           <Grid item xs={12} style={{ fontWeight: "bold" }}>
-                            <a href={"https://" + row.url} target="_blank">
+                            <a
+                              href={"https://" + row.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
                               {row.name}
                             </a>
                           </Grid>
                           <Grid item xs={12} style={{ color: "#3578e5" }}>
                             {moment(row.startTime).format("MMMM DD")}
-                            {row.endTime && !moment(moment(row.endTime).format("MMMM DD")).isSame(moment(row.startTime).format("MMMM DD")) &&
+                            {row.endTime &&
+                              !moment(
+                                moment(row.endTime).format("MMMM DD")
+                              ).isSame(
+                                moment(row.startTime).format("MMMM DD")
+                              ) &&
                               " - " + moment(row.endTime).format("MMMM DD")}
                           </Grid>
                         </Grid>
@@ -245,13 +254,22 @@ class EventComponent extends React.Component {
 
                         <Grid container direction="row" item xs={4}>
                           <Grid item xs={12} style={{ fontWeight: "bold" }}>
-                            <a href={"https://" + row.url} target="_blank">
+                            <a
+                              href={"https://" + row.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
                               {row.name}
                             </a>
                           </Grid>
                           <Grid item xs={12} style={{ color: "#3578e5" }}>
                             {moment(row.startTime).format("MMMM DD")}
-                            {row.endTime && !moment(moment(row.endTime).format("MMMM DD")).isSame(moment(row.startTime).format("MMMM DD")) &&
+                            {row.endTime &&
+                              !moment(
+                                moment(row.endTime).format("MMMM DD")
+                              ).isSame(
+                                moment(row.startTime).format("MMMM DD")
+                              ) &&
                               " - " + moment(row.endTime).format("MMMM DD")}
                           </Grid>
                         </Grid>
@@ -370,13 +388,22 @@ class EventComponent extends React.Component {
 
                         <Grid container direction="row" item xs={4}>
                           <Grid item xs={12} style={{ fontWeight: "bold" }}>
-                            <a href={"https://" + row.url} target="_blank">
+                            <a
+                              href={"https://" + row.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
                               {row.name}
                             </a>
                           </Grid>
                           <Grid item xs={12} style={{ color: "#3578e5" }}>
                             {moment(row.startTime).format("MMMM DD")}
-                            {row.endTime && !moment(moment(row.endTime).format("MMMM DD")).isSame(moment(row.startTime).format("MMMM DD")) &&
+                            {row.endTime &&
+                              !moment(
+                                moment(row.endTime).format("MMMM DD")
+                              ).isSame(
+                                moment(row.startTime).format("MMMM DD")
+                              ) &&
                               " - " + moment(row.endTime).format("MMMM DD")}
                           </Grid>
                         </Grid>
@@ -446,13 +473,22 @@ class EventComponent extends React.Component {
 
                         <Grid container direction="row" item xs={4}>
                           <Grid item xs={12} style={{ fontWeight: "bold" }}>
-                            <a href={"https://" + row.url} target="_blank">
+                            <a
+                              href={"https://" + row.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
                               {row.name}
                             </a>
                           </Grid>
                           <Grid item xs={12} style={{ color: "#3578e5" }}>
                             {moment(row.startTime).format("MMMM DD")}
-                            {row.endTime && !moment(moment(row.endTime).format("MMMM DD")).isSame(moment(row.startTime).format("MMMM DD")) &&
+                            {row.endTime &&
+                              !moment(
+                                moment(row.endTime).format("MMMM DD")
+                              ).isSame(
+                                moment(row.startTime).format("MMMM DD")
+                              ) &&
                               " - " + moment(row.endTime).format("MMMM DD")}
                           </Grid>
                         </Grid>

@@ -274,12 +274,15 @@ export function changeNavItems(items) {
   };
 }
 
-export function saveDesignSite(site) {
+export function saveDesignSite({ logo, cover, site }) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
     });
     try {
+      if (typeof logo === "object" && logo.size > 0) {
+        dispatch(uploadLogo(logo, site));
+      }
       const data = await axios({
         method: "patch",
         url: "/site/saveDesign",
@@ -397,7 +400,25 @@ export function setActiveNavItems(site) {
   };
 }
 
-export function uploadLogo(path, site) {
+export function setNewLogo(file) {
+  return dispatch => {
+    dispatch({
+      type: "SET_NEW_LOGO",
+      payload: file
+    });
+  };
+}
+
+export function setNewCover(file) {
+  return dispatch => {
+    dispatch({
+      type: "SET_NEW_COVER",
+      payload: file
+    });
+  };
+}
+
+export function uploadLogo(file, site) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -407,7 +428,7 @@ export function uploadLogo(path, site) {
         .storage()
         .ref()
         .child(`${site.id}`)
-        .put(path, {
+        .put(file, {
           contentType: "image/jpeg"
         })
         .then(async () => {
@@ -437,6 +458,7 @@ export function uploadLogo(path, site) {
           toastr.success("Upload new logo successful", "Success");
         })
         .catch(error => {
+          console.log("upload: ", error);
           dispatch({
             type: "CLOSE_LOADING"
           });

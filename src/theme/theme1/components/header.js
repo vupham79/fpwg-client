@@ -1,11 +1,20 @@
-import { AppBar, Tab, Tabs, Container } from "@material-ui/core";
+import {
+  AppBar,
+  Tab,
+  Tabs,
+  Container,
+  Tooltip,
+  Zoom,
+  Button
+} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateNavItemValue } from "../../../actions";
 import Link from "../../../component/link";
 import styles from "./index.module.css";
-
+import { faExclamation } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class Header extends Component {
   renderTabItems = () => {
     const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
@@ -45,7 +54,14 @@ class Header extends Component {
   };
 
   render() {
-    const { isEdit, siteEdit, siteView, titleEdit, titleView } = this.props;
+    const {
+      isEdit,
+      siteEdit,
+      siteView,
+      titleEdit,
+      titleView,
+      navItemIsActive
+    } = this.props;
 
     const tabStylesView = {
       textTransform: "none",
@@ -96,6 +112,16 @@ class Header extends Component {
                 {isEdit
                   ? siteEdit && siteEdit.title
                   : siteView && siteView.title}
+                {!navItemIsActive && (
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title="This page is currently inactive"
+                  >
+                    <Button>
+                      <FontAwesomeIcon color={"orange"} icon={faExclamation} />
+                    </Button>
+                  </Tooltip>
+                )}
               </Grid>
             </Grid>
             <div style={{ height: "10vh" }} />
@@ -112,7 +138,8 @@ const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
-  titleView: state.site.titleView
+  titleView: state.site.titleView,
+  navItemIsActive: state.site.navItemIsActive
 });
 
 const mapDispatchToProps = dispatch => ({

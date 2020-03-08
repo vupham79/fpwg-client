@@ -1,9 +1,18 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import ExampleComponent from "react-rounded-image";
-
+import RoundedImage from "react-rounded-image";
 class Theme1About extends React.Component {
+  renderImage = () => {
+    const { isEdit, siteEdit, siteView, newLogo } = this.props;
+    if (isEdit) {
+      if (typeof newLogo === "object" && newLogo.size > 0) {
+        return URL.createObjectURL(newLogo);
+      } else return siteEdit.logo;
+    }
+    return siteView.logo;
+  };
+
   render() {
     const {
       isEdit,
@@ -14,7 +23,6 @@ class Theme1About extends React.Component {
       bodyEdit,
       bodyView
     } = this.props;
-
     const useStyles = () => ({
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -109,9 +117,8 @@ class Theme1About extends React.Component {
           </p>
         </Grid>
         <Grid container item xs={12} justify={"center"}>
-          <ExampleComponent
-            image={isEdit ? siteEdit.logo : siteView.logo}
-            imageAlt="./images/theme1-banner3.jpg"
+          <RoundedImage
+            image={this.renderImage()}
             roundedColor={isEdit ? titleEdit.color : titleView.color}
             imageWidth="150"
             imageHeight="150"
@@ -122,8 +129,12 @@ class Theme1About extends React.Component {
           <p style={classes.changableBody3}>
             {isEdit && siteEdit && siteEdit.about}
             {!isEdit && siteView && siteView.about}
-            {isEdit && !siteEdit.about && (<p style={classes.changableBody4}>Welcome to our website!</p>)}
-            {!isEdit && !siteView.about && (<p style={classes.changableBody4}>Welcome to our website!</p>)}
+            {isEdit && !siteEdit.about && (
+              <p style={classes.changableBody4}>Welcome to our website!</p>
+            )}
+            {!isEdit && !siteView.about && (
+              <p style={classes.changableBody4}>Welcome to our website!</p>
+            )}
           </p>
         </Grid>
       </Grid>
@@ -138,7 +149,8 @@ const mapStateToProps = state => ({
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
+  newLogo: state.site.newLogo
 });
 
 export default connect(mapStateToProps, null)(Theme1About);

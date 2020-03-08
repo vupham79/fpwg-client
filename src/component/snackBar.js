@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Snackbar } from "@material-ui/core";
 import { connect } from "react-redux";
-import { closeSnackBar } from "../actions";
 import MuiAlert from "@material-ui/lab/Alert";
 
 function Alert(props) {
@@ -9,13 +8,7 @@ function Alert(props) {
 }
 
 class SnackBar extends Component {
-  handleClose = (event, reason) => {
-    const { closeSnackBar } = this.props;
-    if (reason === "clickaway") {
-      return;
-    }
-    closeSnackBar();
-  };
+  handleClose = (event, reason) => {};
   render() {
     const { isOpen, message, typeAlert } = this.props;
     return (
@@ -38,8 +31,6 @@ const mapStateToProps = state => ({
   typeAlert: state.snackBar.typeAlert
 });
 
-const mapDispatchToProps = dispatch => ({
-  closeSnackBar: () => dispatch(closeSnackBar())
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(SnackBar);

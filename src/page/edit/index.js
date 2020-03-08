@@ -6,15 +6,13 @@ import {
   getAllThemes,
   getSiteById,
   setSiteEdit,
-  setEditOn,
-  closeSnackBar
+  setEditOn
 } from "../../actions";
 import EditPage from "./edit";
 import WebFont from "webfontloader";
 class PreEditPage extends React.Component {
   componentDidMount() {
-    const { isLogin, setEditOn, closeSnackBar } = this.props;
-    closeSnackBar();
+    const { isLogin, setEditOn } = this.props;
     if (isLogin) {
       this.getAllThemes();
       this.getSite();
@@ -72,8 +70,7 @@ const mapDispatchToProps = dispatch => ({
   setSiteEdit: (site, titleStyle, bodyStyle) =>
     dispatch(setSiteEdit(site, titleStyle, bodyStyle)),
   getAllPost: posts => dispatch(getAllPost(posts)),
-  setEditOn: () => dispatch(setEditOn()),
-  closeSnackBar: () => dispatch(closeSnackBar())
+  setEditOn: () => dispatch(setEditOn())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreEditPage);

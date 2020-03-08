@@ -14,6 +14,7 @@ import React from "react";
 import { ChromePicker, CirclePicker } from "react-color";
 import onecolor from "onecolor";
 import ColorThief from "color-thief";
+import { Add } from "@material-ui/icons";
 import { connect } from "react-redux";
 import {
   changeColor,
@@ -22,8 +23,9 @@ import {
   changeSiteTitle,
   changeTheme,
   setShowCustomColor,
-  uploadLogo,
-  setColorPallete
+  setColorPallete,
+  setNewCover,
+  setNewLogo
 } from "../actions";
 import toastr from "./Toastr";
 
@@ -59,14 +61,6 @@ const useStyles = theme => ({
   }
 });
 
-const images = [
-  "https://s3.amazonaws.com/pv-featured-images/restaurant-cafe/coffee-918926_1920.jpg",
-  "https://s3.amazonaws.com/pv-featured-images/restaurant-cafe/cover-1589426_1920.jpg",
-  "https://s3.amazonaws.com/pv-featured-images/restaurant-cafe/alcohol-1869282_1920.jpg",
-  "https://scontent.xx.fbcdn.net/v/t1.0-9/84357702_100161708215284_6628528314745094144_n.jpg?_nc_cat=111&_nc_ohc=j0bhRaMn6QIAX-D2JrZ&_nc_ht=scontent.xx&oh=00c77acfe89ec5953a9b1689b85308cb&oe=5EDA3199",
-  "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E"
-];
-
 const imgStyles = {
   backgroundSize: "cover",
   backgroundPosition: "center",
@@ -78,7 +72,8 @@ const imgStyles = {
 class DesignEditorTab extends React.Component {
   state = {
     file: null,
-    pallete: []
+    pallete: [],
+    covers: []
   };
 
   async componentDidMount() {
@@ -127,7 +122,34 @@ class DesignEditorTab extends React.Component {
     changeFontBody(site);
   };
 
-  handleUpload = async e => {
+  handleBrowseLogo = async e => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    //validating the file
+    //check if the file is exists
+    if (!file) {
+      toastr.error("No image is selected!", "Error");
+      return;
+    }
+    //check if the image size is larger than 1MB
+    if (file.size > 1048576) {
+      toastr.error("Image size must be less than 1MB!", "Error");
+      return;
+    }
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/jpg"
+    ) {
+      var output = document.getElementById("preview");
+      output.src = URL.createObjectURL(e.target.files[0]);
+      this.setState({ file });
+    } else {
+      toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
+    }
+  };
+
+  handleUploadCover = async e => {
     e.preventDefault();
     const file = e.target.files[0];
     //validating the file
@@ -146,15 +168,7 @@ class DesignEditorTab extends React.Component {
       file.type === "image/png" ||
       file.type === "image/jpg"
     ) {
-      var output = document.getElementById("preview");
-      var siteEditLogo = document.getElementById("siteLogo");
-      output.src = URL.createObjectURL(e.target.files[0]);
-      if (siteEditLogo) {
-        siteEditLogo.style.backgroundImage = `url('${URL.createObjectURL(
-          e.target.files[0]
-        )}')`;
-      }
-      this.setState({ file });
+      this.setState({ covers: [...this.state.covers, file] });
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
     }
@@ -174,9 +188,9 @@ class DesignEditorTab extends React.Component {
       classes,
       themes,
       site,
-      uploadLogo,
       colorPallete
     } = this.props;
+    const { covers } = this.state;
     return (
       <div style={{ overflowY: "scroll" }}>
         <Typography className={classes.title}>Theme</Typography>
@@ -208,7 +222,9 @@ class DesignEditorTab extends React.Component {
               onFontSelected={this.handleChangeFontTitle}
             />
           </Grid>
-          <Divider />
+          <Divider
+            style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
+          />
           <Typography className={classes.title2}>Font Body</Typography>
           <Grid container>
             <GoogleFontPicker
@@ -245,7 +261,7 @@ class DesignEditorTab extends React.Component {
             <Input
               type="file"
               id="selectedFile"
-              onChange={e => this.handleUpload(e)}
+              onChange={e => this.handleBrowseLogo(e)}
               style={{ display: "none" }}
             />
             <img style={imgStyles} alt="" id={"preview"} src={site.logo} />
@@ -258,15 +274,6 @@ class DesignEditorTab extends React.Component {
                 onClick={() => document.getElementById("selectedFile").click()}
               >
                 Browse
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                variant={"contained"}
-                color={"primary"}
-                onClick={() => uploadLogo(this.state.file, site)}
-              >
-                Save Logo
               </Button>
             </Grid>
           </Grid>
@@ -323,17 +330,50 @@ class DesignEditorTab extends React.Component {
         />
         <Typography className={classes.title}>Homepage Images</Typography>
         <Grid container className={classes.sideBarBox}>
-          {images.map((img, i) => (
-            <Grid
-              item
-              key={i}
-              md={4}
-              sm={6}
-              xs={6}
-              style={{ ...imgStyles, backgroundImage: `url(${img})` }}
+          {site.cover &&
+            site.cover.map((img, i) => (
+              <Grid
+                item
+                key={i}
+                md={4}
+                sm={6}
+                xs={6}
+                style={{ ...imgStyles, backgroundImage: `url(${img})` }}
+              />
+            ))}
+          {covers &&
+            covers.map((cover, i) => (
+              <Grid
+                item
+                key={i}
+                md={4}
+                sm={6}
+                xs={6}
+                style={{
+                  ...imgStyles,
+                  backgroundImage: `url(${URL.createObjectURL(cover)})`
+                }}
+              />
+            ))}
+          <Grid
+            item
+            container
+            justify={"center"}
+            alignItems="center"
+            md={4}
+            sm={6}
+            xs={6}
+            style={{ backgroundColor: "#F3ECEC", cursor: "pointer" }}
+            onClick={() => document.getElementById("addCover").click()}
+          >
+            <Input
+              type="file"
+              id="addCover"
+              onChange={e => this.handleUploadCover(e)}
+              style={{ display: "none" }}
             />
-          ))}
-          <Grid item md={4} sm={6} xs={6} style={{ ...imgStyles }} />
+            <Add />
+          </Grid>
         </Grid>
       </div>
     );
@@ -353,9 +393,10 @@ const mapDispatchToProps = dispatch => ({
   changeFontTitle: site => dispatch(changeFontTitle(site)),
   changeFontBody: site => dispatch(changeFontBody(site)),
   setShowCustomColor: isShow => dispatch(setShowCustomColor(isShow)),
-  uploadLogo: (path, site) => dispatch(uploadLogo(path, site)),
   changeSiteTitle: site => dispatch(changeSiteTitle(site)),
-  setColorPallete: pallete => dispatch(setColorPallete(pallete))
+  setColorPallete: pallete => dispatch(setColorPallete(pallete)),
+  setNewLogo: file => dispatch(setNewLogo(file)),
+  setNewCover: file => dispatch(setNewCover(file))
 });
 
 export default connect(
