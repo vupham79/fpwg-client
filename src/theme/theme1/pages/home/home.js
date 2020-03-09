@@ -256,7 +256,7 @@ class Theme1Home extends React.Component {
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Slider autoplay arrows centerMode>
+          <Slider autoplay centerMode>
             {this.renderNewCovers()}
           </Slider>
         </Grid>
