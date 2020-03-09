@@ -533,7 +533,16 @@ export function changeSiteTitle(site) {
   };
 }
 
-export function syncDataFromFB(pageId) {
+export function changeSiteLinks(site) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_SITE_LINKS",
+      payload: site
+    });
+  };
+}
+
+export function syncDataFromFB(pageId, access_token) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"

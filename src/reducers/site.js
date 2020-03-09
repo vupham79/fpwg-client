@@ -165,6 +165,11 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         siteEdit: { ...action.payload }
       };
+    case "CHANGE_SITE_LINKS":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
     case "UPLOAD_LOGO":
       return {
         ...state,
