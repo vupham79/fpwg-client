@@ -11,8 +11,7 @@ import {
   Divider
 } from "@material-ui/core";
 import { connect } from "react-redux";
-
-const links = ["Home", "About", "Gallery", "Events", "Contact", "News"];
+import Link from "../../../component/link";
 
 const txtStyles = {
   backgroundColor: "white",
@@ -28,11 +27,6 @@ const iconStyles = {
 };
 
 class FooterPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { links };
-  }
-
   render() {
     const {
       isEdit,
@@ -71,13 +65,44 @@ class FooterPage extends Component {
             QUICK LINKS
           </Typography>
           <Grid container justify="flex-start" direction="column">
-            {this.state.links.map((link, index) => (
-              <Grid item xs={2} sm={1} key={index}>
-                <Box style={isEdit ? bodyEdit : bodyView} lineHeight={2}>
-                  {link}
-                </Box>
-              </Grid>
-            ))}
+            {isEdit
+              ? siteEdit.navItems.map((item, index) => (
+                  <Grid
+                    item
+                    xs={4}
+                    sm={8}
+                    key={index}
+                    style={{ paddingBottom: "0.7rem" }}
+                  >
+                    <Box
+                      style={{
+                        ...bodyEdit,
+                        color: "white"
+                      }}
+                    >
+                      {item.name}
+                    </Box>
+                  </Grid>
+                ))
+              : siteView.navItems.map((item, index) => (
+                  <Grid
+                    item
+                    xs={4}
+                    sm={8}
+                    key={index}
+                    style={{ paddingBottom: "0.7rem" }}
+                  >
+                    <Link
+                      style={{
+                        ...bodyView,
+                        color: "white"
+                      }}
+                      to={`/${siteView.sitePath}/${item.name}`}
+                    >
+                      {item.name}
+                    </Link>
+                  </Grid>
+                ))}
           </Grid>
         </Grid>
         <Grid item sm={4} xs={12} className={styles.content}>
@@ -85,6 +110,7 @@ class FooterPage extends Component {
             variant="h5"
             style={isEdit ? titleEdit : titleView}
             color="primary"
+            className={styles.footerTitle}
           >
             SIGN UP FOR OUR NEWSLETTER
           </Typography>

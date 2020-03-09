@@ -5,7 +5,6 @@ import {
   CardContent,
   CardMedia,
   Container,
-  CssBaseline,
   Dialog,
   Grid,
   makeStyles,
@@ -27,11 +26,13 @@ const useStyles = makeStyles(theme => ({
   },
   message: {
     overflow: "hidden",
-    height: "3rem"
+    height: "3rem",
+    paddingLeft: "1rem"
   },
   title: {
     overflow: "hidden",
-    height: "1.5rem"
+    height: "1.5rem",
+    paddingLeft: "1rem"
   },
   cardMediaAlbum: {
     backgroundRepeat: "no-repeat",
@@ -39,13 +40,13 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: "cover"
   },
   cardMedia: {
-    paddingTop: "60%",
+    height: "10rem",
     backgroundSize: "contain",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat"
   },
   album: {
-    padding: "17%",
+    height: "10rem",
     background: "rgba(24, 20, 20, 0.5)"
   },
   cardContent: {
@@ -78,7 +79,6 @@ function TypeAlbum({ post, openDialog }) {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <CssBaseline />
       <Grid item xs={12} sm={6} md={3}>
         <Card className={classes.card}>
           <CardMedia
@@ -106,7 +106,7 @@ function TypeAlbum({ post, openDialog }) {
               {post.message && post.message}
             </Typography>
           </CardContent>
-          <CardActions>
+          <CardActions style={{ paddingLeft: "1rem" }}>
             <Button
               variant="outlined"
               color="primary"
@@ -128,7 +128,6 @@ function TypePhoto({ post, openDialog }) {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <CssBaseline />
       <Grid item xs={12} sm={6} md={3}>
         <Card className={classes.card}>
           <CardMedia
@@ -144,7 +143,7 @@ function TypePhoto({ post, openDialog }) {
               {post.message && post.message}
             </Typography>
           </CardContent>
-          <CardActions>
+          <CardActions style={{ paddingLeft: "1rem" }}>
             <Button
               variant="outlined"
               color="primary"
