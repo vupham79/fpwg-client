@@ -6,7 +6,7 @@ class Theme1About extends React.Component {
   renderImage = () => {
     const { isEdit, siteEdit, siteView, newLogo } = this.props;
     if (isEdit) {
-      if (typeof newLogo === "object" && newLogo.size > 0) {
+      if (newLogo && typeof newLogo === "object" && newLogo.size > 0) {
         return URL.createObjectURL(newLogo);
       } else return siteEdit.logo;
     }

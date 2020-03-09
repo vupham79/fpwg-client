@@ -276,7 +276,7 @@ export function saveDesignSite({ logo, cover, site }) {
       type: "SHOW_LOADING"
     });
     try {
-      if (typeof logo === "object" && logo.size > 0) {
+      if (logo && typeof logo === "object" && logo.size > 0) {
         dispatch(uploadLogo(logo, site));
       }
       const data = await axios({
