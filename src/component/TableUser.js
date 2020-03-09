@@ -46,7 +46,7 @@ class TableUser extends Component {
   };
 
   getUsers = async () => {
-    const { accessToken, userId, getAllUsers, users } = this.props;
+    const { getAllUsers, users } = this.props;
     await getAllUsers();
     this.setState({
       filteredData: this.props.users.slice(

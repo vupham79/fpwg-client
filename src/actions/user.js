@@ -41,10 +41,25 @@ export function login({ accessToken, profile }) {
 }
 
 export function setLogout() {
-  return dispatch => {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
     dispatch({
       type: "SET_LOGOUT"
     });
+    try {
+      await axios({
+        url: "/user/logout"
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+    }
   };
 }
 
