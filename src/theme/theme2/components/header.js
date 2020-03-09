@@ -6,7 +6,14 @@ import {
   Tab,
   Tabs,
   Tooltip,
-  Zoom
+  Zoom,
+  IconButton,
+  withStyles,
+  ListItem,
+  List,
+  Divider,
+  Hidden,
+  Drawer
 } from "@material-ui/core";
 import { faExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,7 +22,51 @@ import { connect } from "react-redux";
 import { updateNavItemValue } from "../../../actions";
 import Link from "../../../component/link";
 import styles from "./index.module.css";
+import MenuIcon from "@material-ui/icons/Menu";
+import { NavLink } from "react-router-dom";
+
+const drawerWidth = 240;
+
+const useStyles = theme => ({
+  drawer: {
+    [theme.breakpoints.up("sm")]: {
+      width: drawerWidth,
+      flexShrink: 0
+    }
+  },
+  navItems: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "flex"
+    }
+  },
+  appBar: {
+    [theme.breakpoints.up("sm")]: {
+      width: `calc(100% - ${drawerWidth}px)`,
+      marginLeft: drawerWidth
+    }
+  },
+  menuButton: {
+    marginLeft: theme.spacing(2),
+    [theme.breakpoints.up("sm")]: {
+      display: "none"
+    }
+  },
+  drawerPaper: {
+    width: drawerWidth
+  }
+});
+
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mobileOpen: false
+    };
+  }
+  handleDrawerToggle = () => {
+    this.setState({ mobileOpen: !this.state.mobileOpen });
+  };
   renderTabItems = () => {
     const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
     const tabStyles = {
@@ -52,6 +103,31 @@ class Header extends Component {
     );
   };
 
+  renderDrawer = ({ site, titleView }) => {
+    return (
+      <div style={{ marginTop: "3rem" }}>
+        <Divider variant="fullWidth" />
+        <List>
+          {site.navItems.map((item, index) => (
+            <ListItem button key={index}>
+              <Link
+                style={{
+                  ...titleView,
+                  borderBottom: "1px solid",
+                  width: "inherit",
+                  textAlign: "center"
+                }}
+                to={`/${site.sitePath}/${item.name}`}
+              >
+                {item.name}
+              </Link>
+            </ListItem>
+          ))}
+        </List>
+      </div>
+    );
+  };
+
   render() {
     const {
       isEdit,
@@ -59,7 +135,8 @@ class Header extends Component {
       siteView,
       titleEdit,
       titleView,
-      navItemIsActive
+      navItemIsActive,
+      classes
     } = this.props;
     const imgStyles = {
       backgroundSize: "contain",
@@ -68,75 +145,133 @@ class Header extends Component {
       height: "5rem"
     };
 
+    const linkView = {
+      fontFamily: titleView.fontFamily,
+      color: titleView.color,
+      textDecoration: "none"
+    };
+
     return (
-      <AppBar className={styles.app_bar} position="sticky">
-        <Container>
-          <Grid container alignItems="center">
-            <Grid
-              container
-              item
-              xs={12}
-              sm={4}
-              alignItems="center"
-              justify="center"
-            >
+      <>
+        <AppBar className={styles.app_bar} position="sticky">
+          <Container>
+            <Grid container alignItems="center">
               <Grid
-                id={"siteLogo"}
+                container
                 item
-                sm={2}
-                xs={3}
-                style={{
-                  ...imgStyles,
-                  backgroundImage: isEdit
-                    ? `url('${siteEdit.logo}')`
-                    : `url('${siteView.logo}')`
-                }}
-              />
-              <Grid
-                item
-                sm={8}
-                className={styles.shopName}
-                style={isEdit ? titleEdit : titleView}
+                xs={9}
+                sm={5}
+                alignItems="center"
+                justify="flex-start"
               >
-                {isEdit
-                  ? siteEdit && siteEdit.title
-                  : siteView && siteView.title}
+                <Grid
+                  id={"siteLogo"}
+                  item
+                  sm={2}
+                  xs={3}
+                  style={{
+                    ...imgStyles,
+                    backgroundImage: isEdit
+                      ? `url('${siteEdit.logo}')`
+                      : `url('${siteView.logo}')`
+                  }}
+                />
+                <Grid
+                  item
+                  sm={4}
+                  xs={7}
+                  className={styles.shopName}
+                  style={isEdit ? titleEdit : titleView}
+                >
+                  {isEdit
+                    ? siteEdit && siteEdit.title
+                    : siteView && siteView.title}
+                </Grid>
+                <Grid>
+                  {!navItemIsActive && (
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title="This page is currently inactive"
+                    >
+                      <Button>
+                        <FontAwesomeIcon
+                          color={"orange"}
+                          icon={faExclamation}
+                        />
+                      </Button>
+                    </Tooltip>
+                  )}
+                </Grid>
               </Grid>
-              <Grid>
-                {!navItemIsActive && (
-                  <Tooltip
-                    TransitionComponent={Zoom}
-                    title="This page is currently inactive"
-                  >
-                    <Button>
-                      <FontAwesomeIcon color={"orange"} icon={faExclamation} />
-                    </Button>
-                  </Tooltip>
-                )}
-              </Grid>
-            </Grid>
-            <Grid item xs={12} sm={12} md={8}>
-              <Grid container justify="flex-end">
-                {isEdit
-                  ? this.renderTabItems()
-                  : siteView.navItems &&
-                    siteView.navItems.map((item, index) =>
-                      item.isActive ? (
-                        <Grid item xs={2} sm={2} md={1} key={index}>
-                          <Link
-                            style={titleView}
-                            to={`/${siteView.sitePath}/${item.name}`}
+              <Grid item container xs={3} sm={7} justify="flex-end">
+                <Grid
+                  container
+                  item
+                  sm={12}
+                  className={classes.navItems}
+                  justify="flex-end"
+                >
+                  {isEdit
+                    ? this.renderTabItems()
+                    : siteView.navItems &&
+                      siteView.navItems.map((item, index) =>
+                        item.isActive ? (
+                          <Grid
+                            item
+                            sm={2}
+                            key={index}
+                            style={{
+                              textAlign: "end"
+                            }}
                           >
-                            {item.name}
-                          </Link>
-                        </Grid>
-                      ) : null
-                    )}
+                            <NavLink
+                              style={linkView}
+                              activeStyle={{ borderBottom: "1px solid" }}
+                              to={`/${siteView.sitePath}/${item.name}`}
+                            >
+                              {item.name}
+                            </NavLink>
+                          </Grid>
+                        ) : null
+                      )}
+                </Grid>
+                <Grid item>
+                  <IconButton
+                    style={isEdit ? titleEdit : titleView}
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={this.handleDrawerToggle}
+                    className={classes.menuButton}
+                  >
+                    <MenuIcon />
+                  </IconButton>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </Container>
-      </AppBar>
+          </Container>
+        </AppBar>
+        <nav className={classes.drawer} aria-label="mailbox folders">
+          <Hidden smUp implementation="css">
+            <Drawer
+              variant="temporary"
+              anchor={"right"}
+              open={this.state.mobileOpen}
+              onClose={this.handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper
+              }}
+              ModalProps={{
+                keepMounted: true
+              }}
+            >
+              {this.renderDrawer({
+                site: siteView,
+                titleView: titleView
+              })}
+            </Drawer>
+          </Hidden>
+        </nav>
+      </>
     );
   }
 }
@@ -155,4 +290,7 @@ const mapDispatchToProps = dispatch => ({
   updateNavItemValue: value => dispatch(updateNavItemValue(value))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyles)(Header));

@@ -123,8 +123,8 @@ class Theme1Gallery extends React.Component {
           {isEdit ? (
             <GalleryComponent galleries={siteEdit.galleries} />
           ) : (
-              <GalleryComponent galleries={siteView.galleries} />
-            )}
+            <GalleryComponent galleries={siteView.galleries} />
+          )}
         </Grid>
       </Grid>
     );

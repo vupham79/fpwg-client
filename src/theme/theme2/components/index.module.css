@@ -55,6 +55,7 @@ h5 {
   /* color: #646464 !important; */
   font-weight: 700 !important;
   padding-bottom: 5vh;
+  overflow: hidden;
 }
 
 .btn_signUp :hover {

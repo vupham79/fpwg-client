@@ -21,24 +21,7 @@ const imgStyles = {
 
 function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
   return (
-    <Grid
-      container
-      alignItems="center"
-      direction="column"
-      className={styles.event_page}
-    >
-      <Grid item sm={10} xs={10}>
-        <Typography
-          className={styles.title}
-          variant="h4"
-          align="center"
-          gutterBottom
-          style={isEdit ? titleEdit : titleView}
-        >
-          Events
-        </Typography>
-        <Divider className="divider" variant="fullWidth" />
-      </Grid>
+    <>
       <Grid
         item
         sm={3}
@@ -91,34 +74,55 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
           </Typography>
         </Button>
       </Grid>
-    </Grid>
+    </>
   );
 }
 class EventPage extends React.Component {
   render() {
     const { titleEdit, titleView, isEdit, siteEdit, siteView } = this.props;
-    return isEdit ? (
-      siteEdit && siteEdit.events ? (
-        <EventComponent />
-      ) : (
-        <EmptyEvent
-          siteEdit={siteEdit}
-          titleEdit={titleEdit}
-          siteView={siteView}
-          titleView={titleView}
-          isEdit={isEdit}
-        />
-      )
-    ) : siteView && siteView.events ? (
-      <EventComponent />
-    ) : (
-      <EmptyEvent
-        siteEdit={siteEdit}
-        titleEdit={titleEdit}
-        siteView={siteView}
-        titleView={titleView}
-        isEdit={isEdit}
-      />
+    return (
+      <Grid
+        container
+        alignItems="center"
+        direction="column"
+        className={styles.event_page}
+      >
+        <Grid item sm={10} xs={10}>
+          <Typography
+            className={styles.title}
+            variant="h4"
+            align="center"
+            gutterBottom
+            style={isEdit ? titleEdit : titleView}
+          >
+            Events
+          </Typography>
+          <Divider variant="fullWidth" />
+        </Grid>
+        {isEdit ? (
+          siteEdit && siteEdit.events ? (
+            <EventComponent />
+          ) : (
+            <EmptyEvent
+              siteEdit={siteEdit}
+              titleEdit={titleEdit}
+              siteView={siteView}
+              titleView={titleView}
+              isEdit={isEdit}
+            />
+          )
+        ) : siteView && siteView.events ? (
+          <EventComponent />
+        ) : (
+          <EmptyEvent
+            siteEdit={siteEdit}
+            titleEdit={titleEdit}
+            siteView={siteView}
+            titleView={titleView}
+            isEdit={isEdit}
+          />
+        )}
+      </Grid>
     );
   }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import CarouselImages from "../../components/carousel";
 import New from "../../pages/new";
-import Gallery from "../../components/gallery";
+import EventPage from "../../pages/event";
 
 class HomePage extends React.Component {
   render() {
@@ -9,7 +9,7 @@ class HomePage extends React.Component {
       <>
         <CarouselImages />
         <New />
-        <Gallery />
+        <EventPage />
       </>
     );
   }

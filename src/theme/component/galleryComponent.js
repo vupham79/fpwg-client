@@ -1,10 +1,9 @@
 import {
   Container,
-  CssBaseline,
   Dialog,
   Grid,
-  withStyles,
-  Typography
+  Typography,
+  withStyles
 } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
@@ -12,8 +11,7 @@ import { closeDialog, openDialog } from "../../actions";
 
 const useStyles = theme => ({
   root: {
-    marginTop: theme.spacing(15),
-    marginBottom: theme.spacing(10)
+    margin: theme.spacing(15)
   },
   gridItems: {
     maxHeight: 350
@@ -46,9 +44,8 @@ class GalleryComponent extends React.Component {
     const { classes, open, openDialog, closeDialog, galleries } = this.props;
     return (
       <React.Fragment>
-        <CssBaseline />
         <Container className={classes.root}>
-          <Grid container spacing={2} justify="center">
+          <Grid container spacing={5} justify="center">
             {galleries ? (
               galleries.map((item, index) => (
                 <Grid
@@ -56,7 +53,7 @@ class GalleryComponent extends React.Component {
                   key={index}
                   xs={12}
                   sm={4}
-                  md={3}
+                  md={2}
                   className={classes.gridItems}
                 >
                   <img
