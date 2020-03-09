@@ -4,7 +4,7 @@ import { setNavItemActive, setNavItemInActive } from "../../../../actions";
 import EventPage from "./event";
 
 class PreEventPage extends Component {
-  render() {
+  componentDidMount() {
     const { site, isEdit, setNavItemActive, setNavItemInActive } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
@@ -16,6 +16,8 @@ class PreEventPage extends Component {
         }
       }
     }
+  }
+  render() {
     return <EventPage />;
   }
 }

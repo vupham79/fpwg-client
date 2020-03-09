@@ -4,7 +4,7 @@ import { setNavItemActive, setNavItemInActive } from "../../../../actions";
 import { connect } from "react-redux";
 
 class PreNewPage extends Component {
-  render() {
+  componentDidMount() {
     const { site, isEdit } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
@@ -16,6 +16,8 @@ class PreNewPage extends Component {
         }
       }
     }
+  }
+  render() {
     return <NewPage />;
   }
 }

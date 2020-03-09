@@ -4,7 +4,7 @@ import { setNavItemActive, setNavItemInActive } from "../../../../actions";
 import AboutPage from "./about";
 
 class PreAboutPage extends Component {
-  render() {
+  componentDidMount() {
     const { site, isEdit, setNavItemActive, setNavItemInActive } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
@@ -16,6 +16,8 @@ class PreAboutPage extends Component {
         }
       }
     }
+  }
+  render() {
     return <AboutPage />;
   }
 }

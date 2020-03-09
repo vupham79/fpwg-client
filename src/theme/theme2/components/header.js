@@ -20,7 +20,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateNavItemValue } from "../../../actions";
-import Link from "../../../component/link";
 import styles from "./index.module.css";
 import MenuIcon from "@material-ui/icons/Menu";
 import { NavLink } from "react-router-dom";
@@ -163,7 +162,7 @@ class Header extends Component {
       color: titleView.color,
       textDecoration: "none"
     };
-
+    console.log("is active: ", navItemIsActive);
     return (
       <>
         <AppBar className={styles.app_bar} position="sticky">

@@ -11,7 +11,7 @@ import { closeDialog, openDialog } from "../../actions";
 
 const useStyles = theme => ({
   root: {
-    margin: theme.spacing(15)
+    margin: theme.spacing(1)
   },
   gridItems: {
     maxHeight: 350
@@ -51,9 +51,9 @@ class GalleryComponent extends React.Component {
                 <Grid
                   item
                   key={index}
-                  xs={12}
+                  xs={6}
                   sm={4}
-                  md={2}
+                  md={4}
                   className={classes.gridItems}
                 >
                   <img
