@@ -15,3 +15,22 @@ code {
 #root {
   min-height: 100vh;
 }
+
+.slick-slider .slick-dots button:before,
+.slick-dots .slick-active button:before {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+.slick-slider .slick-slide {
+  padding: 0 0 !important;
+}
+
+.slick-track {
+  display: flex !important;
+}
+
+.slick-track .slick-slide {
+  display: flex !important;
+  height: 40rem !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
