@@ -138,7 +138,9 @@ const SiteReducer = (state = defaultState, action) => {
         isEdit: true,
         siteEdit: { ...action.payload.data },
         titleEdit: { ...action.payload.titleEdit },
-        bodyEdit: { ...action.payload.bodyEdit }
+        bodyEdit: { ...action.payload.bodyEdit },
+        newLogo: null,
+        newCover: [...action.payload.data.cover]
       };
     case "SET_SITE_VIEW":
       return {
@@ -189,9 +191,10 @@ const SiteReducer = (state = defaultState, action) => {
         newLogo: action.payload
       };
     case "SET_NEW_COVER":
+      let array = [...state.newCover, action.payload];
       return {
         ...state,
-        newCover: [...state.newCover, action.payload]
+        newCover: [...array]
       };
     default:
       return state;

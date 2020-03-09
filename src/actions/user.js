@@ -50,18 +50,14 @@ export function setEdit(isEdit) {
   };
 }
 
-export function getAllUsers({ id, accessToken }) {
+export function getAllUsers() {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
     });
     try {
       const data = await axios({
-        url: "/user/findAll",
-        params: {
-          id: id,
-          access_token: accessToken
-        }
+        url: "/user/findAll"
       });
       dispatch({
         type: "CLOSE_LOADING"
@@ -83,16 +79,13 @@ export function getAllUsers({ id, accessToken }) {
   };
 }
 
-export function getUserPages({ accessToken }) {
+export function getUserPages() {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
     });
     const data = await axios({
-      url: "/facebook/pages",
-      params: {
-        access_token: accessToken
-      }
+      url: "/facebook/pages"
     });
     dispatch({
       type: "CLOSE_LOADING"
@@ -111,7 +104,6 @@ export function getUserPages({ accessToken }) {
 export function confirmPage({
   pageUrl,
   pageId,
-  accessToken,
   name,
   profile,
   sitepath,
@@ -128,9 +120,7 @@ export function confirmPage({
         data: {
           pageUrl,
           pageId,
-          accessToken,
           name,
-          userId: profile.id,
           profile,
           sitepath,
           isPublish
@@ -165,10 +155,7 @@ export function activateUser({ userId }) {
     try {
       const data = await axios({
         method: "PATCH",
-        url: `/user/activate/${userId}`,
-        params: {
-          id: userId
-        }
+        url: `/user/activate/${userId}`
       });
       dispatch({
         type: "CLOSE_LOADING"

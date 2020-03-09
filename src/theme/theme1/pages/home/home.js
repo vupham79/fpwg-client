@@ -16,7 +16,9 @@ import moment from "moment";
 import EventComponent from "../../../component/eventComponent";
 import GalleryComponent from "../../../component/galleryComponent";
 import RoundedImage from "react-rounded-image";
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 class Theme1Home extends React.Component {
   state = {
     anchorEl: null
@@ -40,6 +42,54 @@ class Theme1Home extends React.Component {
       } else return siteEdit.logo;
     }
     return siteView.logo;
+  };
+  renderLogo = () => {
+    const { isEdit, siteEdit, siteView, newLogo } = this.props;
+    if (isEdit) {
+      if (newLogo && typeof newLogo === "object" && newLogo.size > 0) {
+        return (
+          <img
+            style={{ height: "50vh" }}
+            src={URL.createObjectURL(newLogo)}
+            alt=""
+          />
+        );
+      } else
+        return <img style={{ height: "50vh" }} src={siteEdit.logo} alt="" />;
+    }
+    return <img style={{ height: "50vh" }} src={siteView.logo} alt="" />;
+  };
+  renderCover = () => {
+    const { isEdit, siteEdit, siteView } = this.props;
+    if (isEdit) {
+      return (
+        siteEdit.cover &&
+        siteEdit.cover.map((cover, i) => <img src={cover} key={i} alt="" />)
+      );
+    } else {
+      return (
+        siteView.cover &&
+        siteView.cover.map((cover, i) => <img src={cover} key={i} alt="" />)
+      );
+    }
+  };
+  renderNewCovers = () => {
+    const { isEdit, newCover, siteView } = this.props;
+    if (isEdit) {
+      if (newCover && newCover.length > 0) {
+        return newCover.map((cover, index) => {
+          if (cover && typeof cover === "object" && cover.size > 0) {
+            return <img src={URL.createObjectURL(cover)} alt="" key={index} />;
+          } else return <img src={cover} alt="" key={index} />;
+        });
+      }
+    } else {
+      if (siteView.cover && siteView.cover.length > 0) {
+        return siteView.cover.map((cover, i) => (
+          <img src={cover} alt="" key={i} />
+        ));
+      }
+    }
   };
   render() {
     const {
@@ -206,35 +256,9 @@ class Theme1Home extends React.Component {
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Carousel
-            showArrows={false}
-            showStatus={false}
-            showThumbs={false}
-            showIndicators={false}
-            autoPlay={true}
-            stopOnHover={true}
-            infiniteLoop={true}
-          >
-            {isEdit
-              ? siteEdit.cover &&
-                siteEdit.cover.map((row, i) => (
-                  <img
-                    style={{ height: "50vh" }}
-                    src={row}
-                    key={i}
-                    alt="./images/theme1-banner1.jpg"
-                  />
-                ))
-              : siteView.cover &&
-                siteView.cover.map((row, i) => (
-                  <img
-                    style={{ height: "50vh" }}
-                    src={row}
-                    key={i}
-                    alt="./images/theme1-banner1.jpg"
-                  />
-                ))}
-          </Carousel>
+          <Slider autoplay arrows centerMode>
+            {this.renderNewCovers()}
+          </Slider>
         </Grid>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
@@ -458,7 +482,8 @@ const mapStateToProps = state => ({
   posts: state.post.posts,
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
-  newLogo: state.site.newLogo
+  newLogo: state.site.newLogo,
+  newCover: state.site.newCover
 });
 
 export default connect(mapStateToProps, null)(Theme1Home);

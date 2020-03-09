@@ -2,18 +2,14 @@ import toastr from "toastr";
 import axios from "../utils/axios";
 import { firebase } from "../utils/firebase";
 
-export function getAllSites({ id, accessToken }) {
+export function getAllSites() {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
     });
     try {
       const data = await axios({
-        url: "/site/findAll",
-        data: {
-          id: id,
-          access_token: accessToken
-        }
+        url: "/site/findAll"
       });
       dispatch({
         type: "CLOSE_LOADING"
@@ -35,7 +31,7 @@ export function getAllSites({ id, accessToken }) {
   };
 }
 
-export function getUserSites(userId, accessToken) {
+export function getUserSites() {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -279,6 +275,9 @@ export function saveDesignSite({ logo, cover, site }) {
       if (logo && typeof logo === "object" && logo.size > 0) {
         dispatch(uploadLogo(logo, site));
       }
+      if (cover && cover.length > 0) {
+        dispatch(uploadCover(cover, site));
+      }
       const data = await axios({
         method: "patch",
         url: "/site/saveDesign",
@@ -451,7 +450,6 @@ export function uploadLogo(file, site) {
           dispatch({
             type: "CLOSE_LOADING"
           });
-          toastr.success("Upload new logo successful", "Success");
         })
         .catch(error => {
           console.log("upload: ", error);
@@ -469,6 +467,63 @@ export function uploadLogo(file, site) {
   };
 }
 
+export function uploadCover(covers, site) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      let coversUrl = [];
+      for (let index = 0; index < covers.length; index++) {
+        if (typeof covers[index] === "string") {
+          coversUrl.push(covers[index]);
+        } else {
+          await firebase
+            .storage()
+            .ref(`${site.id}/`)
+            .child(covers[index].name)
+            .put(covers[index], {
+              contentType: "image/jpeg"
+            })
+            .then(async () => {
+              await firebase
+                .storage()
+                .ref(`${site.id}/`)
+                .child(covers[index].name)
+                .getDownloadURL()
+                .then(async url => {
+                  coversUrl.push(url);
+                });
+            })
+            .catch(error => {
+              console.log("upload: ", error);
+              dispatch({
+                type: "CLOSE_LOADING"
+              });
+              toastr.error(`Upload cover failed`, "Error");
+            });
+        }
+      }
+      await axios({
+        method: "PATCH",
+        url: "site/saveHomePageImage",
+        data: {
+          cover: coversUrl,
+          pageId: site.id
+        }
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Upload cover failed`, "Error");
+    }
+  };
+}
+
 export function changeSiteTitle(site) {
   return dispatch => {
     dispatch({
@@ -478,7 +533,7 @@ export function changeSiteTitle(site) {
   };
 }
 
-export function syncDataFromFB(pageId, access_token) {
+export function syncDataFromFB(pageId) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -488,8 +543,7 @@ export function syncDataFromFB(pageId, access_token) {
         method: "patch",
         url: "/site/syncData",
         data: {
-          pageId: pageId,
-          accessToken: access_token
+          pageId: pageId
         }
       });
       dispatch({

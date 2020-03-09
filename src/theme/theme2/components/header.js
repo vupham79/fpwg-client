@@ -76,7 +76,6 @@ class Header extends Component {
       backgroundRepeat: "no-repeat",
       height: "5rem"
     };
-    console.log(navItemIsActive);
     return (
       <AppBar className={styles.app_bar} position="sticky">
         <Container>
