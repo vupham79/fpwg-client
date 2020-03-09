@@ -1,6 +1,47 @@
 import axios from "../utils/axios";
 import toastr from "toastr";
 
+export function updateTheme({ id, name, fontBody, fontTitle, mainColor }) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      const data = await axios({
+        url: `/theme/update/${id}`,
+        data: {
+          name: name,
+          fontBody: fontBody,
+          fontTitle: fontTitle,
+          mainColor: mainColor,
+        }
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "SET_THEME_UPDATED",
+          payload: {
+            id: id,
+            name: name,
+            fontBody: fontBody,
+            fontTitle: fontTitle,
+            mainColor: mainColor,
+          }
+        });
+      } else {
+        toastr.error(`Unable to update theme`, "Error");
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(error, "Error");
+    }
+  };
+}
+
 export function setShowCustomColor(isShow) {
   return dispatch => {
     dispatch({

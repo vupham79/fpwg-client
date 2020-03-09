@@ -24,7 +24,7 @@ class Theme1Contact extends React.Component {
 
     const useStyles = theme => ({
       changableTitle: {
-        fontFamily: siteEdit.fontTitle,
+        fontFamily: isEdit ? siteEdit.fontTitle : siteView.fontTitle,
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
@@ -110,8 +110,27 @@ class Theme1Contact extends React.Component {
 
     const MapWithAMarker = withScriptjs(
       withGoogleMap(props => (
-        <GoogleMap defaultZoom={15} defaultCenter={{ lat: isEdit ? parseFloat(siteEdit.latitude) : parseFloat(siteView.latitude), lng: isEdit ? parseFloat(siteEdit.longitude) : parseFloat(siteView.longitude) }}>
-          <Marker position={{ lat: isEdit ? parseFloat(siteEdit.latitude) : parseFloat(siteView.latitude), lng: isEdit ? parseFloat(siteEdit.longitude) : parseFloat(siteView.longitude) }} />
+        <GoogleMap
+          defaultZoom={15}
+          defaultCenter={{
+            lat: isEdit
+              ? parseFloat(siteEdit.latitude)
+              : parseFloat(siteView.latitude),
+            lng: isEdit
+              ? parseFloat(siteEdit.longitude)
+              : parseFloat(siteView.longitude)
+          }}
+        >
+          <Marker
+            position={{
+              lat: isEdit
+                ? parseFloat(siteEdit.latitude)
+                : parseFloat(siteView.latitude),
+              lng: isEdit
+                ? parseFloat(siteEdit.longitude)
+                : parseFloat(siteView.longitude)
+            }}
+          />
         </GoogleMap>
       ))
     );
@@ -172,10 +191,14 @@ class Theme1Contact extends React.Component {
             />
           )}
           {isEdit && !siteEdit.phone && !siteEdit.address && (
-            <p style={classes.changableBody3}>Currently setting up our location.</p>
+            <p style={classes.changableBody3}>
+              Currently setting up our location.
+            </p>
           )}
           {!isEdit && !siteView.phone && !siteView.address && (
-            <p style={classes.changableBody3}>Currently setting up our location.</p>
+            <p style={classes.changableBody3}>
+              Currently setting up our location.
+            </p>
           )}
         </Grid>
       </Grid>

@@ -28,7 +28,7 @@ function WebsiteItem({ setCurrentEditId, site }) {
         </Typography>
       </Grid>
       <Grid container justify={"flex-end"} item sm={4} xs={4}>
-        <Grid container item md={8}>
+        <Grid container item md={12}>
           <Grid item md={6} sm={6}>
             <Link to={`/${site.sitePath}`}>
               <Button variant={"outlined"}>View</Button>
@@ -45,7 +45,7 @@ function WebsiteItem({ setCurrentEditId, site }) {
             </Link>
           </Grid>
         </Grid>
-        <Grid item container md={6}>
+        <Grid item container md={12}>
           <Grid item>
             <SwitchButton
               siteId={site.id}

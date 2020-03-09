@@ -67,6 +67,15 @@ class Header extends Component {
   handleDrawerToggle = () => {
     this.setState({ mobileOpen: !this.state.mobileOpen });
   };
+  renderImage = () => {
+    const { isEdit, siteEdit, siteView, newLogo } = this.props;
+    if (isEdit) {
+      if (newLogo && typeof newLogo === "object" && newLogo.size > 0) {
+        return `url('${URL.createObjectURL(newLogo)}'`;
+      } else return `url('${siteEdit.logo}')`;
+    }
+    return `url('${siteView.logo}')`;
+  };
   renderTabItems = () => {
     const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
     const tabStyles = {
@@ -110,17 +119,21 @@ class Header extends Component {
         <List>
           {site.navItems.map((item, index) => (
             <ListItem button key={index}>
-              <Link
+              <NavLink
                 style={{
                   ...titleView,
-                  borderBottom: "1px solid",
                   width: "inherit",
-                  textAlign: "center"
+                  textAlign: "center",
+                  height: "inherit",
+                  textDecoration: "none"
+                }}
+                activeStyle={{
+                  borderBottom: "1px solid"
                 }}
                 to={`/${site.sitePath}/${item.name}`}
               >
                 {item.name}
-              </Link>
+              </NavLink>
             </ListItem>
           ))}
         </List>
@@ -151,6 +164,7 @@ class Header extends Component {
       textDecoration: "none"
     };
 
+    console.log(navItemIsActive);
     return (
       <>
         <AppBar className={styles.app_bar} position="sticky">
@@ -159,12 +173,21 @@ class Header extends Component {
               <Grid
                 container
                 item
-                xs={9}
-                sm={5}
-                alignItems="center"
-                justify="flex-start"
+                sm={2}
+                xs={2}
+                style={{
+                  ...imgStyles,
+                  backgroundImage: this.renderImage()
+                }}
+              />
+              <Grid
+                item
+                sm={1}
+                xs={4}
+                className={styles.shopName}
+                style={isEdit ? titleEdit : titleView}
               >
-                <Grid
+                {/* <Grid
                   id={"siteLogo"}
                   item
                   sm={2}
@@ -175,18 +198,18 @@ class Header extends Component {
                       ? `url('${siteEdit.logo}')`
                       : `url('${siteView.logo}')`
                   }}
-                />
-                <Grid
+                /> */}
+                {/* <Grid
                   item
-                  sm={4}
+                  sm={3}
                   xs={7}
                   className={styles.shopName}
                   style={isEdit ? titleEdit : titleView}
-                >
-                  {isEdit
-                    ? siteEdit && siteEdit.title
-                    : siteView && siteView.title}
-                </Grid>
+                > */}
+                {isEdit
+                  ? siteEdit && siteEdit.title
+                  : siteView && siteView.title}
+                {/* </Grid> */}
                 <Grid>
                   {!navItemIsActive && (
                     <Tooltip
@@ -203,11 +226,11 @@ class Header extends Component {
                   )}
                 </Grid>
               </Grid>
-              <Grid item container xs={3} sm={7} justify="flex-end">
+              <Grid item container xs={6} sm={9} justify="flex-end">
                 <Grid
                   container
                   item
-                  sm={12}
+                  sm={10}
                   className={classes.navItems}
                   justify="flex-end"
                 >
@@ -283,7 +306,8 @@ const mapStateToProps = state => ({
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
-  navItemIsActive: state.site.navItemIsActive
+  navItemIsActive: state.site.navItemIsActive,
+  newLogo: state.site.newLogo
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -29,7 +29,9 @@ import {
   clearSiteView,
   getSiteBySitepath,
   setNavItemActive,
-  setNavItemInActive
+  setNavItemInActive,
+  setNewCover,
+  setNewLogo
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -37,7 +39,8 @@ import {
   getAllThemes,
   getAllThemesAdmin,
   getNavItems,
-  setShowCustomColor
+  setShowCustomColor,
+  updateTheme
 } from "./theme";
 import {
   activateUser,
@@ -49,7 +52,6 @@ import {
   setLogout
 } from "./user";
 import { closeDialog, openDialog } from "./dialog";
-import { openSnackBar, closeSnackBar } from "./snackbar";
 import { setColorPallete } from "./color";
 
 export {
@@ -98,8 +100,6 @@ export {
   getAllPaths,
   getAllPost,
   setActivePost,
-  openSnackBar,
-  closeSnackBar,
   setEditOn,
   setEditOff,
   clearSiteView,
@@ -107,5 +107,8 @@ export {
   getSiteBySitepath,
   setColorPallete,
   setNavItemActive,
-  setNavItemInActive
+  setNavItemInActive,
+  updateTheme,
+  setNewCover,
+  setNewLogo
 };

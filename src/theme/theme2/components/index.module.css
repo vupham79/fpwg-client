@@ -3,6 +3,7 @@
   font-size: 3vh;
   text-align: center;
   font-weight: 700;
+  overflow: hidden;
 }
 
 .app_bar {

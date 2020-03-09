@@ -1,7 +1,6 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import { Carousel } from "react-responsive-carousel";
 import GalleryComponent from "../../../component/galleryComponent";
 
 class Theme1Gallery extends React.Component {

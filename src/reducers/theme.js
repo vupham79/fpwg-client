@@ -2,6 +2,8 @@ const defaultState = {
   data: []
 };
 
+let index;
+
 const ThemeReducer = (state = defaultState, action) => {
   switch (action.type) {
     case "SET_SHOW_CUSTOM_COLOR":
@@ -37,6 +39,16 @@ const ThemeReducer = (state = defaultState, action) => {
       return {
         ...state,
         data: action.payload ? [...action.payload] : []
+      };
+    case "SET_THEME_UPDATED":
+      index = state.data.findIndex(theme => theme.id === action.payload.id);
+      state.data[index].name = action.payload.name;
+      state.data[index].fontBody = action.payload.fontBody;
+      state.data[index].fontTitle = action.payload.fontTitle;
+      state.data[index].mainColor = action.payload.mainColor;
+      return {
+        ...state,
+        data: [...state.data]
       };
     default:
       return state;

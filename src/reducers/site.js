@@ -12,7 +12,9 @@ const defaultState = {
   isView: false,
   adminData: [],
   colorPallete: null,
-  navItemIsActive: false
+  navItemIsActive: false,
+  newLogo: null,
+  newCover: []
 };
 
 let index;
@@ -180,6 +182,16 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         navItemIsActive: true
+      };
+    case "SET_NEW_LOGO":
+      return {
+        ...state,
+        newLogo: action.payload
+      };
+    case "SET_NEW_COVER":
+      return {
+        ...state,
+        newCover: [...state.newCover, action.payload]
       };
     default:
       return state;
