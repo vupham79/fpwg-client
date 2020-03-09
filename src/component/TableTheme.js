@@ -46,7 +46,7 @@ class TableTheme extends Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 1, // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
+    itemPerPage: 5, // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
     showDialog: false,
     selectedItem: {
       id: "0",
@@ -291,7 +291,7 @@ class TableTheme extends Component {
           <DialogTitle>Edit theme</DialogTitle>
 
           <DialogContent>
-            <Grid container xs={12} direction="row">
+            <Grid container direction="row">
               <Grid container item xs={7}>
                 <Grid item xs={12}>
                   <TextField

@@ -5,29 +5,36 @@ export function login({ accessToken, profile }) {
     dispatch({
       type: "SHOW_LOADING"
     });
-    const data = await axios({
-      method: "post",
-      url: "/auth",
-      data: {
-        accessToken: accessToken,
-        id: profile.id,
-        name: profile.name,
-        email: profile.email,
-        picture: profile.picture.data.url
-      }
-    });
-    dispatch({
-      type: "CLOSE_LOADING"
-    });
-    if (data.status === 200) {
-      dispatch({
-        type: "SET_LOGIN",
-        payload: {
-          accessToken,
-          profile
+    try {
+      const data = await axios({
+        method: "post",
+        url: "/auth",
+        data: {
+          accessToken: accessToken,
+          id: profile.id,
+          name: profile.name,
+          email: profile.email,
+          picture: profile.picture.data.url
         }
       });
-    } else {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "SET_LOGIN",
+          payload: {
+            accessToken,
+            profile
+          }
+        });
+      } else {
+        toastr.error("Login failed! Please try again.", "Error");
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
       toastr.error("Login failed! Please try again.", "Error");
     }
   };
@@ -81,21 +88,28 @@ export function getAllUsers() {
 
 export function getUserPages() {
   return async dispatch => {
-    dispatch({
-      type: "SHOW_LOADING"
-    });
-    const data = await axios({
-      url: "/facebook/pages"
-    });
-    dispatch({
-      type: "CLOSE_LOADING"
-    });
-    if (data.status === 200) {
+    try {
       dispatch({
-        type: "SET_USER_PAGES",
-        payload: data.data
+        type: "SHOW_LOADING"
       });
-    } else {
+      const data = await axios({
+        url: "/facebook/pages"
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "SET_USER_PAGES",
+          payload: data.data
+        });
+      } else {
+        toastr.error("Get your pages failed!", "Error");
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
       toastr.error("Get your pages failed!", "Error");
     }
   };
