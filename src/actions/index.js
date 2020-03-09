@@ -31,7 +31,8 @@ import {
   setNavItemActive,
   setNavItemInActive,
   setNewCover,
-  setNewLogo
+  setNewLogo,
+  changeSiteLinks
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -110,5 +111,6 @@ export {
   setNavItemInActive,
   updateTheme,
   setNewCover,
-  setNewLogo
+  setNewLogo,
+  changeSiteLinks
 };
