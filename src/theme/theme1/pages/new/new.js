@@ -1,8 +1,7 @@
-import { Grid } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import moment from 'moment';
-import { Carousel } from "react-responsive-carousel";
+import PostTypeComponent from "../../../component/postsType";
 
 class Theme1News extends React.Component {
   render() {
@@ -12,7 +11,8 @@ class Theme1News extends React.Component {
       titleView,
       posts,
       bodyEdit,
-      bodyView
+      bodyView,
+      siteView,
     } = this.props;
 
     const useStyles = () => ({
@@ -126,51 +126,31 @@ class Theme1News extends React.Component {
             <span style={classes.changableFirst5}>N</span>EWS
           </p>
         </Grid>
-        {!posts && (
-          <Grid item xs={12}>
-            <p style={classes.changableBody3}>Currently there are no news.</p>
-          </Grid>
-        )}
-        {posts && posts.length === 0 && (
-          <Grid item xs={12}>
-            <p style={classes.changableBody3}>Currently there are no news.</p>
-          </Grid>
-        )}
-        {posts && posts.length > 0 && (
-          <Grid item xs={12}>
-            <Carousel
-              showArrows={true}
-              showIndicators={false}
-              showStatus={false}
-              showThumbs={false}
-              autoPlay={false}
-              stopOnHover={true}
-              infiniteLoop={false}
-            >
-              {posts &&
-                posts.map(row => (
-                  <Grid item xs={12} style={classes.centerItem3} key={row.id}>
-                    <img
-                      src={row.attachments.images[0]}
-                      alt=""
-                      style={{ height: 200, width: 200 }}
-                    />
-                    <p style={classes.changableTitle2}>
-                      {moment(row.createdTime).format('MMMM') + " "}
-                      <span style={classes.changableFirst2}>
-                        {moment(row.createdTime).format('DD') + " "}
-                      </span>
-                      {moment(row.createdTime).format('YYYY')}
-                    </p>
-                    <p style={classes.changableBody3}>
-                      {row.message ? row.message : ""}
-                    </p>
-                    <p style={classes.changableLink}>Read more...</p>
-                  </Grid>
-                ))}
-            </Carousel>
-          </Grid>
-        )}
+        <Grid item sm={12} xs={12} container spacing={3}>
+          {isEdit ? (
+            posts ? (
+              <Grid container>
+                <PostTypeComponent posts={posts} />
+              </Grid>
+            ) : (
+                <Grid container justify="center">
+                  <Typography variant="body1">
+                    You don't have any news.
+                </Typography>
+                </Grid>
+              )
+          ) : siteView ? (
+            siteView.posts && (
+              <Grid container>
+                <PostTypeComponent posts={siteView.posts} />
+              </Grid>
+            )
+          ) : (
+                <Grid container justify="center">
+                  <Typography variant="body1">You don't have any news.</Typography>
+                </Grid>
+              )}
+        </Grid>
       </Grid>
     );
   }

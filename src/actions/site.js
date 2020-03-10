@@ -524,6 +524,15 @@ export function uploadCover(covers, site) {
   };
 }
 
+export function setPreviewMode(bool) {
+  return dispatch => {
+    dispatch({
+      type: "SET_PREVIEW_MODE",
+      payload: bool
+    });
+  };
+}
+
 export function changeSiteTitle(site) {
   return dispatch => {
     dispatch({

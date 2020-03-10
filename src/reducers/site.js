@@ -14,7 +14,8 @@ const defaultState = {
   colorPallete: null,
   navItemIsActive: false,
   newLogo: null,
-  newCover: []
+  newCover: [],
+  isPreview: false,
 };
 
 let index;
@@ -202,6 +203,11 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         newCover: [...array]
+      };
+    case "SET_PREVIEW_MODE":
+      return {
+        ...state,
+        isPreview: action.payload
       };
     default:
       return state;

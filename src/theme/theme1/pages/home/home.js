@@ -19,6 +19,8 @@ import RoundedImage from "react-rounded-image";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import ReactPlayer from "react-player";
+
 class Theme1Home extends React.Component {
   state = {
     anchorEl: null
@@ -317,11 +319,30 @@ class Theme1Home extends React.Component {
               {posts &&
                 posts.slice(0, 5).map(row => (
                   <Grid item xs={12} style={classes.centerItem3} key={row.id}>
-                    <img
-                      src={row.attachments.images && row.attachments.images[0]}
-                      alt=""
-                      style={{ height: 200, width: 200 }}
-                    />
+                    {
+                      {
+                        "photo":
+                          <img
+                            src={row.attachments.images && row.attachments.images[0]}
+                            alt=""
+                            style={{ height: 200, width: 200 }}
+                          />,
+                        "video":
+                          <ReactPlayer
+                            url={row && row.attachments && row.attachments.video}
+                            playing
+                            width="100%"
+                            height="200px"
+                          />
+                        ,
+                        default:
+                          <img
+                            src={row.attachments.images && row.attachments.images[0]}
+                            alt=""
+                            style={{ height: 200, width: 200 }}
+                          />
+                      }[row.attachments.media_type]
+                    }
                     <p style={classes.changableTitle2}>
                       {moment(row.createdTime).format("MMMM") + " "}
                       <span style={classes.changableFirst2}>

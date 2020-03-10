@@ -32,7 +32,8 @@ import {
   setNavItemInActive,
   setNewCover,
   setNewLogo,
-  changeSiteLinks
+  changeSiteLinks,
+  setPreviewMode
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -112,5 +113,6 @@ export {
   updateTheme,
   setNewCover,
   setNewLogo,
-  changeSiteLinks
+  changeSiteLinks,
+  setPreviewMode
 };
