@@ -140,7 +140,9 @@ const SiteReducer = (state = defaultState, action) => {
         titleEdit: { ...action.payload.titleEdit },
         bodyEdit: { ...action.payload.bodyEdit },
         newLogo: null,
-        newCover: [...action.payload.data.cover]
+        newCover: action.payload.data.cover
+          ? [...action.payload.data.cover]
+          : []
       };
     case "SET_SITE_VIEW":
       return {
