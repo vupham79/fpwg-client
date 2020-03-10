@@ -35,6 +35,7 @@ const useStyles = theme => ({
     }
   },
   navItems: {
+    maxWidth: "max-content",
     display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "flex"
@@ -76,7 +77,7 @@ class Header extends Component {
     }
     return `url('${siteView.logo}')`;
   };
-  renderTabItems = () => {
+  renderTabItems = ({ type }) => {
     const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
     const tabStyles = {
       textTransform: "none",
@@ -96,10 +97,12 @@ class Header extends Component {
     };
     return (
       <Tabs
+        orientation={type}
         value={tabValue}
         textColor="primary"
+        centered
         TabIndicatorProps={{
-          style: { background: siteEdit.color }
+          style: { background: siteEdit.color, left: 0 }
         }}
         onChange={(e, newValue) => updateNavItemValue(newValue)}
       >
@@ -112,31 +115,37 @@ class Header extends Component {
     );
   };
 
-  renderDrawer = ({ site, titleView }) => {
+  renderDrawer = () => {
+    const { isEdit, siteView, titleView, siteEdit } = this.props;
     return (
       <div style={{ marginTop: "3rem" }}>
         <Divider variant="fullWidth" />
-        <List>
-          {site.navItems.map((item, index) => (
-            <ListItem button key={index}>
-              <NavLink
-                style={{
-                  ...titleView,
-                  width: "inherit",
-                  textAlign: "center",
-                  height: "inherit",
-                  textDecoration: "none"
-                }}
-                activeStyle={{
-                  borderBottom: "1px solid"
-                }}
-                to={`/${site.sitePath}/${item.name}`}
-              >
-                {item.name}
-              </NavLink>
-            </ListItem>
-          ))}
-        </List>
+        {isEdit ? (
+          siteEdit && this.renderTabItems({ type: "vertical" })
+        ) : (
+          <List>
+            {siteView &&
+              siteView.navItems.map((item, index) => (
+                <ListItem button key={index}>
+                  <NavLink
+                    style={{
+                      ...titleView,
+                      width: "inherit",
+                      textAlign: "center",
+                      height: "inherit",
+                      textDecoration: "none"
+                    }}
+                    activeStyle={{
+                      borderBottom: "1px solid"
+                    }}
+                    to={`/${siteView.sitePath}/${item.name}`}
+                  >
+                    {item.name}
+                  </NavLink>
+                </ListItem>
+              ))}
+          </List>
+        )}
       </div>
     );
   };
@@ -173,6 +182,7 @@ class Header extends Component {
               <Grid
                 container
                 item
+                md={2}
                 sm={2}
                 xs={2}
                 style={{
@@ -182,7 +192,8 @@ class Header extends Component {
               />
               <Grid
                 item
-                sm={1}
+                md={1}
+                sm={4}
                 xs={4}
                 className={styles.shopName}
                 style={isEdit ? titleEdit : titleView}
@@ -226,7 +237,7 @@ class Header extends Component {
                   )}
                 </Grid>
               </Grid>
-              <Grid item container xs={6} sm={9} justify="flex-end">
+              <Grid item container xs={6} sm={12} md={9} justify="flex-end">
                 <Grid
                   container
                   item
@@ -235,7 +246,7 @@ class Header extends Component {
                   justify="flex-end"
                 >
                   {isEdit
-                    ? this.renderTabItems()
+                    ? this.renderTabItems({ type: "horizontal" })
                     : siteView.navItems &&
                       siteView.navItems.map((item, index) =>
                         item.isActive ? (
