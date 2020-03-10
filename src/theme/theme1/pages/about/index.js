@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { setNavItemActive, setNavItemInActive } from "../../../../actions";
 
 class PreAboutPageT1 extends Component {
-  render() {
+  componentDidMount() {
     const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
@@ -16,6 +16,8 @@ class PreAboutPageT1 extends Component {
         }
       }
     }
+  }
+  render() {
     return <AboutPage />;
   }
 }

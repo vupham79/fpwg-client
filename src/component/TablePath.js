@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import { getAllPaths } from "../actions";
 import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
-import './adminStyleSheet.css'
+import "./adminStyleSheet.css";
 
 const useStyles = theme => ({
   seeMore: {
@@ -31,8 +31,8 @@ class TablePath extends Component {
   state = {
     filteredData: [],
     pageCount: 1,
-    offset: 0,
-    itemPerPage: 2 // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
+    offset: 1,
+    itemPerPage: 5 // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
   };
 
   setListData = listData => {
@@ -78,7 +78,7 @@ class TablePath extends Component {
   };
 
   handleSearch = keyword => {
-    let searchResult = this.props.paths.filter(function (user) {
+    let searchResult = this.props.paths.filter(function(user) {
       return user.pathName.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -121,19 +121,19 @@ class TablePath extends Component {
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-            this.state.filteredData.map((row, index) => (
-              <div key={row.id}>
-                <Grid container direction="row">
-                  <Grid item xs={3}>
-                    {row.pathName}
-                    <div style={{ height: 20 }} />
-                  </Grid>
-                  <Grid item xs={3}></Grid>
+          this.state.filteredData.map((row, index) => (
+            <div key={row.id}>
+              <Grid container direction="row">
+                <Grid item xs={3}>
+                  {row.pathName}
+                  <div style={{ height: 20 }} />
                 </Grid>
-                <Divider />
-              </div>
-            ))
-          )}
+                <Grid item xs={3}></Grid>
+              </Grid>
+              <Divider />
+            </div>
+          ))
+        )}
         <div className="commentBox">
           <ReactPaginate
             previousLabel={"previous"}

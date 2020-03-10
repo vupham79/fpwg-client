@@ -42,9 +42,24 @@ export function loginAdmin({ username, password }) {
 }
 
 export function setLogoutAdmin() {
-  return dispatch => {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
     dispatch({
       type: "SET_LOGOUT_ADMIN"
     });
+    try {
+      await axios({
+        url: "/admin/logout"
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+    }
   };
 }

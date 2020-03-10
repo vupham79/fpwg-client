@@ -4,7 +4,7 @@ import { setNavItemActive, setNavItemInActive } from "../../../../actions";
 import GalleryPage from "./gallery";
 
 class PreGalleryPage extends Component {
-  render() {
+  componentDidMount() {
     const { site, isEdit, setNavItemActive, setNavItemInActive } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
@@ -16,6 +16,8 @@ class PreGalleryPage extends Component {
         }
       }
     }
+  }
+  render() {
     return <GalleryPage />;
   }
 }

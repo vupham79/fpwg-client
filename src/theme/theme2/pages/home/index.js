@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { setNavItemInActive, setNavItemActive } from "../../../../actions";
 
 class PreHomePage extends Component {
-  render() {
+  componentDidMount() {
     const { site, isEdit, setNavItemActive, setNavItemInActive } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
@@ -16,6 +16,8 @@ class PreHomePage extends Component {
         }
       }
     }
+  }
+  render() {
     return <HomePage />;
   }
 }

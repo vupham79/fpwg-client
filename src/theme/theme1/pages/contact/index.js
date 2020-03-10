@@ -4,7 +4,7 @@ import { setNavItemActive, setNavItemInActive } from "../../../../actions";
 import { connect } from "react-redux";
 
 class PreContactPageT1 extends Component {
-  render() {
+  componentDidMount() {
     const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
@@ -16,6 +16,8 @@ class PreContactPageT1 extends Component {
         }
       }
     }
+  }
+  render() {
     return <ContactPage />;
   }
 }

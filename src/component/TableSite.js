@@ -29,8 +29,8 @@ class TableSite extends Component {
   state = {
     filteredData: [],
     pageCount: 1,
-    offset: 0,
-    itemPerPage: 2
+    offset: 1,
+    itemPerPage: 5
   };
 
   setListData = listData => {
@@ -40,8 +40,9 @@ class TableSite extends Component {
   };
 
   setPageCount = listData => {
+    console.log(listData.length);
     this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+      pageCount: Math.max(listData.length / this.state.itemPerPage)
     });
   };
 

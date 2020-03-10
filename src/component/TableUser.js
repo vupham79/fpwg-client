@@ -46,15 +46,15 @@ class TableUser extends Component {
   };
 
   getUsers = async () => {
-    const { accessToken, userId, getAllUsers } = this.props;
-    await getAllUsers({ userId, accessToken });
-    this.setListData(
-      this.props.users.slice(
+    const { getAllUsers, users } = this.props;
+    await getAllUsers();
+    this.setState({
+      filteredData: this.props.users.slice(
         this.state.offset,
         this.state.itemPerPage + this.state.offset
-      )
-    );
-    this.setPageCount(this.props.users);
+      ),
+      pageCount: Math.ceil(users.length / this.state.itemPerPage)
+    });
   };
 
   componentDidMount() {

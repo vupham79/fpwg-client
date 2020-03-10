@@ -143,7 +143,7 @@ class DesignEditorTab extends React.Component {
     ) {
       var output = document.getElementById("preview");
       output.src = URL.createObjectURL(e.target.files[0]);
-      this.setState({ file });
+      this.props.setNewLogo(file);
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
     }
@@ -154,7 +154,7 @@ class DesignEditorTab extends React.Component {
     const file = e.target.files[0];
     //validating the file
     //check if the file is exists
-    if (file === null) {
+    if (!file) {
       toastr.error("No image is selected!", "Error");
       return;
     }
@@ -169,6 +169,7 @@ class DesignEditorTab extends React.Component {
       file.type === "image/jpg"
     ) {
       this.setState({ covers: [...this.state.covers, file] });
+      this.props.setNewCover(file);
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
     }
@@ -264,7 +265,12 @@ class DesignEditorTab extends React.Component {
               onChange={e => this.handleBrowseLogo(e)}
               style={{ display: "none" }}
             />
-            <img style={imgStyles} alt="" id={"preview"} src={site.logo} />
+            <img
+              style={{ ...imgStyles, width: "auto" }}
+              alt=""
+              id={"preview"}
+              src={site.logo}
+            />
           </Grid>
           <Grid container item spacing={2} justify={"center"}>
             <Grid item>
@@ -363,7 +369,11 @@ class DesignEditorTab extends React.Component {
             md={4}
             sm={6}
             xs={6}
-            style={{ backgroundColor: "#F3ECEC", cursor: "pointer" }}
+            style={{
+              ...imgStyles,
+              backgroundColor: "#F3ECEC",
+              cursor: "pointer"
+            }}
             onClick={() => document.getElementById("addCover").click()}
           >
             <Input
