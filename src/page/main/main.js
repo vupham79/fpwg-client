@@ -20,7 +20,8 @@ import {
   closeDialog,
   confirmPage,
   getUserSites,
-  openDialog
+  openDialog,
+  setEditOff
 } from "../../actions";
 import Header from "../../component/Header";
 import SwitchButton from "../../component/SwitchButton";
@@ -152,6 +153,10 @@ class MainPage extends Component {
       tab
     });
   };
+
+  componentDidMount() {
+    this.props.setEditOff();
+  }
 
   render() {
     const { closeDialog, openDialog, open } = this.props;
@@ -293,7 +298,8 @@ const mapDispatchToProps = dispatch => ({
   closeDialog: () => dispatch(closeDialog()),
   openDialog: () => dispatch(openDialog()),
   confirmPage: data => dispatch(confirmPage(data)),
-  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
+  setEditOff: () => dispatch(setEditOff()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
