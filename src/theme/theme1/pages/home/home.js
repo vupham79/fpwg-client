@@ -318,7 +318,7 @@ class Theme1Home extends React.Component {
                 posts.slice(0, 5).map(row => (
                   <Grid item xs={12} style={classes.centerItem3} key={row.id}>
                     <img
-                      src={row.attachments.images[0]}
+                      src={row.attachments.images && row.attachments.images[0]}
                       alt=""
                       style={{ height: 200, width: 200 }}
                     />
@@ -375,8 +375,8 @@ class Theme1Home extends React.Component {
         {isEdit ? (
           <GalleryComponent galleries={siteEdit.galleries} />
         ) : (
-          <GalleryComponent galleries={siteView.galleries} />
-        )}
+            <GalleryComponent galleries={siteView.galleries} />
+          )}
         <div style={{ height: 100, width: "100%" }} />
         <Grid item xs={12}>
           <Parallax

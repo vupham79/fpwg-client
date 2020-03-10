@@ -176,7 +176,7 @@ function TypeVideo({ post, openDialog }) {
       <Grid item xs={12} sm={6} md={3}>
         <Card className={classes.card}>
           <ReactPlayer
-            url={post.attachments.video}
+            url={post && post.attachments && post.attachments.video}
             playing
             width="100%"
             height="50%"
@@ -212,7 +212,8 @@ class PostTypeComponent extends React.Component {
     super(props);
     this.state = {
       open: false,
-      postOpen: null
+      postOpen: null,
+      openVideo: false
     };
   }
 
@@ -223,10 +224,18 @@ class PostTypeComponent extends React.Component {
     });
   };
 
+  handleOpenVideo = post => {
+    this.setState({
+      openVideo: true,
+      postOpen: post
+    });
+  };
+
   handleClose = () => {
     this.setState({
       open: false,
-      postOpen: null
+      postOpen: null,
+      openVideo: false
     });
   };
 
@@ -261,7 +270,7 @@ class PostTypeComponent extends React.Component {
                 <TypeVideo
                   key={index}
                   post={post}
-                  openDialog={this.handleOpen}
+                  openDialog={this.handleOpenVideo}
                 />
               ))
           )}
@@ -273,7 +282,7 @@ class PostTypeComponent extends React.Component {
           >
             <Container className={classes.root}>
               <Grid container spacing={3} justify="center">
-                {post &&
+                {post && post.attachments.images &&
                   post.attachments.images.map((img, index) => (
                     <Grid
                       item
@@ -288,12 +297,12 @@ class PostTypeComponent extends React.Component {
                   ))}
               </Grid>
               <Grid container className={classes.root} justify="center">
-                <Grid>
+                <Grid item xs={12}>
                   <Typography variant="h5" color="textPrimary">
                     {post && post.title}
                   </Typography>
                 </Grid>
-                <Grid>
+                <Grid item xs={12}>
                   <Typography variant="body1">
                     {post && post.message}
                   </Typography>
@@ -301,6 +310,37 @@ class PostTypeComponent extends React.Component {
               </Grid>
             </Container>
           </Dialog>
+          {/* dialogue for video type */}
+          <Dialog
+            open={this.state.openVideo}
+            onClose={this.handleClose}
+            fullWidth
+            maxWidth="md"
+          >
+            <Container className={classes.root}>
+              <Grid container spacing={3} justify="center">
+                <ReactPlayer
+                  url={post && post.attachments && post.attachments.video}
+                  playing
+                  width="100%"
+                  height="50%"
+                />
+              </Grid>
+              <Grid container className={classes.root} justify="center">
+                <Grid item xs={12}>
+                  <Typography variant="h5" color="textPrimary">
+                    {post && post.title}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography variant="body1">
+                    {post && post.message}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Container>
+          </Dialog>
+
         </Grid>
       </Container>
     );
