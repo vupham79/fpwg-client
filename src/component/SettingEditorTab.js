@@ -2,7 +2,8 @@ import React from "react";
 import { TextField, Grid } from "@material-ui/core";
 import "toastr/build/toastr.min.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInstagram, faYoutube, faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faInstagram, faYoutube, faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import MailIcon from '@material-ui/icons/Mail'
 import { changeSiteLinks } from "../actions";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -13,9 +14,9 @@ const useStyles = theme => ({
 
 class SettingEditorTab extends React.Component {
 
-  handleChangeTwitter = e => {
+  handleChangeWhatsapp = e => {
     const { site, changeSiteLinks } = this.props;
-    site.twitter = e.target.value;
+    site.whatsapp = e.target.value;
     changeSiteLinks(site);
   };
 
@@ -28,6 +29,12 @@ class SettingEditorTab extends React.Component {
   handleChangeYoutube = e => {
     const { site, changeSiteLinks } = this.props;
     site.youtube = e.target.value;
+    changeSiteLinks(site);
+  };
+
+  handleChangeMail = e => {
+    const { site, changeSiteLinks } = this.props;
+    site.mail = e.target.value;
     changeSiteLinks(site);
   };
 
@@ -62,18 +69,18 @@ class SettingEditorTab extends React.Component {
         <Grid container item direction="row" justify="center" xs={12} style={{ marginTop: 10 }}>
           <Grid item xs={2}>
             <FontAwesomeIcon
-              icon={faTwitter}
+              icon={faWhatsapp}
               size="2x"
             />
           </Grid>
           <Grid item xs={9}>
             <TextField
               variant="outlined"
-              label="Twitter"
+              label="WhatsApp"
               color="primary"
               size="small"
-              value={site.twitter}
-              onChange={e => this.handleChangeTwitter(e)}
+              value={site.whatsapp}
+              onChange={e => this.handleChangeWhatsapp(e)}
             />
           </Grid>
         </Grid>
@@ -112,6 +119,22 @@ class SettingEditorTab extends React.Component {
               size="small"
               value={site.youtube}
               onChange={e => this.handleChangeYoutube(e)}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid container item direction="row" justify="center" xs={12} style={{ marginTop: 10 }}>
+          <Grid item xs={2}>
+            <MailIcon />
+          </Grid>
+          <Grid item xs={9}>
+            <TextField
+              variant="outlined"
+              label="Mail"
+              color="primary"
+              size="small"
+              value={site.mail}
+              onChange={e => this.handleChangeMail(e)}
             />
           </Grid>
         </Grid>

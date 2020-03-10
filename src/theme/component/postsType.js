@@ -13,6 +13,7 @@ import {
 } from "@material-ui/core";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import React from "react";
+import ReactPlayer from 'react-player'
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -161,6 +162,46 @@ function TypePhoto({ post, openDialog }) {
   );
 }
 
+
+function TypeVideo({ post, openDialog }) {
+  const classes = useStyles();
+  return (
+    <React.Fragment>
+      {/* 'https://www.facebook.com/Indiegogo/videos/484114395557572/UzpfSTMzMzY2NzUwNjczMTk0NzoyNzYzMDQxNjQwNDYxMTc2/' */}
+      <Grid item xs={12} sm={6} md={3}>
+        <Card className={classes.card}>
+          <ReactPlayer
+            url={post.attachments.video}
+            playing
+            width="100%"
+            height="50%"
+          />
+          <CardContent className={classes.cardContent}>
+            <Typography className={classes.title} gutterBottom variant="h6">
+              {post.title}
+            </Typography>
+            <Typography className={classes.message}>
+              {post.message && post.message}
+            </Typography>
+          </CardContent>
+          <CardActions style={{ paddingLeft: "1rem" }}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => openDialog(post)}
+            >
+              Read More
+            </Button>
+            <Button color="primary">
+              <FacebookIcon color="primary" fontSize="large" />
+            </Button>
+          </CardActions>
+        </Card>
+      </Grid>
+    </React.Fragment>
+  );
+}
+
 class PostTypeComponent extends React.Component {
   constructor(props) {
     super(props);
@@ -206,6 +247,13 @@ class PostTypeComponent extends React.Component {
               )) ||
               (post.attachments.media_type === "album" && (
                 <TypeAlbum
+                  key={index}
+                  post={post}
+                  openDialog={this.handleOpen}
+                />
+              )) ||
+              (post.attachments.media_type === "video" && (
+                <TypeVideo
                   key={index}
                   post={post}
                   openDialog={this.handleOpen}
