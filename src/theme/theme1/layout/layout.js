@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Header from "../components/header";
+import HeaderComponent from "../../component/headerComponent";
 import Footer from "../components/Footer";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
@@ -44,7 +44,7 @@ class Layout extends Component {
 
     return (
       <>
-        <Header />
+        <HeaderComponent navPos={"left"} displayImg={false} />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
       </>

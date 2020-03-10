@@ -34,7 +34,6 @@ const useStyles = theme => ({
     }
   },
   navItems: {
-    maxWidth: "max-content",
     display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "flex"
@@ -99,10 +98,20 @@ class Header extends Component {
         orientation={type}
         value={tabValue}
         textColor="primary"
-        centered
-        TabIndicatorProps={{
-          style: { background: siteEdit.color, left: 0 }
-        }}
+        TabIndicatorProps={
+          type === "vertical"
+            ? {
+                style: {
+                  background: siteEdit.color,
+                  left: 0
+                }
+              }
+            : {
+                style: {
+                  background: siteEdit.color
+                }
+              }
+        }
         onChange={(e, newValue) => updateNavItemValue(newValue)}
       >
         {siteEdit.navItems.map((item, index) =>

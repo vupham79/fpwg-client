@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Footer from "../components/footer";
 import Header from "../components/header";
+import HeaderComponent from "../../component/headerComponent";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import { themes as themesConstant } from "../../../constant/constant";
@@ -43,7 +44,7 @@ class Layout extends Component {
 
     return (
       <>
-        <Header />
+        <HeaderComponent navPos={"right"} displayImg={true} />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
       </>
