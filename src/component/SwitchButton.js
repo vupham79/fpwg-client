@@ -54,7 +54,7 @@ class SwitchButton extends React.Component {
     }
   };
   render() {
-    const { style, onChange } = this.props;
+    const { style, onChange, noLabel } = this.props;
     return (
       <FormControlLabel
         style={style}
@@ -64,7 +64,7 @@ class SwitchButton extends React.Component {
             onChange={() => (onChange ? onChange() : this.handlePublish())}
           />
         }
-        label={this.props.isPublish ? "Published" : "Unpublished"}
+        label={!noLabel && (this.props.isPublish ? "Published" : "Unpublished")}
       />
     );
   }

@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import { Grid, IconButton, Link } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInstagram, faYoutube, faTwitter, faFacebook } from "@fortawesome/free-brands-svg-icons";
+import { faInstagram, faYoutube, faWhatsapp, faFacebook } from "@fortawesome/free-brands-svg-icons";
 
 class Footer extends React.Component {
   render() {
@@ -27,36 +27,21 @@ class Footer extends React.Component {
         <Grid container item direction="row" justify="center" xs={12}>
 
           <Grid item>
-            <FontAwesomeIcon
-              icon={faTwitter}
-              size="2x"
-              color="white"
-            />
-          </Grid>
-          <Grid item style={{ marginLeft: 5 }}>
-            <Link href="#">Twitter</Link>
+            <IconButton aria-label="" color="primary" href={isEdit ? siteEdit.url : siteView.url}>
+              <FontAwesomeIcon icon={faWhatsapp} color="white" size="2x" />
+            </IconButton>
           </Grid>
 
-          <Grid item style={{ marginLeft: 5 }}>
-            <FontAwesomeIcon
-              icon={faInstagram}
-              size="2x"
-              color="white"
-            />
-          </Grid>
-          <Grid item style={{ marginLeft: 5 }}>
-            <Link href="#">Instagram</Link>
+          <Grid item>
+            <IconButton aria-label="" color="primary" href={isEdit ? siteEdit.url : siteView.url}>
+              <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />
+            </IconButton>
           </Grid>
 
-          <Grid item style={{ marginLeft: 5 }}>
-            <FontAwesomeIcon
-              icon={faYoutube}
-              size="2x"
-              color="white"
-            />
-          </Grid>
-          <Grid item style={{ marginLeft: 5 }}>
-            <Link href="#">Youtube</Link>
+          <Grid item>
+            <IconButton aria-label="" color="primary" href={isEdit ? siteEdit.url : siteView.url}>
+              <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />
+            </IconButton>
           </Grid>
 
         </Grid>

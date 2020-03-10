@@ -14,6 +14,7 @@ import { saveDesignSite, updateTabValue } from "../actions";
 import DesignTab from "./DesignEditorTab";
 import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
+import SyncEditorTab from "./SyncEditorTab";
 
 const useStyles = theme => ({
   root: {
@@ -78,10 +79,12 @@ class ClippedDrawer extends React.Component {
             <Tab style={tabStyles} label="Design" />
             <Tab style={tabStyles} label="Page" />
             <Tab style={tabStyles} label="Setting" />
+            <Tab style={tabStyles} label="Sync" />
           </Tabs>
           {tabValue === 0 && <DesignTab />}
           {tabValue === 1 && <PagesEditorTab />}
           {tabValue === 2 && <SettingEditorTab />}
+          {tabValue === 3 && <SyncEditorTab />}
           <Divider
             style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
           />
