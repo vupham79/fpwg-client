@@ -28,6 +28,7 @@ import {
   setNewLogo
 } from "../actions";
 import toastr from "./Toastr";
+import DialogThemes from "./DialogThemes";
 
 const useStyles = theme => ({
   content: {
@@ -58,6 +59,19 @@ const useStyles = theme => ({
     borderWidth: 1,
     borderColor: "#2a2e2a",
     padding: "1rem"
+  },
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "#434d58 !important",
+    color: "#434d58 !important"
+  },
+  focused: {
+    borderWidth: "1px",
+    borderColor: "#434d58 !important",
+    color: "#434d58 !important"
+  },
+  pickerButton: {
+    margin: 0
   }
 });
 
@@ -73,7 +87,8 @@ class DesignEditorTab extends React.Component {
   state = {
     file: null,
     pallete: [],
-    covers: []
+    covers: [],
+    logo: ""
   };
 
   async componentDidMount() {
@@ -82,6 +97,9 @@ class DesignEditorTab extends React.Component {
     const img = document.getElementById("preview");
     img.crossOrigin = "Anonymous";
     img.src = site.logo;
+    this.setState({
+      logo: site.logo
+    });
     img.addEventListener("load", async function() {
       const color = await colorThief.getPalette(img, 11);
       const colors = await color.map(rgb =>
@@ -143,6 +161,9 @@ class DesignEditorTab extends React.Component {
     ) {
       var output = document.getElementById("preview");
       output.src = URL.createObjectURL(e.target.files[0]);
+      this.setState({
+        logo: e.target.files[0].name
+      });
       this.props.setNewLogo(file);
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
@@ -187,7 +208,6 @@ class DesignEditorTab extends React.Component {
       isShow,
       setShowCustomColor,
       classes,
-      themes,
       site,
       colorPallete
     } = this.props;
@@ -195,46 +215,43 @@ class DesignEditorTab extends React.Component {
     return (
       <div style={{ overflowY: "scroll" }}>
         <Typography className={classes.title}>Theme</Typography>
-        <Select
-          autoComplete="true"
-          value={site && site.theme.id}
-          fullWidth
-          variant={"outlined"}
-          onChange={this.handleChangeTheme}
-        >
-          {themes.map((element, index) => (
-            <MenuItem value={element.id} key={index}>
-              {element.name}
-            </MenuItem>
-          ))}
-        </Select>
+        <DialogThemes />
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
         <Typography className={classes.title}>Font</Typography>
-        <Grid container className={classes.sideBarBox}>
-          <Typography className={classes.title2}>Font Title</Typography>
-          <Grid item container>
-            <GoogleFontPicker
-              searchable
-              buttonColor={"default"}
-              buttonVariant={"outlined"}
-              defaultFont={site.fontTitle}
-              onFontSelected={this.handleChangeFontTitle}
-            />
+        <Grid container className={classes.sideBarBox} justify={"space-evenly"}>
+          <Grid item>
+            <Typography className={classes.title2}>Font Title</Typography>
+            <Grid item container>
+              <GoogleFontPicker
+                searchable
+                buttonColor={"default"}
+                buttonVariant={"outlined"}
+                defaultFont={site.fontTitle}
+                onFontSelected={this.handleChangeFontTitle}
+                classes={{
+                  pickerButton: classes.pickerButton
+                }}
+                placement={"bottom"}
+              />
+            </Grid>
           </Grid>
-          <Divider
-            style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
-          />
-          <Typography className={classes.title2}>Font Body</Typography>
-          <Grid container>
-            <GoogleFontPicker
-              searchable
-              buttonColor={"default"}
-              buttonVariant={"outlined"}
-              defaultFont={site.fontBody}
-              onFontSelected={this.handleChangeFontBody}
-            />
+          <Grid item>
+            <Typography className={classes.title2}>Font Body</Typography>
+            <Grid container>
+              <GoogleFontPicker
+                searchable
+                buttonColor={"default"}
+                buttonVariant={"outlined"}
+                defaultFont={site.fontBody}
+                onFontSelected={this.handleChangeFontBody}
+                classes={{
+                  pickerButton: classes.pickerButton
+                }}
+                placement={"bottom"}
+              />
+            </Grid>
           </Grid>
         </Grid>
         <Divider
@@ -245,6 +262,16 @@ class DesignEditorTab extends React.Component {
           label="Title"
           variant={"outlined"}
           fullWidth
+          InputLabelProps={{
+            classes: {
+              focused: classes.focused
+            }
+          }}
+          InputProps={{
+            classes: {
+              notchedOutline: classes.notchedOutline
+            }
+          }}
           value={site.title}
           onChange={e => this.handleChangeSiteTitle(e)}
         />
@@ -269,18 +296,24 @@ class DesignEditorTab extends React.Component {
               style={{ ...imgStyles, width: "auto" }}
               alt=""
               id={"preview"}
+              hidden
               src={site.logo}
             />
           </Grid>
-          <Grid container item spacing={2} justify={"center"}>
-            <Grid item>
+          <Grid container item>
+            <Grid item sm={5}>
               <Button
                 variant={"contained"}
-                color={"secondary"}
+                color={"default"}
                 onClick={() => document.getElementById("selectedFile").click()}
               >
                 Browse
               </Button>
+            </Grid>
+            <Grid item sm={5}>
+              <Typography variant={"caption"}>
+                {this.state.logo.substring(0, 50)}
+              </Typography>
             </Grid>
           </Grid>
         </Grid>

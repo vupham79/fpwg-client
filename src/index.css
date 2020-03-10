@@ -36,6 +36,14 @@ code {
   display: flex !important;
 }
 
+.slick-next {
+  right: 0 !important;
+}
+
+.slick-prev {
+  left: 0 !important;
+}
+
 .slick-track .slick-slide {
   display: flex !important;
   height: 40rem !important;
