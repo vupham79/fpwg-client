@@ -220,7 +220,7 @@ class Header extends Component {
                   : siteView && siteView.title}
                 {/* </Grid> */}
                 <Grid>
-                  {!navItemIsActive && (
+                  {!isEdit && !navItemIsActive && (
                     <Tooltip
                       TransitionComponent={Zoom}
                       title="This page is currently inactive"

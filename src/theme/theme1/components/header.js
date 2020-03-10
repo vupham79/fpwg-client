@@ -112,7 +112,7 @@ class Header extends Component {
                 {isEdit
                   ? siteEdit && siteEdit.title
                   : siteView && siteView.title}
-                {!navItemIsActive && (
+                {!isEdit && !navItemIsActive && (
                   <Tooltip
                     TransitionComponent={Zoom}
                     title="This page is currently inactive"
