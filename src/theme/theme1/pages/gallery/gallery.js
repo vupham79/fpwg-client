@@ -118,13 +118,12 @@ class Theme1Gallery extends React.Component {
             <p style={classes.changableBody4}>Currently there are no images.</p>
           </Grid>
         )}
-        <Grid item xs={12}>
-          {isEdit ? (
-            <GalleryComponent galleries={siteEdit.galleries} />
-          ) : (
-            <GalleryComponent galleries={siteView.galleries} />
-          )}
-        </Grid>
+
+        {isEdit ? (
+          <GalleryComponent galleries={siteEdit.galleries} />
+        ) : (
+          <GalleryComponent galleries={siteView.galleries} />
+        )}
       </Grid>
     );
   }

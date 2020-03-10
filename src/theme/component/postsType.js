@@ -9,7 +9,8 @@ import {
   Grid,
   makeStyles,
   Typography,
-  withStyles
+  withStyles,
+  Link
 } from "@material-ui/core";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import React from "react";
@@ -115,7 +116,9 @@ function TypeAlbum({ post, openDialog }) {
               Read More
             </Button>
             <Button color="primary">
-              <FacebookIcon color="primary" fontSize="large" />
+              <a href={post.target}>
+                <FacebookIcon color="primary" fontSize="large" />
+              </a>
             </Button>
           </CardActions>
         </Card>
@@ -152,7 +155,9 @@ function TypePhoto({ post, openDialog }) {
               Read More
             </Button>
             <Button color="primary">
-              <FacebookIcon color="primary" fontSize="large" />
+              <a href={post.target}>
+                <FacebookIcon color="primary" fontSize="large" />
+              </a>
             </Button>
           </CardActions>
         </Card>

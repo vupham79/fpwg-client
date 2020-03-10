@@ -353,8 +353,7 @@ class Theme1Home extends React.Component {
             <p style={classes.changableBody4}>Currently there are no images.</p>
           </Grid>
         )}
-        <Grid item xs={12}>
-          {/* <Carousel
+        {/* <Carousel
             showArrows={true}
             centerMode={true}
             infiniteLoop={true}
@@ -373,12 +372,11 @@ class Theme1Home extends React.Component {
                   <img style={{ height: "50vh" }} src={row.url} alt="" />
                 ))}
           </Carousel> */}
-          {isEdit ? (
-            <GalleryComponent galleries={siteEdit.galleries} />
-          ) : (
-            <GalleryComponent galleries={siteView.galleries} />
-          )}
-        </Grid>
+        {isEdit ? (
+          <GalleryComponent galleries={siteEdit.galleries} />
+        ) : (
+          <GalleryComponent galleries={siteView.galleries} />
+        )}
         <div style={{ height: 100, width: "100%" }} />
         <Grid item xs={12}>
           <Parallax
