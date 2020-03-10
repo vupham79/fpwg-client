@@ -11,24 +11,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React from "react";
 import { connect } from "react-redux";
 import Switch from "./SwitchButton";
-import { closeDialog, openDialog, updateNavItemValue } from "../actions";
+import { closeDialog, openDialog } from "../actions";
 import moment from "moment";
-const gridContainer = {
-  borderStyle: "solid",
-  borderRadius: 10,
-  borderWidth: 1,
-  borderColor: "#2a2e2a"
-};
-
-const gridItem = {
-  borderStyle: "solid",
-  borderColor: "#2a2e2a",
-  borderWidth: 1.5,
-  padding: "0.2rem 0.5rem",
-  margin: "0.7rem",
-  zIndex: "99999999",
-  height: "3.5rem"
-};
 
 const expanStyle = {
   marginTop: "1rem"
@@ -46,7 +30,6 @@ class SyncEditorTab extends React.Component {
   };
 
   render() {
-    const { site } = this.props;
     return (
       <>
         <ExpansionPanel style={expanStyle}>

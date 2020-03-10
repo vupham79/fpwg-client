@@ -2,62 +2,40 @@ import { Grid } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./index.module.css";
-
+import Slider from "react-slick";
 const imgUrl = [
   "https://s3.amazonaws.com/pv-featured-images/restaurant-cafe/coffee-918926_1920.jpg",
   "https://s3.amazonaws.com/pv-featured-images/restaurant-cafe/cover-1589426_1920.jpg",
   "https://s3.amazonaws.com/pv-featured-images/restaurant-cafe/alcohol-1869282_1920.jpg"
 ];
 
-const imgStyles = {
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  width: "100%"
-};
-
 class CarouselImages extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      currentImageIndex: 0
-    };
+    this.state = {};
   }
 
-  previousSlide = () => {
-    const lastIndex = imgUrl.length - 1;
-    const { currentImageIndex } = this.state;
-    const shouldResetIndex = currentImageIndex === 0;
-    const index = shouldResetIndex ? lastIndex : currentImageIndex - 1;
-    this.setState({
-      currentImageIndex: index
-    });
+  renderNewCovers = () => {
+    const { isEdit, newCover, siteView } = this.props;
+    if (isEdit) {
+      if (newCover && newCover.length > 0) {
+        return newCover.map((cover, index) => {
+          if (cover && typeof cover === "object" && cover.size > 0) {
+            return <img src={URL.createObjectURL(cover)} alt="" key={index} />;
+          } else return <img src={cover} alt="" key={index} />;
+        });
+      }
+    } else {
+      if (siteView.cover && siteView.cover.length > 0) {
+        return siteView.cover.map((cover, i) => (
+          <img src={cover} alt="" key={i} />
+        ));
+      }
+    }
+    if (newCover && newCover.length <= 0) {
+      return imgUrl.map((url, i) => <img src={url} alt="" key={i} />);
+    }
   };
-
-  nextSlide = () => {
-    const lastIndex = imgUrl.length - 1;
-    const { currentImageIndex } = this.state;
-    const shouldResetIndex = currentImageIndex === lastIndex;
-    const index = shouldResetIndex ? 0 : currentImageIndex + 1;
-    this.setState({
-      currentImageIndex: index
-    });
-  };
-
-  componentDidMount() {
-    this.startCarousel();
-  }
-
-  startCarousel = () => {
-    this.carouselInterval = setInterval(() => {
-      this.nextSlide();
-    }, 4000);
-  };
-
-  componentWillUnmount() {
-    clearInterval(this.carouselInterval);
-  }
-
   render() {
     const { siteEdit, siteView, bodyEdit, bodyView, isEdit } = this.props;
     return (
@@ -68,39 +46,7 @@ class CarouselImages extends Component {
         className={styles.carousel_wrapper}
       >
         <Grid item sm={12} className={styles.images_slider}>
-          {isEdit ? (
-            siteEdit.cover ? (
-              siteEdit.cover.map((img, index) => (
-                <img
-                  key={index}
-                  src={img[this.state.currentImageIndex]}
-                  alt=""
-                  style={imgStyles}
-                />
-              ))
-            ) : (
-              <img
-                src={imgUrl[this.state.currentImageIndex]}
-                alt=""
-                style={imgStyles}
-              />
-            )
-          ) : siteView.cover ? (
-            siteView.cover.map((img, index) => (
-              <img
-                key={index}
-                src={img[this.state.currentImageIndex]}
-                alt=""
-                style={imgStyles}
-              />
-            ))
-          ) : (
-            <img
-              src={imgUrl[this.state.currentImageIndex]}
-              alt=""
-              style={imgStyles}
-            />
-          )}
+          <Slider autoplay>{this.renderNewCovers()}</Slider>
         </Grid>
         <Grid
           item
@@ -127,7 +73,8 @@ const mapStateToProps = state => ({
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
   siteView: state.site.siteView,
-  isEdit: state.site.isEdit
+  isEdit: state.site.isEdit,
+  newCover: state.site.newCover
 });
 
 export default connect(mapStateToProps, null)(CarouselImages);

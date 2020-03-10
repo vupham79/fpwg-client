@@ -24,6 +24,14 @@ code {
   padding: 0 0 !important;
 }
 
+.slick-slide > div {
+  width: 100%;
+}
+
+.slick-slide > div > img {
+  width: 100%;
+}
+
 .slick-track {
   display: flex !important;
 }

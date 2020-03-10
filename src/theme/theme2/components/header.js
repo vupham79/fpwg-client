@@ -171,7 +171,6 @@ class Header extends Component {
       color: titleView.color,
       textDecoration: "none"
     };
-    console.log("is active: ", navItemIsActive);
     return (
       <>
         <AppBar className={styles.app_bar} position="sticky">
