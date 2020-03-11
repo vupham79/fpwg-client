@@ -30,7 +30,7 @@ class TableSite extends Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5
+    itemPerPage: 3
   };
 
   setListData = listData => {
@@ -40,33 +40,25 @@ class TableSite extends Component {
   };
 
   setPageCount = listData => {
-    console.log(listData.length);
     this.setState({
-      pageCount: Math.max(listData.length / this.state.itemPerPage)
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
     });
   };
 
   getSites = async () => {
-    const { accessToken, userId, getAllSites } = this.props;
+    const { accessToken, userId, sites, getAllSites } = this.props;
     await getAllSites({ accessToken, userId });
-    this.setListData(
-      this.props.sites.slice(
+    this.setState({
+      filteredData: this.props.sites.slice(
         this.state.offset,
         this.state.itemPerPage + this.state.offset
-      )
-    );
-    this.setPageCount(this.props.sites);
+      ),
+      pageCount: Math.ceil(sites.length / this.state.itemPerPage)
+    });
   };
 
   componentDidMount() {
     this.getSites();
-    this.setListData(
-      this.props.sites.slice(
-        this.state.offset,
-        this.state.itemPerPage + this.state.offset
-      )
-    );
-    this.setPageCount(this.props.sites);
   }
 
   handlePageClick = data => {
@@ -140,7 +132,7 @@ class TableSite extends Component {
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
             this.state.filteredData.map((row, index) => (
-              <div key={row.id}>
+              <div key={row._id}>
                 <Grid container direction="row">
                   <Grid item xs={2}>
                     {row.displayName}
