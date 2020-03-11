@@ -219,7 +219,7 @@ class PagesEditorTab extends React.Component {
       <>
         <ExpansionPanel style={expanStyle}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="body1">Navigation</Typography>
+            <Typography variant="button">Navigation</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <SortableList
@@ -234,7 +234,7 @@ class PagesEditorTab extends React.Component {
         </ExpansionPanel>
         <ExpansionPanel style={expanStyle}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="body1">News</Typography>
+            <Typography variant="button">News</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Grid container style={gridContainer}>

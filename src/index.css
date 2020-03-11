@@ -26,10 +26,12 @@ code {
 
 .slick-slide > div {
   width: 100%;
+  height: 100%;
 }
 
 .slick-slide > div > img {
   width: 100%;
+  height: 100%;
 }
 
 .slick-track {
@@ -38,10 +40,12 @@ code {
 
 .slick-next {
   right: 0 !important;
+  display: none !important;
 }
 
 .slick-prev {
   left: 0 !important;
+  display: none !important;
 }
 
 .slick-track .slick-slide {

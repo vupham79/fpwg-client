@@ -45,36 +45,6 @@ class Theme1Home extends React.Component {
     }
     return siteView.logo;
   };
-  renderLogo = () => {
-    const { isEdit, siteEdit, siteView, newLogo } = this.props;
-    if (isEdit) {
-      if (newLogo && typeof newLogo === "object" && newLogo.size > 0) {
-        return (
-          <img
-            style={{ height: "50vh" }}
-            src={URL.createObjectURL(newLogo)}
-            alt=""
-          />
-        );
-      } else
-        return <img style={{ height: "50vh" }} src={siteEdit.logo} alt="" />;
-    }
-    return <img style={{ height: "50vh" }} src={siteView.logo} alt="" />;
-  };
-  renderCover = () => {
-    const { isEdit, siteEdit, siteView } = this.props;
-    if (isEdit) {
-      return (
-        siteEdit.cover &&
-        siteEdit.cover.map((cover, i) => <img src={cover} key={i} alt="" />)
-      );
-    } else {
-      return (
-        siteView.cover &&
-        siteView.cover.map((cover, i) => <img src={cover} key={i} alt="" />)
-      );
-    }
-  };
   renderNewCovers = () => {
     const { isEdit, newCover, siteView } = this.props;
     if (isEdit) {
@@ -321,26 +291,36 @@ class Theme1Home extends React.Component {
                   <Grid item xs={12} style={classes.centerItem3} key={row.id}>
                     {
                       {
-                        "photo":
+                        photo: (
                           <img
-                            src={row.attachments.images && row.attachments.images[0]}
+                            src={
+                              row.attachments.images &&
+                              row.attachments.images[0]
+                            }
                             alt=""
                             style={{ height: 200, width: 200 }}
-                          />,
-                        "video":
+                          />
+                        ),
+                        video: (
                           <ReactPlayer
-                            url={row && row.attachments && row.attachments.video}
+                            url={
+                              row && row.attachments && row.attachments.video
+                            }
                             playing
                             width="100%"
                             height="200px"
                           />
-                        ,
-                        default:
+                        ),
+                        default: (
                           <img
-                            src={row.attachments.images && row.attachments.images[0]}
+                            src={
+                              row.attachments.images &&
+                              row.attachments.images[0]
+                            }
                             alt=""
                             style={{ height: 200, width: 200 }}
                           />
+                        )
                       }[row.attachments.media_type]
                     }
                     <p style={classes.changableTitle2}>
@@ -374,30 +354,11 @@ class Theme1Home extends React.Component {
             <p style={classes.changableBody4}>Currently there are no images.</p>
           </Grid>
         )}
-        {/* <Carousel
-            showArrows={true}
-            centerMode={true}
-            infiniteLoop={true}
-            showStatus={true}
-            showThumbs={false}
-            autoPlay={false}
-            showIndicators={false}
-          >
-            {isEdit
-              ? siteEdit.galleries &&
-                siteEdit.galleries.map(row => (
-                  <img style={{ height: "50vh" }} src={row.url} alt="" />
-                ))
-              : siteView.galleries &&
-                siteView.galleries.map(row => (
-                  <img style={{ height: "50vh" }} src={row.url} alt="" />
-                ))}
-          </Carousel> */}
         {isEdit ? (
           <GalleryComponent galleries={siteEdit.galleries} />
         ) : (
-            <GalleryComponent galleries={siteView.galleries} />
-          )}
+          <GalleryComponent galleries={siteView.galleries} />
+        )}
         <div style={{ height: 100, width: "100%" }} />
         <Grid item xs={12}>
           <Parallax

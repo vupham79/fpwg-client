@@ -413,6 +413,15 @@ export function setNewCover(file) {
   };
 }
 
+export function removeCover(cover) {
+  return dispatch => {
+    dispatch({
+      type: "REMOVE_COVER",
+      payload: cover
+    });
+  };
+}
+
 export function uploadLogo(file, site) {
   return async dispatch => {
     dispatch({
@@ -551,7 +560,7 @@ export function changeSiteLinks(site) {
   };
 }
 
-export function syncDataFromFB(pageId, access_token) {
+export function syncDataFromFB(pageId) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -561,7 +570,8 @@ export function syncDataFromFB(pageId, access_token) {
         method: "patch",
         url: "/site/syncData",
         data: {
-          pageId: pageId
+          pageId: pageId,
+          lastSync: new Date()
         }
       });
       dispatch({
