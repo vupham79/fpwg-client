@@ -4,17 +4,15 @@ import {
   Divider,
   Grid,
   Input,
-  MenuItem,
-  Select,
   TextField,
   Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import { Add } from "@material-ui/icons";
+import ColorThief from "color-thief";
+import onecolor from "onecolor";
 import React from "react";
 import { ChromePicker, CirclePicker } from "react-color";
-import onecolor from "onecolor";
-import ColorThief from "color-thief";
-import { Add } from "@material-ui/icons";
 import { connect } from "react-redux";
 import {
   changeColor,
@@ -22,13 +20,13 @@ import {
   changeFontTitle,
   changeSiteTitle,
   changeTheme,
-  setShowCustomColor,
   setColorPallete,
   setNewCover,
-  setNewLogo
+  setNewLogo,
+  setShowCustomColor
 } from "../actions";
-import toastr from "./Toastr";
 import DialogThemes from "./DialogThemes";
+import toastr from "./Toastr";
 
 const useStyles = theme => ({
   content: {
