@@ -4,12 +4,13 @@ import {
   Menu,
   MenuItem,
   Typography,
-  withStyles
+  withStyles,
+  Button
 } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { setLogout } from "../actions";
+import { setLogout, setPreviewMode } from "../actions";
 import { firebaseAppAuth } from "../utils/firebase";
 import styles from "./index.module.css";
 import Link from "./link";
@@ -93,21 +94,26 @@ function ProfileMenu(props) {
 }
 
 class CustomNavBarEditor extends React.Component {
+
+  handlePreview = body => {
+    this.props.setPreviewMode(!this.props.isPreview);
+  };
+
   logout = () => {
     const { setLogout } = this.props;
     firebaseAppAuth
       .signOut()
-      .then(function() {
+      .then(function () {
         setLogout();
         return <Redirect to="/" />;
       })
-      .catch(function(error) {
+      .catch(function (error) {
         toastr.error(`Logout failed: ${error}`, "Error");
       });
   };
 
   render() {
-    const { imgUrl, profile } = this.props;
+    const { imgUrl, profile, isEdit, isPreview } = this.props;
     return (
       <Container maxWidth={"xl"} className={styles.header}>
         <Grid container item justify="space-between">
@@ -133,6 +139,17 @@ class CustomNavBarEditor extends React.Component {
             alignItems="center"
             justify="flex-end"
           >
+            {isEdit && (
+              <Grid item sm={2} xs={12}>
+                <Button
+                  variant={"contained"}
+                  color={isPreview ? "primary" : "default"}
+                  onClick={() => this.handlePreview()}
+                >
+                  Preview
+              </Button>
+              </Grid>
+            )}
             <Grid container item sm={2} xs={12}>
               <ProfileMenu profile={profile} logout={this.logout} />
             </Grid>
@@ -145,10 +162,13 @@ class CustomNavBarEditor extends React.Component {
 
 const mapStateToProps = state => ({
   imgUrl: state.imageUrl.url,
-  profile: state.user.profile
+  profile: state.user.profile,
+  isEdit: state.site.isEdit,
+  isPreview: state.site.isPreview,
 });
 
 const mapDispatchToProps = dispatch => ({
-  setLogout: () => dispatch(setLogout())
+  setLogout: () => dispatch(setLogout()),
+  setPreviewMode: (bool) => dispatch(setPreviewMode(bool))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CustomNavBarEditor);
