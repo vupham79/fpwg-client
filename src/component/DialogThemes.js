@@ -64,7 +64,7 @@ class DialogThemes extends Component {
   };
   render() {
     const { classes, site, themes } = this.props;
-    const { open } = this.state;
+    const { open, id } = this.state;
     return (
       <>
         <Button
@@ -110,6 +110,9 @@ class DialogThemes extends Component {
                     className={classes.root}
                     onClick={() => this.handleSelect(theme.id, theme.name)}
                     variant={"outlined"}
+                    style={{
+                      border: theme.id === id ? "0.25rem solid #434d58" : ""
+                    }}
                   >
                     <CardActionArea>
                       <CardMedia

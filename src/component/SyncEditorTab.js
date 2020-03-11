@@ -5,10 +5,20 @@ import {
   ExpansionPanelSummary,
   Grid,
   Typography,
-  Divider
+  Divider,
+  DialogContent,
+  DialogTitle as MuiDialogTitle,
+  IconButton,
+  ExpansionPanelDetails,
+  AppBar,
+  Tab,
+  Tabs,
+  Box
 } from "@material-ui/core";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import {
+  ExpandMore as ExpandMoreIcon,
+  Close as CloseIcon
+} from "@material-ui/icons";
 import React from "react";
 import { connect } from "react-redux";
 import Switch from "./SwitchButton";
@@ -19,6 +29,31 @@ import { withStyles } from "@material-ui/core/styles";
 const expanStyle = {
   marginTop: "1rem"
 };
+
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Typography
+      component="div"
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </Typography>
+  );
+}
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`
+  };
+}
+
 const useStyles = theme => ({
   sideBarBox: {
     borderStyle: "solid",
@@ -28,11 +63,48 @@ const useStyles = theme => ({
     padding: "0.5rem"
   }
 });
+
+const styles = theme => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(2)
+  },
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500]
+  }
+});
+
+const DialogTitle = withStyles(styles)(props => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6">{children}</Typography>
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          className={classes.closeButton}
+          onClick={onClose}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
 class SyncEditorTab extends React.Component {
   state = {
-    open: false
+    open: false,
+    tab: 0
   };
 
+  selectTab = (event, tab) => {
+    this.setState({
+      tab: tab
+    });
+  };
   toggleDialog = () => {
     this.setState({
       open: !this.state.open
@@ -41,6 +113,7 @@ class SyncEditorTab extends React.Component {
 
   render() {
     const { syncDataFromFB, site, classes } = this.props;
+    const { tab } = this.state;
     return (
       <>
         <ExpansionPanel style={expanStyle}>
@@ -84,12 +157,57 @@ class SyncEditorTab extends React.Component {
                     onClose={this.toggleDialog}
                     aria-labelledby="simple-dialog-title"
                     open={this.state.open}
-                    maxWidth="sm"
+                    maxWidth="lg"
                     fullWidth
+                    fullScreen
                   >
-                    <Grid container alignItems="center">
-                      {/* <PostsList posts={posts} setActivePost={setActivePost} /> */}
-                    </Grid>
+                    <DialogTitle
+                      id="customized-dialog-title"
+                      onClose={this.toggleDialog}
+                    >
+                      {site.lastSync
+                        ? moment(site.lastSync).format("LLL")
+                        : "Not yet"}
+                    </DialogTitle>
+                    <DialogContent dividers>
+                      <AppBar position="static">
+                        <Tabs
+                          value={tab}
+                          onChange={this.selectTab}
+                          aria-label="simple tabs example"
+                        >
+                          <Tab label="Item One" {...a11yProps(0)} />
+                          <Tab label="Item Two" {...a11yProps(1)} />
+                          <Tab label="Item Three" {...a11yProps(2)} />
+                        </Tabs>
+                      </AppBar>
+                      <TabPanel value={tab} index={0}>
+                        Item One
+                      </TabPanel>
+                      <TabPanel value={tab} index={1}>
+                        Item Two
+                      </TabPanel>
+                      <TabPanel value={tab} index={2}>
+                        Item Three
+                      </TabPanel>
+                      {/* <Typography gutterBottom>
+                        Cras mattis consectetur purus sit amet fermentum. Cras
+                        justo odio, dapibus ac facilisis in, egestas eget quam.
+                        Morbi leo risus, porta ac consectetur ac, vestibulum at
+                        eros.
+                      </Typography>
+                      <Typography gutterBottom>
+                        Praesent commodo cursus magna, vel scelerisque nisl
+                        consectetur et. Vivamus sagittis lacus vel augue laoreet
+                        rutrum faucibus dolor auctor.
+                      </Typography>
+                      <Typography gutterBottom>
+                        Aenean lacinia bibendum nulla sed consectetur. Praesent
+                        commodo cursus magna, vel scelerisque nisl consectetur
+                        et. Donec sed odio dui. Donec ullamcorper nulla non
+                        metus auctor fringilla.
+                      </Typography> */}
+                    </DialogContent>
                   </Dialog>
                 </Grid>
               </Grid>

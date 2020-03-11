@@ -9,12 +9,11 @@ import {
   Grid,
   makeStyles,
   Typography,
-  withStyles,
-  Link
+  withStyles
 } from "@material-ui/core";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import React from "react";
-import ReactPlayer from 'react-player'
+import ReactPlayer from "react-player";
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -167,7 +166,6 @@ function TypePhoto({ post, openDialog }) {
   );
 }
 
-
 function TypeVideo({ post, openDialog }) {
   const classes = useStyles();
   return (
@@ -282,7 +280,8 @@ class PostTypeComponent extends React.Component {
           >
             <Container className={classes.root}>
               <Grid container spacing={3} justify="center">
-                {post && post.attachments.images &&
+                {post &&
+                  post.attachments.images &&
                   post.attachments.images.map((img, index) => (
                     <Grid
                       item
@@ -340,7 +339,6 @@ class PostTypeComponent extends React.Component {
               </Grid>
             </Container>
           </Dialog>
-
         </Grid>
       </Container>
     );

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Footer from "../components/footer";
-import Header from "../components/header";
 import HeaderComponent from "../../component/headerComponent";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";

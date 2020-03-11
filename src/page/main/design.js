@@ -29,13 +29,22 @@ function WebsiteItem({ setCurrentEditId, site }) {
       </Grid>
       <Grid container justify={"flex-end"} item sm={4} xs={4}>
         <Grid container item md={12}>
-          <Grid item md={6} sm={6}>            
+          <Grid item md={6} sm={6}>
             {site.isPublish ? (
-            <a href={`/${site.sitePath}`} rel="noopener" target="_blank" style={{textDecoration: "none"}}>
-              <Button disabled={!site.isPublish} variant={"outlined"}>Visit</Button>
-            </a>
-            ):(
-              <Button disabled={!site.isPublish} variant={"outlined"}>Visit</Button>
+              <a
+                href={`/${site.sitePath}`}
+                rel="noopener noreferrer"
+                target="_blank"
+                style={{ textDecoration: "none" }}
+              >
+                <Button disabled={!site.isPublish} variant={"outlined"}>
+                  Visit
+                </Button>
+              </a>
+            ) : (
+              <Button disabled={!site.isPublish} variant={"outlined"}>
+                Visit
+              </Button>
             )}
           </Grid>
           <Grid item md={6} sm={6}>
@@ -69,7 +78,9 @@ class Design extends Component {
     return (
       <>
         {sites.length === 0 ? (
-          <p style={{fontStyle: "italic", marginLeft: 10}}>You don't have any Website. Please create a new site.</p>
+          <p style={{ fontStyle: "italic", marginLeft: 10 }}>
+            You don't have any Website. Please create a new site.
+          </p>
         ) : (
           sites.map((item, index) => (
             <Grid

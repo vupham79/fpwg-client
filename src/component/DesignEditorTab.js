@@ -409,37 +409,6 @@ class DesignEditorTab extends React.Component {
         />
         <Typography className={classes.title}>Homepage Images</Typography>
         <Grid container className={classes.sideBarBox}>
-          {/* {site.cover &&
-            site.cover.map((img, i) => (
-              <Grid
-                item
-                key={i}
-                md={4}
-                sm={6}
-                xs={6}
-                style={{ ...imgStyles, backgroundImage: `url(${img})` }}
-              >
-                <IconButton onClick={img => this.removeCover(img)}>
-                  <Cancel color={"error"} />
-                </IconButton>
-              </Grid>
-            ))}
-          {covers &&
-            covers.map((cover, i) => (
-              <Grid
-                item
-                key={i}
-                md={4}
-                sm={6}
-                xs={6}
-                style={{
-                  ...imgStyles,
-                  backgroundImage: `url(${URL.createObjectURL(cover)})`
-                }}
-              >
-                <Cancel />
-              </Grid>
-            ))} */}
           {this.renderNewCovers()}
           <Grid
             item

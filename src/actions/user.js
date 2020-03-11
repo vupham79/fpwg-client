@@ -6,30 +6,40 @@ export function login({ accessToken, profile }) {
       type: "SHOW_LOADING"
     });
     try {
-      const data = await axios({
-        method: "post",
-        url: "/auth",
-        data: {
-          accessToken: accessToken,
-          id: profile.id,
-          name: profile.name,
-          email: profile.email,
-          picture: profile.picture.data.url
-        }
-      });
-      dispatch({
-        type: "CLOSE_LOADING"
-      });
-      if (data.status === 200) {
-        dispatch({
-          type: "SET_LOGIN",
-          payload: {
-            accessToken,
-            profile
+      if (profile.email) {
+        const data = await axios({
+          method: "post",
+          url: "/auth",
+          data: {
+            accessToken: accessToken,
+            id: profile.id,
+            name: profile.name,
+            email: profile.email,
+            picture: profile.picture.data.url
           }
         });
+        dispatch({
+          type: "CLOSE_LOADING"
+        });
+        if (data.status === 200) {
+          dispatch({
+            type: "SET_LOGIN",
+            payload: {
+              accessToken,
+              profile
+            }
+          });
+        } else {
+          toastr.error("Login failed! Please try again.", "Error");
+        }
       } else {
-        toastr.error("Login failed! Please try again.", "Error");
+        dispatch({
+          type: "CLOSE_LOADING"
+        });
+        toastr.error(
+          "Please add email to your facebook account then try again.",
+          "Error"
+        );
       }
     } catch (error) {
       dispatch({

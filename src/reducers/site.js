@@ -214,7 +214,7 @@ const SiteReducer = (state = defaultState, action) => {
       const filter = state.newCover.filter(cover => {
         if (typeof img === "object") {
           return cover.name !== img.name;
-        } else if (typeof img === "string") {
+        } else {
           return cover !== img;
         }
       });
