@@ -117,7 +117,7 @@ class MainPage extends Component {
         nonGenerated.splice(index, 1);
       }
     });
-    if (nonGenerated) {
+    if (nonGenerated && nonGenerated.length > 0) {
       return pages.map(page => {
         return (
           nonGenerated.includes(page.id) && (
@@ -143,7 +143,25 @@ class MainPage extends Component {
         );
       });
     } else {
-      return <ListItemText>No pages left</ListItemText>;
+      return (
+        <Grid container justify="center" alignItems="center">
+          <Grid item xs={12}>
+            <p style={{ textAlign: "center", marginLeft: 5, marginRight: 5 }}>No Facebook page to use. Please create one below.</p>
+          </Grid>
+          <Grid item xs={6}>
+            <a
+              href="https://www.facebook.com/pages/create"
+              rel="noopener noreferrer"
+              target="_blank"
+              style={{ textDecoration: "none" }}
+            >
+              <Button color="primary" variant={"contained"}>
+                Create Facebook Page
+              </Button>
+            </a>
+          </Grid>
+        </Grid>
+      );
     }
   };
 
@@ -227,6 +245,7 @@ class MainPage extends Component {
                           required
                           label="Sitepath"
                           onChange={e => this.handleChangeSitepath(e)}
+                          inputProps={{ maxLength: 30 }}
                           value={sitepath ? sitepath : ""}
                         />
                         <SwitchButton
@@ -244,6 +263,7 @@ class MainPage extends Component {
                           error={this.state.pageUrlError}
                           variant={"outlined"}
                           label="Facebook Page Url"
+                          disabled
                           onChange={e => this.handleChangeURL(e)}
                           value={pageUrl ? pageUrl : ""}
                         />
