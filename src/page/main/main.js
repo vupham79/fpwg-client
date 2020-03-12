@@ -1,4 +1,4 @@
-import { faDatabase, faPalette } from "@fortawesome/free-solid-svg-icons";
+import { faPalette } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Avatar,
@@ -26,7 +26,6 @@ import {
 import Header from "../../component/Header";
 import SwitchButton from "../../component/SwitchButton";
 import DesignTab from "./design";
-import DataTab from "./data";
 import styles from "./main.module.css";
 
 class MainPage extends Component {
@@ -175,17 +174,6 @@ class MainPage extends Component {
                 <FontAwesomeIcon className={styles.nav_icon} icon={faPalette} />
                 <Typography variant="inherit">Design</Typography>
               </MenuItem>
-              <MenuItem
-                selected={tab === 1}
-                onClick={() => this.handleChangeTab(1)}
-                style={{ justifyContent: "space-evenly" }}
-              >
-                <FontAwesomeIcon
-                  className={styles.nav_icon}
-                  icon={faDatabase}
-                />
-                <Typography variant="inherit">Data</Typography>
-              </MenuItem>
             </MenuList>
           </Grid>
           <Grid
@@ -276,7 +264,6 @@ class MainPage extends Component {
             </Grid>
             <Grid container item sm={12} xs={12} md={12}>
               {tab === 0 && <DesignTab />}
-              {tab === 1 && <DataTab />}
             </Grid>
           </Grid>
         </Grid>
@@ -299,7 +286,7 @@ const mapDispatchToProps = dispatch => ({
   openDialog: () => dispatch(openDialog()),
   confirmPage: data => dispatch(confirmPage(data)),
   getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
-  setEditOff: () => dispatch(setEditOff()),
+  setEditOff: () => dispatch(setEditOff())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

@@ -1,0 +1,12 @@
+.about_page {
+  position: relative;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+}
+
+.title {
+  color: #646464 !important;
+  font-weight: 700 !important;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
+  padding-bottom: 5vh;
+}

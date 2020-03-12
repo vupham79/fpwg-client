@@ -15,7 +15,7 @@ const defaultState = {
   navItemIsActive: false,
   newLogo: null,
   newCover: [],
-  isPreview: false,
+  isPreview: false
 };
 
 let index;
@@ -208,6 +208,19 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         isPreview: action.payload
+      };
+    case "REMOVE_COVER":
+      const img = action.payload;
+      const filter = state.newCover.filter(cover => {
+        if (typeof img === "object") {
+          return cover.name !== img.name;
+        } else {
+          return cover !== img;
+        }
+      });
+      return {
+        ...state,
+        newCover: [...filter]
       };
     default:
       return state;

@@ -1,11 +1,11 @@
 import {
+  Button,
   Container,
   Grid,
   Menu,
   MenuItem,
   Typography,
-  withStyles,
-  Button
+  withStyles
 } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
@@ -94,7 +94,6 @@ function ProfileMenu(props) {
 }
 
 class CustomNavBarEditor extends React.Component {
-
   handlePreview = body => {
     this.props.setPreviewMode(!this.props.isPreview);
   };
@@ -103,11 +102,11 @@ class CustomNavBarEditor extends React.Component {
     const { setLogout } = this.props;
     firebaseAppAuth
       .signOut()
-      .then(function () {
+      .then(function() {
         setLogout();
         return <Redirect to="/" />;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         toastr.error(`Logout failed: ${error}`, "Error");
       });
   };
@@ -147,7 +146,7 @@ class CustomNavBarEditor extends React.Component {
                   onClick={() => this.handlePreview()}
                 >
                   Preview
-              </Button>
+                </Button>
               </Grid>
             )}
             <Grid container item sm={2} xs={12}>
@@ -164,11 +163,11 @@ const mapStateToProps = state => ({
   imgUrl: state.imageUrl.url,
   profile: state.user.profile,
   isEdit: state.site.isEdit,
-  isPreview: state.site.isPreview,
+  isPreview: state.site.isPreview
 });
 
 const mapDispatchToProps = dispatch => ({
   setLogout: () => dispatch(setLogout()),
-  setPreviewMode: (bool) => dispatch(setPreviewMode(bool))
+  setPreviewMode: bool => dispatch(setPreviewMode(bool))
 });
 export default connect(mapStateToProps, mapDispatchToProps)(CustomNavBarEditor);

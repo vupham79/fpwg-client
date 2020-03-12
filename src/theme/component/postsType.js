@@ -9,8 +9,7 @@ import {
   Grid,
   makeStyles,
   Typography,
-  withStyles,
-  Link
+  withStyles
 } from "@material-ui/core";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import React from "react";

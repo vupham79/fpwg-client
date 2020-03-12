@@ -288,7 +288,11 @@ export function saveDesignSite({ logo, cover, site }) {
           theme: site.theme.id,
           pageId: site.id,
           name: site.title,
-          color: site.color
+          color: site.color,
+          email: site.email,
+          youtube: site.youtube,
+          instagram: site.instagram,
+          whatsapp: site.whatsapp
         }
       });
       dispatch({
@@ -409,6 +413,15 @@ export function setNewCover(file) {
     dispatch({
       type: "SET_NEW_COVER",
       payload: file
+    });
+  };
+}
+
+export function removeCover(cover) {
+  return dispatch => {
+    dispatch({
+      type: "REMOVE_COVER",
+      payload: cover
     });
   };
 }
@@ -551,7 +564,7 @@ export function changeSiteLinks(site) {
   };
 }
 
-export function syncDataFromFB(pageId, access_token) {
+export function syncDataFromFB(pageId) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -561,7 +574,8 @@ export function syncDataFromFB(pageId, access_token) {
         method: "patch",
         url: "/site/syncData",
         data: {
-          pageId: pageId
+          pageId: pageId,
+          lastSync: new Date()
         }
       });
       dispatch({

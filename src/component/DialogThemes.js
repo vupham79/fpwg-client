@@ -64,7 +64,7 @@ class DialogThemes extends Component {
   };
   render() {
     const { classes, site, themes } = this.props;
-    const { open } = this.state;
+    const { open, id } = this.state;
     return (
       <>
         <Button
@@ -110,6 +110,9 @@ class DialogThemes extends Component {
                     className={classes.root}
                     onClick={() => this.handleSelect(theme.id, theme.name)}
                     variant={"outlined"}
+                    style={{
+                      border: theme.id === id ? "0.25rem solid #434d58" : ""
+                    }}
                   >
                     <CardActionArea>
                       <CardMedia
@@ -122,54 +125,11 @@ class DialogThemes extends Component {
                       <CardContent>
                         <Typography
                           align={"center"}
-                          gutterBottom
-                          variant="h5"
+                          variant="subtitle2"
                           component="h2"
                         >
                           {theme.name}
                         </Typography>
-                        <Grid container>
-                          <Grid item container justify={"space-around"}>
-                            <Grid item>
-                              <Typography
-                                variant="body2"
-                                color="textSecondary"
-                                component="p"
-                              >
-                                Font-family:
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <Typography
-                                variant="body2"
-                                color="textSecondary"
-                                component="p"
-                              >
-                                {theme.fontTitle} - {theme.fontBody}
-                              </Typography>
-                            </Grid>
-                          </Grid>
-                          <Grid item container justify={"space-around"}>
-                            <Grid item>
-                              <Typography
-                                variant="body2"
-                                color="textSecondary"
-                                component="p"
-                              >
-                                Color:
-                              </Typography>
-                            </Grid>
-                            <Grid item>
-                              <div
-                                style={{
-                                  height: "1rem",
-                                  width: "5rem",
-                                  backgroundColor: theme.mainColor
-                                }}
-                              />
-                            </Grid>
-                          </Grid>
-                        </Grid>
                       </CardContent>
                     </CardActionArea>
                   </Card>

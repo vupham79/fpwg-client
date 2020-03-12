@@ -5,10 +5,11 @@ import {
   Grid,
   Input,
   TextField,
-  Typography
+  Typography,
+  IconButton
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { Add } from "@material-ui/icons";
+import { Add, Cancel } from "@material-ui/icons";
 import ColorThief from "color-thief";
 import onecolor from "onecolor";
 import React from "react";
@@ -23,7 +24,8 @@ import {
   setColorPallete,
   setNewCover,
   setNewLogo,
-  setShowCustomColor
+  setShowCustomColor,
+  removeCover
 } from "../actions";
 import DialogThemes from "./DialogThemes";
 import toastr from "./Toastr";
@@ -187,7 +189,6 @@ class DesignEditorTab extends React.Component {
       file.type === "image/png" ||
       file.type === "image/jpg"
     ) {
-      this.setState({ covers: [...this.state.covers, file] });
       this.props.setNewCover(file);
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
@@ -200,6 +201,47 @@ class DesignEditorTab extends React.Component {
     changeSiteTitle(site);
   };
 
+  renderNewCovers = () => {
+    const { newCover, removeCover } = this.props;
+    if (newCover && newCover.length > 0) {
+      return newCover.map((cover, i) => {
+        if (cover && typeof cover === "object" && cover.size > 0) {
+          return (
+            <Grid
+              item
+              key={i}
+              md={4}
+              sm={6}
+              xs={6}
+              style={{
+                ...imgStyles,
+                backgroundImage: `url(${URL.createObjectURL(cover)})`
+              }}
+            >
+              <IconButton onClick={() => removeCover(cover)}>
+                <Cancel color={"error"} />
+              </IconButton>
+            </Grid>
+          );
+        } else
+          return (
+            <Grid
+              item
+              key={i}
+              md={4}
+              sm={6}
+              xs={6}
+              style={{ ...imgStyles, backgroundImage: `url(${cover})` }}
+            >
+              <IconButton onClick={() => removeCover(cover)}>
+                <Cancel color={"error"} />
+              </IconButton>
+            </Grid>
+          );
+      });
+    }
+  };
+
   render() {
     const drawerWidth = 280;
     const {
@@ -209,7 +251,7 @@ class DesignEditorTab extends React.Component {
       site,
       colorPallete
     } = this.props;
-    const { covers } = this.state;
+
     return (
       <div style={{ overflowY: "scroll" }}>
         <Typography className={classes.title}>Theme</Typography>
@@ -255,9 +297,9 @@ class DesignEditorTab extends React.Component {
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
-        <Typography className={classes.title}>Title & Logo</Typography>
+        <Typography className={classes.title}>Logo</Typography>
         <TextField
-          label="Title"
+          label="Logo Text"
           variant={"outlined"}
           fullWidth
           InputLabelProps={{
@@ -367,31 +409,7 @@ class DesignEditorTab extends React.Component {
         />
         <Typography className={classes.title}>Homepage Images</Typography>
         <Grid container className={classes.sideBarBox}>
-          {site.cover &&
-            site.cover.map((img, i) => (
-              <Grid
-                item
-                key={i}
-                md={4}
-                sm={6}
-                xs={6}
-                style={{ ...imgStyles, backgroundImage: `url(${img})` }}
-              />
-            ))}
-          {covers &&
-            covers.map((cover, i) => (
-              <Grid
-                item
-                key={i}
-                md={4}
-                sm={6}
-                xs={6}
-                style={{
-                  ...imgStyles,
-                  backgroundImage: `url(${URL.createObjectURL(cover)})`
-                }}
-              />
-            ))}
+          {this.renderNewCovers()}
           <Grid
             item
             container
@@ -425,7 +443,8 @@ const mapStateToProps = state => ({
   themes: state.theme.data,
   isShow: state.theme.isShow,
   site: state.site.siteEdit,
-  colorPallete: state.site.colorPallete
+  colorPallete: state.site.colorPallete,
+  newCover: state.site.newCover
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -437,7 +456,8 @@ const mapDispatchToProps = dispatch => ({
   changeSiteTitle: site => dispatch(changeSiteTitle(site)),
   setColorPallete: pallete => dispatch(setColorPallete(pallete)),
   setNewLogo: file => dispatch(setNewLogo(file)),
-  setNewCover: file => dispatch(setNewCover(file))
+  setNewCover: file => dispatch(setNewCover(file)),
+  removeCover: cover => dispatch(removeCover(cover))
 });
 
 export default connect(

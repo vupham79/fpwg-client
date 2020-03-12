@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Footer from "../components/footer";
 import HeaderComponent from "../../component/headerComponent";
+import Footer from "../components/Footer";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import { themes as themesConstant } from "../../../constant/constant";
@@ -27,6 +27,7 @@ class Layout extends Component {
     const pages =
       siteEdit &&
       themesConstant.find(element => element.id === siteEdit.theme.id).pages;
+
     return (
       <TabItem
         tabValue={navItemValue && navItemValue}
@@ -43,7 +44,7 @@ class Layout extends Component {
 
     return (
       <>
-        <HeaderComponent navPos={"right"} displayImg={true} />
+        <HeaderComponent navPos={"center"} displayImg={false} />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
       </>
