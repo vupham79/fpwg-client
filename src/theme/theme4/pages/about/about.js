@@ -1,7 +1,6 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import { Image } from "@material-ui/icons";
 
 class Theme1About extends React.Component {
   renderImage = () => {
@@ -113,14 +112,12 @@ class Theme1About extends React.Component {
     return (
       <Grid container>
         <Grid item xs={12}>
-          <p style={classes.changableTitle}>
-            ABOUT
-          </p>
+          <p style={classes.changableTitle}>ABOUT</p>
         </Grid>
         <Grid container item xs={12} justify={"center"}>
           <img
             src={this.renderImage()}
-            alt
+            alt=""
             style={{ width: 150, height: 150 }}
           />
         </Grid>

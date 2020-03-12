@@ -1,14 +1,6 @@
+import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import { Grid } from "@material-ui/core";
-import {
-  withGoogleMap,
-  GoogleMap,
-  Marker,
-  withScriptjs
-} from "react-google-maps";
-import { faPhone, faAddressBook, faMailBulk } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Theme1Contact extends React.Component {
   render() {
@@ -111,69 +103,60 @@ class Theme1Contact extends React.Component {
     return (
       <Grid container>
         <Grid item xs={12}>
-          <p style={classes.changableTitle}>
-            CONTACTS
-          </p>
+          <p style={classes.changableTitle}>CONTACTS</p>
         </Grid>
 
         {isEdit && siteEdit.phone && (
           <Grid container item xs={12} justify="center">
-            <p style={classes.changableBody2}>
-              {siteEdit.phone}
-            </p>
+            <p style={classes.changableBody2}>{siteEdit.phone}</p>
           </Grid>
         )}
         {!isEdit && siteView.phone && (
           <Grid container item xs={12} justify="center">
-            <p style={classes.changableBody2}>
-              {siteView.phone}
-            </p>
+            <p style={classes.changableBody2}>{siteView.phone}</p>
           </Grid>
         )}
 
         {isEdit && siteEdit.email && siteEdit.email !== "" && (
           <Grid container item xs={12} justify="center">
-            <p style={classes.changableBody2}>
-              {siteEdit.email}
-            </p>
+            <p style={classes.changableBody2}>{siteEdit.email}</p>
           </Grid>
         )}
         {!isEdit && siteView.email && siteView.email !== "" && (
           <Grid container item xs={12} justify="center">
-            <p style={classes.changableBody2}>
-              {siteView.email}
-            </p>
+            <p style={classes.changableBody2}>{siteView.email}</p>
           </Grid>
         )}
 
         {isEdit && siteEdit.address && siteEdit.adress !== "" && (
           <Grid container item xs={12} justify="center">
-            <p style={classes.changableBody2}>
-              {siteEdit.address}
-            </p>
+            <p style={classes.changableBody2}>{siteEdit.address}</p>
           </Grid>
         )}
         {!isEdit && siteView.address && siteView.adress !== "" && (
           <Grid container item xs={12} justify="center">
-            <p style={classes.changableBody2}>
-              {siteView.address}
-            </p>
+            <p style={classes.changableBody2}>{siteView.address}</p>
           </Grid>
         )}
 
         <Grid item xs={12}>
-          {isEdit && !siteEdit.phone && !siteEdit.address && !siteEdit.email && (
-            <p style={classes.changableBody3}>
-              Currently setting up our location.
-            </p>
-          )}
-          {!isEdit && !siteView.phone && !siteView.address && !siteView.email && (
-            <p style={classes.changableBody3}>
-              Currently setting up our location.
-            </p>
-          )}
+          {isEdit &&
+            !siteEdit.phone &&
+            !siteEdit.address &&
+            !siteEdit.email && (
+              <p style={classes.changableBody3}>
+                Currently setting up our location.
+              </p>
+            )}
+          {!isEdit &&
+            !siteView.phone &&
+            !siteView.address &&
+            !siteView.email && (
+              <p style={classes.changableBody3}>
+                Currently setting up our location.
+              </p>
+            )}
         </Grid>
-
       </Grid>
     );
   }

@@ -156,7 +156,7 @@ class SyncEditorTab extends React.Component {
                   <Dialog
                     onClose={this.toggleDialog}
                     aria-labelledby="simple-dialog-title"
-                    open={this.state.open}
+                    open={true}
                     maxWidth="lg"
                     fullWidth
                     fullScreen
@@ -170,7 +170,11 @@ class SyncEditorTab extends React.Component {
                         : "Not yet"}
                     </DialogTitle>
                     <DialogContent dividers>
-                      <AppBar position="static">
+                      <AppBar
+                        color={"default"}
+                        variant="outlined"
+                        position="static"
+                      >
                         <Tabs
                           value={tab}
                           onChange={this.selectTab}
@@ -190,23 +194,6 @@ class SyncEditorTab extends React.Component {
                       <TabPanel value={tab} index={2}>
                         Item Three
                       </TabPanel>
-                      {/* <Typography gutterBottom>
-                        Cras mattis consectetur purus sit amet fermentum. Cras
-                        justo odio, dapibus ac facilisis in, egestas eget quam.
-                        Morbi leo risus, porta ac consectetur ac, vestibulum at
-                        eros.
-                      </Typography>
-                      <Typography gutterBottom>
-                        Praesent commodo cursus magna, vel scelerisque nisl
-                        consectetur et. Vivamus sagittis lacus vel augue laoreet
-                        rutrum faucibus dolor auctor.
-                      </Typography>
-                      <Typography gutterBottom>
-                        Aenean lacinia bibendum nulla sed consectetur. Praesent
-                        commodo cursus magna, vel scelerisque nisl consectetur
-                        et. Donec sed odio dui. Donec ullamcorper nulla non
-                        metus auctor fringilla.
-                      </Typography> */}
                     </DialogContent>
                   </Dialog>
                 </Grid>

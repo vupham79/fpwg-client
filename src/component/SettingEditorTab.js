@@ -132,6 +132,7 @@ class SettingEditorTab extends React.Component {
               variant="outlined"
               label="Instagram"
               size="small"
+              inputMode={"url"}
               fullWidth
               value={site.instagram ? site.instagram : ""}
               onChange={e => this.handleChangeInstagram(e)}
@@ -165,6 +166,7 @@ class SettingEditorTab extends React.Component {
               variant="outlined"
               label="Youtube"
               size="small"
+              inputMode={"url"}
               fullWidth
               value={site.youtube ? site.youtube : ""}
               onChange={e => this.handleChangeYoutube(e)}
@@ -198,6 +200,7 @@ class SettingEditorTab extends React.Component {
               variant="outlined"
               label="Mail"
               size="small"
+              inputMode={"email"}
               fullWidth
               value={site.email ? site.email : ""}
               onChange={e => this.handleChangeMail(e)}

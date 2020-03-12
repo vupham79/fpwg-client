@@ -297,9 +297,9 @@ class DesignEditorTab extends React.Component {
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
-        <Typography className={classes.title}>Title & Logo</Typography>
+        <Typography className={classes.title}>Logo</Typography>
         <TextField
-          label="Title"
+          label="Logo Text"
           variant={"outlined"}
           fullWidth
           InputLabelProps={{

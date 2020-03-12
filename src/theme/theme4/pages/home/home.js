@@ -1,25 +1,10 @@
-import { faAddressBook, faPhone } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Grid } from "@material-ui/core";
 import React from "react";
-import {
-  GoogleMap,
-  Marker,
-  withGoogleMap,
-  withScriptjs
-} from "react-google-maps";
-import { Parallax } from "react-parallax";
 import { connect } from "react-redux";
-import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import moment from "moment";
-import EventComponent from "../../../component/eventComponent";
-import GalleryComponent from "../../../component/galleryComponent";
-import RoundedImage from "react-rounded-image";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ReactPlayer from "react-player";
+import "slick-carousel/slick/slick.css";
 
 class Theme1Home extends React.Component {
   state = {
@@ -100,7 +85,6 @@ class Theme1Home extends React.Component {
       titleView,
       titleEdit,
       siteView,
-      posts,
       bodyEdit,
       bodyView
     } = this.props;
@@ -233,14 +217,13 @@ class Theme1Home extends React.Component {
     return (
       <Grid container>
         <Grid item xs={12}>
-          <p style={classes.changableTitle}>{isEdit ? siteEdit.title : siteView.title}</p>
+          <p style={classes.changableTitle}>
+            {isEdit ? siteEdit.title : siteView.title}
+          </p>
         </Grid>
         <Grid item xs={12}>
-          <Slider autoplay >
-            {this.renderNewCovers()}
-          </Slider>
+          <Slider autoplay>{this.renderNewCovers()}</Slider>
         </Grid>
-
       </Grid>
     );
   }
