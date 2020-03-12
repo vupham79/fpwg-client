@@ -1,7 +1,7 @@
 import { loginAdmin, setLogoutAdmin } from "./admin";
 import { updateAdminTabIndex } from "./adminTab";
 import { getAllPaths, updateSitepath } from "./path";
-import { getAllPost, setActivePost } from "./post";
+import { getAllPost, setActivePost, savePosts } from "./post";
 import {
   changeColor,
   changeFontBody,
@@ -114,5 +114,6 @@ export {
   setNewCover,
   setNewLogo,
   changeSiteLinks,
-  setPreviewMode
+  setPreviewMode,
+  savePosts
 };

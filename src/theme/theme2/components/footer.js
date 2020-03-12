@@ -8,10 +8,17 @@ import {
   Box,
   Input,
   Button,
-  Divider
+  Divider,
+  IconButton
 } from "@material-ui/core";
 import { connect } from "react-redux";
 import Link from "../../../component/link";
+import {
+  faInstagram,
+  faYoutube,
+  faWhatsapp,
+  faFacebook
+} from "@fortawesome/free-brands-svg-icons";
 
 const txtStyles = {
   backgroundColor: "white",
@@ -54,7 +61,48 @@ class FooterPage extends Component {
             Take a look around and feel free to contact us for more information.
           </Typography>
           <Divider className="divider" variant="fullWidth" />
-          <FontAwesomeIcon style={iconStyles} icon={faFacebookF} size="2x" />
+          <Grid
+            container
+            item
+            justify="flex-start"
+            xs={12}
+            style={{ marginTop: "4rem" }}
+          >
+            <Grid item>
+              <IconButton
+                aria-label=""
+                color="primary"
+                href={isEdit ? siteEdit.url : siteView.url}
+              >
+                {siteEdit.url ? (
+                  <FontAwesomeIcon icon={faFacebookF} color="white" size="2x" />
+                ) : null}
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <IconButton
+                aria-label=""
+                color="primary"
+                href={isEdit ? siteEdit.instagram : siteView.instagram}
+              >
+                {siteEdit.instagram ? (
+                  <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />
+                ) : null}
+              </IconButton>
+            </Grid>
+
+            <Grid item>
+              <IconButton
+                aria-label=""
+                color="primary"
+                href={isEdit ? siteEdit.url : siteView.url}
+              >
+                {siteEdit.youtube ? (
+                  <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />
+                ) : null}
+              </IconButton>
+            </Grid>
+          </Grid>
         </Grid>
         <Grid item sm={4} xs={12} className={styles.content}>
           <Typography

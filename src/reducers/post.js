@@ -18,6 +18,11 @@ const PostReducer = (state = defaultState, action) => {
       return {
         ...defaultState
       };
+    case "UDATE_POSTS":
+      return {
+        ...state,
+        posts: [...action.payload]
+      };
     default:
       return state;
   }

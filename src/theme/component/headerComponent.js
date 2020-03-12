@@ -390,7 +390,7 @@ class HeaderComponent extends Component {
   render() {
     const { classes, navPos, displayImg, isEdit } = this.props;
     const imgStyles = {
-      // backgroundSize: "contain",
+      backgroundSize: "contain",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       height: "5rem"

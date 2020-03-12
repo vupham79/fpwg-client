@@ -1,18 +1,32 @@
 import {
+  Avatar,
   Button,
+  Checkbox,
   Dialog,
   ExpansionPanel,
   ExpansionPanelSummary,
   Grid,
   IconButton,
-  Typography
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+  withStyles,
+  DialogActions,
+  DialogContent
 } from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MenuIcon from "@material-ui/icons/Menu";
 import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
+import moment from "moment";
 import React from "react";
+import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import {
   sortableContainer,
@@ -25,7 +39,8 @@ import {
   openDialog,
   setActiveNavItems,
   setActivePost,
-  updateNavItemValue
+  updateNavItemValue,
+  savePosts
 } from "../actions";
 
 const gridContainer = {
@@ -65,11 +80,11 @@ function handleChangeActive(item, site, setActiveNavItems, updateNavItemValue) {
 const SortableItem = sortableElement(
   ({ value, site, item, setActiveNavItems, updateNavItemValue }) => (
     <Grid container style={gridItem}>
-      <Grid container item alignItems="center" sm={5}>
+      <Grid container item alignItems="center" xs={5}>
         <DragHandle />
         {value}
       </Grid>
-      <Grid container item justify="flex-end" sm={7}>
+      <Grid container item justify="flex-end" xs={7}>
         {item.name === "Home" ? (
           <></>
         ) : (
@@ -123,13 +138,6 @@ const expanStyle = {
   marginTop: "1rem"
 };
 
-const imageStyle = {
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  width: "60%"
-};
-
 function handleActivePost(posts, setActivePost, item) {
   const index = posts.find(e => e._id === item._id);
   if (index.isActive) {
@@ -140,61 +148,160 @@ function handleActivePost(posts, setActivePost, item) {
   setActivePost(posts);
 }
 
-function PostsList({ posts, setActivePost, item }) {
+const GreenCheckbox = withStyles({
+  root: {
+    color: green[400],
+    "&$checked": {
+      color: green[600]
+    }
+  },
+  checked: {}
+})(props => <Checkbox color="default" {...props} />);
+
+const columns = ["Avata", "Title", "Message", "Create At", "Show/Hide"];
+
+function PostsList({
+  filteredData,
+  posts,
+  setActivePost,
+  pageCount,
+  handlePageClick
+}) {
   return (
     <>
-      {posts ? (
-        posts.map((item, index) =>
-          item.attachments.media_type === "photo" ? (
-            <Grid container style={gridItem} key={index}>
-              <Grid container item sm={2} xs={4}>
-                <img src={item.attachments.images} style={imageStyle} alt="" />
-              </Grid>
-              <Grid
-                container
-                item
-                sm={8}
-                xs={6}
-                direction="column"
-                justify="flex-start"
-              >
-                <Grid item>
-                  <Typography color="primary" variant="h6">
-                    {item.message}
-                  </Typography>
-                </Grid>
-                <Grid item>{item.createdAt}</Grid>
-              </Grid>
-              <Grid container justify="flex-end" item sm={2} xs={2}>
-                <IconButton
-                  style={viewButton}
-                  onClick={() => handleActivePost(posts, setActivePost, item)}
-                >
-                  {item.isActive ? (
-                    <VisibilityOutlinedIcon />
-                  ) : (
-                    <VisibilityOffOutlinedIcon />
-                  )}
-                </IconButton>
-              </Grid>
-            </Grid>
-          ) : null
-        )
-      ) : (
-        <Grid container justify="center" style={{ padding: "1rem" }}>
-          <Typography> You don have any post</Typography>
-        </Grid>
-      )}
-      {posts.length === 0 && (
-        <Grid container justify="center" style={{ padding: "1rem" }}>
-          <Typography> You don have any post</Typography>
-        </Grid>
-      )}
+      <TableContainer style={{ maxHeight: "70vh" }}>
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
+              {columns.map((column, index) => (
+                <TableCell align="center" key={index}>
+                  {column}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredData &&
+              filteredData.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    {(row.attachments.media_type === "photo" && (
+                      <Avatar src={row.attachments.images[0]} />
+                    )) ||
+                      (row.attachments.media_type === "video" && (
+                        <Avatar src={row.attachments.video} />
+                      )) ||
+                      (row.attachments.media_type === "album" && (
+                        <Avatar src={row.attachments.images[0]} />
+                      ))}
+                  </TableCell>
+                  <TableCell align="center">{row.title}</TableCell>
+                  <TableCell align="left">
+                    <Grid
+                      style={{
+                        maxWidth: "20rem",
+                        height: "2.5rem",
+                        overflow: "hidden"
+                      }}
+                    >
+                      {row.message}
+                    </Grid>
+                  </TableCell>
+                  <TableCell align="center">
+                    {moment(row.createdAt).format("DD-MM-YYYY")}
+                  </TableCell>
+                  <TableCell align="center">
+                    <GreenCheckbox
+                      checked={row.isActive}
+                      onChange={() =>
+                        handleActivePost(posts, setActivePost, row)
+                      }
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Grid container justify="center">
+        <ReactPaginate
+          previousLabel={"previous"}
+          nextLabel={"next"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+        />
+      </Grid>
     </>
   );
 }
 
 class PagesEditorTab extends React.Component {
+  state = {
+    filteredData: [],
+    pageCount: 1,
+    offset: 0,
+    itemPerPage: 5
+  };
+
+  setListData = listData => {
+    this.setState({
+      filteredData: listData
+    });
+  };
+
+  setPageCount = listData => {
+    this.setState({
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+    });
+  };
+
+  setPosts = () => {
+    this.setListData(
+      this.props.posts.slice(
+        this.state.offset,
+        this.state.itemPerPage + this.state.offset
+      )
+    );
+    this.setPageCount(this.props.posts);
+  };
+
+  componentDidMount() {
+    this.setPosts();
+  }
+
+  setStatePost = posts => {
+    this.setState({ filteredData: posts });
+  };
+
+  handlePageClick = data => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.state.itemPerPage);
+
+    this.setState({ offset: offset }, () => {
+      this.setListData(
+        this.props.posts.slice(
+          this.state.offset,
+          this.state.itemPerPage + this.state.offset
+        )
+      );
+    });
+  };
+
+  handleSearch = keyword => {
+    let searchResult = this.props.paths.filter(function(user) {
+      return user.pathName.toLowerCase().includes(keyword.toLowerCase());
+    });
+    this.setListData(searchResult.slice(0, this.state.itemPerPage));
+    this.setPageCount(searchResult);
+  };
+
   onChangeItem = ({ oldIndex, newIndex }) => {
     const { site, changeNavItems } = this.props;
     let temp = site.navItems[oldIndex];
@@ -204,17 +311,23 @@ class PagesEditorTab extends React.Component {
     changeNavItems(site);
   };
 
+  handleSave = async posts => {
+    await this.props.savePosts(posts);
+    this.props.closeDialog();
+  };
+
   render() {
     const {
       site,
       setActiveNavItems,
       openDialog,
-      closeDialog,
       open,
+      closeDialog,
+      updateNavItemValue,
       posts,
-      setActivePost,
-      updateNavItemValue
+      setActivePost
     } = this.props;
+
     return (
       <>
         <ExpansionPanel style={expanStyle}>
@@ -238,32 +351,64 @@ class PagesEditorTab extends React.Component {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Grid container style={gridContainer}>
-              <Grid container style={gridItem} alignItems="center">
-                <Grid item>
+              <Grid
+                container
+                style={{
+                  ...gridItem,
+                  height: "inherit",
+                  width: "-webkit-fill-available"
+                }}
+                alignItems="center"
+              >
+                <Grid item xs={6} sm={12} md={6}>
                   <Typography variant="body1" style={{ paddingRight: "2rem" }}>
                     News Setting:
                   </Typography>
                 </Grid>
-                <Grid item>
+                <Grid item xs={6} sm={12} md={6}>
                   <Button
                     variant="contained"
                     color="primary"
                     onClick={openDialog}
+                    style={{ width: "-webkit-fill-available" }}
                   >
                     Setting
                   </Button>
                 </Grid>
 
                 <Dialog
-                  onClose={closeDialog}
-                  aria-labelledby="simple-dialog-title"
+                  disableBackdropClick
+                  disableEscapeKeyDown
                   open={open}
-                  maxWidth="sm"
+                  maxWidth="md"
                   fullWidth
                 >
                   <Grid container alignItems="center">
-                    <PostsList posts={posts} setActivePost={setActivePost} />
+                    <PostsList
+                      posts={posts}
+                      filteredData={this.state.filteredData}
+                      setActivePost={setActivePost}
+                      pageCount={this.state.pageCount}
+                      handlePageClick={this.handlePageClick}
+                    />
                   </Grid>
+                  <DialogActions>
+                    <Button
+                      autoFocus
+                      variant="contained"
+                      onClick={closeDialog}
+                      color="primary"
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      variant="contained"
+                      onClick={() => this.handleSave(posts)}
+                      color="primary"
+                    >
+                      Save
+                    </Button>
+                  </DialogActions>
                 </Dialog>
               </Grid>
             </Grid>
@@ -285,7 +430,8 @@ const mapDispatchToProps = dispatch => ({
   openDialog: () => dispatch(openDialog()),
   closeDialog: () => dispatch(closeDialog()),
   setActivePost: posts => dispatch(setActivePost(posts)),
-  updateNavItemValue: value => dispatch(updateNavItemValue(value))
+  updateNavItemValue: value => dispatch(updateNavItemValue(value)),
+  savePosts: posts => dispatch(savePosts(posts))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PagesEditorTab);
