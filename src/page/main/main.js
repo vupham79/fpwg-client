@@ -146,7 +146,9 @@ class MainPage extends Component {
       return (
         <Grid container justify="center" alignItems="center">
           <Grid item xs={12}>
-            <p style={{ textAlign: "center", marginLeft: 5, marginRight: 5 }}>No Facebook page to use. Please create one below.</p>
+            <p style={{ textAlign: "center", marginLeft: 5, marginRight: 5 }}>
+              No Facebook page to use. Please create one below.
+            </p>
           </Grid>
           <Grid item xs={6}>
             <a
@@ -249,7 +251,7 @@ class MainPage extends Component {
                           value={sitepath ? sitepath : ""}
                         />
                         <SwitchButton
-                          value={isPublish}
+                          isPublish={isPublish}
                           style={{ marginLeft: 0 }}
                           onChange={() =>
                             this.setState({ isPublish: !isPublish })
