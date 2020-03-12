@@ -46,7 +46,7 @@ class SettingEditorTab extends React.Component {
 
   handleChangeMail = e => {
     const { site, changeSiteLinks } = this.props;
-    site.mail = e.target.value;
+    site.email = e.target.value;
     changeSiteLinks(site);
   };
 
@@ -199,7 +199,7 @@ class SettingEditorTab extends React.Component {
               label="Mail"
               size="small"
               fullWidth
-              value={site.mail ? site.mail : ""}
+              value={site.email ? site.email : ""}
               onChange={e => this.handleChangeMail(e)}
               InputLabelProps={{
                 classes: {

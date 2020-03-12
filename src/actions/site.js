@@ -288,7 +288,11 @@ export function saveDesignSite({ logo, cover, site }) {
           theme: site.theme.id,
           pageId: site.id,
           name: site.title,
-          color: site.color
+          color: site.color,
+          email: site.email,
+          youtube: site.youtube,
+          instagram: site.instagram,
+          whatsapp: site.whatsapp
         }
       });
       dispatch({

@@ -28,7 +28,7 @@ class Theme1Contact extends React.Component {
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
-        fontSize: 45,
+        fontSize: 30,
         paddingBottom: 20
       },
       changableBody: {
@@ -108,44 +108,17 @@ class Theme1Contact extends React.Component {
     });
     const classes = useStyles();
 
-    const MapWithAMarker = withScriptjs(
-      withGoogleMap(props => (
-        <GoogleMap
-          defaultZoom={15}
-          defaultCenter={{
-            lat: isEdit
-              ? parseFloat(siteEdit.latitude)
-              : parseFloat(siteView.latitude),
-            lng: isEdit
-              ? parseFloat(siteEdit.longitude)
-              : parseFloat(siteView.longitude)
-          }}
-        >
-          <Marker
-            position={{
-              lat: isEdit
-                ? parseFloat(siteEdit.latitude)
-                : parseFloat(siteView.latitude),
-              lng: isEdit
-                ? parseFloat(siteEdit.longitude)
-                : parseFloat(siteView.longitude)
-            }}
-          />
-        </GoogleMap>
-      ))
-    );
     return (
       <Grid container>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>C</span>ONTACTS
+            CONTACTS
           </p>
         </Grid>
 
         {isEdit && siteEdit.phone && (
           <Grid container item xs={12} justify="center">
             <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faPhone} size="2x" />
               {siteEdit.phone}
             </p>
           </Grid>
@@ -153,7 +126,6 @@ class Theme1Contact extends React.Component {
         {!isEdit && siteView.phone && (
           <Grid container item xs={12} justify="center">
             <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faPhone} size="2x" />
               {siteView.phone}
             </p>
           </Grid>
@@ -162,7 +134,6 @@ class Theme1Contact extends React.Component {
         {isEdit && siteEdit.email && siteEdit.email !== "" && (
           <Grid container item xs={12} justify="center">
             <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faMailBulk} size="2x" />
               {siteEdit.email}
             </p>
           </Grid>
@@ -170,7 +141,6 @@ class Theme1Contact extends React.Component {
         {!isEdit && siteView.email && siteView.email !== "" && (
           <Grid container item xs={12} justify="center">
             <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faMailBulk} size="2x" />
               {siteView.email}
             </p>
           </Grid>
@@ -179,7 +149,6 @@ class Theme1Contact extends React.Component {
         {isEdit && siteEdit.address && siteEdit.adress !== "" && (
           <Grid container item xs={12} justify="center">
             <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faAddressBook} size="2x" />
               {siteEdit.address}
             </p>
           </Grid>
@@ -187,29 +156,12 @@ class Theme1Contact extends React.Component {
         {!isEdit && siteView.address && siteView.adress !== "" && (
           <Grid container item xs={12} justify="center">
             <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faAddressBook} size="2x" />
               {siteView.address}
             </p>
           </Grid>
         )}
 
         <Grid item xs={12}>
-          {isEdit && siteEdit.latitude && siteEdit.longitude && (
-            <MapWithAMarker
-              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-              loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `400px` }} />}
-              mapElement={<div style={{ height: `100%` }} />}
-            />
-          )}
-          {!isEdit && siteView.latitude && siteView.longitude && (
-            <MapWithAMarker
-              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-              loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `400px` }} />}
-              mapElement={<div style={{ height: `100%` }} />}
-            />
-          )}
           {isEdit && !siteEdit.phone && !siteEdit.address && !siteEdit.email && (
             <p style={classes.changableBody3}>
               Currently setting up our location.
@@ -221,6 +173,7 @@ class Theme1Contact extends React.Component {
             </p>
           )}
         </Grid>
+
       </Grid>
     );
   }

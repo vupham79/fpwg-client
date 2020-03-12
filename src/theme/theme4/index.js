@@ -1,7 +1,26 @@
-import React, { Component } from "react";
-
-export default class Theme4Page extends Component {
+import React from "react";
+import { Switch, Route } from "react-router-dom";
+import Layout from "../theme1/layout/layout";
+import { Routes } from "./routes/routes";
+import NotFound from "./components/NotFound";
+class Theme4 extends React.Component {
   render() {
-    return <h1>Theme 4</h1>;
+    return (
+      <Layout>
+        <Switch>
+          {Routes.map(route => (
+            <Route
+              key={route.path}
+              exact={route.exact}
+              path={route.path}
+              component={route.component}
+            />
+          ))}
+          <Route path="*" exact={true} component={NotFound} />
+        </Switch>
+      </Layout>
+    );
   }
 }
+
+export default Theme4;

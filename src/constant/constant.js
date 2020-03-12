@@ -19,6 +19,13 @@ import PreEventPage from "../theme/theme2/pages/event";
 import PreGalleryPage from "../theme/theme2/pages/gallery";
 import PreHomePage from "../theme/theme2/pages/home";
 import PreNewPage from "../theme/theme2/pages/new";
+import Theme4 from "../theme/theme4";
+import PreAboutPageT4 from "../theme/theme4/pages/about";
+import PreContactPageT4 from "../theme/theme4/pages/contact";
+import PreEventPageT4 from "../theme/theme4/pages/event";
+import PreGalleryPageT4 from "../theme/theme4/pages/gallery";
+import PreHomePageT4 from "../theme/theme4/pages/home";
+import PreNewPageT4 from "../theme/theme4/pages/new";
 
 export const themes = [
   {
@@ -43,6 +50,18 @@ export const themes = [
       { name: "Event", component: <PreEventPage /> },
       { name: "Gallery", component: <PreGalleryPage /> },
       { name: "News", component: <PreNewPage /> }
+    ]
+  },
+  {
+    id: "z7e520ab785bc282f048799ce",
+    component: <Theme4 />,
+    pages: [
+      { name: "Home", component: <PreHomePageT4 /> },
+      { name: "About", component: <PreAboutPageT4 /> },
+      { name: "Contact", component: <PreContactPageT4 /> },
+      { name: "Event", component: <PreEventPageT4 /> },
+      { name: "Gallery", component: <PreGalleryPageT4 /> },
+      { name: "News", component: <PreNewPageT4 /> }
     ]
   }
 ];
@@ -72,4 +91,13 @@ export const theme2Pages = [
   { name: "event", component: <PreEventPage /> },
   { name: "gallery", component: <PreGalleryPage /> },
   { name: "new", component: <PreNewPage /> }
+];
+
+export const theme4Pages = [
+  { name: "home", component: <PreHomePageT4 /> },
+  { name: "about", component: <PreAboutPageT4 /> },
+  { name: "contact", component: <PreContactPageT4 /> },
+  { name: "event", component: <PreEventPageT4 /> },
+  { name: "gallery", component: <PreGalleryPageT4 /> },
+  { name: "new", component: <PreNewPageT4 /> }
 ];
