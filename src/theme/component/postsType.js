@@ -250,21 +250,21 @@ class PostTypeComponent extends React.Component {
         >
           {posts.map(
             (post, index) =>
-              (post.attachments.media_type === "photo" && (
+              (post.attachments.media_type === "photo" && post.isActive && (
                 <TypePhoto
                   key={index}
                   post={post}
                   openDialog={this.handleOpen}
                 />
               )) ||
-              (post.attachments.media_type === "album" && (
+              (post.attachments.media_type === "album" && post.isActive && (
                 <TypeAlbum
                   key={index}
                   post={post}
                   openDialog={this.handleOpen}
                 />
               )) ||
-              (post.attachments.media_type === "video" && (
+              (post.attachments.media_type === "video" && post.isActive && (
                 <TypeVideo
                   key={index}
                   post={post}
