@@ -1,24 +1,22 @@
-import React, { Component } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFacebookF } from "@fortawesome/free-brands-svg-icons";
-import styles from "./index.module.css";
 import {
-  Grid,
-  Typography,
+  faFacebookF,
+  faInstagram,
+  faYoutube
+} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
   Box,
-  Input,
   Button,
   Divider,
-  IconButton
+  Grid,
+  IconButton,
+  Input,
+  Typography
 } from "@material-ui/core";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import Link from "../../../component/link";
-import {
-  faInstagram,
-  faYoutube,
-  faWhatsapp,
-  faFacebook
-} from "@fortawesome/free-brands-svg-icons";
+import styles from "./index.module.css";
 
 const txtStyles = {
   backgroundColor: "white",
@@ -26,11 +24,6 @@ const txtStyles = {
   height: "7.5vh",
   width: "85%",
   padding: "2vh 4vh"
-};
-
-const iconStyles = {
-  color: "white",
-  marginTop: "6vh"
 };
 
 class FooterPage extends Component {
