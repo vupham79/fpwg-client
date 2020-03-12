@@ -9,7 +9,7 @@ export function login({ accessToken, profile }) {
       if (profile.email) {
         const data = await axios({
           method: "post",
-          url: "/auth",
+          url: "/user",
           data: {
             accessToken: accessToken,
             id: profile.id,
