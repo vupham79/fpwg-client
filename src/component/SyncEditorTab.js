@@ -113,7 +113,7 @@ class SyncEditorTab extends React.Component {
 
   render() {
     const { syncDataFromFB, site, classes } = this.props;
-    const { tab } = this.state;
+    const { tab, open } = this.state;
     return (
       <>
         <ExpansionPanel style={expanStyle}>
@@ -156,7 +156,7 @@ class SyncEditorTab extends React.Component {
                   <Dialog
                     onClose={this.toggleDialog}
                     aria-labelledby="simple-dialog-title"
-                    open={true}
+                    open={open}
                     maxWidth="lg"
                     fullWidth
                     fullScreen
@@ -180,19 +180,19 @@ class SyncEditorTab extends React.Component {
                           onChange={this.selectTab}
                           aria-label="simple tabs example"
                         >
-                          <Tab label="Item One" {...a11yProps(0)} />
-                          <Tab label="Item Two" {...a11yProps(1)} />
-                          <Tab label="Item Three" {...a11yProps(2)} />
+                          <Tab label="Post" {...a11yProps(0)} />
+                          <Tab label="Event" {...a11yProps(1)} />
+                          <Tab label="Contact" {...a11yProps(2)} />
                         </Tabs>
                       </AppBar>
                       <TabPanel value={tab} index={0}>
-                        Item One
+                        Post
                       </TabPanel>
                       <TabPanel value={tab} index={1}>
-                        Item Two
+                        Event
                       </TabPanel>
                       <TabPanel value={tab} index={2}>
-                        Item Three
+                        Contact
                       </TabPanel>
                     </DialogContent>
                   </Dialog>
@@ -229,13 +229,7 @@ class SyncEditorTab extends React.Component {
               <Grid item container className={classes.sideBarBox}>
                 <Grid item container sm={6} alignItems={"center"}>
                   <Grid item>
-                    <Typography
-                      variant={"subtitle2"}
-                      // color="textPrimary"
-                      // style={{ paddingRight: "2rem" }}
-                    >
-                      Active
-                    </Typography>
+                    <Typography variant={"subtitle2"}>Active</Typography>
                   </Grid>
                 </Grid>
                 <Grid item container sm={6} justify={"flex-end"}>

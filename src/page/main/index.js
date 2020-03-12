@@ -20,8 +20,8 @@ class PreMainPage extends Component {
   async componentDidMount() {
     const { isLogin } = this.props;
     if (isLogin) {
-      await this.getUserPages();
-      await this.getAllUserSites();
+      this.getUserPages();
+      this.getAllUserSites();
     }
   }
 
