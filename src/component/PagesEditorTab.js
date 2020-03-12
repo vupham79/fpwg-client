@@ -15,9 +15,9 @@ import {
   TableRow,
   Typography,
   withStyles,
-  DialogActions,
-  DialogContent
+  DialogActions
 } from "@material-ui/core";
+import { withStyles as withStylesStyle } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -53,6 +53,16 @@ const gridContainer = {
 const viewButton = {
   color: "black"
 };
+
+const useStyles = theme => ({
+  sideBarBox: {
+    borderStyle: "solid",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#2a2e2a",
+    padding: "0.5rem"
+  }
+});
 
 const gridItem = {
   borderStyle: "solid",
@@ -138,16 +148,6 @@ const expanStyle = {
   marginTop: "1rem"
 };
 
-function handleActivePost(posts, setActivePost, item) {
-  const index = posts.find(e => e._id === item._id);
-  if (index.isActive) {
-    index.isActive = false;
-  } else {
-    index.isActive = true;
-  }
-  setActivePost(posts);
-}
-
 const GreenCheckbox = withStyles({
   root: {
     color: green[400],
@@ -158,11 +158,10 @@ const GreenCheckbox = withStyles({
   checked: {}
 })(props => <Checkbox color="default" {...props} />);
 
-const columns = ["Avata", "Title", "Message", "Create At", "Show/Hide"];
+const columns = ["Avatar", "Title", "Message", "Created At", "Show"];
 
 function PostsList({
   filteredData,
-  posts,
   setActivePost,
   pageCount,
   handlePageClick
@@ -213,9 +212,7 @@ function PostsList({
                   <TableCell align="center">
                     <GreenCheckbox
                       checked={row.isActive}
-                      onChange={() =>
-                        handleActivePost(posts, setActivePost, row)
-                      }
+                      onChange={() => setActivePost(row, !row.isActive)}
                     />
                   </TableCell>
                 </TableRow>
@@ -250,12 +247,6 @@ class PagesEditorTab extends React.Component {
     itemPerPage: 5
   };
 
-  setListData = listData => {
-    this.setState({
-      filteredData: listData
-    });
-  };
-
   setPageCount = listData => {
     this.setState({
       pageCount: Math.ceil(listData.length / this.state.itemPerPage)
@@ -263,13 +254,15 @@ class PagesEditorTab extends React.Component {
   };
 
   setPosts = () => {
-    this.setListData(
-      this.props.posts.slice(
-        this.state.offset,
-        this.state.itemPerPage + this.state.offset
-      )
+    const { posts } = this.props;
+    const slicePosts = posts.slice(
+      this.state.offset,
+      this.state.itemPerPage + this.state.offset
     );
-    this.setPageCount(this.props.posts);
+    this.setState({
+      filteredData: slicePosts
+    });
+    this.setPageCount(posts);
   };
 
   componentDidMount() {
@@ -277,20 +270,27 @@ class PagesEditorTab extends React.Component {
   }
 
   setStatePost = posts => {
-    this.setState({ filteredData: posts });
+    this.setState({ filteredData: [...posts] });
   };
 
   handlePageClick = data => {
+    const { posts } = this.props;
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.itemPerPage);
-
     this.setState({ offset: offset }, () => {
-      this.setListData(
-        this.props.posts.slice(
-          this.state.offset,
-          this.state.itemPerPage + this.state.offset
-        )
+      const slicePosts = posts.slice(
+        this.state.offset,
+        this.state.itemPerPage + this.state.offset
       );
+      this.setState({
+        filteredData: slicePosts
+      });
+    });
+  };
+
+  setListData = listData => {
+    this.setState({
+      filteredData: listData
     });
   };
 
@@ -311,6 +311,12 @@ class PagesEditorTab extends React.Component {
     changeNavItems(site);
   };
 
+  setActivePost = (post, status) => {
+    const { posts, setActivePost } = this.props;
+    setActivePost(post, status);
+    this.setState({ filteredData: [...posts] });
+  };
+
   handleSave = async posts => {
     await this.props.savePosts(posts);
     this.props.closeDialog();
@@ -325,7 +331,7 @@ class PagesEditorTab extends React.Component {
       closeDialog,
       updateNavItemValue,
       posts,
-      setActivePost
+      classes
     } = this.props;
 
     return (
@@ -350,25 +356,16 @@ class PagesEditorTab extends React.Component {
             <Typography variant="button">News</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Grid container style={gridContainer}>
-              <Grid
-                container
-                style={{
-                  ...gridItem,
-                  height: "inherit",
-                  width: "-webkit-fill-available"
-                }}
-                alignItems="center"
-              >
+            <Grid container className={classes.sideBarBox}>
+              <Grid container alignItems="center">
                 <Grid item xs={6} sm={12} md={6}>
                   <Typography variant="body1" style={{ paddingRight: "2rem" }}>
-                    News Setting:
+                    Posts Setting:
                   </Typography>
                 </Grid>
                 <Grid item xs={6} sm={12} md={6}>
                   <Button
                     variant="contained"
-                    color="primary"
                     onClick={openDialog}
                     style={{ width: "-webkit-fill-available" }}
                   >
@@ -387,7 +384,7 @@ class PagesEditorTab extends React.Component {
                     <PostsList
                       posts={posts}
                       filteredData={this.state.filteredData}
-                      setActivePost={setActivePost}
+                      setActivePost={this.setActivePost}
                       pageCount={this.state.pageCount}
                       handlePageClick={this.handlePageClick}
                     />
@@ -397,14 +394,14 @@ class PagesEditorTab extends React.Component {
                       autoFocus
                       variant="contained"
                       onClick={closeDialog}
-                      color="primary"
+                      color="secondary"
                     >
                       Cancel
                     </Button>
                     <Button
                       variant="contained"
                       onClick={() => this.handleSave(posts)}
-                      color="primary"
+                      color={"primary"}
                     >
                       Save
                     </Button>
@@ -429,9 +426,12 @@ const mapDispatchToProps = dispatch => ({
   setActiveNavItems: site => dispatch(setActiveNavItems(site)),
   openDialog: () => dispatch(openDialog()),
   closeDialog: () => dispatch(closeDialog()),
-  setActivePost: posts => dispatch(setActivePost(posts)),
+  setActivePost: (post, status) => dispatch(setActivePost(post, status)),
   updateNavItemValue: value => dispatch(updateNavItemValue(value)),
   savePosts: posts => dispatch(savePosts(posts))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PagesEditorTab);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStylesStyle(useStyles)(PagesEditorTab));

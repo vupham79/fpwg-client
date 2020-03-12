@@ -10,9 +10,16 @@ const PostReducer = (state = defaultState, action) => {
         posts: [...action.payload]
       };
     case "SET_ACTIVE_POST":
+      const { post, status } = action.payload;
+      let update = state.posts.map(post => {
+        if (post.id === action.payload.post.id) {
+          post.isActive = status;
+        }
+        return post;
+      });
       return {
         ...state,
-        posts: [...action.payload]
+        posts: [...update]
       };
     case "SET_LOGOUT":
       return {
