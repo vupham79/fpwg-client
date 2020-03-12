@@ -4,6 +4,7 @@ import PreMainPage from "../page/main";
 import PreDashboardPage from "../page/dashboard";
 // View generated site
 import ViewSitePage from "../page/view";
+import PreviewSitePage from "../page/preview";
 import PreLoginPage from "../page/login";
 
 export const Routes = [
@@ -30,7 +31,11 @@ export const Routes = [
     path: "/admin"
   },
   {
+    component: PreviewSitePage,
+    path: "/preview"
+  },
+  {
     component: ViewSitePage,
     path: "/:id"
-  }
+  },
 ];
