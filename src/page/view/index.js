@@ -35,7 +35,6 @@ class PreViewSite extends React.Component {
     await updateSitepath(this.state.sitepath);
     const data = await getSiteBySitepath(this.state.sitepath);
     if (data) {
-      console.log(data);
       const fontTitle = {
         fontFamily: data.fontTitle,
         color: data.color
