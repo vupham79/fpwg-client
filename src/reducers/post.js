@@ -10,7 +10,7 @@ const PostReducer = (state = defaultState, action) => {
         posts: [...action.payload]
       };
     case "SET_ACTIVE_POST":
-      const { post, status } = action.payload;
+      const { status } = action.payload;
       let update = state.posts.map(post => {
         if (post.id === action.payload.post.id) {
           post.isActive = status;

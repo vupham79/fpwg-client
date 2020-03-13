@@ -1,7 +1,9 @@
 import {
   faFacebookF,
   faInstagram,
-  faYoutube
+  faYoutube,
+  faWhatsapp,
+  faMailchimp
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -27,6 +29,66 @@ const txtStyles = {
 };
 
 class FooterPage extends Component {
+  renderUrl = () => {
+    const { isEdit, siteView, siteEdit } = this.props;
+    if (isEdit) {
+      if (siteEdit.url) {
+        return <FontAwesomeIcon icon={faFacebookF} color="white" size="2x" />;
+      }
+    } else if (siteView.url) {
+      return <FontAwesomeIcon icon={faFacebookF} color="white" size="2x" />;
+    }
+    return <></>;
+  };
+
+  renderInstagram = () => {
+    const { isEdit, siteView, siteEdit } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.instagram) {
+        return <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />;
+      }
+    } else if (siteView && siteView.instagram) {
+      return <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />;
+    }
+    return <></>;
+  };
+
+  renderYoutube = () => {
+    const { isEdit, siteView, siteEdit } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.youtube) {
+        return <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />;
+      }
+    } else if (siteView && siteView.youtube) {
+      return <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />;
+    }
+    return <></>;
+  };
+
+  renderEmail = () => {
+    const { isEdit, siteView, siteEdit } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.email) {
+        return <FontAwesomeIcon icon={faMailchimp} color="white" size="2x" />;
+      }
+    } else if (siteView && siteView.email) {
+      return <FontAwesomeIcon icon={faMailchimp} color="white" size="2x" />;
+    }
+    return <></>;
+  };
+
+  renderWhatsapp = () => {
+    const { isEdit, siteView, siteEdit } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.whatsapp) {
+        return <FontAwesomeIcon icon={faWhatsapp} color="white" size="2x" />;
+      }
+    } else if (siteView && siteView.whatsapp) {
+      return <FontAwesomeIcon icon={faWhatsapp} color="white" size="2x" />;
+    }
+    return <></>;
+  };
+
   render() {
     const {
       isEdit,
@@ -67,9 +129,7 @@ class FooterPage extends Component {
                 color="primary"
                 href={isEdit ? siteEdit.url : siteView.url}
               >
-                {siteEdit.url ? (
-                  <FontAwesomeIcon icon={faFacebookF} color="white" size="2x" />
-                ) : null}
+                {this.renderUrl()}
               </IconButton>
             </Grid>
             <Grid item>
@@ -78,9 +138,7 @@ class FooterPage extends Component {
                 color="primary"
                 href={isEdit ? siteEdit.instagram : siteView.instagram}
               >
-                {siteEdit.instagram ? (
-                  <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />
-                ) : null}
+                {this.renderInstagram()}
               </IconButton>
             </Grid>
 
@@ -88,11 +146,9 @@ class FooterPage extends Component {
               <IconButton
                 aria-label=""
                 color="primary"
-                href={isEdit ? siteEdit.url : siteView.url}
+                href={isEdit ? siteEdit.youtube : siteView.youtube}
               >
-                {siteEdit.youtube ? (
-                  <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />
-                ) : null}
+                {this.renderYoutube()}
               </IconButton>
             </Grid>
           </Grid>

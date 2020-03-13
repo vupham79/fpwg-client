@@ -132,6 +132,11 @@ export function getUserPages() {
         toastr.error("Get your pages failed!", "Error");
       }
     } catch (error) {
+      if (error.response.status === 401) {
+        dispatch({
+          type: "SET_LOGOUT"
+        });
+      }
       dispatch({
         type: "CLOSE_LOADING"
       });

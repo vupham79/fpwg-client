@@ -37,7 +37,7 @@ export function getUserSites() {
       type: "SHOW_LOADING"
     });
     try {
-      const req = await axios({
+      req = await axios({
         url: "/site/findAllByUser"
       });
       dispatch({
@@ -50,6 +50,11 @@ export function getUserSites() {
         });
       }
     } catch (error) {
+      if (error.response && req.response.status === 401) {
+        dispatch({
+          type: "SET_LOGOUT"
+        });
+      }
       dispatch({
         type: "CLOSE_LOADING"
       });
