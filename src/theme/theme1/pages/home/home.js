@@ -1,4 +1,4 @@
-import { faAddressBook, faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faAddressBook, faPhone, faMailBulk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Grid } from "@material-ui/core";
 import React from "react";
@@ -115,7 +115,8 @@ class Theme1Home extends React.Component {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         textAlign: "left",
-        fontSize: 16
+        fontSize: 16,
+        marginLeft: "30%"
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -357,8 +358,8 @@ class Theme1Home extends React.Component {
         {isEdit ? (
           <GalleryComponent galleries={siteEdit.galleries} />
         ) : (
-          <GalleryComponent galleries={siteView.galleries} />
-        )}
+            <GalleryComponent galleries={siteView.galleries} />
+          )}
         <div style={{ height: 100, width: "100%" }} />
         <Grid item xs={12}>
           <Parallax
@@ -387,35 +388,54 @@ class Theme1Home extends React.Component {
             <span style={classes.changableFirst}>C</span>ONTACTS
           </p>
         </Grid>
+
         {isEdit && siteEdit.phone && (
-          <Grid container item xs={12} justify="center">
+          <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faPhone} size="2x" />
-              {siteEdit.phone}
+              {" " + siteEdit.phone}
             </p>
           </Grid>
         )}
         {!isEdit && siteView.phone && (
-          <Grid container item xs={12} justify="center">
+          <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faPhone} size="2x" />
-              {siteView.phone}
+              {" " + siteView.phone}
             </p>
           </Grid>
         )}
+
+        {isEdit && siteEdit.email && siteEdit.email !== "" && (
+          <Grid container item xs={12}>
+            <p style={classes.changableBody2}>
+              <FontAwesomeIcon icon={faMailBulk} size="2x" />
+              {" " + siteEdit.email}
+            </p>
+          </Grid>
+        )}
+        {!isEdit && siteView.email && siteView.email !== "" && (
+          <Grid container item xs={12}>
+            <p style={classes.changableBody2}>
+              <FontAwesomeIcon icon={faMailBulk} size="2x" />
+              {" " + siteView.email}
+            </p>
+          </Grid>
+        )}
+
         {isEdit && siteEdit.address && siteEdit.adress !== "" && (
-          <Grid container item xs={12} justify="center">
+          <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faAddressBook} size="2x" />
-              {siteEdit.address}
+              {" " + siteEdit.address}
             </p>
           </Grid>
         )}
         {!isEdit && siteView.address && siteView.adress !== "" && (
-          <Grid container item xs={12} justify="center">
+          <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faAddressBook} size="2x" />
-              {siteView.address}
+              {" " + siteView.address}
             </p>
           </Grid>
         )}
@@ -437,17 +457,18 @@ class Theme1Home extends React.Component {
               mapElement={<div style={{ height: `100%` }} />}
             />
           )}
-          {isEdit && !siteEdit.phone && !siteEdit.address && (
+          {isEdit && !siteEdit.phone && !siteEdit.address && !siteEdit.email && (
             <p style={classes.changableBody3}>
               Currently setting up our location.
             </p>
           )}
-          {!isEdit && !siteView.phone && !siteView.address && (
+          {!isEdit && !siteView.phone && !siteView.address && !siteView.email && (
             <p style={classes.changableBody3}>
               Currently setting up our location.
             </p>
           )}
         </Grid>
+
       </Grid>
     );
   }

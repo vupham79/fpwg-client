@@ -135,7 +135,7 @@ class Theme1News extends React.Component {
             ) : (
                 <Grid container justify="center">
                   <Typography variant="body1">
-                    You don't have any news.
+                    Currently there are no news.
                 </Typography>
                 </Grid>
               )

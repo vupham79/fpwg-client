@@ -44,7 +44,7 @@ class Footer extends React.Component {
             <IconButton
               aria-label=""
               color="primary"
-              href={isEdit ? siteEdit.url : siteView.url}
+              href={isEdit ? siteEdit.whatsapp : siteView.whatsapp}
             >
               <FontAwesomeIcon icon={faWhatsapp} color="white" size="2x" />
             </IconButton>
@@ -54,7 +54,7 @@ class Footer extends React.Component {
             <IconButton
               aria-label=""
               color="primary"
-              href={isEdit ? siteEdit.url : siteView.url}
+              href={isEdit ? siteEdit.instagram : siteView.instagram}
             >
               <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />
             </IconButton>
@@ -64,7 +64,7 @@ class Footer extends React.Component {
             <IconButton
               aria-label=""
               color="primary"
-              href={isEdit ? siteEdit.url : siteView.url}
+              href={isEdit ? siteEdit.youtube : siteView.youtube}
             >
               <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />
             </IconButton>

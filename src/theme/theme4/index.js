@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import Layout from "../theme1/layout/layout";
+import Layout from "../theme4/layout/layout";
 import { Routes } from "./routes/routes";
 import NotFound from "./components/NotFound";
 class Theme4 extends React.Component {

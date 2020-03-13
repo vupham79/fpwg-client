@@ -1,10 +1,11 @@
-import { Grid } from "@material-ui/core";
+import { Grid, Typography, Divider } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
+import PostTypeComponent from "../../../component/postsType";
 
 class Theme1Home extends React.Component {
   state = {
@@ -135,7 +136,8 @@ class Theme1Home extends React.Component {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "black",
         textAlign: "center",
-        fontSize: 16
+        fontSize: 19,
+        fontWeight: 300,
       },
       changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -213,16 +215,59 @@ class Theme1Home extends React.Component {
       }
     });
     const classes = useStyles();
+    const { posts } = this.props;
 
     return (
+
       <Grid container>
-        <Grid item xs={12}>
-          <p style={classes.changableTitle}>
-            {isEdit ? siteEdit.title : siteView.title}
-          </p>
-        </Grid>
+
         <Grid item xs={12}>
           <Slider autoplay>{this.renderNewCovers()}</Slider>
+        </Grid>
+
+        {/* <Grid item xs={12}>
+          <p style={classes.changableTitle}>
+            NEWS
+          </p>
+        </Grid> */}
+
+        <Grid item xs={12} style={{ height: 200, paddingTop: 50 }}>
+          <p style={classes.changableBody3}>
+            {isEdit && siteEdit && siteEdit.about}
+            {!isEdit && siteView && siteView.about}
+            {isEdit && !siteEdit.about && "Welcome to our website!"}
+            {!isEdit && !siteView.about && "Welcome to our website!"}
+          </p>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Divider style={{ color: "#d8d8d8" }} />
+        </Grid>
+
+        <Grid item sm={12} xs={12} container style={{ height: 100 }}>
+          {isEdit ? (
+            posts ? (
+              <Grid container>
+                <PostTypeComponent posts={posts} />
+              </Grid>
+            ) : (
+                <Grid container justify="center">
+                  <Typography variant="body1">
+                    Currently there are no news.
+                  </Typography>
+                </Grid>
+              )
+          ) : siteView ? (
+            siteView.posts && (
+              <Grid container>
+                <PostTypeComponent posts={siteView.posts} />
+              </Grid>
+            )
+          ) : (
+                <Grid container justify="center">
+                  <Typography variant="body1">Currently there are no news.</Typography>
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );

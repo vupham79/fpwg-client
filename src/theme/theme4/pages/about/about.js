@@ -27,10 +27,11 @@ class Theme1About extends React.Component {
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: "#212121",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 30,
-        paddingBottom: 20
+        fontSize: 25,
+        paddingBottom: 20,
+        textDecoration: "underline",
       },
       changableBody: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -40,8 +41,8 @@ class Theme1About extends React.Component {
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "black",
-        textAlign: "center",
+        color: "#5e5e5e",
+        textAlign: "left",
         fontSize: 16
       },
       changableBody4: {
@@ -114,24 +115,28 @@ class Theme1About extends React.Component {
         <Grid item xs={12}>
           <p style={classes.changableTitle}>ABOUT</p>
         </Grid>
-        <Grid container item xs={12} justify={"center"}>
-          <img
-            src={this.renderImage()}
-            alt=""
-            style={{ width: 150, height: 150 }}
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <p style={classes.changableBody3}>
-            {isEdit && siteEdit && siteEdit.about}
-            {!isEdit && siteView && siteView.about}
-            {isEdit && !siteEdit.about && (
-              <p style={classes.changableBody4}>Welcome to our website!</p>
-            )}
-            {!isEdit && !siteView.about && (
-              <p style={classes.changableBody4}>Welcome to our website!</p>
-            )}
-          </p>
+
+        <Grid container item xs={12} direction="row" justify="center">
+
+          <Grid container item xs={5} justify="center">
+            <img
+              src={this.renderImage()}
+              alt=""
+              style={{ height: 300 }}
+            />
+          </Grid>
+          <Grid item xs={4}>
+            <p style={classes.changableBody3}>
+              {isEdit && siteEdit && siteEdit.about}
+              {!isEdit && siteView && siteView.about}
+              {isEdit && !siteEdit.about && (
+                <p style={classes.changableBody4}>Welcome to our website!</p>
+              )}
+              {!isEdit && !siteView.about && (
+                <p style={classes.changableBody4}>Welcome to our website!</p>
+              )}
+            </p>
+          </Grid>
         </Grid>
       </Grid>
     );

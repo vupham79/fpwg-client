@@ -19,10 +19,11 @@ class Theme1Gallery extends React.Component {
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: "#212121",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 30,
-        paddingBottom: 20
+        fontSize: 25,
+        paddingBottom: 20,
+        textDecoration: "underline",
       },
       changableBody: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,

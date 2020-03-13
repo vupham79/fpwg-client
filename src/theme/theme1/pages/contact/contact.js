@@ -40,8 +40,9 @@ class Theme1Contact extends React.Component {
       changableBody2: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#212121",
-        textAlign: "left",
-        fontSize: 16
+        textAlign: "center",
+        fontSize: 16,
+        marginLeft: "30%"
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -135,7 +136,7 @@ class Theme1Contact extends React.Component {
       ))
     );
     return (
-      <Grid container>
+      <Grid container justify="center">
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
             <span style={classes.changableFirst}>C</span>ONTACTS
@@ -143,52 +144,52 @@ class Theme1Contact extends React.Component {
         </Grid>
 
         {isEdit && siteEdit.phone && (
-          <Grid container item xs={12} justify="center">
+          <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faPhone} size="2x" />
-              {siteEdit.phone}
+              {" " + siteEdit.phone}
             </p>
           </Grid>
         )}
         {!isEdit && siteView.phone && (
-          <Grid container item xs={12} justify="center">
+          <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faPhone} size="2x" />
-              {siteView.phone}
+              {" " + siteView.phone}
             </p>
           </Grid>
         )}
 
         {isEdit && siteEdit.email && siteEdit.email !== "" && (
-          <Grid container item xs={12} justify="center">
+          <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faMailBulk} size="2x" />
-              {siteEdit.email}
+              {" " + siteEdit.email}
             </p>
           </Grid>
         )}
         {!isEdit && siteView.email && siteView.email !== "" && (
-          <Grid container item xs={12} justify="center">
+          <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faMailBulk} size="2x" />
-              {siteView.email}
+              {" " + siteView.email}
             </p>
           </Grid>
         )}
 
         {isEdit && siteEdit.address && siteEdit.adress !== "" && (
-          <Grid container item xs={12} justify="center">
+          <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faAddressBook} size="2x" />
-              {siteEdit.address}
+              {" " + siteEdit.address}
             </p>
           </Grid>
         )}
         {!isEdit && siteView.address && siteView.adress !== "" && (
-          <Grid container item xs={12} justify="center">
+          <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faAddressBook} size="2x" />
-              {siteView.address}
+              {" " + siteView.address}
             </p>
           </Grid>
         )}

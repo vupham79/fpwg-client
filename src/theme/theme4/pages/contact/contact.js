@@ -1,6 +1,12 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPhoneAlt,
+  faSearchLocation,
+  faNewspaper
+} from "@fortawesome/free-solid-svg-icons";
 
 class Theme1Contact extends React.Component {
   render() {
@@ -16,12 +22,13 @@ class Theme1Contact extends React.Component {
 
     const useStyles = theme => ({
       changableTitle: {
-        fontFamily: isEdit ? siteEdit.fontTitle : siteView.fontTitle,
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: "#212121",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 30,
-        paddingBottom: 20
+        fontSize: 25,
+        paddingBottom: 20,
+        textDecoration: "underline",
       },
       changableBody: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
@@ -32,14 +39,16 @@ class Theme1Contact extends React.Component {
       changableBody2: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#212121",
-        textAlign: "left",
-        fontSize: 16
+        textAlign: "center",
+        fontSize: 16,
+        fontWeight: 400
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "black",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 16
+        fontSize: 18,
+        fontWeight: 400
       },
       pageName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -107,35 +116,65 @@ class Theme1Contact extends React.Component {
         </Grid>
 
         {isEdit && siteEdit.phone && (
-          <Grid container item xs={12} justify="center">
-            <p style={classes.changableBody2}>{siteEdit.phone}</p>
+          <Grid container item xs={12} justify="center" alignItems="center">
+            <Grid item xs={12}>
+              <p style={classes.changableBody3}><FontAwesomeIcon icon={faPhoneAlt} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Phone</p>
+            </Grid>
+            <Grid item xs={12}>
+              <p style={classes.changableBody2}>{siteEdit.phone}</p>
+            </Grid>
           </Grid>
         )}
         {!isEdit && siteView.phone && (
-          <Grid container item xs={12} justify="center">
-            <p style={classes.changableBody2}>{siteView.phone}</p>
+          <Grid container item xs={12} justify="center" alignItems="center">
+            <Grid item xs={12}>
+              <p style={classes.changableBody3}><FontAwesomeIcon icon={faPhoneAlt} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Phone</p>
+            </Grid>
+            <Grid item xs={12}>
+              <p style={classes.changableBody2}>{siteView.phone}</p>
+            </Grid>
           </Grid>
         )}
 
         {isEdit && siteEdit.email && siteEdit.email !== "" && (
-          <Grid container item xs={12} justify="center">
-            <p style={classes.changableBody2}>{siteEdit.email}</p>
+          <Grid container item xs={12} justify="center" alignItems="center">
+            <Grid item xs={12}>
+              <p style={classes.changableBody3}><FontAwesomeIcon icon={faNewspaper} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Email</p>
+            </Grid>
+            <Grid item xs={12}>
+              <p style={classes.changableBody2}>{siteEdit.email}</p>
+            </Grid>
           </Grid>
         )}
         {!isEdit && siteView.email && siteView.email !== "" && (
-          <Grid container item xs={12} justify="center">
-            <p style={classes.changableBody2}>{siteView.email}</p>
+          <Grid container item xs={12} justify="center" alignItems="center">
+            <Grid item xs={12}>
+              <p style={classes.changableBody3}><FontAwesomeIcon icon={faNewspaper} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Email</p>
+            </Grid>
+            <Grid item xs={12}>
+              <p style={classes.changableBody2}>{siteView.email}</p>
+            </Grid>
           </Grid>
         )}
 
         {isEdit && siteEdit.address && siteEdit.adress !== "" && (
-          <Grid container item xs={12} justify="center">
-            <p style={classes.changableBody2}>{siteEdit.address}</p>
+          <Grid container item xs={12} justify="center" alignItems="center">
+            <Grid item xs={12}>
+              <p style={classes.changableBody3}><FontAwesomeIcon icon={faSearchLocation} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Location</p>
+            </Grid>
+            <Grid item xs={12}>
+              <p style={classes.changableBody2}>{siteEdit.address}</p>
+            </Grid>
           </Grid>
         )}
         {!isEdit && siteView.address && siteView.adress !== "" && (
-          <Grid container item xs={12} justify="center">
-            <p style={classes.changableBody2}>{siteView.address}</p>
+          <Grid container item xs={12} justify="center" alignItems="center">
+            <Grid item xs={12}>
+              <p style={classes.changableBody3}><FontAwesomeIcon icon={faSearchLocation} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Location</p>
+            </Grid>
+            <Grid item xs={12}>
+              <p style={classes.changableBody2}>{siteView.address}</p>
+            </Grid>
           </Grid>
         )}
 
