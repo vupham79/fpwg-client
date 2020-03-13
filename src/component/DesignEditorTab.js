@@ -119,6 +119,7 @@ class DesignEditorTab extends React.Component {
     const { changeTheme, themes, site } = this.props;
     const theme = themes.find(e => e.id === event.target.value);
     site.theme = theme;
+    this.setState({ changeTheme: true });
     changeTheme(site);
   };
 
@@ -249,7 +250,8 @@ class DesignEditorTab extends React.Component {
       setShowCustomColor,
       classes,
       site,
-      colorPallete
+      colorPallete,
+      isChanged
     } = this.props;
 
     return (
@@ -268,7 +270,7 @@ class DesignEditorTab extends React.Component {
                 searchable
                 buttonColor={"default"}
                 buttonVariant={"outlined"}
-                defaultFont={site.fontTitle}
+                defaultFont={isChanged ? site.theme.fontTitle : site.fontTitle}
                 onFontSelected={this.handleChangeFontTitle}
                 classes={{
                   pickerButton: classes.pickerButton
@@ -284,7 +286,7 @@ class DesignEditorTab extends React.Component {
                 searchable
                 buttonColor={"default"}
                 buttonVariant={"outlined"}
-                defaultFont={site.fontBody}
+                defaultFont={isChanged ? site.theme.fontBody : site.fontBody}
                 onFontSelected={this.handleChangeFontBody}
                 classes={{
                   pickerButton: classes.pickerButton
@@ -369,7 +371,7 @@ class DesignEditorTab extends React.Component {
               </Typography>
               <CirclePicker
                 width={"fit-content"}
-                color={site.color}
+                color={isChanged ? site.theme.mainColor : site.color}
                 colors={colorPallete}
                 onChangeComplete={this.handleChangeColor}
               />
@@ -444,7 +446,8 @@ const mapStateToProps = state => ({
   isShow: state.theme.isShow,
   site: state.site.siteEdit,
   colorPallete: state.site.colorPallete,
-  newCover: state.site.newCover
+  newCover: state.site.newCover,
+  isChanged: state.site.isChanged
 });
 
 const mapDispatchToProps = dispatch => ({

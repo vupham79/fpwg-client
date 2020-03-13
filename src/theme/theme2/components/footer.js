@@ -127,7 +127,9 @@ class FooterPage extends Component {
               <IconButton
                 aria-label=""
                 color="primary"
-                href={isEdit ? siteEdit.url : siteView.url}
+                href={
+                  isEdit ? siteEdit && siteEdit.url : siteView && siteView.url
+                }
               >
                 {this.renderUrl()}
               </IconButton>
@@ -136,7 +138,11 @@ class FooterPage extends Component {
               <IconButton
                 aria-label=""
                 color="primary"
-                href={isEdit ? siteEdit.instagram : siteView.instagram}
+                href={
+                  isEdit
+                    ? siteEdit && siteEdit.instagram
+                    : siteView && siteView.instagram
+                }
               >
                 {this.renderInstagram()}
               </IconButton>

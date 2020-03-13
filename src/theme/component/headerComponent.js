@@ -61,6 +61,9 @@ const useStyles = theme => ({
   },
   drawerPaper: {
     width: drawerWidth
+  },
+  tooltip: {
+    border: "2px solid orange"
   }
 });
 
@@ -249,11 +252,12 @@ class HeaderComponent extends Component {
   };
 
   renderTooltip = () => {
-    const { navItemIsActive, isEdit } = this.props;
+    const { navItemIsActive, isEdit, classes } = this.props;
     return (
       <Grid>
         {!navItemIsActive && !isEdit && (
           <Tooltip
+            className={[classes.tooltip, "blink"]}
             TransitionComponent={Zoom}
             title="This page is currently inactive"
           >

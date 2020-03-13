@@ -2,17 +2,45 @@ import React from "react";
 import CarouselImages from "../../components/carousel";
 import New from "../../pages/new";
 import EventPage from "../../pages/event";
+import { connect } from "react-redux";
 
 class HomePage extends React.Component {
   render() {
+    const { siteEdit, siteView, isEdit } = this.props;
     return (
       <>
         <CarouselImages />
-        <New />
-        <EventPage />
+        {isEdit
+          ? siteEdit &&
+            siteEdit.navItems &&
+            siteEdit.navItems.map(
+              (item, index) =>
+                (item.name === "News" && item.isActive && (
+                  <New key={index} />
+                )) ||
+                (item.name === "Event" && item.isActive && (
+                  <EventPage key={index} />
+                ))
+            )
+          : siteView &&
+            siteView.navItems &&
+            siteView.navItems.map(
+              (item, index) =>
+                (item.name === "News" && item.isActive && (
+                  <New key={index} />
+                )) ||
+                (item.name === "Event" && item.isActive && (
+                  <EventPage key={index} />
+                ))
+            )}
       </>
     );
   }
 }
+const mapStateToProps = state => ({
+  siteView: state.site.siteView,
+  isEdit: state.site.isEdit,
+  siteEdit: state.site.siteEdit
+});
 
-export default HomePage;
+export default connect(mapStateToProps, null)(HomePage);
