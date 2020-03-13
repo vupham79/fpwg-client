@@ -35,14 +35,15 @@
   width: 60% !important;
   background: black !important;
   text-align: center;
+  padding: 0 !important;
 }
 
 .btn_content {
   color: white !important;
   font-size: 3vh !important;
+  padding: 0.7rem;
 }
 
 .btn_send :hover {
-  width: 100%;
   background: #646464 !important;
 }

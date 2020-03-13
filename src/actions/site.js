@@ -37,7 +37,7 @@ export function getUserSites() {
       type: "SHOW_LOADING"
     });
     try {
-      req = await axios({
+      const req = await axios({
         url: "/site/findAllByUser"
       });
       dispatch({
@@ -50,7 +50,7 @@ export function getUserSites() {
         });
       }
     } catch (error) {
-      if (error.response && req.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         dispatch({
           type: "SET_LOGOUT"
         });
@@ -667,6 +667,15 @@ export function setNavItemActive() {
   return async dispatch => {
     dispatch({
       type: "SET_NAV_ITEM_ACTIVE"
+    });
+  };
+}
+
+export function changeNavItemName(site) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_NAV_ITEM_NAME",
+      payload: site
     });
   };
 }

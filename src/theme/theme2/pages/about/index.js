@@ -8,7 +8,7 @@ class PreAboutPage extends Component {
     const { site, isEdit, setNavItemActive, setNavItemInActive } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
-        const navItem = site.navItems.find(e => e.name === "About");
+        const navItem = site.navItems.find(e => e.original === "about");
         if (!navItem.isActive) {
           setNavItemInActive();
         } else {

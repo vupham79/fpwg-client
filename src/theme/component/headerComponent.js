@@ -164,7 +164,7 @@ class HeaderComponent extends Component {
                   <NavLink
                     style={{ ...titleView, textDecoration: "none" }}
                     activeStyle={{ borderBottom: "1px solid" }}
-                    to={`/${siteView.sitePath}/${item.name}`}
+                    to={`/${siteView.sitePath}/${item.original}`}
                   >
                     {item.name}
                   </NavLink>

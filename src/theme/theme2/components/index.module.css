@@ -61,21 +61,20 @@ h5 {
 
 .btn_signUp :hover {
   color: white;
-  width: 100%;
-  height: 100%;
-  position: absolute;
   transition-duration: 1s;
   background-color: #616161 !important;
 }
 
 .btn_signUp {
   margin-top: 5vh !important;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif !important;
-  font-weight: 700 !important;
-  height: 7vh;
-  width: 80%;
   background-color: white !important;
-  border-radius: 1vh !important;
+  padding: 0 !important;
+}
+
+.btn_content {
+  font-size: 3vh !important;
+  font-weight: 700 !important;
+  padding: 0.4rem 2rem;
 }
 
 .divider {

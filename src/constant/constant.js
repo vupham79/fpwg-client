@@ -32,36 +32,36 @@ export const themes = [
     id: "k5e520ab785bc282f048799ce",
     component: <Theme1 />,
     pages: [
-      { name: "Home", component: <PreHomePageT1 /> },
-      { name: "About", component: <PreAboutPageT1 /> },
-      { name: "Contact", component: <PreContactPageT1 /> },
-      { name: "Event", component: <PreEventPageT1 /> },
-      { name: "Gallery", component: <PreGalleryPageT1 /> },
-      { name: "News", component: <PreNewPageT1 /> }
+      { name: "home", component: <PreHomePageT1 /> },
+      { name: "about", component: <PreAboutPageT1 /> },
+      { name: "contact", component: <PreContactPageT1 /> },
+      { name: "event", component: <PreEventPageT1 /> },
+      { name: "gallery", component: <PreGalleryPageT1 /> },
+      { name: "news", component: <PreNewPageT1 /> }
     ]
   },
   {
     id: "5e50a9d494f9d83350f7398d",
     component: <Theme2 />,
     pages: [
-      { name: "Home", component: <PreHomePage /> },
-      { name: "About", component: <PreAboutPage /> },
-      { name: "Contact", component: <PreContactPage /> },
-      { name: "Event", component: <PreEventPage /> },
-      { name: "Gallery", component: <PreGalleryPage /> },
-      { name: "News", component: <PreNewPage /> }
+      { name: "home", component: <PreHomePage /> },
+      { name: "about", component: <PreAboutPage /> },
+      { name: "contact", component: <PreContactPage /> },
+      { name: "event", component: <PreEventPage /> },
+      { name: "gallery", component: <PreGalleryPage /> },
+      { name: "news", component: <PreNewPage /> }
     ]
   },
   {
     id: "z7e520ab785bc282f048799ce",
     component: <Theme4 />,
     pages: [
-      { name: "Home", component: <PreHomePageT4 /> },
-      { name: "About", component: <PreAboutPageT4 /> },
-      { name: "Contact", component: <PreContactPageT4 /> },
-      { name: "Event", component: <PreEventPageT4 /> },
-      { name: "Gallery", component: <PreGalleryPageT4 /> },
-      { name: "News", component: <PreNewPageT4 /> }
+      { name: "home", component: <PreHomePageT4 /> },
+      { name: "about", component: <PreAboutPageT4 /> },
+      { name: "contact", component: <PreContactPageT4 /> },
+      { name: "event", component: <PreEventPageT4 /> },
+      { name: "gallery", component: <PreGalleryPageT4 /> },
+      { name: "new", component: <PreNewPageT4 /> }
     ]
   }
 ];

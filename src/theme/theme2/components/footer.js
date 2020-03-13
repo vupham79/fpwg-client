@@ -200,7 +200,7 @@ class FooterPage extends Component {
                         ...bodyView,
                         color: "white"
                       }}
-                      to={`/${siteView.sitePath}/${item.name}`}
+                      to={`/${siteView.sitePath}/${item.original}`}
                     >
                       {item.name}
                     </Link>
@@ -228,7 +228,14 @@ class FooterPage extends Component {
             inputProps={{ "aria-label": "description" }}
           />
           <Button className={styles.btn_signUp} variant="outlined">
-            Sign UP
+            <Typography
+              align="center"
+              variant="h6"
+              className={styles.btn_content}
+              style={isEdit ? bodyEdit : bodyView}
+            >
+              Sign UP
+            </Typography>
           </Button>
         </Grid>
         <Divider className={styles.bot_divider} variant="middle" />
