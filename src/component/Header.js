@@ -5,7 +5,8 @@ import {
   Menu,
   MenuItem,
   Typography,
-  withStyles
+  withStyles,
+  IconButton
 } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
@@ -15,6 +16,8 @@ import { firebaseAppAuth } from "../utils/firebase";
 import styles from "./index.module.css";
 import Link from "./link";
 import toastr from "./Toastr";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const StyledMenu = withStyles({
   paper: {
@@ -102,11 +105,11 @@ class CustomNavBarEditor extends React.Component {
     const { setLogout } = this.props;
     firebaseAppAuth
       .signOut()
-      .then(function() {
+      .then(function () {
         setLogout();
         return <Redirect to="/" />;
       })
-      .catch(function(error) {
+      .catch(function (error) {
         toastr.error(`Logout failed: ${error}`, "Error");
       });
   };
@@ -139,15 +142,29 @@ class CustomNavBarEditor extends React.Component {
             justify="flex-end"
           >
             {isEdit && (
-              <Grid item sm={2} xs={12}>
-                <Button
-                  variant={"contained"}
-                  color={isPreview ? "primary" : "default"}
-                  onClick={() => this.handlePreview()}
-                >
-                  Preview
-                </Button>
-              </Grid>
+              <>
+                <Grid item sm={2} xs={12}>
+                  <IconButton
+                    aria-label=""
+                    color="primary"
+                    onClick={() => this.handlePreview()}
+                  >
+                    <FontAwesomeIcon icon={faEye} color={isPreview ? "blue" : "black"} size="1x" />
+                  </IconButton>
+                </Grid>
+                <Grid item sm={2} xs={12}>
+                  <a
+                    href="/preview"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Button color="primary" variant={"contained"}>
+                      Preview
+              </Button>
+                  </a>
+                </Grid>
+              </>
             )}
             <Grid container item sm={2} xs={12}>
               <ProfileMenu profile={profile} logout={this.logout} />

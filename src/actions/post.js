@@ -1,10 +1,10 @@
 import axios from "../utils/axios";
 
-export const setActivePost = posts => {
+export const setActivePost = (post, status) => {
   return dispatch => {
     dispatch({
       type: "SET_ACTIVE_POST",
-      payload: posts
+      payload: { post, status }
     });
   };
 };
