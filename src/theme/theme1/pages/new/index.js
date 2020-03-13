@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 class PreNewPage extends Component {
   componentDidMount() {
-    const { site, isEdit } = this.props;
+    const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
         const navItem = site.navItems.find(e => e.original === "news");
