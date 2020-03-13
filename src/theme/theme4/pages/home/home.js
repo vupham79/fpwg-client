@@ -244,7 +244,7 @@ class Theme1Home extends React.Component {
           <Divider style={{ color: "#d8d8d8" }} />
         </Grid>
 
-        <Grid item sm={12} xs={12} container style={{ height: 100 }}>
+        <Grid item sm={12} xs={12} container>
           {isEdit ? (
             posts ? (
               <Grid container>
