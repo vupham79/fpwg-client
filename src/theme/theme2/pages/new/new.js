@@ -6,7 +6,15 @@ import PostTypeComponent from "../../../component/postsType";
 
 class NewPage extends Component {
   render() {
-    const { isEdit, titleEdit, titleView, siteView, posts } = this.props;
+    const {
+      isEdit,
+      titleEdit,
+      titleView,
+      siteView,
+      posts,
+      bodyEdit,
+      bodyView
+    } = this.props;
     return (
       <Grid container justify="center" className={styles.news}>
         <Grid item sm={10} xs={10}>
@@ -30,7 +38,7 @@ class NewPage extends Component {
               </Grid>
             ) : (
               <Grid container justify="center">
-                <Typography variant="body1">
+                <Typography variant="body1" style={bodyEdit}>
                   You don't have any news.
                 </Typography>
               </Grid>
@@ -43,7 +51,9 @@ class NewPage extends Component {
             )
           ) : (
             <Grid container justify="center">
-              <Typography variant="body1">You don't have any news.</Typography>
+              <Typography variant="body1" style={bodyView}>
+                You don't have any news.
+              </Typography>
             </Grid>
           )}
         </Grid>
@@ -58,7 +68,9 @@ const mapStateToProps = state => ({
   titleView: state.site.titleView,
   titleEdit: state.site.titleEdit,
   siteView: state.site.siteView,
-  posts: state.post.posts
+  posts: state.post.posts,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView
 });
 
 export default connect(mapStateToProps, null)(NewPage);

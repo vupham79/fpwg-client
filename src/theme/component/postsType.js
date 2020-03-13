@@ -14,6 +14,7 @@ import {
 import FacebookIcon from "@material-ui/icons/Facebook";
 import React from "react";
 import ReactPlayer from "react-player";
+import { connect } from "react-redux";
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -76,7 +77,7 @@ const gridStyle = theme => ({
   }
 });
 
-function TypeAlbum({ post, openDialog }) {
+function TypeAlbum({ post, openDialog, style }) {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -100,10 +101,26 @@ function TypeAlbum({ post, openDialog }) {
           </CardMedia>
 
           <CardContent className={classes.cardContent}>
-            <Typography className={classes.title} gutterBottom variant="h6">
+            <Typography
+              className={classes.title}
+              gutterBottom
+              variant="h6"
+              style={
+                style && style.isEdit
+                  ? { fontFamily: style.titleEdit.fontFamily }
+                  : { fontFamily: style.titleView.fontFamily }
+              }
+            >
               {post.title}
             </Typography>
-            <Typography className={classes.message}>
+            <Typography
+              className={classes.message}
+              style={
+                style && style.isEdit
+                  ? style && style.bodyEdit
+                  : style && style.bodyView
+              }
+            >
               {post.message && post.message}
             </Typography>
           </CardContent>
@@ -127,7 +144,7 @@ function TypeAlbum({ post, openDialog }) {
   );
 }
 
-function TypePhoto({ post, openDialog }) {
+function TypePhoto({ post, openDialog, style }) {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -139,10 +156,26 @@ function TypePhoto({ post, openDialog }) {
             title="Image title"
           />
           <CardContent className={classes.cardContent}>
-            <Typography className={classes.title} gutterBottom variant="h6">
+            <Typography
+              className={classes.title}
+              gutterBottom
+              variant="h6"
+              style={
+                style && style.isEdit
+                  ? { fontFamily: style.titleEdit.fontFamily }
+                  : { fontFamily: style.titleView.fontFamily }
+              }
+            >
               {post.title}
             </Typography>
-            <Typography className={classes.message}>
+            <Typography
+              className={classes.message}
+              style={
+                style && style.isEdit
+                  ? style && style.bodyEdit
+                  : style && style.bodyView
+              }
+            >
               {post.message && post.message}
             </Typography>
           </CardContent>
@@ -166,7 +199,7 @@ function TypePhoto({ post, openDialog }) {
   );
 }
 
-function TypeVideo({ post, openDialog }) {
+function TypeVideo({ post, openDialog, style }) {
   const classes = useStyles();
   return (
     <React.Fragment>
@@ -180,10 +213,26 @@ function TypeVideo({ post, openDialog }) {
             height="50%"
           />
           <CardContent className={classes.cardContent}>
-            <Typography className={classes.title} gutterBottom variant="h6">
+            <Typography
+              className={classes.title}
+              gutterBottom
+              variant="h6"
+              style={
+                style && style.isEdit
+                  ? { fontFamily: style.titleEdit.fontFamily }
+                  : { fontFamily: style.titleView.fontFamily }
+              }
+            >
               {post.title}
             </Typography>
-            <Typography className={classes.message}>
+            <Typography
+              className={classes.message}
+              style={
+                style && style.isEdit
+                  ? style && style.bodyEdit
+                  : style && style.bodyView
+              }
+            >
               {post.message && post.message}
             </Typography>
           </CardContent>
@@ -238,8 +287,23 @@ class PostTypeComponent extends React.Component {
   };
 
   render() {
-    const { posts, classes } = this.props;
+    const {
+      posts,
+      classes,
+      isEdit,
+      titleEdit,
+      titleView,
+      bodyEdit,
+      bodyView
+    } = this.props;
     const post = this.state.postOpen;
+    const style = {
+      isEdit: isEdit,
+      titleEdit: titleEdit,
+      titleView: titleView,
+      bodyEdit: bodyEdit,
+      bodyView: bodyView
+    };
     return (
       <Container>
         <Grid
@@ -254,6 +318,7 @@ class PostTypeComponent extends React.Component {
                 <TypePhoto
                   key={index}
                   post={post}
+                  style={style}
                   openDialog={this.handleOpen}
                 />
               )) ||
@@ -261,6 +326,7 @@ class PostTypeComponent extends React.Component {
                 <TypeAlbum
                   key={index}
                   post={post}
+                  style={style}
                   openDialog={this.handleOpen}
                 />
               )) ||
@@ -268,6 +334,7 @@ class PostTypeComponent extends React.Component {
                 <TypeVideo
                   key={index}
                   post={post}
+                  style={style}
                   openDialog={this.handleOpenVideo}
                 />
               ))
@@ -297,12 +364,23 @@ class PostTypeComponent extends React.Component {
               </Grid>
               <Grid container className={classes.root} justify="center">
                 <Grid item xs={12} style={{ flexBasis: "unset" }}>
-                  <Typography variant="h5" color="textPrimary">
+                  <Typography
+                    variant="h5"
+                    color="textPrimary"
+                    style={
+                      isEdit
+                        ? { fontFamily: style.titleEdit.fontFamily }
+                        : { fontFamily: style.titleView.fontFamily }
+                    }
+                  >
                     {post && post.title}
                   </Typography>
                 </Grid>
                 <Grid item xs={12} style={{ flexBasis: "unset" }}>
-                  <Typography variant="body1">
+                  <Typography
+                    variant="body1"
+                    style={isEdit ? bodyEdit : bodyView}
+                  >
                     {post && post.message}
                   </Typography>
                 </Grid>
@@ -327,12 +405,23 @@ class PostTypeComponent extends React.Component {
               </Grid>
               <Grid container className={classes.root} justify="center">
                 <Grid item xs={12}>
-                  <Typography variant="h5" color="textPrimary">
+                  <Typography
+                    variant="h5"
+                    color="textPrimary"
+                    style={
+                      isEdit
+                        ? { fontFamily: style.titleEdit.fontFamily }
+                        : { fontFamily: style.titleView.fontFamily }
+                    }
+                  >
                     {post && post.title}
                   </Typography>
                 </Grid>
                 <Grid item xs={12}>
-                  <Typography variant="body1">
+                  <Typography
+                    variant="body1"
+                    style={isEdit ? bodyEdit : bodyView}
+                  >
                     {post && post.message}
                   </Typography>
                 </Grid>
@@ -344,5 +433,15 @@ class PostTypeComponent extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  isEdit: state.site.isEdit,
+  titleEdit: state.site.titleEdit,
+  bodyEdit: state.site.bodyEdit,
+  titleView: state.site.titleView,
+  bodyView: state.site.bodyView
+});
 
-export default withStyles(gridStyle)(PostTypeComponent);
+export default connect(
+  mapStateToProps,
+  null
+)(withStyles(gridStyle)(PostTypeComponent));

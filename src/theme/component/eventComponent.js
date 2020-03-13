@@ -80,7 +80,7 @@ class EventComponent extends React.Component {
             <Grid
               item
               sm={6}
-              xs={6}
+              xs={10}
               container
               justify="center"
               className={styles.event_body}
