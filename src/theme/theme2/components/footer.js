@@ -65,22 +65,56 @@ class FooterPage extends Component {
               <IconButton
                 aria-label=""
                 color="primary"
-                href={isEdit ? siteEdit.url : siteView.url}
+                href={
+                  isEdit ? siteEdit && siteEdit.url : siteView && siteView.url
+                }
               >
-                {siteEdit.url ? (
-                  <FontAwesomeIcon icon={faFacebookF} color="white" size="2x" />
-                ) : null}
+                {isEdit
+                  ? siteEdit &&
+                    siteEdit.url && (
+                      <FontAwesomeIcon
+                        icon={faFacebookF}
+                        color="white"
+                        size="2x"
+                      />
+                    )
+                  : siteView &&
+                    siteView.url && (
+                      <FontAwesomeIcon
+                        icon={faFacebookF}
+                        color="white"
+                        size="2x"
+                      />
+                    )}
               </IconButton>
             </Grid>
             <Grid item>
               <IconButton
                 aria-label=""
                 color="primary"
-                href={isEdit ? siteEdit.instagram : siteView.instagram}
+                href={
+                  isEdit
+                    ? siteEdit && siteEdit.instagram
+                    : siteView && siteView.instagram
+                }
               >
-                {siteEdit.instagram ? (
-                  <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />
-                ) : null}
+                {isEdit
+                  ? siteEdit &&
+                    siteEdit.instagram && (
+                      <FontAwesomeIcon
+                        icon={faInstagram}
+                        color="white"
+                        size="2x"
+                      />
+                    )
+                  : siteView &&
+                    siteView.instagram && (
+                      <FontAwesomeIcon
+                        icon={faInstagram}
+                        color="white"
+                        size="2x"
+                      />
+                    )}
               </IconButton>
             </Grid>
 
@@ -88,11 +122,29 @@ class FooterPage extends Component {
               <IconButton
                 aria-label=""
                 color="primary"
-                href={isEdit ? siteEdit.url : siteView.url}
+                href={
+                  isEdit
+                    ? siteEdit && siteEdit.youtube
+                    : siteView && siteView.youtube
+                }
               >
-                {siteEdit.youtube ? (
-                  <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />
-                ) : null}
+                {isEdit
+                  ? siteEdit &&
+                    siteEdit.youtube && (
+                      <FontAwesomeIcon
+                        icon={faYoutube}
+                        color="white"
+                        size="2x"
+                      />
+                    )
+                  : siteView &&
+                    siteView.youtube && (
+                      <FontAwesomeIcon
+                        icon={faYoutube}
+                        color="white"
+                        size="2x"
+                      />
+                    )}
               </IconButton>
             </Grid>
           </Grid>

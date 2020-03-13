@@ -15,7 +15,8 @@ const defaultState = {
   navItemIsActive: false,
   newLogo: null,
   newCover: [],
-  isPreview: false
+  isPreview: false,
+  isChanged: false
 };
 
 let index;
@@ -127,7 +128,8 @@ const SiteReducer = (state = defaultState, action) => {
     case "CHANGE_THEME":
       return {
         ...state,
-        siteEdit: { ...action.payload }
+        siteEdit: { ...action.payload },
+        isChanged: true
       };
     case "SET_LOGOUT":
       return {
