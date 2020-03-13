@@ -131,8 +131,7 @@ class ContactPage extends React.Component {
               fullWidth
             />
 
-            <div className={styles.btn_send}>
-              <Button>
+              <Button className={styles.btn_send}>
                 <Typography
                   align="center"
                   variant="h6"
@@ -142,7 +141,6 @@ class ContactPage extends React.Component {
                   Send Message
                 </Typography>
               </Button>
-            </div>
           </form>
         </Grid>
       </Grid>

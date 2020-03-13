@@ -224,6 +224,11 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         newCover: [...filter]
       };
+    case "CHANGE_NAV_ITEM_NAME":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
     default:
       return state;
   }

@@ -8,7 +8,7 @@ class PreHomePageT1 extends Component {
     const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
-        const navItem = site.navItems.find(e => e.name === "Home");
+        const navItem = site.navItems.find(e => e.original === "home");
         if (!navItem.isActive) {
           setNavItemInActive();
         } else {

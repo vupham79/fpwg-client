@@ -13,7 +13,7 @@ function TabItem({ pages, navItems, tabValue }) {
           (item, index) =>
             tabValue === index && (
               <Grid key={index}>
-                {pages.find(e => e.name === item.name).component}
+                {pages.find(e => e.name === item.original).component}
               </Grid>
             )
         )}

@@ -15,7 +15,8 @@ import {
   TableRow,
   Typography,
   withStyles,
-  DialogActions
+  DialogActions,
+  TextField
 } from "@material-ui/core";
 import { withStyles as withStylesStyle } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
@@ -40,7 +41,8 @@ import {
   setActiveNavItems,
   setActivePost,
   updateNavItemValue,
-  savePosts
+  savePosts,
+  changeNavItemName
 } from "../actions";
 
 const gridContainer = {
@@ -70,14 +72,13 @@ const gridItem = {
   borderWidth: 1.5,
   padding: "0.2rem 0.5rem",
   margin: "0.7rem",
-  zIndex: "99999999",
-  height: "3.5rem"
+  zIndex: "99999999"
 };
 
 const DragHandle = sortableHandle(() => <MenuIcon />);
 
-function handleChangeActive(item, site, setActiveNavItems, updateNavItemValue) {
-  const index = site.navItems.find(e => e._id === item._id);
+function handleChangeActive(id, site, setActiveNavItems, updateNavItemValue) {
+  const index = site && site.navItems && site.navItems.find(e => e._id === id);
   if (index.isActive) {
     index.isActive = false;
     updateNavItemValue(0);
@@ -87,22 +88,64 @@ function handleChangeActive(item, site, setActiveNavItems, updateNavItemValue) {
   setActiveNavItems(site);
 }
 
+function handleChangeNavName(id, site, newName, changeNavItemName) {
+  const index = site && site.navItems && site.navItems.find(e => e._id === id);
+  index.name = newName;
+  changeNavItemName(site);
+}
+
 const SortableItem = sortableElement(
-  ({ value, site, item, setActiveNavItems, updateNavItemValue }) => (
+  ({
+    value,
+    site,
+    item,
+    setActiveNavItems,
+    updateNavItemValue,
+    changeNavItemName
+  }) => (
     <Grid container style={gridItem}>
-      <Grid container item alignItems="center" xs={5}>
-        <DragHandle />
-        {value}
+      <Grid
+        container
+        item
+        alignItems="center"
+        xs={10}
+        sm={12}
+        md={10}
+        style={{ padding: "0.2rem 0" }}
+      >
+        <Grid container justify="center" item xs={2} md={2} sm={12}>
+          <DragHandle />
+        </Grid>
+        <Grid item xs={10} md={10} sm={12}>
+          <TextField
+            inputProps={{
+              style: {
+                padding: "0.5rem"
+              }
+            }}
+            fullWidth
+            variant={"outlined"}
+            value={value}
+            onChange={e =>
+              handleChangeNavName(
+                item._id,
+                site,
+                e.target.value,
+                changeNavItemName
+              )
+            }
+          />
+        </Grid>
       </Grid>
-      <Grid container item justify="flex-end" xs={7}>
-        {item.name === "Home" ? (
+      <Grid container item justify="center" xs={2} sm={12} md={2}>
+        {item.original === "home" ? (
           <></>
         ) : (
           <IconButton
             style={viewButton}
             onClick={() =>
               handleChangeActive(
-                item,
+                item._id,
                 site,
                 setActiveNavItems,
                 updateNavItemValue
@@ -122,7 +165,13 @@ const SortableItem = sortableElement(
 );
 
 const SortableList = sortableContainer(
-  ({ items, site, setActiveNavItems, updateNavItemValue }) => {
+  ({
+    items,
+    site,
+    setActiveNavItems,
+    updateNavItemValue,
+    changeNavItemName
+  }) => {
     if (items) {
       return (
         <Grid container style={gridContainer} alignItems="center">
@@ -135,6 +184,7 @@ const SortableList = sortableContainer(
               site={site}
               setActiveNavItems={setActiveNavItems}
               updateNavItemValue={updateNavItemValue}
+              changeNavItemName={changeNavItemName}
             />
           ))}
         </Grid>
@@ -331,7 +381,8 @@ class PagesEditorTab extends React.Component {
       closeDialog,
       updateNavItemValue,
       posts,
-      classes
+      classes,
+      changeNavItemName
     } = this.props;
 
     return (
@@ -348,6 +399,7 @@ class PagesEditorTab extends React.Component {
               site={site}
               setActiveNavItems={setActiveNavItems}
               updateNavItemValue={updateNavItemValue}
+              changeNavItemName={changeNavItemName}
             />
           </ExpansionPanelDetails>
         </ExpansionPanel>
@@ -428,7 +480,8 @@ const mapDispatchToProps = dispatch => ({
   closeDialog: () => dispatch(closeDialog()),
   setActivePost: (post, status) => dispatch(setActivePost(post, status)),
   updateNavItemValue: value => dispatch(updateNavItemValue(value)),
-  savePosts: posts => dispatch(savePosts(posts))
+  savePosts: posts => dispatch(savePosts(posts)),
+  changeNavItemName: site => dispatch(changeNavItemName(site))
 });
 
 export default connect(

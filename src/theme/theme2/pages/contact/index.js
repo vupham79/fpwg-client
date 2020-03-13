@@ -7,7 +7,7 @@ class PreContactPage extends Component {
     const { site, isEdit, setNavItemActive, setNavItemInActive } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
-        const navItem = site.navItems.find(e => e.name === "Contact");
+        const navItem = site.navItems.find(e => e.original === "contact");
         if (!navItem.isActive) {
           setNavItemInActive();
         } else {

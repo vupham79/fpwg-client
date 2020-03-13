@@ -670,3 +670,12 @@ export function setNavItemActive() {
     });
   };
 }
+
+export function changeNavItemName(site) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_NAV_ITEM_NAME",
+      payload: site
+    });
+  };
+}

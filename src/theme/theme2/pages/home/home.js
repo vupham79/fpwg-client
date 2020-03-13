@@ -15,10 +15,10 @@ class HomePage extends React.Component {
             siteEdit.navItems &&
             siteEdit.navItems.map(
               (item, index) =>
-                (item.name === "News" && item.isActive && (
+                (item.original === "news" && item.isActive && (
                   <New key={index} />
                 )) ||
-                (item.name === "Event" && item.isActive && (
+                (item.original === "event" && item.isActive && (
                   <EventPage key={index} />
                 ))
             )
@@ -26,10 +26,10 @@ class HomePage extends React.Component {
             siteView.navItems &&
             siteView.navItems.map(
               (item, index) =>
-                (item.name === "News" && item.isActive && (
+                (item.original === "news" && item.isActive && (
                   <New key={index} />
                 )) ||
-                (item.name === "Event" && item.isActive && (
+                (item.original === "event" && item.isActive && (
                   <EventPage key={index} />
                 ))
             )}
