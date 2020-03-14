@@ -61,7 +61,7 @@ export const themes = [
       { name: "contact", component: <PreContactPageT4 /> },
       { name: "event", component: <PreEventPageT4 /> },
       { name: "gallery", component: <PreGalleryPageT4 /> },
-      { name: "new", component: <PreNewPageT4 /> }
+      { name: "news", component: <PreNewPageT4 /> }
     ]
   }
 ];
