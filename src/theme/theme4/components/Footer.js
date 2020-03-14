@@ -17,8 +17,7 @@ class Footer extends React.Component {
       <Grid
         container
         style={{
-          backgroundColor: "white",
-          marginTop: 50,
+          backgroundColor: "black",
           height: 300,
           postion: "absolute",
           bottom: 0
@@ -74,7 +73,7 @@ class Footer extends React.Component {
         </Grid>
 
         <Grid item xs={12}>
-          <Divider style={{ color: "#d8d8d8" }} />
+          <Divider style={{ backgroundColor: "#1a1919" }} />
         </Grid>
 
         <Grid container item xs={12}>

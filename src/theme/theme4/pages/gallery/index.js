@@ -8,7 +8,7 @@ class PreGalleryPageT4 extends Component {
     const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
     if (site && !isEdit) {
       if (site.navItems) {
-        const navItem = site.navItems.find(e => e.name === "Gallery");
+        const navItem = site.navItems.find(e => e.original === "gallery");
         if (!navItem.isActive) {
           setNavItemInActive();
         } else {

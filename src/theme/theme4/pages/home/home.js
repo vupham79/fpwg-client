@@ -100,7 +100,7 @@ class Theme1Home extends React.Component {
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: "#212121",
+        color: "#b3b2b2",
         textAlign: "center",
         fontSize: 45,
         paddingBottom: 20
@@ -108,7 +108,7 @@ class Theme1Home extends React.Component {
       changableTitle2: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: "#212121",
+        color: "#b3b2b2",
         textAlign: "center",
         fontSize: 20,
         paddingBottom: 20
@@ -134,14 +134,14 @@ class Theme1Home extends React.Component {
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "black",
+        color: "#b3b2b2",
         textAlign: "center",
         fontSize: 19,
         fontWeight: 300,
       },
       changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "black",
+        color: "#b3b2b2",
         textAlign: "center",
         fontSize: 16
       },
@@ -219,10 +219,10 @@ class Theme1Home extends React.Component {
 
     return (
 
-      <Grid container>
+      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 100 }}>
 
         <Grid item xs={12}>
-          <Slider autoplay>{this.renderNewCovers()}</Slider>
+          <Slider fade speed={2000} autoplay>{this.renderNewCovers()}</Slider>
         </Grid>
 
         {/* <Grid item xs={12}>
@@ -231,7 +231,7 @@ class Theme1Home extends React.Component {
           </p>
         </Grid> */}
 
-        <Grid item xs={12} style={{ height: 200, paddingTop: 50 }}>
+        <Grid item xs={12} style={{ minHeight: 200, paddingTop: 50 }}>
           <p style={classes.changableBody3}>
             {isEdit && siteEdit && siteEdit.about}
             {!isEdit && siteView && siteView.about}
@@ -241,10 +241,10 @@ class Theme1Home extends React.Component {
         </Grid>
 
         <Grid item xs={12}>
-          <Divider style={{ color: "#d8d8d8" }} />
+          <Divider style={{ backgroundColor: "#b3b2b2" }} />
         </Grid>
 
-        <Grid item sm={12} xs={12} container>
+        <Grid item sm={12} xs={12} container style={{ minHeight: 200, backgroundColor: "white" }}>
           {isEdit ? (
             posts ? (
               <Grid container>

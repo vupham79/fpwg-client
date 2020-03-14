@@ -51,17 +51,18 @@ class Theme1Home extends React.Component {
       if (newCover && newCover.length > 0) {
         return newCover.map((cover, index) => {
           if (cover && typeof cover === "object" && cover.size > 0) {
-            return <img src={URL.createObjectURL(cover)} alt="" key={index} />;
-          } else return <img src={cover} alt="" key={index} />;
+            return <div style={{ height: 400, overflow: "hidden" }}><img src={URL.createObjectURL(cover)} alt="" key={index} /></div>;
+          } else return <div style={{ height: 400, overflow: "hidden" }}><img src={cover} alt="" key={index} /></div>;
         });
       }
     } else {
       if (siteView.cover && siteView.cover.length > 0) {
         return siteView.cover.map((cover, i) => (
-          <img src={cover} alt="" key={i} />
+          <div style={{ height: 400, overflow: "hidden" }}><img src={cover} alt="" key={i} /></div>
         ));
       }
     }
+    //mỗi img phải bọc div để component carousel phân biệt chia slide
   };
   render() {
     const {
@@ -229,9 +230,9 @@ class Theme1Home extends React.Component {
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Slider autoplay centerMode>
+          <Carousel autoPlay infiniteLoop centerMode={false} showArrows={false} showIndicators={true} dynamicHeight={false} showStatus={false} showThumbs={false}>
             {this.renderNewCovers()}
-          </Slider>
+          </Carousel>
         </Grid>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
@@ -283,9 +284,9 @@ class Theme1Home extends React.Component {
               showIndicators={false}
               showStatus={false}
               showThumbs={false}
-              autoPlay={false}
+              autoPlay={true}
               stopOnHover={true}
-              infiniteLoop={false}
+              infiniteLoop={true}
             >
               {posts &&
                 posts.slice(0, 5).map(row => (
@@ -340,40 +341,7 @@ class Theme1Home extends React.Component {
             </Carousel>
           </Grid>
         )}
-        <Grid item xs={12}>
-          <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>G</span>ALLERY
-          </p>
-        </Grid>
-        {isEdit && !siteEdit.galleries && (
-          <Grid item xs={12}>
-            <p style={classes.changableBody4}>Currently there are no images.</p>
-          </Grid>
-        )}
-        {!isEdit && !siteView.galleries && (
-          <Grid item xs={12}>
-            <p style={classes.changableBody4}>Currently there are no images.</p>
-          </Grid>
-        )}
-        {isEdit ? (
-          <GalleryComponent galleries={siteEdit.galleries} />
-        ) : (
-            <GalleryComponent galleries={siteView.galleries} />
-          )}
-        <div style={{ height: 100, width: "100%" }} />
-        <Grid item xs={12}>
-          <Parallax
-            blur={0}
-            bgImage={
-              isEdit
-                ? siteEdit.cover && siteEdit.cover[0]
-                : siteView.cover && siteView.cover[0]
-            }
-            bgImageAlt="./images/theme1-banner2.jpg"
-            strength={300}
-            style={{ height: "30vh", width: "100%" }}
-          />
-        </Grid>
+
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
             <span style={classes.changableFirst}>E</span>VENTS

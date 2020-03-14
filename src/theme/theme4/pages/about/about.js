@@ -41,7 +41,7 @@ class Theme1About extends React.Component {
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#5e5e5e",
+        color: "#b3b2b2",
         textAlign: "left",
         fontSize: 16
       },
@@ -111,7 +111,7 @@ class Theme1About extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container>
+      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50 }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>ABOUT</p>
         </Grid>
