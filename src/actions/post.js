@@ -19,7 +19,6 @@ export const getAllPost = posts => {
 };
 
 export const savePosts = posts => {
-  console.log(posts);
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -27,7 +26,7 @@ export const savePosts = posts => {
     try {
       const data = await axios({
         method: "PATCH",
-        url: "site/activePost",
+        url: "posts/activePosts",
         data: {
           posts: posts
         }

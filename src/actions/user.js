@@ -118,7 +118,7 @@ export function getUserPages() {
         type: "SHOW_LOADING"
       });
       const data = await axios({
-        url: "/facebook/pages"
+        url: "/user/pages"
       });
       dispatch({
         type: "CLOSE_LOADING"
