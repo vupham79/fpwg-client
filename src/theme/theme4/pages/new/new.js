@@ -121,38 +121,39 @@ class Theme1News extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container>
+      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50 }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle5}>
             NEWS
           </p>
         </Grid>
-        <Grid item sm={12} xs={12} container spacing={3}>
-          {isEdit ? (
-            posts ? (
-              <Grid container>
-                <PostTypeComponent posts={posts} />
-              </Grid>
-            ) : (
-                <Grid container justify="center">
-                  <Typography variant="body1">
-                    You don't have any news.
+        <Grid item sm={12} xs={12} container spacing={3} style={{ backgroundColor: "white" }} >
+          {
+            isEdit ? (
+              posts ? (
+                <Grid container>
+                  <PostTypeComponent posts={posts} />
+                </Grid>
+              ) : (
+                  <Grid container justify="center">
+                    <Typography variant="body1">
+                      You don't have any news.
                 </Typography>
+                  </Grid>
+                )
+            ) : siteView ? (
+              siteView.posts && (
+                <Grid container>
+                  <PostTypeComponent posts={siteView.posts} />
                 </Grid>
               )
-          ) : siteView ? (
-            siteView.posts && (
-              <Grid container>
-                <PostTypeComponent posts={siteView.posts} />
-              </Grid>
-            )
-          ) : (
-                <Grid container justify="center">
-                  <Typography variant="body1">You don't have any news.</Typography>
-                </Grid>
-              )}
+            ) : (
+                  <Grid container justify="center">
+                    <Typography variant="body1">You don't have any news.</Typography>
+                  </Grid>
+                )}
         </Grid>
-      </Grid>
+      </Grid >
     );
   }
 }

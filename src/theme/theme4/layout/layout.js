@@ -43,7 +43,7 @@ class Layout extends Component {
 
     return (
       <>
-        <HeaderComponent navPos={"right"} displayImg={true} />
+        <HeaderComponent navPos={"right"} displayImg={false} navColor={"#b3b2b2"} headerColor="#1a1919" />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
       </>
