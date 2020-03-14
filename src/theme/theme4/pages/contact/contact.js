@@ -38,7 +38,7 @@ class Theme1Contact extends React.Component {
       },
       changableBody2: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
-        color: "#212121",
+        color: "#b3b2b2",
         textAlign: "center",
         fontSize: 16,
         fontWeight: 400
@@ -110,7 +110,7 @@ class Theme1Contact extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container>
+      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50 }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>CONTACTS</p>
         </Grid>
