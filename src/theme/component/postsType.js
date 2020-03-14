@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    height: "22rem"
+    height: "22rem",
   },
   message: {
     overflow: "hidden",
@@ -43,9 +43,9 @@ const useStyles = makeStyles(theme => ({
   },
   cardMedia: {
     height: "10rem",
-    backgroundSize: "contain",
     backgroundPosition: "center",
-    backgroundRepeat: "no-repeat"
+    backgroundRepeat: "no-repeat",
+    overflow: "hidden"
   },
   album: {
     height: "10rem",
