@@ -162,7 +162,7 @@ class HeaderComponent extends Component {
                 }}
               >
                 <NavLink
-                  style={{ ...titleView, textDecoration: "none" }}
+                  style={{ ...titleView, textDecoration: "none", color: this.props.navColor, backgroundColor: this.props.headerColor }}
                   activeStyle={{ borderBottom: "1px solid" }}
                   to={`/${siteView.sitePath}/${item.original}`}
                 >
