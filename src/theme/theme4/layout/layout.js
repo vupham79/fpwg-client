@@ -6,6 +6,7 @@ import { Grid } from "@material-ui/core";
 import { themes as themesConstant } from "../../../constant/constant";
 
 function TabItem({ pages, navItems, tabValue }) {
+  console.log(pages, tabValue);
   return (
     <>
       {navItems &&
