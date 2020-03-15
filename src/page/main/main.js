@@ -109,6 +109,7 @@ class MainPage extends Component {
 
   renderPagesNotGenerated = () => {
     const { pages, sites } = this.props;
+    const { pageUrl, sitepath, isPublish, tab } = this.state;
     let nonGenerated = pages.map(page => page.id);
     let index = -1;
     sites.forEach(site => {
@@ -121,24 +122,64 @@ class MainPage extends Component {
       return pages.map(page => {
         return (
           nonGenerated.includes(page.id) && (
-            <ListItem
-              button
-              onClick={() =>
-                this.handleSelectPage({
-                  id: page.id,
-                  link: page.link,
-                  name: page.name
-                })
-              }
-              key={page.id}
-            >
-              <ListItemAvatar>
-                <Avatar>
-                  <img src={page.picture.data.url} alt="" />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={page.name} secondary={page.category} />
-            </ListItem>
+            <>
+              <ListItem
+                button
+                onClick={() =>
+                  this.handleSelectPage({
+                    id: page.id,
+                    link: page.link,
+                    name: page.name
+                  })
+                }
+                key={page.id}
+              >
+                <ListItemAvatar>
+                  <Avatar>
+                    <img src={page.picture.data.url} alt="" />
+                  </Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={page.name} secondary={page.category} />
+              </ListItem>
+              <ListItem>
+                <TextField
+                  variant={"outlined"}
+                  fullWidth
+                  error={this.state.sitepathError}
+                  required
+                  label="Sitepath"
+                  onChange={e => this.handleChangeSitepath(e)}
+                  inputProps={{ maxLength: 30 }}
+                  value={sitepath ? sitepath : ""}
+                />
+                <SwitchButton
+                  isPublish={isPublish}
+                  style={{ marginLeft: 0 }}
+                  onChange={() => this.setState({ isPublish: !isPublish })}
+                />
+              </ListItem>
+              <ListItem>
+                <TextField
+                  fullWidth
+                  required
+                  error={this.state.pageUrlError}
+                  variant={"outlined"}
+                  label="Facebook Page Url"
+                  disabled
+                  onChange={e => this.handleChangeURL(e)}
+                  value={pageUrl ? pageUrl : ""}
+                />
+              </ListItem>
+              <ListItem>
+                <Button
+                  variant={"outlined"}
+                  onClick={() => this.handleConfirm()}
+                  fullWidth
+                >
+                  Confirm
+                </Button>
+              </ListItem>
+            </>
           )
         );
       });
@@ -152,7 +193,7 @@ class MainPage extends Component {
           </Grid>
           <Grid item xs={6}>
             <a
-              href="https://www.facebook.com/pages/create"
+              href="https://www.facebook.com/pages/create/?ref_type=pages_browser"
               rel="noopener noreferrer"
               target="_blank"
               style={{ textDecoration: "none" }}
@@ -179,7 +220,7 @@ class MainPage extends Component {
 
   render() {
     const { closeDialog, openDialog, open } = this.props;
-    const { pageUrl, sitepath, isPublish, tab } = this.state;
+    const { tab } = this.state;
     return (
       <>
         <Header />
@@ -237,49 +278,7 @@ class MainPage extends Component {
                     maxWidth="xs"
                     fullWidth
                   >
-                    <List>
-                      {this.renderPagesNotGenerated()}
-                      <ListItem>
-                        <TextField
-                          variant={"outlined"}
-                          fullWidth
-                          error={this.state.sitepathError}
-                          required
-                          label="Sitepath"
-                          onChange={e => this.handleChangeSitepath(e)}
-                          inputProps={{ maxLength: 30 }}
-                          value={sitepath ? sitepath : ""}
-                        />
-                        <SwitchButton
-                          isPublish={isPublish}
-                          style={{ marginLeft: 0 }}
-                          onChange={() =>
-                            this.setState({ isPublish: !isPublish })
-                          }
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <TextField
-                          fullWidth
-                          required
-                          error={this.state.pageUrlError}
-                          variant={"outlined"}
-                          label="Facebook Page Url"
-                          disabled
-                          onChange={e => this.handleChangeURL(e)}
-                          value={pageUrl ? pageUrl : ""}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <Button
-                          variant={"outlined"}
-                          onClick={() => this.handleConfirm()}
-                          fullWidth
-                        >
-                          Confirm
-                        </Button>
-                      </ListItem>
-                    </List>
+                    <List>{this.renderPagesNotGenerated()}</List>
                   </Dialog>
                 </Grid>
               </Grid>
