@@ -25,6 +25,9 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     height: "22rem",
+    "&:hover": {
+      border: style => "1.5px solid" + style.color
+    }
   },
   message: {
     overflow: "hidden",
@@ -39,12 +42,13 @@ const useStyles = makeStyles(theme => ({
   cardMediaAlbum: {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-    backgroundSize: "cover"
+    backgroundSize: "contain"
   },
   cardMedia: {
     height: "10rem",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
+    backgroundSize: "contain",
     overflow: "hidden"
   },
   album: {
@@ -57,6 +61,15 @@ const useStyles = makeStyles(theme => ({
   },
   gridItems: {
     maxHeight: 350
+  },
+  btnReadMore: {
+    border: style => "1.5px solid" + style.color,
+    color: style => style.color,
+    "&:hover": {
+      border: style => "1.5px solid" + style.color,
+      color: "white",
+      background: style => style.color
+    }
   }
 }));
 
@@ -78,7 +91,9 @@ const gridStyle = theme => ({
 });
 
 function TypeAlbum({ post, openDialog, style }) {
-  const classes = useStyles();
+  const classes = useStyles(
+    style && style.isEdit ? style.titleEdit : style.titleView
+  );
   return (
     <React.Fragment>
       <Grid item xs={12} sm={6} md={3}>
@@ -126,6 +141,7 @@ function TypeAlbum({ post, openDialog, style }) {
           </CardContent>
           <CardActions style={{ paddingLeft: "1rem" }}>
             <Button
+              className={classes.btnReadMore}
               variant="outlined"
               color="primary"
               onClick={() => openDialog(post)}
@@ -145,7 +161,9 @@ function TypeAlbum({ post, openDialog, style }) {
 }
 
 function TypePhoto({ post, openDialog, style }) {
-  const classes = useStyles();
+  const classes = useStyles(
+    style && style.isEdit ? style.titleEdit : style.titleView
+  );
   return (
     <React.Fragment>
       <Grid item xs={12} sm={6} md={3}>
@@ -181,6 +199,7 @@ function TypePhoto({ post, openDialog, style }) {
           </CardContent>
           <CardActions style={{ paddingLeft: "1rem" }}>
             <Button
+              className={classes.btnReadMore}
               variant="outlined"
               color="primary"
               onClick={() => openDialog(post)}
@@ -200,7 +219,9 @@ function TypePhoto({ post, openDialog, style }) {
 }
 
 function TypeVideo({ post, openDialog, style }) {
-  const classes = useStyles();
+  const classes = useStyles(
+    style && style.isEdit ? style.titleEdit : style.titleView
+  );
   return (
     <React.Fragment>
       {/* 'https://www.facebook.com/Indiegogo/videos/484114395557572/UzpfSTMzMzY2NzUwNjczMTk0NzoyNzYzMDQxNjQwNDYxMTc2/' */}
@@ -238,6 +259,8 @@ function TypeVideo({ post, openDialog, style }) {
           </CardContent>
           <CardActions style={{ paddingLeft: "1rem" }}>
             <Button
+              color="primary"
+              className={classes.btnReadMore}
               variant="outlined"
               color="primary"
               onClick={() => openDialog(post)}
