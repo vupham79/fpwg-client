@@ -1,4 +1,8 @@
-import { faAddressBook, faPhone, faMailBulk } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAddressBook,
+  faPhone,
+  faMailBulk
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Grid } from "@material-ui/core";
 import React from "react";
@@ -51,14 +55,25 @@ class Theme1Home extends React.Component {
       if (newCover && newCover.length > 0) {
         return newCover.map((cover, index) => {
           if (cover && typeof cover === "object" && cover.size > 0) {
-            return <div style={{ height: 400, overflow: "hidden" }}><img src={URL.createObjectURL(cover)} alt="" key={index} /></div>;
-          } else return <div style={{ height: 400, overflow: "hidden" }}><img src={cover} alt="" key={index} /></div>;
+            return (
+              <div key={index} style={{ height: 400, overflow: "hidden" }}>
+                <img src={URL.createObjectURL(cover)} alt="" key={index} />
+              </div>
+            );
+          } else
+            return (
+              <div key={index} style={{ height: 400, overflow: "hidden" }}>
+                <img src={cover} alt="" key={index} />
+              </div>
+            );
         });
       }
     } else {
       if (siteView.cover && siteView.cover.length > 0) {
         return siteView.cover.map((cover, i) => (
-          <div style={{ height: 400, overflow: "hidden" }}><img src={cover} alt="" key={i} /></div>
+          <div style={{ height: 400, overflow: "hidden" }}>
+            <img src={cover} alt="" key={i} />
+          </div>
         ));
       }
     }
@@ -230,7 +245,16 @@ class Theme1Home extends React.Component {
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Carousel autoPlay infiniteLoop centerMode={false} showArrows={false} showIndicators={true} dynamicHeight={false} showStatus={false} showThumbs={false}>
+          <Carousel
+            autoPlay
+            infiniteLoop
+            centerMode={false}
+            showArrows={false}
+            showIndicators={true}
+            dynamicHeight={false}
+            showStatus={false}
+            showThumbs={false}
+          >
             {this.renderNewCovers()}
           </Carousel>
         </Grid>
@@ -255,16 +279,16 @@ class Theme1Home extends React.Component {
           {!isEdit && !siteView && (
             <p style={classes.changableBody3}>Welcome!</p>
           )}
-          <p style={classes.changableBody3}>
-            {isEdit && siteEdit && siteEdit.about}
-            {!isEdit && siteView && siteView.about}
-            {isEdit && !siteEdit.about && (
-              <p style={classes.changableBody4}>Welcome to our website!</p>
-            )}
-            {!isEdit && !siteView.about && (
-              <p style={classes.changableBody4}>Welcome to our website!</p>
-            )}
-          </p>
+          {/* <p style={classes.changableBody3}> */}
+          {isEdit && siteEdit && siteEdit.about}
+          {!isEdit && siteView && siteView.about}
+          {isEdit && !siteEdit.about && (
+            <p style={classes.changableBody4}>Welcome to our website!</p>
+          )}
+          {!isEdit && !siteView.about && (
+            <p style={classes.changableBody4}>Welcome to our website!</p>
+          )}
+          {/* </p> */}
         </Grid>
         <Grid item xs={12} style={classes.greyDiv}>
           <p style={classes.changableTitle}>
@@ -425,18 +449,23 @@ class Theme1Home extends React.Component {
               mapElement={<div style={{ height: `100%` }} />}
             />
           )}
-          {isEdit && !siteEdit.phone && !siteEdit.address && !siteEdit.email && (
-            <p style={classes.changableBody3}>
-              Currently setting up our location.
-            </p>
-          )}
-          {!isEdit && !siteView.phone && !siteView.address && !siteView.email && (
-            <p style={classes.changableBody3}>
-              Currently setting up our location.
-            </p>
-          )}
+          {isEdit &&
+            !siteEdit.phone &&
+            !siteEdit.address &&
+            !siteEdit.email && (
+              <p style={classes.changableBody3}>
+                Currently setting up our location.
+              </p>
+            )}
+          {!isEdit &&
+            !siteView.phone &&
+            !siteView.address &&
+            !siteView.email && (
+              <p style={classes.changableBody3}>
+                Currently setting up our location.
+              </p>
+            )}
         </Grid>
-
       </Grid>
     );
   }

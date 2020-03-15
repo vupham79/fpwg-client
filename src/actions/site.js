@@ -297,7 +297,8 @@ export function saveDesignSite({ logo, cover, site }) {
           email: site.email,
           youtube: site.youtube,
           instagram: site.instagram,
-          whatsapp: site.whatsapp
+          whatsapp: site.whatsapp,
+          phone: site.phone
         }
       });
       dispatch({

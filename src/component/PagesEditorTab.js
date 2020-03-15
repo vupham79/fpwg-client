@@ -316,7 +316,10 @@ class PagesEditorTab extends React.Component {
   };
 
   componentDidMount() {
-    this.setPosts();
+    const { posts } = this.props;
+    if (posts) {
+      this.setPosts();
+    }
   }
 
   setStatePost = posts => {

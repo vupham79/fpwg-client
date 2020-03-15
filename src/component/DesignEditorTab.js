@@ -338,25 +338,17 @@ class DesignEditorTab extends React.Component {
               style={{ ...imgStyles, width: "auto" }}
               alt=""
               id={"preview"}
-              hidden
               src={site.logo}
             />
           </Grid>
-          <Grid container item>
-            <Grid item sm={5}>
-              <Button
-                variant={"contained"}
-                color={"default"}
-                onClick={() => document.getElementById("selectedFile").click()}
-              >
-                Browse
-              </Button>
-            </Grid>
-            <Grid item sm={5}>
-              <Typography variant={"caption"}>
-                {this.state.logo.substring(0, 50)}
-              </Typography>
-            </Grid>
+          <Grid container justify={"center"}>
+            <Button
+              variant={"contained"}
+              color={"default"}
+              onClick={() => document.getElementById("selectedFile").click()}
+            >
+              Browse
+            </Button>
           </Grid>
         </Grid>
         <Divider
