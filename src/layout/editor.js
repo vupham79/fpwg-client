@@ -11,21 +11,19 @@ class EditLayout extends Component {
         <Header />
         <Grid container>
           {!this.props.isPreview && (
-
             <Grid item sm={3} xs={12}>
               <SiteBarEditor />
             </Grid>
           )}
           {this.props.isPreview ? (
-
             <Grid item sm={12} xs={12}>
               {this.props.children}
             </Grid>
           ) : (
-              <Grid item sm={9} xs={12}>
-                {this.props.children}
-              </Grid>
-            )}
+            <Grid item sm={9} xs={12}>
+              {this.props.children}
+            </Grid>
+          )}
         </Grid>
       </>
     );
@@ -33,13 +31,9 @@ class EditLayout extends Component {
 }
 
 const mapStateToProps = state => ({
-  isPreview: state.site.isPreview,
+  isPreview: state.site.isPreview
 });
 
-const mapDispatchToProps = dispatch => ({
-});
+const mapDispatchToProps = dispatch => ({});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EditLayout);
+export default connect(mapStateToProps, mapDispatchToProps)(EditLayout);

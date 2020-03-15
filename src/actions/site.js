@@ -280,9 +280,7 @@ export function saveDesignSite({ logo, cover, site }) {
       if (logo && typeof logo === "object" && logo.size > 0) {
         dispatch(uploadLogo(logo, site));
       }
-      if (cover && cover.length > 0) {
-        dispatch(uploadCover(cover, site));
-      }
+      dispatch(uploadCover(cover, site));
       const data = await axios({
         method: "patch",
         url: "/site/saveDesign",
@@ -493,35 +491,39 @@ export function uploadCover(covers, site) {
     });
     try {
       let coversUrl = [];
-      for (let index = 0; index < covers.length; index++) {
-        if (typeof covers[index] === "string") {
-          coversUrl.push(covers[index]);
-        } else {
-          await firebase
-            .storage()
-            .ref(`${site.id}/`)
-            .child(covers[index].name)
-            .put(covers[index], {
-              contentType: "image/jpeg"
-            })
-            .then(async () => {
-              await firebase
-                .storage()
-                .ref(`${site.id}/`)
-                .child(covers[index].name)
-                .getDownloadURL()
-                .then(async url => {
-                  coversUrl.push(url);
+      if (covers && covers.length > 0) {
+        for (let index = 0; index < covers.length; index++) {
+          if (typeof covers[index] === "string") {
+            coversUrl.push(covers[index]);
+          } else {
+            await firebase
+              .storage()
+              .ref(`${site.id}/`)
+              .child(covers[index].name)
+              .put(covers[index], {
+                contentType: "image/jpeg"
+              })
+              .then(async () => {
+                await firebase
+                  .storage()
+                  .ref(`${site.id}/`)
+                  .child(covers[index].name)
+                  .getDownloadURL()
+                  .then(async url => {
+                    coversUrl.push(url);
+                  });
+              })
+              .catch(error => {
+                console.log("upload: ", error);
+                dispatch({
+                  type: "CLOSE_LOADING"
                 });
-            })
-            .catch(error => {
-              console.log("upload: ", error);
-              dispatch({
-                type: "CLOSE_LOADING"
+                toastr.error(`Upload cover failed`, "Error");
               });
-              toastr.error(`Upload cover failed`, "Error");
-            });
+          }
         }
+      } else {
+        coversUrl = null;
       }
       await axios({
         method: "PATCH",

@@ -7,7 +7,11 @@ import {
   faYoutube,
   faWhatsapp
 } from "@fortawesome/free-brands-svg-icons";
-import { faPhoneAlt, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPhoneAlt,
+  faEnvelope,
+  faLink
+} from "@fortawesome/free-solid-svg-icons";
 import { changeSiteLinks } from "../actions";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -53,6 +57,12 @@ class SettingEditorTab extends React.Component {
   handleChangePhone = e => {
     const { site, changeSiteLinks } = this.props;
     site.phone = e.target.value;
+    changeSiteLinks(site);
+  };
+
+  handleChangeSitepath = e => {
+    const { site, changeSiteLinks } = this.props;
+    site.sitePath = e.target.value;
     changeSiteLinks(site);
   };
 
@@ -248,6 +258,40 @@ class SettingEditorTab extends React.Component {
               fullWidth
               value={site.phone ? site.phone : ""}
               onChange={e => this.handleChangePhone(e)}
+              InputLabelProps={{
+                classes: {
+                  focused: classes.focused
+                }
+              }}
+              InputProps={{
+                classes: {
+                  notchedOutline: classes.notchedOutline
+                }
+              }}
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          item
+          direction="row"
+          justify="center"
+          alignItems="center"
+          xs={12}
+          style={{ marginTop: 10 }}
+        >
+          <Grid item xs={2}>
+            <FontAwesomeIcon icon={faLink} size="2x" />
+          </Grid>
+          <Grid item xs={8}>
+            <TextField
+              variant="outlined"
+              label="Sitepath"
+              size="small"
+              inputMode={"url"}
+              fullWidth
+              value={site.sitePath ? site.sitePath : ""}
+              onChange={e => this.handleChangeSitepath(e)}
               InputLabelProps={{
                 classes: {
                   focused: classes.focused

@@ -262,7 +262,6 @@ function TypeVideo({ post, openDialog, style }) {
               color="primary"
               className={classes.btnReadMore}
               variant="outlined"
-              color="primary"
               onClick={() => openDialog(post)}
             >
               Read More

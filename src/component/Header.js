@@ -5,9 +5,9 @@ import {
   Menu,
   MenuItem,
   Typography,
-  withStyles,
-  IconButton
+  withStyles
 } from "@material-ui/core";
+import { Computer } from "@material-ui/icons";
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
@@ -16,8 +16,6 @@ import { firebaseAppAuth } from "../utils/firebase";
 import styles from "./index.module.css";
 import Link from "./link";
 import toastr from "./Toastr";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const StyledMenu = withStyles({
   paper: {
@@ -105,17 +103,17 @@ class CustomNavBarEditor extends React.Component {
     const { setLogout } = this.props;
     firebaseAppAuth
       .signOut()
-      .then(function () {
+      .then(function() {
         setLogout();
         return <Redirect to="/" />;
       })
-      .catch(function (error) {
+      .catch(function(error) {
         toastr.error(`Logout failed: ${error}`, "Error");
       });
   };
 
   render() {
-    const { imgUrl, profile, isEdit, isPreview } = this.props;
+    const { imgUrl, profile, isEdit } = this.props;
     return (
       <Container maxWidth={"xl"} className={styles.header}>
         <Grid container item justify="space-between">
@@ -144,24 +142,15 @@ class CustomNavBarEditor extends React.Component {
             {isEdit && (
               <>
                 <Grid item sm={2} xs={12}>
-                  <IconButton
-                    aria-label=""
-                    color="primary"
-                    onClick={() => this.handlePreview()}
-                  >
-                    <FontAwesomeIcon icon={faEye} color={isPreview ? "blue" : "black"} size="1x" />
-                  </IconButton>
-                </Grid>
-                <Grid item sm={2} xs={12}>
                   <a
                     href="/preview"
                     rel="noopener noreferrer"
                     target="_blank"
                     style={{ textDecoration: "none" }}
                   >
-                    <Button color="primary" variant={"contained"}>
+                    <Button variant={"contained"} startIcon={<Computer />}>
                       Preview
-              </Button>
+                    </Button>
                   </a>
                 </Grid>
               </>

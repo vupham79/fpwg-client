@@ -5,11 +5,24 @@ import EventPage from "../../pages/event";
 import { connect } from "react-redux";
 
 class HomePage extends React.Component {
+  renderCarousel = () => {
+    const { isEdit, covers, siteView } = this.props;
+    if (isEdit) {
+      if (covers && covers.length > 0) {
+        return <CarouselImages />;
+      }
+    } else {
+      if (siteView.cover && siteView.cover.length > 0) {
+        return <CarouselImages />;
+      }
+    }
+    return <></>;
+  };
   render() {
     const { siteEdit, siteView, isEdit } = this.props;
     return (
       <>
-        <CarouselImages />
+        {this.renderCarousel()}
         {isEdit
           ? siteEdit &&
             siteEdit.navItems &&
@@ -40,7 +53,8 @@ class HomePage extends React.Component {
 const mapStateToProps = state => ({
   siteView: state.site.siteView,
   isEdit: state.site.isEdit,
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  covers: state.site.newCover
 });
 
 export default connect(mapStateToProps, null)(HomePage);

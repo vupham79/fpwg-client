@@ -3,11 +3,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./index.module.css";
 import Slider from "react-slick";
-const imgUrl = [
-  "https://s3.amazonaws.com/pv-featured-images/restaurant-cafe/coffee-918926_1920.jpg",
-  "https://s3.amazonaws.com/pv-featured-images/restaurant-cafe/cover-1589426_1920.jpg",
-  "https://s3.amazonaws.com/pv-featured-images/restaurant-cafe/alcohol-1869282_1920.jpg"
-];
 
 class CarouselImages extends Component {
   constructor(props) {
@@ -31,9 +26,6 @@ class CarouselImages extends Component {
           <img src={cover} alt="" key={i} />
         ));
       }
-    }
-    if (newCover && newCover.length <= 0) {
-      return imgUrl.map((url, i) => <img src={url} alt="" key={i} />);
     }
   };
   render() {

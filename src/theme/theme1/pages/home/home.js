@@ -1,10 +1,11 @@
 import {
   faAddressBook,
-  faPhone,
-  faMailBulk
+  faMailBulk,
+  faPhone
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Grid } from "@material-ui/core";
+import moment from "moment";
 import React from "react";
 import {
   GoogleMap,
@@ -12,18 +13,14 @@ import {
   withGoogleMap,
   withScriptjs
 } from "react-google-maps";
-import { Parallax } from "react-parallax";
+import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import moment from "moment";
-import EventComponent from "../../../component/eventComponent";
-import GalleryComponent from "../../../component/galleryComponent";
 import RoundedImage from "react-rounded-image";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import ReactPlayer from "react-player";
+import "slick-carousel/slick/slick.css";
+import EventComponent from "../../../component/eventComponent";
 
 class Theme1Home extends React.Component {
   state = {
