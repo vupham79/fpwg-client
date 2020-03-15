@@ -109,16 +109,6 @@ class Theme1Gallery extends React.Component {
             GALLERY
           </p>
         </Grid>
-        {isEdit && !siteEdit.galleries && (
-          <Grid item xs={12}>
-            <p style={classes.changableBody4}>Currently there are no images.</p>
-          </Grid>
-        )}
-        {!isEdit && !siteView.galleries && (
-          <Grid item xs={12}>
-            <p style={classes.changableBody4}>Currently there are no images.</p>
-          </Grid>
-        )}
 
         {isEdit ? (
           <GalleryComponent galleries={siteEdit.galleries} />

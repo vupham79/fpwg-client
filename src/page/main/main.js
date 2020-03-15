@@ -152,7 +152,7 @@ class MainPage extends Component {
           </Grid>
           <Grid item xs={6}>
             <a
-              href="https://www.facebook.com/pages/create"
+              href="https://www.facebook.com/pages/create/?ref_type=universal_creation_hub"
               rel="noopener noreferrer"
               target="_blank"
               style={{ textDecoration: "none" }}

@@ -40,7 +40,7 @@ class Footer extends React.Component {
             </IconButton>
           </Grid>
 
-          <Grid item>
+          <Grid item style={isEdit ? (siteEdit.whatsapp ? null : { display: "none" }) : (siteView.whatsapp ? null : { display: "none" })}>
             <IconButton
               aria-label=""
               color="primary"
@@ -50,7 +50,7 @@ class Footer extends React.Component {
             </IconButton>
           </Grid>
 
-          <Grid item>
+          <Grid item style={isEdit ? (siteEdit.instagram ? null : { display: "none" }) : (siteView.instagram ? null : { display: "none" })}>
             <IconButton
               aria-label=""
               color="primary"
@@ -60,7 +60,7 @@ class Footer extends React.Component {
             </IconButton>
           </Grid>
 
-          <Grid item>
+          <Grid item style={isEdit ? (siteEdit.youtube ? null : { display: "none" }) : (siteView.youtube ? null : { display: "none" })}>
             <IconButton
               aria-label=""
               color="primary"

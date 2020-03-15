@@ -129,12 +129,8 @@ class Theme1About extends React.Component {
           <p style={classes.changableBody3}>
             {isEdit && siteEdit && siteEdit.about}
             {!isEdit && siteView && siteView.about}
-            {isEdit && !siteEdit.about && (
-              <p style={classes.changableBody4}>Welcome to our website!</p>
-            )}
-            {!isEdit && !siteView.about && (
-              <p style={classes.changableBody4}>Welcome to our website!</p>
-            )}
+            {isEdit && !siteEdit.about && "Welcome to our website!"}
+            {!isEdit && !siteView.about && "Welcome to our website!"}
           </p>
         </Grid>
       </Grid>

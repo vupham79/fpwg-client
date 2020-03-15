@@ -270,22 +270,12 @@ class Theme1Home extends React.Component {
           />
         </Grid>
         <Grid item xs={12}>
-          {isEdit && !siteEdit && (
-            <p style={classes.changableBody3}>Welcome!</p>
-          )}
-          {!isEdit && !siteView && (
-            <p style={classes.changableBody3}>Welcome!</p>
-          )}
-          {/* <p style={classes.changableBody3}> */}
-          {isEdit && siteEdit && siteEdit.about}
-          {!isEdit && siteView && siteView.about}
-          {isEdit && !siteEdit.about && (
-            <p style={classes.changableBody4}>Welcome to our website!</p>
-          )}
-          {!isEdit && !siteView.about && (
-            <p style={classes.changableBody4}>Welcome to our website!</p>
-          )}
-          {/* </p> */}
+          <p style={classes.changableBody3}>
+            {isEdit && siteEdit && siteEdit.about}
+            {!isEdit && siteView && siteView.about}
+            {isEdit && !siteEdit.about && "Welcome to our website!"}
+            {!isEdit && !siteView.about && "Welcome to our website!"}
+          </p>
         </Grid>
         <Grid item xs={12} style={classes.greyDiv}>
           <p style={classes.changableTitle}>
