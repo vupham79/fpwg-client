@@ -7,7 +7,7 @@ import {
   faYoutube,
   faWhatsapp
 } from "@fortawesome/free-brands-svg-icons";
-import MailIcon from "@material-ui/icons/Mail";
+import { faPhoneAlt, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { changeSiteLinks } from "../actions";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -50,6 +50,12 @@ class SettingEditorTab extends React.Component {
     changeSiteLinks(site);
   };
 
+  handleChangePhone = e => {
+    const { site, changeSiteLinks } = this.props;
+    site.phone = e.target.value;
+    changeSiteLinks(site);
+  };
+
   // handleClick = () => {
   //   toastr.options = {
   //     closeButton: false,
@@ -88,6 +94,7 @@ class SettingEditorTab extends React.Component {
           item
           direction="row"
           justify="center"
+          alignItems="center"
           xs={12}
           style={{ marginTop: 10 }}
         >
@@ -121,6 +128,7 @@ class SettingEditorTab extends React.Component {
           item
           direction="row"
           justify="center"
+          alignItems="center"
           xs={12}
           style={{ marginTop: 10 }}
         >
@@ -155,6 +163,7 @@ class SettingEditorTab extends React.Component {
           item
           direction="row"
           justify="center"
+          alignItems="center"
           xs={12}
           style={{ marginTop: 10 }}
         >
@@ -188,12 +197,13 @@ class SettingEditorTab extends React.Component {
           container
           item
           direction="row"
+          alignItems="center"
           justify="center"
           xs={12}
           style={{ marginTop: 10 }}
         >
           <Grid item xs={2}>
-            <MailIcon />
+            <FontAwesomeIcon icon={faEnvelope} size="2x" />
           </Grid>
           <Grid item xs={8}>
             <TextField
@@ -204,6 +214,40 @@ class SettingEditorTab extends React.Component {
               fullWidth
               value={site.email ? site.email : ""}
               onChange={e => this.handleChangeMail(e)}
+              InputLabelProps={{
+                classes: {
+                  focused: classes.focused
+                }
+              }}
+              InputProps={{
+                classes: {
+                  notchedOutline: classes.notchedOutline
+                }
+              }}
+            />
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          item
+          direction="row"
+          justify="center"
+          alignItems="center"
+          xs={12}
+          style={{ marginTop: 10 }}
+        >
+          <Grid item xs={2}>
+            <FontAwesomeIcon icon={faPhoneAlt} size="2x" />
+          </Grid>
+          <Grid item xs={8}>
+            <TextField
+              variant="outlined"
+              label="Phone"
+              size="small"
+              inputMode={"url"}
+              fullWidth
+              value={site.phone ? site.phone : ""}
+              onChange={e => this.handleChangePhone(e)}
               InputLabelProps={{
                 classes: {
                   focused: classes.focused
