@@ -48,7 +48,6 @@ const useStyles = makeStyles(theme => ({
     height: "10rem",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
-    backgroundSize: "contain",
     overflow: "hidden"
   },
   album: {
@@ -90,13 +89,13 @@ const gridStyle = theme => ({
   }
 });
 
-function TypeAlbum({ post, openDialog, style }) {
+function TypeAlbum({ post, openDialog, style, dark }) {
   const classes = useStyles(
     style && style.isEdit ? style.titleEdit : style.titleView
   );
   return (
     <React.Fragment>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid item xs={12} sm={6} md={3} style={dark ? { backgroundColor: "#1a1919" } : null}>
         <Card className={classes.card}>
           <CardMedia
             className={classes.cardMediaAlbum}
@@ -160,13 +159,13 @@ function TypeAlbum({ post, openDialog, style }) {
   );
 }
 
-function TypePhoto({ post, openDialog, style }) {
+function TypePhoto({ post, openDialog, style, dark }) {
   const classes = useStyles(
     style && style.isEdit ? style.titleEdit : style.titleView
   );
   return (
     <React.Fragment>
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid item xs={12} sm={6} md={3} style={dark ? { backgroundColor: "#1a1919" } : null}>
         <Card className={classes.card}>
           <CardMedia
             className={classes.cardMedia}
@@ -218,14 +217,14 @@ function TypePhoto({ post, openDialog, style }) {
   );
 }
 
-function TypeVideo({ post, openDialog, style }) {
+function TypeVideo({ post, openDialog, style, dark }) {
   const classes = useStyles(
     style && style.isEdit ? style.titleEdit : style.titleView
   );
   return (
     <React.Fragment>
       {/* 'https://www.facebook.com/Indiegogo/videos/484114395557572/UzpfSTMzMzY2NzUwNjczMTk0NzoyNzYzMDQxNjQwNDYxMTc2/' */}
-      <Grid item xs={12} sm={6} md={3}>
+      <Grid item xs={12} sm={6} md={3} style={dark ? { backgroundColor: "#1a1919" } : null}>
         <Card className={classes.card}>
           <ReactPlayer
             url={post && post.attachments && post.attachments.video}
@@ -341,6 +340,7 @@ class PostTypeComponent extends React.Component {
                   key={index}
                   post={post}
                   style={style}
+                  dark={this.props.darkMode}
                   openDialog={this.handleOpen}
                 />
               )) ||
@@ -349,6 +349,7 @@ class PostTypeComponent extends React.Component {
                   key={index}
                   post={post}
                   style={style}
+                  dark={this.props.darkMode}
                   openDialog={this.handleOpen}
                 />
               )) ||
@@ -357,6 +358,7 @@ class PostTypeComponent extends React.Component {
                   key={index}
                   post={post}
                   style={style}
+                  dark={this.props.darkMode}
                   openDialog={this.handleOpenVideo}
                 />
               ))

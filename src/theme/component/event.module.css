@@ -1,7 +1,6 @@
 .event_page {
   margin-top: 5vh;
   margin-bottom: 5vh;
-  background-color: white;
 }
 
 .image_page {
@@ -9,9 +8,8 @@
 }
 
 .event_body {
-  margin-top: 10vh !important;
   border: 1px solid #d4e1db;
-  height: 50vh;
+  background-color: white;
 }
 
 .shop_name {
