@@ -41,7 +41,7 @@ class GalleryComponent extends React.Component {
       this.setState({ img: image });
       openDialog();
     };
-    const { classes, open, openDialog, closeDialog, galleries } = this.props;
+    const { classes, open, openDialog, closeDialog, galleries, bodyEdit, bodyView, isEdit } = this.props;
     return (
       <React.Fragment>
         <Container className={classes.root}>
@@ -66,8 +66,10 @@ class GalleryComponent extends React.Component {
                 </Grid>
               ))
             ) : (
-              <Typography>You don't have any Gallery.</Typography>
-            )}
+                <p style={{ fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily, fontSize: 16, textAlign: "center" }}>
+                  Currently no image to show.
+                </p>
+              )}
           </Grid>
           <Dialog open={open} onClose={closeDialog} maxWidth="sm" fullWidth>
             <img style={imgStyles} src={this.state.img} alt="" />
@@ -79,7 +81,10 @@ class GalleryComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  open: state.dialog.open
+  open: state.dialog.open,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView,
+  isEdit: state.site.isEdit,
 });
 
 const mapDispatchToProps = dispatch => ({
