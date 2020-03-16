@@ -127,7 +127,7 @@ class Theme1News extends React.Component {
             NEWS
           </p>
         </Grid>
-        <Grid item sm={12} xs={12} container spacing={3} style={{ backgroundColor: "white" }} >
+        <Grid item sm={12} xs={12} container spacing={3} >
           {
             isEdit ? (
               posts ? (
