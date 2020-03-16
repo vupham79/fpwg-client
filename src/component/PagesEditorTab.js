@@ -288,15 +288,6 @@ function PostsList({
     </>
   );
 }
-
-const imgStyles = {
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  width: "1.5rem",
-  height: "1.5rem"
-};
-
 class PagesEditorTab extends React.Component {
   state = {
     filteredData: [],

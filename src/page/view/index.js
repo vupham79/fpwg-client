@@ -59,7 +59,7 @@ class PreViewSite extends React.Component {
 
   render() {
     const { siteView } = this.props;
-    const { isLoading } = this.state;
+    const { isLoading, metas } = this.state;
     clearSiteView();
     if (!isLoading) {
       if (siteView) {
@@ -85,16 +85,17 @@ class PreViewSite extends React.Component {
                 href={siteView.favicon ? siteView.favicon : siteView.logo}
                 type="image/x-icon"
               />
-              {this.state.metas.map((meta, index) => {
-                let metaSplit = meta.split("=");
-                return (
-                  <meta
-                    key={index}
-                    name={metaSplit[0]}
-                    content={metaSplit[1]}
-                  />
-                );
-              })}
+              {metas &&
+                metas.map((meta, index) => {
+                  let metaSplit = meta.split("=");
+                  return (
+                    <meta
+                      key={index}
+                      name={metaSplit[0]}
+                      content={metaSplit[1]}
+                    />
+                  );
+                })}
             </Helmet>
             {themesConstant.find(e => e.id === siteView.theme.id).component}
           </>
