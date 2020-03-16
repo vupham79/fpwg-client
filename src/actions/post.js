@@ -26,7 +26,7 @@ export const savePosts = posts => {
     try {
       const data = await axios({
         method: "PATCH",
-        url: "posts/activePosts",
+        url: "post/activePosts",
         data: {
           posts: posts
         }
