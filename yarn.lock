@@ -5605,11 +5605,6 @@ google-auth-library@^5.0.0, google-auth-library@^5.5.0:
     jws "^4.0.0"
     lru-cache "^5.0.0"
 
-google-font-picker@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/google-font-picker/-/google-font-picker-1.0.1.tgz#ef0fc97c27e520e3308240e905b1970f82deee57"
-  integrity sha512-sN6g7qfiY/jE/Ia+VONStvuuJNvOQy1Rmh/7bX3L5wbPwIcPx0GjHSO6et2MSfhZSlgM75rlGBjYUGmjESKHxg==
-
 google-maps-infobox@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/google-maps-infobox/-/google-maps-infobox-2.0.0.tgz#1ea6de93c0cdf4138c2d586331835c83dcc59dc2"
