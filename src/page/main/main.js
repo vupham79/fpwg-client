@@ -109,7 +109,7 @@ class MainPage extends Component {
 
   renderPagesNotGenerated = () => {
     const { pages, sites } = this.props;
-    const { pageUrl, sitepath, isPublish, tab } = this.state;
+    const { pageUrl, sitepath, isPublish } = this.state;
     let nonGenerated = pages.map(page => page.id);
     let index = -1;
     sites.forEach(site => {

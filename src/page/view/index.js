@@ -12,6 +12,8 @@ import {
 import { Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import WebFont from "webfontloader";
+import Helmet from "react-helmet";
+
 class PreViewSite extends React.Component {
   state = {
     sitepath: "",
@@ -67,7 +69,26 @@ class PreViewSite extends React.Component {
             families: [siteView.fontTitle, siteView.fontBody]
           }
         });
-        return themesConstant.find(e => e.id === siteView.theme.id).component;
+        return (
+          <>
+            <Helmet>
+              <title>{siteView.title}</title>
+              <link
+                id="favicon"
+                rel="icon"
+                href={siteView.logo}
+                type="image/x-icon"
+              />
+              {siteView.metas &&
+                siteView.metas.map((meta, index) => {
+                  return (
+                    <meta key={index} name={meta.name} content={meta.content} />
+                  );
+                })}
+            </Helmet>
+            {themesConstant.find(e => e.id === siteView.theme.id).component}
+          </>
+        );
       }
       return (
         <Grid container justify="center">
