@@ -35,7 +35,10 @@ import {
   changeSiteLinks,
   setPreviewMode,
   removeCover,
-  changeNavItemName
+  changeNavItemName,
+  uploadFavicon,
+  setNewFavicon,
+  setNewMetas
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -119,5 +122,8 @@ export {
   setPreviewMode,
   savePosts,
   removeCover,
-  changeNavItemName
+  changeNavItemName,
+  uploadFavicon,
+  setNewFavicon,
+  setNewMetas
 };

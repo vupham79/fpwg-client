@@ -16,7 +16,9 @@ const defaultState = {
   newLogo: null,
   newCover: [],
   isPreview: false,
-  isChanged: false
+  isChanged: false,
+  favicon: null,
+  metas: null
 };
 
 let index;
@@ -145,7 +147,9 @@ const SiteReducer = (state = defaultState, action) => {
         newLogo: null,
         newCover: action.payload.data.cover
           ? [...action.payload.data.cover]
-          : []
+          : [],
+        metas: action.payload.data.metas,
+        favicon: action.payload.data.favicon
       };
     case "SET_SITE_VIEW":
       return {
@@ -180,6 +184,11 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         siteEdit: { ...action.payload }
       };
+    case "UPLOAD_FAVICON":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
     case "SET_COLOR_PALLETE":
       return {
         ...state,
@@ -199,6 +208,16 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         newLogo: action.payload
+      };
+    case "SET_NEW_FAVICON":
+      return {
+        ...state,
+        favicon: action.payload
+      };
+    case "SET_NEW_METAS":
+      return {
+        ...state,
+        metas: action.payload
       };
     case "SET_NEW_COVER":
       let array = [...state.newCover, action.payload];
