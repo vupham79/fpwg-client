@@ -23,6 +23,11 @@ export function getAllSites() {
         toastr.error(`Unable to retrieve sites`, "Error");
       }
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch({
+          type: "SET_LOGOUT"
+        });
+      }
       dispatch({
         type: "CLOSE_LOADING"
       });
@@ -107,6 +112,11 @@ export const unPublishSiteAdmin = ({ siteId, siteName }) => {
         );
       }
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch({
+          type: "SET_LOGOUT"
+        });
+      }
       dispatch({
         type: "CLOSE_LOADING"
       });
@@ -148,6 +158,11 @@ export const publishSiteAdmin = ({ siteId, siteName }) => {
         );
       }
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch({
+          type: "SET_LOGOUT"
+        });
+      }
       dispatch({
         type: "CLOSE_LOADING"
       });
@@ -186,6 +201,11 @@ export const unPublishSite = ({ siteId, siteName }) => {
         );
       }
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch({
+          type: "SET_LOGOUT"
+        });
+      }
       dispatch({
         type: "CLOSE_LOADING"
       });
@@ -227,6 +247,11 @@ export const publishSite = ({ siteId, siteName }) => {
         );
       }
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch({
+          type: "SET_LOGOUT"
+        });
+      }
       dispatch({
         type: "CLOSE_LOADING"
       });
@@ -312,6 +337,11 @@ export function saveDesignSite({ logo, cover, favicon, site, metas }) {
         toastr.error("There are something wrong when save your site", "Error");
       }
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch({
+          type: "SET_LOGOUT"
+        });
+      }
       dispatch({
         type: "CLOSE_LOADING"
       });
@@ -355,6 +385,11 @@ export function getSiteById(id) {
         return data.data;
       }
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch({
+          type: "SET_LOGOUT"
+        });
+      }
       dispatch({
         type: "CLOSE_LOADING"
       });
@@ -620,6 +655,11 @@ export function syncDataFromFB(pageId) {
         );
       }
     } catch (error) {
+      if (error.response && error.response.status === 401) {
+        dispatch({
+          type: "SET_LOGOUT"
+        });
+      }
       dispatch({
         type: "CLOSE_LOADING"
       });

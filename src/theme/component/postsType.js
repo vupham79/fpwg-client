@@ -25,9 +25,10 @@ const useStyles = makeStyles(theme => ({
     display: "flex",
     flexDirection: "column",
     height: "22rem",
-    "&:hover": {
-      border: style => "1.5px solid" + style.color
-    }
+    border: style => "0.5px solid" + style.color
+    // "&:hover": {
+    //   border: style => "1.5px solid" + style.color
+    // }
   },
   message: {
     overflow: "hidden",
@@ -36,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     overflow: "hidden",
-    height: "1.5rem",
+    // height: "1.5rem",
     paddingLeft: "1rem"
   },
   cardMediaAlbum: {
@@ -45,7 +46,7 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: "contain"
   },
   cardMedia: {
-    height: "10rem",
+    height: "100%",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     overflow: "hidden"
@@ -62,7 +63,7 @@ const useStyles = makeStyles(theme => ({
     maxHeight: 350
   },
   btnReadMore: {
-    border: style => "1.5px solid" + style.color,
+    border: style => "0.5px solid" + style.color,
     color: style => style.color,
     "&:hover": {
       border: style => "1.5px solid" + style.color,
@@ -95,7 +96,14 @@ function TypeAlbum({ post, openDialog, style, dark }) {
   );
   return (
     <React.Fragment>
-      <Grid item xs={12} sm={6} md={3} style={dark ? { backgroundColor: "#1a1919" } : null}>
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        md={4}
+        lg={3}
+        style={dark ? { backgroundColor: "#1a1919" } : null}
+      >
         <Card className={classes.card}>
           <CardMedia
             className={classes.cardMediaAlbum}
@@ -139,19 +147,24 @@ function TypeAlbum({ post, openDialog, style, dark }) {
             </Typography>
           </CardContent>
           <CardActions style={{ paddingLeft: "1rem" }}>
-            <Button
-              className={classes.btnReadMore}
-              variant="outlined"
-              color="primary"
-              onClick={() => openDialog(post)}
-            >
-              Read More
-            </Button>
-            <Button color="primary">
-              <a href={post.target}>
-                <FacebookIcon color="primary" fontSize="large" />
-              </a>
-            </Button>
+            <Grid container justify="space-between">
+              <Grid item>
+                <Button
+                  className={classes.btnReadMore}
+                  variant="outlined"
+                  onClick={() => openDialog(post)}
+                >
+                  Read More
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button color="primary">
+                  <a href={post.target} target={"_blank"}>
+                    <FacebookIcon color="primary" fontSize="small" />
+                  </a>
+                </Button>
+              </Grid>
+            </Grid>
           </CardActions>
         </Card>
       </Grid>
@@ -165,7 +178,14 @@ function TypePhoto({ post, openDialog, style, dark }) {
   );
   return (
     <React.Fragment>
-      <Grid item xs={12} sm={6} md={3} style={dark ? { backgroundColor: "#1a1919" } : null}>
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        md={4}
+        lg={3}
+        style={dark ? { backgroundColor: "#1a1919" } : null}
+      >
         <Card className={classes.card}>
           <CardMedia
             className={classes.cardMedia}
@@ -185,31 +205,38 @@ function TypePhoto({ post, openDialog, style, dark }) {
             >
               {post.title}
             </Typography>
-            <Typography
-              className={classes.message}
-              style={
-                style && style.isEdit
-                  ? style && style.bodyEdit
-                  : style && style.bodyView
-              }
-            >
-              {post.message && post.message}
-            </Typography>
+            {post.message && (
+              <Typography
+                className={classes.message}
+                style={
+                  style && style.isEdit
+                    ? style && style.bodyEdit
+                    : style && style.bodyView
+                }
+              >
+                {post.message}
+              </Typography>
+            )}
           </CardContent>
           <CardActions style={{ paddingLeft: "1rem" }}>
-            <Button
-              className={classes.btnReadMore}
-              variant="outlined"
-              color="primary"
-              onClick={() => openDialog(post)}
-            >
-              Read More
-            </Button>
-            <Button color="primary">
-              <a href={post.target}>
-                <FacebookIcon color="primary" fontSize="large" />
-              </a>
-            </Button>
+            <Grid container justify="space-between">
+              <Grid item>
+                <Button
+                  className={classes.btnReadMore}
+                  variant="outlined"
+                  onClick={() => openDialog(post)}
+                >
+                  Read More
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button color="primary">
+                  <a href={post.target} target={"_blank"}>
+                    <FacebookIcon color="primary" fontSize="small" />
+                  </a>
+                </Button>
+              </Grid>
+            </Grid>
           </CardActions>
         </Card>
       </Grid>
@@ -223,14 +250,20 @@ function TypeVideo({ post, openDialog, style, dark }) {
   );
   return (
     <React.Fragment>
-      {/* 'https://www.facebook.com/Indiegogo/videos/484114395557572/UzpfSTMzMzY2NzUwNjczMTk0NzoyNzYzMDQxNjQwNDYxMTc2/' */}
-      <Grid item xs={12} sm={6} md={3} style={dark ? { backgroundColor: "#1a1919" } : null}>
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        md={4}
+        lg={3}
+        style={dark ? { backgroundColor: "#1a1919" } : null}
+      >
         <Card className={classes.card}>
           <ReactPlayer
             url={post && post.attachments && post.attachments.video}
             controls={true}
             width="100%"
-            height="50%"
+            height="100%"
           />
           <CardContent className={classes.cardContent}>
             <Typography
@@ -245,29 +278,38 @@ function TypeVideo({ post, openDialog, style, dark }) {
             >
               {post.title}
             </Typography>
-            <Typography
-              className={classes.message}
-              style={
-                style && style.isEdit
-                  ? style && style.bodyEdit
-                  : style && style.bodyView
-              }
-            >
-              {post.message && post.message}
-            </Typography>
+            {post.message && (
+              <Typography
+                className={classes.message}
+                style={
+                  style && style.isEdit
+                    ? style && style.bodyEdit
+                    : style && style.bodyView
+                }
+              >
+                {post.message}
+              </Typography>
+            )}
           </CardContent>
           <CardActions style={{ paddingLeft: "1rem" }}>
-            <Button
-              color="primary"
-              className={classes.btnReadMore}
-              variant="outlined"
-              onClick={() => openDialog(post)}
-            >
-              Read More
-            </Button>
-            <Button color="primary">
-              <FacebookIcon color="primary" fontSize="large" />
-            </Button>
+            <Grid container justify="space-between">
+              <Grid item>
+                <Button
+                  className={classes.btnReadMore}
+                  variant="outlined"
+                  onClick={() => openDialog(post)}
+                >
+                  Read More
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button color="primary">
+                  <a href={post.target} target={"_blank"}>
+                    <FacebookIcon color="primary" fontSize="small" />
+                  </a>
+                </Button>
+              </Grid>
+            </Grid>
           </CardActions>
         </Card>
       </Grid>
@@ -400,7 +442,7 @@ class PostTypeComponent extends React.Component {
                     {post && post.title}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} >
+                <Grid item xs={12}>
                   <Typography
                     variant="body1"
                     style={isEdit ? bodyEdit : bodyView}
