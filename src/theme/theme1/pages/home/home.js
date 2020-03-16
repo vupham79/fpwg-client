@@ -21,6 +21,7 @@ import RoundedImage from "react-rounded-image";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import EventComponent from "../../../component/eventComponent";
+import BannerComponent from "../../../component/bannerComponent";
 
 class Theme1Home extends React.Component {
   state = {
@@ -46,36 +47,7 @@ class Theme1Home extends React.Component {
     }
     return siteView.logo;
   };
-  renderNewCovers = () => {
-    const { isEdit, newCover, siteView } = this.props;
-    if (isEdit) {
-      if (newCover && newCover.length > 0) {
-        return newCover.map((cover, index) => {
-          if (cover && typeof cover === "object" && cover.size > 0) {
-            return (
-              <div key={index} style={{ height: 400, overflow: "hidden" }}>
-                <img src={URL.createObjectURL(cover)} alt="" key={index} />
-              </div>
-            );
-          } else
-            return (
-              <div key={index} style={{ height: 400, overflow: "hidden" }}>
-                <img src={cover} alt="" key={index} />
-              </div>
-            );
-        });
-      }
-    } else {
-      if (siteView.cover && siteView.cover.length > 0) {
-        return siteView.cover.map((cover, i) => (
-          <div style={{ height: 400, overflow: "hidden" }}>
-            <img src={cover} alt="" key={i} />
-          </div>
-        ));
-      }
-    }
-    //mỗi img phải bọc div để component carousel phân biệt chia slide
-  };
+
   render() {
     const {
       siteEdit,
@@ -242,18 +214,7 @@ class Theme1Home extends React.Component {
     return (
       <Grid container>
         <Grid item xs={12}>
-          <Carousel
-            autoPlay
-            infiniteLoop
-            centerMode={false}
-            showArrows={false}
-            showIndicators={true}
-            dynamicHeight={false}
-            showStatus={false}
-            showThumbs={false}
-          >
-            {this.renderNewCovers()}
-          </Carousel>
+          <BannerComponent bannerType={0} />
         </Grid>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>

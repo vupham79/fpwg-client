@@ -1,84 +1,11 @@
 import { Grid, Typography, Divider } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
 import PostTypeComponent from "../../../component/postsType";
+import BannerComponent from "../../../component/bannerComponent";
 
 class Theme1Home extends React.Component {
-  state = {
-    anchorEl: null
-  };
-  setAnchorEl = anchorEl => {
-    this.setState({
-      anchorEl: anchorEl
-    });
-  };
-  handleMenuClick = event => {
-    this.setAnchorEl(event.currentTarget);
-  };
-  handleMenuClose = () => {
-    this.setAnchorEl(null);
-  };
-  renderImage = () => {
-    const { isEdit, siteEdit, siteView, newLogo } = this.props;
-    if (isEdit) {
-      if (newLogo && typeof newLogo === "object" && newLogo.size > 0) {
-        return URL.createObjectURL(newLogo);
-      } else return siteEdit.logo;
-    }
-    return siteView.logo;
-  };
-  renderLogo = () => {
-    const { isEdit, siteEdit, siteView, newLogo } = this.props;
-    if (isEdit) {
-      if (newLogo && typeof newLogo === "object" && newLogo.size > 0) {
-        return (
-          <img
-            style={{ height: "50vh" }}
-            src={URL.createObjectURL(newLogo)}
-            alt=""
-          />
-        );
-      } else
-        return <img style={{ height: "50vh" }} src={siteEdit.logo} alt="" />;
-    }
-    return <img style={{ height: "50vh" }} src={siteView.logo} alt="" />;
-  };
-  renderCover = () => {
-    const { isEdit, siteEdit, siteView } = this.props;
-    if (isEdit) {
-      return (
-        siteEdit.cover &&
-        siteEdit.cover.map((cover, i) => <img src={cover} key={i} alt="" />)
-      );
-    } else {
-      return (
-        siteView.cover &&
-        siteView.cover.map((cover, i) => <img src={cover} key={i} alt="" />)
-      );
-    }
-  };
-  renderNewCovers = () => {
-    const { isEdit, newCover, siteView } = this.props;
-    if (isEdit) {
-      if (newCover && newCover.length > 0) {
-        return newCover.map((cover, index) => {
-          if (cover && typeof cover === "object" && cover.size > 0) {
-            return <img src={URL.createObjectURL(cover)} alt="" key={index} />;
-          } else return <img src={cover} alt="" key={index} />;
-        });
-      }
-    } else {
-      if (siteView.cover && siteView.cover.length > 0) {
-        return siteView.cover.map((cover, i) => (
-          <img src={cover} alt="" key={i} />
-        ));
-      }
-    }
-  };
+
   render() {
     const {
       siteEdit,
@@ -160,59 +87,6 @@ class Theme1Home extends React.Component {
         textDecoration: "underline",
         textDecorationColor: isEdit ? titleEdit.color : titleView.color
       },
-      changableFirst2: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: isEdit ? titleEdit.color : titleView.color,
-        textAlign: "center",
-        fontSize: 20
-      },
-      changableLegend: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "white",
-        zIndex: 5,
-        position: "absolute",
-        top: "50%",
-        left: "40%",
-        fontSize: 80,
-        textAlign: "center"
-      },
-      greyDiv: {
-        backgroundColor: "#e1ede4",
-        textAlign: "center",
-        color: "#535353",
-        fontSize: 20
-      },
-      centerItem: {
-        display: "block",
-        width: 150,
-        marginLeft: "auto",
-        marginRight: "auto",
-        paddingLeft: 10
-      },
-      centerItem2: {
-        display: "block",
-        height: 100,
-        justifyContent: "center",
-        alignItems: "center",
-        marginLeft: "auto",
-        marginRight: "auto"
-      },
-      centerItem3: {
-        display: "block",
-        marginLeft: "auto",
-        marginRight: "auto",
-        height: "100%",
-        backgroundColor: "white"
-      },
-      changableAppBar: {
-        backgroundColor: "white",
-        opacity: 0.6,
-        position: "sticky",
-        color: "#535353",
-        textAlign: "right"
-      }
     });
     const classes = useStyles();
     const { posts } = this.props;
@@ -222,7 +96,7 @@ class Theme1Home extends React.Component {
       <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 100 }}>
 
         <Grid item xs={12}>
-          <Slider fade speed={2000} autoplay>{this.renderNewCovers()}</Slider>
+          <BannerComponent bannerType={1} />
         </Grid>
 
         {/* <Grid item xs={12}>

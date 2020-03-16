@@ -3,6 +3,7 @@ import CarouselImages from "../../components/carousel";
 import New from "../../pages/new";
 import EventPage from "../../pages/event";
 import { connect } from "react-redux";
+import BannerComponent from "../../../component/bannerComponent";
 
 class HomePage extends React.Component {
   renderCarousel = () => {
@@ -22,30 +23,30 @@ class HomePage extends React.Component {
     const { siteEdit, siteView, isEdit } = this.props;
     return (
       <>
-        {this.renderCarousel()}
+        <BannerComponent bannerType={2} />
         {isEdit
           ? siteEdit &&
-            siteEdit.navItems &&
-            siteEdit.navItems.map(
-              (item, index) =>
-                (item.original === "news" && item.isActive && (
-                  <New key={index} />
-                )) ||
-                (item.original === "event" && item.isActive && (
-                  <EventPage key={index} />
-                ))
-            )
+          siteEdit.navItems &&
+          siteEdit.navItems.map(
+            (item, index) =>
+              (item.original === "news" && item.isActive && (
+                <New key={index} />
+              )) ||
+              (item.original === "event" && item.isActive && (
+                <EventPage key={index} />
+              ))
+          )
           : siteView &&
-            siteView.navItems &&
-            siteView.navItems.map(
-              (item, index) =>
-                (item.original === "news" && item.isActive && (
-                  <New key={index} />
-                )) ||
-                (item.original === "event" && item.isActive && (
-                  <EventPage key={index} />
-                ))
-            )}
+          siteView.navItems &&
+          siteView.navItems.map(
+            (item, index) =>
+              (item.original === "news" && item.isActive && (
+                <New key={index} />
+              )) ||
+              (item.original === "event" && item.isActive && (
+                <EventPage key={index} />
+              ))
+          )}
       </>
     );
   }
