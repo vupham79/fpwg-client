@@ -387,7 +387,7 @@ class PostTypeComponent extends React.Component {
                   ))}
               </Grid>
               <Grid container className={classes.root} justify="center">
-                <Grid item xs={12} style={{ flexBasis: "unset" }}>
+                <Grid item xs={12}>
                   <Typography
                     variant="h5"
                     color="textPrimary"
@@ -400,7 +400,7 @@ class PostTypeComponent extends React.Component {
                     {post && post.title}
                   </Typography>
                 </Grid>
-                <Grid item xs={12} style={{ flexBasis: "unset" }}>
+                <Grid item xs={12} >
                   <Typography
                     variant="body1"
                     style={isEdit ? bodyEdit : bodyView}
