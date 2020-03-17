@@ -271,7 +271,7 @@ export function changeNavItems(items) {
   };
 }
 
-export function saveDesignSite({ logo, cover, site }) {
+export function saveDesignSite({ logo, cover, favicon, site, metas }) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -279,6 +279,9 @@ export function saveDesignSite({ logo, cover, site }) {
     try {
       if (logo && typeof logo === "object" && logo.size > 0) {
         dispatch(uploadLogo(logo, site));
+      }
+      if (favicon && typeof favicon === "object" && favicon.size > 0) {
+        dispatch(uploadFavicon(favicon, site));
       }
       dispatch(uploadCover(cover, site));
       const data = await axios({
@@ -296,7 +299,8 @@ export function saveDesignSite({ logo, cover, site }) {
           youtube: site.youtube,
           instagram: site.instagram,
           whatsapp: site.whatsapp,
-          phone: site.phone
+          phone: site.phone,
+          metas: metas
         }
       });
       dispatch({
@@ -408,6 +412,24 @@ export function setNewLogo(file) {
     dispatch({
       type: "SET_NEW_LOGO",
       payload: file
+    });
+  };
+}
+
+export function setNewFavicon(file) {
+  return dispatch => {
+    dispatch({
+      type: "SET_NEW_FAVICON",
+      payload: file
+    });
+  };
+}
+
+export function setNewMetas(metas) {
+  return dispatch => {
+    dispatch({
+      type: "SET_NEW_METAS",
+      payload: metas
     });
   };
 }
@@ -680,5 +702,59 @@ export function changeNavItemName(site) {
       type: "CHANGE_NAV_ITEM_NAME",
       payload: site
     });
+  };
+}
+
+export function uploadFavicon(file, site) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      firebase
+        .storage()
+        .ref()
+        .child(`${site.id}_favicon`)
+        .put(file, {
+          contentType: "image/jpeg"
+        })
+        .then(async () => {
+          await firebase
+            .storage()
+            .ref()
+            .child(`${site.id}_favicon`)
+            .getDownloadURL()
+            .then(async url => {
+              await axios({
+                method: "PATCH",
+                url: "/site/favicon",
+                data: {
+                  favicon: url,
+                  id: site.id
+                }
+              });
+              site.favicon = url;
+              dispatch({
+                type: "UPLOAD_FAVICON",
+                payload: site
+              });
+            });
+          dispatch({
+            type: "CLOSE_LOADING"
+          });
+        })
+        .catch(error => {
+          console.log("upload: ", error);
+          dispatch({
+            type: "CLOSE_LOADING"
+          });
+          toastr.error(`Upload new favicon failed`, "Error");
+        });
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Upload new favicon failed`, "Error");
+    }
   };
 }

@@ -55,9 +55,10 @@ class ClippedDrawer extends React.Component {
       siteEdit,
       saveDesignSite,
       newLogo,
-      newCover
+      newCover,
+      favicon,
+      metas
     } = this.props;
-
     return (
       <AppBar className={classes.root} position="sticky">
         <CssBaseline />
@@ -94,7 +95,13 @@ class ClippedDrawer extends React.Component {
             color="primary"
             variant="contained"
             onClick={() =>
-              saveDesignSite({ site: siteEdit, logo: newLogo, cover: newCover })
+              saveDesignSite({
+                site: siteEdit,
+                logo: newLogo,
+                cover: newCover,
+                favicon,
+                metas
+              })
             }
           >
             Save Design
@@ -109,13 +116,14 @@ const mapStateToProps = state => ({
   tabValue: state.tab.value,
   siteEdit: state.site.siteEdit,
   newLogo: state.site.newLogo,
-  newCover: state.site.newCover
+  newCover: state.site.newCover,
+  favicon: state.site.favicon,
+  metas: state.site.metas
 });
 
 const mapDispatchToProps = dispatch => ({
   updateTabValue: value => dispatch(updateTabValue(value)),
-  saveDesignSite: ({ site, logo, cover }) =>
-    dispatch(saveDesignSite({ site, logo, cover }))
+  saveDesignSite: data => dispatch(saveDesignSite(data))
 });
 
 export default connect(

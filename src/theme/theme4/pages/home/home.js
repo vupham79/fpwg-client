@@ -244,11 +244,11 @@ class Theme1Home extends React.Component {
           <Divider style={{ backgroundColor: "#b3b2b2" }} />
         </Grid>
 
-        <Grid item sm={12} xs={12} container style={{ minHeight: 200, backgroundColor: "white" }}>
+        <Grid item sm={12} xs={12} container style={{ minHeight: 200 }}>
           {isEdit ? (
             posts ? (
               <Grid container>
-                <PostTypeComponent posts={posts} />
+                <PostTypeComponent darkMode posts={posts} />
               </Grid>
             ) : (
                 <Grid container justify="center">

@@ -3,6 +3,7 @@ import {
   Button,
   Checkbox,
   Dialog,
+  DialogActions,
   ExpansionPanel,
   ExpansionPanelSummary,
   Grid,
@@ -13,14 +14,13 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  TextField,
   Typography,
-  withStyles,
-  DialogActions,
-  TextField
+  withStyles
 } from "@material-ui/core";
-import { withStyles as withStylesStyle } from "@material-ui/core/styles";
 import { green } from "@material-ui/core/colors";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
+import { withStyles as withStylesStyle } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MenuIcon from "@material-ui/icons/Menu";
 import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
@@ -35,14 +35,14 @@ import {
   sortableHandle
 } from "react-sortable-hoc";
 import {
+  changeNavItemName,
   changeNavItems,
   closeDialog,
   openDialog,
+  savePosts,
   setActiveNavItems,
   setActivePost,
-  updateNavItemValue,
-  savePosts,
-  changeNavItemName
+  updateNavItemValue
 } from "../actions";
 
 const gridContainer = {
@@ -288,6 +288,14 @@ function PostsList({
     </>
   );
 }
+
+const imgStyles = {
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  width: "1.5rem",
+  height: "1.5rem"
+};
 
 class PagesEditorTab extends React.Component {
   state = {

@@ -119,70 +119,76 @@ class MainPage extends Component {
       }
     });
     if (nonGenerated && nonGenerated.length > 0) {
-      return pages.map(page => {
-        return (
-          nonGenerated.includes(page.id) && (
-            <>
-              <ListItem
-                button
-                onClick={() =>
-                  this.handleSelectPage({
-                    id: page.id,
-                    link: page.link,
-                    name: page.name
-                  })
-                }
-                key={page.id}
-              >
-                <ListItemAvatar>
-                  <Avatar>
-                    <img src={page.picture.data.url} alt="" />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={page.name} secondary={page.category} />
-              </ListItem>
-              <ListItem>
-                <TextField
-                  variant={"outlined"}
-                  fullWidth
-                  error={this.state.sitepathError}
-                  required
-                  label="Sitepath"
-                  onChange={e => this.handleChangeSitepath(e)}
-                  inputProps={{ maxLength: 30 }}
-                  value={sitepath ? sitepath : ""}
-                />
-                <SwitchButton
-                  isPublish={isPublish}
-                  style={{ marginLeft: 0 }}
-                  onChange={() => this.setState({ isPublish: !isPublish })}
-                />
-              </ListItem>
-              <ListItem>
-                <TextField
-                  fullWidth
-                  required
-                  error={this.state.pageUrlError}
-                  variant={"outlined"}
-                  label="Facebook Page Url"
-                  disabled
-                  onChange={e => this.handleChangeURL(e)}
-                  value={pageUrl ? pageUrl : ""}
-                />
-              </ListItem>
-              <ListItem>
-                <Button
-                  variant={"outlined"}
-                  onClick={() => this.handleConfirm()}
-                  fullWidth
-                >
-                  Confirm
-                </Button>
-              </ListItem>
-            </>
-          )
-        );
-      });
+      return (
+        <>
+          {pages.map(
+            page =>
+              nonGenerated.includes(page.id) && (
+                <>
+                  <ListItem
+                    button
+                    onClick={() =>
+                      this.handleSelectPage({
+                        id: page.id,
+                        link: page.link,
+                        name: page.name
+                      })
+                    }
+                    key={page.id}
+                  >
+                    <ListItemAvatar>
+                      <Avatar>
+                        <img src={page.picture.data.url} alt="" />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={page.name}
+                      secondary={page.category}
+                    />
+                  </ListItem>
+                </>
+              )
+          )}
+          <ListItem>
+            <TextField
+              variant={"outlined"}
+              fullWidth
+              error={this.state.sitepathError}
+              required
+              label="Sitepath"
+              onChange={e => this.handleChangeSitepath(e)}
+              inputProps={{ maxLength: 30 }}
+              value={sitepath ? sitepath : ""}
+            />
+            <SwitchButton
+              isPublish={isPublish}
+              style={{ marginLeft: 0 }}
+              onChange={() => this.setState({ isPublish: !isPublish })}
+            />
+          </ListItem>
+          <ListItem>
+            <TextField
+              fullWidth
+              required
+              error={this.state.pageUrlError}
+              variant={"outlined"}
+              label="Facebook Page Url"
+              disabled
+              onChange={e => this.handleChangeURL(e)}
+              value={pageUrl ? pageUrl : ""}
+            />
+          </ListItem>
+          <ListItem>
+            <Button
+              variant={"outlined"}
+              onClick={() => this.handleConfirm()}
+              fullWidth
+            >
+              Confirm
+            </Button>
+          </ListItem>
+        </>
+      );
     } else {
       return (
         <Grid container justify="center" alignItems="center">

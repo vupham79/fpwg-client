@@ -17,7 +17,8 @@ import Helmet from "react-helmet";
 class PreViewSite extends React.Component {
   state = {
     sitepath: "",
-    isLoading: true
+    isLoading: true,
+    metas: null
   };
 
   async componentDidMount() {
@@ -44,6 +45,11 @@ class PreViewSite extends React.Component {
       const fontBody = {
         fontFamily: data.fontBody
       };
+      const metas =
+        data.metas && data.metas.length > 0 ? data.metas.split("\n") : null;
+      this.setState({
+        metas
+      });
       await setSiteView(data, fontTitle, fontBody);
     }
     this.setState({
@@ -76,15 +82,19 @@ class PreViewSite extends React.Component {
               <link
                 id="favicon"
                 rel="icon"
-                href={siteView.logo}
+                href={siteView.favicon ? siteView.favicon : siteView.logo}
                 type="image/x-icon"
               />
-              {siteView.metas &&
-                siteView.metas.map((meta, index) => {
-                  return (
-                    <meta key={index} name={meta.name} content={meta.content} />
-                  );
-                })}
+              {this.state.metas.map((meta, index) => {
+                let metaSplit = meta.split("=");
+                return (
+                  <meta
+                    key={index}
+                    name={metaSplit[0]}
+                    content={metaSplit[1]}
+                  />
+                );
+              })}
             </Helmet>
             {themesConstant.find(e => e.id === siteView.theme.id).component}
           </>
