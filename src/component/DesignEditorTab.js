@@ -100,7 +100,7 @@ class DesignEditorTab extends React.Component {
     this.setState({
       logo: site.logo
     });
-    img.addEventListener("load", async function() {
+    img.addEventListener("load", async function () {
       const color = await colorThief.getPalette(img, 11);
       const colors = await color.map(rgb =>
         onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
@@ -255,7 +255,7 @@ class DesignEditorTab extends React.Component {
     } = this.props;
 
     return (
-      <div style={{ overflowY: "scroll" }}>
+      <div>
         <Typography className={classes.title}>Theme</Typography>
         <DialogThemes />
         <Divider
