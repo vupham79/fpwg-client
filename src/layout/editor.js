@@ -8,7 +8,6 @@ class EditLayout extends Component {
   render() {
     return (
       <>
-        <Header />
         <Grid container>
           {!this.props.isPreview && (
             <Grid item sm={3} xs={12}>
