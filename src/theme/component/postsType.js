@@ -159,7 +159,11 @@ function TypeAlbum({ post, openDialog, style, dark }) {
               </Grid>
               <Grid item>
                 <Button color="primary">
-                  <a href={post.target} target={"_blank"}>
+                  <a
+                    href={post.target}
+                    target={"_blank"}
+                    rel="noopener noreferrer"
+                  >
                     <FacebookIcon color="primary" fontSize="small" />
                   </a>
                 </Button>
@@ -231,7 +235,11 @@ function TypePhoto({ post, openDialog, style, dark }) {
               </Grid>
               <Grid item>
                 <Button color="primary">
-                  <a href={post.target} target={"_blank"}>
+                  <a
+                    href={post.target}
+                    target={"_blank"}
+                    rel="noopener noreferrer"
+                  >
                     <FacebookIcon color="primary" fontSize="small" />
                   </a>
                 </Button>
@@ -304,7 +312,11 @@ function TypeVideo({ post, openDialog, style, dark }) {
               </Grid>
               <Grid item>
                 <Button color="primary">
-                  <a href={post.target} target={"_blank"}>
+                  <a
+                    href={post.target}
+                    target={"_blank"}
+                    rel="noopener noreferrer"
+                  >
                     <FacebookIcon color="primary" fontSize="small" />
                   </a>
                 </Button>
