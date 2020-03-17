@@ -15,6 +15,7 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import React from "react";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
+import ReactPaginate from "react-paginate";
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -330,14 +331,56 @@ function TypeVideo({ post, openDialog, style, dark }) {
 }
 
 class PostTypeComponent extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-      postOpen: null,
-      openVideo: false
-    };
+  state = {
+    filteredData: [],
+    pageCount: 1,
+    offset: 0,
+    itemPerPage: 4, // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
+    open: false,
+    postOpen: null,
+    openVideo: false
+  };
+
+  setListData = listData => {
+    this.setState({
+      filteredData: listData
+    });
+  };
+
+  setPageCount = listData => {
+    this.setState({
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+    });
+  };
+
+  getPosts = async () => {
+    const { posts } = this.props;
+    this.setState({
+      filteredData: posts.slice(
+        this.state.offset,
+        this.state.itemPerPage + this.state.offset
+      ),
+      pageCount: Math.ceil(posts.length / this.state.itemPerPage)
+    });
+  };
+
+  componentDidMount() {
+    this.getPosts();
   }
+
+  handlePageClick = data => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.state.itemPerPage);
+
+    this.setState({ offset: offset }, () => {
+      this.setListData(
+        this.props.posts.slice(
+          this.state.offset,
+          this.state.itemPerPage + this.state.offset
+        )
+      );
+    });
+  };
 
   handleOpen = post => {
     this.setState({
@@ -363,7 +406,6 @@ class PostTypeComponent extends React.Component {
 
   render() {
     const {
-      posts,
       classes,
       isEdit,
       titleEdit,
@@ -385,9 +427,9 @@ class PostTypeComponent extends React.Component {
           container
           spacing={5}
           justify="center"
-          style={{ marginTop: "3rem" }}
+          style={{ marginTop: "5rem" }}
         >
-          {posts.map(
+          {this.state.filteredData.map(
             (post, index) =>
               (post.attachments.media_type === "photo" && post.isActive && (
                 <TypePhoto
@@ -441,7 +483,7 @@ class PostTypeComponent extends React.Component {
                   ))}
               </Grid>
               <Grid container className={classes.root} justify="center">
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{ textAlign: "center" }}>
                   <Typography
                     variant="h5"
                     color="textPrimary"
@@ -454,7 +496,7 @@ class PostTypeComponent extends React.Component {
                     {post && post.title}
                   </Typography>
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{ textAlign: "center" }}>
                   <Typography
                     variant="body1"
                     style={isEdit ? bodyEdit : bodyView}
@@ -506,6 +548,21 @@ class PostTypeComponent extends React.Component {
               </Grid>
             </Container>
           </Dialog>
+        </Grid>
+        <Grid container justify="center" style={{ marginTop: "5rem" }}>
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+          />
         </Grid>
       </Container>
     );

@@ -19,6 +19,13 @@ import PreEventPage from "../theme/theme2/pages/event";
 import PreGalleryPage from "../theme/theme2/pages/gallery";
 import PreHomePage from "../theme/theme2/pages/home";
 import PreNewPage from "../theme/theme2/pages/new";
+import Theme3 from "../theme/theme3";
+import PreAboutPageT3 from "../theme/theme3/pages/about";
+import PreContactPageT3 from "../theme/theme3/pages/contact";
+import PreEventPageT3 from "../theme/theme3/pages/event";
+import PreGalleryPageT3 from "../theme/theme3/pages/gallery";
+import PreHomePageT3 from "../theme/theme3/pages/home";
+import PreNewPageT3 from "../theme/theme3/pages/new";
 import Theme4 from "../theme/theme4";
 import PreAboutPageT4 from "../theme/theme4/pages/about";
 import PreContactPageT4 from "../theme/theme4/pages/contact";
@@ -50,6 +57,18 @@ export const themes = [
       { name: "event", component: <PreEventPage /> },
       { name: "gallery", component: <PreGalleryPage /> },
       { name: "news", component: <PreNewPage /> }
+    ]
+  },
+  {
+    id: "",
+    component: <Theme3 />,
+    pages: [
+      { name: "home", component: <PreHomePageT3 /> },
+      { name: "about", component: <PreAboutPageT3 /> },
+      { name: "contact", component: <PreContactPageT3 /> },
+      { name: "event", component: <PreEventPageT3 /> },
+      { name: "gallery", component: <PreGalleryPageT3 /> },
+      { name: "news", component: <PreNewPageT3 /> }
     ]
   },
   {

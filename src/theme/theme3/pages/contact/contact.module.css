@@ -1,0 +1,49 @@
+.contact_page {
+  margin-top: 15vh;
+  margin-bottom: 20vh;
+}
+
+.title {
+  font-weight: 700 !important;
+  padding-bottom: 5vh;
+}
+
+.divider {
+  background-color: black !important;
+}
+
+.child_title {
+  color: black !important;
+  font-weight: 700 !important;
+}
+
+.child_content {
+  margin-top: -5vh !important;
+}
+
+.child {
+  padding-left: 5vh !important;
+  margin-right: 5vh !important;
+}
+
+.txtInput {
+  margin-top: 5vh !important;
+}
+
+.btn_send {
+  margin-top: 5vh !important;
+  width: 60% !important;
+  background: black !important;
+  text-align: center;
+  padding: 0 !important;
+}
+
+.btn_content {
+  color: white !important;
+  font-size: 3vh !important;
+  padding: 0.7rem;
+}
+
+.btn_send :hover {
+  background: #646464 !important;
+}

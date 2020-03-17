@@ -1,0 +1,13 @@
+.about_page {
+  padding: 2rem;
+}
+
+.title {
+  font-weight: 700 !important;
+  padding-bottom: 5vh;
+}
+.about {
+  color: white !important;
+  padding: 8vh 0vh;
+  font-size: 1.3rem !important;
+}

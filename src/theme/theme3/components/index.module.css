@@ -39,60 +39,10 @@
   background: rgba(24, 20, 20, 0.5);
 }
 
-/*Footer*/
+/*footer*/
+
 .footer {
-  position: relative;
-  background: #000;
-  color: white;
-  padding: 10vh 0vh;
-  bottom: 0;
-}
-
-.content {
-  padding: 0vh 3rem !important;
-}
-
-h5 {
-  /* color: #646464 !important; */
-  font-weight: 700 !important;
-  padding-bottom: 5vh;
-  overflow: hidden;
-}
-
-.btn_signUp :hover {
-  color: white;
-  transition-duration: 1s;
-  background-color: #616161 !important;
-}
-
-.btn_signUp {
-  margin-top: 5vh !important;
-  background-color: white !important;
-  padding: 0 !important;
-}
-
-.btn_content {
-  font-size: 3vh !important;
-  font-weight: 700 !important;
-  padding: 0.4rem 2rem;
-}
-
-.divider {
-  background-color: #616161 !important;
-  margin-top: 7vh !important;
-  width: 100% !important;
-}
-
-.bot_divider {
-  background-color: #616161 !important;
-  margin-top: 8vh !important;
-  width: 100% !important;
-}
-
-.bot_footer {
-  position: relative;
-  top: 5vh;
-  padding-left: 3rem;
+  padding: 1rem;
 }
 
 /*Gallery*/

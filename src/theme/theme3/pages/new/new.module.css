@@ -1,0 +1,15 @@
+/*New*/
+.title {
+  font-weight: 700 !important;
+  padding-bottom: 5vh;
+}
+
+.news {
+  position: relative;
+  margin-top: 15vh;
+  margin-bottom: 20vh;
+}
+
+.card {
+  border: 1px solid black;
+}
