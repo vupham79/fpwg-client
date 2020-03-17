@@ -1,32 +1,16 @@
 import {
   faFacebookF,
   faInstagram,
-  faYoutube,
+  faMailchimp,
   faWhatsapp,
-  faMailchimp
+  faYoutube
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  IconButton,
-  Input,
-  Typography
-} from "@material-ui/core";
+import { Box, Divider, Grid, IconButton, Typography } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Link from "../../../component/link";
 import styles from "./index.module.css";
-
-const txtStyles = {
-  backgroundColor: "white",
-  marginTop: "5vh",
-  height: "7.5vh",
-  width: "85%",
-  padding: "2vh 4vh"
-};
 
 class FooterPage extends Component {
   renderUrl = () => {
@@ -220,25 +204,8 @@ class FooterPage extends Component {
           <Typography variant="body1" style={isEdit ? bodyEdit : bodyView}>
             Get exclusive updates and promotions straight to your email.
           </Typography>
-          <Input
-            style={txtStyles}
-            variant="outlined"
-            placeholder="Email"
-            autoComplete="true"
-            inputProps={{ "aria-label": "description" }}
-          />
-          <Button className={styles.btn_signUp} variant="outlined">
-            <Typography
-              align="center"
-              variant="h6"
-              className={styles.btn_content}
-              style={isEdit ? bodyEdit : bodyView}
-            >
-              Sign UP
-            </Typography>
-          </Button>
         </Grid>
-        <Divider className={styles.bot_divider} variant="middle" />
+        <Divider className={styles.bot_divider} variant="fullWidth" />
         <Grid item sm={12} xs={12} container className={styles.bot_footer}>
           <Grid item sm={9} container justify="flex-start">
             <Typography variant="body1">

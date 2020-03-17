@@ -91,7 +91,7 @@ class HeaderComponent extends Component {
     const tabStyles = {
       textTransform: "none",
       fontFamily: titleEdit.fontFamily,
-      color: this.props.navColor,
+      color: this.props.navPos === "center" ? "white" : this.props.navColor,
       minWidth: "4vh",
       "&:hover": {
         color: "#40a9ff",
@@ -113,22 +113,22 @@ class HeaderComponent extends Component {
           type === "vertical"
             ? pos === "right"
               ? {
-                style: {
-                  background: siteEdit.color,
-                  right: 0
+                  style: {
+                    background: siteEdit.color,
+                    right: 0
+                  }
                 }
-              }
               : {
+                  style: {
+                    background: siteEdit.color,
+                    left: 0
+                  }
+                }
+            : {
                 style: {
-                  background: siteEdit.color,
-                  left: 0
+                  background: siteEdit.color
                 }
               }
-            : {
-              style: {
-                background: siteEdit.color
-              }
-            }
         }
         onChange={(e, newValue) => updateNavItemValue(newValue)}
       >
@@ -149,28 +149,33 @@ class HeaderComponent extends Component {
         {isEdit
           ? this.renderTabItems({ type: "horizontal" })
           : siteView &&
-          siteView.navItems &&
-          siteView.navItems.map((item, index) =>
-            item.isActive ? (
-              <Grid
-                item
-                sm
-                md
-                key={index}
-                style={{
-                  textAlign: "end"
-                }}
-              >
-                <NavLink
-                  style={{ ...titleView, textDecoration: "none", color: this.props.navColor, backgroundColor: this.props.headerColor }}
-                  activeStyle={{ borderBottom: "1px solid" }}
-                  to={`/${siteView.sitePath}/${item.original}`}
+            siteView.navItems &&
+            siteView.navItems.map((item, index) =>
+              item.isActive ? (
+                <Grid
+                  item
+                  sm
+                  md
+                  key={index}
+                  style={{
+                    textAlign: "end"
+                  }}
                 >
-                  {item.name}
-                </NavLink>
-              </Grid>
-            ) : null
-          )}
+                  <NavLink
+                    style={{
+                      ...titleView,
+                      textDecoration: "none",
+                      color: this.props.navColor,
+                      backgroundColor: this.props.headerColor
+                    }}
+                    activeStyle={{ borderBottom: "1px solid" }}
+                    to={`/${siteView.sitePath}/${item.original}`}
+                  >
+                    {item.name}
+                  </NavLink>
+                </Grid>
+              ) : null
+            )}
       </Grid>
     );
   };
@@ -183,31 +188,31 @@ class HeaderComponent extends Component {
         {isEdit ? (
           siteEdit && this.renderTabItems({ type: "vertical", pos: pos })
         ) : (
-            <List>
-              {siteView &&
-                siteView.navItems.map((item, index) =>
-                  item.isActive ? (
-                    <ListItem button key={index}>
-                      <NavLink
-                        style={{
-                          ...titleView,
-                          width: "inherit",
-                          textAlign: "center",
-                          height: "inherit",
-                          textDecoration: "none"
-                        }}
-                        activeStyle={{
-                          borderBottom: "1px solid"
-                        }}
-                        to={`/${siteView.sitePath}/${item.name}`}
-                      >
-                        {item.name}
-                      </NavLink>
-                    </ListItem>
-                  ) : null
-                )}
-            </List>
-          )}
+          <List>
+            {siteView &&
+              siteView.navItems.map((item, index) =>
+                item.isActive ? (
+                  <ListItem button key={index}>
+                    <NavLink
+                      style={{
+                        ...titleView,
+                        width: "inherit",
+                        textAlign: "center",
+                        height: "inherit",
+                        textDecoration: "none"
+                      }}
+                      activeStyle={{
+                        borderBottom: "1px solid"
+                      }}
+                      to={`/${siteView.sitePath}/${item.name}`}
+                    >
+                      {item.name}
+                    </NavLink>
+                  </ListItem>
+                ) : null
+              )}
+          </List>
+        )}
       </div>
     );
   };
@@ -292,7 +297,11 @@ class HeaderComponent extends Component {
         <Grid
           container
           alignItems="center"
-          style={displayImg ? { backgroundColor: this.props.headerColor } : { padding: "1rem", backgroundColor: this.props.headerColor }}
+          style={
+            displayImg
+              ? { backgroundColor: this.props.headerColor }
+              : { padding: "1rem", backgroundColor: this.props.headerColor }
+          }
         >
           <Grid container item md={7} sm={12} xs={8} justify="flex-start">
             <Grid>
@@ -323,21 +332,21 @@ class HeaderComponent extends Component {
               />
             </Grid>
           ) : (
-              <Grid
-                container
-                item
-                md={5}
-                sm={7}
-                xs={4}
-                justify="flex-end"
-                alignItems="center"
-              >
-                {this.renderTitle()}
-              </Grid>
-            )}
+            <Grid
+              container
+              item
+              md={5}
+              sm={7}
+              xs={4}
+              justify="flex-end"
+              alignItems="center"
+            >
+              {this.renderTitle()}
+            </Grid>
+          )}
         </Grid>
       );
-    } else {
+    } else if (navPos === "right") {
       return (
         <Grid
           container
@@ -358,16 +367,16 @@ class HeaderComponent extends Component {
               </Grid>
             </Grid>
           ) : (
-              <Grid container item md={6} sm={6} xs={8}>
-                <Grid
-                  container
-                  justify="flex-start"
-                  style={{ paddingLeft: "2rem" }}
-                >
-                  {this.renderTitle()}
-                </Grid>
+            <Grid container item md={6} sm={6} xs={8}>
+              <Grid
+                container
+                justify="flex-start"
+                style={{ paddingLeft: "2rem" }}
+              >
+                {this.renderTitle()}
               </Grid>
-            )}
+            </Grid>
+          )}
           <Grid
             container
             justify="center"
@@ -387,21 +396,64 @@ class HeaderComponent extends Component {
           </Grid>
         </Grid>
       );
+    } else if (navPos === "center") {
+      return (
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          style={{ height: "10vh" }}
+        >
+          {this.renderNavItems(navPos)}
+        </Grid>
+      );
     }
   };
 
   render() {
-    const { classes, navPos, displayImg, isEdit } = this.props;
+    const {
+      classes,
+      navPos,
+      displayImg,
+      isEdit,
+      titleEdit,
+      titleView
+    } = this.props;
     const imgStyles = {
       backgroundSize: "contain",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       height: "5rem"
     };
+    const useStyle =
+      navPos === "center"
+        ? {
+            background: titleEdit.color,
+            padding: "0.5rem",
+            position: "absolute",
+            marginTop: "40vh"
+          }
+        : {
+            background: titleView.color,
+            padding: "0.5rem",
+            position: "absolute",
+            marginTop: "40vh"
+          };
 
     return (
-      <AppBar className={classes.app_bar} position="sticky">
-        <Grid container alignItems="center" style={{ backgroundColor: this.props.headerColor }}>
+      <AppBar
+        className={classes.app_bar}
+        position={navPos === "center" ? "static" : "sticky"}
+      >
+        <Grid
+          container
+          alignItems="center"
+          style={
+            navPos === "center"
+              ? useStyle
+              : { backgroundColor: this.props.headerColor }
+          }
+        >
           <Grid item xs={11}>
             {this.renderHeader({
               imgStyles: imgStyles,
@@ -414,7 +466,7 @@ class HeaderComponent extends Component {
             {this.renderTooltip()}
           </Grid>
         </Grid>
-      </AppBar >
+      </AppBar>
     );
   }
 }
