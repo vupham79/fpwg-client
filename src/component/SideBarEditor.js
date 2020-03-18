@@ -20,6 +20,7 @@ import SettingEditorTab from "./SettingEditorTab";
 import SyncEditorTab from "./SyncEditorTab";
 import AccordionButton from "../theme/component/mainComponent";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import ThemeEditorTab from "./ThemeEditorTab";
 
 const useStyles = theme => ({
   root: {
@@ -192,7 +193,7 @@ class ClippedDrawer extends React.Component {
           <Divider
             style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
           /> */}
-          <AccordionButton comp={<DesignTab />} label="Select theme" currentNav={this.state.currentNavName} isNav={this.state.navigating} setNav={this.setNavigating} />
+          <AccordionButton comp={<ThemeEditorTab />} label="Select theme" currentNav={this.state.currentNavName} isNav={this.state.navigating} setNav={this.setNavigating} />
           <AccordionButton comp={<DesignTab />} label="Customize theme" currentNav={this.state.currentNavName} isNav={this.state.navigating} setNav={this.setNavigating} />
           <AccordionButton comp={<PagesEditorTab />} label="Pages" currentNav={this.state.currentNavName} isNav={this.state.navigating} setNav={this.setNavigating} />
           <AccordionButton comp={<SettingEditorTab />} label="Settings" currentNav={this.state.currentNavName} isNav={this.state.navigating} setNav={this.setNavigating} />
