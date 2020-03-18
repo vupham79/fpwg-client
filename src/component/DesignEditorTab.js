@@ -105,7 +105,7 @@ const useStyles = theme => ({
     fontFamily: "Segoe UI, sans-serif !important",
     fontSize: 13,
     color: "#555d66"
-  },
+  }
 });
 
 const imgStyles = {
@@ -139,7 +139,7 @@ class DesignEditorTab extends React.Component {
     this.setState({
       logo: site.logo
     });
-    img.addEventListener("load", async function () {
+    img.addEventListener("load", async function() {
       const color = await colorThief.getPalette(img, 11);
       const colors = await color.map(rgb =>
         onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
@@ -277,7 +277,7 @@ class DesignEditorTab extends React.Component {
               style={{ ...coverStyles, backgroundImage: `url(${cover})` }}
             >
               <IconButton
-                style={{ width: "100%" }}
+                style={{ width: "100%", borderRadius: "0" }}
                 onClick={() => removeCover(cover)}
               >
                 <Cancel
@@ -381,7 +381,7 @@ class DesignEditorTab extends React.Component {
               onFontSelected={this.handleChangeFontTitle}
               classes={{
                 pickerButton: classes.pickerButton,
-                root: classes.fontPickerRoot,
+                root: classes.fontPickerRoot
               }}
               children={<Add />}
               innerRef={""}

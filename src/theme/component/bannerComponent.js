@@ -134,7 +134,7 @@ class BannerComponent extends React.Component {
     return (
       <React.Fragment>
         <Grid item xs={12}>
-          <Carousel
+          {/* <Carousel
             autoPlay
             infiniteLoop
             centerMode={false}
@@ -145,7 +145,7 @@ class BannerComponent extends React.Component {
             showThumbs={false}
           >
             {this.renderNewCoversCarouselWithTitle()}
-          </Carousel>
+          </Carousel> */}
         </Grid>
       </React.Fragment>
     );
@@ -163,7 +163,7 @@ class BannerComponent extends React.Component {
     const { bannerType } = this.props;
 
     return (
-      <Grid container xs={12} justify="center">
+      <Grid container justify="center">
         {
           {
             0: this.TypeCarousel(),

@@ -1,8 +1,7 @@
-import React, { Component } from "react";
 import { Grid } from "@material-ui/core";
-import SiteBarEditor from "../component/SideBarEditor";
-import Header from "../component/Header";
+import React, { Component } from "react";
 import { connect } from "react-redux";
+import SiteBarEditor from "../component/SideBarEditor";
 
 class EditLayout extends Component {
   render() {
@@ -19,10 +18,10 @@ class EditLayout extends Component {
               {this.props.children}
             </Grid>
           ) : (
-              <Grid item sm={9} xs={12}>
-                {this.props.children}
-              </Grid>
-            )}
+            <Grid item sm={9} xs={12}>
+              {this.props.children}
+            </Grid>
+          )}
         </Grid>
       </>
     );

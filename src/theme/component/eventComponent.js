@@ -68,7 +68,7 @@ class EventComponent extends React.Component {
       eventPage: {
         marginTop: "5vh",
         marginBottom: "5vh",
-        backgroundColor: "#1a1919",
+        backgroundColor: "#1a1919"
       }
     });
     const classes = useStyles();
@@ -80,7 +80,7 @@ class EventComponent extends React.Component {
             container
             alignItems="center"
             direction="column"
-            className={classes.eventPage}
+            // className={classes.eventPage}
           >
             <Grid
               item

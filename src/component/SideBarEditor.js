@@ -10,11 +10,11 @@ import { connect } from "react-redux";
 import { saveDesignSite, updateTabValue } from "../actions";
 import AccordionButton from "../theme/component/mainComponent";
 import DesignTab from "./DesignEditorTab";
+import Link from "./link";
 import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
 import SyncEditorTab from "./SyncEditorTab";
 import ThemeEditorTab from "./ThemeEditorTab";
-import Link from "./link";
 
 const useStyles = theme => ({
   root: {
@@ -33,21 +33,6 @@ const useStyles = theme => ({
   }
 });
 
-const tabStyles = {
-  textTransform: "none",
-  minWidth: "5vh",
-  "&:hover": {
-    color: "#40a9ff",
-    opacity: 1
-  },
-  "&$selected": {
-    color: "#1890ff"
-  },
-  "&:focus": {
-    color: "#40a9ff"
-  }
-};
-
 class ClippedDrawer extends React.Component {
   state = {
     currentNavName: "",
@@ -64,8 +49,6 @@ class ClippedDrawer extends React.Component {
   render() {
     const {
       classes,
-      tabValue,
-      updateTabValue,
       siteEdit,
       saveDesignSite,
       newLogo,

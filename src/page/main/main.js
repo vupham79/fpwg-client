@@ -75,7 +75,7 @@ function EmptyListSite() {
   return (
     <Grid container justify="center" alignItems="center">
       <Grid item xs={3} sm={2} md={1}>
-        <img src={imgUrl} className={style.img} />
+        <img src={imgUrl} alt="" className={style.img} />
       </Grid>
       <Grid container item xs={12}>
         <Grid item xs={12}>
@@ -248,7 +248,7 @@ class MainPage extends Component {
               ) : (
                 <Grid container alignItems="center" justify="center">
                   <Grid item xs={3} sm={2} md={1}>
-                    <img src={imgUrl} className={classes.img} />
+                    <img src={imgUrl} alt="" className={classes.img} />
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant="h5" className={classes.h4}>

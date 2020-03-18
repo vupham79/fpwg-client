@@ -8,18 +8,18 @@ class PreMainPage extends Component {
     isEdit: false
   };
   getUserPages = async () => {
-    const { accessToken, userId, getUserPages } = this.props;
-    await getUserPages({ accessToken, userId });
+    const { accessToken, profile, getUserPages } = this.props;
+    await getUserPages({ accessToken, userId: profile.id });
   };
 
   getAllUserSites = async () => {
-    const { accessToken, userId, getUserSites } = this.props;
-    await getUserSites(userId, accessToken);
+    const { accessToken, profile, getUserSites } = this.props;
+    await getUserSites(profile.id, accessToken);
   };
 
   async componentDidMount() {
-    const { isLogin } = this.props;
-    if (isLogin) {
+    const { isLogin, profile } = this.props;
+    if (isLogin && profile) {
       this.getUserPages();
       this.getAllUserSites();
     }
@@ -37,7 +37,7 @@ class PreMainPage extends Component {
 const mapStateToProps = state => ({
   isLogin: state.user.isLogin,
   accessToken: state.user.accessToken,
-  userId: state.user.profile.id
+  profile: state.user.profile
 });
 
 const mapDispatchToProps = dispatch => ({

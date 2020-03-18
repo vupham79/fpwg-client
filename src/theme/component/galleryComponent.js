@@ -1,8 +1,7 @@
 import { Container, Dialog, Grid, withStyles } from "@material-ui/core";
 import React from "react";
-import { connect } from "react-redux";
-import { closeDialog, openDialog } from "../../actions";
 import ReactPaginate from "react-paginate";
+import { connect } from "react-redux";
 
 const useStyles = theme => ({
   root: {
@@ -83,16 +82,7 @@ class GalleryComponent extends React.Component {
     const handleOpenDialog = image => {
       this.setState({ img: image, open: true });
     };
-    const {
-      classes,
-      open,
-      openDialog,
-      closeDialog,
-      galleries,
-      bodyEdit,
-      bodyView,
-      isEdit
-    } = this.props;
+    const { classes, galleries, bodyEdit, bodyView, isEdit } = this.props;
     return (
       <React.Fragment>
         <Container className={classes.root}>
