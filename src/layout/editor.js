@@ -10,7 +10,7 @@ class EditLayout extends Component {
       <>
         <Grid container>
           {!this.props.isPreview && (
-            <Grid item sm={2} xs={12}>
+            <Grid item sm={3} xs={12}>
               <SiteBarEditor />
             </Grid>
           )}
@@ -19,10 +19,10 @@ class EditLayout extends Component {
               {this.props.children}
             </Grid>
           ) : (
-            <Grid item sm={10} xs={12}>
-              {this.props.children}
-            </Grid>
-          )}
+              <Grid item sm={9} xs={12}>
+                {this.props.children}
+              </Grid>
+            )}
         </Grid>
       </>
     );
