@@ -344,6 +344,29 @@ class DesignEditorTab extends React.Component {
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
+        <Typography className={classes.title}>Site Title</Typography>
+        <TextField
+          variant={"outlined"}
+          fullWidth
+          size="small"
+          InputLabelProps={{
+            classes: {
+              focused: classes.focused
+            }
+          }}
+          InputProps={{
+            classes: {
+              notchedOutline: classes.notchedOutline,
+              input: classes.inputTitle
+            }
+          }}
+          style={{ backgroundColor: "white" }}
+          value={site.title}
+          onChange={e => this.handleChangeSiteTitle(e)}
+        />
+        <Divider
+          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
+        />
         <Typography className={classes.title}>Font</Typography>
         <Grid container className={classes.sideBarBox} justify={"space-evenly"}>
           <Grid item xs={12}>
