@@ -423,7 +423,7 @@ class HeaderComponent extends Component {
       backgroundSize: "contain",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
-      height: "5rem"
+      height: "3.5rem"
     };
     const useStyle =
       navPos === "center"

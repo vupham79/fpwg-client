@@ -37,29 +37,9 @@
   padding: 1.5vh 0vh;
 }
 
-.profile {
-  padding: 2vh;
-  background: white;
-  border: 1px solid black;
-}
-
 .profile_img {
-  background-position: center !important;
-  background-repeat: no-repeat !important;
-  background-size: cover !important;
-  border: 1px solid black;
-  width: 20%;
-  float: left;
-  margin-right: 0.5rem;
-}
-
-.profile_content {
-  font-size: 2vh !important;
-  color: #616161;
-  cursor: pointer;
-  border: 1px solid #616161 !important;
-  padding: 0.2rem !important;
-  border-radius: 0.2rem;
+  width: 40%;
+  border-radius: 100%;
 }
 
 .support {

@@ -83,6 +83,7 @@ class EventPage extends React.Component {
       <Grid
         container
         alignItems="center"
+        justify="center"
         direction="column"
         className={styles.event_page}
       >

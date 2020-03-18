@@ -6,6 +6,7 @@
 .title {
   font-weight: 700 !important;
   padding-bottom: 5vh;
+  text-align: center;
 }
 
 .divider {
@@ -15,10 +16,12 @@
 .child_title {
   color: black !important;
   font-weight: 700 !important;
+  text-align: center;
 }
 
 .child_content {
   margin-top: -5vh !important;
+  text-align: center;
 }
 
 .child {
