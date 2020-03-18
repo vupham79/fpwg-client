@@ -4,8 +4,7 @@ import {
   Checkbox,
   Dialog,
   DialogActions,
-  ExpansionPanel,
-  ExpansionPanelSummary,
+  Divider,
   Grid,
   IconButton,
   Table,
@@ -22,7 +21,7 @@ import { green } from "@material-ui/core/colors";
 import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import { withStyles as withStylesStyle } from "@material-ui/core/styles";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MenuIcon from "@material-ui/icons/Menu";
+import MenuIcon from "@material-ui/icons/DragHandle";
 import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import moment from "moment";
@@ -45,37 +44,100 @@ import {
   updateNavItemValue
 } from "../actions";
 
+const useStyles = theme => ({
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+    paddingTop: 90
+  },
+  title: {
+    fontFamily: "Segoe UI, sans-serif",
+    fontWeight: "600",
+    color: "#555d66",
+    fontSize: 14
+  },
+  title2: {
+    fontSize: "12px",
+    marginTop: "0.25rem",
+    fontFamily: "Segoe UI, sans-serif",
+    fontWeight: 600,
+    marginBottom: "1rem",
+    color: "#555d66"
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 400
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2)
+  },
+  sideBarBox: {
+    borderStyle: "solid",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#b4c0cf",
+    padding: "1rem"
+  },
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "#0087be !important",
+    color: "#434d58 !important"
+  },
+  focused: {
+    borderWidth: "1px",
+    borderColor: "#0087be !important",
+    color: "#434d58 !important"
+  },
+  pickerButton: {
+    margin: 0,
+    backgroundColor: "white",
+    marginBottom: "0.2rem"
+  },
+  customButton: {
+    border: "1px solid #0071a1",
+    borderRadius: 5,
+    color: "#0071a1",
+    fontSize: 11
+  },
+  logoButton: {
+    marginTop: 5,
+    border: "1px solid #555d66",
+    borderRadius: 5,
+    color: "#555d66",
+    borderStyle: "dashed",
+    fontSize: 13,
+    height: 40,
+    width: "100%",
+    "&:hover": {
+      backgroundColor: "white"
+    }
+  },
+  fontPickerRoot: {
+    width: "100% !important"
+  },
+  inputTitle: {
+    fontFamily: "Segoe UI, sans-serif !important",
+    fontSize: 13,
+    color: "#555d66"
+  },
+});
+
 const gridContainer = {
-  borderStyle: "solid",
-  borderRadius: 10,
-  borderWidth: 1,
-  borderColor: "#2a2e2a"
+
 };
 
 const viewButton = {
   color: "black"
 };
 
-const useStyles = theme => ({
-  sideBarBox: {
-    borderStyle: "solid",
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#2a2e2a",
-    padding: "0.5rem"
-  }
-});
-
 const gridItem = {
-  borderStyle: "solid",
-  borderColor: "#2a2e2a",
-  borderWidth: 1.5,
   padding: "0.2rem 0.5rem",
-  margin: "0.7rem",
-  zIndex: "99999999"
+  zIndex: "99999999",
+  backgroundColor: "white",
+  border: "1px solid #dddddd"
 };
 
-const DragHandle = sortableHandle(() => <MenuIcon />);
+const DragHandle = sortableHandle(() => <MenuIcon style={{ color: "#555d66", cursor: "move" }} />);
 
 function handleChangeActive(id, site, setActiveNavItems, updateNavItemValue) {
   const index = site && site.navItems && site.navItems.find(e => e._id === id);
@@ -94,108 +156,9 @@ function handleChangeNavName(id, site, newName, changeNavItemName) {
   changeNavItemName(site);
 }
 
-const SortableItem = sortableElement(
-  ({
-    value,
-    site,
-    item,
-    setActiveNavItems,
-    updateNavItemValue,
-    changeNavItemName
-  }) => (
-    <Grid container style={gridItem}>
-      <Grid
-        container
-        item
-        alignItems="center"
-        xs={10}
-        sm={12}
-        md={10}
-        style={{ padding: "0.2rem 0" }}
-      >
-        <Grid container justify="center" item xs={2} md={2} sm={12}>
-          <DragHandle />
-        </Grid>
-        <Grid item xs={10} md={10} sm={12}>
-          <TextField
-            inputProps={{
-              style: {
-                padding: "0.5rem"
-              }
-            }}
-            fullWidth
-            variant={"outlined"}
-            value={value}
-            onChange={e =>
-              handleChangeNavName(
-                item._id,
-                site,
-                e.target.value,
-                changeNavItemName
-              )
-            }
-          />
-        </Grid>
-      </Grid>
-      <Grid container item justify="center" xs={2} sm={12} md={2}>
-        {item.original === "home" ? (
-          <></>
-        ) : (
-          <IconButton
-            style={viewButton}
-            onClick={() =>
-              handleChangeActive(
-                item._id,
-                site,
-                setActiveNavItems,
-                updateNavItemValue
-              )
-            }
-          >
-            {item.isActive && item.name !== "Home" ? (
-              <VisibilityOutlinedIcon />
-            ) : (
-              <VisibilityOffOutlinedIcon />
-            )}
-          </IconButton>
-        )}
-      </Grid>
-    </Grid>
-  )
-);
-
-const SortableList = sortableContainer(
-  ({
-    items,
-    site,
-    setActiveNavItems,
-    updateNavItemValue,
-    changeNavItemName
-  }) => {
-    if (items) {
-      return (
-        <Grid container style={gridContainer} alignItems="center">
-          {items.map((value, index) => (
-            <SortableItem
-              key={index}
-              index={index}
-              value={value.name}
-              item={value}
-              site={site}
-              setActiveNavItems={setActiveNavItems}
-              updateNavItemValue={updateNavItemValue}
-              changeNavItemName={changeNavItemName}
-            />
-          ))}
-        </Grid>
-      );
-    }
-    return <></>;
-  }
-);
-
 const expanStyle = {
-  marginTop: "1rem"
+  marginTop: "1rem",
+  backgroundColor: "#f0eded",
 };
 
 const GreenCheckbox = withStyles({
@@ -347,7 +310,7 @@ class PagesEditorTab extends React.Component {
   };
 
   handleSearch = keyword => {
-    let searchResult = this.props.paths.filter(function(user) {
+    let searchResult = this.props.paths.filter(function (user) {
       return user.pathName.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -387,85 +350,205 @@ class PagesEditorTab extends React.Component {
       changeNavItemName
     } = this.props;
 
-    return (
-      <>
-        <ExpansionPanel style={expanStyle}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="button">Navigation</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <SortableList
-              items={site.navItems}
-              onSortEnd={this.onChangeItem}
-              useDragHandle
-              site={site}
-              setActiveNavItems={setActiveNavItems}
-              updateNavItemValue={updateNavItemValue}
-              changeNavItemName={changeNavItemName}
-            />
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-        <ExpansionPanel style={expanStyle}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="button">News</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Grid container className={classes.sideBarBox}>
-              <Grid container alignItems="center">
-                <Grid item xs={6} sm={12} md={6}>
-                  <Typography variant="body1" style={{ paddingRight: "2rem" }}>
-                    Posts Setting:
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} sm={12} md={6}>
-                  <Button
-                    variant="contained"
-                    onClick={openDialog}
-                    style={{ width: "-webkit-fill-available" }}
-                  >
-                    Setting
-                  </Button>
-                </Grid>
-
-                <Dialog
-                  disableBackdropClick
-                  disableEscapeKeyDown
-                  open={open}
-                  maxWidth="md"
+    const SortableItem = sortableElement(
+      ({
+        value,
+        site,
+        item,
+        setActiveNavItems,
+        updateNavItemValue,
+        changeNavItemName,
+      }) => (
+          <Grid container style={gridItem}>
+            <Grid
+              container
+              item
+              alignItems="center"
+              xs={10}
+              sm={12}
+              md={10}
+              style={{ padding: "0.2rem 0" }}
+            >
+              <Grid container justify="center" item xs={2} md={2} sm={12}>
+                <DragHandle />
+              </Grid>
+              <Grid item xs={10} md={10} sm={12}>
+                <TextField
+                  InputLabelProps={{
+                    classes: {
+                      focused: classes.focused
+                    }
+                  }}
+                  InputProps={{
+                    classes: {
+                      notchedOutline: classes.notchedOutline,
+                      input: classes.inputTitle
+                    }
+                  }}
+                  size="small"
+                  style={{ backgroundColor: "white" }}
                   fullWidth
-                >
-                  <Grid container alignItems="center">
-                    <PostsList
-                      posts={posts}
-                      filteredData={this.state.filteredData}
-                      setActivePost={this.setActivePost}
-                      pageCount={this.state.pageCount}
-                      handlePageClick={this.handlePageClick}
-                    />
-                  </Grid>
-                  <DialogActions>
-                    <Button
-                      autoFocus
-                      variant="contained"
-                      onClick={closeDialog}
-                      color="secondary"
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      variant="contained"
-                      onClick={() => this.handleSave(posts)}
-                      color={"primary"}
-                    >
-                      Save
-                    </Button>
-                  </DialogActions>
-                </Dialog>
+                  variant={"outlined"}
+                  value={value}
+                  onChange={e =>
+                    handleChangeNavName(
+                      item._id,
+                      site,
+                      e.target.value,
+                      changeNavItemName
+                    )
+                  }
+                />
               </Grid>
             </Grid>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      </>
+            <Grid container item justify="center" xs={2} sm={12} md={2}>
+              {item.original === "home" ? (
+                <></>
+              ) : (
+                  <IconButton
+                    style={viewButton}
+                    onClick={() =>
+                      handleChangeActive(
+                        item._id,
+                        site,
+                        setActiveNavItems,
+                        updateNavItemValue
+                      )
+                    }
+                  >
+                    {item.isActive && item.name !== "Home" ? (
+                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                    ) : (
+                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                      )}
+                  </IconButton>
+                )}
+            </Grid>
+          </Grid>
+        )
+    );
+
+    const SortableList = sortableContainer(
+      ({
+        items,
+        site,
+        setActiveNavItems,
+        updateNavItemValue,
+        changeNavItemName
+      }) => {
+        if (items) {
+          return (
+            <Grid container style={gridContainer} alignItems="center">
+              {items.map((value, index) => (
+                <SortableItem
+                  key={index}
+                  index={index}
+                  value={value.name}
+                  item={value}
+                  site={site}
+                  setActiveNavItems={setActiveNavItems}
+                  updateNavItemValue={updateNavItemValue}
+                  changeNavItemName={changeNavItemName}
+                />
+              ))}
+            </Grid>
+          );
+        }
+        return <></>;
+      }
+    );
+
+
+    return (
+      <div style={{ padding: 10 }}>
+
+        <Grid container justify={"center"} direction={"column"}>
+          <Grid
+            item
+            style={{
+              color: "#555d66",
+              textAlign: "left",
+              fontStyle: "italic",
+              fontFamily: "Segoe UI, sans-serif"
+            }}
+          >
+            Select which post from Facebook you want to see on your site.
+          </Grid>
+          <Grid container justify={"center"} style={{ marginTop: "1rem" }}>
+            <button
+              className={classes.logoButton}
+              color={"default"}
+              onClick={openDialog}
+            >
+              Select
+                  </button>
+          </Grid>
+
+          <Dialog
+            disableBackdropClick
+            disableEscapeKeyDown
+            open={open}
+            maxWidth="md"
+            fullWidth
+          >
+            <Grid container alignItems="center">
+              <PostsList
+                posts={posts}
+                filteredData={this.state.filteredData}
+                setActivePost={this.setActivePost}
+                pageCount={this.state.pageCount}
+                handlePageClick={this.handlePageClick}
+              />
+            </Grid>
+            <DialogActions>
+              <Button
+                autoFocus
+                variant="contained"
+                onClick={closeDialog}
+                color="secondary"
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                onClick={() => this.handleSave(posts)}
+                color={"primary"}
+              >
+                Save
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Grid>
+
+        <Divider
+          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
+        />
+        <Typography className={classes.title}>Pages</Typography>
+        <Divider
+          style={{ height: "1.2rem", width: "100%", backgroundColor: "#ffffff00" }}
+        />
+        <Grid
+          item
+          style={{
+            color: "#555d66",
+            textAlign: "left",
+            fontStyle: "italic",
+            fontFamily: "Segoe UI, sans-serif",
+            marginBottom: "0.8rem"
+          }}
+        >
+          Reorder or hide pages of your site.
+         </Grid>
+        <SortableList
+          items={site.navItems}
+          onSortEnd={this.onChangeItem}
+          useDragHandle
+          site={site}
+          setActiveNavItems={setActiveNavItems}
+          updateNavItemValue={updateNavItemValue}
+          changeNavItemName={changeNavItemName}
+        />
+      </div>
     );
   }
 }
