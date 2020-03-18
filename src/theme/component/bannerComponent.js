@@ -1,13 +1,10 @@
-import {
-  Grid,
-} from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import Slider from "react-slick";
 
 class BannerComponent extends React.Component {
-
   renderNewCoversSlider = () => {
     const { isEdit, newCover, siteView } = this.props;
     if (isEdit) {
@@ -104,11 +101,13 @@ class BannerComponent extends React.Component {
     return (
       <React.Fragment>
         <Grid item xs={12}>
-          <Slider fade speed={2000} autoplay>{this.renderNewCoversSlider()}</Slider>
+          <Slider fade speed={2000} autoplay>
+            {this.renderNewCoversSlider()}
+          </Slider>
         </Grid>
       </React.Fragment>
     );
-  }
+  };
 
   TypeCarousel = () => {
     return (
@@ -129,7 +128,7 @@ class BannerComponent extends React.Component {
         </Grid>
       </React.Fragment>
     );
-  }
+  };
 
   TypeCarouselWithTitle = () => {
     return (
@@ -150,7 +149,7 @@ class BannerComponent extends React.Component {
         </Grid>
       </React.Fragment>
     );
-  }
+  };
 
   render() {
     const useStyles = () => ({
@@ -158,19 +157,13 @@ class BannerComponent extends React.Component {
         textAlign: "center",
         fontStyle: "italic",
         fontSize: 20
-      },
+      }
     });
     const classes = useStyles();
-    const {
-      bannerType
-    } = this.props;
+    const { bannerType } = this.props;
 
     return (
-      <Grid
-        container
-        xs={12}
-        justify="center"
-      >
+      <Grid container xs={12} justify="center">
         {
           {
             0: this.TypeCarousel(),
@@ -179,7 +172,6 @@ class BannerComponent extends React.Component {
             default: this.TypeCarousel()
           }[bannerType]
         }
-
       </Grid>
     );
   }
@@ -193,10 +185,7 @@ const mapStateToProps = state => ({
   newLogo: state.site.newLogo,
   newCover: state.site.newCover,
   siteEdit: state.site.siteEdit,
-  siteView: state.site.siteView,
+  siteView: state.site.siteView
 });
 
-export default connect(
-  mapStateToProps,
-  null
-)(BannerComponent);
+export default connect(mapStateToProps, null)(BannerComponent);

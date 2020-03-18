@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./about.module.css";

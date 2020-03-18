@@ -1,19 +1,6 @@
-import GoogleFontPicker from "@bit/take2.components.google-font-picker";
-import {
-  Button,
-  Divider,
-  Grid,
-  Input,
-  TextField,
-  Typography,
-  IconButton
-} from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { Add, Cancel } from "@material-ui/icons";
-import ColorThief from "color-thief";
-import onecolor from "onecolor";
 import React from "react";
-import { ChromePicker, CirclePicker } from "react-color";
 import { connect } from "react-redux";
 import {
   changeColor,
@@ -21,14 +8,13 @@ import {
   changeFontTitle,
   changeSiteTitle,
   changeTheme,
+  removeCover,
   setColorPallete,
   setNewCover,
   setNewLogo,
-  setShowCustomColor,
-  removeCover
+  setShowCustomColor
 } from "../actions";
 import DialogThemes from "./DialogThemes";
-import toastr from "./Toastr";
 
 const useStyles = theme => ({
   content: {
@@ -126,7 +112,6 @@ class ThemeEditorTab extends React.Component {
       <div>
         <Typography className={classes.title}>Theme</Typography>
         <DialogThemes />
-
       </div>
     );
   }

@@ -13,9 +13,8 @@ import DesignTab from "./DesignEditorTab";
 import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
 import SyncEditorTab from "./SyncEditorTab";
-import AccordionButton from "../theme/component/mainComponent";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import ThemeEditorTab from "./ThemeEditorTab";
+import Link from "./link";
 
 const useStyles = theme => ({
   root: {
@@ -86,24 +85,25 @@ class ClippedDrawer extends React.Component {
         >
           <Grid container style={{ border: "1px solid #dddddd" }}>
             <Grid item xs={2}>
-              <Button
-                href="/view"
-                fullWidth
-                style={{
-                  borderRight: "1px solid #dddddd",
-                  borderRadius: 0,
-                  color: "#565d66",
-                  fontSize: 14,
-                  fontWeight: "bold",
-                  height: 40
-                }}
-              >
-                <FontAwesomeIcon
-                  icon={faWindowClose}
-                  // color="#0074aa"
-                  size="md"
-                />
-              </Button>
+              <Link to="/view">
+                <Button
+                  fullWidth
+                  style={{
+                    borderRight: "1px solid #dddddd",
+                    borderRadius: 0,
+                    color: "#565d66",
+                    fontSize: 14,
+                    fontWeight: "bold",
+                    height: 40
+                  }}
+                >
+                  <FontAwesomeIcon
+                    icon={faWindowClose}
+                    // color="#0074aa"
+                    size="sm"
+                  />
+                </Button>
+              </Link>
             </Grid>
             <Grid
               item

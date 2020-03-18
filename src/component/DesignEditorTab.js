@@ -3,10 +3,10 @@ import {
   Button,
   Divider,
   Grid,
+  IconButton,
   Input,
   TextField,
-  Typography,
-  IconButton
+  Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Add, Cancel } from "@material-ui/icons";
@@ -21,13 +21,12 @@ import {
   changeFontTitle,
   changeSiteTitle,
   changeTheme,
+  removeCover,
   setColorPallete,
   setNewCover,
   setNewLogo,
-  setShowCustomColor,
-  removeCover
+  setShowCustomColor
 } from "../actions";
-import DialogThemes from "./DialogThemes";
 import toastr from "./Toastr";
 
 const useStyles = theme => ({
@@ -37,18 +36,18 @@ const useStyles = theme => ({
     paddingTop: 90
   },
   title: {
-    fontFamily: "Segoe UI Semibold",
+    fontFamily: "Segoe UI, sans-serif",
     marginBottom: theme.spacing(1),
-    fontWeight: "bold",
+    fontWeight: "600",
     color: "#555d66",
     fontSize: 14
   },
   title2: {
-    fontFamily: "Segoe UI Semibold",
-    marginBottom: theme.spacing(1),
-    marginTop: theme.spacing(1),
-    fontWeight: "bold",
-    fontSize: 12,
+    fontSize: "12px",
+    marginTop: "0.25rem",
+    fontFamily: "Segoe UI, sans-serif",
+    fontWeight: 600,
+    marginBottom: "0.25rem",
     color: "#555d66"
   },
   formControl: {
@@ -63,32 +62,33 @@ const useStyles = theme => ({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#b4c0cf",
-    padding: "1rem",
+    padding: "1rem"
   },
   notchedOutline: {
     borderWidth: "1px",
-    borderColor: "#b4c0cf",
+    borderColor: "#0087be !important",
     color: "#434d58 !important"
   },
   focused: {
     borderWidth: "1px",
-    borderColor: "#0087be",
+    borderColor: "#0087be !important",
     color: "#434d58 !important"
+  },
+  input: {
+    fontFamily: "Segoe UI !important"
   },
   pickerButton: {
     margin: 0,
-    width: 200,
+    width: "100%",
     backgroundColor: "white"
   },
-  customButton:
-  {
+  customButton: {
     border: "1px solid #0071a1",
     borderRadius: 5,
     color: "#0071a1",
     fontSize: 11
   },
-  logoButton:
-  {
+  logoButton: {
     marginTop: 5,
     border: "1px solid #555d66",
     borderRadius: 5,
@@ -97,11 +97,13 @@ const useStyles = theme => ({
     fontSize: 13,
     height: 40,
     width: "100%",
-
     "&:hover": {
       backgroundColor: "white"
     }
   },
+  fontPickerRoot: {
+    width: "100% !important"
+  }
 });
 
 const imgStyles = {
@@ -110,6 +112,12 @@ const imgStyles = {
   backgroundRepeat: "no-repeat",
   width: "6rem",
   height: "6rem"
+};
+
+const coverStyles = {
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat"
 };
 
 class DesignEditorTab extends React.Component {
@@ -129,7 +137,7 @@ class DesignEditorTab extends React.Component {
     this.setState({
       logo: site.logo
     });
-    img.addEventListener("load", async function () {
+    img.addEventListener("load", async function() {
       const color = await colorThief.getPalette(img, 11);
       const colors = await color.map(rgb =>
         onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
@@ -244,11 +252,14 @@ class DesignEditorTab extends React.Component {
               sm={6}
               xs={6}
               style={{
-                ...imgStyles,
+                ...coverStyles,
                 backgroundImage: `url(${URL.createObjectURL(cover)})`
               }}
             >
-              <IconButton onClick={() => removeCover(cover)}>
+              <IconButton
+                style={{ width: "100%" }}
+                onClick={() => removeCover(cover)}
+              >
                 <Cancel color={"error"} />
               </IconButton>
             </Grid>
@@ -261,10 +272,17 @@ class DesignEditorTab extends React.Component {
               md={4}
               sm={6}
               xs={6}
-              style={{ ...imgStyles, backgroundImage: `url(${cover})` }}
+              style={{ ...coverStyles, backgroundImage: `url(${cover})` }}
             >
-              <IconButton onClick={() => removeCover(cover)}>
-                <Cancel color={"error"} />
+              <IconButton
+                style={{ width: "100%" }}
+                onClick={() => removeCover(cover)}
+              >
+                <Cancel
+                  onClick={() => removeCover(cover)}
+                  color={"error"}
+                  fontSize={""}
+                />
               </IconButton>
             </Grid>
           );
@@ -286,14 +304,19 @@ class DesignEditorTab extends React.Component {
     return (
       <div style={{ padding: 10 }}>
         <Typography className={classes.title}>Logo</Typography>
-        <Grid
-          container
-          justify={"center"}
-          direction={"column"}
-        >
-          <Grid item style={{ color: "#555d66", textAlign: "left", fontStyle: "italic", fontFamily: "Segoe UI" }}>
-            Add a logo to display on your site. Choose a file from your computer below.
-            </Grid>
+        <Grid container justify={"center"} direction={"column"}>
+          <Grid
+            item
+            style={{
+              color: "#555d66",
+              textAlign: "left",
+              fontStyle: "italic",
+              fontFamily: "Segoe UI"
+            }}
+          >
+            Add a logo to display on your site. Choose a file from your computer
+            below.
+          </Grid>
           <Grid item>
             <Input
               type="file"
@@ -325,35 +348,39 @@ class DesignEditorTab extends React.Component {
         <Grid container className={classes.sideBarBox} justify={"space-evenly"}>
           <Grid item xs={12}>
             <Typography className={classes.title2}>Title</Typography>
-            <Grid item container justify="center">
-              <GoogleFontPicker
-                searchable
-                buttonColor={"default"}
-                buttonVariant={"outlined"}
-                defaultFont={isChanged ? site.theme.fontTitle : site.fontTitle}
-                onFontSelected={this.handleChangeFontTitle}
-                classes={{
-                  pickerButton: classes.pickerButton
-                }}
-                placement={"bottom"}
-              />
-            </Grid>
+            {/* <Grid item container justify="center"> */}
+            <GoogleFontPicker
+              searchable
+              buttonColor={"default"}
+              buttonVariant={"outlined"}
+              defaultFont={isChanged ? site.theme.fontTitle : site.fontTitle}
+              onFontSelected={this.handleChangeFontTitle}
+              classes={{
+                pickerButton: classes.pickerButton,
+                root: classes.fontPickerRoot
+              }}
+              children={<Add />}
+              innerRef={""}
+              placement={"bottom"}
+            />
+            {/* </Grid> */}
           </Grid>
           <Grid item xs={12}>
             <Typography className={classes.title2}>Body</Typography>
-            <Grid container justify="center">
-              <GoogleFontPicker
-                searchable
-                buttonColor={""}
-                buttonVariant={"outlined"}
-                defaultFont={isChanged ? site.theme.fontBody : site.fontBody}
-                onFontSelected={this.handleChangeFontBody}
-                classes={{
-                  pickerButton: classes.pickerButton
-                }}
-                placement={"bottom"}
-              />
-            </Grid>
+            {/* <Grid container justify="center"> */}
+            <GoogleFontPicker
+              searchable
+              buttonColor={""}
+              buttonVariant={"outlined"}
+              defaultFont={isChanged ? site.theme.fontBody : site.fontBody}
+              onFontSelected={this.handleChangeFontBody}
+              classes={{
+                pickerButton: classes.pickerButton,
+                root: classes.fontPickerRoot
+              }}
+              placement={"bottom"}
+            />
+            {/* </Grid> */}
           </Grid>
         </Grid>
         <Divider
@@ -371,7 +398,8 @@ class DesignEditorTab extends React.Component {
           }}
           InputProps={{
             classes: {
-              notchedOutline: classes.notchedOutline
+              notchedOutline: classes.notchedOutline,
+              input: classes.input
             }
           }}
           style={{ backgroundColor: "white" }}
@@ -390,6 +418,7 @@ class DesignEditorTab extends React.Component {
               </Typography>
               <CirclePicker
                 width={"fit-content"}
+                circleSize={20}
                 color={isChanged ? site.theme.mainColor : site.color}
                 colors={colorPallete}
                 onChangeComplete={this.handleChangeColor}
@@ -441,8 +470,9 @@ class DesignEditorTab extends React.Component {
             sm={6}
             xs={6}
             style={{
-              ...imgStyles,
+              ...coverStyles,
               backgroundColor: "#F3ECEC",
+              border: "1px dashed",
               cursor: "pointer"
             }}
             onClick={() => document.getElementById("addCover").click()}
@@ -453,7 +483,7 @@ class DesignEditorTab extends React.Component {
               onChange={e => this.handleUploadCover(e)}
               style={{ display: "none" }}
             />
-            <Add />
+            <Add fontSize="small" />
           </Grid>
         </Grid>
       </div>

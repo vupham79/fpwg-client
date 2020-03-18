@@ -6,20 +6,10 @@ import {
   faYoutube
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Box,
-  Divider,
-  Grid,
-  IconButton,
-  Typography,
-  withStyles,
-  Container
-} from "@material-ui/core";
+import { Grid, IconButton, Typography, withStyles } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Link from "../../../component/link";
 import styles from "./index.module.css";
-import About from "../pages/about/about";
 
 const useStyle = theme => ({
   root: {
