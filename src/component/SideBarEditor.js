@@ -13,6 +13,9 @@ import DesignTab from "./DesignEditorTab";
 import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
 import SyncEditorTab from "./SyncEditorTab";
+import AccordionButton from "../theme/component/mainComponent";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import ThemeEditorTab from "./ThemeEditorTab";
 
 const useStyles = theme => ({
   root: {
@@ -198,7 +201,7 @@ class ClippedDrawer extends React.Component {
             style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
           /> */}
           <AccordionButton
-            comp={<DesignTab />}
+            comp={<ThemeEditorTab />}
             label="Select theme"
             currentNav={this.state.currentNavName}
             isNav={this.state.navigating}

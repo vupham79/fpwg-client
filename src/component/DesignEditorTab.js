@@ -37,14 +37,19 @@ const useStyles = theme => ({
     paddingTop: 90
   },
   title: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(1),
-    fontWeight: "bold"
-  },
-  title2: {
+    fontFamily: "Segoe UI Semibold",
     marginBottom: theme.spacing(1),
     fontWeight: "bold",
-    fontSize: 12
+    color: "#555d66",
+    fontSize: 14
+  },
+  title2: {
+    fontFamily: "Segoe UI Semibold",
+    marginBottom: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    fontWeight: "bold",
+    fontSize: 12,
+    color: "#555d66"
   },
   formControl: {
     margin: theme.spacing(1),
@@ -57,22 +62,46 @@ const useStyles = theme => ({
     borderStyle: "solid",
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#2a2e2a",
-    padding: "1rem"
+    borderColor: "#b4c0cf",
+    padding: "1rem",
   },
   notchedOutline: {
     borderWidth: "1px",
-    borderColor: "#434d58 !important",
+    borderColor: "#b4c0cf",
     color: "#434d58 !important"
   },
   focused: {
     borderWidth: "1px",
-    borderColor: "#434d58 !important",
+    borderColor: "#0087be",
     color: "#434d58 !important"
   },
   pickerButton: {
-    margin: 0
-  }
+    margin: 0,
+    width: 200,
+    backgroundColor: "white"
+  },
+  customButton:
+  {
+    border: "1px solid #0071a1",
+    borderRadius: 5,
+    color: "#0071a1",
+    fontSize: 11
+  },
+  logoButton:
+  {
+    marginTop: 5,
+    border: "1px solid #555d66",
+    borderRadius: 5,
+    color: "#555d66",
+    borderStyle: "dashed",
+    fontSize: 13,
+    height: 40,
+    width: "100%",
+
+    "&:hover": {
+      backgroundColor: "white"
+    }
+  },
 });
 
 const imgStyles = {
@@ -255,17 +284,48 @@ class DesignEditorTab extends React.Component {
     } = this.props;
 
     return (
-      <div>
-        <Typography className={classes.title}>Theme</Typography>
-        <DialogThemes />
+      <div style={{ padding: 10 }}>
+        <Typography className={classes.title}>Logo</Typography>
+        <Grid
+          container
+          justify={"center"}
+          direction={"column"}
+        >
+          <Grid item style={{ color: "#555d66", textAlign: "left", fontStyle: "italic", fontFamily: "Segoe UI" }}>
+            Add a logo to display on your site. Choose a file from your computer below.
+            </Grid>
+          <Grid item>
+            <Input
+              type="file"
+              id="selectedFile"
+              onChange={e => this.handleBrowseLogo(e)}
+              style={{ display: "none" }}
+            />
+            <img
+              style={{ ...imgStyles, width: "auto", display: "none" }}
+              alt=""
+              id={"preview"}
+              src={site.logo}
+            />
+          </Grid>
+          <Grid container justify={"center"}>
+            <button
+              className={classes.logoButton}
+              color={"default"}
+              onClick={() => document.getElementById("selectedFile").click()}
+            >
+              Browse
+            </button>
+          </Grid>
+        </Grid>
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
         <Typography className={classes.title}>Font</Typography>
         <Grid container className={classes.sideBarBox} justify={"space-evenly"}>
-          <Grid item>
-            <Typography className={classes.title2}>Font Title</Typography>
-            <Grid item container>
+          <Grid item xs={12}>
+            <Typography className={classes.title2}>Title</Typography>
+            <Grid item container justify="center">
               <GoogleFontPicker
                 searchable
                 buttonColor={"default"}
@@ -279,12 +339,12 @@ class DesignEditorTab extends React.Component {
               />
             </Grid>
           </Grid>
-          <Grid item>
-            <Typography className={classes.title2}>Font Body</Typography>
-            <Grid container>
+          <Grid item xs={12}>
+            <Typography className={classes.title2}>Body</Typography>
+            <Grid container justify="center">
               <GoogleFontPicker
                 searchable
-                buttonColor={"default"}
+                buttonColor={""}
                 buttonVariant={"outlined"}
                 defaultFont={isChanged ? site.theme.fontBody : site.fontBody}
                 onFontSelected={this.handleChangeFontBody}
@@ -299,11 +359,11 @@ class DesignEditorTab extends React.Component {
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
-        <Typography className={classes.title}>Logo</Typography>
+        <Typography className={classes.title}>Site Title</Typography>
         <TextField
-          label="Logo Text"
           variant={"outlined"}
           fullWidth
+          size="small"
           InputLabelProps={{
             classes: {
               focused: classes.focused
@@ -314,43 +374,10 @@ class DesignEditorTab extends React.Component {
               notchedOutline: classes.notchedOutline
             }
           }}
+          style={{ backgroundColor: "white" }}
           value={site.title}
           onChange={e => this.handleChangeSiteTitle(e)}
         />
-        <Divider
-          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
-        />
-        <Grid
-          container
-          className={classes.sideBarBox}
-          justify={"center"}
-          alignItems={"center"}
-          direction={"column"}
-        >
-          <Grid item>
-            <Input
-              type="file"
-              id="selectedFile"
-              onChange={e => this.handleBrowseLogo(e)}
-              style={{ display: "none" }}
-            />
-            <img
-              style={{ ...imgStyles, width: "auto" }}
-              alt=""
-              id={"preview"}
-              src={site.logo}
-            />
-          </Grid>
-          <Grid container justify={"center"}>
-            <Button
-              variant={"contained"}
-              color={"default"}
-              onClick={() => document.getElementById("selectedFile").click()}
-            >
-              Browse
-            </Button>
-          </Grid>
-        </Grid>
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
@@ -371,6 +398,7 @@ class DesignEditorTab extends React.Component {
           )}
           <Typography className={classes.title2}>Custom Color</Typography>
           <Button
+            className={classes.customButton}
             variant="contained"
             color="default"
             onClick={() => setShowCustomColor(!isShow)}
