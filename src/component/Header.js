@@ -5,17 +5,37 @@ import {
   Menu,
   MenuItem,
   Typography,
-  withStyles
+  withStyles,
+  Avatar,
+  IconButton,
+  ListItem,
+  ListItemText,
+  ListItemAvatar,
+  TextField,
+  Dialog,
+  List
 } from "@material-ui/core";
+import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import { Computer } from "@material-ui/icons";
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { setLogout, setPreviewMode } from "../actions";
+import {
+  setLogout,
+  setPreviewMode,
+  closeDialog,
+  openDialog,
+  confirmPage,
+  getUserSites,
+  setEditOff
+} from "../actions";
 import { firebaseAppAuth } from "../utils/firebase";
 import styles from "./index.module.css";
 import Link from "./link";
 import toastr from "./Toastr";
+import imgUrl from "../FBWGLogo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SwitchButton from "./SwitchButton";
 
 const StyledMenu = withStyles({
   paper: {
@@ -38,12 +58,8 @@ const StyledMenu = withStyles({
 ));
 
 const imgStyles = {
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  width: "25%",
-  marginRight: "0.5rem",
-  marginLeft: "0.5rem"
+  width: "50%",
+  paddingLeft: "1.5rem"
 };
 
 const StyledMenuItem = withStyles(theme => ({
@@ -56,6 +72,40 @@ const StyledMenuItem = withStyles(theme => ({
     }
   }
 }))(MenuItem);
+
+const ButtonCreate = withStyles(theme => ({
+  root: {
+    borderRadius: "2px",
+    padding: "0.5rem 2rem",
+    background: "white",
+    "&:hover": {
+      background: "white"
+    },
+    minHeight: "auto"
+  }
+}))(MenuItem);
+
+const useStyle = theme => ({
+  root: {
+    background: "#006088",
+    height: "9vh"
+  },
+  btnLink: {
+    background: "#002c40",
+    [theme.breakpoints.up("sm")]: {
+      minWidth: "22vh"
+    },
+    minWidth: "fit-content"
+  },
+  title: {
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
+      color: "white"
+    },
+    display: "none",
+    color: "white"
+  }
+});
 
 function ProfileMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -70,18 +120,12 @@ function ProfileMenu(props) {
   const { profile, logout } = props;
   return (
     <>
-      <Typography
-        variant="body1"
-        onClick={handleClick}
-        className={styles.profile_content}
-      >
-        <img
+      <Button onClick={handleClick}>
+        <Avatar
           src={profile && profile.picture && profile.picture.data.url}
-          alt="logo"
           className={styles.profile_img}
         />
-        {profile && profile.name}
-      </Typography>
+      </Button>
       <StyledMenu
         anchorEl={anchorEl}
         keepMounted
@@ -95,6 +139,15 @@ function ProfileMenu(props) {
 }
 
 class CustomNavBarEditor extends React.Component {
+  state = {
+    pageUrl: "",
+    pageId: "",
+    pageName: "",
+    sitepath: "",
+    isPublish: false,
+    sitepathError: false,
+    pageUrlError: false
+  };
   handlePreview = body => {
     this.props.setPreviewMode(!this.props.isPreview);
   };
@@ -112,68 +165,286 @@ class CustomNavBarEditor extends React.Component {
       });
   };
 
+  handleSelectPage = ({ id, link, name }) => {
+    this.setState({
+      pageUrl: link,
+      pageId: id,
+      pageName: name
+    });
+  };
+
+  handleConfirm = async () => {
+    const {
+      confirmPage,
+      accessToken,
+      profile,
+      closeDialog,
+      userId,
+      getUserSites
+    } = this.props;
+    const { pageId, pageUrl, pageName, sitepath, isPublish } = this.state;
+    if (pageUrl && sitepath) {
+      this.setState({
+        pageUrlError: false,
+        sitepathError: false
+      });
+      const confirm = await confirmPage({
+        pageId,
+        pageUrl,
+        accessToken,
+        profile,
+        name: pageName,
+        sitepath,
+        isPublish
+      });
+      confirm && (await getUserSites(userId, accessToken)) && closeDialog();
+    } else {
+      if (!pageUrl) {
+        this.setState({
+          pageUrlError: true
+        });
+      } else {
+        this.setState({
+          pageUrlError: false
+        });
+      }
+      if (!sitepath) {
+        this.setState({
+          sitepathError: true
+        });
+      } else {
+        this.setState({
+          sitepathError: false
+        });
+      }
+    }
+  };
+
+  handleChangeURL = e => {
+    this.setState({
+      pageUrl: e.target.value
+    });
+  };
+
+  handleChangeSitepath = e => {
+    this.setState({
+      sitepath: e.target.value
+    });
+  };
+
+  renderPagesNotGenerated = () => {
+    const { pages, sites } = this.props;
+    const { pageUrl, sitepath, isPublish } = this.state;
+    let nonGenerated = pages.map(page => page.id);
+    let index = -1;
+    sites.forEach(site => {
+      index = nonGenerated.indexOf(site.id);
+      if (index >= 0) {
+        nonGenerated.splice(index, 1);
+      }
+    });
+    if (nonGenerated && nonGenerated.length > 0) {
+      return (
+        <>
+          {pages.map(
+            page =>
+              nonGenerated.includes(page.id) && (
+                <>
+                  <ListItem
+                    button
+                    onClick={() =>
+                      this.handleSelectPage({
+                        id: page.id,
+                        link: page.link,
+                        name: page.name
+                      })
+                    }
+                    key={page.id}
+                  >
+                    <ListItemAvatar>
+                      <Avatar>
+                        <img src={page.picture.data.url} alt="" />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={page.name}
+                      secondary={page.category}
+                    />
+                  </ListItem>
+                </>
+              )
+          )}
+          <ListItem>
+            <TextField
+              variant={"outlined"}
+              fullWidth
+              error={this.state.sitepathError}
+              required
+              label="Sitepath"
+              onChange={e => this.handleChangeSitepath(e)}
+              inputProps={{ maxLength: 30 }}
+              value={sitepath ? sitepath : ""}
+            />
+            <SwitchButton
+              isPublish={isPublish}
+              style={{ marginLeft: 0 }}
+              onChange={() => this.setState({ isPublish: !isPublish })}
+            />
+          </ListItem>
+          <ListItem>
+            <TextField
+              fullWidth
+              required
+              error={this.state.pageUrlError}
+              variant={"outlined"}
+              label="Facebook Page Url"
+              disabled
+              onChange={e => this.handleChangeURL(e)}
+              value={pageUrl ? pageUrl : ""}
+            />
+          </ListItem>
+          <ListItem>
+            <Button
+              variant={"outlined"}
+              onClick={() => this.handleConfirm()}
+              fullWidth
+            >
+              Confirm
+            </Button>
+          </ListItem>
+        </>
+      );
+    } else {
+      return (
+        <Grid container justify="center" alignItems="center">
+          <Grid item xs={12}>
+            <p style={{ textAlign: "center", marginLeft: 5, marginRight: 5 }}>
+              No Facebook page to use. Please create one below.
+            </p>
+          </Grid>
+          <Grid item xs={6}>
+            <a
+              href="https://www.facebook.com/pages/create/?ref_type=universal_creation_hub"
+              rel="noopener noreferrer"
+              target="_blank"
+              style={{ textDecoration: "none" }}
+            >
+              <Button color="primary" variant={"contained"}>
+                Create Facebook Page
+              </Button>
+            </a>
+          </Grid>
+        </Grid>
+      );
+    }
+  };
+
+  componentDidMount() {
+    this.props.setEditOff();
+  }
+
   render() {
-    const { imgUrl, profile, isEdit } = this.props;
+    const { profile, classes, closeDialog, openDialog, open } = this.props;
     return (
-      <Container maxWidth={"xl"} className={styles.header}>
-        <Grid container item justify="space-between">
-          <Grid container item sm={2} xs={12} md={2} alignItems="center">
-            <Link to="/">
-              <Grid container>
-                <img style={imgStyles} src={imgUrl} alt="" />
+      <Grid container item justify="space-between" className={classes.root}>
+        <Grid
+          container
+          item
+          sm={2}
+          xs={1}
+          md={1}
+          alignItems="center"
+          justify="center"
+          className={classes.btnLink}
+        >
+          <Link to="/">
+            <Grid item container xs={12} alignItems="center">
+              <Grid item xs={6}>
+                <img src={imgUrl} style={imgStyles} />
+              </Grid>
+              <Grid item xs={6}>
                 <Typography
-                  variant="h5"
-                  color="textPrimary"
-                  className={styles.title}
+                  variant="body1"
+                  className={[classes.title, "mainFont"]}
                 >
                   FPWG
                 </Typography>
               </Grid>
+            </Grid>
+          </Link>
+        </Grid>
+        <Grid
+          container
+          item
+          sm={8}
+          xs={8}
+          alignItems="center"
+          justify="flex-end"
+        >
+          <Grid container item sm={5} xs={6} justify="flex-end">
+            <Link to="">
+              <ButtonCreate onClick={openDialog}>
+                <Typography
+                  className={"mainFont"}
+                  style={{
+                    color: "#2271b1",
+                    fontSize: "12px",
+                    paddingRight: "0.3rem"
+                  }}
+                >
+                  New Site
+                </Typography>
+                <AddOutlinedIcon
+                  style={{ color: "#2271b1" }}
+                  fontSize="small"
+                />
+              </ButtonCreate>
             </Link>
+            <Dialog
+              onClose={closeDialog}
+              aria-labelledby="simple-dialog-title"
+              open={open}
+              maxWidth="xs"
+              fullWidth
+            >
+              <List>{this.renderPagesNotGenerated()}</List>
+            </Dialog>
           </Grid>
           <Grid
             container
+            justify="center"
             item
-            sm={10}
-            xs={6}
-            alignItems="center"
-            justify="flex-end"
+            sm={2}
+            xs={3}
+            className={styles.profile}
           >
-            {isEdit && (
-              <>
-                <Grid item sm={2} xs={12}>
-                  <a
-                    href="/preview"
-                    rel="noopener noreferrer"
-                    target="_blank"
-                    style={{ textDecoration: "none" }}
-                  >
-                    <Button variant={"contained"} startIcon={<Computer />}>
-                      Preview
-                    </Button>
-                  </a>
-                </Grid>
-              </>
-            )}
-            <Grid container item sm={2} xs={12}>
-              <ProfileMenu profile={profile} logout={this.logout} />
-            </Grid>
+            <ProfileMenu profile={profile} logout={this.logout} />
           </Grid>
         </Grid>
-      </Container>
+      </Grid>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  imgUrl: state.imageUrl.url,
+  open: state.dialog.open,
+  pages: state.user.pages,
+  sites: state.site.data,
+  accessToken: state.user.accessToken,
   profile: state.user.profile,
-  isEdit: state.site.isEdit,
-  isPreview: state.site.isPreview
+  userId: state.user.profile.id
 });
 
 const mapDispatchToProps = dispatch => ({
-  setLogout: () => dispatch(setLogout()),
-  setPreviewMode: bool => dispatch(setPreviewMode(bool))
+  closeDialog: () => dispatch(closeDialog()),
+  openDialog: () => dispatch(openDialog()),
+  confirmPage: data => dispatch(confirmPage(data)),
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
+  setEditOff: () => dispatch(setEditOff()),
+  setLogout: () => dispatch(setLogout())
 });
-export default connect(mapStateToProps, mapDispatchToProps)(CustomNavBarEditor);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyle)(CustomNavBarEditor));

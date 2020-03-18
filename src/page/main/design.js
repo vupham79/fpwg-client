@@ -1,102 +1,185 @@
-import { Button, Grid, Typography } from "@material-ui/core";
+import {
+  Button,
+  Divider,
+  Grid,
+  List,
+  ListItem,
+  withStyles
+} from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setCurrentEditId } from "../../actions";
+import {
+  getAllPost,
+  getAllThemes,
+  getSiteById,
+  setCurrentEditId,
+  setEditOn,
+  setSiteEdit
+} from "../../actions";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import Link from "../../component/link";
-import SwitchButton from "../../component/SwitchButton";
-import styles from "./main.module.css";
 
-function WebsiteItem({ setCurrentEditId, site }) {
-  return (
-    <Grid container item justify="space-between" className={styles.web_item}>
-      <Grid
-        item
-        sm={2}
-        xs={4}
-        container
-        style={{
-          backgroundImage: `url(${site.logo})`,
-          backgroundSize: "contain",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          height: "5rem"
-        }}
-      />
-      <Grid container item sm={6} xs={4} style={{ overflow: "auto" }}>
-        <Typography variant="subtitle1" style={{ fontWeight: "bolder" }}>
-          {site.title}
-        </Typography>
-      </Grid>
-      <Grid container justify={"flex-end"} item sm={4} xs={4}>
-        <Grid container item md={12}>
-          <Grid item md={6} sm={6}>
-            {site.isPublish ? (
-              <a
-                href={`/${site.sitePath}`}
-                rel="noopener noreferrer"
-                target="_blank"
-                style={{ textDecoration: "none" }}
-              >
-                <Button disabled={!site.isPublish} variant={"outlined"}>
-                  Visit
-                </Button>
-              </a>
-            ) : (
-              <Button disabled={!site.isPublish} variant={"outlined"}>
-                Visit
-              </Button>
-            )}
-          </Grid>
-          <Grid item md={6} sm={6}>
-            <Link to="/edit">
-              <Button
-                variant={"outlined"}
-                onClick={() => setCurrentEditId(site.id)}
-              >
-                Edit
-              </Button>
-            </Link>
-          </Grid>
-        </Grid>
-        <Grid item container md={12}>
-          <Grid item>
-            <SwitchButton
-              siteId={site.id}
-              siteName={site.title}
-              isPublish={site.isPublish}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-}
-
+const imgStyle = {
+  backgroundSize: "contain",
+  backgroundRepeat: "no-repeat",
+  height: "2rem"
+};
+const useStyle = {
+  listSites: {
+    borderRight: "0.5px solid ",
+    padding: 0,
+    width: " -webkit-fill-available"
+  },
+  numberSite: {
+    border: "1px solid",
+    textAlign: "center",
+    borderRadius: "2px",
+    padding: "0.4rem 0"
+  },
+  item: {
+    minHeight: "4rem",
+    "&:hover": {
+      background: "#c3c4c7",
+      transitionDuration: ".5s"
+    }
+  },
+  status: {
+    borderRadius: "5px",
+    padding: "0.1rem 0.3rem",
+    background: "#c3c4c7",
+    marginTop: "0.2rem",
+    color: "black",
+    textAlign: "center"
+  }
+};
 class Design extends Component {
-  render() {
-    const { sites, setCurrentEditId } = this.props;
+  state = {
+    selectedIndex: -1
+  };
+
+  renderListSites = sites => {
+    const { classes } = this.props;
     return (
-      <>
-        {sites.length === 0 ? (
-          <p style={{ fontStyle: "italic", marginLeft: 10 }}>
-            You don't have any Website. Please create a new site.
-          </p>
+      <List className={classes.listSites}>
+        <ListItem>
+          <Grid container alignItems="center">
+            <Grid item xs={2} className={classes.numberSite}>
+              {sites.length}
+            </Grid>
+            <Grid
+              container
+              item
+              xs={10}
+              style={{ padding: "0 1rem" }}
+              className={"mainFont"}
+            >
+              <Grid item xs={12}>
+                My Pages Site
+              </Grid>
+            </Grid>
+          </Grid>
+        </ListItem>
+        <Divider />
+        {sites ? (
+          sites.map((item, index) => this.renderSiteItem(item, index))
         ) : (
-          sites.map((item, index) => (
+          <></>
+        )}
+        <Divider />
+        <ListItem>
+          <Link to="">
+            <Button
+              variant="outlined"
+              color="primary"
+              className={(classes.button, "mainFont")}
+              startIcon={<AddCircleOutlineIcon />}
+            >
+              Add new site
+            </Button>
+          </Link>
+        </ListItem>
+      </List>
+    );
+  };
+
+  getAllThemes = async () => {
+    const { getAllThemes } = this.props;
+    await getAllThemes();
+  };
+
+  getSite = async id => {
+    const { getSiteById, setSiteEdit, getAllPost } = this.props;
+    const data = await getSiteById(id);
+    if (data) {
+      const titleStyle = {
+        fontFamily: data.fontTitle,
+        color: data.color
+      };
+      const bodyStyle = {
+        fontFamily: data.fontBody
+      };
+      await setSiteEdit(data, titleStyle, bodyStyle);
+      data.posts && getAllPost(data.posts);
+    }
+  };
+
+  handleClickItem = (e, index, id) => {
+    const { setCurrentEditId } = this.props;
+    setCurrentEditId(id);
+    this.getAllThemes();
+    this.getSite(id);
+    this.setState({ selectedIndex: index });
+  };
+
+  renderSiteItem = (item, index) => {
+    const { classes } = this.props;
+    return (
+      <ListItem
+        key={index}
+        button
+        className={classes.item}
+        selected={this.state.selectedIndex === index}
+        onClick={event => this.handleClickItem(event, index, item.id)}
+      >
+        <Grid container alignItems="center">
+          <Grid container item xs={2} sm={3} justify="center">
             <Grid
               item
-              container
-              md={6}
+              xs={6}
               sm={12}
-              key={index}
-              className={styles.siteItem}
-            >
-              <WebsiteItem site={item} setCurrentEditId={setCurrentEditId} />
+              style={{ backgroundImage: `url('${item.logo}')`, ...imgStyle }}
+            />
+          </Grid>
+          <Grid container item xs={8}>
+            <Grid item xs={12} className={"mainFont"}>
+              {item.title}
             </Grid>
-          ))
-        )}
-      </>
+            <Grid
+              item
+              xs={12}
+              className={"mainFont"}
+              style={{ fontSize: "12px", overflow: "hidden" }}
+            >
+              {"http://localhost:3000/" + item.sitePath}
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              className={"mainFont"}
+              style={{ fontSize: "12px", overflow: "hidden" }}
+            >
+              <Grid item xs={6} sm={10} md={8} className={classes.status}>
+                {item.isPublish ? "Published " : "Unpublished "}
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </ListItem>
     );
+  };
+  render() {
+    const { sites } = this.props;
+    return <Grid container>{this.renderListSites(sites)}</Grid>;
   }
 }
 
@@ -105,7 +188,16 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCurrentEditId: id => dispatch(setCurrentEditId(id))
+  setCurrentEditId: id => dispatch(setCurrentEditId(id)),
+  getAllThemes: () => dispatch(getAllThemes()),
+  getSiteById: id => dispatch(getSiteById(id)),
+  setSiteEdit: (site, titleStyle, bodyStyle) =>
+    dispatch(setSiteEdit(site, titleStyle, bodyStyle)),
+  getAllPost: posts => dispatch(getAllPost(posts)),
+  setEditOn: () => dispatch(setEditOn())
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Design);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyle)(Design));

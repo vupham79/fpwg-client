@@ -1,319 +1,282 @@
-import { faPalette } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  Avatar,
   Button,
-  Dialog,
   Grid,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  MenuItem,
-  MenuList,
+  makeStyles,
   TextField,
-  Typography
+  Typography,
+  withStyles
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  closeDialog,
-  confirmPage,
-  getUserSites,
-  openDialog,
-  setEditOff
-} from "../../actions";
+import { setEditOff, setCurrentEditId } from "../../actions";
 import Header from "../../component/Header";
-import SwitchButton from "../../component/SwitchButton";
+import { themes as themesConstant } from "../../constant/constant";
+import imgUrl from "../../FBWGLogo.png";
 import DesignTab from "./design";
-import styles from "./main.module.css";
+import Link from "../../component/link";
 
-class MainPage extends Component {
-  state = {
-    pageUrl: "",
-    pageId: "",
-    pageName: "",
-    sitepath: "",
-    isPublish: false,
-    sitepathError: false,
-    pageUrlError: false,
-    tab: 0
-  };
-
-  handleSelectPage = ({ id, link, name }) => {
-    this.setState({
-      pageUrl: link,
-      pageId: id,
-      pageName: name
-    });
-  };
-
-  handleConfirm = async () => {
-    const {
-      confirmPage,
-      accessToken,
-      profile,
-      closeDialog,
-      userId,
-      getUserSites
-    } = this.props;
-    const { pageId, pageUrl, pageName, sitepath, isPublish } = this.state;
-    if (pageUrl && sitepath) {
-      this.setState({
-        pageUrlError: false,
-        sitepathError: false
-      });
-      const confirm = await confirmPage({
-        pageId,
-        pageUrl,
-        accessToken,
-        profile,
-        name: pageName,
-        sitepath,
-        isPublish
-      });
-      confirm && (await getUserSites(userId, accessToken)) && closeDialog();
-    } else {
-      if (!pageUrl) {
-        this.setState({
-          pageUrlError: true
-        });
-      } else {
-        this.setState({
-          pageUrlError: false
-        });
-      }
-      if (!sitepath) {
-        this.setState({
-          sitepathError: true
-        });
-      } else {
-        this.setState({
-          sitepathError: false
-        });
-      }
+const useStyle = theme => ({
+  root: {
+    [theme.breakpoints.up("sm")]: {
+      position: "absolute",
+      marginTop: "9vh",
+      bottom: 0,
+      top: 0
     }
-  };
-
-  handleChangeURL = e => {
-    this.setState({
-      pageUrl: e.target.value
-    });
-  };
-
-  handleChangeSitepath = e => {
-    this.setState({
-      sitepath: e.target.value
-    });
-  };
-
-  renderPagesNotGenerated = () => {
-    const { pages, sites } = this.props;
-    const { pageUrl, sitepath, isPublish } = this.state;
-    let nonGenerated = pages.map(page => page.id);
-    let index = -1;
-    sites.forEach(site => {
-      index = nonGenerated.indexOf(site.id);
-      if (index >= 0) {
-        nonGenerated.splice(index, 1);
-      }
-    });
-    if (nonGenerated && nonGenerated.length > 0) {
-      return (
-        <>
-          {pages.map(
-            page =>
-              nonGenerated.includes(page.id) && (
-                <>
-                  <ListItem
-                    button
-                    onClick={() =>
-                      this.handleSelectPage({
-                        id: page.id,
-                        link: page.link,
-                        name: page.name
-                      })
-                    }
-                    key={page.id}
-                  >
-                    <ListItemAvatar>
-                      <Avatar>
-                        <img src={page.picture.data.url} alt="" />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={page.name}
-                      secondary={page.category}
-                    />
-                  </ListItem>
-                </>
-              )
-          )}
-          <ListItem>
-            <TextField
-              variant={"outlined"}
-              fullWidth
-              error={this.state.sitepathError}
-              required
-              label="Sitepath"
-              onChange={e => this.handleChangeSitepath(e)}
-              inputProps={{ maxLength: 30 }}
-              value={sitepath ? sitepath : ""}
-            />
-            <SwitchButton
-              isPublish={isPublish}
-              style={{ marginLeft: 0 }}
-              onChange={() => this.setState({ isPublish: !isPublish })}
-            />
-          </ListItem>
-          <ListItem>
-            <TextField
-              fullWidth
-              required
-              error={this.state.pageUrlError}
-              variant={"outlined"}
-              label="Facebook Page Url"
-              disabled
-              onChange={e => this.handleChangeURL(e)}
-              value={pageUrl ? pageUrl : ""}
-            />
-          </ListItem>
-          <ListItem>
-            <Button
-              variant={"outlined"}
-              onClick={() => this.handleConfirm()}
-              fullWidth
-            >
-              Confirm
-            </Button>
-          </ListItem>
-        </>
-      );
-    } else {
-      return (
-        <Grid container justify="center" alignItems="center">
-          <Grid item xs={12}>
-            <p style={{ textAlign: "center", marginLeft: 5, marginRight: 5 }}>
-              No Facebook page to use. Please create one below.
-            </p>
-          </Grid>
-          <Grid item xs={6}>
-            <a
-              href="https://www.facebook.com/pages/create/?ref_type=universal_creation_hub"
-              rel="noopener noreferrer"
-              target="_blank"
-              style={{ textDecoration: "none" }}
-            >
-              <Button color="primary" variant={"contained"}>
-                Create Facebook Page
-              </Button>
-            </a>
-          </Grid>
-        </Grid>
-      );
+  },
+  sites: {
+    [theme.breakpoints.up("sm")]: {
+      position: "absolute",
+      bottom: 0,
+      top: 0,
+      left: 0
     }
-  };
-
-  handleChangeTab = tab => {
-    this.setState({
-      tab
-    });
-  };
-
-  componentDidMount() {
-    this.props.setEditOff();
+  },
+  view: {
+    [theme.breakpoints.up("sm")]: {
+      position: "absolute",
+      bottom: 0,
+      top: 0,
+      right: 0,
+      overflow: "auto"
+    }
+  },
+  toolEdit: {
+    height: "10vh",
+    position: "sticky"
+  },
+  img: {
+    width: "100%"
+  },
+  h4: {
+    textAlign: "center",
+    padding: "2rem 1rem"
   }
+});
+
+const siteStyle = makeStyles(theme => ({
+  h4: {
+    textAlign: "center",
+    padding: "1rem"
+  },
+  body1: {
+    textAlign: "center"
+  },
+  button: {
+    padding: "2rem"
+  },
+  img: {
+    width: "100%"
+  }
+}));
+
+function EmptyListSite() {
+  const style = siteStyle();
+  return (
+    <Grid container justify="center" alignItems="center">
+      <Grid item xs={3} sm={2} md={1}>
+        <img src={imgUrl} className={style.img} />
+      </Grid>
+      <Grid container item xs={12}>
+        <Grid item xs={12}>
+          <Typography variant="h4" className={style.h4}>
+            You don't have any FBWG sites yet.
+          </Typography>
+        </Grid>
+        <Grid item xs={12} className={style.body1}>
+          <Typography variant="body1">Would you like to start one?</Typography>
+        </Grid>
+      </Grid>
+      <Grid
+        container
+        justify="center"
+        item
+        xs={10}
+        sm={6}
+        className={style.button}
+      >
+        <Grid item xs={10} container justify="center">
+          <Button variant="contained" color="primary">
+            Create New
+          </Button>
+        </Grid>
+      </Grid>
+    </Grid>
+  );
+}
+class MainPage extends Component {
+  renderViewPage = siteEdit => {
+    if (siteEdit) {
+      const theme = siteEdit
+        ? themesConstant.find(e => e.id === siteEdit.theme.id)
+        : null;
+      return theme && theme.component;
+    }
+    return <></>;
+  };
+
+  copyToClipboard = e => {
+    var textField = document.getElementById("txtSitePath");
+    textField.innerText = e.target.value;
+    textField.select();
+    document.execCommand("copy");
+  };
 
   render() {
-    const { closeDialog, openDialog, open } = this.props;
-    const { tab } = this.state;
+    const { sites, classes, siteEdit } = this.props;
     return (
-      <>
-        <Header />
-        <Grid container item className={styles.body} md={12}>
-          <Grid container item sm={3} md={2} className={styles.navigation}>
-            <MenuList className={styles.menu_list}>
-              <MenuItem
-                selected={tab === 0}
-                onClick={() => this.handleChangeTab(0)}
-                style={{ justifyContent: "space-evenly" }}
-              >
-                <FontAwesomeIcon className={styles.nav_icon} icon={faPalette} />
-                <Typography variant="inherit">Design</Typography>
-              </MenuItem>
-            </MenuList>
-          </Grid>
+      <Grid container>
+        <Grid item xs={12}>
+          <Header />
+        </Grid>
+        {sites && sites.length === 0 ? (
           <Grid
             container
             item
-            sm={9}
             xs={12}
-            md={10}
-            className={styles.righter}
-            direction={"column"}
+            alignItems="center"
+            className={classes.root}
           >
-            <Grid container md={12} item className={styles.current_edit}>
-              <Grid container item xs sm md>
-                <Grid
-                  container
-                  item
-                  className={styles.info}
-                  alignItems="center"
-                >
-                  <Typography variant="body1" className={styles.info_content}>
-                    CURRENT SITES
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                item
-                sm={6}
-                md={4}
-                alignItems="center"
-                justify="flex-end"
-              >
-                <Grid container item sm={6}>
-                  <Button className={styles.create_button} onClick={openDialog}>
-                    Create A New Site
-                  </Button>
-                  <Dialog
-                    onClose={closeDialog}
-                    aria-labelledby="simple-dialog-title"
-                    open={open}
-                    maxWidth="xs"
-                    fullWidth
-                  >
-                    <List>{this.renderPagesNotGenerated()}</List>
-                  </Dialog>
-                </Grid>
-              </Grid>
+            <EmptyListSite />
+          </Grid>
+        ) : (
+          <Grid
+            container
+            item
+            xs={12}
+            alignItems="center"
+            className={classes.root}
+          >
+            <Grid container item xs={12} sm={2} className={classes.sites}>
+              <DesignTab />
             </Grid>
-            <Grid container item sm={12} xs={12} md={12}>
-              {tab === 0 && <DesignTab />}
+            <Grid
+              container
+              item
+              xs={12}
+              sm={10}
+              alignItems="center"
+              className={classes.view}
+            >
+              {siteEdit && this.props.isEdit ? (
+                <>
+                  <Grid
+                    container
+                    alignItems="center"
+                    justify="center"
+                    item
+                    xs={12}
+                    className={classes.toolEdit}
+                  >
+                    <Grid item xs={5} sm={7} md={7}>
+                      <TextField
+                        id="txtSitePath"
+                        className={"mainFont"}
+                        inputProps={{
+                          style: {
+                            readOnly: true,
+                            padding: "0.5rem",
+                            textAlign: "center",
+                            fontFamily: "Segoe UI",
+                            fontSize: "14px"
+                          }
+                        }}
+                        fullWidth
+                        variant={"outlined"}
+                        value={"http://localhost:3000/" + siteEdit.sitePath}
+                        InputProps={{
+                          endAdornment: (
+                            <Button
+                              className={"mainFont"}
+                              onClick={e => this.copyToClipboard(e)}
+                              position="end"
+                            >
+                              Copy
+                            </Button>
+                          )
+                        }}
+                      />
+                    </Grid>
+                    <Grid container item xs={6} sm={5} md={3} justify="center">
+                      <Grid item xs={5} sm={4} md={4}>
+                        <Link to="/edit">
+                          <Button
+                            color="primary"
+                            className={"mainFont"}
+                            variant={"outlined"}
+                            onClick={() =>
+                              this.props.setCurrentEditId(siteEdit.id)
+                            }
+                          >
+                            Edit
+                          </Button>
+                        </Link>
+                      </Grid>
+                      <Grid item xs={5} sm={4} md={4}>
+                        {siteEdit.isPublish ? (
+                          <a
+                            href={`/${siteEdit.sitePath}`}
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            style={{ textDecoration: "none" }}
+                          >
+                            <Button
+                              color="secondary"
+                              className={"mainFont"}
+                              disabled={!siteEdit.isPublish}
+                              variant="contained"
+                            >
+                              Visit
+                            </Button>
+                          </a>
+                        ) : (
+                          <Button
+                            className={"mainFont"}
+                            disabled={!siteEdit.isPublish}
+                            variant={"outlined"}
+                          >
+                            Visit
+                          </Button>
+                        )}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                    {this.renderViewPage(siteEdit)}
+                  </Grid>
+                </>
+              ) : (
+                <Grid container alignItems="center" justify="center">
+                  <Grid item xs={3} sm={2} md={1}>
+                    <img src={imgUrl} className={classes.img} />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography variant="h5" className={classes.h4}>
+                      Select the site you want to view.
+                    </Typography>
+                  </Grid>
+                </Grid>
+              )}
             </Grid>
           </Grid>
-        </Grid>
-      </>
+        )}
+      </Grid>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  open: state.dialog.open,
-  pages: state.user.pages,
   sites: state.site.data,
-  accessToken: state.user.accessToken,
-  profile: state.user.profile,
-  userId: state.user.profile.id
+  siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit
 });
 
 const mapDispatchToProps = dispatch => ({
-  closeDialog: () => dispatch(closeDialog()),
-  openDialog: () => dispatch(openDialog()),
-  confirmPage: data => dispatch(confirmPage(data)),
-  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
-  setEditOff: () => dispatch(setEditOff())
+  setEditOff: () => dispatch(setEditOff()),
+  setCurrentEditId: id => dispatch(setCurrentEditId(id))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyle)(MainPage));
