@@ -325,7 +325,7 @@ export function saveDesignSite({ logo, cover, favicon, site, metas }) {
           instagram: site.instagram,
           whatsapp: site.whatsapp,
           phone: site.phone,
-          metas: metas
+          sitePath: site.sitePath,
         }
       });
       dispatch({
