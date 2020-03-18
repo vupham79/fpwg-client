@@ -319,7 +319,7 @@ class Theme1Home extends React.Component {
             <span style={classes.changableFirst}>E</span>VENTS
           </p>
         </Grid>
-        <Grid item xs={12} style={{ marginTop: -80 }}>
+        <Grid item xs={12}>
           <EventComponent />
         </Grid>
 

@@ -47,12 +47,12 @@ const useStyles = theme => ({
     marginTop: "0.25rem",
     fontFamily: "Segoe UI, sans-serif",
     fontWeight: 600,
-    marginBottom: "0.25rem",
+    marginBottom: "1rem",
     color: "#555d66"
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120
+    minWidth: 400
   },
   selectEmpty: {
     marginTop: theme.spacing(2)
@@ -74,13 +74,10 @@ const useStyles = theme => ({
     borderColor: "#0087be !important",
     color: "#434d58 !important"
   },
-  input: {
-    fontFamily: "Segoe UI !important"
-  },
   pickerButton: {
     margin: 0,
-    width: "100%",
-    backgroundColor: "white"
+    backgroundColor: "white",
+    marginBottom: "0.2rem"
   },
   customButton: {
     border: "1px solid #0071a1",
@@ -103,7 +100,12 @@ const useStyles = theme => ({
   },
   fontPickerRoot: {
     width: "100% !important"
-  }
+  },
+  inputTitle: {
+    fontFamily: "Segoe UI, sans-serif !important",
+    fontSize: 13,
+    color: "#555d66"
+  },
 });
 
 const imgStyles = {
@@ -137,7 +139,7 @@ class DesignEditorTab extends React.Component {
     this.setState({
       logo: site.logo
     });
-    img.addEventListener("load", async function() {
+    img.addEventListener("load", async function () {
       const color = await colorThief.getPalette(img, 11);
       const colors = await color.map(rgb =>
         onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
@@ -311,7 +313,7 @@ class DesignEditorTab extends React.Component {
               color: "#555d66",
               textAlign: "left",
               fontStyle: "italic",
-              fontFamily: "Segoe UI"
+              fontFamily: "Segoe UI, sans-serif"
             }}
           >
             Add a logo to display on your site. Choose a file from your computer
@@ -371,7 +373,6 @@ class DesignEditorTab extends React.Component {
         <Grid container className={classes.sideBarBox} justify={"space-evenly"}>
           <Grid item xs={12}>
             <Typography className={classes.title2}>Title</Typography>
-            {/* <Grid item container justify="center"> */}
             <GoogleFontPicker
               searchable
               buttonColor={"default"}
@@ -380,17 +381,15 @@ class DesignEditorTab extends React.Component {
               onFontSelected={this.handleChangeFontTitle}
               classes={{
                 pickerButton: classes.pickerButton,
-                root: classes.fontPickerRoot
+                root: classes.fontPickerRoot,
               }}
               children={<Add />}
               innerRef={""}
               placement={"bottom"}
             />
-            {/* </Grid> */}
           </Grid>
           <Grid item xs={12}>
             <Typography className={classes.title2}>Body</Typography>
-            {/* <Grid container justify="center"> */}
             <GoogleFontPicker
               searchable
               buttonColor={""}
@@ -403,32 +402,8 @@ class DesignEditorTab extends React.Component {
               }}
               placement={"bottom"}
             />
-            {/* </Grid> */}
           </Grid>
         </Grid>
-        <Divider
-          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
-        />
-        <Typography className={classes.title}>Site Title</Typography>
-        <TextField
-          variant={"outlined"}
-          fullWidth
-          size="small"
-          InputLabelProps={{
-            classes: {
-              focused: classes.focused
-            }
-          }}
-          InputProps={{
-            classes: {
-              notchedOutline: classes.notchedOutline,
-              input: classes.input
-            }
-          }}
-          style={{ backgroundColor: "white" }}
-          value={site.title}
-          onChange={e => this.handleChangeSiteTitle(e)}
-        />
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
