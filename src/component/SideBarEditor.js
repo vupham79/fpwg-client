@@ -163,26 +163,6 @@ class ClippedDrawer extends React.Component {
 
           <Grid container style={{ height: 50 }} />
 
-          {/* <Tabs
-            value={tabValue}
-            textColor="primary"
-            indicatorColor="primary"
-            variant="fullWidth"
-            centered
-            onChange={(e, newValue) => updateTabValue(newValue)}
-          >
-            <Tab style={tabStyles} label="Design" />
-            <Tab style={tabStyles} label="Page" />
-            <Tab style={tabStyles} label="Setting" />
-            <Tab style={tabStyles} label="Sync" />
-          </Tabs>
-          {tabValue === 0 && <DesignTab />}
-          {tabValue === 1 && <PagesEditorTab />}
-          {tabValue === 2 && <SettingEditorTab />}
-          {tabValue === 3 && <SyncEditorTab />}
-          <Divider
-            style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
-          /> */}
           <AccordionButton
             comp={<ThemeEditorTab />}
             label="Select theme"
@@ -218,6 +198,7 @@ class ClippedDrawer extends React.Component {
             isNav={this.state.navigating}
             setNav={this.setNavigating}
           />
+
         </Drawer>
       </AppBar>
     );
@@ -230,12 +211,13 @@ const mapStateToProps = state => ({
   newLogo: state.site.newLogo,
   newCover: state.site.newCover,
   favicon: state.site.favicon,
-  metas: state.site.metas
+  metas: state.site.metas,
+  isPreview: state.site.isPreview
 });
 
 const mapDispatchToProps = dispatch => ({
   updateTabValue: value => dispatch(updateTabValue(value)),
-  saveDesignSite: data => dispatch(saveDesignSite(data))
+  saveDesignSite: data => dispatch(saveDesignSite(data)),
 });
 
 export default connect(
