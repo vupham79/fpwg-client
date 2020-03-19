@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { getUserPages, getUserSites } from "../../actions";
+import { getUserSites } from "../../actions";
 import MainPage from "./main";
 class PreMainPage extends Component {
   state = {
@@ -36,8 +36,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUserPages: ({ accessToken, userId }) =>
-    dispatch(getUserPages({ accessToken, userId })),
   getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
 });
 

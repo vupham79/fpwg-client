@@ -8,13 +8,13 @@ import {
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setCurrentEditId, setEditOff } from "../../actions";
+import { publishSite, setCurrentEditId, unPublishSite } from "../../actions";
+import ButtonStyled from "../../component/Button";
 import Header from "../../component/Header";
 import Link from "../../component/link";
 import { themes as themesConstant } from "../../constant/constant";
 import imgUrl from "../../FBWGLogo.png";
 import DesignTab from "./design";
-import ButtonStyled from "../../component/Button";
 
 const useStyle = theme => ({
   root: {
@@ -139,7 +139,7 @@ class MainPage extends Component {
   };
 
   render() {
-    const { sites, classes, siteEdit } = this.props;
+    const { sites, classes, siteEdit, publishSite, unPublishSite } = this.props;
     return (
       <Grid container>
         <Grid item xs={12}>
@@ -252,17 +252,35 @@ class MainPage extends Component {
                         )}
                       </Grid>
                       <Grid item>
-                        <Link to="/edit">
-                          <ButtonStyled
-                            style={{ borderColor: "#006088", color: "#006088" }}
-                            onClick={() =>
-                              this.props.setCurrentEditId(siteEdit.id)
-                            }
-                            label={`Make ${
-                              siteEdit.isPublish ? "Unpublish" : "Publish"
-                            }`}
-                          />
-                        </Link>
+                        <ButtonStyled
+                          style={
+                            siteEdit.isPublish
+                              ? {
+                                  backgroundColor: "#cc2127",
+                                  color: "#fff",
+                                  fontWeight: "600"
+                                }
+                              : {
+                                  backgroundColor: "#5ea95a",
+                                  color: "#fff",
+                                  fontWeight: "600"
+                                }
+                          }
+                          onClick={() =>
+                            siteEdit.isPublish
+                              ? unPublishSite({
+                                  siteId: siteEdit.id,
+                                  siteName: siteEdit.title
+                                })
+                              : publishSite({
+                                  siteId: siteEdit.id,
+                                  siteName: siteEdit.title
+                                })
+                          }
+                          label={`Make ${
+                            siteEdit.isPublish ? "Unpublish" : "Publish"
+                          }`}
+                        />
                       </Grid>
                     </Grid>
                   </Grid>
@@ -297,8 +315,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setEditOff: () => dispatch(setEditOff()),
-  setCurrentEditId: id => dispatch(setCurrentEditId(id))
+  setCurrentEditId: id => dispatch(setCurrentEditId(id)),
+  publishSite: ({ siteId, siteName }) =>
+    dispatch(publishSite({ siteId, siteName })),
+  unPublishSite: ({ siteId, siteName }) =>
+    dispatch(unPublishSite({ siteId, siteName }))
 });
 
 export default connect(

@@ -153,7 +153,6 @@ class createNewSite extends Component {
             <p
               style={{
                 textAlign: "center",
-                textAlign: "center",
                 fontFamily: "Segoe UI,sans-serif",
                 fontSize: "16px"
               }}

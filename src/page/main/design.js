@@ -35,12 +35,20 @@ const useStyle = {
       transitionDuration: ".5s"
     }
   },
-  status: {
+  published: {
     borderRadius: "5px",
     padding: "0.1rem 0.3rem",
-    background: "#c3c4c7",
+    background: "#5ea95a",
     marginTop: "0.2rem",
-    color: "black",
+    color: "#fff",
+    textAlign: "center"
+  },
+  unpublished: {
+    borderRadius: "5px",
+    padding: "0.1rem 0.3rem",
+    background: "#cc2127",
+    marginTop: "0.2rem",
+    color: "#fff",
     textAlign: "center"
   }
 };
@@ -111,7 +119,7 @@ class Design extends Component {
   handleClickItem = (e, index, id) => {
     const { setCurrentEditId } = this.props;
     setCurrentEditId(id);
-    this.getAllThemes();
+    // this.getAllThemes();
     this.getSite(id);
     this.setState({ selectedIndex: index });
   };
@@ -153,7 +161,15 @@ class Design extends Component {
               className={"mainFont"}
               style={{ fontSize: "12px", overflow: "hidden" }}
             >
-              <Grid item lg={8} sm={12} xs={8} className={classes.status}>
+              <Grid
+                item
+                lg={8}
+                sm={12}
+                xs={8}
+                className={
+                  item.isPublish ? classes.published : classes.unpublished
+                }
+              >
                 {item.isPublish ? "Published " : "Unpublished "}
               </Grid>
             </Grid>
