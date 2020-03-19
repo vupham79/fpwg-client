@@ -153,7 +153,7 @@ class Design extends Component {
               className={"mainFont"}
               style={{ fontSize: "12px", overflow: "hidden" }}
             >
-              <Grid item xs={6} sm={10} md={8} className={classes.status}>
+              <Grid item lg={8} sm={12} xs={8} className={classes.status}>
                 {item.isPublish ? "Published " : "Unpublished "}
               </Grid>
             </Grid>

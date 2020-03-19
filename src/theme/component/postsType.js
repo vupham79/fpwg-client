@@ -365,7 +365,10 @@ class PostTypeComponent extends React.Component {
   };
 
   componentDidMount() {
-    this.getPosts();
+    const { posts } = this.props;
+    if (posts && posts.length > 0) {
+      this.getPosts();
+    }
   }
 
   handlePageClick = data => {
@@ -549,21 +552,23 @@ class PostTypeComponent extends React.Component {
             </Container>
           </Dialog>
         </Grid>
-        <Grid container justify="center" style={{ marginTop: "5rem" }}>
-          <ReactPaginate
-            previousLabel={"previous"}
-            nextLabel={"next"}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
-            pageCount={this.state.pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePageClick}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
-        </Grid>
+        {this.state.pageCount > 1 && (
+          <Grid container justify="center" style={{ marginTop: "5rem" }}>
+            <ReactPaginate
+              previousLabel={"previous"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={this.state.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
+          </Grid>
+        )}
       </Container>
     );
   }

@@ -3,7 +3,6 @@ import moment from "moment";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./event.module.css";
-
 class EventComponent extends React.Component {
   render() {
     const {
