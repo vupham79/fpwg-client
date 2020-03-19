@@ -8,6 +8,8 @@ import {
   faArrowCircleRight
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styles from "./editorStyle.module.css";
+
 
 class EditLayout extends Component {
   render() {
@@ -42,41 +44,41 @@ class EditLayout extends Component {
               </Grid>
             </Grid>
           ) : (
-            <Grid
-              container
-              item
-              sm={9}
-              xs={12}
-              justify="center"
-              style={{ background: "black" }}
-            >
               <Grid
+                container
                 item
+                sm={9}
                 xs={12}
-                style={{
-                  background: "white",
-                  overflowY: "scroll",
-                  overflowX: "hidden",
-                  height: "100vh"
-                }}
+                justify="center"
+                style={{ background: "black" }}
               >
-                {this.props.children}
+                <Grid
+                  item
+                  xs={12}
+                  style={{
+                    background: "white",
+                    overflowY: "scroll",
+                    overflowX: "hidden",
+                    height: "100vh"
+                  }}
+                >
+                  {this.props.children}
+                </Grid>
               </Grid>
-            </Grid>
-          )}
+            )}
 
-          <IconButton
+          <button
             onClick={() => this.props.setPreviewMode(!this.props.isPreview)}
-            style={{ position: "fixed", bottom: 0, zIndex: 9999 }}
+            className={styles.glowingButton}
           >
             <FontAwesomeIcon
               icon={
                 this.props.isPreview ? faArrowCircleRight : faArrowCircleLeft
               }
-              color="#0074aa"
-              size="xs"
+              color="white"
+              size="2x"
             />
-          </IconButton>
+          </button>
         </Grid>
       </>
     );
