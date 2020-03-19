@@ -6,6 +6,7 @@ import PreDashboardPage from "../page/dashboard";
 import ViewSitePage from "../page/view";
 import PreviewSitePage from "../page/preview";
 import PreLoginPage from "../page/login";
+import CreateNewSite from "../page/createNewSite";
 
 export const Routes = [
   {
@@ -26,6 +27,10 @@ export const Routes = [
     path: "/design"
   },
   {
+    component: CreateNewSite,
+    path: "/create"
+  },
+  {
     component: PreDashboardPage,
     exact: true,
     path: "/admin"
@@ -37,5 +42,5 @@ export const Routes = [
   {
     component: ViewSitePage,
     path: "/:id"
-  },
+  }
 ];

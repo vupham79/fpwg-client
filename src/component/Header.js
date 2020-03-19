@@ -35,6 +35,9 @@ import toastr from "./Toastr";
 const StyledMenu = withStyles({
   paper: {
     border: "1px solid #d3d4d5"
+  },
+  list: {
+    padding: 0
   }
 })(props => (
   <Menu
@@ -64,7 +67,9 @@ const StyledMenuItem = withStyles(theme => ({
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
         color: theme.palette.common.black
       }
-    }
+    },
+    fontSize: "14px",
+    fontFamily: "Segoe UI, sans-serif"
   }
 }))(MenuItem);
 
@@ -377,8 +382,10 @@ class CustomNavBarEditor extends React.Component {
           justify="flex-end"
         >
           <Grid container item sm={5} xs={6} justify="flex-end">
-            <Link to="">
-              <ButtonCreate onClick={openDialog}>
+            <Link to="/create">
+              <ButtonCreate
+              // onClick={openDialog}
+              >
                 <Typography
                   className={"mainFont"}
                   style={{

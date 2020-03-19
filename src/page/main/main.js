@@ -6,6 +6,7 @@ import {
   Typography,
   withStyles
 } from "@material-ui/core";
+import { fade, ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { setEditOff, setCurrentEditId } from "../../actions";
@@ -51,6 +52,21 @@ const useStyle = theme => ({
   h4: {
     textAlign: "center",
     padding: "2rem 1rem"
+  },
+  textField: {
+    overflow: "hidden",
+    // borderRadius: 4,
+    backgroundColor: "#fcfcfb",
+    // transition: theme.transitions.create(["border-color", "box-shadow"]),
+    "&:hover": {
+      backgroundColor: "#fff"
+      // borderColor: "rgba(81,152,217,.7)"
+    },
+    "&$focused": {
+      backgroundColor: "#fff",
+      borderColor: "black !important"
+      // boxShadow: `${fade(rgba(81, 152, 217, 0.7), 0.25)} 0 0 0 2px`
+    }
   }
 });
 
@@ -171,7 +187,7 @@ class MainPage extends Component {
                     <Grid item xs={5} sm={7} md={7}>
                       <TextField
                         id="txtSitePath"
-                        className={"mainFont"}
+                        className={`"mainFont" ${classes.textField}`}
                         inputProps={{
                           style: {
                             readOnly: true,
@@ -185,6 +201,7 @@ class MainPage extends Component {
                         variant={"outlined"}
                         value={"http://localhost:3000/" + siteEdit.sitePath}
                         InputProps={{
+                          classes: classes.textField,
                           endAdornment: (
                             <Button
                               className={"mainFont"}
@@ -238,6 +255,20 @@ class MainPage extends Component {
                             Visit
                           </Button>
                         )}
+                      </Grid>
+                      <Grid item xs={5} sm={4} md={4}>
+                        <Link to="/edit">
+                          <Button
+                            color="primary"
+                            className={"mainFont"}
+                            variant={"outlined"}
+                            onClick={() =>
+                              this.props.setCurrentEditId(siteEdit.id)
+                            }
+                          >
+                            Edit
+                          </Button>
+                        </Link>
                       </Grid>
                     </Grid>
                   </Grid>

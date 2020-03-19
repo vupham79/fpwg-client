@@ -3,20 +3,16 @@ import {
   faWhatsapp,
   faYoutube
 } from "@fortawesome/free-brands-svg-icons";
-import {
-  faEnvelope,
-  faPhoneAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  Divider,
   Grid,
   TextField,
   Tooltip,
-  Typography,
-  Divider
+  Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { ExpandMore as ExpandMoreIcon } from "@material-ui/icons";
 import React from "react";
 import { connect } from "react-redux";
 import "toastr/build/toastr.min.css";
@@ -101,8 +97,8 @@ const useStyles = theme => ({
   },
   inputLabel: {
     fontFamily: "Segoe UI, sans-serif !important",
-    fontSize: 13,
-  },
+    fontSize: 13
+  }
 });
 
 const HtmlTooltip = withStyles(theme => ({
@@ -201,7 +197,6 @@ class SettingEditorTab extends React.Component {
     const { site, classes, metas } = this.props;
     return (
       <div style={{ padding: 10 }}>
-
         <Grid
           container
           item
@@ -220,7 +215,8 @@ class SettingEditorTab extends React.Component {
               fontFamily: "Segoe UI, sans-serif"
             }}
           >
-            Set a unique path name to your website. Example: Site path "abc" means your website url will be "https://fpwg.herokuapp.com/abc"
+            Set a unique path name to your website. Example: Site path "abc"
+            means your website url will be "https://fpwg.herokuapp.com/abc"
           </Grid>
           <Grid item xs={12}>
             <TextField
@@ -247,7 +243,11 @@ class SettingEditorTab extends React.Component {
           </Grid>
         </Grid>
         <Divider
-          style={{ height: "1rem", width: "100%", backgroundColor: "#ffffff00" }}
+          style={{
+            height: "1rem",
+            width: "100%",
+            backgroundColor: "#ffffff00"
+          }}
         />
         <Typography className={classes.title}>Links</Typography>
         <Grid container>
@@ -359,7 +359,11 @@ class SettingEditorTab extends React.Component {
             </Grid>
           </Grid>
           <Divider
-            style={{ height: "1rem", width: "100%", backgroundColor: "#ffffff00" }}
+            style={{
+              height: "1rem",
+              width: "100%",
+              backgroundColor: "#ffffff00"
+            }}
           />
           <Typography className={classes.title}>Contact</Typography>
           <Grid
@@ -434,7 +438,6 @@ class SettingEditorTab extends React.Component {
               />
             </Grid>
           </Grid>
-
         </Grid>
 
         {/* <ExpansionPanel style={expanStyle}>
