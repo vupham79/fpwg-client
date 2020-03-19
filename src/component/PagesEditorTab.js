@@ -18,9 +18,7 @@ import {
   withStyles
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
-import ExpansionPanelDetails from "@material-ui/core/ExpansionPanelDetails";
 import { withStyles as withStylesStyle } from "@material-ui/core/styles";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import MenuIcon from "@material-ui/icons/DragHandle";
 import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
@@ -119,12 +117,10 @@ const useStyles = theme => ({
     fontFamily: "Segoe UI, sans-serif !important",
     fontSize: 13,
     color: "#555d66"
-  },
+  }
 });
 
-const gridContainer = {
-
-};
+const gridContainer = {};
 
 const viewButton = {
   color: "black"
@@ -137,7 +133,9 @@ const gridItem = {
   border: "1px solid #dddddd"
 };
 
-const DragHandle = sortableHandle(() => <MenuIcon style={{ color: "#555d66", cursor: "move" }} />);
+const DragHandle = sortableHandle(() => (
+  <MenuIcon style={{ color: "#555d66", cursor: "move" }} />
+));
 
 function handleChangeActive(id, site, setActiveNavItems, updateNavItemValue) {
   const index = site && site.navItems && site.navItems.find(e => e._id === id);
@@ -155,11 +153,6 @@ function handleChangeNavName(id, site, newName, changeNavItemName) {
   index.name = newName;
   changeNavItemName(site);
 }
-
-const expanStyle = {
-  marginTop: "1rem",
-  backgroundColor: "#f0eded",
-};
 
 const GreenCheckbox = withStyles({
   root: {
@@ -310,7 +303,7 @@ class PagesEditorTab extends React.Component {
   };
 
   handleSearch = keyword => {
-    let searchResult = this.props.paths.filter(function (user) {
+    let searchResult = this.props.paths.filter(function(user) {
       return user.pathName.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -357,75 +350,75 @@ class PagesEditorTab extends React.Component {
         item,
         setActiveNavItems,
         updateNavItemValue,
-        changeNavItemName,
+        changeNavItemName
       }) => (
-          <Grid container style={gridItem}>
-            <Grid
-              container
-              item
-              alignItems="center"
-              xs={10}
-              sm={12}
-              md={10}
-              style={{ padding: "0.2rem 0" }}
-            >
-              <Grid container justify="center" item xs={2} md={2} sm={12}>
-                <DragHandle />
-              </Grid>
-              <Grid item xs={10} md={10} sm={12}>
-                <TextField
-                  InputLabelProps={{
-                    classes: {
-                      focused: classes.focused
-                    }
-                  }}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle
-                    }
-                  }}
-                  size="small"
-                  style={{ backgroundColor: "white" }}
-                  fullWidth
-                  variant={"outlined"}
-                  value={value}
-                  onChange={e =>
-                    handleChangeNavName(
-                      item._id,
-                      site,
-                      e.target.value,
-                      changeNavItemName
-                    )
-                  }
-                />
-              </Grid>
+        <Grid container style={gridItem}>
+          <Grid
+            container
+            item
+            alignItems="center"
+            xs={10}
+            sm={12}
+            md={10}
+            style={{ padding: "0.2rem 0" }}
+          >
+            <Grid container justify="center" item xs={2} md={2} sm={12}>
+              <DragHandle />
             </Grid>
-            <Grid container item justify="center" xs={2} sm={12} md={2}>
-              {item.original === "home" ? (
-                <></>
-              ) : (
-                  <IconButton
-                    style={viewButton}
-                    onClick={() =>
-                      handleChangeActive(
-                        item._id,
-                        site,
-                        setActiveNavItems,
-                        updateNavItemValue
-                      )
-                    }
-                  >
-                    {item.isActive && item.name !== "Home" ? (
-                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                    ) : (
-                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
-                      )}
-                  </IconButton>
-                )}
+            <Grid item xs={10} md={10} sm={12}>
+              <TextField
+                InputLabelProps={{
+                  classes: {
+                    focused: classes.focused
+                  }
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                    input: classes.inputTitle
+                  }
+                }}
+                size="small"
+                style={{ backgroundColor: "white" }}
+                fullWidth
+                variant={"outlined"}
+                value={value}
+                onChange={e =>
+                  handleChangeNavName(
+                    item._id,
+                    site,
+                    e.target.value,
+                    changeNavItemName
+                  )
+                }
+              />
             </Grid>
           </Grid>
-        )
+          <Grid container item justify="center" xs={2} sm={12} md={2}>
+            {item.original === "home" ? (
+              <></>
+            ) : (
+              <IconButton
+                style={viewButton}
+                onClick={() =>
+                  handleChangeActive(
+                    item._id,
+                    site,
+                    setActiveNavItems,
+                    updateNavItemValue
+                  )
+                }
+              >
+                {item.isActive && item.name !== "Home" ? (
+                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                ) : (
+                  <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                )}
+              </IconButton>
+            )}
+          </Grid>
+        </Grid>
+      )
     );
 
     const SortableList = sortableContainer(
@@ -458,10 +451,8 @@ class PagesEditorTab extends React.Component {
       }
     );
 
-
     return (
       <div style={{ padding: 10 }}>
-
         <Grid container justify={"center"} direction={"column"}>
           <Grid
             item
@@ -481,7 +472,7 @@ class PagesEditorTab extends React.Component {
               onClick={openDialog}
             >
               Select
-                  </button>
+            </button>
           </Grid>
 
           <Dialog
@@ -525,7 +516,11 @@ class PagesEditorTab extends React.Component {
         />
         <Typography className={classes.title}>Pages</Typography>
         <Divider
-          style={{ height: "1.2rem", width: "100%", backgroundColor: "#ffffff00" }}
+          style={{
+            height: "1.2rem",
+            width: "100%",
+            backgroundColor: "#ffffff00"
+          }}
         />
         <Grid
           item
@@ -538,7 +533,7 @@ class PagesEditorTab extends React.Component {
           }}
         >
           Reorder or hide pages of your site.
-         </Grid>
+        </Grid>
         <SortableList
           items={site.navItems}
           onSortEnd={this.onChangeItem}

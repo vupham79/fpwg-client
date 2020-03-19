@@ -143,7 +143,7 @@ class BannerComponent extends React.Component {
     const { isEdit, newCover } = this.props;
     return (
       <React.Fragment>
-        {isEdit && newCover && newCover.length == 0 ? (
+        {isEdit && newCover && newCover.length === 0 ? (
           <div></div>
         ) : (
           <Grid item xs={12}>
@@ -169,7 +169,7 @@ class BannerComponent extends React.Component {
     const { isEdit, newCover } = this.props;
     return (
       <React.Fragment>
-        {isEdit && newCover && newCover.length == 0 ? (
+        {isEdit && newCover && newCover.length === 0 ? (
           <div></div>
         ) : (
           <Grid item xs={12}>
@@ -192,14 +192,6 @@ class BannerComponent extends React.Component {
   };
 
   render() {
-    const useStyles = () => ({
-      changableLink: {
-        textAlign: "center",
-        fontStyle: "italic",
-        fontSize: 20
-      }
-    });
-    const classes = useStyles();
     const { bannerType } = this.props;
 
     return (

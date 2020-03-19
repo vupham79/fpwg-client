@@ -6,14 +6,29 @@ import {
   ListItem,
   ListItemAvatar,
   ListItemText,
+  TextField,
   Typography,
-  TextField
+  withStyles,
+  Tooltip
 } from "@material-ui/core";
-import { ArrowBackIos } from "@material-ui/icons";
+import { ArrowBackIos, Public, Facebook } from "@material-ui/icons";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { confirmPage } from "../../actions";
+import { confirmPage, getUserSites } from "../../actions";
 import Link from "../../component/link";
+import ButtonStyled from "../../component/Button";
+
+const useStyle = theme => ({
+  textField: {
+    overflow: "hidden",
+    backgroundColor: "#fcfcfb",
+    "&:hover": {},
+    "&:focused": {
+      backgroundColor: "red !important",
+      borderColor: "red !important"
+    }
+  }
+});
 
 class createNewSite extends Component {
   state = {
@@ -21,37 +36,30 @@ class createNewSite extends Component {
     sitepath: "",
     isPublish: false,
     sitepathError: false,
+    pageUrlError: false,
     id: "",
     picture: "",
-    pageName: ""
+    name: ""
   };
 
   handleConfirm = async () => {
-    const {
-      confirmPage,
-      accessToken,
-      profile,
-      closeDialog,
-      getUserSites
-    } = this.props;
-    const { pageId, pageUrl, pageName, sitepath, isPublish } = this.state;
+    const { confirmPage, accessToken, profile, getUserSites } = this.props;
+    const { id, pageUrl, name, sitepath, isPublish } = this.state;
     if (pageUrl && sitepath) {
       this.setState({
         pageUrlError: false,
         sitepathError: false
       });
       const confirm = await confirmPage({
-        pageId,
+        pageId: id,
         pageUrl,
         accessToken,
         profile,
-        name: pageName,
+        name,
         sitepath,
         isPublish
       });
-      confirm &&
-        (await getUserSites(profile.userId, accessToken)) &&
-        closeDialog();
+      confirm && (await getUserSites(profile.userId, accessToken));
     } else {
       if (!pageUrl) {
         this.setState({
@@ -89,15 +97,14 @@ class createNewSite extends Component {
   handleSelectPage = ({ id, link, name, picture }) => {
     this.setState({
       pageUrl: link,
-      pageId: id,
-      pageName: name,
+      id: id,
+      name: name,
       picture: picture
     });
   };
 
   renderPagesNotGenerated = () => {
     const { pages, sites } = this.props;
-    const { pageUrl, sitepath, isPublish } = this.state;
     let nonGenerated = pages && pages.map(page => page.id);
     let index = -1;
     sites.forEach(site => {
@@ -143,8 +150,15 @@ class createNewSite extends Component {
       return (
         <Grid container justify="center" alignItems="center">
           <Grid item xs={12}>
-            <p style={{ textAlign: "center", marginLeft: 5, marginRight: 5 }}>
-              No Facebook page to use. Please create one below.
+            <p
+              style={{
+                textAlign: "center",
+                textAlign: "center",
+                fontFamily: "Segoe UI,sans-serif",
+                fontSize: "16px"
+              }}
+            >
+              No Facebook page to use or no page you authorized left.
             </p>
           </Grid>
           <Grid item xs={6}>
@@ -154,9 +168,11 @@ class createNewSite extends Component {
               target="_blank"
               style={{ textDecoration: "none" }}
             >
-              <Button color="primary" variant={"contained"}>
-                Create Facebook Page
-              </Button>
+              <ButtonStyled
+                backgroundColor="#4267b2"
+                color="#fff"
+                label={"Create Facebook Page"}
+              />
             </a>
           </Grid>
         </Grid>
@@ -165,13 +181,13 @@ class createNewSite extends Component {
   };
 
   renderSelectedPage = () => {
-    const {} = this.props;
-    const { id, pageUrl, picture } = this.state;
+    const { picture, pageUrl, name, sitepath } = this.state;
     return (
-      <Grid container>
+      <>
         <Grid
           item
           sm={12}
+          lg={12}
           style={{ display: "flex", justifyContent: "center" }}
         >
           <img
@@ -185,19 +201,93 @@ class createNewSite extends Component {
             }}
           />
         </Grid>
+        <Grid
+          item
+          sm={12}
+          lg={12}
+          style={{ display: "flex", justifyContent: "center" }}
+        >
+          <Typography>{name}</Typography>
+        </Grid>
         <Grid item sm={12}>
+          <TextField
+            placeholder={"Facebook Page URL"}
+            inputProps={{
+              style: {
+                padding: "7px 14px",
+                textAlign: "center",
+                fontFamily: "Segoe UI,sans-serif",
+                fontSize: "12px"
+              }
+            }}
+            onChange={this.handleChangeURL}
+            fullWidth
+            error={this.state.pageUrlError}
+            variant={"outlined"}
+            value={pageUrl}
+            InputProps={{
+              startAdornment: (
+                <Tooltip title="Facebook Page URL">
+                  <Facebook />
+                </Tooltip>
+              )
+            }}
+          />
+        </Grid>
+        <Grid item sm={12}>
+          <TextField
+            placeholder={"Sitepath"}
+            onChange={this.handleChangeSitepath}
+            inputProps={{
+              style: {
+                padding: "7px 14px",
+                textAlign: "center",
+                fontFamily: "Segoe UI,sans-serif",
+                fontSize: "12px"
+              }
+            }}
+            error={this.state.sitepathError}
+            fullWidth
+            variant={"outlined"}
+            value={sitepath}
+            InputProps={{
+              startAdornment: (
+                <Tooltip
+                  title={`Set a unique path name to your website. Example: Site path "abc" means your website url will be "https://fpwg.herokuapp.com/abc"`}
+                >
+                  <Public />
+                </Tooltip>
+              )
+            }}
+          />
+        </Grid>
+        <Grid
+          item
+          sm={12}
+          style={{
+            borderTop: "1px solid #f6f7f7",
+            // margin: "24px -24px -24px",
+            justifyContent: "flex-end",
+            display: "flex",
+            flexDirection: "column"
+          }}
+        >
           <Typography
             style={{
-              marginBottom: ".75em",
-              fontSize: "24px",
-              lineHeight: "1.25em"
+              fontSize: "11px",
+              margin: "0 0 16px",
+              textAlign: "center"
             }}
           >
-            Title
+            By submit creating new site you agree to our{" "}
+            <span style={{ color: "#2271b1" }}>Terms of Service</span> and to
+            sync{" "}
+            <span style={{ color: "#2271b1" }}>certain data and settings</span>{" "}
+            to FPWG
           </Typography>
-          <TextField FormHelperTextProps />
+          <ButtonStyled label="Confirm" onClick={this.handleConfirm} />
         </Grid>
-      </Grid>
+      </>
     );
   };
 
@@ -262,7 +352,6 @@ class createNewSite extends Component {
 }
 
 const mapStateToProps = state => ({
-  open: state.dialog.open,
   pages: state.user.pages,
   sites: state.site.data,
   accessToken: state.user.accessToken,
@@ -270,7 +359,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  confirmPage: data => dispatch(confirmPage(data))
+  confirmPage: data => dispatch(confirmPage(data)),
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(createNewSite);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyle)(createNewSite));

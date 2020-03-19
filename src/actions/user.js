@@ -45,7 +45,11 @@ export function login({ accessToken, profile }) {
       dispatch({
         type: "CLOSE_LOADING"
       });
-      toastr.error("Login failed! Please try again.", "Error");
+      if (error && error.response) {
+        toastr.error(error.response.data, "Error");
+      } else {
+        toastr.error("Login failed! Please try again.", "Error");
+      }
     }
   };
 }
@@ -113,6 +117,7 @@ export function getAllUsers() {
 
 export function getUserPages() {
   return async dispatch => {
+    console.log("hhello");
     try {
       dispatch({
         type: "SHOW_LOADING"
@@ -185,7 +190,11 @@ export function confirmPage({
       dispatch({
         type: "CLOSE_LOADING"
       });
-      toastr.error(`Create new site ${name} failed`, "Error");
+      if (error && error.response) {
+        toastr.error(`${error.response.data.error}`, "Error");
+      } else {
+        toastr.error(`Create new site ${name} failed`, "Error");
+      }
       return true;
     }
   };

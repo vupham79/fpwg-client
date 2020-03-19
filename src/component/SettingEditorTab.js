@@ -5,13 +5,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { faEnvelope, faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Divider,
-  Grid,
-  TextField,
-  Tooltip,
-  Typography
-} from "@material-ui/core";
+import { Divider, Grid, TextField, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
@@ -101,27 +95,6 @@ const useStyles = theme => ({
   }
 });
 
-const HtmlTooltip = withStyles(theme => ({
-  tooltip: {
-    backgroundColor: "#f5f5f9",
-    color: "rgba(0, 0, 0, 0.87)",
-    maxWidth: 220,
-    fontSize: theme.typography.pxToRem(12),
-    border: "1px solid #dadde9"
-  }
-}))(Tooltip);
-
-const expanStyle = {
-  marginTop: "1rem"
-};
-
-const imgStyles = {
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  width: "2rem",
-  height: "2rem"
-};
 class SettingEditorTab extends React.Component {
   handleChangeWhatsapp = e => {
     const { site, changeSiteLinks } = this.props;
@@ -194,7 +167,7 @@ class SettingEditorTab extends React.Component {
   };
 
   render() {
-    const { site, classes, metas } = this.props;
+    const { site, classes } = this.props;
     return (
       <div style={{ padding: 10 }}>
         <Grid
@@ -439,94 +412,6 @@ class SettingEditorTab extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-
-        {/* <ExpansionPanel style={expanStyle}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="button">SEO</Typography>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Grid container>
-              <Grid
-                container
-                item
-                direction="row"
-                justify="space-around"
-                alignItems="center"
-                xs={12}
-                md={12}
-                style={{ marginTop: 10 }}
-              >
-                <Grid item xs={2} sm={2}>
-                  <Typography className={classes.title2}>Favicon</Typography>
-                </Grid>
-                <Grid item container xs={8} sm={8} justify={"center"}>
-                  <Grid
-                    onClick={() =>
-                      document.getElementById("selectedFavicon").click()
-                    }
-                    id={"previewFavicon"}
-                    item
-                    // sm={6}
-                    style={{
-                      cursor: "pointer",
-                      ...imgStyles,
-                      backgroundImage: `url('${
-                        site.favicon ? site.favicon : site.logo
-                        }')`
-                    }}
-                  >
-                    <Input
-                      type="file"
-                      id="selectedFavicon"
-                      onChange={e => this.handleBrowseFavicon(e)}
-                      style={{ display: "none" }}
-                    />
-                  </Grid>
-                </Grid>
-              </Grid>
-              <Grid
-                container
-                item
-                direction="row"
-                justify="space-around"
-                alignItems="center"
-                xs={12}
-                sm={12}
-                style={{ marginTop: 10 }}
-              >
-                <Grid item xs={4} sm={4}>
-                  <HtmlTooltip
-                    title={
-                      <React.Fragment>
-                        <Typography color="inherit">Format to input</Typography>
-                        {"meta1=ABC"}
-                        <br />
-                        {"meta2=ABC"}
-                        <br />
-                        {"meta3=ABC"}
-                        <br />
-                      </React.Fragment>
-                    }
-                  >
-                    <Typography className={classes.title2}>
-                      Metadata
-                      <FontAwesomeIcon icon={faInfoCircle} size={"sm"} />
-                    </Typography>
-                  </HtmlTooltip>
-                </Grid>
-                <Grid item sm={6} xs={6}>
-                  <TextField
-                    value={metas}
-                    fullWidth
-                    variant={"outlined"}
-                    multiline
-                    onChange={this.handleChangeMetas}
-                  />
-                </Grid>
-              </Grid>
-            </Grid>
-          </ExpansionPanelDetails>
-        </ExpansionPanel> */}
       </div>
     );
   }

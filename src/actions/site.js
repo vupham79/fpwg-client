@@ -48,12 +48,10 @@ export function getUserSites() {
       dispatch({
         type: "CLOSE_LOADING"
       });
-      if (req.status === 200) {
-        dispatch({
-          type: "SET_USER_SITES",
-          payload: req.data.sites
-        });
-      }
+      dispatch({
+        type: "SET_USER_SITES",
+        payload: req.data.sites
+      });
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
@@ -325,7 +323,7 @@ export function saveDesignSite({ logo, cover, favicon, site, metas }) {
           instagram: site.instagram,
           whatsapp: site.whatsapp,
           phone: site.phone,
-          sitePath: site.sitePath,
+          sitePath: site.sitePath
         }
       });
       dispatch({

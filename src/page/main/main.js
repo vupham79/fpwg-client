@@ -6,15 +6,15 @@ import {
   Typography,
   withStyles
 } from "@material-ui/core";
-import { fade, ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setEditOff, setCurrentEditId } from "../../actions";
+import { setCurrentEditId, setEditOff } from "../../actions";
 import Header from "../../component/Header";
+import Link from "../../component/link";
 import { themes as themesConstant } from "../../constant/constant";
 import imgUrl from "../../FBWGLogo.png";
 import DesignTab from "./design";
-import Link from "../../component/link";
+import ButtonStyled from "../../component/Button";
 
 const useStyle = theme => ({
   root: {
@@ -187,7 +187,7 @@ class MainPage extends Component {
                     <Grid item xs={5} sm={7} md={7}>
                       <TextField
                         id="txtSitePath"
-                        className={`"mainFont" ${classes.textField}`}
+                        className={`mainFont ${classes.textField}`}
                         inputProps={{
                           style: {
                             readOnly: true,
@@ -201,7 +201,6 @@ class MainPage extends Component {
                         variant={"outlined"}
                         value={"http://localhost:3000/" + siteEdit.sitePath}
                         InputProps={{
-                          classes: classes.textField,
                           endAdornment: (
                             <Button
                               className={"mainFont"}
@@ -214,22 +213,27 @@ class MainPage extends Component {
                         }}
                       />
                     </Grid>
-                    <Grid container item xs={6} sm={5} md={3} justify="center">
-                      <Grid item xs={5} sm={4} md={4}>
+                    <Grid
+                      container
+                      item
+                      xs={6}
+                      sm={5}
+                      md={3}
+                      spacing={1}
+                      justify="flex-end"
+                    >
+                      <Grid item>
                         <Link to="/edit">
-                          <Button
-                            color="primary"
-                            className={"mainFont"}
-                            variant={"outlined"}
+                          <ButtonStyled
+                            style={{ borderColor: "#006088", color: "#006088" }}
                             onClick={() =>
                               this.props.setCurrentEditId(siteEdit.id)
                             }
-                          >
-                            Edit
-                          </Button>
+                            label="Edit"
+                          />
                         </Link>
                       </Grid>
-                      <Grid item xs={5} sm={4} md={4}>
+                      <Grid item>
                         {siteEdit.isPublish ? (
                           <a
                             href={`/${siteEdit.sitePath}`}
@@ -237,37 +241,27 @@ class MainPage extends Component {
                             target="_blank"
                             style={{ textDecoration: "none" }}
                           >
-                            <Button
-                              color="secondary"
-                              className={"mainFont"}
-                              disabled={!siteEdit.isPublish}
-                              variant="contained"
-                            >
-                              Visit
-                            </Button>
+                            <ButtonStyled label="Visit" />
                           </a>
                         ) : (
-                          <Button
-                            className={"mainFont"}
+                          <ButtonStyled
+                            style={{ color: "rgb(195, 196, 199)" }}
                             disabled={!siteEdit.isPublish}
-                            variant={"outlined"}
-                          >
-                            Visit
-                          </Button>
+                            label="Visit"
+                          />
                         )}
                       </Grid>
-                      <Grid item xs={5} sm={4} md={4}>
+                      <Grid item>
                         <Link to="/edit">
-                          <Button
-                            color="primary"
-                            className={"mainFont"}
-                            variant={"outlined"}
+                          <ButtonStyled
+                            style={{ borderColor: "#006088", color: "#006088" }}
                             onClick={() =>
                               this.props.setCurrentEditId(siteEdit.id)
                             }
-                          >
-                            Edit
-                          </Button>
+                            label={`Make ${
+                              siteEdit.isPublish ? "Unpublish" : "Publish"
+                            }`}
+                          />
                         </Link>
                       </Grid>
                     </Grid>

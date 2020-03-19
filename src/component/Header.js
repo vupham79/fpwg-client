@@ -344,7 +344,7 @@ class CustomNavBarEditor extends React.Component {
   }
 
   render() {
-    const { profile, classes, closeDialog, openDialog, open } = this.props;
+    const { profile, classes, closeDialog, open } = this.props;
     return (
       <Grid container item justify="space-between" className={classes.root}>
         <Grid
