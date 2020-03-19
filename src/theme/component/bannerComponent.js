@@ -3,6 +3,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
 import Slider from "react-slick";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+
 
 class BannerComponent extends React.Component {
   renderNewCoversSlider = () => {
@@ -139,43 +141,49 @@ class BannerComponent extends React.Component {
   };
 
   TypeCarousel = () => {
+    const { isEdit, newCover } = this.props;
     return (
       <React.Fragment>
-        <Grid item xs={12}>
-          <Carousel
-            autoPlay
-            infiniteLoop
-            centerMode={false}
-            showArrows={false}
-            showIndicators={true}
-            dynamicHeight={false}
-            showStatus={false}
-            showThumbs={false}
-          >
-            {this.renderNewCoversCarousel()}
-          </Carousel>
-        </Grid>
+        {(isEdit && newCover && newCover.length == 0) ? (<div></div>) : (
+          <Grid item xs={12}>
+            <Carousel
+              autoPlay
+              infiniteLoop
+              centerMode={false}
+              showArrows={false}
+              showIndicators={true}
+              dynamicHeight={false}
+              showStatus={false}
+              showThumbs={false}
+            >
+              {this.renderNewCoversCarousel()}
+            </Carousel>
+          </Grid>
+        )}
       </React.Fragment>
     );
   };
 
   TypeCarouselWithTitle = () => {
+    const { isEdit, newCover } = this.props;
     return (
       <React.Fragment>
-        <Grid item xs={12}>
-          <Carousel
-            autoPlay
-            infiniteLoop
-            centerMode={false}
-            showArrows={false}
-            showIndicators={false}
-            dynamicHeight={false}
-            showStatus={false}
-            showThumbs={false}
-          >
-            {this.renderNewCoversCarouselWithTitle()}
-          </Carousel>
-        </Grid>
+        {(isEdit && newCover && newCover.length == 0) ? (<div></div>) : (
+          <Grid item xs={12}>
+            <Carousel
+              autoPlay
+              infiniteLoop
+              centerMode={false}
+              showArrows={false}
+              showIndicators={false}
+              dynamicHeight={false}
+              showStatus={false}
+              showThumbs={false}
+            >
+              {this.renderNewCoversCarouselWithTitle()}
+            </Carousel>
+          </Grid>
+        )}
       </React.Fragment>
     );
   };
