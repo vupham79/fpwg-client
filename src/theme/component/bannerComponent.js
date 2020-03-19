@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Grid, CardMedia } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
@@ -31,24 +31,36 @@ class BannerComponent extends React.Component {
         return newCover.map((cover, index) => {
           if (cover && typeof cover === "object" && cover.size > 0) {
             return (
-              <div key={index} style={{ height: 400, overflow: "hidden" }}>
-                <img src={URL.createObjectURL(cover)} alt="" key={index} />
-              </div>
+              <CardMedia
+                key={index}
+                component="img"
+                alt="Contemplative Reptile"
+                height="400"
+                image={URL.createObjectURL(cover)}
+              />
             );
           } else
             return (
-              <div key={index} style={{ height: 400, overflow: "hidden" }}>
-                <img src={cover} alt="" key={index} />
-              </div>
+              <CardMedia
+                key={index}
+                component="img"
+                alt="Contemplative Reptile"
+                height="400"
+                image={cover}
+              />
             );
         });
       }
     } else {
       if (siteView.cover && siteView.cover.length > 0) {
         return siteView.cover.map((cover, i) => (
-          <div style={{ height: 400, overflow: "hidden" }}>
-            <img src={cover} alt="" key={i} />
-          </div>
+          <CardMedia
+            key={i}
+            component="img"
+            alt="Contemplative Reptile"
+            height="400"
+            image={cover}
+          />
         ));
       }
     }
@@ -62,8 +74,13 @@ class BannerComponent extends React.Component {
         return newCover.map((cover, index) => {
           if (cover && typeof cover === "object" && cover.size > 0) {
             return (
-              <div key={index} style={{ height: 400, overflow: "hidden" }}>
-                <img src={URL.createObjectURL(cover)} alt="" key={index} />
+              <div key={index} style={{ height: "100%", overflow: "hidden" }}>
+                <CardMedia
+                  component="img"
+                  alt="Contemplative Reptile"
+                  height="400"
+                  image={URL.createObjectURL(cover)}
+                />
                 <p className="legend">
                   {isEdit && siteEdit && siteEdit.about}
                   {!isEdit && siteView && siteView.about}
@@ -74,13 +91,16 @@ class BannerComponent extends React.Component {
             );
           } else
             return (
-              <div key={index} style={{ height: 400, overflow: "hidden" }}>
-                <img src={cover} alt="" key={index} />
+              <div key={index} style={{ height: "100%", overflow: "hidden" }}>
+                <CardMedia
+                  component="img"
+                  alt="Contemplative Reptile"
+                  height="400"
+                  image={cover}
+                />
                 <p className="legend">
                   {isEdit && siteEdit && siteEdit.about}
-                  {!isEdit && siteView && siteView.about}
                   {isEdit && !siteEdit.about && "Welcome to our website!"}
-                  {!isEdit && !siteView.about && "Welcome to our website!"}
                 </p>
               </div>
             );
@@ -88,9 +108,18 @@ class BannerComponent extends React.Component {
       }
     } else {
       if (siteView.cover && siteView.cover.length > 0) {
-        return siteView.cover.map((cover, i) => (
-          <div style={{ height: 400, overflow: "hidden" }}>
-            <img src={cover} alt="" key={i} />
+        return siteView.cover.map((cover, index) => (
+          <div key={index} style={{ height: "100%", overflow: "hidden" }}>
+            <CardMedia
+              component="img"
+              alt="Contemplative Reptile"
+              height="400"
+              image={cover}
+            />
+            <p className="legend">
+              {!isEdit && siteView && siteView.about}
+              {!isEdit && !siteView.about && "Welcome to our website!"}
+            </p>
           </div>
         ));
       }
