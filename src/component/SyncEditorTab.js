@@ -13,7 +13,11 @@ import {
   AppBar,
   Tab,
   Tabs,
-  Box
+  Box,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  Select
 } from "@material-ui/core";
 import {
   ExpandMore as ExpandMoreIcon,
@@ -25,6 +29,9 @@ import Switch from "./SwitchButton";
 import { closeDialog, openDialog, syncDataFromFB } from "../actions";
 import moment from "moment";
 import { withStyles } from "@material-ui/core/styles";
+import ButtonComponent from "./Button";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const expanStyle = {
   marginTop: "1rem"
@@ -61,6 +68,21 @@ const useStyles = theme => ({
     borderWidth: 1,
     borderColor: "#2a2e2a",
     padding: "0.5rem"
+  },
+  gridBtnSync: {
+    margin: "0.2rem 0"
+  },
+  datePicker: {
+    padding: "0.2rem 0",
+    margin: "0.1rem 0"
+  },
+  picker: {
+    height: "1.8rem",
+    width: "-webkit-fill-available",
+    padding: "0 0.5rem"
+  },
+  gridItem: {
+    padding: "0.5rem 0"
   }
 });
 
@@ -97,7 +119,12 @@ const DialogTitle = withStyles(styles)(props => {
 class SyncEditorTab extends React.Component {
   state = {
     open: false,
-    tab: 0
+    tab: 0,
+    radioValue: "",
+    startDate: new Date(),
+    endDate: new Date(),
+    selectValue: "All",
+    msg: null
   };
 
   selectTab = (event, tab) => {
@@ -111,9 +138,38 @@ class SyncEditorTab extends React.Component {
     });
   };
 
+  handleRadioChange = event => {
+    this.setState({ radioValue: event.target.value });
+    console.log(this.state.radioValue);
+  };
+  setStartDate = date => {
+    this.setState({ startDate: date });
+  };
+  setEndDate = date => {
+    this.setState({ endDate: date });
+  };
+
+  handleChange = event => {
+    this.setState({
+      selectValue: event.target.value
+    });
+  };
+
+  handleSyncData = () => {
+    if (this.state.radioValue === "") {
+      this.setState({ msg: "Please choose the data type you want to sync" });
+    }
+  };
+
   render() {
     const { syncDataFromFB, site, classes } = this.props;
-    const { tab, open } = this.state;
+    const { tab, open, startDate, endDate } = this.state;
+    const btnSync = {
+      width: "-webkit-fill-available",
+      backgroundColor: "rgb(0, 116, 170)",
+      color: "white"
+    };
+
     return (
       <>
         <ExpansionPanel style={expanStyle}>
@@ -205,19 +261,165 @@ class SyncEditorTab extends React.Component {
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="button">Manual</Typography>
           </ExpansionPanelSummary>
+          <Divider variant="fullWidth" />
           <ExpansionPanelDetails>
-            <Grid container>
-              <Grid item container justify={"center"}>
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    onClick={() => syncDataFromFB(site.id)}
+            <Grid container justify="center" alignItems="center">
+              <Grid
+                item
+                xs={12}
+                container
+                alignItems="center"
+                className={classes.gridItem}
+              >
+                <Grid item xs={4} style={{ textAlign: "start" }}>
+                  Sync Type:
+                </Grid>
+                <Grid item xs={6}>
+                  <Select
+                    fullWidth
+                    native
+                    value={this.state.selectValue}
+                    onChange={this.handleChange}
                   >
-                    Sync
-                  </Button>
+                    <option>All</option>
+                    <option>Date</option>
+                  </Select>
+                </Grid>
+              </Grid>
+
+              {this.state.selectValue === "Date" && (
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  alignItems="center"
+                  className={classes.gridItem}
+                >
+                  <Grid container className={classes.datePicker}>
+                    <Grid item xs={4} sm={4} md={4}>
+                      From:
+                    </Grid>
+                    <Grid item xs={6} sm={12} md={6}>
+                      <DatePicker
+                        className={classes.picker}
+                        selected={startDate}
+                        onChange={date => this.setStartDate(date)}
+                        selectsStart
+                        startDate={startDate}
+                        endDate={endDate}
+                      />
+                    </Grid>
+                  </Grid>
+                  <Grid container className={classes.datePicker}>
+                    <Grid item xs={4} sm={4} md={4}>
+                      To:
+                    </Grid>
+                    <Grid item xs={6} sm={12} md={6}>
+                      <DatePicker
+                        className={classes.picker}
+                        selected={this.state.endDate}
+                        onChange={date => this.setEndDate(date)}
+                        selectsEnd
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={startDate}
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              )}
+
+              <Grid
+                container
+                item
+                xs={12}
+                alignItems="center"
+                className={classes.gridItem}
+              >
+                <Grid item xs={4} sm={4}>
+                  Data type:
+                </Grid>
+                <Grid item xs={6} sm={12} className={classes.gridItem}>
+                  <RadioGroup
+                    row
+                    value={this.state.radioValue}
+                    onChange={this.handleRadioChange}
+                  >
+                    <FormControlLabel
+                      value="post"
+                      control={<Radio color="primary" />}
+                      label={
+                        <Typography
+                          style={{ fontSize: "14px", fontFamily: "Segoe UI" }}
+                        >
+                          Post
+                        </Typography>
+                      }
+                    />
+                    <FormControlLabel
+                      value="event"
+                      control={<Radio color="primary" />}
+                      label={
+                        <Typography
+                          style={{ fontSize: "14px", fontFamily: "Segoe UI" }}
+                        >
+                          Event
+                        </Typography>
+                      }
+                    />
+                    <FormControlLabel
+                      value="gallery"
+                      control={<Radio color="primary" />}
+                      label={
+                        <Typography
+                          style={{ fontSize: "14px", fontFamily: "Segoe UI" }}
+                        >
+                          Gallery
+                        </Typography>
+                      }
+                    />
+                    <FormControlLabel
+                      value="all"
+                      control={<Radio color="primary" />}
+                      label={
+                        <Typography
+                          style={{ fontSize: "14px", fontFamily: "Segoe UI" }}
+                        >
+                          All
+                        </Typography>
+                      }
+                    />
+                  </RadioGroup>
+                </Grid>
+              </Grid>
+              {this.state.msg && (
+                <Grid
+                  container
+                  justify="center"
+                  style={{ marginBottom: "1.5rem", textAlign: "center" }}
+                >
+                  {this.state.msg}
+                </Grid>
+              )}
+              <Grid container justify="center" alignItems="center">
+                <Grid item xs={5}>
+                  <ButtonComponent
+                    onClick={this.handleSyncData}
+                    label="Sync"
+                    style={btnSync}
+                  />
                 </Grid>
               </Grid>
             </Grid>
+            {/* <Grid item xs={12}>
+                <Button
+                  variant="contained"
+                  onClick={() => syncDataFromFB(site.id)}
+                >
+                  Sync
+                </Button>
+              </Grid> */}
+            {/* </Grid> */}
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel style={expanStyle}>

@@ -233,7 +233,7 @@ class SettingEditorTab extends React.Component {
             xs={12}
             style={{ marginTop: 10 }}
           >
-            <Grid item xs={2} sm={12} md={2} justify="center">
+            <Grid container item xs={2} sm={12} md={2} justify="center">
               <FontAwesomeIcon icon={faWhatsapp} size="2x" color="#555d66" />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
@@ -268,7 +268,7 @@ class SettingEditorTab extends React.Component {
             xs={12}
             style={{ marginTop: 10 }}
           >
-            <Grid item xs={2} sm={12} md={2} justify="center">
+            <Grid container item xs={2} sm={12} md={2} justify="center">
               <FontAwesomeIcon icon={faInstagram} size="2x" color="#555d66" />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
@@ -304,7 +304,7 @@ class SettingEditorTab extends React.Component {
             xs={12}
             style={{ marginTop: 10 }}
           >
-            <Grid item xs={2} sm={12} md={2} justify="center">
+            <Grid container item xs={2} sm={12} md={2} justify="center">
               <FontAwesomeIcon icon={faYoutube} size="2x" color="#555d66" />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
@@ -348,7 +348,7 @@ class SettingEditorTab extends React.Component {
             xs={12}
             style={{ marginTop: 10 }}
           >
-            <Grid item xs={2} sm={12} md={2} justify="center">
+            <Grid container item xs={2} sm={12} md={2} justify="center">
               <FontAwesomeIcon icon={faEnvelope} size="2x" color="#555d66" />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
@@ -384,7 +384,7 @@ class SettingEditorTab extends React.Component {
             xs={12}
             style={{ marginTop: 10 }}
           >
-            <Grid item xs={2} sm={12} md={2} justify="center">
+            <Grid container item xs={2} sm={12} md={2} justify="center">
               <FontAwesomeIcon icon={faPhoneAlt} size="2x" color="#555d66" />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
