@@ -317,7 +317,7 @@ class SettingEditorTab extends React.Component {
               <FontAwesomeIcon
                 icon={faYoutube}
                 size="2x"
-                color="linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)"
+                color="#555d66"
               />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>

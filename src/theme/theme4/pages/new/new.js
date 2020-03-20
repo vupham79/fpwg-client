@@ -141,7 +141,7 @@ class Theme1News extends React.Component {
             ) : (
               <Grid container justify="center">
                 <Typography variant="body1">
-                  You don't have any news.
+                  Currently there are no news.
                 </Typography>
               </Grid>
             )
@@ -149,17 +149,19 @@ class Theme1News extends React.Component {
             siteView.posts && (
               <Grid container>
                 <PostTypeComponent
+                  posts={siteView.posts}
                   siteInfo={{
                     logo: siteView.logo,
                     title: siteView.title
                   }}
-                  posts={siteView.posts}
                 />
               </Grid>
             )
           ) : (
             <Grid container justify="center">
-              <Typography variant="body1">You don't have any news.</Typography>
+              <Typography variant="body1">
+                Currently there are no news.
+              </Typography>
             </Grid>
           )}
         </Grid>
@@ -171,6 +173,7 @@ class Theme1News extends React.Component {
 const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
+  siteEdit: state.site.siteEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
