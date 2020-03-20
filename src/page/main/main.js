@@ -163,12 +163,12 @@ class MainPage extends Component {
                   <Grid
                     container
                     alignItems="center"
-                    justify="center"
+                    justify="flex-end"
                     item
                     xs={12}
                     className={classes.toolEdit}
                   >
-                    <Grid item xs={5} sm={7} md={7}>
+                    <Grid item xs={4} sm={7} md={6}>
                       <TextField
                         id="txtSitePath"
                         className={"mainFont"}
@@ -197,10 +197,19 @@ class MainPage extends Component {
                         }}
                       />
                     </Grid>
-                    <Grid container item xs={6} sm={5} md={3} justify="center">
-                      <Grid item xs={5} sm={4} md={4}>
+                    <Grid
+                      container
+                      item
+                      xs={8}
+                      sm={5}
+                      md={3}
+                      justify="flex-end"
+                      style={{ padding: 0 }}
+                    >
+                      <Grid item xs={5} sm={5} md={5}>
                         <Link to="/edit">
                           <Button
+                            style={{ minWidth: "80px" }}
                             color="primary"
                             className={"mainFont"}
                             variant={"outlined"}
@@ -212,7 +221,7 @@ class MainPage extends Component {
                           </Button>
                         </Link>
                       </Grid>
-                      <Grid item xs={5} sm={4} md={4}>
+                      <Grid item xs={5} sm={5} md={5}>
                         {siteEdit.isPublish ? (
                           <a
                             href={`/${siteEdit.sitePath}`}
@@ -221,6 +230,7 @@ class MainPage extends Component {
                             style={{ textDecoration: "none" }}
                           >
                             <Button
+                              style={{ minWidth: "80px" }}
                               color="secondary"
                               className={"mainFont"}
                               disabled={!siteEdit.isPublish}
@@ -231,6 +241,7 @@ class MainPage extends Component {
                           </a>
                         ) : (
                           <Button
+                            style={{ minWidth: "80px" }}
                             className={"mainFont"}
                             disabled={!siteEdit.isPublish}
                             variant={"outlined"}

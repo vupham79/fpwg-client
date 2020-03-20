@@ -44,7 +44,9 @@ export default function AccordionButton({
           />
         </h3>
       </button>
-      <div style={{ display: isNav && currentNav == label ? "block" : "none" }}>
+      <div
+        style={{ display: isNav && currentNav === label ? "block" : "none" }}
+      >
         {comp}
       </div>
     </React.Fragment>

@@ -1,71 +1,65 @@
 import {
-  AppBar,
-  Button,
-  Container,
+  faFacebookF,
+  faInstagram,
+  faMailchimp,
+  faWhatsapp,
+  faYoutube
+} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  Divider,
   Grid,
+  IconButton,
+  List,
+  ListItem,
   Tab,
   Tabs,
-  Tooltip,
-  Zoom,
-  IconButton,
-  withStyles,
-  ListItem,
-  List,
-  Divider,
-  Hidden,
-  Drawer
+  withStyles
 } from "@material-ui/core";
-import { faExclamation } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updateNavItemValue } from "../../../actions";
-import styles from "./index.module.css";
-import MenuIcon from "@material-ui/icons/Menu";
 import { NavLink } from "react-router-dom";
-
-const drawerWidth = 240;
+import { updateNavItemValue } from "../../../actions";
 
 const useStyles = theme => ({
-  drawer: {
-    [theme.breakpoints.up("sm")]: {
-      width: drawerWidth,
-      flexShrink: 0
-    }
+  root: {
+    position: "relative"
   },
-  navItems: {
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-      display: "flex"
-    }
+  info: {
+    margin: "0.2rem 0.4rem",
+    fontSize: "1rem",
+    padding: "0 0.4rem",
+    color: "white"
   },
-  appBar: {
-    [theme.breakpoints.up("sm")]: {
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth
-    }
+  contact: {
+    position: "absolute"
   },
-  menuButton: {
-    marginLeft: theme.spacing(2),
-    [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
+  gridIcon: {
+    borderRadius: "0.3rem"
   },
-  drawerPaper: {
-    width: drawerWidth
+  icon: {
+    maxHeight: "2rem"
+  },
+  navItem: {
+    position: "absolute",
+    top: "70%",
+    minHeight: "10vh"
   }
 });
 
-class Header extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      mobileOpen: false
-    };
+function hexToRGB(hex, alpha) {
+  var r = parseInt(hex.slice(1, 3), 16),
+    g = parseInt(hex.slice(3, 5), 16),
+    b = parseInt(hex.slice(5, 7), 16);
+
+  if (alpha) {
+    return "rgba(" + r + ", " + g + ", " + b + ", " + alpha + ")";
+  } else {
+    return "rgb(" + r + ", " + g + ", " + b + ")";
   }
-  handleDrawerToggle = () => {
-    this.setState({ mobileOpen: !this.state.mobileOpen });
-  };
+}
+
+class Header extends Component {
   renderImage = () => {
     const { isEdit, siteEdit, siteView, newLogo } = this.props;
     if (isEdit) {
@@ -75,12 +69,13 @@ class Header extends Component {
     }
     return `url('${siteView.logo}')`;
   };
-  renderTabItems = ({ type }) => {
+
+  renderTabItems = () => {
     const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
     const tabStyles = {
       textTransform: "none",
       fontFamily: titleEdit.fontFamily,
-      color: titleEdit.color,
+      color: "white",
       minWidth: "3vh",
       "&:hover": {
         color: "#40a9ff",
@@ -95,23 +90,23 @@ class Header extends Component {
     };
     return (
       <Tabs
-        orientation={type}
+        orientation="horizontal"
         value={tabValue}
         textColor="primary"
-        TabIndicatorProps={
-          type === "vertical"
-            ? {
-                style: {
-                  background: siteEdit.color,
-                  left: 0
-                }
-              }
-            : {
-                style: {
-                  background: siteEdit.color
-                }
-              }
-        }
+        // TabIndicatorProps={
+        //   type === "vertical"
+        //     ? {
+        //         style: {
+        //           background: siteEdit.color,
+        //           left: 0
+        //         }
+        //       }
+        //     : {
+        //         style: {
+        //           background: siteEdit.color
+        //         }
+        //       }
+        // }
         onChange={(e, newValue) => updateNavItemValue(newValue)}
       >
         {siteEdit.navItems.map((item, index) =>
@@ -158,6 +153,112 @@ class Header extends Component {
     );
   };
 
+  renderUrl = () => {
+    const { isEdit, siteView, siteEdit } = this.props;
+    if (isEdit) {
+      if (siteEdit.url) {
+        return <FontAwesomeIcon icon={faFacebookF} color="white" size="1x" />;
+      }
+    } else if (siteView.url) {
+      return <FontAwesomeIcon icon={faFacebookF} color="white" size="1x" />;
+    }
+    return <></>;
+  };
+
+  renderInstagram = () => {
+    const { isEdit, siteView, siteEdit } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.instagram) {
+        return <FontAwesomeIcon icon={faInstagram} color="white" size="1x" />;
+      }
+    } else if (siteView && siteView.instagram) {
+      return <FontAwesomeIcon icon={faInstagram} color="white" size="1x" />;
+    }
+    return <></>;
+  };
+
+  renderYoutube = () => {
+    const { isEdit, siteView, siteEdit } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.youtube) {
+        return <FontAwesomeIcon icon={faYoutube} color="white" size="1x" />;
+      }
+    } else if (siteView && siteView.youtube) {
+      return <FontAwesomeIcon icon={faYoutube} color="white" size="1x" />;
+    }
+    return <></>;
+  };
+
+  renderEmail = () => {
+    const { isEdit, siteView, siteEdit } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.email) {
+        return <FontAwesomeIcon icon={faMailchimp} color="white" size="1x" />;
+      }
+    } else if (siteView && siteView.email) {
+      return <FontAwesomeIcon icon={faMailchimp} color="white" size="1x" />;
+    }
+    return <></>;
+  };
+
+  renderWhatsapp = () => {
+    const { isEdit, siteView, siteEdit } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.whatsapp) {
+        return <FontAwesomeIcon icon={faWhatsapp} color="white" size="1x" />;
+      }
+    } else if (siteView && siteView.whatsapp) {
+      return <FontAwesomeIcon icon={faWhatsapp} color="white" size="1x" />;
+    }
+    return <></>;
+  };
+
+  renderNavItems = () => {
+    const { classes, siteView, isEdit, titleView } = this.props;
+    return (
+      <Grid className={classes.navItems}>
+        {isEdit
+          ? this.renderTabItems({ type: "horizontal" })
+          : siteView &&
+            siteView.navItems &&
+            siteView.navItems.map((item, index) =>
+              item.isActive ? (
+                <Grid
+                  item
+                  sm
+                  md
+                  key={index}
+                  style={{
+                    textAlign: "end"
+                  }}
+                >
+                  <NavLink
+                    style={{
+                      ...titleView,
+                      textDecoration: "none",
+                      color: this.props.navColor,
+                      backgroundColor: this.props.headerColor
+                    }}
+                    activeStyle={{ borderBottom: "1px solid" }}
+                    to={`/${siteView.sitePath}/${item.original}`}
+                  >
+                    {item.name}
+                  </NavLink>
+                </Grid>
+              ) : null
+            )}
+      </Grid>
+    );
+  };
+
+  renderHeader = () => {
+    const { isEdit } = this.props;
+    console.log(isEdit);
+    return (
+      <Grid>{isEdit ? this.renderTabItems() : this.renderNavItems()}</Grid>
+    );
+  };
+
   render() {
     const {
       isEdit,
@@ -165,14 +266,15 @@ class Header extends Component {
       siteView,
       titleEdit,
       titleView,
-      navItemIsActive,
-      classes
+      classes,
+      bodyEdit,
+      bodyView
     } = this.props;
+
     const imgStyles = {
-      backgroundSize: "contain",
+      backgroundSize: "cover",
       backgroundPosition: "center",
-      backgroundRepeat: "no-repeat",
-      height: "5rem"
+      backgroundRepeat: "no-repeat"
     };
 
     const linkView = {
@@ -180,138 +282,138 @@ class Header extends Component {
       color: titleView.color,
       textDecoration: "none"
     };
+
+    const imgUrl = `url(
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTMU4nhQFC4i2nhwFQ_3PYY3I2OsKbZOeD6Ma7kK0PuM3kFixnu")`;
+
+    const infoStyle = {
+      background: isEdit
+        ? hexToRGB(titleEdit.color)
+        : hexToRGB(titleView.color),
+      fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
+    };
+
     return (
-      <>
-        <AppBar className={styles.app_bar} position="sticky">
-          <Container>
-            <Grid container alignItems="center">
-              <Grid
-                container
-                item
-                md={2}
-                sm={2}
-                xs={2}
-                style={{
-                  ...imgStyles,
-                  backgroundImage: this.renderImage()
-                }}
-              />
-              <Grid
-                item
-                md={1}
-                sm={4}
-                xs={4}
-                className={styles.shopName}
-                style={isEdit ? titleEdit : titleView}
-              >
-                {/* <Grid
-                  id={"siteLogo"}
-                  item
-                  sm={2}
-                  xs={3}
-                  style={{
-                    ...imgStyles,
-                    backgroundImage: isEdit
-                      ? `url('${siteEdit.logo}')`
-                      : `url('${siteView.logo}')`
-                  }}
-                /> */}
-                {/* <Grid
-                  item
-                  sm={3}
-                  xs={7}
-                  className={styles.shopName}
-                  style={isEdit ? titleEdit : titleView}
-                > */}
-                {isEdit
-                  ? siteEdit && siteEdit.title
-                  : siteView && siteView.title}
-                {/* </Grid> */}
-                <Grid>
-                  {!isEdit && !navItemIsActive && (
-                    <Tooltip
-                      TransitionComponent={Zoom}
-                      title="This page is currently inactive"
-                    >
-                      <Button>
-                        <FontAwesomeIcon
-                          color={"orange"}
-                          icon={faExclamation}
-                        />
-                      </Button>
-                    </Tooltip>
-                  )}
-                </Grid>
-              </Grid>
-              <Grid item container xs={6} sm={12} md={9} justify="flex-end">
-                <Grid
-                  container
-                  item
-                  sm={10}
-                  className={classes.navItems}
-                  justify="flex-end"
+      <Grid container className={classes.root}>
+        <Grid
+          container
+          item
+          style={{ backgroundImage: imgUrl, minHeight: "90vh", ...imgStyles }}
+        />
+        <Grid
+          container
+          item
+          direction="column"
+          alignItems="flex-end"
+          justify="flex-end"
+          className={classes.contact}
+        >
+          <Grid item sm={6} className={classes.info} style={{ ...infoStyle }}>
+            {isEdit
+              ? siteEdit && siteEdit.address
+                ? siteEdit.address
+                : "This information is private"
+              : siteView && siteView.address
+              ? siteView.address
+              : "This information is private"}
+          </Grid>
+          <Grid item sm={6} className={classes.info} style={{ ...infoStyle }}>
+            {isEdit
+              ? siteEdit && siteEdit.phone
+                ? siteEdit.phone
+                : "This information is private"
+              : siteView && siteView.phone
+              ? siteView.phone
+              : "This information is private"}
+          </Grid>
+
+          <Grid
+            container
+            direction="row"
+            justify="flex-end"
+            item
+            sm={6}
+            className={classes.info}
+          >
+            {(siteEdit && siteEdit.url) || (siteView && siteView.url) ? (
+              <Grid className={classes.gridIcon} item style={{ ...infoStyle }}>
+                <IconButton
+                  className={classes.icon}
+                  aria-label=""
+                  color="primary"
+                  href={
+                    isEdit ? siteEdit && siteEdit.url : siteView && siteView.url
+                  }
                 >
-                  {isEdit
-                    ? this.renderTabItems({ type: "horizontal" })
-                    : siteView.navItems &&
-                      siteView.navItems.map((item, index) =>
-                        item.isActive ? (
-                          <Grid
-                            item
-                            sm={2}
-                            key={index}
-                            style={{
-                              textAlign: "end"
-                            }}
-                          >
-                            <NavLink
-                              style={linkView}
-                              activeStyle={{ borderBottom: "1px solid" }}
-                              to={`/${siteView.sitePath}/${item.name}`}
-                            >
-                              {item.name}
-                            </NavLink>
-                          </Grid>
-                        ) : null
-                      )}
-                </Grid>
-                <Grid item>
-                  <IconButton
-                    style={isEdit ? titleEdit : titleView}
-                    aria-label="open drawer"
-                    edge="start"
-                    onClick={this.handleDrawerToggle}
-                    className={classes.menuButton}
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                </Grid>
+                  {this.renderUrl()}
+                </IconButton>
               </Grid>
-            </Grid>
-          </Container>
-        </AppBar>
-        <nav className={classes.drawer} aria-label="mailbox folders">
-          <Hidden smUp implementation="css">
-            <Drawer
-              variant="temporary"
-              anchor={"right"}
-              open={this.state.mobileOpen}
-              onClose={this.handleDrawerToggle}
-              classes={{
-                paper: classes.drawerPaper
-              }}
-              ModalProps={{
-                keepMounted: true
-              }}
-            >
-              {this.renderDrawer({
-                site: siteView,
-                titleView: titleView
-              })}
-            </Drawer>
-          </Hidden>
-        </nav>
-      </>
+            ) : null}
+
+            {(siteEdit && siteEdit.youtube) ||
+            (siteView && siteView.youtube) ? (
+              <Grid className={classes.gridIcon} item style={{ ...infoStyle }}>
+                <IconButton
+                  className={classes.icon}
+                  aria-label=""
+                  color="primary"
+                  href={
+                    isEdit
+                      ? siteEdit && siteEdit.youtube
+                      : siteView && siteView.youtube
+                  }
+                >
+                  {this.renderYoutube()}
+                </IconButton>
+              </Grid>
+            ) : null}
+
+            {(siteEdit && siteEdit.email) || (siteView && siteView.email) ? (
+              <Grid className={classes.gridIcon} item style={{ ...infoStyle }}>
+                <IconButton
+                  className={classes.icon}
+                  aria-label=""
+                  color="primary"
+                  href={
+                    isEdit
+                      ? siteEdit && siteEdit.email
+                      : siteView && siteView.email
+                  }
+                >
+                  {this.renderEmail()}
+                </IconButton>
+              </Grid>
+            ) : null}
+
+            {(siteEdit && siteEdit.whatsapp) ||
+            (siteView && siteView.whatsapp) ? (
+              <Grid className={classes.gridIcon} item style={{ ...infoStyle }}>
+                <IconButton
+                  className={classes.icon}
+                  aria-label=""
+                  color="primary"
+                  href={
+                    isEdit
+                      ? siteEdit && siteEdit.whatsapp
+                      : siteView && siteView.whatsapp
+                  }
+                >
+                  {this.renderWhatsapp()}
+                </IconButton>
+              </Grid>
+            ) : null}
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          item
+          justify="center"
+          className={classes.navItem}
+          style={{ ...infoStyle }}
+        >
+          {this.renderHeader()}
+        </Grid>
+      </Grid>
     );
   }
 }
@@ -323,6 +425,8 @@ const mapStateToProps = state => ({
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView,
   navItemIsActive: state.site.navItemIsActive,
   newLogo: state.site.newLogo
 });

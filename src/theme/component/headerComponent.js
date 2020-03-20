@@ -86,6 +86,7 @@ class HeaderComponent extends Component {
     }
     return `url('${siteView.logo}')`;
   };
+
   renderTabItems = ({ type, pos }) => {
     const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
     const tabStyles = {
@@ -396,17 +397,6 @@ class HeaderComponent extends Component {
           </Grid>
         </Grid>
       );
-    } else if (navPos === "center") {
-      return (
-        <Grid
-          container
-          justify="center"
-          alignItems="center"
-          style={{ height: "10vh" }}
-        >
-          {this.renderNavItems(navPos)}
-        </Grid>
-      );
     }
   };
 
@@ -448,11 +438,7 @@ class HeaderComponent extends Component {
         <Grid
           container
           alignItems="center"
-          style={
-            navPos === "center"
-              ? useStyle
-              : { backgroundColor: this.props.headerColor }
-          }
+          style={{ backgroundColor: this.props.headerColor }}
         >
           <Grid item xs={11}>
             {this.renderHeader({

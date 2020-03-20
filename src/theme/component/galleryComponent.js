@@ -1,8 +1,7 @@
 import { Container, Dialog, Grid, withStyles } from "@material-ui/core";
 import React from "react";
-import { connect } from "react-redux";
-import { closeDialog, openDialog } from "../../actions";
 import ReactPaginate from "react-paginate";
+import { connect } from "react-redux";
 
 const useStyles = theme => ({
   root: {

@@ -1,41 +1,36 @@
 import {
+  Avatar,
   Button,
-  Container,
+  Dialog,
   Grid,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
   Menu,
   MenuItem,
-  Typography,
-  withStyles,
-  Avatar,
-  IconButton,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
   TextField,
-  Dialog,
-  List
+  Typography,
+  withStyles
 } from "@material-ui/core";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
-import { Computer } from "@material-ui/icons";
 import React from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {
-  setLogout,
-  setPreviewMode,
   closeDialog,
-  openDialog,
   confirmPage,
   getUserSites,
-  setEditOff
+  openDialog,
+  setEditOff,
+  setLogout
 } from "../actions";
+import imgUrl from "../FBWGLogo.png";
 import { firebaseAppAuth } from "../utils/firebase";
 import styles from "./index.module.css";
 import Link from "./link";
-import toastr from "./Toastr";
-import imgUrl from "../FBWGLogo.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import SwitchButton from "./SwitchButton";
+import toastr from "./Toastr";
 
 const StyledMenu = withStyles({
   paper: {

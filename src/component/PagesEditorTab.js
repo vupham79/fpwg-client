@@ -71,7 +71,7 @@ const gridItem = {
   borderColor: "#2a2e2a",
   borderWidth: 1.5,
   padding: "0.2rem 0.5rem",
-  margin: "0.7rem",
+  margin: "0.3rem",
   zIndex: "99999999"
 };
 
@@ -393,7 +393,7 @@ class PagesEditorTab extends React.Component {
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
             <Typography variant="button">Navigation</Typography>
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
+          <ExpansionPanelDetails style={{ padding: "0.1rem" }}>
             <SortableList
               items={site.navItems}
               onSortEnd={this.onChangeItem}

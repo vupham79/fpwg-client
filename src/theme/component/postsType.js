@@ -1,21 +1,25 @@
 import {
-  Button,
+  Avatar,
   Card,
-  CardActions,
+  CardActionArea,
   CardContent,
+  CardHeader,
   CardMedia,
   Container,
   Dialog,
   Grid,
+  IconButton,
   makeStyles,
   Typography,
   withStyles
 } from "@material-ui/core";
 import FacebookIcon from "@material-ui/icons/Facebook";
+import moment from "moment";
 import React from "react";
+import ReactPaginate from "react-paginate";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
-import ReactPaginate from "react-paginate";
+import Truncate from "react-truncate";
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -25,20 +29,17 @@ const useStyles = makeStyles(theme => ({
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    height: "22rem",
+    minHeight: "28rem",
     border: style => "0.5px solid" + style.color
     // "&:hover": {
     //   border: style => "1.5px solid" + style.color
     // }
   },
   message: {
-    overflow: "hidden",
-    height: "3rem",
-    paddingLeft: "1rem"
+    paddingLeft: "0.5rem"
   },
   title: {
     overflow: "hidden",
-    // height: "1.5rem",
     paddingLeft: "1rem"
   },
   cardMediaAlbum: {
@@ -47,18 +48,28 @@ const useStyles = makeStyles(theme => ({
     backgroundSize: "contain"
   },
   cardMedia: {
-    height: "100%",
+    height: "50vh",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
     overflow: "hidden"
   },
   album: {
-    height: "10rem",
+    height: "50vh",
     background: "rgba(24, 20, 20, 0.5)"
   },
   cardContent: {
     flexGrow: 1,
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
+    paddingBottom: 0,
+    overflow: "hidden"
+  },
+  cardHeader: {
+    padding: "0.5rem"
+  },
+  avatar: {
+    width: "2rem",
+    height: "2rem"
   },
   gridItems: {
     maxHeight: 350
@@ -85,245 +96,252 @@ const gridStyle = theme => ({
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     width: "-webkit-fill-available",
-    height: "30vh",
     maxHeight: "100%",
     maxWidth: "100%"
   }
 });
 
-function TypeAlbum({ post, openDialog, style, dark }) {
+const cardTitle = {
+  fontSize: "11px",
+  fontFamily: "Segoe UI"
+};
+
+function TypeAlbum({ post, openDialog, style, dark, siteInfo }) {
   const classes = useStyles(
     style && style.isEdit ? style.titleEdit : style.titleView
   );
+
+  const txtStyle = {
+    fontFamily: style.isEdit
+      ? style.bodyEdit.fontFamily
+      : style.bodyView.fontFamily
+  };
   return (
     <React.Fragment>
       <Grid
         item
         xs={12}
         sm={6}
-        md={4}
-        lg={3}
+        md={6}
+        lg={4}
         style={dark ? { backgroundColor: "#1a1919" } : null}
       >
         <Card className={classes.card}>
-          <CardMedia
-            className={classes.cardMediaAlbum}
-            image={post.attachments.images[0]}
-            title="Image title"
+          <CardHeader
+            className={classes.cardHeader}
+            avatar={
+              <Avatar
+                aria-label="recipe"
+                src={siteInfo.logo}
+                className={classes.avatar}
+              />
+            }
+            action={
+              <IconButton aria-label="settings" style={{ borderRadius: 0 }}>
+                <a
+                  href={post.target}
+                  target={"_blank"}
+                  rel="noopener noreferrer"
+                >
+                  <FacebookIcon color="primary" fontSize="inherit" />
+                </a>
+              </IconButton>
+            }
+            subheaderTypographyProps={{
+              style: { ...cardTitle, ...txtStyle }
+            }}
+            titleTypographyProps={{
+              style: { ...cardTitle, ...txtStyle }
+            }}
+            title={siteInfo.title}
+            subheader={moment(post.createAt).format("MMMM DD,YYYY")}
+          />
+          <CardActionArea>
+            <CardMedia
+              onClick={() => openDialog(post)}
+              className={classes.cardMediaAlbum}
+              image={post.attachments.images[0]}
+            >
+              <Grid
+                container
+                alignItems="center"
+                justify="center"
+                className={classes.album}
+              >
+                <Typography variant="h3" style={{ color: "white" }}>
+                  {post.attachments.images.length} +
+                </Typography>
+              </Grid>
+            </CardMedia>
+          </CardActionArea>
+          <CardContent className={classes.cardContent}>
+            <div style={{ padding: "0.5rem" }}>
+              <Truncate
+                style={{ ...txtStyle }}
+                lines={1}
+                ellipsis={<span> ...</span>}
+              >
+                {post.message}
+              </Truncate>
+            </div>
+          </CardContent>
+        </Card>
+      </Grid>
+    </React.Fragment>
+  );
+}
+
+function TypePhoto({ post, openDialog, style, dark, siteInfo }) {
+  const classes = useStyles(
+    style && style.isEdit ? style.titleEdit : style.titleView
+  );
+  const txtStyle = {
+    fontFamily: style.isEdit
+      ? style.bodyEdit.fontFamily
+      : style.bodyView.fontFamily
+  };
+  return (
+    <React.Fragment>
+      <Grid
+        item
+        xs={12}
+        sm={6}
+        md={6}
+        lg={4}
+        style={dark ? { backgroundColor: "#1a1919" } : null}
+      >
+        <Card className={classes.card}>
+          <CardHeader
+            className={classes.cardHeader}
+            avatar={
+              <Avatar
+                aria-label="recipe"
+                src={siteInfo.logo}
+                className={classes.avatar}
+              />
+            }
+            action={
+              <IconButton aria-label="settings" style={{ borderRadius: 0 }}>
+                <a
+                  href={post.target}
+                  target={"_blank"}
+                  rel="noopener noreferrer"
+                >
+                  <FacebookIcon color="primary" fontSize="inherit" />
+                </a>
+              </IconButton>
+            }
+            subheaderTypographyProps={{
+              style: { ...cardTitle, ...txtStyle }
+            }}
+            titleTypographyProps={{
+              style: { ...cardTitle, ...txtStyle }
+            }}
+            title={siteInfo.title}
+            subheader={moment(post.createAt).format("MMMM DD,YYYY")}
+          />
+          <CardActionArea>
+            <CardMedia
+              onClick={() => openDialog(post)}
+              className={classes.cardMedia}
+              image={post.attachments.images[0]}
+            />
+          </CardActionArea>
+
+          <CardContent
+            className={classes.cardContent}
+            style={{ paddingBottom: "0.5rem" }}
           >
-            <Grid
-              container
-              alignItems="center"
-              justify="center"
-              className={classes.album}
-            >
-              <Typography variant="h3" style={{ color: "white" }}>
-                {post.attachments.images.length} +
-              </Typography>
-            </Grid>
-          </CardMedia>
-
-          <CardContent className={classes.cardContent}>
-            <Typography
-              className={classes.title}
-              gutterBottom
-              variant="h6"
-              style={
-                style && style.isEdit
-                  ? { fontFamily: style.titleEdit.fontFamily }
-                  : { fontFamily: style.titleView.fontFamily }
-              }
-            >
-              {post.title}
-            </Typography>
-            <Typography
-              className={classes.message}
-              style={
-                style && style.isEdit
-                  ? style && style.bodyEdit
-                  : style && style.bodyView
-              }
-            >
-              {post.message && post.message}
-            </Typography>
-          </CardContent>
-          <CardActions style={{ paddingLeft: "1rem" }}>
-            <Grid container justify="space-between">
-              <Grid item>
-                <Button
-                  className={classes.btnReadMore}
-                  variant="outlined"
-                  onClick={() => openDialog(post)}
+            {post.message && (
+              <div style={{ padding: "0.5rem" }}>
+                <Truncate
+                  style={{ ...txtStyle }}
+                  lines={1}
+                  ellipsis={<span> ...</span>}
                 >
-                  Read More
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button color="primary">
-                  <a
-                    href={post.target}
-                    target={"_blank"}
-                    rel="noopener noreferrer"
-                  >
-                    <FacebookIcon color="primary" fontSize="small" />
-                  </a>
-                </Button>
-              </Grid>
-            </Grid>
-          </CardActions>
+                  {post.message}
+                </Truncate>
+              </div>
+            )}
+          </CardContent>
         </Card>
       </Grid>
     </React.Fragment>
   );
 }
 
-function TypePhoto({ post, openDialog, style, dark }) {
+function TypeVideo({ post, openDialog, style, dark, siteInfo }) {
   const classes = useStyles(
     style && style.isEdit ? style.titleEdit : style.titleView
   );
+  const txtStyle = {
+    fontFamily: style.isEdit
+      ? style.bodyEdit.fontFamily
+      : style.bodyView.fontFamily
+  };
   return (
     <React.Fragment>
       <Grid
         item
         xs={12}
         sm={6}
-        md={4}
-        lg={3}
+        md={6}
+        lg={4}
         style={dark ? { backgroundColor: "#1a1919" } : null}
       >
         <Card className={classes.card}>
-          <CardMedia
-            className={classes.cardMedia}
-            image={post.attachments.images[0]}
-            title="Image title"
-          />
-          <CardContent className={classes.cardContent}>
-            <Typography
-              className={classes.title}
-              gutterBottom
-              variant="h6"
-              style={
-                style && style.isEdit
-                  ? { fontFamily: style.titleEdit.fontFamily }
-                  : { fontFamily: style.titleView.fontFamily }
-              }
-            >
-              {post.title}
-            </Typography>
-            {post.message && (
-              <Typography
-                className={classes.message}
-                style={
-                  style && style.isEdit
-                    ? style && style.bodyEdit
-                    : style && style.bodyView
-                }
-              >
-                {post.message}
-              </Typography>
-            )}
-          </CardContent>
-          <CardActions style={{ paddingLeft: "1rem" }}>
-            <Grid container justify="space-between">
-              <Grid item>
-                <Button
-                  className={classes.btnReadMore}
-                  variant="outlined"
-                  onClick={() => openDialog(post)}
+          <CardHeader
+            className={classes.cardHeader}
+            avatar={
+              <Avatar
+                aria-label="recipe"
+                src={siteInfo.logo}
+                className={classes.avatar}
+              />
+            }
+            action={
+              <IconButton aria-label="settings" style={{ borderRadius: 0 }}>
+                <a
+                  href={post.target}
+                  target={"_blank"}
+                  rel="noopener noreferrer"
                 >
-                  Read More
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button color="primary">
-                  <a
-                    href={post.target}
-                    target={"_blank"}
-                    rel="noopener noreferrer"
-                  >
-                    <FacebookIcon color="primary" fontSize="small" />
-                  </a>
-                </Button>
-              </Grid>
-            </Grid>
-          </CardActions>
-        </Card>
-      </Grid>
-    </React.Fragment>
-  );
-}
+                  <FacebookIcon color="primary" fontSize="inherit" />
+                </a>
+              </IconButton>
+            }
+            subheaderTypographyProps={{
+              style: { ...cardTitle, ...txtStyle }
+            }}
+            titleTypographyProps={{
+              style: { ...cardTitle, ...txtStyle }
+            }}
+            title={siteInfo.title}
+            subheader={moment(post.createAt).format("MMMM DD,YYYY")}
+          />
+          <CardActionArea>
+            <ReactPlayer
+              onClick={() => openDialog(post)}
+              url={post && post.attachments && post.attachments.video}
+              controls={true}
+              width="100%"
+              height="50vh"
+            />
+          </CardActionArea>
 
-function TypeVideo({ post, openDialog, style, dark }) {
-  const classes = useStyles(
-    style && style.isEdit ? style.titleEdit : style.titleView
-  );
-  return (
-    <React.Fragment>
-      <Grid
-        item
-        xs={12}
-        sm={6}
-        md={4}
-        lg={3}
-        style={dark ? { backgroundColor: "#1a1919" } : null}
-      >
-        <Card className={classes.card}>
-          <ReactPlayer
-            url={post && post.attachments && post.attachments.video}
-            controls={true}
-            width="100%"
-            height="100%"
-          />
           <CardContent className={classes.cardContent}>
-            <Typography
-              className={classes.title}
-              gutterBottom
-              variant="h6"
-              style={
-                style && style.isEdit
-                  ? { fontFamily: style.titleEdit.fontFamily }
-                  : { fontFamily: style.titleView.fontFamily }
-              }
-            >
-              {post.title}
-            </Typography>
             {post.message && (
-              <Typography
-                className={classes.message}
-                style={
-                  style && style.isEdit
-                    ? style && style.bodyEdit
-                    : style && style.bodyView
-                }
-              >
-                {post.message}
-              </Typography>
+              <div style={{ padding: "0.5rem" }}>
+                <Truncate
+                  style={{ ...txtStyle }}
+                  lines={1}
+                  ellipsis={<span> ...</span>}
+                >
+                  {post.message}
+                </Truncate>
+              </div>
             )}
           </CardContent>
-          <CardActions style={{ paddingLeft: "1rem" }}>
-            <Grid container justify="space-between">
-              <Grid item>
-                <Button
-                  className={classes.btnReadMore}
-                  variant="outlined"
-                  onClick={() => openDialog(post)}
-                >
-                  Read More
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button color="primary">
-                  <a
-                    href={post.target}
-                    target={"_blank"}
-                    rel="noopener noreferrer"
-                  >
-                    <FacebookIcon color="primary" fontSize="small" />
-                  </a>
-                </Button>
-              </Grid>
-            </Grid>
-          </CardActions>
         </Card>
       </Grid>
     </React.Fragment>
@@ -335,7 +353,7 @@ class PostTypeComponent extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 4, // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
+    itemPerPage: 6, // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
     open: false,
     postOpen: null,
     openVideo: false
@@ -411,7 +429,8 @@ class PostTypeComponent extends React.Component {
       titleEdit,
       titleView,
       bodyEdit,
-      bodyView
+      bodyView,
+      siteInfo
     } = this.props;
     const post = this.state.postOpen;
     const style = {
@@ -438,6 +457,7 @@ class PostTypeComponent extends React.Component {
                   style={style}
                   dark={this.props.darkMode}
                   openDialog={this.handleOpen}
+                  siteInfo={siteInfo}
                 />
               )) ||
               (post.attachments.media_type === "album" && post.isActive && (
@@ -447,6 +467,7 @@ class PostTypeComponent extends React.Component {
                   style={style}
                   dark={this.props.darkMode}
                   openDialog={this.handleOpen}
+                  siteInfo={siteInfo}
                 />
               )) ||
               (post.attachments.media_type === "video" && post.isActive && (
@@ -456,6 +477,7 @@ class PostTypeComponent extends React.Component {
                   style={style}
                   dark={this.props.darkMode}
                   openDialog={this.handleOpenVideo}
+                  siteInfo={siteInfo}
                 />
               ))
           )}
@@ -463,7 +485,12 @@ class PostTypeComponent extends React.Component {
             open={this.state.open}
             onClose={this.handleClose}
             fullWidth
-            maxWidth="md"
+            maxWidth={
+              this.state.postOpen &&
+              this.state.postOpen.attachments.media_type === "album"
+                ? "md"
+                : "sm"
+            }
           >
             <Container className={classes.root}>
               <Grid container spacing={3} justify="center">
@@ -474,8 +501,8 @@ class PostTypeComponent extends React.Component {
                       item
                       key={index}
                       xs={12}
-                      sm={4}
-                      md={4}
+                      sm={10}
+                      md={8}
                       className={classes.girdItems}
                     >
                       <img src={img} alt="" className={classes.images} />
@@ -483,19 +510,6 @@ class PostTypeComponent extends React.Component {
                   ))}
               </Grid>
               <Grid container className={classes.root} justify="center">
-                <Grid item xs={12} style={{ textAlign: "center" }}>
-                  <Typography
-                    variant="h5"
-                    color="textPrimary"
-                    style={
-                      isEdit
-                        ? { fontFamily: style.titleEdit.fontFamily }
-                        : { fontFamily: style.titleView.fontFamily }
-                    }
-                  >
-                    {post && post.title}
-                  </Typography>
-                </Grid>
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                   <Typography
                     variant="body1"
@@ -512,7 +526,7 @@ class PostTypeComponent extends React.Component {
             open={this.state.openVideo}
             onClose={this.handleClose}
             fullWidth
-            maxWidth="md"
+            maxWidth="sm"
           >
             <Container className={classes.root}>
               <Grid container spacing={3} justify="center">
@@ -524,20 +538,7 @@ class PostTypeComponent extends React.Component {
                 />
               </Grid>
               <Grid container className={classes.root} justify="center">
-                <Grid item xs={12}>
-                  <Typography
-                    variant="h5"
-                    color="textPrimary"
-                    style={
-                      isEdit
-                        ? { fontFamily: style.titleEdit.fontFamily }
-                        : { fontFamily: style.titleView.fontFamily }
-                    }
-                  >
-                    {post && post.title}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} style={{ textAlign: "center" }}>
                   <Typography
                     variant="body1"
                     style={isEdit ? bodyEdit : bodyView}
