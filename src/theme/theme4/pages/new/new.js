@@ -12,7 +12,8 @@ class Theme1News extends React.Component {
       posts,
       bodyEdit,
       bodyView,
-      siteView
+      siteView,
+      siteEdit
     } = this.props;
 
     const useStyles = () => ({
@@ -129,26 +130,40 @@ class Theme1News extends React.Component {
           {isEdit ? (
             posts ? (
               <Grid container>
-                <PostTypeComponent posts={posts} />
+                <PostTypeComponent
+                  posts={posts}
+                  siteInfo={{
+                    logo: siteEdit.logo,
+                    title: siteEdit.title
+                  }}
+                />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography variant="body1">
-                  You don't have any news.
+                <Grid container justify="center">
+                  <Typography variant="body1">
+                    Currently there are no news.
                 </Typography>
-              </Grid>
-            )
+                </Grid>
+              )
           ) : siteView ? (
             siteView.posts && (
               <Grid container>
-                <PostTypeComponent posts={siteView.posts} />
+                <PostTypeComponent
+                  posts={siteView.posts}
+                  siteInfo={{
+                    logo: siteView.logo,
+                    title: siteView.title
+                  }}
+                />
               </Grid>
             )
           ) : (
-            <Grid container justify="center">
-              <Typography variant="body1">You don't have any news.</Typography>
-            </Grid>
-          )}
+                <Grid container justify="center">
+                  <Typography variant="body1">
+                    Currently there are no news.
+                </Typography>
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );
@@ -157,6 +172,7 @@ class Theme1News extends React.Component {
 
 const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
+  siteEdit: state.site.siteEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,

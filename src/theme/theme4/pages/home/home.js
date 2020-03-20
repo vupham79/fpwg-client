@@ -122,24 +122,38 @@ class Theme1Home extends React.Component {
           {isEdit ? (
             posts ? (
               <Grid container>
-                <PostTypeComponent darkMode posts={posts} />
+                <PostTypeComponent
+                  posts={posts}
+                  siteInfo={{
+                    logo: siteEdit.logo,
+                    title: siteEdit.title
+                  }}
+                />
               </Grid>
             ) : (
                 <Grid container justify="center">
                   <Typography variant="body1">
                     Currently there are no news.
-                  </Typography>
+                </Typography>
                 </Grid>
               )
           ) : siteView ? (
             siteView.posts && (
               <Grid container>
-                <PostTypeComponent posts={siteView.posts} />
+                <PostTypeComponent
+                  posts={siteView.posts}
+                  siteInfo={{
+                    logo: siteView.logo,
+                    title: siteView.title
+                  }}
+                />
               </Grid>
             )
           ) : (
                 <Grid container justify="center">
-                  <Typography variant="body1">Currently there are no news.</Typography>
+                  <Typography variant="body1">
+                    Currently there are no news.
+                </Typography>
                 </Grid>
               )}
         </Grid>

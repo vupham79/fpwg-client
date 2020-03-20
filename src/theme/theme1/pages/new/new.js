@@ -140,12 +140,12 @@ class Theme1News extends React.Component {
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography variant="body1">
-                  Currently there are no news.
+                <Grid container justify="center">
+                  <Typography variant="body1">
+                    Currently there are no news.
                 </Typography>
-              </Grid>
-            )
+                </Grid>
+              )
           ) : siteView ? (
             siteView.posts && (
               <Grid container>
@@ -159,10 +159,12 @@ class Theme1News extends React.Component {
               </Grid>
             )
           ) : (
-            <Grid container justify="center">
-              <Typography variant="body1">You don't have any news.</Typography>
-            </Grid>
-          )}
+                <Grid container justify="center">
+                  <Typography variant="body1">
+                    Currently there are no news.
+                </Typography>
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );
