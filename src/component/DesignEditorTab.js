@@ -139,7 +139,7 @@ class DesignEditorTab extends React.Component {
     this.setState({
       logo: site.logo
     });
-    img.addEventListener("load", async function() {
+    img.addEventListener("load", async function () {
       const color = await colorThief.getPalette(img, 11);
       const colors = await color.map(rgb =>
         onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
@@ -450,7 +450,7 @@ class DesignEditorTab extends React.Component {
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
-        <Typography className={classes.title}>Homepage Images</Typography>
+        {/* <Typography className={classes.title}>Homepage Images</Typography>
         <Grid container className={classes.sideBarBox}>
           {this.renderNewCovers()}
           <Grid
@@ -477,7 +477,7 @@ class DesignEditorTab extends React.Component {
             />
             <Add fontSize="small" />
           </Grid>
-        </Grid>
+        </Grid> */}
       </div>
     );
   }

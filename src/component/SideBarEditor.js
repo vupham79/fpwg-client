@@ -15,6 +15,7 @@ import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
 import SyncEditorTab from "./SyncEditorTab";
 import ThemeEditorTab from "./ThemeEditorTab";
+import HomepageEditorTab from "./HomepageEditorTab";
 
 const useStyles = theme => ({
   root: {
@@ -188,6 +189,13 @@ class ClippedDrawer extends React.Component {
           <AccordionButton
             comp={<PagesEditorTab />}
             label="Pages"
+            currentNav={this.state.currentNavName}
+            isNav={this.state.navigating}
+            setNav={this.setNavigating}
+          />
+          <AccordionButton
+            comp={<HomepageEditorTab />}
+            label="Homepage Settings"
             currentNav={this.state.currentNavName}
             isNav={this.state.navigating}
             setNav={this.setNavigating}
