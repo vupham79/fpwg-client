@@ -35,6 +35,9 @@ import toastr from "./Toastr";
 const StyledMenu = withStyles({
   paper: {
     border: "1px solid #d3d4d5"
+  },
+  list: {
+    padding: 0
   }
 })(props => (
   <Menu
@@ -64,7 +67,9 @@ const StyledMenuItem = withStyles(theme => ({
       "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
         color: theme.palette.common.black
       }
-    }
+    },
+    fontSize: "14px",
+    fontFamily: "Segoe UI, sans-serif"
   }
 }))(MenuItem);
 
@@ -174,7 +179,6 @@ class CustomNavBarEditor extends React.Component {
       accessToken,
       profile,
       closeDialog,
-      userId,
       getUserSites
     } = this.props;
     const { pageId, pageUrl, pageName, sitepath, isPublish } = this.state;
@@ -192,7 +196,9 @@ class CustomNavBarEditor extends React.Component {
         sitepath,
         isPublish
       });
-      confirm && (await getUserSites(userId, accessToken)) && closeDialog();
+      confirm &&
+        (await getUserSites(profile.userId, accessToken)) &&
+        closeDialog();
     } else {
       if (!pageUrl) {
         this.setState({
@@ -230,7 +236,7 @@ class CustomNavBarEditor extends React.Component {
   renderPagesNotGenerated = () => {
     const { pages, sites } = this.props;
     const { pageUrl, sitepath, isPublish } = this.state;
-    let nonGenerated = pages.map(page => page.id);
+    let nonGenerated = pages && pages.map(page => page.id);
     let index = -1;
     sites.forEach(site => {
       index = nonGenerated.indexOf(site.id);
@@ -244,7 +250,7 @@ class CustomNavBarEditor extends React.Component {
           {pages.map(
             page =>
               nonGenerated.includes(page.id) && (
-                <>
+                <React.Fragment key={page.id}>
                   <ListItem
                     button
                     onClick={() =>
@@ -254,7 +260,6 @@ class CustomNavBarEditor extends React.Component {
                         name: page.name
                       })
                     }
-                    key={page.id}
                   >
                     <ListItemAvatar>
                       <Avatar>
@@ -266,7 +271,7 @@ class CustomNavBarEditor extends React.Component {
                       secondary={page.category}
                     />
                   </ListItem>
-                </>
+                </React.Fragment>
               )
           )}
           <ListItem>
@@ -339,7 +344,7 @@ class CustomNavBarEditor extends React.Component {
   }
 
   render() {
-    const { profile, classes, closeDialog, openDialog, open } = this.props;
+    const { profile, classes, closeDialog, open } = this.props;
     return (
       <Grid container item justify="space-between" className={classes.root}>
         <Grid
@@ -355,12 +360,12 @@ class CustomNavBarEditor extends React.Component {
           <Link to="/">
             <Grid item container xs={12} alignItems="center">
               <Grid item xs={6}>
-                <img src={imgUrl} style={imgStyles} />
+                <img src={imgUrl} alt="" style={imgStyles} />
               </Grid>
               <Grid item xs={6}>
                 <Typography
                   variant="body1"
-                  className={[classes.title, "mainFont"]}
+                  className={`${classes.title} "mainFont"`}
                 >
                   FPWG
                 </Typography>
@@ -377,8 +382,10 @@ class CustomNavBarEditor extends React.Component {
           justify="flex-end"
         >
           <Grid container item sm={5} xs={6} justify="flex-end">
-            <Link to="">
-              <ButtonCreate onClick={openDialog}>
+            <Link to="/create">
+              <ButtonCreate
+              // onClick={openDialog}
+              >
                 <Typography
                   className={"mainFont"}
                   style={{
@@ -426,8 +433,7 @@ const mapStateToProps = state => ({
   pages: state.user.pages,
   sites: state.site.data,
   accessToken: state.user.accessToken,
-  profile: state.user.profile,
-  userId: state.user.profile.id
+  profile: state.user.profile
 });
 
 const mapDispatchToProps = dispatch => ({

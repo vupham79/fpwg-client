@@ -1,26 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { getUserPages, getUserSites } from "../../actions";
+import { getUserSites } from "../../actions";
 import MainPage from "./main";
 class PreMainPage extends Component {
   state = {
     isEdit: false
   };
-  getUserPages = async () => {
-    const { accessToken, userId, getUserPages } = this.props;
-    await getUserPages({ accessToken, userId });
-  };
 
   getAllUserSites = async () => {
-    const { accessToken, userId, getUserSites } = this.props;
-    await getUserSites(userId, accessToken);
+    const { accessToken, profile, getUserSites } = this.props;
+    await getUserSites(profile.id, accessToken);
   };
 
   async componentDidMount() {
-    const { isLogin } = this.props;
-    if (isLogin) {
-      this.getUserPages();
+    const { isLogin, profile } = this.props;
+    if (isLogin && profile) {
       this.getAllUserSites();
     }
   }
@@ -37,12 +32,10 @@ class PreMainPage extends Component {
 const mapStateToProps = state => ({
   isLogin: state.user.isLogin,
   accessToken: state.user.accessToken,
-  userId: state.user.profile.id
+  profile: state.user.profile
 });
 
 const mapDispatchToProps = dispatch => ({
-  getUserPages: ({ accessToken, userId }) =>
-    dispatch(getUserPages({ accessToken, userId })),
   getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
 });
 

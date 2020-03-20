@@ -6,7 +6,6 @@ import { Grid } from "@material-ui/core";
 import { themes as themesConstant } from "../../../constant/constant";
 
 function TabItem({ pages, navItems, tabValue }) {
-  console.log(pages, tabValue);
   return (
     <>
       {navItems &&
@@ -44,7 +43,12 @@ class Layout extends Component {
 
     return (
       <>
-        <HeaderComponent navPos={"right"} displayImg={false} navColor={"#b3b2b2"} headerColor="#1a1919" />
+        <HeaderComponent
+          navPos={"right"}
+          displayImg={false}
+          navColor={"#b3b2b2"}
+          headerColor="#1a1919"
+        />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
       </>

@@ -1,20 +1,15 @@
-import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
+import { changeTheme } from "../actions";
 import {
-  changeColor,
-  changeFontBody,
-  changeFontTitle,
-  changeSiteTitle,
-  changeTheme,
-  removeCover,
-  setColorPallete,
-  setNewCover,
-  setNewLogo,
-  setShowCustomColor
-} from "../actions";
-import DialogThemes from "./DialogThemes";
+  Grid,
+  Typography,
+  Card,
+  CardActionArea,
+  CardMedia,
+  CardContent
+} from "@material-ui/core";
 
 const useStyles = theme => ({
   content: {
@@ -34,7 +29,7 @@ const useStyles = theme => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120
+    minWidth: 400
   },
   selectEmpty: {
     marginTop: theme.spacing(2)
@@ -61,57 +56,77 @@ const useStyles = theme => ({
   }
 });
 
-const imgStyles = {
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  width: "6rem",
-  height: "6rem"
-};
-
 class ThemeEditorTab extends React.Component {
   state = {
-    file: null,
-    pallete: [],
-    covers: [],
-    logo: ""
+    id: this.props.site.theme.id,
   };
 
-  handleChangeTheme = event => {
+  handleChangeTheme = (selectId) => {
     const { changeTheme, themes, site } = this.props;
-    const theme = themes.find(e => e.id === event.target.value);
+    const theme = themes.find(e => e.id === selectId);
     site.theme = theme;
-    this.setState({ changeTheme: true });
+    this.setState({
+      id: selectId,
+    });
     changeTheme(site);
   };
 
-  handleChangeColor = color => {
-    const { site, changeColor } = this.props;
-    site.color = color.hex;
-    changeColor(site);
-  };
-
-  handleChangeFontBody = font => {
-    const { site, changeFontBody } = this.props;
-    site.fontBody = font.family;
-    changeFontBody(site);
-  };
-
   render() {
-    const drawerWidth = 280;
     const {
-      isShow,
-      setShowCustomColor,
-      classes,
-      site,
-      colorPallete,
-      isChanged
+      themes
     } = this.props;
-
+    const { id } = this.state;
     return (
-      <div>
-        <Typography className={classes.title}>Theme</Typography>
-        <DialogThemes />
+      <div style={{ padding: 20 }}>
+        <Grid
+          container
+          style={{
+            color: "#555d66",
+            textAlign: "left",
+            fontStyle: "italic",
+            fontFamily: "Segoe UI, sans-serif",
+            marginTop: "1rem",
+            marginBottom: "2rem",
+            fontSize: 14
+          }}
+        >
+          Pick a theme for your site.
+          </Grid>
+
+        <Grid container direction="column">
+          {themes.map((theme, i) => {
+            return (
+              <Grid key={i} item sm={12} style={{ marginBottom: "1rem" }}>
+                <Card
+                  onClick={() => this.handleChangeTheme(theme.id)}
+                  variant={"outlined"}
+                  style={{
+                    border: theme.id === id ? "0.2rem solid #0074aa" : ""
+                  }}
+                >
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      alt="Contemplative Reptile"
+                      height="150"
+                      image={theme.previewImage}
+                      title="preview"
+                    />
+                    <CardContent>
+                      <Typography
+                        align={"center"}
+                        variant="subtitle2"
+                        component="h2"
+                      >
+                        {theme.name}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            );
+          })}
+        </Grid>
       </div>
     );
   }
@@ -121,22 +136,11 @@ const mapStateToProps = state => ({
   themes: state.theme.data,
   isShow: state.theme.isShow,
   site: state.site.siteEdit,
-  colorPallete: state.site.colorPallete,
-  newCover: state.site.newCover,
-  isChanged: state.site.isChanged
+  titleEdit: state.site.titleEdit,
 });
 
 const mapDispatchToProps = dispatch => ({
   changeTheme: site => dispatch(changeTheme(site)),
-  changeColor: site => dispatch(changeColor(site)),
-  changeFontTitle: site => dispatch(changeFontTitle(site)),
-  changeFontBody: site => dispatch(changeFontBody(site)),
-  setShowCustomColor: isShow => dispatch(setShowCustomColor(isShow)),
-  changeSiteTitle: site => dispatch(changeSiteTitle(site)),
-  setColorPallete: pallete => dispatch(setColorPallete(pallete)),
-  setNewLogo: file => dispatch(setNewLogo(file)),
-  setNewCover: file => dispatch(setNewCover(file)),
-  removeCover: cover => dispatch(removeCover(cover))
 });
 
 export default connect(

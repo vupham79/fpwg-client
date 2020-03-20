@@ -8,12 +8,13 @@ import {
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setEditOff, setCurrentEditId } from "../../actions";
+import { publishSite, setCurrentEditId, unPublishSite } from "../../actions";
+import ButtonStyled from "../../component/Button";
 import Header from "../../component/Header";
+import Link from "../../component/link";
 import { themes as themesConstant } from "../../constant/constant";
 import imgUrl from "../../FBWGLogo.png";
 import DesignTab from "./design";
-import Link from "../../component/link";
 
 const useStyle = theme => ({
   root: {
@@ -51,6 +52,21 @@ const useStyle = theme => ({
   h4: {
     textAlign: "center",
     padding: "2rem 1rem"
+  },
+  textField: {
+    overflow: "hidden",
+    // borderRadius: 4,
+    backgroundColor: "#fcfcfb",
+    // transition: theme.transitions.create(["border-color", "box-shadow"]),
+    "&:hover": {
+      backgroundColor: "#fff"
+      // borderColor: "rgba(81,152,217,.7)"
+    },
+    "&$focused": {
+      backgroundColor: "#fff",
+      borderColor: "black !important"
+      // boxShadow: `${fade(rgba(81, 152, 217, 0.7), 0.25)} 0 0 0 2px`
+    }
   }
 });
 
@@ -75,7 +91,7 @@ function EmptyListSite() {
   return (
     <Grid container justify="center" alignItems="center">
       <Grid item xs={3} sm={2} md={1}>
-        <img src={imgUrl} className={style.img} />
+        <img src={imgUrl} alt="" className={style.img} />
       </Grid>
       <Grid container item xs={12}>
         <Grid item xs={12}>
@@ -123,7 +139,7 @@ class MainPage extends Component {
   };
 
   render() {
-    const { sites, classes, siteEdit } = this.props;
+    const { sites, classes, siteEdit, publishSite, unPublishSite } = this.props;
     return (
       <Grid container>
         <Grid item xs={12}>
@@ -171,7 +187,7 @@ class MainPage extends Component {
                     <Grid item xs={4} sm={7} md={6}>
                       <TextField
                         id="txtSitePath"
-                        className={"mainFont"}
+                        className={`mainFont ${classes.textField}`}
                         inputProps={{
                           style: {
                             readOnly: true,
@@ -200,28 +216,24 @@ class MainPage extends Component {
                     <Grid
                       container
                       item
-                      xs={8}
+                      xs={6}
                       sm={5}
                       md={3}
+                      spacing={1}
                       justify="flex-end"
-                      style={{ padding: 0 }}
                     >
-                      <Grid item xs={5} sm={5} md={5}>
+                      <Grid item>
                         <Link to="/edit">
-                          <Button
-                            style={{ minWidth: "80px" }}
-                            color="primary"
-                            className={"mainFont"}
-                            variant={"outlined"}
+                          <ButtonStyled
+                            style={{ borderColor: "#006088", color: "#006088" }}
                             onClick={() =>
                               this.props.setCurrentEditId(siteEdit.id)
                             }
-                          >
-                            Edit
-                          </Button>
+                            label="Edit"
+                          />
                         </Link>
                       </Grid>
-                      <Grid item xs={5} sm={5} md={5}>
+                      <Grid item>
                         {siteEdit.isPublish ? (
                           <a
                             href={`/${siteEdit.sitePath}`}
@@ -229,26 +241,46 @@ class MainPage extends Component {
                             target="_blank"
                             style={{ textDecoration: "none" }}
                           >
-                            <Button
-                              style={{ minWidth: "80px" }}
-                              color="secondary"
-                              className={"mainFont"}
-                              disabled={!siteEdit.isPublish}
-                              variant="contained"
-                            >
-                              Visit
-                            </Button>
+                            <ButtonStyled label="Visit" />
                           </a>
                         ) : (
-                          <Button
-                            style={{ minWidth: "80px" }}
-                            className={"mainFont"}
+                          <ButtonStyled
+                            style={{ color: "rgb(195, 196, 199)" }}
                             disabled={!siteEdit.isPublish}
-                            variant={"outlined"}
-                          >
-                            Visit
-                          </Button>
+                            label="Visit"
+                          />
                         )}
+                      </Grid>
+                      <Grid item>
+                        <ButtonStyled
+                          style={
+                            siteEdit.isPublish
+                              ? {
+                                  backgroundColor: "#cc2127",
+                                  color: "#fff",
+                                  fontWeight: "600"
+                                }
+                              : {
+                                  backgroundColor: "#5ea95a",
+                                  color: "#fff",
+                                  fontWeight: "600"
+                                }
+                          }
+                          onClick={() =>
+                            siteEdit.isPublish
+                              ? unPublishSite({
+                                  siteId: siteEdit.id,
+                                  siteName: siteEdit.title
+                                })
+                              : publishSite({
+                                  siteId: siteEdit.id,
+                                  siteName: siteEdit.title
+                                })
+                          }
+                          label={`Make ${
+                            siteEdit.isPublish ? "Unpublish" : "Publish"
+                          }`}
+                        />
                       </Grid>
                     </Grid>
                   </Grid>
@@ -259,7 +291,7 @@ class MainPage extends Component {
               ) : (
                 <Grid container alignItems="center" justify="center">
                   <Grid item xs={3} sm={2} md={1}>
-                    <img src={imgUrl} className={classes.img} />
+                    <img src={imgUrl} alt="" className={classes.img} />
                   </Grid>
                   <Grid item xs={12}>
                     <Typography variant="h5" className={classes.h4}>
@@ -283,8 +315,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setEditOff: () => dispatch(setEditOff()),
-  setCurrentEditId: id => dispatch(setCurrentEditId(id))
+  setCurrentEditId: id => dispatch(setCurrentEditId(id)),
+  publishSite: ({ siteId, siteName }) =>
+    dispatch(publishSite({ siteId, siteName })),
+  unPublishSite: ({ siteId, siteName }) =>
+    dispatch(unPublishSite({ siteId, siteName }))
 });
 
 export default connect(

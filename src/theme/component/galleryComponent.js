@@ -82,16 +82,7 @@ class GalleryComponent extends React.Component {
     const handleOpenDialog = image => {
       this.setState({ img: image, open: true });
     };
-    const {
-      classes,
-      open,
-      openDialog,
-      closeDialog,
-      galleries,
-      bodyEdit,
-      bodyView,
-      isEdit
-    } = this.props;
+    const { classes, galleries, bodyEdit, bodyView, isEdit } = this.props;
     return (
       <React.Fragment>
         <Container className={classes.root}>
@@ -121,21 +112,23 @@ class GalleryComponent extends React.Component {
               </p>
             )}
           </Grid>
-          <Grid container justify="center" style={{ marginTop: "5rem" }}>
-            <ReactPaginate
-              previousLabel={"Previous"}
-              nextLabel={"Next"}
-              breakLabel={"..."}
-              breakClassName={"break-me"}
-              pageCount={this.state.pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={this.handlePageClick}
-              containerClassName={"pagination"}
-              subContainerClassName={"pages pagination"}
-              activeClassName={"active"}
-            />
-          </Grid>
+          {this.state.pageCount > 1 && (
+            <Grid container justify="center" style={{ marginTop: "5rem" }}>
+              <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                breakClassName={"break-me"}
+                pageCount={this.state.pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={this.handlePageClick}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+              />
+            </Grid>
+          )}
           <Dialog
             open={this.state.open}
             onClose={this.handleClose}

@@ -3,7 +3,6 @@ import moment from "moment";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./event.module.css";
-
 class EventComponent extends React.Component {
   render() {
     const {
@@ -68,7 +67,7 @@ class EventComponent extends React.Component {
       eventPage: {
         marginTop: "5vh",
         marginBottom: "5vh",
-        backgroundColor: "#1a1919",
+        backgroundColor: "#1a1919"
       }
     });
     const classes = useStyles();
@@ -80,7 +79,7 @@ class EventComponent extends React.Component {
             container
             alignItems="center"
             direction="column"
-            className={classes.eventPage}
+            // className={classes.eventPage}
           >
             <Grid
               item
@@ -144,7 +143,7 @@ class EventComponent extends React.Component {
 
               {isEdit &&
                 siteEdit.events &&
-                siteEdit.events.map(row => {
+                siteEdit.events.map((row, index) => {
                   return (
                     !row.isCancelled &&
                     moment(row.endTime).isAfter(moment()) && (
@@ -153,7 +152,7 @@ class EventComponent extends React.Component {
                         container
                         sm={12}
                         className={styles.contain_event}
-                        key={row.id}
+                        key={index}
                         style={{ marginTop: 10, backgroundColor: "white" }}
                       >
                         <Grid
@@ -228,7 +227,7 @@ class EventComponent extends React.Component {
                 })}
               {!isEdit &&
                 siteView.events &&
-                siteView.events.map(row => {
+                siteView.events.map((row, index) => {
                   return (
                     !row.isCancelled &&
                     moment(row.endTime).isAfter(moment()) && (
@@ -237,7 +236,7 @@ class EventComponent extends React.Component {
                         container
                         sm={12}
                         className={styles.contain_event}
-                        key={row.id}
+                        key={index}
                         style={{ marginTop: 10, backgroundColor: "white" }}
                       >
                         <Grid
@@ -361,7 +360,7 @@ class EventComponent extends React.Component {
 
               {isEdit &&
                 siteEdit.events &&
-                siteEdit.events.map(row => {
+                siteEdit.events.map((row, index) => {
                   return (
                     (row.isCancelled ||
                       moment(row.endTime).isSameOrBefore(moment()) ||
@@ -371,7 +370,7 @@ class EventComponent extends React.Component {
                         container
                         sm={12}
                         className={styles.contain_event}
-                        key={row.id}
+                        key={index}
                         style={{ marginTop: 10, backgroundColor: "white" }}
                       >
                         <Grid
@@ -446,7 +445,8 @@ class EventComponent extends React.Component {
                 })}
               {!isEdit &&
                 siteView.events &&
-                siteView.events.map(row => {
+                siteView.events.map((row, index) => {
+                  console.log(row);
                   return (
                     (row.isCancelled ||
                       moment(row.endTime).isSameOrBefore(moment()) ||
@@ -456,7 +456,7 @@ class EventComponent extends React.Component {
                         container
                         sm={12}
                         className={styles.contain_event}
-                        key={row.id}
+                        key={index}
                         style={{ marginTop: 10, backgroundColor: "white" }}
                       >
                         <Grid

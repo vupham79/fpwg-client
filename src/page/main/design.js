@@ -1,11 +1,4 @@
-import {
-  Button,
-  Divider,
-  Grid,
-  List,
-  ListItem,
-  withStyles
-} from "@material-ui/core";
+import { Divider, Grid, List, ListItem, withStyles } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
@@ -14,10 +7,9 @@ import {
   getSiteById,
   setCurrentEditId,
   setEditOn,
-  setSiteEdit
+  setSiteEdit,
+  getUserSites
 } from "../../actions";
-import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
-import Link from "../../component/link";
 
 const imgStyle = {
   backgroundSize: "contain",
@@ -43,12 +35,20 @@ const useStyle = {
       transitionDuration: ".5s"
     }
   },
-  status: {
+  published: {
     borderRadius: "5px",
     padding: "0.1rem 0.3rem",
-    background: "#c3c4c7",
+    background: "#5ea95a",
     marginTop: "0.2rem",
-    color: "black",
+    color: "#fff",
+    textAlign: "center"
+  },
+  unpublished: {
+    borderRadius: "5px",
+    padding: "0.1rem 0.3rem",
+    background: "#cc2127",
+    marginTop: "0.2rem",
+    color: "#fff",
     textAlign: "center"
   }
 };
@@ -57,8 +57,13 @@ class Design extends Component {
     selectedIndex: -1
   };
 
-  renderListSites = sites => {
-    const { classes } = this.props;
+  getAllUserSites = async () => {
+    const { accessToken, profile, getUserSites } = this.props;
+    await getUserSites(profile.id, accessToken);
+  };
+
+  renderListSites = () => {
+    const { classes, sites } = this.props;
     return (
       <List className={classes.listSites}>
         <ListItem>
@@ -86,18 +91,6 @@ class Design extends Component {
           <></>
         )}
         <Divider />
-        <ListItem>
-          <Link to="">
-            <Button
-              variant="outlined"
-              color="primary"
-              className={(classes.button, "mainFont")}
-              startIcon={<AddCircleOutlineIcon />}
-            >
-              Add new site
-            </Button>
-          </Link>
-        </ListItem>
       </List>
     );
   };
@@ -126,7 +119,7 @@ class Design extends Component {
   handleClickItem = (e, index, id) => {
     const { setCurrentEditId } = this.props;
     setCurrentEditId(id);
-    this.getAllThemes();
+    // this.getAllThemes();
     this.getSite(id);
     this.setState({ selectedIndex: index });
   };
@@ -168,7 +161,15 @@ class Design extends Component {
               className={"mainFont"}
               style={{ fontSize: "12px", overflow: "hidden" }}
             >
-              <Grid item xs={6} sm={10} md={8} className={classes.status}>
+              <Grid
+                item
+                lg={8}
+                sm={12}
+                xs={8}
+                className={
+                  item.isPublish ? classes.published : classes.unpublished
+                }
+              >
                 {item.isPublish ? "Published " : "Unpublished "}
               </Grid>
             </Grid>
@@ -178,13 +179,14 @@ class Design extends Component {
     );
   };
   render() {
-    const { sites } = this.props;
-    return <Grid container>{this.renderListSites(sites)}</Grid>;
+    return <Grid container>{this.renderListSites()}</Grid>;
   }
 }
 
 const mapStateToProps = state => ({
-  sites: state.site.data
+  sites: state.site.data,
+  accessToken: state.user.accessToken,
+  profile: state.user.profile
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -194,7 +196,8 @@ const mapDispatchToProps = dispatch => ({
   setSiteEdit: (site, titleStyle, bodyStyle) =>
     dispatch(setSiteEdit(site, titleStyle, bodyStyle)),
   getAllPost: posts => dispatch(getAllPost(posts)),
-  setEditOn: () => dispatch(setEditOn())
+  setEditOn: () => dispatch(setEditOn()),
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
 });
 
 export default connect(
