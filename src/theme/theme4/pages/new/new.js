@@ -12,7 +12,8 @@ class Theme1News extends React.Component {
       posts,
       bodyEdit,
       bodyView,
-      siteView
+      siteView,
+      siteEdit
     } = this.props;
 
     const useStyles = () => ({
@@ -129,7 +130,13 @@ class Theme1News extends React.Component {
           {isEdit ? (
             posts ? (
               <Grid container>
-                <PostTypeComponent posts={posts} />
+                <PostTypeComponent
+                  posts={posts}
+                  siteInfo={{
+                    logo: siteEdit.logo,
+                    title: siteEdit.title
+                  }}
+                />
               </Grid>
             ) : (
               <Grid container justify="center">
@@ -141,7 +148,13 @@ class Theme1News extends React.Component {
           ) : siteView ? (
             siteView.posts && (
               <Grid container>
-                <PostTypeComponent posts={siteView.posts} />
+                <PostTypeComponent
+                  siteInfo={{
+                    logo: siteView.logo,
+                    title: siteView.title
+                  }}
+                  posts={siteView.posts}
+                />
               </Grid>
             )
           ) : (
@@ -156,6 +169,7 @@ class Theme1News extends React.Component {
 }
 
 const mapStateToProps = state => ({
+  siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,

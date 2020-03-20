@@ -5,7 +5,6 @@ import PostTypeComponent from "../../../component/postsType";
 import BannerComponent from "../../../component/bannerComponent";
 
 class Theme1Home extends React.Component {
-
   render() {
     const {
       siteEdit,
@@ -64,7 +63,7 @@ class Theme1Home extends React.Component {
         color: "#b3b2b2",
         textAlign: "center",
         fontSize: 19,
-        fontWeight: 300,
+        fontWeight: 300
       },
       changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -86,15 +85,16 @@ class Theme1Home extends React.Component {
         fontSize: 45,
         textDecoration: "underline",
         textDecorationColor: isEdit ? titleEdit.color : titleView.color
-      },
+      }
     });
     const classes = useStyles();
     const { posts } = this.props;
 
     return (
-
-      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 100 }}>
-
+      <Grid
+        container
+        style={{ backgroundColor: "#1a1919", paddingBottom: 100 }}
+      >
         <Grid item xs={12}>
           <BannerComponent bannerType={1} />
         </Grid>
@@ -122,26 +122,41 @@ class Theme1Home extends React.Component {
           {isEdit ? (
             posts ? (
               <Grid container>
-                <PostTypeComponent darkMode posts={posts} />
+                <PostTypeComponent
+                  darkMode
+                  posts={posts}
+                  siteInfo={{
+                    logo: siteEdit.logo,
+                    title: siteEdit.title
+                  }}
+                />
               </Grid>
             ) : (
-                <Grid container justify="center">
-                  <Typography variant="body1">
-                    Currently there are no news.
-                  </Typography>
-                </Grid>
-              )
+              <Grid container justify="center">
+                <Typography variant="body1">
+                  Currently there are no news.
+                </Typography>
+              </Grid>
+            )
           ) : siteView ? (
             siteView.posts && (
               <Grid container>
-                <PostTypeComponent posts={siteView.posts} />
+                <PostTypeComponent
+                  posts={siteView.posts}
+                  siteInfo={{
+                    logo: siteView.logo,
+                    title: siteView.title
+                  }}
+                />
               </Grid>
             )
           ) : (
-                <Grid container justify="center">
-                  <Typography variant="body1">Currently there are no news.</Typography>
-                </Grid>
-              )}
+            <Grid container justify="center">
+              <Typography variant="body1">
+                Currently there are no news.
+              </Typography>
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );
