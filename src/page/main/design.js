@@ -116,7 +116,7 @@ class Design extends Component {
     }
   };
 
-  handleClickItem = (e, index, id) => {
+  handleClickItem = (index, id) => {
     const { setCurrentEditId } = this.props;
     setCurrentEditId(id);
     // this.getAllThemes();
@@ -132,7 +132,7 @@ class Design extends Component {
         button
         className={classes.item}
         selected={this.state.selectedIndex === index}
-        onClick={event => this.handleClickItem(event, index, item.id)}
+        onClick={() => this.handleClickItem(index, item.id)}
       >
         <Grid container alignItems="center">
           <Grid container item xs={2} sm={3} justify="center">

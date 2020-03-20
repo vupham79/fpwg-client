@@ -1,11 +1,25 @@
 import React, { Component } from "react";
 import NewPage from "./new";
-import { setNavItemActive, setNavItemInActive } from "../../../../actions";
+import {
+  setNavItemActive,
+  setNavItemInActive,
+  getPosts
+} from "../../../../actions";
 import { connect } from "react-redux";
 
 class PreNewPage extends Component {
   componentDidMount() {
-    const { site, isEdit, setNavItemActive, setNavItemInActive } = this.props;
+    const {
+      site,
+      isEdit,
+      setNavItemActive,
+      setNavItemInActive,
+      getPosts,
+      sitepath
+    } = this.props;
+    if (sitepath) {
+      getPosts(sitepath);
+    }
     if (site && !isEdit) {
       if (site.navItems) {
         const navItem = site.navItems.find(e => e.original === "news");
@@ -24,12 +38,14 @@ class PreNewPage extends Component {
 
 const mapStateToProps = state => ({
   site: state.site.siteView,
-  isEdit: state.site.isEdit
+  isEdit: state.site.isEdit,
+  sitepath: state.path.currentSitepath
 });
 
 const mapDispatchToProps = dispatch => ({
   setNavItemInActive: () => dispatch(setNavItemInActive()),
-  setNavItemActive: () => dispatch(setNavItemActive())
+  setNavItemActive: () => dispatch(setNavItemActive()),
+  getPosts: sitepath => dispatch(getPosts(sitepath))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreNewPage);

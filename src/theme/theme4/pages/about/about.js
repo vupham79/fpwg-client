@@ -31,7 +31,7 @@ class Theme1About extends React.Component {
         textAlign: "center",
         fontSize: 25,
         paddingBottom: 20,
-        textDecoration: "underline",
+        textDecoration: "underline"
       },
       changableBody: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -117,11 +117,11 @@ class Theme1About extends React.Component {
         </Grid>
 
         <Grid container item xs={12} direction="row" justify="center">
-
           <Grid container item xs={12} sm={4} justify="center">
             <CardMedia
               component="img"
               height="300"
+              style={{ objectFit: "contain" }}
               image={this.renderImage()}
             />
           </Grid>

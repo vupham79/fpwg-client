@@ -17,8 +17,12 @@ const defaultState = {
   newCover: [],
   isPreview: false,
   isChanged: false,
-  favicon: null,
-  metas: null
+  youtube: null,
+  instagram: null,
+  sitepath: null,
+  phone: null,
+  email: null,
+  whatsapp: null
 };
 
 let index;
@@ -156,8 +160,12 @@ const SiteReducer = (state = defaultState, action) => {
         newCover: action.payload.data.cover
           ? [...action.payload.data.cover]
           : [],
-        metas: action.payload.data.metas,
-        favicon: action.payload.data.favicon
+        youtube: action.payload.data.youtube,
+        sitepath: action.payload.data.sitePath,
+        whatsapp: action.payload.data.whatsapp,
+        phone: action.payload.data.phone,
+        instagram: action.payload.data.instagram,
+        email: action.payload.data.email
       };
     case "SET_SITE_VIEW":
       return {
@@ -217,16 +225,6 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         newLogo: action.payload
       };
-    case "SET_NEW_FAVICON":
-      return {
-        ...state,
-        favicon: action.payload
-      };
-    case "SET_NEW_METAS":
-      return {
-        ...state,
-        metas: action.payload
-      };
     case "SET_NEW_COVER":
       let array = [...state.newCover, action.payload];
       return {
@@ -255,6 +253,76 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         siteEdit: { ...action.payload }
+      };
+    case "CHANGE_SITE_SITEPATH":
+      return {
+        ...state,
+        sitepath: action.payload
+      };
+    case "CHANGE_SITE_WHATSAPP":
+      return {
+        ...state,
+        whatsapp: action.payload
+      };
+    case "CHANGE_SITE_INSTAGRAM":
+      return {
+        ...state,
+        instagram: action.payload
+      };
+    case "CHANGE_SITE_YOUTUBE":
+      return {
+        ...state,
+        youtube: action.payload
+      };
+    case "CHANGE_SITE_EMAIL":
+      return {
+        ...state,
+        email: action.payload
+      };
+    case "CHANGE_SITE_PHONE":
+      return {
+        ...state,
+        phone: action.payload
+      };
+    case "SET_SITEVIEW_ABOUT":
+      return {
+        ...state,
+        siteView: {
+          ...state.siteView,
+          about: action.payload
+        }
+      };
+    case "SET_SITEVIEW_EVENT":
+      return {
+        ...state,
+        siteView: {
+          ...state.siteView,
+          events: action.payload
+        }
+      };
+    case "SET_SITEVIEW_GALLERIES":
+      return {
+        ...state,
+        siteView: {
+          ...state.siteView,
+          galleries: action.payload
+        }
+      };
+    case "SET_SITEVIEW_NEWS":
+      return {
+        ...state,
+        siteView: {
+          ...state.siteView,
+          posts: action.payload
+        }
+      };
+    case "SET_SITEVIEW_CONTACT":
+      return {
+        ...state,
+        siteView: {
+          ...state.siteView,
+          ...action.payload
+        }
       };
     default:
       return state;

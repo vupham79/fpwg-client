@@ -11,7 +11,15 @@ import {
 
 class Footer extends React.Component {
   render() {
-    const { isEdit, siteEdit, siteView, bodyEdit, bodyView, titleEdit, titleView } = this.props;
+    const {
+      isEdit,
+      siteEdit,
+      siteView,
+      bodyEdit,
+      bodyView,
+      titleEdit,
+      titleView
+    } = this.props;
 
     return (
       <Grid
@@ -23,53 +31,103 @@ class Footer extends React.Component {
           bottom: 0
         }}
       >
-
         <Grid item xs={12}>
           <Divider />
         </Grid>
 
         <Grid container item direction="row" justify="center" xs={12}>
-
           <Grid item>
             <IconButton
               aria-label=""
               color="primary"
               href={isEdit ? siteEdit.url : siteView.url}
             >
-              <FontAwesomeIcon icon={faFacebook} color={isEdit ? titleEdit.color : titleView.color} size="1x" />
+              <FontAwesomeIcon
+                icon={faFacebook}
+                color={isEdit ? titleEdit.color : titleView.color}
+                size="1x"
+              />
             </IconButton>
           </Grid>
 
-          <Grid item style={isEdit ? (siteEdit.whatsapp ? null : { display: "none" }) : (siteView.whatsapp ? null : { display: "none" })}>
+          <Grid
+            item
+            style={
+              isEdit
+                ? siteEdit.whatsapp
+                  ? null
+                  : { display: "none" }
+                : siteView.whatsapp
+                ? null
+                : { display: "none" }
+            }
+          >
             <IconButton
               aria-label=""
               color="primary"
-              href={isEdit ? siteEdit.whatsapp : siteView.whatsapp}
+              href={`https://wa.me/${
+                isEdit ? siteEdit.whatsapp : siteView.whatsapp
+              }`}
             >
-              <FontAwesomeIcon icon={faWhatsapp} color={isEdit ? titleEdit.color : titleView.color} size="1x" />
+              <FontAwesomeIcon
+                icon={faWhatsapp}
+                color={isEdit ? titleEdit.color : titleView.color}
+                size="1x"
+              />
             </IconButton>
           </Grid>
 
-          <Grid item style={isEdit ? (siteEdit.instagram ? null : { display: "none" }) : (siteView.instagram ? null : { display: "none" })}>
+          <Grid
+            item
+            style={
+              isEdit
+                ? siteEdit.instagram
+                  ? null
+                  : { display: "none" }
+                : siteView.instagram
+                ? null
+                : { display: "none" }
+            }
+          >
             <IconButton
               aria-label=""
               color="primary"
-              href={isEdit ? siteEdit.instagram : siteView.instagram}
+              href={`https://instagram.com/${
+                isEdit ? siteEdit.instagram : siteView.instagram
+              }`}
             >
-              <FontAwesomeIcon icon={faInstagram} color={isEdit ? titleEdit.color : titleView.color} size="1x" />
+              <FontAwesomeIcon
+                icon={faInstagram}
+                color={isEdit ? titleEdit.color : titleView.color}
+                size="1x"
+              />
             </IconButton>
           </Grid>
 
-          <Grid item style={isEdit ? (siteEdit.youtube ? null : { display: "none" }) : (siteView.youtube ? null : { display: "none" })}>
+          <Grid
+            item
+            style={
+              isEdit
+                ? siteEdit.youtube
+                  ? null
+                  : { display: "none" }
+                : siteView.youtube
+                ? null
+                : { display: "none" }
+            }
+          >
             <IconButton
               aria-label=""
               color="primary"
               href={isEdit ? siteEdit.youtube : siteView.youtube}
             >
-              <FontAwesomeIcon icon={faYoutube} color={isEdit ? titleEdit.color : titleView.color} size="1x" />
+              <FontAwesomeIcon
+                icon={faYoutube}
+                color={isEdit ? titleEdit.color : titleView.color}
+                size="1x"
+              />
             </IconButton>
           </Grid>
-
         </Grid>
 
         <Grid item xs={12}>
@@ -77,11 +135,17 @@ class Footer extends React.Component {
         </Grid>
 
         <Grid container item xs={12}>
-          <p style={{ color: "#5e5e5e", fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily, fontSize: 14, marginLeft: 50 }}>
+          <p
+            style={{
+              color: "#5e5e5e",
+              fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+              fontSize: 14,
+              marginLeft: 50
+            }}
+          >
             @{isEdit ? siteEdit.title : siteView.title}
           </p>
         </Grid>
-
       </Grid>
     );
   }
@@ -94,7 +158,7 @@ const mapStateToProps = state => ({
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
   titleEdit: state.site.titleEdit,
-  titleView: state.site.titleView,
+  titleView: state.site.titleView
 });
 
 export default connect(mapStateToProps, null)(Footer);

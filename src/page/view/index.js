@@ -17,8 +17,7 @@ import Helmet from "react-helmet";
 class PreViewSite extends React.Component {
   state = {
     sitepath: "",
-    isLoading: true,
-    metas: null
+    isLoading: true
   };
 
   async componentDidMount() {
@@ -45,11 +44,6 @@ class PreViewSite extends React.Component {
       const fontBody = {
         fontFamily: data.fontBody
       };
-      const metas =
-        data.metas && data.metas.length > 0 ? data.metas.split("\n") : null;
-      this.setState({
-        metas
-      });
       await setSiteView(data, fontTitle, fontBody);
     }
     this.setState({
@@ -59,7 +53,7 @@ class PreViewSite extends React.Component {
 
   render() {
     const { siteView } = this.props;
-    const { isLoading, metas } = this.state;
+    const { isLoading } = this.state;
     clearSiteView();
     if (!isLoading) {
       if (siteView) {
@@ -82,20 +76,9 @@ class PreViewSite extends React.Component {
               <link
                 id="favicon"
                 rel="icon"
-                href={siteView.favicon ? siteView.favicon : siteView.logo}
+                href={siteView.logo}
                 type="image/x-icon"
               />
-              {metas &&
-                metas.map((meta, index) => {
-                  let metaSplit = meta.split("=");
-                  return (
-                    <meta
-                      key={index}
-                      name={metaSplit[0]}
-                      content={metaSplit[1]}
-                    />
-                  );
-                })}
             </Helmet>
             {themesConstant.find(e => e.id === siteView.theme.id).component}
           </>
@@ -121,7 +104,7 @@ const mapDispatchToProps = dispatch => ({
   setSiteView: (site, title, body) => dispatch(setSiteView(site, title, body)),
   setEditOff: () => dispatch(setEditOff()),
   clearSiteView: () => dispatch(clearSiteView()),
-  updateSitepath: () => dispatch(updateSitepath()),
+  updateSitepath: sitepath => dispatch(updateSitepath(sitepath)),
   getSiteBySitepath: sitepath => dispatch(getSiteBySitepath(sitepath))
 });
 export default withRouter(

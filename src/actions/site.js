@@ -294,7 +294,17 @@ export function changeNavItems(items) {
   };
 }
 
-export function saveDesignSite({ logo, cover, favicon, site, metas }) {
+export function saveDesignSite({
+  logo,
+  cover,
+  site,
+  youtube,
+  sitepath,
+  instagram,
+  whatsapp,
+  email,
+  phone
+}) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -302,9 +312,6 @@ export function saveDesignSite({ logo, cover, favicon, site, metas }) {
     try {
       if (logo && typeof logo === "object" && logo.size > 0) {
         dispatch(uploadLogo(logo, site));
-      }
-      if (favicon && typeof favicon === "object" && favicon.size > 0) {
-        dispatch(uploadFavicon(favicon, site));
       }
       dispatch(uploadCover(cover, site));
       const data = await axios({
@@ -318,12 +325,13 @@ export function saveDesignSite({ logo, cover, favicon, site, metas }) {
           pageId: site.id,
           name: site.title,
           color: site.color,
-          email: site.email,
-          youtube: site.youtube,
-          instagram: site.instagram,
-          whatsapp: site.whatsapp,
           phone: site.phone,
-          sitePath: site.sitePath
+          sitePath: sitepath,
+          youtube,
+          instagram,
+          whatsapp,
+          email,
+          phone
         }
       });
       dispatch({
@@ -618,11 +626,56 @@ export function changeSiteTitle(site) {
   };
 }
 
-export function changeSiteLinks(site) {
+export function changeSiteSitepath(sitepath) {
   return dispatch => {
     dispatch({
-      type: "CHANGE_SITE_LINKS",
-      payload: site
+      type: "CHANGE_SITE_SITEPATH",
+      payload: sitepath
+    });
+  };
+}
+
+export function changeSiteWhatsapp(whatsapp) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_SITE_WHATSAPP",
+      payload: whatsapp
+    });
+  };
+}
+
+export function changeSiteInstagram(instagram) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_SITE_INSTAGRAM",
+      payload: instagram
+    });
+  };
+}
+
+export function changeSiteYoutube(youtube) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_SITE_YOUTUBE",
+      payload: youtube
+    });
+  };
+}
+
+export function changeSiteEmail(email) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_SITE_EMAIL",
+      payload: email
+    });
+  };
+}
+
+export function changeSitePhone(phone) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_SITE_PHONE",
+      payload: phone
     });
   };
 }
@@ -793,6 +846,118 @@ export function uploadFavicon(file, site) {
         type: "CLOSE_LOADING"
       });
       toastr.error(`Upload new favicon failed`, "Error");
+    }
+  };
+}
+
+export function getAbout(sitepath) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      const data = await axios({
+        method: "get",
+        url: `/site/find/${sitepath}/about`
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "SET_SITEVIEW_ABOUT",
+          payload: data.data[0].about
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error("Get site data failed!", "Error");
+    }
+  };
+}
+
+export function getPosts(sitepath) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      const data = await axios({
+        method: "get",
+        url: `/site/find/${sitepath}/news`
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "SET_SITEVIEW_NEWS",
+          payload: data.data[0].posts
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error("Get site data failed!", "Error");
+    }
+  };
+}
+
+export function getEvents(sitepath) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      const data = await axios({
+        method: "get",
+        url: `/site/find/${sitepath}/event`
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "SET_SITEVIEW_EVENT",
+          payload: data.data[0].events
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error("Get site data failed!", "Error");
+    }
+  };
+}
+
+export function getGalleries(sitepath) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      const data = await axios({
+        method: "get",
+        url: `/site/find/${sitepath}/gallery`
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        dispatch({
+          type: "SET_SITEVIEW_GALLERIES",
+          payload: data.data[0].galleries
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error("Get site data failed!", "Error");
     }
   };
 }

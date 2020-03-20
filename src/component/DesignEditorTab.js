@@ -280,11 +280,7 @@ class DesignEditorTab extends React.Component {
                 style={{ width: "100%", borderRadius: "0" }}
                 onClick={() => removeCover(cover)}
               >
-                <Cancel
-                  onClick={() => removeCover(cover)}
-                  color={"error"}
-                  fontSize={""}
-                />
+                <Cancel color={"error"} />
               </IconButton>
             </Grid>
           );
@@ -384,7 +380,6 @@ class DesignEditorTab extends React.Component {
                 root: classes.fontPickerRoot
               }}
               children={<Add />}
-              innerRef={""}
               placement={"bottom"}
             />
           </Grid>
@@ -392,7 +387,6 @@ class DesignEditorTab extends React.Component {
             <Typography className={classes.title2}>Body</Typography>
             <GoogleFontPicker
               searchable
-              buttonColor={""}
               buttonVariant={"outlined"}
               defaultFont={isChanged ? site.theme.fontBody : site.fontBody}
               onFontSelected={this.handleChangeFontBody}

@@ -12,7 +12,7 @@ class Theme1News extends React.Component {
       posts,
       bodyEdit,
       bodyView,
-      siteView,
+      siteView
     } = this.props;
 
     const useStyles = () => ({
@@ -115,51 +115,47 @@ class Theme1News extends React.Component {
         textAlign: "center",
         fontSize: 25,
         paddingBottom: 20,
-        textDecoration: "underline",
-      },
+        textDecoration: "underline"
+      }
     });
     const classes = useStyles();
 
     return (
       <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50 }}>
         <Grid item xs={12}>
-          <p style={classes.changableTitle5}>
-            NEWS
-          </p>
+          <p style={classes.changableTitle5}>NEWS</p>
         </Grid>
-        <Grid item sm={12} xs={12} container spacing={3} >
-          {
-            isEdit ? (
-              posts ? (
-                <Grid container>
-                  <PostTypeComponent posts={posts} />
-                </Grid>
-              ) : (
-                  <Grid container justify="center">
-                    <Typography variant="body1">
-                      You don't have any news.
-                </Typography>
-                  </Grid>
-                )
-            ) : siteView ? (
-              siteView.posts && (
-                <Grid container>
-                  <PostTypeComponent posts={siteView.posts} />
-                </Grid>
-              )
+        <Grid item sm={12} xs={12} container spacing={3}>
+          {isEdit ? (
+            posts ? (
+              <Grid container>
+                <PostTypeComponent posts={posts} />
+              </Grid>
             ) : (
-                  <Grid container justify="center">
-                    <Typography variant="body1">You don't have any news.</Typography>
-                  </Grid>
-                )}
+              <Grid container justify="center">
+                <Typography variant="body1">
+                  You don't have any news.
+                </Typography>
+              </Grid>
+            )
+          ) : siteView ? (
+            siteView.posts && (
+              <Grid container>
+                <PostTypeComponent posts={siteView.posts} />
+              </Grid>
+            )
+          ) : (
+            <Grid container justify="center">
+              <Typography variant="body1">You don't have any news.</Typography>
+            </Grid>
+          )}
         </Grid>
-      </Grid >
+      </Grid>
     );
   }
 }
 
 const mapStateToProps = state => ({
-  siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
