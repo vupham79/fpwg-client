@@ -179,12 +179,12 @@ class MainPage extends Component {
                   <Grid
                     container
                     alignItems="center"
-                    justify="center"
+                    justify="flex-end"
                     item
                     xs={12}
                     className={classes.toolEdit}
                   >
-                    <Grid item xs={5} sm={7} md={7}>
+                    <Grid item xs={4} sm={7} md={6}>
                       <TextField
                         id="txtSitePath"
                         className={`mainFont ${classes.textField}`}

@@ -11,6 +11,7 @@ class NewPage extends Component {
       titleEdit,
       titleView,
       siteView,
+      siteEdit,
       posts,
       bodyEdit,
       bodyView
@@ -34,7 +35,13 @@ class NewPage extends Component {
           {isEdit ? (
             posts ? (
               <Grid container>
-                <PostTypeComponent posts={posts} />
+                <PostTypeComponent
+                  posts={posts}
+                  siteInfo={{
+                    logo: siteEdit.logo,
+                    title: siteEdit.title
+                  }}
+                />
               </Grid>
             ) : (
               <Grid container justify="center">
@@ -46,7 +53,13 @@ class NewPage extends Component {
           ) : siteView ? (
             siteView.posts && (
               <Grid container>
-                <PostTypeComponent posts={siteView.posts} />
+                <PostTypeComponent
+                  posts={siteView.posts}
+                  siteInfo={{
+                    logo: siteView.logo,
+                    title: siteView.title
+                  }}
+                />
               </Grid>
             )
           ) : (

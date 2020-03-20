@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Footer from "../components/footer";
-import HeaderComponent from "../../component/headerComponent";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import { themes as themesConstant } from "../../../constant/constant";
+import Header from "../components/header";
 
 function TabItem({ pages, navItems, tabValue }) {
   return (
@@ -43,11 +43,7 @@ class Layout extends Component {
 
     return (
       <>
-        <HeaderComponent
-          navPos={"center"}
-          displayImg={false}
-          navColor={isEdit ? titleEdit.color : titleView.color}
-        />
+        <Header />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
       </>

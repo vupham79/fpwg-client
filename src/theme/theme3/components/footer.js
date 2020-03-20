@@ -93,53 +93,27 @@ class FooterPage extends Component {
       <Grid
         container
         alignItems="center"
+        justify="center"
         className={styles.footer}
         style={usestyle}
       >
-        <Grid item xs={4} container justify="flex-end">
-          <Typography variant="body1" style={{ color: "white" }}>
+        <Grid item xs={3}>
+          <Typography
+            variant="body1"
+            style={{ color: "white", textAlign: "end" }}
+          >
             © {isEdit ? siteEdit.title : siteView.title}
           </Typography>
         </Grid>
-        <Grid container item xs={4} justify="center">
-          <Grid item>
-            <IconButton
-              aria-label=""
-              color="primary"
-              href={
-                isEdit ? siteEdit && siteEdit.url : siteView && siteView.url
-              }
-            >
-              {this.renderUrl()}
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <IconButton
-              aria-label=""
-              color="primary"
-              href={
-                isEdit
-                  ? siteEdit && siteEdit.instagram
-                  : siteView && siteView.instagram
-              }
-            >
-              {this.renderInstagram()}
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <IconButton
-              aria-label=""
-              color="primary"
-              href={isEdit ? siteEdit.youtube : siteView.youtube}
-            >
-              {this.renderYoutube()}
-            </IconButton>
-          </Grid>
-        </Grid>
-        <Grid item xs={4} container justify="flex-start">
+        <Grid item xs={1}></Grid>
+        <Grid item xs={3}>
           <Grid style={{ border: "1px solid white", color: "white" }}>
             <Typography
-              style={{ padding: "1rem", fontWeight: "800" }}
+              style={{
+                padding: "1rem",
+                fontWeight: "800",
+                textAlign: "center"
+              }}
               variant="body1"
             >
               POWERED BY FPWG
