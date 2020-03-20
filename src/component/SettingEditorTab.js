@@ -1,5 +1,5 @@
 import {
-  faInstagram,
+  faInstagramSquare,
   faWhatsapp,
   faYoutube
 } from "@fortawesome/free-brands-svg-icons";
@@ -10,7 +10,14 @@ import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
 import "toastr/build/toastr.min.css";
-import { changeSiteLinks, setNewFavicon, setNewMetas } from "../actions";
+import {
+  changeSiteEmail,
+  changeSiteInstagram,
+  changeSitePhone,
+  changeSiteSitepath,
+  changeSiteWhatsapp,
+  changeSiteYoutube
+} from "../actions";
 import toastr from "./Toastr";
 const useStyles = theme => ({
   content: {
@@ -97,39 +104,33 @@ const useStyles = theme => ({
 
 class SettingEditorTab extends React.Component {
   handleChangeWhatsapp = e => {
-    const { site, changeSiteLinks } = this.props;
-    site.whatsapp = e.target.value;
-    changeSiteLinks(site);
+    const { changeSiteWhatsapp } = this.props;
+    changeSiteWhatsapp(e.target.value);
   };
 
   handleChangeInstagram = e => {
-    const { site, changeSiteLinks } = this.props;
-    site.instagram = e.target.value;
-    changeSiteLinks(site);
+    const { changeSiteInstagram } = this.props;
+    changeSiteInstagram(e.target.value);
   };
 
   handleChangeYoutube = e => {
-    const { site, changeSiteLinks } = this.props;
-    site.youtube = e.target.value;
-    changeSiteLinks(site);
+    const { changeSiteYoutube } = this.props;
+    changeSiteYoutube(e.target.value);
   };
 
   handleChangeMail = e => {
-    const { site, changeSiteLinks } = this.props;
-    site.email = e.target.value;
-    changeSiteLinks(site);
+    const { changeSiteEmail } = this.props;
+    changeSiteEmail(e.target.value);
   };
 
   handleChangePhone = e => {
-    const { site, changeSiteLinks } = this.props;
-    site.phone = e.target.value;
-    changeSiteLinks(site);
+    const { changeSitePhone } = this.props;
+    changeSitePhone(e.target.value);
   };
 
   handleChangeSitepath = e => {
-    const { site, changeSiteLinks } = this.props;
-    site.sitePath = e.target.value;
-    changeSiteLinks(site);
+    const { changeSiteSitepath } = this.props;
+    changeSiteSitepath(e.target.value);
   };
 
   handleBrowseFavicon = async e => {
@@ -161,13 +162,17 @@ class SettingEditorTab extends React.Component {
     }
   };
 
-  handleChangeMetas = e => {
-    const { setNewMetas } = this.props;
-    setNewMetas(e.target.value);
-  };
-
   render() {
-    const { site, classes } = this.props;
+    const {
+      site,
+      classes,
+      email,
+      youtube,
+      instagram,
+      phone,
+      whatsapp,
+      sitepath
+    } = this.props;
     return (
       <div style={{ padding: 10 }}>
         <Grid
@@ -197,7 +202,7 @@ class SettingEditorTab extends React.Component {
               size="small"
               inputMode={"url"}
               fullWidth
-              value={site.sitePath ? site.sitePath : ""}
+              value={sitepath ? sitepath : ""}
               onChange={e => this.handleChangeSitepath(e)}
               style={{ marginTop: 10, backgroundColor: "white" }}
               InputLabelProps={{
@@ -233,7 +238,7 @@ class SettingEditorTab extends React.Component {
             xs={12}
             style={{ marginTop: 10 }}
           >
-            <Grid container item xs={2} sm={12} md={2} justify="center">
+            <Grid item xs={2} sm={12} md={2}>
               <FontAwesomeIcon icon={faWhatsapp} size="2x" color="#555d66" />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
@@ -242,7 +247,7 @@ class SettingEditorTab extends React.Component {
                 label="WhatsApp"
                 size="small"
                 fullWidth
-                value={site.whatsapp ? site.whatsapp : ""}
+                value={whatsapp ? whatsapp : ""}
                 onChange={e => this.handleChangeWhatsapp(e)}
                 InputLabelProps={{
                   classes: {
@@ -268,17 +273,21 @@ class SettingEditorTab extends React.Component {
             xs={12}
             style={{ marginTop: 10 }}
           >
-            <Grid container item xs={2} sm={12} md={2} justify="center">
-              <FontAwesomeIcon icon={faInstagram} size="2x" color="#555d66" />
+            <Grid item xs={2} sm={12} md={2}>
+              <FontAwesomeIcon
+                icon={faInstagramSquare}
+                size="2x"
+                color="#555d66"
+              />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
               <TextField
                 variant="outlined"
-                label="Instagram"
+                label="Instagram Account"
                 size="small"
                 inputMode={"url"}
                 fullWidth
-                value={site.instagram ? site.instagram : ""}
+                value={instagram ? instagram : ""}
                 onChange={e => this.handleChangeInstagram(e)}
                 InputLabelProps={{
                   classes: {
@@ -304,17 +313,21 @@ class SettingEditorTab extends React.Component {
             xs={12}
             style={{ marginTop: 10 }}
           >
-            <Grid container item xs={2} sm={12} md={2} justify="center">
-              <FontAwesomeIcon icon={faYoutube} size="2x" color="#555d66" />
+            <Grid item xs={2} sm={12} md={2}>
+              <FontAwesomeIcon
+                icon={faYoutube}
+                size="2x"
+                color="linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)"
+              />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
               <TextField
                 variant="outlined"
-                label="Youtube"
+                label="Youtube URL"
                 size="small"
                 inputMode={"url"}
                 fullWidth
-                value={site.youtube ? site.youtube : ""}
+                value={youtube ? youtube : ""}
                 onChange={e => this.handleChangeYoutube(e)}
                 InputLabelProps={{
                   classes: {
@@ -358,7 +371,7 @@ class SettingEditorTab extends React.Component {
                 size="small"
                 inputMode={"email"}
                 fullWidth
-                value={site.email ? site.email : ""}
+                value={email ? email : ""}
                 onChange={e => this.handleChangeMail(e)}
                 InputLabelProps={{
                   classes: {
@@ -384,7 +397,7 @@ class SettingEditorTab extends React.Component {
             xs={12}
             style={{ marginTop: 10 }}
           >
-            <Grid container item xs={2} sm={12} md={2} justify="center">
+            <Grid item xs={2} sm={12} md={2}>
               <FontAwesomeIcon icon={faPhoneAlt} size="2x" color="#555d66" />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
@@ -394,7 +407,7 @@ class SettingEditorTab extends React.Component {
                 size="small"
                 inputMode={"url"}
                 fullWidth
-                value={site.phone ? site.phone : ""}
+                value={phone ? phone : ""}
                 onChange={e => this.handleChangePhone(e)}
                 InputLabelProps={{
                   classes: {
@@ -418,13 +431,21 @@ class SettingEditorTab extends React.Component {
 }
 const mapStateToProps = state => ({
   site: state.site.siteEdit,
-  metas: state.site.metas
+  email: state.site.email,
+  youtube: state.site.youtube,
+  instagram: state.site.instagram,
+  phone: state.site.phone,
+  whatsapp: state.site.whatsapp,
+  sitepath: state.site.sitepath
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeSiteLinks: site => dispatch(changeSiteLinks(site)),
-  setNewFavicon: file => dispatch(setNewFavicon(file)),
-  setNewMetas: metas => dispatch(setNewMetas(metas))
+  changeSiteEmail: email => dispatch(changeSiteEmail(email)),
+  changeSiteInstagram: instagram => dispatch(changeSiteInstagram(instagram)),
+  changeSitePhone: phone => dispatch(changeSitePhone(phone)),
+  changeSiteSitepath: sitepath => dispatch(changeSiteSitepath(sitepath)),
+  changeSiteWhatsapp: whatsapp => dispatch(changeSiteWhatsapp(whatsapp)),
+  changeSiteYoutube: youtube => dispatch(changeSiteYoutube(youtube))
 });
 
 export default connect(

@@ -32,13 +32,20 @@ import {
   setNavItemInActive,
   setNewCover,
   setNewLogo,
-  changeSiteLinks,
   setPreviewMode,
   removeCover,
   changeNavItemName,
   uploadFavicon,
-  setNewFavicon,
-  setNewMetas
+  changeSiteEmail,
+  changeSiteInstagram,
+  changeSitePhone,
+  changeSiteSitepath,
+  changeSiteWhatsapp,
+  changeSiteYoutube,
+  getAbout,
+  getPosts,
+  getEvents,
+  getGalleries
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -118,12 +125,19 @@ export {
   updateTheme,
   setNewCover,
   setNewLogo,
-  changeSiteLinks,
   setPreviewMode,
   savePosts,
   removeCover,
   changeNavItemName,
   uploadFavicon,
-  setNewFavicon,
-  setNewMetas
+  changeSiteEmail,
+  changeSiteInstagram,
+  changeSitePhone,
+  changeSiteSitepath,
+  changeSiteWhatsapp,
+  changeSiteYoutube,
+  getAbout,
+  getPosts,
+  getEvents,
+  getGalleries
 };

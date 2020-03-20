@@ -284,7 +284,15 @@ class createNewSite extends Component {
             <span style={{ color: "#2271b1" }}>certain data and settings</span>{" "}
             to FPWG
           </Typography>
-          <ButtonStyled label="Confirm" onClick={this.handleConfirm} />
+          <ButtonStyled
+            style={{
+              color: "#006088",
+              borderColor: "#006088",
+              fontWeight: "bold"
+            }}
+            label="Confirm"
+            onClick={this.handleConfirm}
+          />
         </Grid>
       </>
     );

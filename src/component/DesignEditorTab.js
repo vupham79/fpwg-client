@@ -139,7 +139,7 @@ class DesignEditorTab extends React.Component {
     this.setState({
       logo: site.logo
     });
-    img.addEventListener("load", async function() {
+    img.addEventListener("load", async function () {
       const color = await colorThief.getPalette(img, 11);
       const colors = await color.map(rgb =>
         onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
@@ -280,11 +280,7 @@ class DesignEditorTab extends React.Component {
                 style={{ width: "100%", borderRadius: "0" }}
                 onClick={() => removeCover(cover)}
               >
-                <Cancel
-                  onClick={() => removeCover(cover)}
-                  color={"error"}
-                  fontSize={""}
-                />
+                <Cancel color={"error"} />
               </IconButton>
             </Grid>
           );
@@ -384,7 +380,6 @@ class DesignEditorTab extends React.Component {
                 root: classes.fontPickerRoot
               }}
               children={<Add />}
-              innerRef={""}
               placement={"bottom"}
             />
           </Grid>
@@ -392,7 +387,6 @@ class DesignEditorTab extends React.Component {
             <Typography className={classes.title2}>Body</Typography>
             <GoogleFontPicker
               searchable
-              buttonColor={""}
               buttonVariant={"outlined"}
               defaultFont={isChanged ? site.theme.fontBody : site.fontBody}
               onFontSelected={this.handleChangeFontBody}
@@ -456,7 +450,7 @@ class DesignEditorTab extends React.Component {
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
-        <Typography className={classes.title}>Homepage Images</Typography>
+        {/* <Typography className={classes.title}>Homepage Images</Typography>
         <Grid container className={classes.sideBarBox}>
           {this.renderNewCovers()}
           <Grid
@@ -483,7 +477,7 @@ class DesignEditorTab extends React.Component {
             />
             <Add fontSize="small" />
           </Grid>
-        </Grid>
+        </Grid> */}
       </div>
     );
   }

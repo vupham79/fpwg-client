@@ -225,7 +225,11 @@ class MainPage extends Component {
                       <Grid item>
                         <Link to="/edit">
                           <ButtonStyled
-                            style={{ borderColor: "#006088", color: "#006088" }}
+                            style={{
+                              borderColor: "rgb(0, 96, 136)",
+                              color: "rgb(0, 96, 136)",
+                              fontWeight: "bold"
+                            }}
                             onClick={() =>
                               this.props.setCurrentEditId(siteEdit.id)
                             }
@@ -241,7 +245,14 @@ class MainPage extends Component {
                             target="_blank"
                             style={{ textDecoration: "none" }}
                           >
-                            <ButtonStyled label="Visit" />
+                            <ButtonStyled
+                              style={{
+                                borderColor: "rgb(0, 96, 136)",
+                                color: "rgb(0, 96, 136)",
+                                fontWeight: "bold"
+                              }}
+                              label="Visit"
+                            />
                           </a>
                         ) : (
                           <ButtonStyled

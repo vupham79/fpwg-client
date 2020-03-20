@@ -268,7 +268,8 @@ class Header extends Component {
       titleView,
       classes,
       bodyEdit,
-      bodyView
+      bodyView,
+      newCover
     } = this.props;
 
     const imgStyles = {
@@ -292,13 +293,17 @@ class Header extends Component {
         : hexToRGB(titleView.color),
       fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
     };
-
+    console.log(newCover);
     return (
       <Grid container className={classes.root}>
         <Grid
           container
           item
-          style={{ backgroundImage: imgUrl, minHeight: "90vh", ...imgStyles }}
+          style={{
+            backgroundImage: `url(${isEdit ? newCover[0] : siteView.cover})`,
+            minHeight: "90vh",
+            ...imgStyles
+          }}
         />
         <Grid
           container
@@ -428,7 +433,8 @@ const mapStateToProps = state => ({
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
   navItemIsActive: state.site.navItemIsActive,
-  newLogo: state.site.newLogo
+  newLogo: state.site.newLogo,
+  newCover: state.site.newCover
 });
 
 const mapDispatchToProps = dispatch => ({

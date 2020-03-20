@@ -1,11 +1,25 @@
 import React, { Component } from "react";
 import EventPage from "./event";
-import { setNavItemActive, setNavItemInActive } from "../../../../actions";
+import {
+  setNavItemActive,
+  setNavItemInActive,
+  getEvents
+} from "../../../../actions";
 import { connect } from "react-redux";
 
 class PreEventPageT4 extends Component {
   componentDidMount() {
-    const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
+    const {
+      site,
+      setNavItemActive,
+      getEvents,
+      sitepath,
+      setNavItemInActive,
+      isEdit
+    } = this.props;
+    if (sitepath) {
+      getEvents(sitepath);
+    }
     if (site && !isEdit) {
       if (site.navItems) {
         const navItem = site.navItems.find(e => e.original === "event");
@@ -24,12 +38,14 @@ class PreEventPageT4 extends Component {
 
 const mapStateToProps = state => ({
   site: state.site.siteView,
-  isEdit: state.site.isEdit
+  isEdit: state.site.isEdit,
+  sitepath: state.path.currentSitepath
 });
 
 const mapDispatchToProps = dispatch => ({
   setNavItemInActive: () => dispatch(setNavItemInActive()),
-  setNavItemActive: () => dispatch(setNavItemActive())
+  setNavItemActive: () => dispatch(setNavItemActive()),
+  getEvents: sitepath => dispatch(getEvents(sitepath))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreEventPageT4);

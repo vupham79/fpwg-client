@@ -1,15 +1,14 @@
-import React, { Component } from "react";
-import { Grid, IconButton } from "@material-ui/core";
-import SiteBarEditor from "../component/SideBarEditor";
-import { connect } from "react-redux";
-import { setPreviewMode } from "../actions";
 import {
   faArrowCircleLeft,
   faArrowCircleRight
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Grid } from "@material-ui/core";
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { setPreviewMode } from "../actions";
+import SiteBarEditor from "../component/SideBarEditor";
 import styles from "./editorStyle.module.css";
-
 
 class EditLayout extends Component {
   render() {
@@ -44,28 +43,28 @@ class EditLayout extends Component {
               </Grid>
             </Grid>
           ) : (
+            <Grid
+              container
+              item
+              sm={9}
+              xs={12}
+              justify="center"
+              style={{ background: "black" }}
+            >
               <Grid
-                container
                 item
-                sm={9}
                 xs={12}
-                justify="center"
-                style={{ background: "black" }}
+                style={{
+                  background: "white",
+                  overflowY: "scroll",
+                  overflowX: "hidden",
+                  height: "100vh"
+                }}
               >
-                <Grid
-                  item
-                  xs={12}
-                  style={{
-                    background: "white",
-                    overflowY: "scroll",
-                    overflowX: "hidden",
-                    height: "100vh"
-                  }}
-                >
-                  {this.props.children}
-                </Grid>
+                {this.props.children}
               </Grid>
-            )}
+            </Grid>
+          )}
 
           <button
             onClick={() => this.props.setPreviewMode(!this.props.isPreview)}

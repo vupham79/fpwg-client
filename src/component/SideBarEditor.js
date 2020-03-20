@@ -15,6 +15,7 @@ import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
 import SyncEditorTab from "./SyncEditorTab";
 import ThemeEditorTab from "./ThemeEditorTab";
+import HomepageEditorTab from "./HomepageEditorTab";
 
 const useStyles = theme => ({
   root: {
@@ -53,8 +54,12 @@ class ClippedDrawer extends React.Component {
       saveDesignSite,
       newLogo,
       newCover,
-      favicon,
-      metas
+      youtube,
+      sitepath,
+      instagram,
+      whatsapp,
+      email,
+      phone
     } = this.props;
     return (
       <AppBar className={classes.root} position="sticky">
@@ -108,8 +113,12 @@ class ClippedDrawer extends React.Component {
                     site: siteEdit,
                     logo: newLogo,
                     cover: newCover,
-                    favicon,
-                    metas
+                    youtube,
+                    sitepath,
+                    instagram,
+                    whatsapp,
+                    email,
+                    phone
                   })
                 }
               >
@@ -185,6 +194,13 @@ class ClippedDrawer extends React.Component {
             setNav={this.setNavigating}
           />
           <AccordionButton
+            comp={<HomepageEditorTab />}
+            label="Homepage Settings"
+            currentNav={this.state.currentNavName}
+            isNav={this.state.navigating}
+            setNav={this.setNavigating}
+          />
+          <AccordionButton
             comp={<SettingEditorTab />}
             label="Settings"
             currentNav={this.state.currentNavName}
@@ -198,7 +214,6 @@ class ClippedDrawer extends React.Component {
             isNav={this.state.navigating}
             setNav={this.setNavigating}
           />
-
         </Drawer>
       </AppBar>
     );
@@ -210,14 +225,18 @@ const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
   newLogo: state.site.newLogo,
   newCover: state.site.newCover,
-  favicon: state.site.favicon,
-  metas: state.site.metas,
+  youtube: state.site.youtube,
+  sitepath: state.site.sitepath,
+  instagram: state.site.instagram,
+  whatsapp: state.site.whatsapp,
+  email: state.site.email,
+  phone: state.site.phone,
   isPreview: state.site.isPreview
 });
 
 const mapDispatchToProps = dispatch => ({
   updateTabValue: value => dispatch(updateTabValue(value)),
-  saveDesignSite: data => dispatch(saveDesignSite(data)),
+  saveDesignSite: data => dispatch(saveDesignSite(data))
 });
 
 export default connect(
