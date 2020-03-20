@@ -50,6 +50,13 @@ class Theme1Contact extends React.Component {
         fontSize: 18,
         fontWeight: 400
       },
+      changableBody4: {
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+        color: "#b3b2b2",
+        textAlign: "center",
+        fontSize: 18,
+        fontWeight: 300
+      },
       pageName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
@@ -110,7 +117,7 @@ class Theme1Contact extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50 }}>
+      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50, minHeight: "60vh" }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>CONTACTS</p>
         </Grid>
@@ -183,7 +190,7 @@ class Theme1Contact extends React.Component {
             !siteEdit.phone &&
             !siteEdit.address &&
             !siteEdit.email && (
-              <p style={classes.changableBody3}>
+              <p style={classes.changableBody4}>
                 Currently setting up our location.
               </p>
             )}
@@ -191,7 +198,7 @@ class Theme1Contact extends React.Component {
             !siteView.phone &&
             !siteView.address &&
             !siteView.email && (
-              <p style={classes.changableBody3}>
+              <p style={classes.changableBody4}>
                 Currently setting up our location.
               </p>
             )}

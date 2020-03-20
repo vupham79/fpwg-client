@@ -1,0 +1,27 @@
+.glowingButton {
+  position: fixed;
+  margin-bottom: 3px;
+  margin-left: 3px;
+  bottom: 0;
+  z-index: 9999;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  width: 40px;
+  height: 40px;
+  opacity: 0.6;
+}
+@keyframes glowing {
+  0% { background-color: #03638f; box-shadow: 0 0 3px #03638f; }
+  50% { background-color: #0074aa; box-shadow: 0 0 10px #0074aa; }
+  100% { background-color: #03638f; box-shadow: 0 0 3px #03638f; }
+}
+.glowingButton {
+    animation: glowing 1300ms infinite;
+}
+.glowingButton:hover {
+  opacity: 1;
+}
+
+ 

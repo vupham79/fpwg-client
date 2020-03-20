@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Grid, CardMedia } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 
@@ -118,14 +118,14 @@ class Theme1About extends React.Component {
 
         <Grid container item xs={12} direction="row" justify="center">
 
-          <Grid container item xs={5} justify="center">
-            <img
-              src={this.renderImage()}
-              alt=""
-              style={{ height: 300 }}
+          <Grid container item xs={12} sm={4} justify="center">
+            <CardMedia
+              component="img"
+              height="300"
+              image={this.renderImage()}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={4} style={{ paddingLeft: 10 }}>
             <p style={classes.changableBody3}>
               {isEdit && siteEdit && siteEdit.about}
               {!isEdit && siteView && siteView.about}
