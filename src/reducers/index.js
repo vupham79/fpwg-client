@@ -11,6 +11,7 @@ import admin from "./admin";
 import path from "./path";
 import post from "./post";
 import snackBar from "./snackbar";
+import syncdata from "./syncdata";
 
 export default combineReducers({
   site,
@@ -24,5 +25,6 @@ export default combineReducers({
   admin,
   path,
   post,
-  snackBar
+  snackBar,
+  syncdata
 });

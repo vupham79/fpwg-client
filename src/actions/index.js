@@ -19,7 +19,6 @@ import {
   setCurrentEditId,
   setSiteEdit,
   setSiteView,
-  syncDataFromFB,
   unPublishSite,
   unPublishSiteAdmin,
   updateSiteId,
@@ -67,6 +66,12 @@ import {
 } from "./user";
 import { closeDialog, openDialog } from "./dialog";
 import { setColorPallete } from "./color";
+import {
+  syncDataFromFB,
+  syncGalleryFromFB,
+  syncEventFromFB,
+  syncPostFromFB
+} from "./syncdata";
 
 export {
   getUserPages,
@@ -105,7 +110,6 @@ export {
   activateUser,
   deactivateUser,
   changeSiteTitle,
-  syncDataFromFB,
   getAllThemesAdmin,
   publishSiteAdmin,
   unPublishSiteAdmin,
@@ -139,5 +143,9 @@ export {
   getAbout,
   getPosts,
   getEvents,
-  getGalleries
+  getGalleries,
+  syncDataFromFB,
+  syncEventFromFB,
+  syncGalleryFromFB,
+  syncPostFromFB
 };

@@ -26,7 +26,14 @@ import {
 import React from "react";
 import { connect } from "react-redux";
 import Switch from "./SwitchButton";
-import { closeDialog, openDialog, syncDataFromFB } from "../actions";
+import {
+  closeDialog,
+  openDialog,
+  syncDataFromFB,
+  syncPostFromFB,
+  syncEventFromFB,
+  syncGalleryFromFB
+} from "../actions";
 import moment from "moment";
 import { withStyles } from "@material-ui/core/styles";
 import ButtonComponent from "./Button";
@@ -156,8 +163,30 @@ class SyncEditorTab extends React.Component {
   };
 
   handleSyncData = () => {
-    if (this.state.radioValue === "") {
-      this.setState({ msg: "Please choose the data type you want to sync" });
+    const {
+      syncDataFromFB,
+      site,
+      syncEventFromFB,
+      syncGalleryFromFB,
+      syncPostFromFB
+    } = this.props;
+    const { startDate, endDate, radioValue } = this.state;
+    const msg = "Please choose the data type you want to sync.";
+
+    if (radioValue === "") {
+      this.setState({ msg: msg });
+    } else if (radioValue === "post") {
+      this.setState({ msg: "" });
+      syncPostFromFB(site.id, startDate, endDate);
+    } else if (radioValue === "event") {
+      this.setState({ msg: "" });
+      syncEventFromFB(site.id, startDate, endDate);
+    } else if (radioValue === "gallery") {
+      this.setState({ msg: "" });
+      syncGalleryFromFB(site.id, startDate, endDate);
+    } else if (radioValue === "all") {
+      this.setState({ msg: "" });
+      syncDataFromFB(site.id);
     }
   };
 
@@ -411,15 +440,6 @@ class SyncEditorTab extends React.Component {
                 </Grid>
               </Grid>
             </Grid>
-            {/* <Grid item xs={12}>
-                <Button
-                  variant="contained"
-                  onClick={() => syncDataFromFB(site.id)}
-                >
-                  Sync
-                </Button>
-              </Grid> */}
-            {/* </Grid> */}
           </ExpansionPanelDetails>
         </ExpansionPanel>
         <ExpansionPanel style={expanStyle}>
@@ -478,7 +498,13 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   openDialog: () => dispatch(openDialog()),
   closeDialog: () => dispatch(closeDialog()),
-  syncDataFromFB: pageId => dispatch(syncDataFromFB(pageId))
+  syncDataFromFB: pagId => dispatch(syncDataFromFB(pagId)),
+  syncPostFromFB: (pageId, dateFrom, dateTo) =>
+    dispatch(syncPostFromFB(pageId, dateFrom, dateTo)),
+  syncEventFromFB: (pageId, dateFrom, dateTo) =>
+    dispatch(syncEventFromFB(pageId, dateFrom, dateTo)),
+  syncGalleryFromFB: (pageId, dateFrom, dateTo) =>
+    dispatch(syncGalleryFromFB(pageId, dateFrom, dateTo))
 });
 
 export default connect(
