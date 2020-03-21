@@ -65,6 +65,7 @@ class ThemeEditorTab extends React.Component {
     const { changeTheme, themes, site, updateNavItemValue } = this.props;
     const theme = themes.find(e => e.id === selectId);
     site.theme = theme;
+    site.color = theme.mainColor;
     this.setState({
       id: selectId,
     });
@@ -74,7 +75,6 @@ class ThemeEditorTab extends React.Component {
     let searchResult = site.navItems.filter(function (nav) {
       return nav.original == "home";
     });
-    console.log(searchResult);
     updateNavItemValue(searchResult[0].order - 1);
   };
 
