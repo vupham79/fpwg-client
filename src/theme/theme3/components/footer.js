@@ -6,7 +6,7 @@ import {
   faYoutube
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Grid, IconButton, Typography, withStyles } from "@material-ui/core";
+import { Grid, Typography, withStyles } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./index.module.css";

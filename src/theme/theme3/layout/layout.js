@@ -39,7 +39,7 @@ class Layout extends Component {
   };
 
   render() {
-    const { isEdit, titleEdit, titleView } = this.props;
+    const { isEdit } = this.props;
 
     return (
       <>

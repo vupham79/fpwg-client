@@ -325,7 +325,6 @@ export function saveDesignSite({
           pageId: site.id,
           name: site.title,
           color: site.color,
-          phone: site.phone,
           sitePath: sitepath,
           youtube,
           instagram,
