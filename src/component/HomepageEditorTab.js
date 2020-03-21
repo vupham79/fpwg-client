@@ -1,30 +1,30 @@
 import {
+  Avatar,
   Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
   Divider,
+  FormControlLabel,
   Grid,
   IconButton,
   Input,
-  TextField,
-  Typography,
-  Dialog,
-  DialogActions,
+  Radio,
+  RadioGroup,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Avatar,
-  Checkbox,
-  Radio,
-  RadioGroup,
-  FormControlLabel
+  Typography
 } from "@material-ui/core";
-import moment from "moment";
-import ReactPaginate from "react-paginate";
+import { green } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
 import { Add, Cancel } from "@material-ui/icons";
+import moment from "moment";
 import React from "react";
+import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import {
   changeColor,
@@ -33,15 +33,14 @@ import {
   changeSiteTitle,
   changeTheme,
   removeCover,
+  savePosts,
+  setActivePost,
   setColorPallete,
   setNewCover,
   setNewLogo,
-  setShowCustomColor,
-  savePosts,
-  setActivePost
+  setShowCustomColor
 } from "../actions";
 import toastr from "./Toastr";
-import { green } from "@material-ui/core/colors";
 
 const useStyles = theme => ({
   content: {
@@ -121,14 +120,6 @@ const useStyles = theme => ({
     color: "#555d66"
   }
 });
-
-const imgStyles = {
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  width: "6rem",
-  height: "6rem"
-};
 
 const coverStyles = {
   backgroundSize: "cover",
@@ -243,7 +234,7 @@ class HomepageEditorTab extends React.Component {
     });
   };
 
-  handleOpenDialogue = (bool) => {
+  handleOpenDialogue = bool => {
     this.setState({
       openDiag: bool
     });
@@ -359,11 +350,7 @@ class HomepageEditorTab extends React.Component {
                 style={{ width: "100%", borderRadius: "0" }}
                 onClick={() => removeCover(cover)}
               >
-                <Cancel
-                  onClick={() => removeCover(cover)}
-                  color={"error"}
-                  fontSize={""}
-                />
+                <Cancel color={"error"} />
               </IconButton>
             </Grid>
           );
@@ -371,14 +358,8 @@ class HomepageEditorTab extends React.Component {
     }
   };
 
-
   render() {
-
-    const {
-      classes,
-      site,
-      posts
-    } = this.props;
+    const { classes, posts } = this.props;
 
     return (
       <div style={{ padding: 10 }}>
@@ -391,23 +372,39 @@ class HomepageEditorTab extends React.Component {
             fontFamily: "Segoe UI, sans-serif"
           }}
         >
-          Choose what’s displayed on the homepage of your site. Latest contents are automatically shown on your site but you can decide which content to display manually.
-          </Grid>
+          Choose what’s displayed on the homepage of your site. Latest contents
+          are automatically shown on your site but you can decide which content
+          to display manually.
+        </Grid>
 
         <Divider
           style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
         />
         <Typography className={classes.title}>Your hompage displays</Typography>
-        <RadioGroup value={this.state.autoLatest} onChange={() => this.handleSetLatest(!this.state.autoLatest)} style={{ color: "#555d66", fontFamily: "Segoe UI, sans-serif" }}>
-          <FormControlLabel value={true} control={<Radio style={{ color: "#0074aa" }} />} label={<p style={{ fontSize: 13 }}>Your latest posts</p>} />
-          <FormControlLabel value={false} control={<Radio style={{ color: "#0074aa" }} />} label={<p style={{ fontSize: 13 }}>Manual</p>} />
+        <RadioGroup
+          value={this.state.autoLatest}
+          onChange={() => this.handleSetLatest(!this.state.autoLatest)}
+          style={{ color: "#555d66", fontFamily: "Segoe UI, sans-serif" }}
+        >
+          <FormControlLabel
+            value={true}
+            control={<Radio style={{ color: "#0074aa" }} />}
+            label={<p style={{ fontSize: 13 }}>Your latest posts</p>}
+          />
+          <FormControlLabel
+            value={false}
+            control={<Radio style={{ color: "#0074aa" }} />}
+            label={<p style={{ fontSize: 13 }}>Manual</p>}
+          />
         </RadioGroup>
         <Divider
           style={{ height: 30, width: "100%", backgroundColor: "#ffffff00" }}
         />
 
-        <Grid container style={{ display: this.state.autoLatest ? "none" : "block" }}>
-
+        <Grid
+          container
+          style={{ display: this.state.autoLatest ? "none" : "block" }}
+        >
           <Typography className={classes.title}>News</Typography>
           <Grid container justify={"center"} direction={"column"}>
             <Grid
@@ -420,7 +417,7 @@ class HomepageEditorTab extends React.Component {
               }}
             >
               Select which post from Facebook you want to see on your site.
-          </Grid>
+            </Grid>
             <Grid container justify={"center"} style={{ marginTop: "1rem" }}>
               <button
                 className={classes.logoButton}
@@ -428,7 +425,7 @@ class HomepageEditorTab extends React.Component {
                 onClick={() => this.handleOpenDialogue(true)}
               >
                 Select
-            </button>
+              </button>
             </Grid>
 
             <Dialog
@@ -455,14 +452,14 @@ class HomepageEditorTab extends React.Component {
                   color="secondary"
                 >
                   Cancel
-              </Button>
+                </Button>
                 <Button
                   variant="contained"
                   onClick={() => this.handleSave(posts)}
                   color={"primary"}
                 >
                   Save
-              </Button>
+                </Button>
               </DialogActions>
             </Dialog>
           </Grid>
@@ -499,7 +496,6 @@ class HomepageEditorTab extends React.Component {
               <Add fontSize="small" />
             </Grid>
           </Grid>
-
         </Grid>
       </div>
     );
@@ -527,7 +523,7 @@ const mapDispatchToProps = dispatch => ({
   setNewCover: file => dispatch(setNewCover(file)),
   removeCover: cover => dispatch(removeCover(cover)),
   savePosts: posts => dispatch(savePosts(posts)),
-  setActivePost: (post, status) => dispatch(setActivePost(post, status)),
+  setActivePost: (post, status) => dispatch(setActivePost(post, status))
 });
 
 export default connect(

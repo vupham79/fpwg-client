@@ -401,34 +401,13 @@ class HeaderComponent extends Component {
   };
 
   render() {
-    const {
-      classes,
-      navPos,
-      displayImg,
-      isEdit,
-      titleEdit,
-      titleView
-    } = this.props;
+    const { classes, navPos, displayImg, isEdit } = this.props;
     const imgStyles = {
       backgroundSize: "contain",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       height: "3.5rem"
     };
-    const useStyle =
-      navPos === "center"
-        ? {
-            background: titleEdit.color,
-            padding: "0.5rem",
-            position: "absolute",
-            marginTop: "40vh"
-          }
-        : {
-            background: titleView.color,
-            padding: "0.5rem",
-            position: "absolute",
-            marginTop: "40vh"
-          };
 
     return (
       <AppBar

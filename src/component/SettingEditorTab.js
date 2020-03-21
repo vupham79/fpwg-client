@@ -164,7 +164,6 @@ class SettingEditorTab extends React.Component {
 
   render() {
     const {
-      site,
       classes,
       email,
       youtube,
@@ -314,11 +313,7 @@ class SettingEditorTab extends React.Component {
             style={{ marginTop: 10 }}
           >
             <Grid item xs={2} sm={12} md={2}>
-              <FontAwesomeIcon
-                icon={faYoutube}
-                size="2x"
-                color="#555d66"
-              />
+              <FontAwesomeIcon icon={faYoutube} size="2x" color="#555d66" />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
               <TextField

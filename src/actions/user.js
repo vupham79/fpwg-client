@@ -117,7 +117,6 @@ export function getAllUsers() {
 
 export function getUserPages() {
   return async dispatch => {
-    console.log("hhello");
     try {
       dispatch({
         type: "SHOW_LOADING"
