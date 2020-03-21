@@ -123,7 +123,6 @@ class Theme1Home extends React.Component {
             posts ? (
               <Grid container>
                 <PostTypeComponent
-                  darkMode
                   posts={posts}
                   siteInfo={{
                     logo: siteEdit.logo,
