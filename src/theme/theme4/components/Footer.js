@@ -18,7 +18,10 @@ class Footer extends React.Component {
       bodyEdit,
       bodyView,
       titleEdit,
-      titleView
+      titleView,
+      youtube,
+      whatsapp,
+      instagram
     } = this.props;
 
     return (
@@ -54,20 +57,20 @@ class Footer extends React.Component {
             item
             style={
               isEdit
-                ? siteEdit.whatsapp
+                ? whatsapp
                   ? null
                   : { display: "none" }
                 : siteView.whatsapp
-                ? null
-                : { display: "none" }
+                  ? null
+                  : { display: "none" }
             }
           >
             <IconButton
               aria-label=""
               color="primary"
               href={`https://wa.me/${
-                isEdit ? siteEdit.whatsapp : siteView.whatsapp
-              }`}
+                isEdit ? whatsapp : siteView.whatsapp
+                }`}
             >
               <FontAwesomeIcon
                 icon={faWhatsapp}
@@ -81,20 +84,20 @@ class Footer extends React.Component {
             item
             style={
               isEdit
-                ? siteEdit.instagram
+                ? instagram
                   ? null
                   : { display: "none" }
                 : siteView.instagram
-                ? null
-                : { display: "none" }
+                  ? null
+                  : { display: "none" }
             }
           >
             <IconButton
               aria-label=""
               color="primary"
               href={`https://instagram.com/${
-                isEdit ? siteEdit.instagram : siteView.instagram
-              }`}
+                isEdit ? instagram : siteView.instagram
+                }`}
             >
               <FontAwesomeIcon
                 icon={faInstagram}
@@ -108,18 +111,18 @@ class Footer extends React.Component {
             item
             style={
               isEdit
-                ? siteEdit.youtube
+                ? youtube
                   ? null
                   : { display: "none" }
                 : siteView.youtube
-                ? null
-                : { display: "none" }
+                  ? null
+                  : { display: "none" }
             }
           >
             <IconButton
               aria-label=""
               color="primary"
-              href={isEdit ? siteEdit.youtube : siteView.youtube}
+              href={isEdit ? youtube : siteView.youtube}
             >
               <FontAwesomeIcon
                 icon={faYoutube}
@@ -158,7 +161,10 @@ const mapStateToProps = state => ({
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
   titleEdit: state.site.titleEdit,
-  titleView: state.site.titleView
+  titleView: state.site.titleView,
+  youtube: state.site.youtube,
+  instagram: state.site.instagram,
+  whatsapp: state.site.whatsapp,
 });
 
 export default connect(mapStateToProps, null)(Footer);
