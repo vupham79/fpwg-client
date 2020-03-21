@@ -249,7 +249,8 @@ class PagesEditorTab extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5
+    itemPerPage: 5,
+    openDiag: false
   };
 
   setPageCount = listData => {
@@ -328,6 +329,12 @@ class PagesEditorTab extends React.Component {
   handleSave = async posts => {
     await this.props.savePosts(posts);
     this.props.closeDialog();
+  };
+
+  handleOpenDialogue = bool => {
+    this.setState({
+      openDiag: bool
+    });
   };
 
   render() {
@@ -465,7 +472,7 @@ class PagesEditorTab extends React.Component {
             <button
               className={classes.logoButton}
               color={"default"}
-              onClick={openDialog}
+              onClick={() => this.handleOpenDialogue(true)}
             >
               Select
             </button>
@@ -474,13 +481,13 @@ class PagesEditorTab extends React.Component {
           <Dialog
             disableBackdropClick
             disableEscapeKeyDown
-            open={open}
+            open={this.state.openDiag}
             maxWidth="md"
             fullWidth
           >
             <Grid container alignItems="center">
               <PostsList
-                posts={posts}
+                posts={this.props.posts}
                 filteredData={this.state.filteredData}
                 setActivePost={this.setActivePost}
                 pageCount={this.state.pageCount}
@@ -491,14 +498,14 @@ class PagesEditorTab extends React.Component {
               <Button
                 autoFocus
                 variant="contained"
-                onClick={closeDialog}
+                onClick={() => this.handleOpenDialogue(false)}
                 color="secondary"
               >
                 Cancel
               </Button>
               <Button
                 variant="contained"
-                onClick={() => this.handleSave(posts)}
+                onClick={() => this.handleSave(this.props.posts)}
                 color={"primary"}
               >
                 Save

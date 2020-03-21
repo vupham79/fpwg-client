@@ -38,10 +38,7 @@ import {
   syncEventFromFB,
   syncGalleryFromFB
 } from "../actions";
-import moment from "moment";
-import { withStyles } from "@material-ui/core/styles";
 import ButtonComponent from "./Button";
-import Switch from "./SwitchButton";
 
 const expanStyle = {
   marginTop: "1rem"
