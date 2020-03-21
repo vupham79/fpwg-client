@@ -14,7 +14,9 @@ import {
   ListItem,
   Tab,
   Tabs,
-  withStyles
+  withStyles,
+  FormControl,
+  Select
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -41,9 +43,32 @@ const useStyles = theme => ({
     maxHeight: "2rem"
   },
   navItem: {
+    [theme.breakpoints.up("md")]: {
+      position: "absolute",
+      top: "70%",
+      minHeight: "11vh"
+    },
     position: "absolute",
-    top: "70%",
-    minHeight: "10vh"
+    top: "60%",
+    minHeight: "auto"
+  },
+  tab: {
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "block"
+    }
+  },
+  title: {
+    minWidth: "20vh",
+    color: "white",
+    fontSize: "2.5rem",
+    overflow: "hidden",
+    textAlign: "center",
+    [theme.breakpoints.up("md")]: {
+      display: "block",
+      position: "absolute",
+      top: "-2rem"
+    }
   }
 });
 
@@ -71,14 +96,21 @@ class Header extends Component {
   };
 
   renderTabItems = () => {
-    const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
+    const {
+      tabValue,
+      updateNavItemValue,
+      siteEdit,
+      titleEdit,
+      classes
+    } = this.props;
     const tabStyles = {
       textTransform: "none",
       fontFamily: titleEdit.fontFamily,
       color: "white",
-      minWidth: "3vh",
+      fontSize: "1.2rem",
+      minWidth: "12vh",
       "&:hover": {
-        color: "#40a9ff",
+        color: "red",
         opacity: 1
       },
       "&$selected": {
@@ -93,20 +125,11 @@ class Header extends Component {
         orientation="horizontal"
         value={tabValue}
         textColor="primary"
-        // TabIndicatorProps={
-        //   type === "vertical"
-        //     ? {
-        //         style: {
-        //           background: siteEdit.color,
-        //           left: 0
-        //         }
-        //       }
-        //     : {
-        //         style: {
-        //           background: siteEdit.color
-        //         }
-        //       }
-        // }
+        TabIndicatorProps={{
+          style: {
+            display: "none"
+          }
+        }}
         onChange={(e, newValue) => updateNavItemValue(newValue)}
       >
         {siteEdit.navItems.map((item, index) =>
@@ -251,11 +274,37 @@ class Header extends Component {
     );
   };
 
-  renderHeader = () => {
-    const { isEdit } = this.props;
-    console.log(isEdit);
+  renderSelect = () => {
     return (
-      <Grid>{isEdit ? this.renderTabItems() : this.renderNavItems()}</Grid>
+      <FormControl variant="outlined">
+        <Select native>
+          <option aria-label="None" value="" />
+          <option value={10}>Ten</option>
+          <option value={20}>Twenty</option>
+          <option value={30}>Thirty</option>
+        </Select>
+      </FormControl>
+    );
+  };
+
+  renderHeader = () => {
+    const { isEdit, siteEdit, siteView, classes } = this.props;
+    return (
+      <Grid container justify="center" className={classes.rootHeader}>
+        <Grid
+          className={classes.title}
+          style={
+            isEdit
+              ? siteEdit && siteEdit.fontFamily
+              : siteView && siteView.fontFamily
+          }
+        >
+          {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
+        </Grid>
+        <Grid className={classes.tab}>
+          {isEdit ? this.renderTabItems() : this.renderNavItems()}
+        </Grid>
+      </Grid>
     );
   };
 
@@ -293,14 +342,14 @@ class Header extends Component {
         : hexToRGB(titleView.color),
       fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
     };
-    console.log(newCover);
     return (
       <Grid container className={classes.root}>
         <Grid
           container
           item
           style={{
-            backgroundImage: `url(${isEdit ? newCover[0] : siteView.cover})`,
+            // backgroundImage: `url(${isEdit ? newCover[0] : siteView.cover})`,
+            backgroundImage: imgUrl,
             minHeight: "90vh",
             ...imgStyles
           }}
@@ -413,6 +462,7 @@ class Header extends Component {
           container
           item
           justify="center"
+          alignItems="flex-end"
           className={classes.navItem}
           style={{ ...infoStyle }}
         >
