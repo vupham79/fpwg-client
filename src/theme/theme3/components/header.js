@@ -7,16 +7,13 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  Divider,
+  FormControl,
   Grid,
   IconButton,
-  List,
-  ListItem,
+  Select,
   Tab,
   Tabs,
-  withStyles,
-  FormControl,
-  Select
+  withStyles
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -96,13 +93,7 @@ class Header extends Component {
   };
 
   renderTabItems = () => {
-    const {
-      tabValue,
-      updateNavItemValue,
-      siteEdit,
-      titleEdit,
-      classes
-    } = this.props;
+    const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
     const tabStyles = {
       textTransform: "none",
       fontFamily: titleEdit.fontFamily,

@@ -14,9 +14,9 @@ import {
   withStyles
 } from "@material-ui/core";
 import FacebookIcon from "@material-ui/icons/Facebook";
+import Pagination from "@material-ui/lab/Pagination";
 import moment from "moment";
 import React from "react";
-import ReactPaginate from "react-paginate";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import Truncate from "react-truncate";
@@ -25,7 +25,6 @@ import {
   setPostsToSiteEdit,
   setPostsToSiteView
 } from "../../actions";
-import Pagination from "@material-ui/lab/Pagination";
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
