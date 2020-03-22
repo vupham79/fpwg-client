@@ -9,7 +9,6 @@ class Theme1News extends React.Component {
       isEdit,
       titleEdit,
       titleView,
-      posts,
       bodyEdit,
       bodyView,
       siteView,
@@ -128,38 +127,38 @@ class Theme1News extends React.Component {
         </Grid>
         <Grid item sm={12} xs={12} container spacing={3}>
           {isEdit ? (
-            posts ? (
+            siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
-                  posts={posts}
+                  posts={siteEdit.posts}
                   siteInfo={{
                     logo: siteEdit.logo,
-                    title: siteEdit.title
+                    title: siteEdit.title,
+                    id: siteEdit.id
                   }}
                 />
               </Grid>
             ) : (
               <Grid container justify="center">
-                <Typography variant="body1">
+                <Typography variant="body1" style={bodyEdit}>
                   Currently there are no news.
                 </Typography>
               </Grid>
             )
-          ) : siteView ? (
-            siteView.posts && (
-              <Grid container>
-                <PostTypeComponent
-                  posts={siteView.posts}
-                  siteInfo={{
-                    logo: siteView.logo,
-                    title: siteView.title
-                  }}
-                />
-              </Grid>
-            )
+          ) : siteView && siteView.posts ? (
+            <Grid container>
+              <PostTypeComponent
+                posts={siteView.posts}
+                siteInfo={{
+                  logo: siteView.logo,
+                  title: siteView.title,
+                  sitePath: siteView.sitePath
+                }}
+              />
+            </Grid>
           ) : (
             <Grid container justify="center">
-              <Typography variant="body1">
+              <Typography variant="body1" style={bodyView}>
                 Currently there are no news.
               </Typography>
             </Grid>
@@ -177,7 +176,6 @@ const mapStateToProps = state => ({
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
-  posts: state.post.posts,
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView
 });

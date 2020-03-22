@@ -141,41 +141,6 @@ class Header extends Component {
     );
   };
 
-  renderDrawer = () => {
-    const { isEdit, siteView, titleView, siteEdit } = this.props;
-    return (
-      <div style={{ marginTop: "3rem" }}>
-        <Divider variant="fullWidth" />
-        {isEdit ? (
-          siteEdit && this.renderTabItems({ type: "vertical" })
-        ) : (
-          <List>
-            {siteView &&
-              siteView.navItems.map((item, index) => (
-                <ListItem button key={index}>
-                  <NavLink
-                    style={{
-                      ...titleView,
-                      width: "inherit",
-                      textAlign: "center",
-                      height: "inherit",
-                      textDecoration: "none"
-                    }}
-                    activeStyle={{
-                      borderBottom: "1px solid"
-                    }}
-                    to={`/${siteView.sitePath}/${item.name}`}
-                  >
-                    {item.name}
-                  </NavLink>
-                </ListItem>
-              ))}
-          </List>
-        )}
-      </div>
-    );
-  };
-
   renderUrl = () => {
     const { isEdit, siteView, siteEdit } = this.props;
     if (isEdit) {
@@ -237,37 +202,31 @@ class Header extends Component {
   };
 
   renderNavItems = () => {
-    const { classes, siteView, isEdit, titleView } = this.props;
+    const { siteView, isEdit, titleView } = this.props;
+    const navLinkStyle = {
+      fontFamily: titleView.fontFamily,
+      color: "white",
+      fontSize: "1.2rem",
+      minWidth: "12vh",
+      textDecoration: "none",
+      height: "auto"
+    };
     return (
-      <Grid className={classes.navItems}>
+      <Grid container justify="center" alignItems="center">
         {isEdit
-          ? this.renderTabItems({ type: "horizontal" })
+          ? this.renderTabItems()
           : siteView &&
             siteView.navItems &&
             siteView.navItems.map((item, index) =>
               item.isActive ? (
-                <Grid
-                  item
-                  sm
-                  md
+                <NavLink
                   key={index}
-                  style={{
-                    textAlign: "end"
-                  }}
+                  style={navLinkStyle}
+                  activeStyle={{ backgroundColor: siteView.color }}
+                  to={`/${siteView.sitePath}/${item.original}`}
                 >
-                  <NavLink
-                    style={{
-                      ...titleView,
-                      textDecoration: "none",
-                      color: this.props.navColor,
-                      backgroundColor: this.props.headerColor
-                    }}
-                    activeStyle={{ borderBottom: "1px solid" }}
-                    to={`/${siteView.sitePath}/${item.original}`}
-                  >
-                    {item.name}
-                  </NavLink>
-                </Grid>
+                  {item.name}
+                </NavLink>
               ) : null
             )}
       </Grid>
@@ -301,9 +260,7 @@ class Header extends Component {
         >
           {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
         </Grid>
-        <Grid className={classes.tab}>
-          {isEdit ? this.renderTabItems() : this.renderNavItems()}
-        </Grid>
+        <Grid className={classes.tab}>{this.renderNavItems()}</Grid>
       </Grid>
     );
   };
@@ -362,24 +319,52 @@ class Header extends Component {
           justify="flex-end"
           className={classes.contact}
         >
-          <Grid item sm={6} className={classes.info} style={{ ...infoStyle }}>
-            {isEdit
-              ? siteEdit && siteEdit.address
-                ? siteEdit.address
-                : "This information is private"
-              : siteView && siteView.address
-              ? siteView.address
-              : "This information is private"}
-          </Grid>
-          <Grid item sm={6} className={classes.info} style={{ ...infoStyle }}>
-            {isEdit
-              ? siteEdit && siteEdit.phone
-                ? siteEdit.phone
-                : "This information is private"
-              : siteView && siteView.phone
-              ? siteView.phone
-              : "This information is private"}
-          </Grid>
+          {isEdit
+            ? siteEdit &&
+              siteEdit.address && (
+                <Grid
+                  item
+                  sm={6}
+                  className={classes.info}
+                  style={{ ...infoStyle }}
+                >
+                  {siteEdit.address}
+                </Grid>
+              )
+            : siteView &&
+              siteView.address && (
+                <Grid
+                  item
+                  sm={6}
+                  className={classes.info}
+                  style={{ ...infoStyle }}
+                >
+                  {siteView.address}
+                </Grid>
+              )}
+          {isEdit
+            ? siteEdit &&
+              siteEdit.phone && (
+                <Grid
+                  item
+                  sm={6}
+                  className={classes.info}
+                  style={{ ...infoStyle }}
+                >
+                  {siteEdit.phone}
+                </Grid>
+              )
+            : siteView &&
+              siteView.phone && (
+                <Grid
+                  item
+                  sm={6}
+                  className={classes.info}
+                  style={{ ...infoStyle }}
+                >
+                  {siteView.phone}
+                </Grid>
+              )}
 
           <Grid
             container
