@@ -146,21 +146,21 @@ class BannerComponent extends React.Component {
         {isEdit && newCover && newCover.length === 0 ? (
           <div></div>
         ) : (
-          <Grid item xs={12}>
-            <Carousel
-              autoPlay
-              infiniteLoop
-              centerMode={false}
-              showArrows={false}
-              showIndicators={true}
-              dynamicHeight={false}
-              showStatus={false}
-              showThumbs={false}
-            >
-              {this.renderNewCoversCarousel()}
-            </Carousel>
-          </Grid>
-        )}
+            <Grid item xs={12}>
+              <Carousel
+                autoPlay
+                infiniteLoop
+                centerMode={false}
+                showArrows={false}
+                showIndicators={false}
+                dynamicHeight={false}
+                showStatus={false}
+                showThumbs={false}
+              >
+                {this.renderNewCoversCarousel()}
+              </Carousel>
+            </Grid>
+          )}
       </React.Fragment>
     );
   };
@@ -172,21 +172,21 @@ class BannerComponent extends React.Component {
         {isEdit && newCover && newCover.length === 0 ? (
           <div></div>
         ) : (
-          <Grid item xs={12}>
-            <Carousel
-              autoPlay
-              infiniteLoop
-              centerMode={false}
-              showArrows={false}
-              showIndicators={false}
-              dynamicHeight={false}
-              showStatus={false}
-              showThumbs={false}
-            >
-              {this.renderNewCoversCarouselWithTitle()}
-            </Carousel>
-          </Grid>
-        )}
+            <Grid item xs={12}>
+              <Carousel
+                autoPlay
+                infiniteLoop
+                centerMode={false}
+                showArrows={false}
+                showIndicators={false}
+                dynamicHeight={false}
+                showStatus={false}
+                showThumbs={false}
+              >
+                {this.renderNewCoversCarouselWithTitle()}
+              </Carousel>
+            </Grid>
+          )}
       </React.Fragment>
     );
   };

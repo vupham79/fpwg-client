@@ -139,6 +139,11 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         siteEdit: { ...action.payload }
       };
+    case "CHANGE_HOME_ITEMS":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
     case "CHANGE_THEME":
       const newColor = {
         fontFamily: action.payload.fontTitle,
@@ -255,6 +260,11 @@ const SiteReducer = (state = defaultState, action) => {
         newCover: [...filter]
       };
     case "CHANGE_NAV_ITEM_NAME":
+      return {
+        ...state,
+        siteEdit: { ...action.payload }
+      };
+    case "CHANGE_HOME_ITEM_NAME":
       return {
         ...state,
         siteEdit: { ...action.payload }

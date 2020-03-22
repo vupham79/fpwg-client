@@ -17,7 +17,8 @@ import {
   Select,
   Tab,
   Tabs,
-  Typography
+  Typography,
+  Switch
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import {
