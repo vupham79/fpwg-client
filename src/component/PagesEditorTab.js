@@ -1,5 +1,24 @@
-import { Grid, IconButton, TextField } from "@material-ui/core";
-import { withStyles as withStylesStyle } from "@material-ui/core/styles";
+import {
+  Grid,
+  IconButton,
+  TextField,
+  Typography,
+  Dialog,
+  DialogActions,
+  Button,
+  Table,
+  TableCell,
+  TableRow,
+  Avatar,
+  Divider,
+  TableHead,
+  TableBody,
+  TableContainer,
+  Checkbox,
+} from "@material-ui/core";
+import moment from "moment";
+import { green } from "@material-ui/core/colors";
+import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/DragHandle";
 import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
@@ -20,6 +39,7 @@ import {
   setActivePost,
   updateNavItemValue
 } from "../actions";
+import ReactPaginate from "react-paginate";
 
 const useStyles = theme => ({
   content: {
@@ -133,103 +153,104 @@ function handleChangeNavName(id, site, newName, changeNavItemName) {
   changeNavItemName(site);
 }
 
-// const GreenCheckbox = withStyles({
-//   root: {
-//     color: green[400],
-//     "&$checked": {
-//       color: green[600]
-//     }
-//   },
-//   checked: {}
-// })(props => <Checkbox color="default" {...props} />);
+const GreenCheckbox = withStyles({
+  root: {
+    color: green[400],
+    "&$checked": {
+      color: green[600]
+    }
+  },
+  checked: {}
+})(props => <Checkbox color="default" {...props} />);
 
-// const columns = ["Avatar", "Title", "Message", "Created At", "Show"];
+const columns = ["Avatar", "Title", "Message", "Created At", "Show"];
 
-// function PostsList({
-//   filteredData,
-//   setActivePost,
-//   pageCount,
-//   handlePageClick
-// }) {
-//   return (
-//     <>
-//       <TableContainer style={{ maxHeight: "70vh" }}>
-//         <Table stickyHeader>
-//           <TableHead>
-//             <TableRow>
-//               {columns.map((column, index) => (
-//                 <TableCell align="center" key={index}>
-//                   {column}
-//                 </TableCell>
-//               ))}
-//             </TableRow>
-//           </TableHead>
-//           <TableBody>
-//             {filteredData &&
-//               filteredData.map((row, index) => (
-//                 <TableRow key={index}>
-//                   <TableCell>
-//                     {(row.attachments.media_type === "photo" && (
-//                       <Avatar src={row.attachments.images[0]} />
-//                     )) ||
-//                       (row.attachments.media_type === "video" && (
-//                         <Avatar src={row.attachments.video} />
-//                       )) ||
-//                       (row.attachments.media_type === "album" && (
-//                         <Avatar src={row.attachments.images[0]} />
-//                       ))}
-//                   </TableCell>
-//                   <TableCell align="center">{row.title}</TableCell>
-//                   <TableCell align="left">
-//                     <Grid
-//                       style={{
-//                         maxWidth: "20rem",
-//                         height: "2.5rem",
-//                         overflow: "hidden"
-//                       }}
-//                     >
-//                       {row.message}
-//                     </Grid>
-//                   </TableCell>
-//                   <TableCell align="center">
-//                     {moment(row.createdAt).format("DD-MM-YYYY")}
-//                   </TableCell>
-//                   <TableCell align="center">
-//                     <GreenCheckbox
-//                       checked={row.isActive}
-//                       onChange={() => setActivePost(row, !row.isActive)}
-//                     />
-//                   </TableCell>
-//                 </TableRow>
-//               ))}
-//           </TableBody>
-//         </Table>
-//       </TableContainer>
-//       <Grid container justify="center">
-//         <ReactPaginate
-//           previousLabel={"previous"}
-//           nextLabel={"next"}
-//           breakLabel={"..."}
-//           breakClassName={"break-me"}
-//           pageCount={pageCount}
-//           marginPagesDisplayed={2}
-//           pageRangeDisplayed={5}
-//           onPageChange={handlePageClick}
-//           containerClassName={"pagination"}
-//           subContainerClassName={"pages pagination"}
-//           activeClassName={"active"}
-//         />
-//       </Grid>
-//     </>
-//   );
-// }
+function PostsList({
+  filteredData,
+  setActivePost,
+  pageCount,
+  handlePageClick
+}) {
+  return (
+    <>
+      <TableContainer style={{ maxHeight: "70vh" }}>
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
+              {columns.map((column, index) => (
+                <TableCell align="center" key={index}>
+                  {column}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredData &&
+              filteredData.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell>
+                    {(row.attachments.media_type === "photo" && (
+                      <Avatar src={row.attachments.images[0]} />
+                    )) ||
+                      (row.attachments.media_type === "video" && (
+                        <Avatar src={row.attachments.video} />
+                      )) ||
+                      (row.attachments.media_type === "album" && (
+                        <Avatar src={row.attachments.images[0]} />
+                      ))}
+                  </TableCell>
+                  <TableCell align="center">{row.title}</TableCell>
+                  <TableCell align="left">
+                    <Grid
+                      style={{
+                        maxWidth: "20rem",
+                        height: "2.5rem",
+                        overflow: "hidden"
+                      }}
+                    >
+                      {row.message}
+                    </Grid>
+                  </TableCell>
+                  <TableCell align="center">
+                    {moment(row.createdAt).format("DD-MM-YYYY")}
+                  </TableCell>
+                  <TableCell align="center">
+                    <GreenCheckbox
+                      checked={row.isActive}
+                      onChange={() => setActivePost(row, !row.isActive)}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Grid container justify="center">
+        <ReactPaginate
+          previousLabel={"previous"}
+          nextLabel={"next"}
+          breakLabel={"..."}
+          breakClassName={"break-me"}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination"}
+          subContainerClassName={"pages pagination"}
+          activeClassName={"active"}
+        />
+      </Grid>
+    </>
+  );
+}
 
 class PagesEditorTab extends React.Component {
   state = {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5
+    itemPerPage: 5,
+    openDiag: false
   };
 
   setPageCount = listData => {
@@ -283,7 +304,7 @@ class PagesEditorTab extends React.Component {
   };
 
   handleSearch = keyword => {
-    let searchResult = this.props.paths.filter(function(user) {
+    let searchResult = this.props.paths.filter(function (user) {
       return user.pathName.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -310,6 +331,12 @@ class PagesEditorTab extends React.Component {
     this.props.closeDialog();
   };
 
+  handleOpenDialogue = bool => {
+    this.setState({
+      openDiag: bool
+    });
+  };
+
   render() {
     const {
       site,
@@ -328,73 +355,73 @@ class PagesEditorTab extends React.Component {
         updateNavItemValue,
         changeNavItemName
       }) => (
-        <Grid container style={gridItem}>
-          <Grid
-            container
-            item
-            alignItems="center"
-            xs={10}
-            sm={12}
-            md={10}
-            style={{ padding: "0.2rem 0" }}
-          >
-            <Grid container justify="center" item xs={2} md={2} sm={12}>
-              <DragHandle />
-            </Grid>
-            <Grid item xs={10} md={10} sm={12}>
-              <TextField
-                InputLabelProps={{
-                  classes: {
-                    focused: classes.focused
+          <Grid container style={gridItem}>
+            <Grid
+              container
+              item
+              alignItems="center"
+              xs={10}
+              sm={12}
+              md={10}
+              style={{ padding: "0.2rem 0" }}
+            >
+              <Grid container justify="center" item xs={2} md={2} sm={12}>
+                <DragHandle />
+              </Grid>
+              <Grid item xs={10} md={10} sm={12}>
+                <TextField
+                  InputLabelProps={{
+                    classes: {
+                      focused: classes.focused
+                    }
+                  }}
+                  InputProps={{
+                    classes: {
+                      notchedOutline: classes.notchedOutline,
+                      input: classes.inputTitle
+                    }
+                  }}
+                  size="small"
+                  style={{ backgroundColor: "white" }}
+                  fullWidth
+                  variant={"outlined"}
+                  value={value}
+                  onChange={e =>
+                    handleChangeNavName(
+                      item._id,
+                      site,
+                      e.target.value,
+                      changeNavItemName
+                    )
                   }
-                }}
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle
-                  }
-                }}
-                size="small"
-                style={{ backgroundColor: "white" }}
-                fullWidth
-                variant={"outlined"}
-                value={value}
-                onChange={e =>
-                  handleChangeNavName(
-                    item._id,
-                    site,
-                    e.target.value,
-                    changeNavItemName
-                  )
-                }
-              />
+                />
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid container item justify="center" xs={2} sm={12} md={2}>
-            {item.original === "home" ? (
-              <></>
-            ) : (
-              <IconButton
-                style={viewButton}
-                onClick={() =>
-                  handleChangeActive(
-                    item._id,
-                    site,
-                    setActiveNavItems,
-                    updateNavItemValue
-                  )
-                }
-              >
-                {item.isActive && item.name !== "Home" ? (
-                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                ) : (
-                  <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+            <Grid container item justify="center" xs={2} sm={12} md={2}>
+              {item.original === "home" ? (
+                <></>
+              ) : (
+                  <IconButton
+                    style={viewButton}
+                    onClick={() =>
+                      handleChangeActive(
+                        item._id,
+                        site,
+                        setActiveNavItems,
+                        updateNavItemValue
+                      )
+                    }
+                  >
+                    {item.isActive && item.name !== "Home" ? (
+                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                    ) : (
+                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                      )}
+                  </IconButton>
                 )}
-              </IconButton>
-            )}
+            </Grid>
           </Grid>
-        </Grid>
-      )
+        )
     );
 
     const SortableList = sortableContainer(
@@ -429,7 +456,7 @@ class PagesEditorTab extends React.Component {
 
     return (
       <div style={{ padding: 10 }}>
-        {/* <Grid container justify={"center"} direction={"column"}>
+        <Grid container justify={"center"} direction={"column"}>
           <Grid
             item
             style={{
@@ -445,7 +472,7 @@ class PagesEditorTab extends React.Component {
             <button
               className={classes.logoButton}
               color={"default"}
-              onClick={openDialog}
+              onClick={() => this.handleOpenDialogue(true)}
             >
               Select
             </button>
@@ -454,13 +481,13 @@ class PagesEditorTab extends React.Component {
           <Dialog
             disableBackdropClick
             disableEscapeKeyDown
-            open={open}
+            open={this.state.openDiag}
             maxWidth="md"
             fullWidth
           >
             <Grid container alignItems="center">
               <PostsList
-                posts={posts}
+                posts={this.props.posts}
                 filteredData={this.state.filteredData}
                 setActivePost={this.setActivePost}
                 pageCount={this.state.pageCount}
@@ -471,14 +498,14 @@ class PagesEditorTab extends React.Component {
               <Button
                 autoFocus
                 variant="contained"
-                onClick={closeDialog}
+                onClick={() => this.handleOpenDialogue(false)}
                 color="secondary"
               >
                 Cancel
               </Button>
               <Button
                 variant="contained"
-                onClick={() => this.handleSave(posts)}
+                onClick={() => this.handleSave(this.props.posts)}
                 color={"primary"}
               >
                 Save
@@ -497,7 +524,7 @@ class PagesEditorTab extends React.Component {
             width: "100%",
             backgroundColor: "#ffffff00"
           }}
-        /> */}
+        />
 
         <Grid
           item
@@ -544,4 +571,4 @@ const mapDispatchToProps = dispatch => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStylesStyle(useStyles)(PagesEditorTab));
+)(withStyles(useStyles)(PagesEditorTab));

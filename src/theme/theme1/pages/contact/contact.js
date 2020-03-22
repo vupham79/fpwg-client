@@ -19,7 +19,9 @@ class Theme1Contact extends React.Component {
       titleEdit,
       titleView,
       bodyEdit,
-      bodyView
+      bodyView,
+      phone,
+      email
     } = this.props;
 
     const useStyles = theme => ({
@@ -143,11 +145,11 @@ class Theme1Contact extends React.Component {
           </p>
         </Grid>
 
-        {isEdit && siteEdit.phone && (
+        {isEdit && phone && (
           <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faPhone} size="2x" />
-              {" " + siteEdit.phone}
+              {" " + phone}
             </p>
           </Grid>
         )}
@@ -160,11 +162,11 @@ class Theme1Contact extends React.Component {
           </Grid>
         )}
 
-        {isEdit && siteEdit.email && siteEdit.email !== "" && (
+        {isEdit && email && email !== "" && (
           <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faMailBulk} size="2x" />
-              {" " + siteEdit.email}
+              {" " + email}
             </p>
           </Grid>
         )}
@@ -211,7 +213,7 @@ class Theme1Contact extends React.Component {
               mapElement={<div style={{ height: `100%` }} />}
             />
           )}
-          {isEdit && !siteEdit.phone && !siteEdit.address && !siteEdit.email && (
+          {isEdit && !phone && !siteEdit.address && !email && (
             <p style={classes.changableBody3}>
               Currently setting up our location.
             </p>
@@ -234,7 +236,9 @@ const mapStateToProps = state => ({
   titleEdit: state.site.titleEdit,
   siteView: state.site.siteView,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
+  phone: state.site.phone,
+  email: state.site.email
 });
 
 export default connect(mapStateToProps, null)(Theme1Contact);

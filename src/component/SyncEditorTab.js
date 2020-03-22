@@ -38,7 +38,6 @@ import {
   syncPostFromFB
 } from "../actions";
 import ButtonComponent from "./Button";
-import Switch from "./SwitchButton";
 
 const expanStyle = {
   marginTop: "1rem"
