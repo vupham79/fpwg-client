@@ -29,17 +29,14 @@ import React from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
-import Switch from "./SwitchButton";
 import {
   closeDialog,
   openDialog,
   syncDataFromFB,
-  syncPostFromFB,
   syncEventFromFB,
-  syncGalleryFromFB
+  syncGalleryFromFB,
+  syncPostFromFB
 } from "../actions";
-import moment from "moment";
-import { withStyles } from "@material-ui/core/styles";
 import ButtonComponent from "./Button";
 import Switch from "./SwitchButton";
 
@@ -93,6 +90,9 @@ const useStyles = theme => ({
   },
   gridItem: {
     padding: "0.5rem 0"
+  },
+  "&.MuiSelect-outlined": {
+    padding: "0"
   }
 });
 
@@ -309,6 +309,7 @@ class SyncEditorTab extends React.Component {
                   <Select
                     fullWidth
                     native
+                    variant={"outlined"}
                     value={this.state.selectValue}
                     onChange={this.handleChange}
                   >

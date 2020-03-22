@@ -339,8 +339,7 @@ class Header extends Component {
           container
           item
           style={{
-            // backgroundImage: `url(${isEdit ? newCover[0] : siteView.cover})`,
-            backgroundImage: imgUrl,
+            backgroundImage: `url(${isEdit ? newCover[0] : siteView.cover})`,
             minHeight: "90vh",
             ...imgStyles
           }}
