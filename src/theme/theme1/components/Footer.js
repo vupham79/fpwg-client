@@ -11,7 +11,14 @@ import {
 
 class Footer extends React.Component {
   render() {
-    const { isEdit, siteEdit, siteView } = this.props;
+    const {
+      isEdit,
+      siteEdit,
+      siteView,
+      youtube,
+      instagram,
+      whatsapp,
+    } = this.props;
 
     return (
       <Grid
@@ -40,31 +47,31 @@ class Footer extends React.Component {
         </Grid>
 
         <Grid container item direction="row" justify="center" xs={12}>
-          <Grid item style={isEdit ? (siteEdit.whatsapp ? null : { display: "none" }) : (siteView.whatsapp ? null : { display: "none" })}>
+          <Grid item style={isEdit ? (whatsapp ? null : { display: "none" }) : (siteView.whatsapp ? null : { display: "none" })}>
             <IconButton
               aria-label=""
               color="primary"
-              href={isEdit ? siteEdit.whatsapp : siteView.whatsapp}
+              href={isEdit ? whatsapp : siteView.whatsapp}
             >
               <FontAwesomeIcon icon={faWhatsapp} color="white" size="2x" />
             </IconButton>
           </Grid>
 
-          <Grid item style={isEdit ? (siteEdit.instagram ? null : { display: "none" }) : (siteView.instagram ? null : { display: "none" })}>
+          <Grid item style={isEdit ? (instagram ? null : { display: "none" }) : (siteView.instagram ? null : { display: "none" })}>
             <IconButton
               aria-label=""
               color="primary"
-              href={isEdit ? siteEdit.instagram : siteView.instagram}
+              href={isEdit ? instagram : siteView.instagram}
             >
               <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />
             </IconButton>
           </Grid>
 
-          <Grid item style={isEdit ? (siteEdit.youtube ? null : { display: "none" }) : (siteView.youtube ? null : { display: "none" })}>
+          <Grid item style={isEdit ? (youtube ? null : { display: "none" }) : (siteView.youtube ? null : { display: "none" })}>
             <IconButton
               aria-label=""
               color="primary"
-              href={isEdit ? siteEdit.youtube : siteView.youtube}
+              href={isEdit ? youtube : siteView.youtube}
             >
               <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />
             </IconButton>
@@ -78,7 +85,10 @@ class Footer extends React.Component {
 const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
-  siteEdit: state.site.siteEdit
+  siteEdit: state.site.siteEdit,
+  youtube: state.site.youtube,
+  instagram: state.site.instagram,
+  whatsapp: state.site.whatsapp,
 });
 
 export default connect(mapStateToProps, null)(Footer);

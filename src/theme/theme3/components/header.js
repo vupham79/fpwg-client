@@ -284,15 +284,6 @@ class Header extends Component {
       backgroundRepeat: "no-repeat"
     };
 
-    const linkView = {
-      fontFamily: titleView.fontFamily,
-      color: titleView.color,
-      textDecoration: "none"
-    };
-
-    const imgUrl = `url(
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTMU4nhQFC4i2nhwFQ_3PYY3I2OsKbZOeD6Ma7kK0PuM3kFixnu")`;
-
     const infoStyle = {
       background: isEdit
         ? hexToRGB(titleEdit.color)
@@ -305,8 +296,7 @@ class Header extends Component {
           container
           item
           style={{
-            // backgroundImage: `url(${isEdit ? newCover[0] : siteView.cover})`,
-            backgroundImage: imgUrl,
+            backgroundImage: `url(${isEdit ? newCover[0] : siteView.cover})`,
             minHeight: "90vh",
             ...imgStyles
           }}

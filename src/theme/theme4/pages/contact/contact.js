@@ -17,7 +17,9 @@ class Theme1Contact extends React.Component {
       titleEdit,
       titleView,
       bodyEdit,
-      bodyView
+      bodyView,
+      phone,
+      email
     } = this.props;
 
     const useStyles = theme => ({
@@ -122,13 +124,13 @@ class Theme1Contact extends React.Component {
           <p style={classes.changableTitle}>CONTACTS</p>
         </Grid>
 
-        {isEdit && siteEdit.phone && (
+        {isEdit && phone && (
           <Grid container item xs={12} justify="center" alignItems="center">
             <Grid item xs={12}>
               <p style={classes.changableBody3}><FontAwesomeIcon icon={faPhoneAlt} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Phone</p>
             </Grid>
             <Grid item xs={12}>
-              <p style={classes.changableBody2}>{siteEdit.phone}</p>
+              <p style={classes.changableBody2}>{phone}</p>
             </Grid>
           </Grid>
         )}
@@ -143,13 +145,13 @@ class Theme1Contact extends React.Component {
           </Grid>
         )}
 
-        {isEdit && siteEdit.email && siteEdit.email !== "" && (
+        {isEdit && email && email !== "" && (
           <Grid container item xs={12} justify="center" alignItems="center">
             <Grid item xs={12}>
               <p style={classes.changableBody3}><FontAwesomeIcon icon={faNewspaper} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Email</p>
             </Grid>
             <Grid item xs={12}>
-              <p style={classes.changableBody2}>{siteEdit.email}</p>
+              <p style={classes.changableBody2}>{email}</p>
             </Grid>
           </Grid>
         )}
@@ -187,9 +189,9 @@ class Theme1Contact extends React.Component {
 
         <Grid item xs={12}>
           {isEdit &&
-            !siteEdit.phone &&
+            !phone &&
             !siteEdit.address &&
-            !siteEdit.email && (
+            !email && (
               <p style={classes.changableBody4}>
                 Currently setting up our location.
               </p>
@@ -215,7 +217,9 @@ const mapStateToProps = state => ({
   titleEdit: state.site.titleEdit,
   siteView: state.site.siteView,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
+  phone: state.site.phone,
+  email: state.site.email
 });
 
 export default connect(mapStateToProps, null)(Theme1Contact);

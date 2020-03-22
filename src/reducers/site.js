@@ -140,9 +140,14 @@ const SiteReducer = (state = defaultState, action) => {
         siteEdit: { ...action.payload }
       };
     case "CHANGE_THEME":
+      const newColor = {
+        fontFamily: action.payload.fontTitle,
+        color: action.payload.color
+      };
       return {
         ...state,
         siteEdit: { ...action.payload },
+        titleEdit: { ...newColor },
         isChanged: true
       };
     case "SET_LOGOUT":

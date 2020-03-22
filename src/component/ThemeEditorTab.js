@@ -1,7 +1,7 @@
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
-import { changeTheme } from "../actions";
+import { changeTheme, updateNavItemValue } from "../actions";
 import {
   Grid,
   Typography,
@@ -62,13 +62,20 @@ class ThemeEditorTab extends React.Component {
   };
 
   handleChangeTheme = (selectId) => {
-    const { changeTheme, themes, site } = this.props;
+    const { changeTheme, themes, site, updateNavItemValue } = this.props;
     const theme = themes.find(e => e.id === selectId);
     site.theme = theme;
+    site.color = theme.mainColor;
     this.setState({
       id: selectId,
     });
     changeTheme(site);
+
+    //go to home tab of new theme
+    let searchResult = site.navItems.filter(function (nav) {
+      return nav.original == "home";
+    });
+    updateNavItemValue(searchResult[0].order - 1);
   };
 
   render() {
@@ -101,7 +108,7 @@ class ThemeEditorTab extends React.Component {
                   onClick={() => this.handleChangeTheme(theme.id)}
                   variant={"outlined"}
                   style={{
-                    border: theme.id === id ? "0.2rem solid #0074aa" : ""
+                    border: theme.id === this.props.site.theme.id ? "0.2rem solid #0074aa" : ""
                   }}
                 >
                   <CardActionArea>
@@ -141,6 +148,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   changeTheme: site => dispatch(changeTheme(site)),
+  updateNavItemValue: value => dispatch(updateNavItemValue(value))
 });
 
 export default connect(

@@ -446,7 +446,6 @@ class EventComponent extends React.Component {
               {!isEdit &&
                 siteView.events &&
                 siteView.events.map((row, index) => {
-                  console.log(row);
                   return (
                     (row.isCancelled ||
                       moment(row.endTime).isSameOrBefore(moment()) ||

@@ -172,7 +172,6 @@ class Theme1News extends React.Component {
 const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
-  siteEdit: state.site.siteEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,

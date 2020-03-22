@@ -325,7 +325,6 @@ export function saveDesignSite({
           pageId: site.id,
           name: site.title,
           color: site.color,
-          phone: site.phone,
           sitePath: sitepath,
           youtube,
           instagram,
@@ -844,18 +843,24 @@ export function getPosts(sitepath) {
     try {
       const data = await axios({
         method: "get",
-        url: `/site/find/${sitepath}/news`
+        url: "/site/findByTab",
+        params: {
+          sitePath: sitepath,
+          page: "news"
+        }
       });
       dispatch({
         type: "CLOSE_LOADING"
       });
+      console.log(data);
       if (data.status === 200) {
         dispatch({
           type: "SET_SITEVIEW_NEWS",
-          payload: data.data[0].posts
+          payload: data.data.posts
         });
       }
     } catch (error) {
+      console.log("error: ", error);
       dispatch({
         type: "CLOSE_LOADING"
       });

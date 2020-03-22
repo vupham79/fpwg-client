@@ -1,44 +1,43 @@
 import {
+  AppBar,
+  Box,
   Button,
   Dialog,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  Grid,
-  Typography,
-  Divider,
   DialogContent,
   DialogTitle as MuiDialogTitle,
-  IconButton,
+  Divider,
+  ExpansionPanel,
   ExpansionPanelDetails,
-  AppBar,
-  Tab,
-  Tabs,
-  Box,
+  ExpansionPanelSummary,
+  FormControlLabel,
+  Grid,
+  IconButton,
   Radio,
   RadioGroup,
-  FormControlLabel,
-  Select
+  Select,
+  Tab,
+  Tabs,
+  Typography
 } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
 import {
-  ExpandMore as ExpandMoreIcon,
-  Close as CloseIcon
+  Close as CloseIcon,
+  ExpandMore as ExpandMoreIcon
 } from "@material-ui/icons";
+import moment from "moment";
 import React from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
-import Switch from "./SwitchButton";
 import {
   closeDialog,
   openDialog,
   syncDataFromFB,
-  syncPostFromFB,
   syncEventFromFB,
-  syncGalleryFromFB
+  syncGalleryFromFB,
+  syncPostFromFB
 } from "../actions";
-import moment from "moment";
-import { withStyles } from "@material-ui/core/styles";
 import ButtonComponent from "./Button";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
 const expanStyle = {
   marginTop: "1rem"
@@ -90,6 +89,9 @@ const useStyles = theme => ({
   },
   gridItem: {
     padding: "0.5rem 0"
+  },
+  "&.MuiSelect-outlined": {
+    padding: "0"
   }
 });
 
@@ -147,7 +149,6 @@ class SyncEditorTab extends React.Component {
 
   handleRadioChange = event => {
     this.setState({ radioValue: event.target.value });
-    console.log(this.state.radioValue);
   };
   setStartDate = date => {
     this.setState({ startDate: date });
@@ -191,7 +192,7 @@ class SyncEditorTab extends React.Component {
   };
 
   render() {
-    const { syncDataFromFB, site, classes } = this.props;
+    const { site, classes } = this.props;
     const { tab, open, startDate, endDate } = this.state;
     const btnSync = {
       width: "-webkit-fill-available",
@@ -307,6 +308,7 @@ class SyncEditorTab extends React.Component {
                   <Select
                     fullWidth
                     native
+                    variant={"outlined"}
                     value={this.state.selectValue}
                     onChange={this.handleChange}
                   >
