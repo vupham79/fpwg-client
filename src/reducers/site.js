@@ -26,6 +26,7 @@ const defaultState = {
 };
 
 let index;
+let convertAutoSyncValue;
 
 const SiteReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -155,10 +156,27 @@ const SiteReducer = (state = defaultState, action) => {
         ...defaultState
       };
     case "SET_SITE_EDIT":
+      if (action.payload) {
+        if (action.payload.minute) {
+          convertAutoSyncValue = `${action.payload.minute}min`;
+        }
+        if (action.payload.hour) {
+          convertAutoSyncValue = `${action.payload.hour}hr`;
+        }
+        if (action.payload.day) {
+          convertAutoSyncValue = "daily";
+        }
+      }
       return {
         ...state,
         isEdit: true,
-        siteEdit: { ...action.payload.data },
+        siteEdit: {
+          ...action.payload.data,
+          autoSync: {
+            ...action.payload.data.autoSync,
+            convertAutoSyncValue
+          }
+        },
         titleEdit: { ...action.payload.titleEdit },
         bodyEdit: { ...action.payload.bodyEdit },
         newLogo: null,
@@ -327,6 +345,28 @@ const SiteReducer = (state = defaultState, action) => {
         siteView: {
           ...state.siteView,
           ...action.payload
+        }
+      };
+    case "SET_AUTO_SYNC":
+      if (action.payload) {
+        if (action.payload.minute) {
+          convertAutoSyncValue = `${action.payload.minute}min`;
+        }
+        if (action.payload.hour) {
+          convertAutoSyncValue = `${action.payload.hour}hr`;
+        }
+        if (action.payload.day) {
+          convertAutoSyncValue = "daily";
+        }
+      }
+      return {
+        ...state,
+        siteEdit: {
+          ...state.siteEdit,
+          autoSync: {
+            ...action.payload,
+            convertAutoSyncValue
+          }
         }
       };
     default:

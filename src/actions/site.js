@@ -589,7 +589,7 @@ export function uploadCover(covers, site) {
       }
       await axios({
         method: "PATCH",
-        url: "site/saveHomePageImage",
+        url: "/site/saveHomePageImage",
         data: {
           cover: coversUrl,
           pageId: site.id

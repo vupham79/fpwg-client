@@ -70,7 +70,9 @@ import {
   syncDataFromFB,
   syncGalleryFromFB,
   syncEventFromFB,
-  syncPostFromFB
+  syncPostFromFB,
+  setAutoSync,
+  applyAutoSync
 } from "./syncdata";
 
 export {
@@ -147,5 +149,7 @@ export {
   syncDataFromFB,
   syncEventFromFB,
   syncGalleryFromFB,
-  syncPostFromFB
+  syncPostFromFB,
+  setAutoSync,
+  applyAutoSync
 };
