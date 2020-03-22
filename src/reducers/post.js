@@ -1,5 +1,7 @@
 const defaultState = {
-  posts: null
+  posts: null,
+  pageCountView: 1,
+  pageCountEdit: 1
 };
 
 const PostReducer = (state = defaultState, action) => {
@@ -29,6 +31,16 @@ const PostReducer = (state = defaultState, action) => {
       return {
         ...state,
         posts: [...action.payload]
+      };
+    case "SET_PAGECOUNT_VIEW":
+      return {
+        ...state,
+        pageCountView: action.payload
+      };
+    case "SET_PAGECOUNT_EDIT":
+      return {
+        ...state,
+        pageCountEdit: action.payload
       };
     default:
       return state;

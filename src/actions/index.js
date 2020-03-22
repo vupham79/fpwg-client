@@ -1,7 +1,14 @@
 import { loginAdmin, setLogoutAdmin } from "./admin";
 import { updateAdminTabIndex } from "./adminTab";
 import { getAllPaths, updateSitepath } from "./path";
-import { getAllPost, setActivePost, savePosts } from "./post";
+import {
+  getAllPost,
+  setActivePost,
+  savePosts,
+  getDataByPageNumber,
+  setPostsToSiteEdit,
+  setPostsToSiteView
+} from "./post";
 import {
   changeColor,
   changeFontBody,
@@ -155,5 +162,8 @@ export {
   setAutoSync,
   applyAutoSync,
   changeHomeItems,
-  changeHomeItemName
+  changeHomeItemName,
+  getDataByPageNumber,
+  setPostsToSiteEdit,
+  setPostsToSiteView
 };

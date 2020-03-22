@@ -349,6 +349,14 @@ const SiteReducer = (state = defaultState, action) => {
           posts: action.payload
         }
       };
+    case "SET_SITEEDIT_NEWS":
+      return {
+        ...state,
+        siteEdit: {
+          ...state.siteEdit,
+          posts: action.payload
+        }
+      };
     case "SET_SITEVIEW_CONTACT":
       return {
         ...state,

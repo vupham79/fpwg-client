@@ -20,6 +20,12 @@ import ReactPaginate from "react-paginate";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import Truncate from "react-truncate";
+import {
+  getDataByPageNumber,
+  setPostsToSiteEdit,
+  setPostsToSiteView
+} from "../../actions";
+import Pagination from "@material-ui/lab/Pagination";
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -350,57 +356,43 @@ function TypeVideo({ post, openDialog, style, dark, siteInfo }) {
 
 class PostTypeComponent extends React.Component {
   state = {
-    filteredData: [],
-    pageCount: 1,
-    offset: 0,
-    itemPerPage: 6, // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
     open: false,
     postOpen: null,
-    openVideo: false
+    openVideo: false,
+    pageEdit: 1,
+    pageView: 1
   };
 
-  setListData = listData => {
-    this.setState({
-      filteredData: listData
-    });
-  };
+  handlePageClick = async (event, value) => {
+    const {
+      siteInfo,
+      getDataByPageNumber,
+      isEdit,
+      setPostToSiteEdit,
+      setPostToSiteView
+    } = this.props;
 
-  setPageCount = listData => {
-    this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
-    });
-  };
-
-  getPosts = async () => {
-    const { posts } = this.props;
-    this.setState({
-      filteredData: posts.slice(
-        this.state.offset,
-        this.state.itemPerPage + this.state.offset
-      ),
-      pageCount: Math.ceil(posts.length / this.state.itemPerPage)
-    });
-  };
-
-  componentDidMount() {
-    const { posts } = this.props;
-    if (posts && posts.length > 0) {
-      this.getPosts();
+    if (isEdit) {
+      this.setState({ pageEdit: value });
+      const data = await getDataByPageNumber({
+        siteId: siteInfo.id,
+        page: "news",
+        pageNumber: value
+      });
+      data && setPostToSiteEdit(data);
+    } else {
+      this.setState({ pageView: value });
+      const data = await getDataByPageNumber({
+        sitePath: siteInfo.sitePath,
+        page: "news",
+        pageNumber: value
+      });
+      data && setPostToSiteView(data);
     }
-  }
+  };
 
-  handlePageClick = data => {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * this.state.itemPerPage);
-
-    this.setState({ offset: offset }, () => {
-      this.setListData(
-        this.props.posts.slice(
-          this.state.offset,
-          this.state.itemPerPage + this.state.offset
-        )
-      );
-    });
+  handleClick = (event, value) => {
+    this.setState({ page: value });
   };
 
   handleOpen = post => {
@@ -433,7 +425,10 @@ class PostTypeComponent extends React.Component {
       titleView,
       bodyEdit,
       bodyView,
-      siteInfo
+      siteInfo,
+      posts,
+      pageCountEdit,
+      pageCountView
     } = this.props;
     const post = this.state.postOpen;
     const style = {
@@ -451,7 +446,7 @@ class PostTypeComponent extends React.Component {
           justify="center"
           style={{ marginTop: "5rem" }}
         >
-          {this.state.filteredData.map(
+          {posts.map(
             (post, index) =>
               (post.attachments.media_type === "photo" && post.isActive && (
                 <TypePhoto
@@ -553,23 +548,31 @@ class PostTypeComponent extends React.Component {
             </Container>
           </Dialog>
         </Grid>
-        {this.state.pageCount > 1 && (
-          <Grid container justify="center" style={{ marginTop: "5rem" }}>
-            <ReactPaginate
-              previousLabel={"previous"}
-              nextLabel={"next"}
-              breakLabel={"..."}
-              breakClassName={"break-me"}
-              pageCount={this.state.pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={this.handlePageClick}
-              containerClassName={"pagination"}
-              subContainerClassName={"pages pagination"}
-              activeClassName={"active"}
-            />
-          </Grid>
-        )}
+        {isEdit
+          ? pageCountEdit > 1 && (
+              <Grid container justify="center" style={{ marginTop: "5rem" }}>
+                <Pagination
+                  color="primary"
+                  variant="outlined"
+                  shape="rounded"
+                  count={pageCountEdit}
+                  page={this.state.pageEdit}
+                  onChange={this.handlePageClick}
+                />
+              </Grid>
+            )
+          : pageCountView > 1 && (
+              <Grid container justify="center" style={{ marginTop: "5rem" }}>
+                <Pagination
+                  color="primary"
+                  variant="outlined"
+                  shape="rounded"
+                  count={pageCountView}
+                  page={this.state.pageView}
+                  onChange={this.handlePageClick}
+                />
+              </Grid>
+            )}
       </Container>
     );
   }
@@ -579,10 +582,19 @@ const mapStateToProps = state => ({
   titleEdit: state.site.titleEdit,
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
+  pageCountEdit: state.post.pageCountEdit,
+  pageCountView: state.post.pageCountView
+});
+
+const mapDispatchToProps = dispatch => ({
+  getDataByPageNumber: ({ sitePath, page, siteId, pageNumber }) =>
+    dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
+  setPostToSiteEdit: posts => dispatch(setPostsToSiteEdit(posts)),
+  setPostToSiteView: posts => dispatch(setPostsToSiteView(posts))
 });
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(withStyles(gridStyle)(PostTypeComponent));
