@@ -478,7 +478,7 @@ class HomepageEditorTab extends React.Component {
       </Dialog>
     );
 
-    const postSection = (item) => (
+    const postSection = (item, sectName, dialogEdit, handleOpenDiag) => (
       <>
         <Divider
           style={{ height: "1rem", width: "100%", backgroundColor: "#ffffff00" }}
@@ -514,7 +514,7 @@ class HomepageEditorTab extends React.Component {
           style={{ display: item.filter.type == "latest" ? "none" : "block" }}
         >
           <Grid item xs={12}>
-            <Typography className={classes.title}>News</Typography>
+            <Typography className={classes.title}>{sectName}</Typography>
           </Grid>
 
 
@@ -527,19 +527,19 @@ class HomepageEditorTab extends React.Component {
               fontFamily: "Segoe UI, sans-serif"
             }}
           >
-            Select which post from Facebook you want to see on your site.
+            Select which content from Facebook you want to see on your homepage.
         </Grid>
 
           <Grid item xs={12} justify={"center"} style={{ marginTop: "1rem" }}>
             <button
               className={classes.logoButton}
               color={"default"}
-              onClick={() => this.handleOpenPostDialogue(true)}
+              onClick={() => handleOpenDiag(true)}
             >
               Select
           </button>
           </Grid>
-          {postDialog()}
+          {dialogEdit()}
         </Grid>
       </>
     );
@@ -672,7 +672,9 @@ class HomepageEditorTab extends React.Component {
                     </Grid>
                   </>
                 )}
-                {item.original == "news" && postSection(item)}
+                {item.original == "news" && postSection(item, "News", postDialog, this.handleOpenPostDialogue)}
+                {item.original == "event" && postSection(item, "Events", postDialog, this.handleOpenPostDialogue)}
+                {item.original == "gallery" && postSection(item, "Pictures", postDialog, this.handleOpenPostDialogue)}
 
                 <FormControlLabel
                   control={
