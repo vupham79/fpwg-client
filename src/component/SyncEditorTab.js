@@ -17,7 +17,8 @@ import {
   Select,
   Tab,
   Tabs,
-  Typography
+  Typography,
+  Switch
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -35,7 +36,9 @@ import {
   syncDataFromFB,
   syncEventFromFB,
   syncGalleryFromFB,
-  syncPostFromFB
+  syncPostFromFB,
+  setAutoSync,
+  applyAutoSync
 } from "../actions";
 import ButtonComponent from "./Button";
 import Switch from "./SwitchButton";
@@ -134,7 +137,8 @@ class SyncEditorTab extends React.Component {
     startDate: new Date(),
     endDate: new Date(),
     selectValue: "All",
-    msg: null
+    msg: null,
+    selectValueSchedule: "None"
   };
 
   selectTab = (event, tab) => {
@@ -162,6 +166,58 @@ class SyncEditorTab extends React.Component {
     this.setState({
       selectValue: event.target.value
     });
+  };
+
+  handleChangeSchedule = e => {
+    const { setAutoSync } = this.props;
+    setAutoSync({
+      dataType: e.target.value
+    });
+  };
+
+  handleChangeScheduleTime = e => {
+    const { setAutoSync, site } = this.props;
+    const time = e.target.value;
+    switch (time) {
+      case "2min":
+        setAutoSync({
+          dataType: site.autoSync.dataType,
+          minute: 2
+        });
+        break;
+      case "30min":
+        setAutoSync({
+          dataType: site.autoSync.dataType,
+          minute: 30
+        });
+        break;
+      case "1hr":
+        setAutoSync({
+          dataType: site.autoSync.dataType,
+          hour: 1
+        });
+        break;
+      case "2hr":
+        setAutoSync({
+          dataType: site.autoSync.dataType,
+          hour: 2
+        });
+        break;
+      case "12hr":
+        setAutoSync({
+          dataType: site.autoSync.dataType,
+          hour: 12
+        });
+        break;
+      case "daily":
+        setAutoSync({
+          dataType: site.autoSync.dataType,
+          day: 1
+        });
+        break;
+      default:
+        break;
+    }
   };
 
   handleSyncData = () => {
@@ -192,6 +248,11 @@ class SyncEditorTab extends React.Component {
     }
   };
 
+  handleApply = () => {
+    const { applyAutoSync, site } = this.props;
+    applyAutoSync(site.id, site.autoSync);
+  };
+
   render() {
     const { site, classes } = this.props;
     const { tab, open, startDate, endDate } = this.state;
@@ -200,7 +261,6 @@ class SyncEditorTab extends React.Component {
       backgroundColor: "rgb(0, 116, 170)",
       color: "white"
     };
-
     return (
       <>
         <ExpansionPanel style={expanStyle}>
@@ -451,40 +511,83 @@ class SyncEditorTab extends React.Component {
             <Typography variant="button">Schedule</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
-            <Grid container>
-              <Grid item container className={classes.sideBarBox}>
-                <Grid item container sm={6} alignItems={"center"}>
-                  <Grid item>
-                    <Typography variant={"subtitle2"}>Active</Typography>
-                  </Grid>
+            <Grid container justify="center" alignItems="center">
+              <Grid
+                item
+                xs={12}
+                container
+                alignItems="center"
+                className={classes.gridItem}
+              >
+                <Grid item xs={4} style={{ textAlign: "start" }}>
+                  Data Type:
                 </Grid>
-                <Grid item container sm={6} justify={"flex-end"}>
-                  <Grid item>
-                    <Switch noLabel />
-                  </Grid>
+                <Grid item xs={6}>
+                  <Select
+                    fullWidth
+                    native
+                    variant={"outlined"}
+                    value={site.autoSync.dataType}
+                    onChange={this.handleChangeSchedule}
+                  >
+                    <option value="none">None</option>
+                    <option value="post">Post</option>
+                    <option value="event">Event</option>
+                    <option value="gallery">Gallery</option>
+                    <option value="all">All</option>
+                  </Select>
                 </Grid>
               </Grid>
-              <Divider
-                style={{
-                  height: 10,
-                  width: "100%",
-                  backgroundColor: "#ffffff00"
-                }}
-              />
-              <Grid container alignItems="center">
-                <Grid item>
-                  <Typography
-                    variant={"subtitle2"}
-                    color="textPrimary"
-                    style={{ paddingRight: "2rem" }}
-                  ></Typography>
+
+              {site.autoSync.dataType !== "none" && (
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  alignItems="center"
+                  className={classes.gridItem}
+                >
+                  <Grid item xs={4} sm={4}>
+                    Time:
+                  </Grid>
+                  <Grid item xs={6} sm={6} className={classes.gridItem}>
+                    <Select
+                      fullWidth
+                      native
+                      variant={"outlined"}
+                      value={
+                        site.autoSync.convertAutoSyncValue
+                          ? site.autoSync.convertAutoSyncValue
+                          : "2min"
+                      }
+                      onChange={this.handleChangeScheduleTime}
+                    >
+                      <option value="2min">2 minutes</option>
+                      <option value="30min">30 minutes</option>
+                      <option value="1hr">1 hour</option>
+                      <option value="2hr">2 hours</option>
+                      <option value="12hr">12 hours</option>
+                      <option value="daily">Daily</option>
+                    </Select>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Typography
-                    variant={"subtitle2"}
-                    color="textPrimary"
-                    style={{ paddingRight: "2rem" }}
-                  ></Typography>
+              )}
+              {this.state.msg && (
+                <Grid
+                  container
+                  justify="center"
+                  style={{ marginBottom: "1.5rem", textAlign: "center" }}
+                >
+                  {this.state.msg}
+                </Grid>
+              )}
+              <Grid container justify="center" alignItems="center">
+                <Grid item xs={5}>
+                  <ButtonComponent
+                    onClick={this.handleApply}
+                    label="Apply"
+                    style={btnSync}
+                  />
                 </Grid>
               </Grid>
             </Grid>
@@ -508,7 +611,9 @@ const mapDispatchToProps = dispatch => ({
   syncEventFromFB: (pageId, dateFrom, dateTo) =>
     dispatch(syncEventFromFB(pageId, dateFrom, dateTo)),
   syncGalleryFromFB: (pageId, dateFrom, dateTo) =>
-    dispatch(syncGalleryFromFB(pageId, dateFrom, dateTo))
+    dispatch(syncGalleryFromFB(pageId, dateFrom, dateTo)),
+  setAutoSync: autoSync => dispatch(setAutoSync(autoSync)),
+  applyAutoSync: (id, autoSync) => dispatch(applyAutoSync(id, autoSync))
 });
 
 export default connect(

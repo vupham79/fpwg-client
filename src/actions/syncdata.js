@@ -171,3 +171,53 @@ export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
     }
   };
 }
+
+export function setAutoSync(autoSync) {
+  return dispatch => {
+    dispatch({
+      type: "SET_AUTO_SYNC",
+      payload: {
+        dataType: autoSync.dataType,
+        minute: autoSync.minute
+          ? autoSync.minute
+          : !autoSync.minute && !autoSync.hour && !autoSync.day
+          ? 2
+          : null,
+        hour: autoSync.hour ? autoSync.hour : null,
+        day: autoSync.day ? autoSync.day : null
+      }
+    });
+  };
+}
+
+export function applyAutoSync(id, autoSync) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      console.log(autoSync);
+      const data = await axios({
+        method: "patch",
+        url: "/site/autoSync",
+        data: {
+          id,
+          autoSync
+        }
+      });
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      if (data.status === 200) {
+        toastr.success("Apply auto sync success.", "Success");
+      } else {
+        toastr.error("Apply auto sync failed", "Error");
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error("Apply auto sync failed", "Error");
+    }
+  };
+}

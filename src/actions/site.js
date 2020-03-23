@@ -294,6 +294,15 @@ export function changeNavItems(items) {
   };
 }
 
+export function changeHomeItems(items) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_HOME_ITEMS",
+      payload: items
+    });
+  };
+}
+
 export function saveDesignSite({
   logo,
   cover,
@@ -383,6 +392,7 @@ export function getSiteById(id) {
           id: id
         }
       });
+      console.log(data);
       dispatch({
         type: "CLOSE_LOADING"
       });
@@ -589,7 +599,7 @@ export function uploadCover(covers, site) {
       }
       await axios({
         method: "PATCH",
-        url: "site/saveHomePageImage",
+        url: "/site/saveHomePageImage",
         data: {
           cover: coversUrl,
           pageId: site.id
@@ -748,6 +758,15 @@ export function changeNavItemName(site) {
   return dispatch => {
     dispatch({
       type: "CHANGE_NAV_ITEM_NAME",
+      payload: site
+    });
+  };
+}
+
+export function changeHomeItemName(site) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_HOME_ITEM_NAME",
       payload: site
     });
   };

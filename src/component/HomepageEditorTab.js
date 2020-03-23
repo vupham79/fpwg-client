@@ -1,25 +1,29 @@
 import {
-  Avatar,
+  Typography,
   Button,
-  Checkbox,
-  Dialog,
-  DialogActions,
   Divider,
-  FormControlLabel,
   Grid,
   IconButton,
   Input,
-  Radio,
-  RadioGroup,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Typography
+  Avatar,
+  Checkbox,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  ExpansionPanel,
+  ExpansionPanelActions,
+  ExpansionPanelSummary,
+  ExpansionPanelDetails,
+  TextField,
+  Dialog,
+  DialogActions
 } from "@material-ui/core";
-import { green } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
 import { Add, Cancel } from "@material-ui/icons";
 import moment from "moment";
@@ -27,20 +31,25 @@ import React from "react";
 import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import {
-  changeColor,
-  changeFontBody,
-  changeFontTitle,
-  changeSiteTitle,
-  changeTheme,
   removeCover,
   savePosts,
   setActivePost,
-  setColorPallete,
   setNewCover,
   setNewLogo,
-  setShowCustomColor
+  changeHomeItemName,
+  changeHomeItems,
+  setActiveNavItems
 } from "../actions";
 import toastr from "./Toastr";
+import {
+  sortableContainer,
+  sortableElement,
+  sortableHandle
+} from "react-sortable-hoc";
+import { green } from "@material-ui/core/colors";
+import DragHandleIcon from "@material-ui/icons/DragHandle";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
 
 const useStyles = theme => ({
   content: {
@@ -56,12 +65,20 @@ const useStyles = theme => ({
     fontSize: 14
   },
   title2: {
-    fontSize: "12px",
+    fontSize: "14px",
     marginTop: "0.25rem",
     fontFamily: "Segoe UI, sans-serif",
-    fontWeight: 600,
     marginBottom: "1rem",
-    color: "#555d66"
+    color: "#555d66",
+    fontWeight: 600
+  },
+  title3: {
+    fontFamily: "Segoe UI, sans-serif",
+    marginBottom: theme.spacing(1),
+    fontWeight: "600",
+    color: "#555d66",
+    fontSize: 14,
+    textAlign: "center"
   },
   formControl: {
     margin: theme.spacing(1),
@@ -118,6 +135,12 @@ const useStyles = theme => ({
     fontFamily: "Segoe UI, sans-serif !important",
     fontSize: 13,
     color: "#555d66"
+  },
+  gridItem: {
+    zIndex: "99999999",
+    border: "1px solid #dddddd",
+    width: "100%",
+    backgroundColor: "#f0eded"
   }
 });
 
@@ -218,6 +241,22 @@ function PostsList({
   );
 }
 
+const DragHandle = sortableHandle(() => (
+  <DragHandleIcon style={{ color: "#555d66", cursor: "move" }} />
+));
+
+function handleChangeActive(id, site, setActiveHomeItems) {
+  const index = site && site.homepage && site.homepage.find(e => e._id === id);
+  index.isActive = !index.isActive;
+  setActiveHomeItems(site);
+}
+
+function handleChangeNavName(id, site, newName, changeHomeItemName) {
+  const index = site && site.homepage && site.homepage.find(e => e._id === id);
+  index.name = newName;
+  changeHomeItemName(site);
+}
+
 class HomepageEditorTab extends React.Component {
   state = {
     autoLatest: true, //biến này chắc phải lưu database?
@@ -225,16 +264,19 @@ class HomepageEditorTab extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5
+    itemPerPage: 5,
+    currentExpandItemId: null,
+    previousExpandItemId: null,
+    isExpanding: false
   };
 
-  handleSetLatest = event => {
-    this.setState({
-      autoLatest: event
-    });
+  handleSetLatest = (item, setActiveHomeItems) => (event) => {
+    const index = this.props.site && this.props.site.homepage && this.props.site.homepage.find(e => e._id === item._id);
+    index.filter.type = event.target.value;
+    setActiveHomeItems(this.props.site);
   };
 
-  handleOpenDialogue = bool => {
+  handleOpenPostDialogue = bool => {
     this.setState({
       openDiag: bool
     });
@@ -246,7 +288,7 @@ class HomepageEditorTab extends React.Component {
 
   handleSave = async posts => {
     await this.props.savePosts(posts);
-    this.handleOpenDialogue(false);
+    this.handleOpenPostDialogue(false);
   };
 
   handleUploadCover = async e => {
@@ -358,8 +400,286 @@ class HomepageEditorTab extends React.Component {
     }
   };
 
+  onChangeItem = ({ oldIndex, newIndex }) => {
+    const { site, changeHomeItems } = this.props;
+    let temp = site.homepage[oldIndex];
+    site.homepage[oldIndex] = site.homepage[newIndex];
+    site.homepage[newIndex] = temp;
+    site.homepage.map((item, index) => (item.order = index + 1));
+    changeHomeItems(site);
+  };
+
+  onChangePanel = (itemId, expand) => {
+    if (itemId !== this.state.previousExpandItemId)
+      (
+        this.setState({
+          currentExpandItemId: itemId,
+          previousExpandItemId: itemId,
+          isExpanding: true
+        })
+      )
+    else
+      (
+        this.setState({
+          currentExpandItemId: itemId,
+          isExpanding: expand
+        })
+      )
+  };
+
   render() {
-    const { classes, posts } = this.props;
+
+    const {
+      classes,
+      site,
+      posts,
+      setActiveHomeItems,
+      updateHomeItemValue,
+      changeHomeItemName
+    } = this.props;
+
+    const postDialog = () => (
+      <Dialog
+        disableBackdropClick
+        disableEscapeKeyDown
+        open={this.state.openDiag}
+        maxWidth="md"
+        fullWidth
+      >
+        <Grid container alignItems="center">
+          <PostsList
+            posts={posts}
+            filteredData={this.state.filteredData}
+            setActivePost={this.setActivePost}
+            pageCount={this.state.pageCount}
+            handlePageClick={this.handlePageClick}
+          />
+        </Grid>
+        <DialogActions>
+          <Button
+            autoFocus
+            variant="contained"
+            onClick={() => this.handleOpenPostDialogue(false)}
+            color="secondary"
+          >
+            Cancel
+      </Button>
+          <Button
+            variant="contained"
+            onClick={() => this.handleSave(posts)}
+            color={"primary"}
+          >
+            Save
+      </Button>
+        </DialogActions>
+      </Dialog>
+    );
+
+    const postSection = (item) => (
+      <>
+        <Divider
+          style={{ height: "1rem", width: "100%", backgroundColor: "#ffffff00" }}
+        />
+
+        <Grid item xs={12}>
+          <Typography className={classes.title}>Section display</Typography>
+        </Grid>
+
+        <Grid item xs={12}>
+          <RadioGroup
+            value={item.filter.type}
+            onChange={this.handleSetLatest(item, setActiveHomeItems)}
+            style={{ color: "#555d66", fontFamily: "Segoe UI, sans-serif" }}
+          >
+            <FormControlLabel
+              value={"lastest"}
+              control={<Radio style={{ color: "#0074aa" }} />}
+              label={<p style={{ fontSize: 13 }}>Latest contents</p>}
+            />
+            <FormControlLabel
+              value={"manual"}
+              control={<Radio style={{ color: "#0074aa" }} />}
+              label={<p style={{ fontSize: 13 }}>Manual</p>}
+            />
+          </RadioGroup>
+        </Grid>
+        <Grid item xs={12} style={{ height: 30 }} />
+
+        <Grid
+          item
+          container
+          style={{ display: item.filter.type == "lastest" ? "none" : "block" }}
+        >
+          <Grid item xs={12}>
+            <Typography className={classes.title}>News</Typography>
+          </Grid>
+
+
+          <Grid
+            item xs={12}
+            style={{
+              color: "#555d66",
+              textAlign: "left",
+              fontStyle: "italic",
+              fontFamily: "Segoe UI, sans-serif"
+            }}
+          >
+            Select which post from Facebook you want to see on your site.
+        </Grid>
+
+          <Grid item xs={12} justify={"center"} style={{ marginTop: "1rem" }}>
+            <button
+              className={classes.logoButton}
+              color={"default"}
+              onClick={() => this.handleOpenPostDialogue(true)}
+            >
+              Select
+          </button>
+          </Grid>
+          {postDialog()}
+        </Grid>
+      </>
+    );
+
+    const SortableItem = sortableElement(
+      ({
+        value,
+        site,
+        item,
+        setActiveHomeItems,
+        changeHomeItemName
+      }) => (
+
+          <ExpansionPanel expanded={(this.state.currentExpandItemId == item._id && this.state.isExpanding) ? true : false} className={classes.gridItem} >
+
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon onClick={() => this.onChangePanel(item._id, !this.state.isExpanding)} />}
+              aria-controls="panel1a-content"
+              style={{ backgroundColor: "white" }}
+            >
+              <Grid
+                container
+                item
+                alignItems="center"
+                xs={10}
+                sm={12}
+                md={10}
+              >
+                <Grid container justify="center" item xs={2} md={2} sm={12}>
+                  <DragHandle />
+                </Grid>
+                <Grid item xs={10} md={10} sm={12}>
+                  <Typography className={classes.title3}>{item.original}</Typography>
+                </Grid>
+              </Grid>
+              {/* <Grid container item justify="center" xs={2} sm={12} md={2}>
+                {item.original === "home" ? (
+                  <></>
+                ) : (
+                    <IconButton
+                      style={{ color: "black" }}
+                      onClick={() =>
+                        handleChangeActive(
+                          item._id,
+                          site,
+                          setActiveNavItems,
+                          updateHomeItemValue
+                        )
+                      }
+                    >
+                      {item.isActive && item.name !== "Home" ? (
+                        <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                      ) : (
+                          <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                        )}
+                    </IconButton>
+                  )}
+              </Grid> */}
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <Grid container>
+
+                <Grid item xs={12}>
+                  <Typography className={classes.title2}>Display name</Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                  <TextField
+                    InputLabelProps={{
+                      classes: {
+                        focused: classes.focused
+                      }
+                    }}
+                    InputProps={{
+                      classes: {
+                        notchedOutline: classes.notchedOutline,
+                        input: classes.inputTitle
+                      }
+                    }}
+                    size="small"
+                    style={{ backgroundColor: "white" }}
+                    fullWidth
+                    variant={"outlined"}
+                    value={value}
+                    onChange={e =>
+                      handleChangeNavName(
+                        item._id,
+                        site,
+                        e.target.value,
+                        changeHomeItemName
+                      )
+                    }
+                  />
+                </Grid>
+
+                {item.original == "news" && postSection(item)}
+
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      style={{ color: "#0074aa" }}
+                      checked={item.isActive}
+                      onChange={() => handleChangeActive(item._id, site, setActiveHomeItems)}
+                    />
+                  }
+                  label={<p style={{ fontSize: 13, color: "#555d66" }}>Hide this section</p>}
+                />
+
+              </Grid>
+            </ExpansionPanelDetails>
+          </ExpansionPanel >
+        )
+    );
+
+    const SortableList = sortableContainer(
+      ({
+        items,
+        site,
+        setActiveHomeItems,
+        updateHomeItemValue,
+        changeHomeItemName
+      }) => {
+        if (items) {
+          return (
+            <Grid container alignItems="center">
+              {items.map((value, index) => (
+                <SortableItem
+                  key={index}
+                  index={index}
+                  value={value.name}
+                  item={value}
+                  site={site}
+                  setActiveHomeItems={setActiveHomeItems}
+                  updateHomeItemValue={updateHomeItemValue}
+                  changeHomeItemName={changeHomeItemName}
+                />
+              ))}
+            </Grid>
+          );
+        }
+        return <></>;
+      }
+    );
 
     return (
       <div style={{ padding: 10 }}>
@@ -378,125 +698,61 @@ class HomepageEditorTab extends React.Component {
         </Grid>
 
         <Divider
-          style={{ height: 20, width: "100%", backgroundColor: "#ffffff00" }}
+          style={{ height: 40, width: "100%", backgroundColor: "#ffffff00" }}
         />
-        <Typography className={classes.title}>Your hompage displays</Typography>
-        <RadioGroup
-          value={this.state.autoLatest}
-          onChange={() => this.handleSetLatest(!this.state.autoLatest)}
-          style={{ color: "#555d66", fontFamily: "Segoe UI, sans-serif" }}
-        >
-          <FormControlLabel
-            value={true}
-            control={<Radio style={{ color: "#0074aa" }} />}
-            label={<p style={{ fontSize: 13 }}>Your latest posts</p>}
-          />
-          <FormControlLabel
-            value={false}
-            control={<Radio style={{ color: "#0074aa" }} />}
-            label={<p style={{ fontSize: 13 }}>Manual</p>}
-          />
-        </RadioGroup>
+
+        <Typography className={classes.title}>Contents</Typography>
+
         <Divider
           style={{ height: 30, width: "100%", backgroundColor: "#ffffff00" }}
         />
 
-        <Grid
-          container
-          style={{ display: this.state.autoLatest ? "none" : "block" }}
-        >
-          <Typography className={classes.title}>News</Typography>
-          <Grid container justify={"center"} direction={"column"}>
-            <Grid
-              item
-              style={{
-                color: "#555d66",
-                textAlign: "left",
-                fontStyle: "italic",
-                fontFamily: "Segoe UI, sans-serif"
-              }}
-            >
-              Select which post from Facebook you want to see on your site.
-            </Grid>
-            <Grid container justify={"center"} style={{ marginTop: "1rem" }}>
-              <button
-                className={classes.logoButton}
-                color={"default"}
-                onClick={() => this.handleOpenDialogue(true)}
-              >
-                Select
-              </button>
-            </Grid>
+        <SortableList
+          items={site.homepage}
+          onSortEnd={this.onChangeItem}
+          useDragHandle
+          site={site}
+          setActiveHomeItems={setActiveHomeItems}
+          updateHomeItemValue={updateHomeItemValue}
+          changeHomeItemName={changeHomeItemName}
+        />
 
-            <Dialog
-              disableBackdropClick
-              disableEscapeKeyDown
-              open={this.state.openDiag}
-              maxWidth="md"
-              fullWidth
-            >
-              <Grid container alignItems="center">
-                <PostsList
-                  posts={posts}
-                  filteredData={this.state.filteredData}
-                  setActivePost={this.setActivePost}
-                  pageCount={this.state.pageCount}
-                  handlePageClick={this.handlePageClick}
-                />
-              </Grid>
-              <DialogActions>
-                <Button
-                  autoFocus
-                  variant="contained"
-                  onClick={() => this.handleOpenDialogue(false)}
-                  color="secondary"
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={() => this.handleSave(posts)}
-                  color={"primary"}
-                >
-                  Save
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </Grid>
-          <Divider
-            style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
-          />
-          <Typography className={classes.title}>Banner images</Typography>
-          <Grid container className={classes.sideBarBox}>
-            {this.renderNewCovers()}
-            <Grid
-              item
-              container
-              justify={"center"}
-              alignItems="center"
-              md={4}
-              sm={6}
-              xs={6}
-              style={{
-                ...coverStyles,
-                backgroundColor: "#F3ECEC",
-                border: "1px dashed #555d66",
-                cursor: "pointer",
-                color: "#555d66",
-                minHeight: 50 //maintain height when removing all images
-              }}
-              onClick={() => document.getElementById("addCover").click()}
-            >
-              <Input
-                type="file"
-                id="addCover"
-                onChange={e => this.handleUploadCover(e)}
-                style={{ display: "none" }}
-              />
-              <Add fontSize="small" />
-            </Grid>
+
+        <Divider
+          style={{ height: 30, width: "100%", backgroundColor: "#ffffff00" }}
+        />
+        <Typography className={classes.title}>Banner images</Typography>
+        <Grid container className={classes.sideBarBox}>
+          {this.renderNewCovers()}
+          <Grid
+            item
+            container
+            justify={"center"}
+            alignItems="center"
+            md={4}
+            sm={6}
+            xs={6}
+            style={{
+              ...coverStyles,
+              backgroundColor: "#F3ECEC",
+              border: "1px dashed #555d66",
+              cursor: "pointer",
+              color: "#555d66",
+              minHeight: 50 //maintain height when removing all images
+            }}
+            onClick={() => document.getElementById("addCover").click()}
+          >
+            <Input
+              type="file"
+              id="addCover"
+              onChange={e => this.handleUploadCover(e)}
+              style={{ display: "none" }}
+            />
+            <Add fontSize="small" />
           </Grid>
         </Grid>
+
+
       </div>
     );
   }
@@ -512,18 +768,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeTheme: site => dispatch(changeTheme(site)),
-  changeColor: site => dispatch(changeColor(site)),
-  changeFontTitle: site => dispatch(changeFontTitle(site)),
-  changeFontBody: site => dispatch(changeFontBody(site)),
-  setShowCustomColor: isShow => dispatch(setShowCustomColor(isShow)),
-  changeSiteTitle: site => dispatch(changeSiteTitle(site)),
-  setColorPallete: pallete => dispatch(setColorPallete(pallete)),
   setNewLogo: file => dispatch(setNewLogo(file)),
   setNewCover: file => dispatch(setNewCover(file)),
   removeCover: cover => dispatch(removeCover(cover)),
   savePosts: posts => dispatch(savePosts(posts)),
-  setActivePost: (post, status) => dispatch(setActivePost(post, status))
+  setActivePost: (post, status) => dispatch(setActivePost(post, status)),
+  changeHomeItems: items => dispatch(changeHomeItems(items)),
+  changeHomeItemName: site => dispatch(changeHomeItemName(site)),
+  setActiveHomeItems: site => dispatch(setActiveNavItems(site)),
+  // updateHomeItemValue: 
 });
 
 export default connect(

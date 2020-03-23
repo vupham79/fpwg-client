@@ -51,7 +51,9 @@ import {
   getAbout,
   getPosts,
   getEvents,
-  getGalleries
+  getGalleries,
+  changeHomeItems,
+  changeHomeItemName
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -77,7 +79,9 @@ import {
   syncDataFromFB,
   syncGalleryFromFB,
   syncEventFromFB,
-  syncPostFromFB
+  syncPostFromFB,
+  setAutoSync,
+  applyAutoSync
 } from "./syncdata";
 
 export {
@@ -155,6 +159,10 @@ export {
   syncEventFromFB,
   syncGalleryFromFB,
   syncPostFromFB,
+  setAutoSync,
+  applyAutoSync,
+  changeHomeItems,
+  changeHomeItemName,
   getDataByPageNumber,
   setPostsToSiteEdit,
   setPostsToSiteView
