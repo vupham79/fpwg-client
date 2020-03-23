@@ -319,10 +319,21 @@ export function saveDesignSite({
       type: "SHOW_LOADING"
     });
     try {
-      if (logo && typeof logo === "object" && logo.size > 0) {
-        dispatch(uploadLogo(logo, site));
+      let logoURL = undefined;
+      let coverURL = undefined;
+      const uploadLogoAction = await uploadLogo(logo, site);
+      if (uploadLogoAction) {
+        logoURL = uploadLogoAction;
+        site.logo = uploadLogoAction;
+        dispatch({
+          type: "UPLOAD_LOGO",
+          payload: site
+        });
       }
-      dispatch(uploadCover(cover, site));
+      const uploadCoverAction = await uploadCover(cover, site);
+      if (uploadCoverAction) {
+        coverURL = uploadCoverAction;
+      }
       const data = await axios({
         method: "patch",
         url: "/site/saveDesign",
@@ -340,7 +351,9 @@ export function saveDesignSite({
           whatsapp,
           email,
           phone,
-          homepage: site.homepage
+          homepage: site.homepage,
+          logoURL,
+          coverURL
         }
       });
       dispatch({
@@ -504,64 +517,43 @@ export function removeCover(cover) {
 }
 
 export function uploadLogo(file, site) {
-  return async dispatch => {
-    dispatch({
-      type: "SHOW_LOADING"
-    });
+  console.log(file);
+  return new Promise(async (resolve, reject) => {
     try {
-      firebase
-        .storage()
-        .ref()
-        .child(`${site.id}`)
-        .put(file, {
-          contentType: "image/jpeg"
-        })
-        .then(async () => {
-          await firebase
-            .storage()
-            .ref()
-            .child(`${site.id}`)
-            .getDownloadURL()
-            .then(async url => {
-              await axios({
-                method: "PATCH",
-                url: "/site/logo",
-                data: {
-                  logo: url,
-                  id: site.id
-                }
+      if (file && typeof file === "object" && file.size > 0) {
+        firebase
+          .storage()
+          .ref()
+          .child(`${site.id}`)
+          .put(file, {
+            contentType: "image/jpeg"
+          })
+          .then(async () => {
+            firebase
+              .storage()
+              .ref()
+              .child(`${site.id}`)
+              .getDownloadURL()
+              .then(async url => {
+                console.log("return url");
+                resolve(url);
               });
-              site.logo = url;
-              dispatch({
-                type: "UPLOAD_LOGO",
-                payload: site
-              });
-            });
-          dispatch({
-            type: "CLOSE_LOADING"
+          })
+          .catch(error => {
+            console.log("upload: ", error);
+            toastr.error(`Upload new logo failed`, "Error");
+            resolve(false);
           });
-        })
-        .catch(error => {
-          console.log("upload: ", error);
-          dispatch({
-            type: "CLOSE_LOADING"
-          });
-          toastr.error(`Upload new logo failed`, "Error");
-        });
+      } else resolve(false);
     } catch (error) {
-      dispatch({
-        type: "CLOSE_LOADING"
-      });
       toastr.error(`Upload new logo failed`, "Error");
+      resolve(false);
     }
-  };
+  });
 }
 
-export function uploadCover(covers, site) {
-  return async dispatch => {
-    dispatch({
-      type: "SHOW_LOADING"
-    });
+export async function uploadCover(covers, site) {
+  return new Promise((resolve, reject) => {
     try {
       let coversUrl = [];
       if (covers && covers.length > 0) {
@@ -569,53 +561,39 @@ export function uploadCover(covers, site) {
           if (typeof covers[index] === "string") {
             coversUrl.push(covers[index]);
           } else {
-            await firebase
+            firebase
               .storage()
               .ref(`${site.id}/`)
               .child(covers[index].name)
               .put(covers[index], {
                 contentType: "image/jpeg"
               })
-              .then(async () => {
-                await firebase
+              .then(() => {
+                firebase
                   .storage()
                   .ref(`${site.id}/`)
                   .child(covers[index].name)
                   .getDownloadURL()
-                  .then(async url => {
+                  .then(url => {
                     coversUrl.push(url);
                   });
               })
               .catch(error => {
                 console.log("upload: ", error);
-                dispatch({
-                  type: "CLOSE_LOADING"
-                });
                 toastr.error(`Upload cover failed`, "Error");
+                resolve(false);
               });
           }
         }
+        resolve(coversUrl);
       } else {
-        coversUrl = null;
+        resolve([]);
       }
-      await axios({
-        method: "PATCH",
-        url: "/site/saveHomePageImage",
-        data: {
-          cover: coversUrl,
-          pageId: site.id
-        }
-      });
-      dispatch({
-        type: "CLOSE_LOADING"
-      });
     } catch (error) {
-      dispatch({
-        type: "CLOSE_LOADING"
-      });
       toastr.error(`Upload cover failed`, "Error");
+      resolve(false);
     }
-  };
+  });
 }
 
 export function setPreviewMode(bool) {
@@ -934,7 +912,11 @@ export function getGalleries(sitepath) {
     try {
       const data = await axios({
         method: "get",
-        url: `/site/find/${sitepath}/gallery`
+        url: "/site/findByTab",
+        params: {
+          sitePath: sitepath,
+          page: "gallery"
+        }
       });
       dispatch({
         type: "CLOSE_LOADING"

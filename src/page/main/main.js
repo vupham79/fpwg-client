@@ -288,8 +288,10 @@ class MainPage extends Component {
                                   siteName: siteEdit.title
                                 })
                           }
-                          label={`Make ${
-                            siteEdit.isPublish ? "Unpublish" : "Publish"
+                          label={`${
+                            siteEdit.isPublish
+                              ? "Unpublish Site"
+                              : "Publish Site"
                           }`}
                         />
                       </Grid>

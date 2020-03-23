@@ -105,12 +105,13 @@ class Theme1Home extends React.Component {
         {isEdit &&
           siteEdit &&
           siteEdit.homepage.map(
-            row =>
+            (row, index) =>
               ({
                 about: (
                   <Grid
                     container
                     item
+                    key={index}
                     xs={12}
                     style={{
                       display: row.isActive ? "block" : "none",
@@ -131,6 +132,7 @@ class Theme1Home extends React.Component {
                 ),
                 event: (
                   <Grid
+                    key={index}
                     container
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
@@ -141,6 +143,7 @@ class Theme1Home extends React.Component {
                 gallery: (
                   <Grid
                     container
+                    key={index}
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
@@ -150,6 +153,7 @@ class Theme1Home extends React.Component {
                 contact: (
                   <Grid
                     container
+                    key={index}
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
@@ -159,6 +163,7 @@ class Theme1Home extends React.Component {
                 news: (
                   <Grid
                     container
+                    key={index}
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
@@ -171,12 +176,13 @@ class Theme1Home extends React.Component {
         {!isEdit &&
           siteView &&
           siteView.homepage.map(
-            row =>
+            (row, index) =>
               ({
                 about: (
                   <Grid
                     container
                     item
+                    key={index}
                     xs={12}
                     style={{
                       display: row.isActive ? "block" : "none",
@@ -199,6 +205,7 @@ class Theme1Home extends React.Component {
                   <Grid
                     container
                     item
+                    key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <EventPage fromHome homeTitle={row.name} />
@@ -206,6 +213,7 @@ class Theme1Home extends React.Component {
                 ),
                 gallery: (
                   <Grid
+                    key={index}
                     container
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
@@ -215,6 +223,7 @@ class Theme1Home extends React.Component {
                 ),
                 contact: (
                   <Grid
+                    key={index}
                     container
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
@@ -224,6 +233,7 @@ class Theme1Home extends React.Component {
                 ),
                 news: (
                   <Grid
+                    key={index}
                     container
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
