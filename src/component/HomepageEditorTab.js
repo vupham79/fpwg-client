@@ -37,7 +37,8 @@ import {
   setNewLogo,
   changeHomeItemName,
   changeHomeItems,
-  setActiveNavItems
+  setActiveNavItems,
+  changeSiteAbout
 } from "../actions";
 import toastr from "./Toastr";
 import {
@@ -257,7 +258,6 @@ function handleChangeNavName(id, site, newName, changeHomeItemName) {
 
 class HomepageEditorTab extends React.Component {
   state = {
-    autoLatest: true, //biến này chắc phải lưu database?
     openDiag: false,
     filteredData: [],
     pageCount: 1,
@@ -274,6 +274,12 @@ class HomepageEditorTab extends React.Component {
       this.props.site.homepage &&
       this.props.site.homepage.find(e => e._id === item._id);
     index.filter.type = event.target.value;
+    if (event.target.value == "latest") {
+      index.filter.items = null;
+    }
+    else {
+
+    }
     setActiveHomeItems(this.props.site);
   };
 
@@ -315,12 +321,6 @@ class HomepageEditorTab extends React.Component {
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
     }
-  };
-
-  handleChangeSiteTitle = e => {
-    const { site, changeSiteTitle } = this.props;
-    site.title = e.target.value;
-    changeSiteTitle(site);
   };
 
   setPosts = () => {
@@ -399,6 +399,12 @@ class HomepageEditorTab extends React.Component {
           );
       });
     }
+  };
+
+  handleChangeAbout = e => {
+    const { site, changeSiteAbout } = this.props;
+    site.about = e.target.value;
+    changeSiteAbout(site.about);
   };
 
   onChangeItem = ({ oldIndex, newIndex }) => {
@@ -492,7 +498,7 @@ class HomepageEditorTab extends React.Component {
             style={{ color: "#555d66", fontFamily: "Segoe UI, sans-serif" }}
           >
             <FormControlLabel
-              value={"lastest"}
+              value={"latest"}
               control={<Radio style={{ color: "#0074aa" }} />}
               label={<p style={{ fontSize: 13 }}>Latest contents</p>}
             />
@@ -774,8 +780,14 @@ const mapDispatchToProps = dispatch => ({
   setActivePost: (post, status) => dispatch(setActivePost(post, status)),
   changeHomeItems: items => dispatch(changeHomeItems(items)),
   changeHomeItemName: site => dispatch(changeHomeItemName(site)),
+<<<<<<< HEAD
   setActiveHomeItems: site => dispatch(setActiveNavItems(site))
   // updateHomeItemValue:
+=======
+  setActiveHomeItems: site => dispatch(setActiveNavItems(site)),
+  changeSiteAbout: about => dispatch(changeSiteAbout(about)),
+  // updateHomeItemValue: 
+>>>>>>> tung1
 });
 
 export default connect(

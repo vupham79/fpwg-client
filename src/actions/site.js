@@ -339,7 +339,8 @@ export function saveDesignSite({
           instagram,
           whatsapp,
           email,
-          phone
+          phone,
+          homepage: site.homepage
         }
       });
       dispatch({
@@ -622,6 +623,15 @@ export function setPreviewMode(bool) {
     dispatch({
       type: "SET_PREVIEW_MODE",
       payload: bool
+    });
+  };
+}
+
+export function changeSiteAbout(about) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_SITE_ABOUT",
+      payload: about
     });
   };
 }

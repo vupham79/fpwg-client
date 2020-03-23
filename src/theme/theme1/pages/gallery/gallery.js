@@ -12,7 +12,9 @@ class Theme1Gallery extends React.Component {
       siteEdit,
       siteView,
       bodyEdit,
-      bodyView
+      bodyView,
+      fromHome,
+      homeTitle
     } = this.props;
 
     const useStyles = theme => ({
@@ -105,7 +107,7 @@ class Theme1Gallery extends React.Component {
       <Grid container>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>G</span>ALLERY
+            <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "G"}</span>{fromHome ? homeTitle.substring(1) : "ALLERY"}
           </p>
         </Grid>
 

@@ -12,7 +12,9 @@ class Theme1News extends React.Component {
       bodyEdit,
       bodyView,
       siteView,
-      siteEdit
+      siteEdit,
+      fromHome,
+      homeTitle
     } = this.props;
 
     const useStyles = () => ({
@@ -123,7 +125,7 @@ class Theme1News extends React.Component {
       <Grid container>
         <Grid item xs={12}>
           <p style={classes.changableTitle5}>
-            <span style={classes.changableFirst5}>N</span>EWS
+            <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "N"}</span>{fromHome ? homeTitle.substring(1) : "EWS"}
           </p>
         </Grid>
         <Grid item sm={12} xs={12} container spacing={3}>
@@ -140,12 +142,12 @@ class Theme1News extends React.Component {
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography variant="body1">
-                  Currently there are no news.
+                <Grid container justify="center">
+                  <Typography variant="body1">
+                    Currently there are no news.
                 </Typography>
-              </Grid>
-            )
+                </Grid>
+              )
           ) : siteView && siteView.posts ? (
             <Grid container>
               <PostTypeComponent
@@ -158,12 +160,12 @@ class Theme1News extends React.Component {
               />
             </Grid>
           ) : (
-            <Grid container justify="center">
-              <Typography variant="body1">
-                Currently there are no news.
+                <Grid container justify="center">
+                  <Typography variant="body1">
+                    Currently there are no news.
               </Typography>
-            </Grid>
-          )}
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );

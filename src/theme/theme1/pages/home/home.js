@@ -1,43 +1,19 @@
-import {
-  faAddressBook,
-  faMailBulk,
-  faPhone
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Grid } from "@material-ui/core";
-import moment from "moment";
 import React from "react";
-import {
-  GoogleMap,
-  Marker,
-  withGoogleMap,
-  withScriptjs
-} from "react-google-maps";
-import ReactPlayer from "react-player";
 import { connect } from "react-redux";
-import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import RoundedImage from "react-rounded-image";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
-import EventComponent from "../../../component/eventComponent";
 import BannerComponent from "../../../component/bannerComponent";
+import EventPage from "../event/event";
+import GalleryPage from "../gallery/gallery";
+import ContactPage from "../contact/contact";
+import AboutPage from "../about/about";
+import NewsPage from "../new/new";
+
 
 class Theme1Home extends React.Component {
-  state = {
-    anchorEl: null
-  };
-  setAnchorEl = anchorEl => {
-    this.setState({
-      anchorEl: anchorEl
-    });
-  };
-  handleMenuClick = event => {
-    this.setAnchorEl(event.currentTarget);
-  };
-  handleMenuClose = () => {
-    this.setAnchorEl(null);
-  };
+
   renderImage = () => {
     const { isEdit, siteEdit, siteView, newLogo } = this.props;
     if (isEdit) {
@@ -185,71 +161,14 @@ class Theme1Home extends React.Component {
       }
     });
     const classes = useStyles();
-    const MapWithAMarker = withScriptjs(
-      withGoogleMap(props => (
-        <GoogleMap
-          defaultZoom={15}
-          defaultCenter={{
-            lat: isEdit
-              ? parseFloat(siteEdit.latitude)
-              : parseFloat(siteView.latitude),
-            lng: isEdit
-              ? parseFloat(siteEdit.longitude)
-              : parseFloat(siteView.longitude)
-          }}
-        >
-          <Marker
-            position={{
-              lat: isEdit
-                ? parseFloat(siteEdit.latitude)
-                : parseFloat(siteView.latitude),
-              lng: isEdit
-                ? parseFloat(siteEdit.longitude)
-                : parseFloat(siteView.longitude)
-            }}
-          />
-        </GoogleMap>
-      ))
-    );
+
     return (
       <Grid container>
         <Grid item xs={12}>
           <BannerComponent bannerType={0} />
         </Grid>
-        <Grid item xs={12}>
-          <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>A</span>BOUT
-          </p>
-        </Grid>
-        <Grid container item xs={12} justify={"center"}>
-          <RoundedImage
-            image={this.renderImage()}
-            roundedColor={isEdit ? titleEdit.color : titleView.color}
-            imageWidth="150"
-            imageHeight="150"
-            roundedSize="5"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <p style={classes.changableBody3}>
-            {isEdit && siteEdit && siteEdit.about}
-            {!isEdit && siteView && siteView.about}
-            {isEdit && !siteEdit.about && "Welcome to our website!"}
-            {!isEdit && !siteView.about && "Welcome to our website!"}
-          </p>
-        </Grid>
-        <Grid item xs={12} style={classes.greyDiv}>
-          <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>N</span>EWS
-          </p>
-          {!posts && (
-            <p style={classes.changableBody3}>Currently there are no news.</p>
-          )}
-          {posts && posts.length === 0 && (
-            <p style={classes.changableBody3}>Currently there are no news.</p>
-          )}
-        </Grid>
-        {posts && posts.length > 0 && (
+
+        {/* {posts && posts.length > 0 && (
           <Grid item xs={12}>
             <Carousel
               showArrows={true}
@@ -312,108 +231,60 @@ class Theme1Home extends React.Component {
                 ))}
             </Carousel>
           </Grid>
-        )}
+        )} */}
 
-        <Grid item xs={12}>
-          <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>E</span>VENTS
-          </p>
-        </Grid>
-        <Grid item xs={12}>
-          <EventComponent />
-        </Grid>
+        {isEdit && siteEdit && siteEdit.homepage.map((row) => (
+          {
+            "about":
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
+                <AboutPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "event":
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
+                <EventPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "gallery":
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
+                <GalleryPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "contact":
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
+                <ContactPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "news":
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
+                <NewsPage fromHome homeTitle={row.name} />
+              </Grid>,
+          }[row.original]
+        ))}
 
-        <Grid item xs={12}>
-          <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>C</span>ONTACTS
-          </p>
-        </Grid>
+        {!isEdit && siteView && siteView.homepage.map((row) => (
+          {
+            "about":
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
+                <AboutPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "event":
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
+                <EventPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "gallery":
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
+                <GalleryPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "contact":
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
+                <ContactPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "news":
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
+                <NewsPage fromHome homeTitle={row.name} />
+              </Grid>,
+          }[row.original]
+        ))}
 
-        {isEdit && siteEdit.phone && (
-          <Grid container item xs={12}>
-            <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faPhone} size="2x" />
-              {" " + siteEdit.phone}
-            </p>
-          </Grid>
-        )}
-        {!isEdit && siteView.phone && (
-          <Grid container item xs={12}>
-            <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faPhone} size="2x" />
-              {" " + siteView.phone}
-            </p>
-          </Grid>
-        )}
 
-        {isEdit && siteEdit.email && siteEdit.email !== "" && (
-          <Grid container item xs={12}>
-            <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faMailBulk} size="2x" />
-              {" " + siteEdit.email}
-            </p>
-          </Grid>
-        )}
-        {!isEdit && siteView.email && siteView.email !== "" && (
-          <Grid container item xs={12}>
-            <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faMailBulk} size="2x" />
-              {" " + siteView.email}
-            </p>
-          </Grid>
-        )}
 
-        {isEdit && siteEdit.address && siteEdit.adress !== "" && (
-          <Grid container item xs={12}>
-            <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faAddressBook} size="2x" />
-              {" " + siteEdit.address}
-            </p>
-          </Grid>
-        )}
-        {!isEdit && siteView.address && siteView.adress !== "" && (
-          <Grid container item xs={12}>
-            <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faAddressBook} size="2x" />
-              {" " + siteView.address}
-            </p>
-          </Grid>
-        )}
-
-        <Grid item xs={12}>
-          {isEdit && siteEdit.latitude && siteEdit.longitude && (
-            <MapWithAMarker
-              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-              loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `400px` }} />}
-              mapElement={<div style={{ height: `100%` }} />}
-            />
-          )}
-          {!isEdit && siteView.latitude && siteView.longitude && (
-            <MapWithAMarker
-              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-              loadingElement={<div style={{ height: `100%` }} />}
-              containerElement={<div style={{ height: `400px` }} />}
-              mapElement={<div style={{ height: `100%` }} />}
-            />
-          )}
-          {isEdit &&
-            !siteEdit.phone &&
-            !siteEdit.address &&
-            !siteEdit.email && (
-              <p style={classes.changableBody3}>
-                Currently setting up our location.
-              </p>
-            )}
-          {!isEdit &&
-            !siteView.phone &&
-            !siteView.address &&
-            !siteView.email && (
-              <p style={classes.changableBody3}>
-                Currently setting up our location.
-              </p>
-            )}
-        </Grid>
       </Grid>
     );
   }

@@ -21,7 +21,9 @@ class Theme1About extends React.Component {
       titleEdit,
       titleView,
       bodyEdit,
-      bodyView
+      bodyView,
+      fromHome,
+      homeTitle
     } = this.props;
     const useStyles = () => ({
       changableTitle: {
@@ -113,7 +115,7 @@ class Theme1About extends React.Component {
       <Grid container>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>A</span>BOUT
+            <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "A"}</span>{fromHome ? homeTitle.substring(1) : "BOUT"}
           </p>
         </Grid>
         <Grid container item xs={12} justify={"center"}>

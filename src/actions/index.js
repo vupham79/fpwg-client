@@ -53,7 +53,8 @@ import {
   getEvents,
   getGalleries,
   changeHomeItems,
-  changeHomeItemName
+  changeHomeItemName,
+  changeSiteAbout
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import { updateNavItemValue, updateTabValue } from "./tab";
@@ -165,5 +166,6 @@ export {
   changeHomeItemName,
   getDataByPageNumber,
   setPostsToSiteEdit,
-  setPostsToSiteView
+  setPostsToSiteView,
+  changeSiteAbout
 };
