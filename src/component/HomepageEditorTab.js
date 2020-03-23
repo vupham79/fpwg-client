@@ -276,9 +276,7 @@ class HomepageEditorTab extends React.Component {
     index.filter.type = event.target.value;
     if (event.target.value == "latest") {
       index.filter.items = null;
-    }
-    else {
-
+    } else {
     }
     setActiveHomeItems(this.props.site);
   };
@@ -477,7 +475,7 @@ class HomepageEditorTab extends React.Component {
       </Dialog>
     );
 
-    const postSection = item => (
+    const postSection = (item, sectName, dialogEdit, handleOpenDiag) => (
       <>
         <Divider
           style={{
@@ -517,7 +515,7 @@ class HomepageEditorTab extends React.Component {
           style={{ display: item.filter.type === "lastest" ? "none" : "block" }}
         >
           <Grid item xs={12}>
-            <Typography className={classes.title}>News</Typography>
+            <Typography className={classes.title}>{sectName}</Typography>
           </Grid>
 
           <Grid
@@ -530,19 +528,19 @@ class HomepageEditorTab extends React.Component {
               fontFamily: "Segoe UI, sans-serif"
             }}
           >
-            Select which post from Facebook you want to see on your site.
+            Select which content from Facebook you want to see on your homepage.
           </Grid>
 
           <Grid item xs={12} style={{ marginTop: "1rem" }}>
             <button
               className={classes.logoButton}
               color={"default"}
-              onClick={() => this.handleOpenPostDialogue(true)}
+              onClick={() => handleOpenDiag(true)}
             >
               Select
             </button>
           </Grid>
-          {postDialog()}
+          {dialogEdit()}
         </Grid>
       </>
     );
@@ -576,84 +574,99 @@ class HomepageEditorTab extends React.Component {
                 </Typography>
               </Grid>
             </Grid>
-            {/* <Grid container item justify="center" xs={2} sm={12} md={2}>
-                {item.original === "home" ? (
-                  <></>
-                ) : (
-                    <IconButton
-                      style={{ color: "black" }}
-                      onClick={() =>
-                        handleChangeActive(
-                          item._id,
-                          site,
-                          setActiveNavItems,
-                          updateHomeItemValue
-                        )
-                      }
-                    >
-                      {item.isActive && item.name !== "Home" ? (
-                        <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                      ) : (
-                          <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
-                        )}
-                    </IconButton>
-                  )}
-              </Grid> */}
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Grid container>
               <Grid item xs={12}>
                 <Typography className={classes.title2}>Display name</Typography>
               </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  InputLabelProps={{
-                    classes: {
-                      focused: classes.focused
-                    }
-                  }}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle
-                    }
-                  }}
-                  size="small"
-                  style={{ backgroundColor: "white" }}
-                  fullWidth
-                  variant={"outlined"}
-                  value={value}
-                  onChange={e =>
-                    handleChangeNavName(
-                      item._id,
-                      site,
-                      e.target.value,
-                      changeHomeItemName
-                    )
-                  }
-                />
-              </Grid>
-
-              {item.original === "news" && postSection(item)}
+              {item.original == "about" && (
+                <>
+                  <Grid item xs={12} style={{ height: 20 }} />
+                  <Grid item xs={12}>
+                    <Typography className={classes.title2}>Content</Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      InputLabelProps={{
+                        classes: {
+                          focused: classes.focused
+                        }
+                      }}
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline,
+                          input: classes.inputTitle,
+                          maxLength: 200
+                        }
+                      }}
+                      multiline
+                      // autoFocus
+                      size="small"
+                      style={{ backgroundColor: "white" }}
+                      fullWidth
+                      rows={5}
+                      spellCheck={false}
+                      variant={"outlined"}
+                      value={site.about}
+                      onChange={e => this.handleChangeAbout(e)}
+                    />
+                  </Grid>
+                </>
+              )}
+              {item.original == "news" &&
+                postSection(
+                  item,
+                  "News",
+                  postDialog,
+                  this.handleOpenPostDialogue
+                )}
+              {item.original == "event" &&
+                postSection(
+                  item,
+                  "Events",
+                  postDialog,
+                  this.handleOpenPostDialogue
+                )}
+              {item.original == "gallery" &&
+                postSection(
+                  item,
+                  "Pictures",
+                  postDialog,
+                  this.handleOpenPostDialogue
+                )}
 
               <FormControlLabel
                 control={
                   <Checkbox
                     style={{ color: "#0074aa" }}
-                    checked={item.isActive}
+                    checked={!item.isActive}
                     onChange={() =>
                       handleChangeActive(item._id, site, setActiveHomeItems)
                     }
                   />
                 }
-                label={
-                  <p style={{ fontSize: 13, color: "#555d66" }}>
-                    Hide this section
-                  </p>
-                }
               />
             </Grid>
+
+            {item.original === "news" && postSection(item)}
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  style={{ color: "#0074aa" }}
+                  checked={item.isActive}
+                  onChange={() =>
+                    handleChangeActive(item._id, site, setActiveHomeItems)
+                  }
+                />
+              }
+              label={
+                <p style={{ fontSize: 13, color: "#555d66" }}>
+                  Hide this section
+                </p>
+              }
+            />
           </ExpansionPanelDetails>
         </ExpansionPanel>
       )
@@ -780,14 +793,9 @@ const mapDispatchToProps = dispatch => ({
   setActivePost: (post, status) => dispatch(setActivePost(post, status)),
   changeHomeItems: items => dispatch(changeHomeItems(items)),
   changeHomeItemName: site => dispatch(changeHomeItemName(site)),
-<<<<<<< HEAD
-  setActiveHomeItems: site => dispatch(setActiveNavItems(site))
-  // updateHomeItemValue:
-=======
   setActiveHomeItems: site => dispatch(setActiveNavItems(site)),
-  changeSiteAbout: about => dispatch(changeSiteAbout(about)),
-  // updateHomeItemValue: 
->>>>>>> tung1
+  changeSiteAbout: about => dispatch(changeSiteAbout(about))
+  // updateHomeItemValue:
 });
 
 export default connect(
