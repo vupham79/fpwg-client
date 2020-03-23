@@ -1,14 +1,19 @@
 import { Container, Dialog, Grid, withStyles } from "@material-ui/core";
 import React from "react";
-import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
+import Pagination from "@material-ui/lab/Pagination";
+import {
+  getDataByPageNumber,
+  setGalleriesToSiteEdit,
+  setGalleriesToSiteView
+} from "../../actions";
 
 const useStyles = theme => ({
   root: {
     margin: theme.spacing(10)
   },
   gridItems: {
-    maxHeight: 350
+    maxHeight: 250
   },
   icon: {
     color: "rgba(255, 255, 255, 0.54)"
@@ -25,110 +30,102 @@ const imgStyles = {
 
 class GalleryComponent extends React.Component {
   state = {
-    filteredData: [],
-    pageCount: 1,
-    offset: 0,
-    itemPerPage: 8,
     img: "",
-    open: false
+    open: false,
+    pageEdit: 1,
+    pageView: 1
   };
 
-  setListData = listData => {
-    this.setState({
-      filteredData: listData
-    });
-  };
-
-  setPageCount = listData => {
-    this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
-    });
-  };
-
-  getGalleries = async () => {
-    const { galleries } = this.props;
-    this.setState({
-      filteredData: galleries.slice(
-        this.state.offset,
-        this.state.itemPerPage + this.state.offset
-      ),
-      pageCount: Math.ceil(galleries.length / this.state.itemPerPage)
-    });
-  };
-
-  componentDidMount() {
-    this.getGalleries();
-  }
-
-  handlePageClick = data => {
-    let selected = data.selected;
-    let offset = Math.ceil(selected * this.state.itemPerPage);
-
-    this.setState({ offset: offset }, () => {
-      this.setListData(
-        this.props.galleries.slice(
-          this.state.offset,
-          this.state.itemPerPage + this.state.offset
-        )
-      );
-    });
+  handlePageClick = async (event, value) => {
+    const {
+      siteInfo,
+      getDataByPageNumber,
+      isEdit,
+      setGalleriesToSiteEdit,
+      setGalleriesToSiteView
+    } = this.props;
+    if (isEdit) {
+      this.setState({ pageEdit: value });
+      const data = await getDataByPageNumber({
+        siteId: siteInfo,
+        page: "gallery",
+        pageNumber: value
+      });
+      data && setGalleriesToSiteEdit(data);
+    } else {
+      this.setState({ pageView: value });
+      const data = await getDataByPageNumber({
+        sitePath: siteInfo,
+        page: "gallery",
+        pageNumber: value
+      });
+      data && setGalleriesToSiteView(data);
+    }
   };
 
   handleClose = () => {
     this.setState({ open: false });
   };
 
+  handleOpenDialog = image => {
+    this.setState({ img: image, open: true });
+  };
   render() {
-    const handleOpenDialog = image => {
-      this.setState({ img: image, open: true });
-    };
-    const { classes, galleries, bodyEdit, bodyView, isEdit } = this.props;
+    const {
+      classes,
+      galleries,
+      pageCountEdit,
+      pageCountView,
+      isEdit
+    } = this.props;
     return (
       <React.Fragment>
         <Container className={classes.root}>
           <Grid container spacing={1} justify="center">
-            {galleries ? (
-              this.state.filteredData.map((item, index) => (
-                <Grid
-                  item
-                  key={index}
-                  xs={6}
-                  sm={3}
-                  md={3}
-                  className={classes.gridItems}
-                >
-                  <img
-                    src={item.url}
-                    alt="Title"
-                    style={imgStyles}
-                    onClick={() => handleOpenDialog(item.url)}
-                    aria-labelledby="form-dialog-title"
+            {galleries.map((item, index) => (
+              <Grid
+                item
+                key={index}
+                xs={6}
+                sm={4}
+                md={3}
+                className={classes.gridItems}
+              >
+                <img
+                  src={item._id.url}
+                  alt="Title"
+                  style={imgStyles}
+                  onClick={() => this.handleOpenDialog(item._id.url)}
+                  aria-labelledby="form-dialog-title"
+                />
+              </Grid>
+            ))}
+          </Grid>
+          {isEdit
+            ? pageCountEdit > 1 && (
+                <Grid container justify="center" style={{ marginTop: "5rem" }}>
+                  <Pagination
+                    color="primary"
+                    variant="outlined"
+                    shape="rounded"
+                    count={pageCountEdit}
+                    page={this.state.pageEdit}
+                    onChange={this.handlePageClick}
                   />
                 </Grid>
-              ))
-            ) : (
-              <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-                Current no image to show .
-              </p>
-            )}
-          </Grid>
-          {this.state.pageCount > 1 && (
-            <Grid container justify="center" style={{ marginTop: "5rem" }}>
-              <ReactPaginate
-                previousLabel={"Previous"}
-                nextLabel={"Next"}
-                breakLabel={"..."}
-                breakClassName={"break-me"}
-                pageCount={this.state.pageCount}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={this.handlePageClick}
-                containerClassName={"pagination"}
-                subContainerClassName={"pages pagination"}
-                activeClassName={"active"}
-              />
-            </Grid>
-          )}
+              )
+            : pageCountView > 1 && (
+                <Grid container justify="center" style={{ marginTop: "5rem" }}>
+                  <Pagination
+                    color="primary"
+                    variant="outlined"
+                    shape="rounded"
+                    count={pageCountView}
+                    page={this.state.pageView}
+                    onChange={this.handlePageClick}
+                  />
+                </Grid>
+              )}
           <Dialog
             open={this.state.open}
             onClose={this.handleClose}
@@ -144,12 +141,21 @@ class GalleryComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView,
-  isEdit: state.site.isEdit
+  isEdit: state.site.isEdit,
+  pageCountEdit: state.post.pageCountGalleriesEdit,
+  pageCountView: state.post.pageCountGalleriesView
+});
+
+const mapDispatchToProps = dispatch => ({
+  getDataByPageNumber: ({ sitePath, page, siteId, pageNumber }) =>
+    dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
+  setGalleriesToSiteEdit: galleries =>
+    dispatch(setGalleriesToSiteEdit(galleries)),
+  setGalleriesToSiteView: galleries =>
+    dispatch(setGalleriesToSiteView(galleries))
 });
 
 export default connect(
   mapStateToProps,
-  null
+  mapDispatchToProps
 )(withStyles(useStyles)(GalleryComponent));

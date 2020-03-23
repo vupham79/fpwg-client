@@ -3,7 +3,9 @@ import EventPage from "./event";
 import {
   setNavItemActive,
   setNavItemInActive,
-  getEvents
+  setEventsToSiteEdit,
+  setEventsToSiteView,
+  getDataByPageNumber
 } from "../../../../actions";
 import { connect } from "react-redux";
 
@@ -17,9 +19,7 @@ class PreEventPageT4 extends Component {
       setNavItemInActive,
       isEdit
     } = this.props;
-    if (sitepath) {
-      getEvents(sitepath);
-    }
+    this.setDataToSite();
     if (site && !isEdit) {
       if (site.navItems) {
         const navItem = site.navItems.find(e => e.original === "event");
@@ -31,21 +31,50 @@ class PreEventPageT4 extends Component {
       }
     }
   }
+
+  setDataToSite = async () => {
+    const {
+      getDataByPageNumber,
+      setEventsToSiteEdit,
+      setEventsToSiteView,
+      isEdit,
+      siteView,
+      siteEdit
+    } = this.props;
+
+    if (isEdit) {
+      const data = await getDataByPageNumber({
+        siteId: siteEdit.id,
+        page: "event"
+      });
+      data && setEventsToSiteEdit(data);
+    } else {
+      const data = await getDataByPageNumber({
+        sitePath: siteView.sitePath,
+        page: "event"
+      });
+      data && setEventsToSiteView(data);
+    }
+  };
+
   render() {
     return <EventPage />;
   }
 }
 
 const mapStateToProps = state => ({
-  site: state.site.siteView,
-  isEdit: state.site.isEdit,
-  sitepath: state.path.currentSitepath
+  siteView: state.site.siteView,
+  siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit
 });
 
 const mapDispatchToProps = dispatch => ({
   setNavItemInActive: () => dispatch(setNavItemInActive()),
   setNavItemActive: () => dispatch(setNavItemActive()),
-  getEvents: sitepath => dispatch(getEvents(sitepath))
+  getDataByPageNumber: ({ sitePath, page, siteId }) =>
+    dispatch(getDataByPageNumber({ sitePath, page, siteId })),
+  setEventsToSiteEdit: events => dispatch(setEventsToSiteEdit(events)),
+  setEventsToSiteView: events => dispatch(setEventsToSiteView(events))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreEventPageT4);

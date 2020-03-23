@@ -1,25 +1,18 @@
 import React, { Component } from "react";
 import GalleryPage from "./gallery";
+import { connect } from "react-redux";
 import {
   setNavItemActive,
   setNavItemInActive,
-  getGalleries
+  setGalleriesToSiteEdit,
+  setGalleriesToSiteView,
+  getDataByPageNumber
 } from "../../../../actions";
-import { connect } from "react-redux";
 
 class PreGalleryPageT4 extends Component {
   componentDidMount() {
-    const {
-      site,
-      setNavItemActive,
-      sitepath,
-      getGalleries,
-      setNavItemInActive,
-      isEdit
-    } = this.props;
-    if (sitepath) {
-      getGalleries(sitepath);
-    }
+    const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
+    this.setDataToSite();
     if (site && !isEdit) {
       if (site.navItems) {
         const navItem = site.navItems.find(e => e.original === "gallery");
@@ -31,21 +24,52 @@ class PreGalleryPageT4 extends Component {
       }
     }
   }
+
+  setDataToSite = async () => {
+    const {
+      getDataByPageNumber,
+      setGalleriesToSiteEdit,
+      setGalleriesToSiteView,
+      isEdit,
+      siteView,
+      siteEdit
+    } = this.props;
+
+    if (isEdit) {
+      const data = await getDataByPageNumber({
+        siteId: siteEdit.id,
+        page: "gallery"
+      });
+      data && setGalleriesToSiteEdit(data);
+    } else {
+      const data = await getDataByPageNumber({
+        sitePath: siteView.sitePath,
+        page: "gallery"
+      });
+      data && setGalleriesToSiteView(data);
+    }
+  };
+
   render() {
     return <GalleryPage />;
   }
 }
 
 const mapStateToProps = state => ({
-  site: state.site.siteView,
-  isEdit: state.site.isEdit,
-  sitepath: state.path.currentSitepath
+  siteView: state.site.siteView,
+  siteEdit: state.site.siteEdit,
+  isEdit: state.site.isEdit
 });
 
 const mapDispatchToProps = dispatch => ({
   setNavItemInActive: () => dispatch(setNavItemInActive()),
   setNavItemActive: () => dispatch(setNavItemActive()),
-  getGalleries: sitepath => dispatch(getGalleries(sitepath))
+  getDataByPageNumber: ({ sitePath, page, siteId }) =>
+    dispatch(getDataByPageNumber({ sitePath, page, siteId })),
+  setGalleriesToSiteEdit: galleries =>
+    dispatch(setGalleriesToSiteEdit(galleries)),
+  setGalleriesToSiteView: galleries =>
+    dispatch(setGalleriesToSiteView(galleries))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreGalleryPageT4);

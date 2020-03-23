@@ -7,7 +7,11 @@ import {
   savePosts,
   getDataByPageNumber,
   setPostsToSiteEdit,
-  setPostsToSiteView
+  setPostsToSiteView,
+  setEventsToSiteEdit,
+  setEventsToSiteView,
+  setGalleriesToSiteEdit,
+  setGalleriesToSiteView
 } from "./post";
 import {
   changeColor,
@@ -167,5 +171,9 @@ export {
   getDataByPageNumber,
   setPostsToSiteEdit,
   setPostsToSiteView,
-  changeSiteAbout
+  changeSiteAbout,
+  setEventsToSiteEdit,
+  setEventsToSiteView,
+  setGalleriesToSiteEdit,
+  setGalleriesToSiteView
 };

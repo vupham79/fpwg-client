@@ -55,6 +55,18 @@ const useStyles = theme => ({
       display: "block"
     }
   },
+  dropdownSelect: {
+    marginTop: "1rem",
+    display: "block",
+    [theme.breakpoints.up("md")]: {
+      display: "none"
+    }
+  },
+  select: {
+    "& option": {
+      padding: "0.5rem"
+    }
+  },
   title: {
     minWidth: "20vh",
     color: "white",
@@ -224,14 +236,66 @@ class Header extends Component {
     );
   };
 
+  hangleChangeSelect = event => {
+    const { updateNavItemValue, isEdit } = this.props;
+    if (isEdit) {
+      const newValue = parseInt(event.target.value);
+      updateNavItemValue(newValue);
+    }
+  };
+
   renderSelect = () => {
+    const { siteEdit, siteView, isEdit, classes } = this.props;
+    const selectStyle = {
+      color: "white",
+      backgroundColor: isEdit
+        ? siteEdit && siteEdit.color
+        : siteView && siteView.color,
+      border: "1px solid white",
+      fontSize: 14
+    };
     return (
-      <FormControl variant="outlined">
-        <Select native>
-          <option aria-label="None" value="" />
-          <option value={10}>Ten</option>
-          <option value={20}>Twenty</option>
-          <option value={30}>Thirty</option>
+      <FormControl
+        margin="dense"
+        variant="outlined"
+        style={{ width: "-webkit-fill-available" }}
+      >
+        <Select
+          className={classes.select}
+          onChange={this.hangleChangeSelect}
+          native
+          fullWidth
+          IconComponent={"false"}
+          inputProps={{ style: { ...selectStyle } }}
+        >
+          {isEdit
+            ? siteEdit &&
+              siteEdit.navItems &&
+              siteEdit.navItems.map((item, index) =>
+                item.isActive ? (
+                  <option
+                    style={{ ...selectStyle, height: "2rem" }}
+                    key={index}
+                    value={index}
+                  >
+                    {item.name}
+                  </option>
+                ) : null
+              )
+            : siteView &&
+              siteView.navItems &&
+              siteView.navItems.map((item, index) =>
+                item.isActive ? (
+                  <option>
+                    <NavLink
+                      key={index}
+                      to={`/${siteView.sitePath}/${item.original}`}
+                    >
+                      {item.name}
+                    </NavLink>
+                  </option>
+                ) : null
+              )}
         </Select>
       </FormControl>
     );
@@ -242,6 +306,8 @@ class Header extends Component {
     return (
       <Grid container justify="center" className={classes.rootHeader}>
         <Grid
+          item
+          xs={12}
           className={classes.title}
           style={
             isEdit
@@ -252,6 +318,9 @@ class Header extends Component {
           {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
         </Grid>
         <Grid className={classes.tab}>{this.renderNavItems()}</Grid>
+        <Grid item xs={6} className={classes.dropdownSelect}>
+          {this.renderSelect()}
+        </Grid>
       </Grid>
     );
   };
