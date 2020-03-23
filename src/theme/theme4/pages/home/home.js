@@ -6,15 +6,9 @@ import BannerComponent from "../../../component/bannerComponent";
 import EventPage from "../event/event";
 import GalleryPage from "../gallery/gallery";
 import ContactPage from "../contact/contact";
-
+import NewsPage from "../new/new";
 
 class Theme1Home extends React.Component {
-  state = {
-  };
-
-  componentDidMount() {
-
-  }
 
   render() {
     const {
@@ -27,7 +21,7 @@ class Theme1Home extends React.Component {
       bodyView,
       posts
     } = this.props;
-    const siteData = this.state;
+
     const useStyles = () => ({
       changableLink: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -126,59 +120,21 @@ class Theme1Home extends React.Component {
                 </Grid>
               </Grid>,
             "event":
-              <Grid container item style={{ display: row.isActive ? "block" : "none", backgroundColor: "#1a1919", paddingBottom: 50 }}>
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
                 <EventPage fromHome homeTitle={row.name} />
               </Grid>,
             "gallery":
-              <Grid container item style={{ display: row.isActive ? "block" : "none", backgroundColor: "#1a1919", paddingBottom: 50 }}>
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
                 <GalleryPage fromHome homeTitle={row.name} />
               </Grid>,
             "contact":
-              <Grid container item style={{ display: row.isActive ? "block" : "none", backgroundColor: "#1a1919", paddingBottom: 50 }}>
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
                 <ContactPage fromHome homeTitle={row.name} />
               </Grid>,
             "news":
               <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <Grid item sm={12} xs={12} container style={{ minHeight: 200 }}>
-                  {isEdit ? (
-                    posts ? (
-                      <Grid container>
-                        <PostTypeComponent
-                          posts={posts}
-                          siteInfo={{
-                            logo: siteEdit.logo,
-                            title: siteEdit.title
-                          }}
-                        />
-                      </Grid>
-                    ) : (
-                        <Grid container justify="center">
-                          <Typography variant="body1">
-                            Currently there are no news.
-                          </Typography>
-                        </Grid>
-                      )
-                  ) : siteView ? (
-                    siteView.posts && (
-                      <Grid container>
-                        <PostTypeComponent
-                          posts={siteView.posts}
-                          siteInfo={{
-                            logo: siteView.logo,
-                            title: siteView.title
-                          }}
-                        />
-                      </Grid>
-                    )
-                  ) : (
-                        <Grid container justify="center">
-                          <Typography variant="body1">
-                            Currently there are no news.
-                          </Typography>
-                        </Grid>
-                      )}
-                </Grid>
-              </Grid>
+                <NewsPage fromHome homeTitle={row.name} />
+              </Grid>,
           }[row.original]
         ))}
 
@@ -198,59 +154,21 @@ class Theme1Home extends React.Component {
                 </Grid>
               </Grid>,
             "event":
-              <Grid container item style={{ display: row.isActive ? "block" : "none", backgroundColor: "#1a1919", paddingBottom: 50 }}>
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
                 <EventPage fromHome homeTitle={row.name} />
               </Grid>,
             "gallery":
-              <Grid container item style={{ display: row.isActive ? "block" : "none", backgroundColor: "#1a1919", paddingBottom: 50 }}>
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
                 <GalleryPage fromHome homeTitle={row.name} />
               </Grid>,
             "contact":
-              <Grid container item style={{ display: row.isActive ? "block" : "none", backgroundColor: "#1a1919", paddingBottom: 50 }}>
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
                 <ContactPage fromHome homeTitle={row.name} />
               </Grid>,
             "news":
               <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <Grid item sm={12} xs={12} container style={{ minHeight: 200 }}>
-                  {isEdit ? (
-                    posts ? (
-                      <Grid container>
-                        <PostTypeComponent
-                          posts={posts}
-                          siteInfo={{
-                            logo: siteEdit.logo,
-                            title: siteEdit.title
-                          }}
-                        />
-                      </Grid>
-                    ) : (
-                        <Grid container justify="center">
-                          <Typography variant="body1">
-                            Currently there are no news.
-                          </Typography>
-                        </Grid>
-                      )
-                  ) : siteView ? (
-                    siteView.posts && (
-                      <Grid container>
-                        <PostTypeComponent
-                          posts={siteView.posts}
-                          siteInfo={{
-                            logo: siteView.logo,
-                            title: siteView.title
-                          }}
-                        />
-                      </Grid>
-                    )
-                  ) : (
-                        <Grid container justify="center">
-                          <Typography variant="body1">
-                            Currently there are no news.
-                          </Typography>
-                        </Grid>
-                      )}
-                </Grid>
-              </Grid>
+                <NewsPage fromHome homeTitle={row.name} />
+              </Grid>,
           }[row.original]
         ))}
 

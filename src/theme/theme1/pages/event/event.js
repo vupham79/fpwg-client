@@ -5,7 +5,7 @@ import EventComponent from "../../../component/eventComponent";
 
 class Theme1Event extends React.Component {
   render() {
-    const { isEdit, titleEdit, titleView, bodyEdit, bodyView } = this.props;
+    const { isEdit, titleEdit, titleView, bodyEdit, bodyView, fromHome, homeTitle } = this.props;
 
     const useStyles = () => ({
       changableLink: {
@@ -98,7 +98,7 @@ class Theme1Event extends React.Component {
       <Grid container>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>E</span>VENTS
+            <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "E"}</span>{fromHome ? homeTitle.substring(1) : "VENTS"}
           </p>
         </Grid>
         <Grid item xs={12}>

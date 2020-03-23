@@ -21,7 +21,9 @@ class Theme1Contact extends React.Component {
       bodyEdit,
       bodyView,
       phone,
-      email
+      email,
+      fromHome,
+      homeTitle
     } = this.props;
 
     const useStyles = theme => ({
@@ -141,7 +143,7 @@ class Theme1Contact extends React.Component {
       <Grid container justify="center">
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>C</span>ONTACTS
+            <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "C"}</span>{fromHome ? homeTitle.substring(1) : "ONTACT"}
           </p>
         </Grid>
 
