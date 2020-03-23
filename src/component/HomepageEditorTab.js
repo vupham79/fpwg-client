@@ -17,7 +17,6 @@ import {
   RadioGroup,
   FormControlLabel,
   ExpansionPanel,
-  ExpansionPanelActions,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
   TextField,
@@ -38,7 +37,8 @@ import {
   setNewLogo,
   changeHomeItemName,
   changeHomeItems,
-  setActiveNavItems
+  setActiveNavItems,
+  changeSiteAbout
 } from "../actions";
 import toastr from "./Toastr";
 import {
@@ -259,7 +259,6 @@ function handleChangeNavName(id, site, newName, changeHomeItemName) {
 
 class HomepageEditorTab extends React.Component {
   state = {
-    autoLatest: true, //biến này chắc phải lưu database?
     openDiag: false,
     filteredData: [],
     pageCount: 1,
@@ -273,6 +272,12 @@ class HomepageEditorTab extends React.Component {
   handleSetLatest = (item, setActiveHomeItems) => (event) => {
     const index = this.props.site && this.props.site.homepage && this.props.site.homepage.find(e => e._id === item._id);
     index.filter.type = event.target.value;
+    if (event.target.value == "latest") {
+      index.filter.items = null;
+    }
+    else {
+
+    }
     setActiveHomeItems(this.props.site);
   };
 
@@ -314,12 +319,6 @@ class HomepageEditorTab extends React.Component {
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
     }
-  };
-
-  handleChangeSiteTitle = e => {
-    const { site, changeSiteTitle } = this.props;
-    site.title = e.target.value;
-    changeSiteTitle(site);
   };
 
   setPosts = () => {
@@ -400,6 +399,12 @@ class HomepageEditorTab extends React.Component {
     }
   };
 
+  handleChangeAbout = e => {
+    const { site, changeSiteAbout } = this.props;
+    site.about = e.target.value;
+    changeSiteAbout(site.about);
+  };
+
   onChangeItem = ({ oldIndex, newIndex }) => {
     const { site, changeHomeItems } = this.props;
     let temp = site.homepage[oldIndex];
@@ -410,21 +415,19 @@ class HomepageEditorTab extends React.Component {
   };
 
   onChangePanel = (itemId, expand) => {
-    if (itemId !== this.state.previousExpandItemId)
-      (
-        this.setState({
-          currentExpandItemId: itemId,
-          previousExpandItemId: itemId,
-          isExpanding: true
-        })
-      )
-    else
-      (
-        this.setState({
-          currentExpandItemId: itemId,
-          isExpanding: expand
-        })
-      )
+    if (itemId !== this.state.previousExpandItemId) {
+      this.setState({
+        currentExpandItemId: itemId,
+        previousExpandItemId: itemId,
+        isExpanding: true
+      })
+    }
+    else {
+      this.setState({
+        currentExpandItemId: itemId,
+        isExpanding: expand
+      })
+    }
   };
 
   render() {
@@ -492,7 +495,7 @@ class HomepageEditorTab extends React.Component {
             style={{ color: "#555d66", fontFamily: "Segoe UI, sans-serif" }}
           >
             <FormControlLabel
-              value={"lastest"}
+              value={"latest"}
               control={<Radio style={{ color: "#0074aa" }} />}
               label={<p style={{ fontSize: 13 }}>Latest contents</p>}
             />
@@ -508,7 +511,7 @@ class HomepageEditorTab extends React.Component {
         <Grid
           item
           container
-          style={{ display: item.filter.type == "lastest" ? "none" : "block" }}
+          style={{ display: item.filter.type == "latest" ? "none" : "block" }}
         >
           <Grid item xs={12}>
             <Typography className={classes.title}>News</Typography>
@@ -613,9 +616,11 @@ class HomepageEditorTab extends React.Component {
                     InputProps={{
                       classes: {
                         notchedOutline: classes.notchedOutline,
-                        input: classes.inputTitle
+                        input: classes.inputTitle,
+                        maxLength: 50
                       }
                     }}
+                    autoFocus
                     size="small"
                     style={{ backgroundColor: "white" }}
                     fullWidth
@@ -632,13 +637,48 @@ class HomepageEditorTab extends React.Component {
                   />
                 </Grid>
 
+
+                {item.original == "about" && (
+                  <>
+                    <Grid item xs={12} style={{ height: 20 }} />
+                    <Grid item xs={12}>
+                      <Typography className={classes.title2}>Content</Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        InputLabelProps={{
+                          classes: {
+                            focused: classes.focused
+                          }
+                        }}
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline,
+                            input: classes.inputTitle,
+                            maxLength: 200
+                          }
+                        }}
+                        multiline
+                        // autoFocus
+                        size="small"
+                        style={{ backgroundColor: "white" }}
+                        fullWidth
+                        rows={5}
+                        spellCheck={false}
+                        variant={"outlined"}
+                        value={site.about}
+                        onChange={(e) => this.handleChangeAbout(e)}
+                      />
+                    </Grid>
+                  </>
+                )}
                 {item.original == "news" && postSection(item)}
 
                 <FormControlLabel
                   control={
                     <Checkbox
                       style={{ color: "#0074aa" }}
-                      checked={item.isActive}
+                      checked={!item.isActive}
                       onChange={() => handleChangeActive(item._id, site, setActiveHomeItems)}
                     />
                   }
@@ -776,6 +816,7 @@ const mapDispatchToProps = dispatch => ({
   changeHomeItems: items => dispatch(changeHomeItems(items)),
   changeHomeItemName: site => dispatch(changeHomeItemName(site)),
   setActiveHomeItems: site => dispatch(setActiveNavItems(site)),
+  changeSiteAbout: about => dispatch(changeSiteAbout(about)),
   // updateHomeItemValue: 
 });
 

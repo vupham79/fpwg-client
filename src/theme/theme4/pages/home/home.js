@@ -3,8 +3,19 @@ import React from "react";
 import { connect } from "react-redux";
 import PostTypeComponent from "../../../component/postsType";
 import BannerComponent from "../../../component/bannerComponent";
+import EventPage from "../event/event";
+import GalleryPage from "../gallery/gallery";
+import ContactPage from "../contact/contact";
+
 
 class Theme1Home extends React.Component {
+  state = {
+  };
+
+  componentDidMount() {
+
+  }
+
   render() {
     const {
       siteEdit,
@@ -13,8 +24,10 @@ class Theme1Home extends React.Component {
       titleEdit,
       siteView,
       bodyEdit,
-      bodyView
+      bodyView,
+      posts
     } = this.props;
+    const siteData = this.state;
     const useStyles = () => ({
       changableLink: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -88,7 +101,6 @@ class Theme1Home extends React.Component {
       }
     });
     const classes = useStyles();
-    const { posts } = this.props;
 
     return (
       <Grid
@@ -99,64 +111,150 @@ class Theme1Home extends React.Component {
           <BannerComponent bannerType={1} />
         </Grid>
 
-        {/* <Grid item xs={12}>
-          <p style={classes.changableTitle}>
-            NEWS
-          </p>
-        </Grid> */}
-
-        <Grid item xs={12} style={{ minHeight: 200, paddingTop: 50 }}>
-          <p style={classes.changableBody3}>
-            {isEdit && siteEdit && siteEdit.about}
-            {!isEdit && siteView && siteView.about}
-            {isEdit && !siteEdit.about && "Welcome to our website!"}
-            {!isEdit && !siteView.about && "Welcome to our website!"}
-          </p>
-        </Grid>
-
-        <Grid item xs={12}>
-          <Divider style={{ backgroundColor: "#b3b2b2" }} />
-        </Grid>
-
-        <Grid item sm={12} xs={12} container style={{ minHeight: 200 }}>
-          {isEdit ? (
-            posts ? (
-              <Grid container>
-                <PostTypeComponent
-                  posts={posts}
-                  siteInfo={{
-                    logo: siteEdit.logo,
-                    title: siteEdit.title
-                  }}
-                />
+        {isEdit && siteEdit && siteEdit.homepage.map((row) => (
+          {
+            "about":
+              <Grid container item xs={12} style={{ display: row.isActive ? "block" : "none", minHeight: 200, paddingTop: 50 }}>
+                <Grid item xs={12}>
+                  <p style={classes.changableBody3}>
+                    {siteEdit && siteEdit.about}
+                    {!siteEdit.about && "Welcome to our website!"}
+                  </p>
+                </Grid>
+                <Grid item xs={12}>
+                  <Divider style={{ backgroundColor: "#b3b2b2" }} />
+                </Grid>
+              </Grid>,
+            "event":
+              <Grid container item style={{ display: row.isActive ? "block" : "none", backgroundColor: "#1a1919", paddingBottom: 50 }}>
+                <EventPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "gallery":
+              <Grid container item style={{ display: row.isActive ? "block" : "none", backgroundColor: "#1a1919", paddingBottom: 50 }}>
+                <GalleryPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "contact":
+              <Grid container item style={{ display: row.isActive ? "block" : "none", backgroundColor: "#1a1919", paddingBottom: 50 }}>
+                <ContactPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "news":
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
+                <Grid item sm={12} xs={12} container style={{ minHeight: 200 }}>
+                  {isEdit ? (
+                    posts ? (
+                      <Grid container>
+                        <PostTypeComponent
+                          posts={posts}
+                          siteInfo={{
+                            logo: siteEdit.logo,
+                            title: siteEdit.title
+                          }}
+                        />
+                      </Grid>
+                    ) : (
+                        <Grid container justify="center">
+                          <Typography variant="body1">
+                            Currently there are no news.
+                          </Typography>
+                        </Grid>
+                      )
+                  ) : siteView ? (
+                    siteView.posts && (
+                      <Grid container>
+                        <PostTypeComponent
+                          posts={siteView.posts}
+                          siteInfo={{
+                            logo: siteView.logo,
+                            title: siteView.title
+                          }}
+                        />
+                      </Grid>
+                    )
+                  ) : (
+                        <Grid container justify="center">
+                          <Typography variant="body1">
+                            Currently there are no news.
+                          </Typography>
+                        </Grid>
+                      )}
+                </Grid>
               </Grid>
-            ) : (
-              <Grid container justify="center">
-                <Typography variant="body1">
-                  Currently there are no news.
-                </Typography>
+          }[row.original]
+        ))}
+
+
+        {!isEdit && siteView && siteView.homepage.map((row) => (
+          {
+            "about":
+              <Grid container item xs={12} style={{ display: row.isActive ? "block" : "none", minHeight: 200, paddingTop: 50 }}>
+                <Grid item xs={12}>
+                  <p style={classes.changableBody3}>
+                    {siteView && siteView.about}
+                    {!siteView.about && "Welcome to our website!"}
+                  </p>
+                </Grid>
+                <Grid item xs={12}>
+                  <Divider style={{ backgroundColor: "#b3b2b2" }} />
+                </Grid>
+              </Grid>,
+            "event":
+              <Grid container item style={{ display: row.isActive ? "block" : "none", backgroundColor: "#1a1919", paddingBottom: 50 }}>
+                <EventPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "gallery":
+              <Grid container item style={{ display: row.isActive ? "block" : "none", backgroundColor: "#1a1919", paddingBottom: 50 }}>
+                <GalleryPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "contact":
+              <Grid container item style={{ display: row.isActive ? "block" : "none", backgroundColor: "#1a1919", paddingBottom: 50 }}>
+                <ContactPage fromHome homeTitle={row.name} />
+              </Grid>,
+            "news":
+              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
+                <Grid item sm={12} xs={12} container style={{ minHeight: 200 }}>
+                  {isEdit ? (
+                    posts ? (
+                      <Grid container>
+                        <PostTypeComponent
+                          posts={posts}
+                          siteInfo={{
+                            logo: siteEdit.logo,
+                            title: siteEdit.title
+                          }}
+                        />
+                      </Grid>
+                    ) : (
+                        <Grid container justify="center">
+                          <Typography variant="body1">
+                            Currently there are no news.
+                          </Typography>
+                        </Grid>
+                      )
+                  ) : siteView ? (
+                    siteView.posts && (
+                      <Grid container>
+                        <PostTypeComponent
+                          posts={siteView.posts}
+                          siteInfo={{
+                            logo: siteView.logo,
+                            title: siteView.title
+                          }}
+                        />
+                      </Grid>
+                    )
+                  ) : (
+                        <Grid container justify="center">
+                          <Typography variant="body1">
+                            Currently there are no news.
+                          </Typography>
+                        </Grid>
+                      )}
+                </Grid>
               </Grid>
-            )
-          ) : siteView ? (
-            siteView.posts && (
-              <Grid container>
-                <PostTypeComponent
-                  posts={siteView.posts}
-                  siteInfo={{
-                    logo: siteView.logo,
-                    title: siteView.title
-                  }}
-                />
-              </Grid>
-            )
-          ) : (
-            <Grid container justify="center">
-              <Typography variant="body1">
-                Currently there are no news.
-              </Typography>
-            </Grid>
-          )}
-        </Grid>
+          }[row.original]
+        ))}
+
+
       </Grid>
     );
   }

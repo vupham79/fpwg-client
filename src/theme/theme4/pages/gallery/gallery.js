@@ -12,7 +12,9 @@ class Theme1Gallery extends React.Component {
       siteEdit,
       siteView,
       bodyEdit,
-      bodyView
+      bodyView,
+      fromHome,
+      homeTitle
     } = this.props;
 
     const useStyles = theme => ({
@@ -106,7 +108,7 @@ class Theme1Gallery extends React.Component {
       <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50 }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            GALLERY
+            {fromHome ? homeTitle : "GALLERY"}
           </p>
         </Grid>
 

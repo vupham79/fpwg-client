@@ -19,7 +19,9 @@ class Theme1Contact extends React.Component {
       bodyEdit,
       bodyView,
       phone,
-      email
+      email,
+      fromHome,
+      homeTitle
     } = this.props;
 
     const useStyles = theme => ({
@@ -121,7 +123,7 @@ class Theme1Contact extends React.Component {
     return (
       <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50, minHeight: "60vh" }}>
         <Grid item xs={12}>
-          <p style={classes.changableTitle}>CONTACTS</p>
+          <p style={classes.changableTitle}>{fromHome ? homeTitle : "CONTACTS"}</p>
         </Grid>
 
         {isEdit && phone && (

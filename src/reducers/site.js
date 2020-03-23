@@ -282,6 +282,14 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         siteEdit: { ...action.payload }
       };
+    case "CHANGE_SITE_ABOUT":
+      return {
+        ...state,
+        siteEdit: {
+          ...state.siteEdit,
+          about: action.payload
+        }
+      };
     case "CHANGE_HOME_ITEM_NAME":
       return {
         ...state,
