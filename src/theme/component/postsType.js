@@ -391,10 +391,6 @@ class PostTypeComponent extends React.Component {
     }
   };
 
-  handleClick = (event, value) => {
-    this.setState({ page: value });
-  };
-
   handleOpen = post => {
     this.setState({
       open: true,
@@ -583,8 +579,8 @@ const mapStateToProps = state => ({
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
   bodyView: state.site.bodyView,
-  pageCountEdit: state.post.pageCountEdit,
-  pageCountView: state.post.pageCountView
+  pageCountEdit: state.post.pageCountNewsEdit,
+  pageCountView: state.post.pageCountNewsView
 });
 
 const mapDispatchToProps = dispatch => ({

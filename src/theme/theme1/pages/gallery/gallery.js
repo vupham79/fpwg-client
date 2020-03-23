@@ -108,13 +108,27 @@ class Theme1Gallery extends React.Component {
             <span style={classes.changableFirst}>G</span>ALLERY
           </p>
         </Grid>
-
         {isEdit ? (
-          <GalleryComponent galleries={siteEdit.galleries} />
+          siteEdit && siteEdit.galleries ? (
+            <GalleryComponent
+              galleries={siteEdit.galleries}
+              siteInfo={siteEdit.id}
+            />
+          ) : (
+            <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+              Current no image to show .
+            </p>
+          )
+        ) : siteView && siteView.galleries ? (
+          <GalleryComponent
+            galleries={siteView.galleries}
+            siteInfo={siteView.sitePath}
+          />
         ) : (
-            <GalleryComponent galleries={siteView.galleries} />
-          )}
-
+          <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+            Current no image to show .
+          </p>
+        )}
       </Grid>
     );
   }

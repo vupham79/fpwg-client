@@ -17,8 +17,7 @@ import {
   Select,
   Tab,
   Tabs,
-  Typography,
-  Switch
+  Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -41,7 +40,6 @@ import {
   applyAutoSync
 } from "../actions";
 import ButtonComponent from "./Button";
-import Switch from "./SwitchButton";
 
 const expanStyle = {
   marginTop: "1rem"
@@ -524,6 +522,7 @@ class SyncEditorTab extends React.Component {
                 </Grid>
                 <Grid item xs={6}>
                   <Select
+                    inputProps={{ style: { padding: "0.5rem" } }}
                     fullWidth
                     native
                     variant={"outlined"}
@@ -553,6 +552,7 @@ class SyncEditorTab extends React.Component {
                   <Grid item xs={6} sm={6} className={classes.gridItem}>
                     <Select
                       fullWidth
+                      inputProps={{ style: { padding: "0.5rem" } }}
                       native
                       variant={"outlined"}
                       value={

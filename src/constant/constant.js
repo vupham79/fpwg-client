@@ -48,7 +48,7 @@ export const themes = [
     ]
   },
   {
-    id: "",
+    id: "5e50a9d494f9d83350f7398d",
     component: <Theme2 />,
     pages: [
       { name: "home", component: <PreHomePage /> },
@@ -60,7 +60,7 @@ export const themes = [
     ]
   },
   {
-    id: "5e50a9d494f9d83350f7398d",
+    id: "k5e520ab785bc282f048799ce2",
     component: <Theme3 />,
     pages: [
       { name: "home", component: <PreHomePageT3 /> },

@@ -6,7 +6,15 @@ import styles from "./gallery.module.css";
 
 class GalleryPage extends React.Component {
   render() {
-    const { isEdit, titleEdit, titleView, siteView, siteEdit } = this.props;
+    const {
+      isEdit,
+      titleEdit,
+      titleView,
+      siteView,
+      siteEdit,
+      bodyEdit,
+      bodyView
+    } = this.props;
     return (
       <Grid
         container
@@ -27,9 +35,25 @@ class GalleryPage extends React.Component {
           <Divider variant="middle" />
         </Grid>
         {isEdit ? (
-          <GalleryComponent galleries={siteEdit.galleries} />
+          siteEdit && siteEdit.galleries ? (
+            <GalleryComponent
+              galleries={siteEdit.galleries}
+              siteInfo={siteEdit.id}
+            />
+          ) : (
+            <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+              Current no image to show .
+            </p>
+          )
+        ) : siteView && siteView.galleries ? (
+          <GalleryComponent
+            galleries={siteView.galleries}
+            siteInfo={siteView.sitePath}
+          />
         ) : (
-          <GalleryComponent galleries={siteView.galleries} />
+          <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+            Current no image to show .
+          </p>
         )}
       </Grid>
     );
@@ -41,7 +65,9 @@ const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
   siteView: state.site.siteView,
-  titleView: state.site.titleView
+  titleView: state.site.titleView,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView
 });
 
 export default connect(mapStateToProps, null)(GalleryPage);

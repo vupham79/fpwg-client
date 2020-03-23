@@ -325,7 +325,15 @@ const SiteReducer = (state = defaultState, action) => {
           about: action.payload
         }
       };
-    case "SET_SITEVIEW_EVENT":
+    case "SET_SITEEDIT_EVENTS":
+      return {
+        ...state,
+        siteView: {
+          ...state.siteEdit,
+          events: action.payload
+        }
+      };
+    case "SET_SITEVIEW_EVENTS":
       return {
         ...state,
         siteView: {
@@ -338,6 +346,14 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         siteView: {
           ...state.siteView,
+          galleries: action.payload
+        }
+      };
+    case "SET_SITEEDIT_GALLERIES":
+      return {
+        ...state,
+        siteEdit: {
+          ...state.siteEdit,
           galleries: action.payload
         }
       };
