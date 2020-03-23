@@ -38,6 +38,7 @@ import {
   syncPostFromFB
 } from "../actions";
 import ButtonComponent from "./Button";
+import Switch from "./SwitchButton";
 
 const expanStyle = {
   marginTop: "1rem"
@@ -306,6 +307,7 @@ class SyncEditorTab extends React.Component {
                 </Grid>
                 <Grid item xs={6}>
                   <Select
+                    inputProps={{ style: { padding: "0.5rem" } }}
                     fullWidth
                     native
                     variant={"outlined"}
