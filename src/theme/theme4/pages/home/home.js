@@ -121,11 +121,11 @@ class Theme1Home extends React.Component {
               </Grid>,
             "event":
               <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <EventPage fromHome homeTitle={row.name} />
+                <EventPage fromHome homeTitle={row.name} homeList={row.filter.items} />
               </Grid>,
             "gallery":
               <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <GalleryPage fromHome homeTitle={row.name} />
+                <GalleryPage fromHome homeTitle={row.name} homeList={row.filter.items} />
               </Grid>,
             "contact":
               <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
@@ -133,7 +133,7 @@ class Theme1Home extends React.Component {
               </Grid>,
             "news":
               <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <NewsPage fromHome homeTitle={row.name} />
+                <NewsPage fromHome homeTitle={row.name} homeList={row.filter.items} />
               </Grid>,
           }[row.original]
         ))}
@@ -155,11 +155,11 @@ class Theme1Home extends React.Component {
               </Grid>,
             "event":
               <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <EventPage fromHome homeTitle={row.name} />
+                <EventPage fromHome homeTitle={row.name} homeList={row.filter.items} />
               </Grid>,
             "gallery":
               <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <GalleryPage fromHome homeTitle={row.name} />
+                <GalleryPage fromHome homeTitle={row.name} homeList={row.filter.items} />
               </Grid>,
             "contact":
               <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
@@ -167,7 +167,7 @@ class Theme1Home extends React.Component {
               </Grid>,
             "news":
               <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <NewsPage fromHome homeTitle={row.name} />
+                <NewsPage fromHome homeTitle={row.name} homeList={row.filter.items} />
               </Grid>,
           }[row.original]
         ))}
