@@ -508,7 +508,7 @@ class EventComponent extends React.Component {
                               display: "inline-block"
                             }}
                           >
-                            {row.place.name}
+                            {row.place && row.place.name}
                           </Grid>
 
                           <Grid
@@ -521,7 +521,7 @@ class EventComponent extends React.Component {
                               display: "inline-block"
                             }}
                           >
-                            {row.place.city}
+                            {row.place && row.place.city}
                           </Grid>
                         </Grid>
                       </Grid>
