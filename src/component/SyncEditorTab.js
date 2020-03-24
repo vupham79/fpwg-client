@@ -1,6 +1,4 @@
 import {
-  AppBar,
-  Box,
   Button,
   Dialog,
   DialogContent,
@@ -12,19 +10,17 @@ import {
   FormControlLabel,
   Grid,
   IconButton,
+  Paper,
   Radio,
   RadioGroup,
   Select,
-  Tab,
-  Tabs,
-  Typography,
-  TableContainer,
   Table,
+  TableBody,
+  TableCell,
+  TableContainer,
   TableHead,
   TableRow,
-  TableCell,
-  TableBody,
-  Paper
+  Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -51,31 +47,6 @@ import ButtonComponent from "./Button";
 const expanStyle = {
   marginTop: "1rem"
 };
-
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box p={3}>{children}</Box>}
-    </Typography>
-  );
-}
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`
-  };
-}
-
 const useStyles = theme => ({
   sideBarBox: {
     borderStyle: "solid",
@@ -339,7 +310,7 @@ class SyncEditorTab extends React.Component {
 
   render() {
     const { site, classes } = this.props;
-    const { tab, open, startDate, endDate } = this.state;
+    const { open, startDate, endDate } = this.state;
     const btnSync = {
       width: "-webkit-fill-available",
       backgroundColor: "rgb(0, 116, 170)",

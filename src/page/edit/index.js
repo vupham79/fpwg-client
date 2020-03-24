@@ -25,8 +25,8 @@ class PreEditPage extends React.Component {
   };
 
   render() {
-    const { isLogin, siteEdit, isEdit } = this.props;
-    if (!isLogin) {
+    const { isLogin, siteEdit, isEdit, currentEditId } = this.props;
+    if (!isLogin || !currentEditId) {
       return <Redirect to="/" />;
     } else if (siteEdit && isEdit) {
       WebFont.load({

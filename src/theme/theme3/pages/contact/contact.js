@@ -1,14 +1,7 @@
+import { Divider, Grid, Typography } from "@material-ui/core";
 import React from "react";
-import {
-  Grid,
-  Typography,
-  Divider,
-  Box,
-  TextField,
-  Button
-} from "@material-ui/core";
-import styles from "./contact.module.css";
 import { connect } from "react-redux";
+import styles from "./contact.module.css";
 
 class ContactPage extends React.Component {
   render() {

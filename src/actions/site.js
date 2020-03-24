@@ -332,6 +332,7 @@ export function saveDesignSite({
       }
       const uploadCoverAction = await uploadCover(cover, site);
       if (uploadCoverAction) {
+        console.log(uploadCoverAction);
         coverURL = uploadCoverAction;
       }
       const data = await axios({
@@ -554,26 +555,27 @@ export function uploadLogo(file, site) {
 }
 
 export async function uploadCover(covers, site) {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     try {
       let coversUrl = [];
       if (covers && covers.length > 0) {
-        for (let index = 0; index < covers.length; index++) {
-          if (typeof covers[index] === "string") {
-            coversUrl.push(covers[index]);
+        // map array to promises
+        const promises = covers.map(async cover => {
+          if (typeof cover === "string") {
+            coversUrl.push(cover);
           } else {
-            firebase
+            await firebase
               .storage()
               .ref(`${site.id}/`)
-              .child(covers[index].name)
-              .put(covers[index], {
+              .child(cover.name)
+              .put(cover, {
                 contentType: "image/jpeg"
               })
-              .then(() => {
-                firebase
+              .then(async () => {
+                await firebase
                   .storage()
                   .ref(`${site.id}/`)
-                  .child(covers[index].name)
+                  .child(cover.name)
                   .getDownloadURL()
                   .then(url => {
                     coversUrl.push(url);
@@ -585,7 +587,9 @@ export async function uploadCover(covers, site) {
                 resolve(false);
               });
           }
-        }
+        });
+        // wait until all promises are resolved
+        await Promise.all(promises);
         resolve(coversUrl);
       } else {
         resolve([]);

@@ -14,10 +14,9 @@ import {
 import { ArrowBackIos, Public, Facebook } from "@material-ui/icons";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { confirmPage, getUserSites } from "../../actions";
+import { confirmPage } from "../../actions";
 import Link from "../../component/link";
 import ButtonStyled from "../../component/Button";
-import { Redirect } from "react-router-dom";
 
 const useStyle = theme => ({
   textField: {
@@ -44,7 +43,7 @@ class createNewSite extends Component {
   };
 
   handleConfirm = async () => {
-    const { confirmPage, accessToken, profile, getUserSites } = this.props;
+    const { confirmPage, accessToken, profile } = this.props;
     const { id, pageUrl, name, sitepath, isPublish } = this.state;
     if (pageUrl && sitepath) {
       this.setState({
@@ -61,7 +60,7 @@ class createNewSite extends Component {
         isPublish
       });
       if (confirm) {
-        return <Redirect to="/" />;
+        window.location.href = "/";
       }
     } else {
       if (!pageUrl) {
@@ -369,8 +368,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  confirmPage: data => dispatch(confirmPage(data)),
-  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
+  confirmPage: data => dispatch(confirmPage(data))
 });
 
 export default connect(

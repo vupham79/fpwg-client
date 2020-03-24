@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography, Tabs, Tab } from "@material-ui/core";
+import { Grid, Typography, Tabs, Tab } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import GalleryComponent from "../../../component/galleryComponent";
