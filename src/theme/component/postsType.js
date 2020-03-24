@@ -207,7 +207,6 @@ function TypePhoto({ post, openDialog, style, dark, siteInfo }) {
       ? style.bodyEdit.fontFamily
       : style.bodyView.fontFamily
   };
-  console.log(post.message);
   return (
     <React.Fragment>
       <Grid

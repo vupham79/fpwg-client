@@ -406,7 +406,6 @@ export function getSiteById(id) {
           id: id
         }
       });
-      console.log(data);
       dispatch({
         type: "CLOSE_LOADING"
       });
@@ -517,7 +516,6 @@ export function removeCover(cover) {
 }
 
 export function uploadLogo(file, site) {
-  console.log(file);
   return new Promise(async (resolve, reject) => {
     try {
       if (file && typeof file === "object" && file.size > 0) {
@@ -535,7 +533,6 @@ export function uploadLogo(file, site) {
               .child(`${site.id}`)
               .getDownloadURL()
               .then(async url => {
-                console.log("return url");
                 resolve(url);
               });
           })
@@ -859,7 +856,6 @@ export function getPosts(sitepath) {
       dispatch({
         type: "CLOSE_LOADING"
       });
-      console.log(data);
       if (data.status === 200) {
         dispatch({
           type: "SET_SITEVIEW_NEWS",

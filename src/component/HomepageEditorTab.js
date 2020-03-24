@@ -193,6 +193,31 @@ class HomepageEditorTab extends React.Component {
     currentExpandItem: null
   };
 
+  handleUploadCover = async e => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    //validating the file
+    //check if the file is exists
+    if (!file) {
+      toastr.error("No image is selected!", "Error");
+      return;
+    }
+    //check if the image size is larger than 1MB
+    if (file.size > 1048576) {
+      toastr.error("Image size must be less than 1MB!", "Error");
+      return;
+    }
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/jpg"
+    ) {
+      this.props.setNewCover(file);
+    } else {
+      toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
+    }
+  };
+
   PostsList() {
     return (
       <>
@@ -414,6 +439,7 @@ class HomepageEditorTab extends React.Component {
     if (event.target.value === "latest") {
       index.filter.items = null;
     } else {
+      // index.filter.items = [];
     }
     setActiveHomeItems(this.props.site);
   };
@@ -485,7 +511,6 @@ class HomepageEditorTab extends React.Component {
     }
 
     // this.props.setActiveHomeItems(this.props.site);
-    console.log(index);
     this.setState({ currentExpandItem: index });
   };
 
@@ -739,8 +764,8 @@ class HomepageEditorTab extends React.Component {
           className={classes.gridItem}
         >
           <ExpansionPanelSummary
-            onClick={() => this.onChangePanel(item, !this.state.isExpanding)}
             expandIcon={<ExpandMoreIcon />}
+            onClick={() => this.onChangePanel(item, !this.state.isExpanding)}
             aria-controls="panel1a-content"
             style={{ backgroundColor: "white" }}
           >
@@ -750,106 +775,110 @@ class HomepageEditorTab extends React.Component {
               </Grid>
               <Grid item xs={10} md={10} sm={12}>
                 <Typography className={classes.title3}>
-                  {item.original}
+                  {item.original.charAt(0).toUpperCase()}
+                  {item.original.substring(1)}
                 </Typography>
               </Grid>
             </Grid>
           </ExpansionPanelSummary>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography className={classes.title2}>Display name</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                InputLabelProps={{
-                  classes: {
-                    focused: classes.focused
-                  }
-                }}
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle
-                  }
-                }}
-                autoFocus
-                size="small"
-                style={{ backgroundColor: "white" }}
-                fullWidth
-                variant={"outlined"}
-                value={value}
-                onChange={e =>
-                  handleChangeNavName(
-                    item._id,
-                    site,
-                    e.target.value,
-                    changeHomeItemName
-                  )
-                }
-                maxLength="50"
-              />
-            </Grid>
+          <ExpansionPanelDetails>
+            <Grid container>
+              <Grid item xs={12}>
+                <Typography className={classes.title2}>Display name</Typography>
+              </Grid>
 
-            {item.original === "about" && (
-              <>
-                <Grid item xs={12} style={{ height: 20 }} />
-                <Grid item xs={12}>
-                  <Typography className={classes.title2}>Content</Typography>
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    InputLabelProps={{
-                      classes: {
-                        focused: classes.focused
-                      }
-                    }}
-                    InputProps={{
-                      classes: {
-                        notchedOutline: classes.notchedOutline,
-                        input: classes.inputTitle
-                      }
-                    }}
-                    multiline
-                    maxLength={200}
-                    // autoFocus
-                    size="small"
-                    style={{ backgroundColor: "white" }}
-                    fullWidth
-                    rows={5}
-                    spellCheck={false}
-                    variant={"outlined"}
-                    value={this.props.about}
-                    onChange={e => this.handleChangeAbout(e)}
-                  />
-                </Grid>
-              </>
-            )}
-
-            {
-              {
-                news: postSection(item, "News"),
-                event: postSection(item, "Events"),
-                gallery: postSection(item, "Pictures")
-              }[item.original]
-            }
-
-            <FormControlLabel
-              control={
-                <Checkbox
-                  style={{ color: "#0074aa" }}
-                  checked={!item.isActive}
-                  onChange={() =>
-                    handleChangeActive(item._id, site, setActiveHomeItems)
+              <Grid item xs={12}>
+                <TextField
+                  InputLabelProps={{
+                    classes: {
+                      focused: classes.focused
+                    }
+                  }}
+                  maxLength={50}
+                  InputProps={{
+                    classes: {
+                      notchedOutline: classes.notchedOutline,
+                      input: classes.inputTitle
+                    }
+                  }}
+                  autoFocus
+                  size="small"
+                  style={{ backgroundColor: "white" }}
+                  fullWidth
+                  variant={"outlined"}
+                  value={value}
+                  onChange={e =>
+                    handleChangeNavName(
+                      item._id,
+                      site,
+                      e.target.value,
+                      changeHomeItemName
+                    )
                   }
                 />
+              </Grid>
+
+              {item.original === "about" && (
+                <>
+                  <Grid item xs={12} style={{ height: 20 }} />
+                  <Grid item xs={12}>
+                    <Typography className={classes.title2}>Content</Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      InputLabelProps={{
+                        classes: {
+                          focused: classes.focused
+                        }
+                      }}
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline,
+                          input: classes.inputTitle
+                        }
+                      }}
+                      multiline
+                      maxLength={200}
+                      // autoFocus
+                      size="small"
+                      style={{ backgroundColor: "white" }}
+                      fullWidth
+                      rows={5}
+                      spellCheck={false}
+                      variant={"outlined"}
+                      value={this.props.about ? this.props.about : ""}
+                      onChange={e => this.handleChangeAbout(e)}
+                    />
+                  </Grid>
+                </>
+              )}
+
+              {
+                {
+                  news: postSection(item, "News"),
+                  event: postSection(item, "Events"),
+                  gallery: postSection(item, "Pictures")
+                }[item.original]
               }
-              label={
-                <p style={{ fontSize: 13, color: "#555d66" }}>
-                  Hide this section
-                </p>
-              }
-            />
-          </Grid>
+
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    style={{ color: "#0074aa" }}
+                    checked={!item.isActive}
+                    onChange={() =>
+                      handleChangeActive(item._id, site, setActiveHomeItems)
+                    }
+                  />
+                }
+                label={
+                  <p style={{ fontSize: 13, color: "#555d66" }}>
+                    Hide this section
+                  </p>
+                }
+              />
+            </Grid>
+          </ExpansionPanelDetails>
         </ExpansionPanel>
       )
     );
