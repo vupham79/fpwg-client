@@ -25,7 +25,7 @@ class Theme1Home extends React.Component {
   render() {
     const { siteEdit, isEdit, siteView } = this.props;
     return (
-      <Grid container>
+      <Grid container style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
           <BannerComponent bannerType={0} />
         </Grid>
