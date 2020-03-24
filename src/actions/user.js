@@ -184,7 +184,7 @@ export function confirmPage({
       } else {
         toastr.error(`Create new site ${site.error} failed`, "Error");
       }
-      return true;
+      return false;
     } catch (error) {
       dispatch({
         type: "CLOSE_LOADING"
@@ -194,7 +194,7 @@ export function confirmPage({
       } else {
         toastr.error(`Create new site ${name} failed`, "Error");
       }
-      return true;
+      return false;
     }
   };
 }

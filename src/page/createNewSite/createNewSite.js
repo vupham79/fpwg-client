@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 import { confirmPage, getUserSites } from "../../actions";
 import Link from "../../component/link";
 import ButtonStyled from "../../component/Button";
+import { Redirect } from "react-router-dom";
 
 const useStyle = theme => ({
   textField: {
@@ -59,7 +60,9 @@ class createNewSite extends Component {
         sitepath,
         isPublish
       });
-      confirm && (await getUserSites(profile.userId, accessToken));
+      if (confirm) {
+        return <Redirect to="/" />;
+      }
     } else {
       if (!pageUrl) {
         this.setState({

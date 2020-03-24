@@ -368,13 +368,12 @@ export function saveDesignSite({
       dispatch({
         type: "CLOSE_LOADING"
       });
-      console.log(error.response);
       if (error.response && error.response.status === 401) {
         dispatch({
           type: "SET_LOGOUT"
         });
       }
-      if (error.response.data) {
+      if (error.response && toerror.response.data) {
         toastr.error(error.response.data.msg, "Error");
       } else {
         toastr.error("There are something wrong when save your site", "Error");
