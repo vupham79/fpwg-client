@@ -14,7 +14,8 @@ class Theme1Gallery extends React.Component {
       bodyEdit,
       bodyView,
       fromHome,
-      homeTitle
+      homeTitle,
+      homeList
     } = this.props;
 
     const useStyles = theme => ({
@@ -114,7 +115,7 @@ class Theme1Gallery extends React.Component {
         {isEdit ? (
           siteEdit && siteEdit.galleries ? (
             <GalleryComponent
-              galleries={siteEdit.galleries}
+              galleries={fromHome && homeList ? homeList : siteEdit.galleries}
               siteInfo={siteEdit.id}
             />
           ) : (
@@ -124,7 +125,7 @@ class Theme1Gallery extends React.Component {
           )
         ) : siteView && siteView.galleries ? (
           <GalleryComponent
-            galleries={siteView.galleries}
+            galleries={fromHome && homeList ? homeList : siteView.galleries}
             siteInfo={siteView.sitePath}
           />
         ) : (

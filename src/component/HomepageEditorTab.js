@@ -21,7 +21,8 @@ import {
   ExpansionPanelDetails,
   TextField,
   Dialog,
-  DialogActions
+  DialogActions,
+  CardMedia
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Add, Cancel } from "@material-ui/icons";
@@ -32,7 +33,6 @@ import { connect } from "react-redux";
 import {
   removeCover,
   savePosts,
-  setActivePost,
   setNewCover,
   setNewLogo,
   changeHomeItemName,
@@ -160,85 +160,8 @@ const GreenCheckbox = withStyles({
 })(props => <Checkbox color="default" {...props} />);
 
 const columns = ["Avatar", "Title", "Message", "Created At", "Show"];
-
-function PostsList({
-  filteredData,
-  setActivePost,
-  pageCount,
-  handlePageClick
-}) {
-  return (
-    <>
-      <TableContainer style={{ maxHeight: "70vh" }}>
-        <Table stickyHeader>
-          <TableHead>
-            <TableRow>
-              {columns.map((column, index) => (
-                <TableCell align="center" key={index}>
-                  {column}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {filteredData &&
-              filteredData.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    {(row.attachments.media_type === "photo" && (
-                      <Avatar src={row.attachments.images[0]} />
-                    )) ||
-                      (row.attachments.media_type === "video" && (
-                        <Avatar src={row.attachments.video} />
-                      )) ||
-                      (row.attachments.media_type === "album" && (
-                        <Avatar src={row.attachments.images[0]} />
-                      ))}
-                  </TableCell>
-                  <TableCell align="center">{row.title}</TableCell>
-                  <TableCell align="left">
-                    <Grid
-                      style={{
-                        maxWidth: "20rem",
-                        height: "2.5rem",
-                        overflow: "hidden"
-                      }}
-                    >
-                      {row.message}
-                    </Grid>
-                  </TableCell>
-                  <TableCell align="center">
-                    {moment(row.createdAt).format("DD-MM-YYYY")}
-                  </TableCell>
-                  <TableCell align="center">
-                    <GreenCheckbox
-                      checked={row.isActive}
-                      onChange={() => setActivePost(row, !row.isActive)}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Grid container justify="center">
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={"..."}
-          breakClassName={"break-me"}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"}
-        />
-      </Grid>
-    </>
-  );
-}
+const columnsGallery = ["Picture", "Show"];
+const columnsEvent = ["Name", "Description", "Start Time", "End Time", "Show"];
 
 const DragHandle = sortableHandle(() => (
   <DragHandleIcon style={{ color: "#555d66", cursor: "move" }} />
@@ -262,11 +185,225 @@ class HomepageEditorTab extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5,
+    itemPerPage: 2,
     currentExpandItemId: null,
     previousExpandItemId: null,
-    isExpanding: false
+    isExpanding: false,
+    currentExpandType: "",
+    currentExpandItem: null
   };
+
+  PostsList() {
+    return (
+      <>
+        <TableContainer style={{ maxHeight: "70vh" }}>
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                {columns.map((column, index) => (
+                  <TableCell align="center" key={index}>
+                    {column}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.state.filteredData &&
+                this.state.filteredData.map((row, index) => (
+                  <TableRow key={index}>
+                    <TableCell>
+                      {(row.attachments &&
+                        row.attachments.media_type === "photo" && (
+                          <Avatar src={row.attachments.images[0]} />
+                        )) ||
+                        (row.attachments &&
+                          row.attachments.media_type === "video" && (
+                            <Avatar src={row.attachments.video} />
+                          )) ||
+                        (row.attachments &&
+                          row.attachments.media_type === "album" && (
+                            <Avatar src={row.attachments.images[0]} />
+                          ))}
+                    </TableCell>
+                    <TableCell align="center">{row.title}</TableCell>
+                    <TableCell align="left">
+                      <Grid
+                        style={{
+                          maxWidth: "20rem",
+                          height: "2.5rem",
+                          overflow: "hidden"
+                        }}
+                      >
+                        {row.message}
+                      </Grid>
+                    </TableCell>
+                    <TableCell align="center">
+                      {moment(row.createdAt).format("DD-MM-YYYY")}
+                    </TableCell>
+                    <TableCell align="center">
+                      <GreenCheckbox
+                        checked={
+                          this.state.currentExpandItem.filter.items &&
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
+                            ? true
+                            : false
+                        }
+                        onChange={() => this.setActivePost(row)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Grid container justify="center">
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+          />
+        </Grid>
+      </>
+    );
+  }
+
+  EventList() {
+    return (
+      <>
+        <TableContainer style={{ maxHeight: "70vh" }}>
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                {columnsEvent.map((column, index) => (
+                  <TableCell align="center" key={index}>
+                    {column}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.state.filteredData &&
+                this.state.filteredData.map((row, index) => (
+                  <TableRow key={index}>
+                    <TableCell>{row.name}</TableCell>
+                    <TableCell align="center">{row.description}</TableCell>
+                    <TableCell align="center">
+                      {moment(row.startTime).format("DD-MM-YYYY")}
+                    </TableCell>
+                    <TableCell align="center">
+                      {row.endTime
+                        ? moment(row.endTime).format("DD-MM-YYYY")
+                        : ""}
+                    </TableCell>
+                    <TableCell align="center">
+                      <GreenCheckbox
+                        checked={
+                          this.state.currentExpandItem.filter.items &&
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
+                            ? true
+                            : false
+                        }
+                        onChange={() => this.setActivePost(row)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Grid container justify="center">
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+          />
+        </Grid>
+      </>
+    );
+  }
+
+  GalleryList() {
+    return (
+      <>
+        <TableContainer style={{ maxHeight: "70vh" }}>
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                {columnsGallery.map((column, index) => (
+                  <TableCell align="center" key={index}>
+                    {column}
+                  </TableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.state.filteredData &&
+                this.state.filteredData.map((row, index) => (
+                  <TableRow key={index}>
+                    <TableCell style={{ width: 300 }}>
+                      <CardMedia
+                        component="img"
+                        alt="Contemplative Reptile"
+                        height="200"
+                        image={row.url}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      <GreenCheckbox
+                        checked={
+                          this.state.currentExpandItem.filter.items &&
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
+                            ? true
+                            : false
+                        }
+                        onChange={() => this.setActivePost(row)}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Grid container justify="center">
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            breakClassName={"break-me"}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={"pagination"}
+            subContainerClassName={"pages pagination"}
+            activeClassName={"active"}
+          />
+        </Grid>
+      </>
+    );
+  }
 
   handleSetLatest = (item, setActiveHomeItems) => event => {
     const index =
@@ -287,46 +424,23 @@ class HomepageEditorTab extends React.Component {
     });
   };
 
-  setStatePost = posts => {
-    this.setState({ filteredData: [...posts] });
-  };
-
-  handleSave = async posts => {
-    await this.props.savePosts(posts);
+  handleSave = () => {
+    // let currentList;
+    // if (this.state.currentExpandType === "news" && this.props.posts) {
+    //   currentList = this.props.posts;
+    // }
+    // if (this.state.currentExpandType === "gallery" && this.props.site.galleries) {
+    //   currentList = this.props.site.galleries;
+    // }
+    // if (this.state.currentExpandType === "event" && this.props.site.events) {
+    //   currentList = this.props.site.events;
+    // }
+    this.props.setActiveHomeItems(this.props.site);
     this.handleOpenPostDialogue(false);
   };
 
-  handleUploadCover = async e => {
-    e.preventDefault();
-    const file = e.target.files[0];
-    //validating the file
-    //check if the file is exists
-    if (!file) {
-      toastr.error("No image is selected!", "Error");
-      return;
-    }
-    //check if the image size is larger than 1MB
-    if (file.size > 1048576) {
-      toastr.error("Image size must be less than 1MB!", "Error");
-      return;
-    }
-    if (
-      file.type === "image/jpeg" ||
-      file.type === "image/png" ||
-      file.type === "image/jpg"
-    ) {
-      this.props.setNewCover(file);
-    } else {
-      toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
-    }
-  };
-
-  setPosts = () => {
-    const { posts } = this.props;
-    const slicePosts = posts.slice(
-      this.state.offset,
-      this.state.itemPerPage + this.state.offset
-    );
+  setPosts = posts => {
+    const slicePosts = posts.slice(0, this.state.itemPerPage + 0);
     this.setState({
       filteredData: slicePosts
     });
@@ -339,18 +453,50 @@ class HomepageEditorTab extends React.Component {
     });
   };
 
-  setActivePost = (post, status) => {
-    const { posts, setActivePost } = this.props;
-    setActivePost(post, status);
-    this.setState({ filteredData: [...posts] });
+  setActivePost = row => {
+    // let index = this.props.site && this.props.site.homepage && this.props.site.homepage.find(e => e._id === this.state.currentExpandItemId);
+    let index = this.state.currentExpandItem;
+    if (!index.filter.items) {
+      index.filter.items = [];
+    }
+    //set max item allowed for selected tab
+    let maxAllowable;
+    if (this.state.currentExpandType === "news" && this.props.posts) {
+      maxAllowable = 3;
+    }
+    if (
+      this.state.currentExpandType === "gallery" &&
+      this.props.site.galleries
+    ) {
+      maxAllowable = 5;
+    }
+    if (this.state.currentExpandType === "event" && this.props.site.events) {
+      maxAllowable = 5;
+    }
+
+    if (!index.filter.items.includes(row)) {
+      if (index.filter.items.length >= maxAllowable) {
+        toastr.error("Maximum item selected");
+      } else index.filter.items = [...index.filter.items, row];
+    } else {
+      index.filter.items = index.filter.items.filter(function(post) {
+        return post._id !== row._id;
+      });
+    }
+
+    // this.props.setActiveHomeItems(this.props.site);
+    console.log(index);
+    this.setState({ currentExpandItem: index });
   };
 
-  componentDidMount() {
-    const { posts } = this.props;
-    if (posts) {
-      this.setPosts();
-    }
-  }
+  componentDidMount() {}
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (nextProps.site == this.props.site) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   renderNewCovers = () => {
     const { newCover, removeCover } = this.props;
@@ -400,9 +546,7 @@ class HomepageEditorTab extends React.Component {
   };
 
   handleChangeAbout = e => {
-    const { site, changeSiteAbout } = this.props;
-    site.about = e.target.value;
-    changeSiteAbout(site.about);
+    this.props.changeSiteAbout(e.target.value);
   };
 
   onChangeItem = ({ oldIndex, newIndex }) => {
@@ -414,26 +558,64 @@ class HomepageEditorTab extends React.Component {
     changeHomeItems(site);
   };
 
-  onChangePanel = (itemId, expand) => {
-    if (itemId !== this.state.previousExpandItemId) {
+  onChangePanel = (item, expand) => {
+    if (item.original === "news" && this.props.posts) {
+      this.setPosts(this.props.posts);
+    }
+    if (item.original === "gallery" && this.props.site.galleries) {
+      this.setPosts(this.props.site.galleries);
+    }
+    if (item.original === "event" && this.props.site.events) {
+      this.setPosts(this.props.site.events);
+    }
+    if (item._id !== this.state.previousExpandItemId) {
       this.setState({
-        currentExpandItemId: itemId,
-        previousExpandItemId: itemId,
-        isExpanding: true
+        currentExpandItemId: item._id,
+        previousExpandItemId: item._id,
+        isExpanding: true,
+        currentExpandType: item.original,
+        currentExpandItem: item
       });
     } else {
       this.setState({
-        currentExpandItemId: itemId,
-        isExpanding: expand
+        currentExpandItemId: item._id,
+        isExpanding: expand,
+        currentExpandType: item.original
       });
     }
+  };
+
+  handlePageClick = data => {
+    let currentList;
+    if (this.state.currentExpandType === "news" && this.props.posts) {
+      currentList = this.props.posts;
+    }
+    if (
+      this.state.currentExpandType === "gallery" &&
+      this.props.site.galleries
+    ) {
+      currentList = this.props.site.galleries;
+    }
+    if (this.state.currentExpandType === "event" && this.props.site.events) {
+      currentList = this.props.site.events;
+    }
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.state.itemPerPage);
+    this.setState({ offset: offset }, () => {
+      const slicePosts = currentList.slice(
+        this.state.offset,
+        this.state.itemPerPage + this.state.offset
+      );
+      this.setState({
+        filteredData: slicePosts
+      });
+    });
   };
 
   render() {
     const {
       classes,
       site,
-      posts,
       setActiveHomeItems,
       updateHomeItemValue,
       changeHomeItemName
@@ -448,13 +630,13 @@ class HomepageEditorTab extends React.Component {
         fullWidth
       >
         <Grid container alignItems="center">
-          <PostsList
-            posts={posts}
-            filteredData={this.state.filteredData}
-            setActivePost={this.setActivePost}
-            pageCount={this.state.pageCount}
-            handlePageClick={this.handlePageClick}
-          />
+          {
+            {
+              news: this.PostsList(),
+              gallery: this.GalleryList(),
+              event: this.EventList()
+            }[this.state.currentExpandType]
+          }
         </Grid>
         <DialogActions>
           <Button
@@ -467,7 +649,7 @@ class HomepageEditorTab extends React.Component {
           </Button>
           <Button
             variant="contained"
-            onClick={() => this.handleSave(posts)}
+            onClick={() => this.handleSave()}
             color={"primary"}
           >
             Save
@@ -476,7 +658,7 @@ class HomepageEditorTab extends React.Component {
       </Dialog>
     );
 
-    const postSection = (item, sectName, dialogEdit, handleOpenDiag) => (
+    const postSection = (item, sectName) => (
       <>
         <Divider
           style={{
@@ -536,12 +718,11 @@ class HomepageEditorTab extends React.Component {
             <button
               className={classes.logoButton}
               color={"default"}
-              onClick={() => handleOpenDiag(true)}
+              onClick={() => this.handleOpenPostDialogue(true)}
             >
               Select
             </button>
           </Grid>
-          {dialogEdit()}
         </Grid>
       </>
     );
@@ -558,9 +739,7 @@ class HomepageEditorTab extends React.Component {
           className={classes.gridItem}
         >
           <ExpansionPanelSummary
-            onClick={() =>
-              this.onChangePanel(item._id, !this.state.isExpanding)
-            }
+            onClick={() => this.onChangePanel(item, !this.state.isExpanding)}
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
             style={{ backgroundColor: "white" }}
@@ -575,141 +754,102 @@ class HomepageEditorTab extends React.Component {
                 </Typography>
               </Grid>
             </Grid>
-            {/* <Grid container item justify="center" xs={2} sm={12} md={2}>
-                {item.original === "home" ? (
-                  <></>
-                ) : (
-                    <IconButton
-                      style={{ color: "black" }}
-                      onClick={() =>
-                        handleChangeActive(
-                          item._id,
-                          site,
-                          setActiveNavItems,
-                          updateHomeItemValue
-                        )
-                      }
-                    >
-                      {item.isActive && item.name !== "Home" ? (
-                        <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                      ) : (
-                          <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
-                        )}
-                    </IconButton>
-                  )}
-              </Grid> */}
           </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Grid container>
-              <Grid item xs={12}>
-                <Typography className={classes.title2}>Display name</Typography>
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  InputLabelProps={{
-                    classes: {
-                      focused: classes.focused
-                    }
-                  }}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle
-                    }
-                  }}
-                  autoFocus
-                  size="small"
-                  style={{ backgroundColor: "white" }}
-                  fullWidth
-                  variant={"outlined"}
-                  value={value}
-                  onChange={e =>
-                    handleChangeNavName(
-                      item._id,
-                      site,
-                      e.target.value,
-                      changeHomeItemName
-                    )
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography className={classes.title2}>Display name</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                InputLabelProps={{
+                  classes: {
+                    focused: classes.focused
                   }
-                  maxLength="2"
-                />
-              </Grid>
-
-              {item.original === "about" && (
-                <>
-                  <Grid item xs={12} style={{ height: 20 }} />
-                  <Grid item xs={12}>
-                    <Typography className={classes.title2}>Content</Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputLabelProps={{
-                        classes: {
-                          focused: classes.focused
-                        }
-                      }}
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline,
-                          input: classes.inputTitle
-                        }
-                      }}
-                      multiline
-                      maxLength={200}
-                      // autoFocus
-                      size="small"
-                      style={{ backgroundColor: "white" }}
-                      fullWidth
-                      rows={5}
-                      spellCheck={false}
-                      variant={"outlined"}
-                      value={site.about}
-                      onChange={e => this.handleChangeAbout(e)}
-                    />
-                  </Grid>
-                </>
-              )}
-              {item.original === "news" &&
-                postSection(
-                  item,
-                  "News",
-                  postDialog,
-                  this.handleOpenPostDialogue
-                )}
-              {item.original === "event" &&
-                postSection(
-                  item,
-                  "Events",
-                  postDialog,
-                  this.handleOpenPostDialogue
-                )}
-              {item.original === "gallery" &&
-                postSection(
-                  item,
-                  "Pictures",
-                  postDialog,
-                  this.handleOpenPostDialogue
-                )}
-
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    style={{ color: "#0074aa" }}
-                    checked={!item.isActive}
-                    onChange={() =>
-                      handleChangeActive(item._id, site, setActiveHomeItems)
-                    }
-                  />
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                    input: classes.inputTitle
+                  }
+                }}
+                autoFocus
+                size="small"
+                style={{ backgroundColor: "white" }}
+                fullWidth
+                variant={"outlined"}
+                value={value}
+                onChange={e =>
+                  handleChangeNavName(
+                    item._id,
+                    site,
+                    e.target.value,
+                    changeHomeItemName
+                  )
                 }
-                label={
-                  <p style={{ fontSize: 13, color: "#555d66" }}>
-                    Hide this section
-                  </p>
-                }
+                maxLength="50"
               />
             </Grid>
-          </ExpansionPanelDetails>
+
+            {item.original === "about" && (
+              <>
+                <Grid item xs={12} style={{ height: 20 }} />
+                <Grid item xs={12}>
+                  <Typography className={classes.title2}>Content</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    InputLabelProps={{
+                      classes: {
+                        focused: classes.focused
+                      }
+                    }}
+                    InputProps={{
+                      classes: {
+                        notchedOutline: classes.notchedOutline,
+                        input: classes.inputTitle
+                      }
+                    }}
+                    multiline
+                    maxLength={200}
+                    // autoFocus
+                    size="small"
+                    style={{ backgroundColor: "white" }}
+                    fullWidth
+                    rows={5}
+                    spellCheck={false}
+                    variant={"outlined"}
+                    value={this.props.about}
+                    onChange={e => this.handleChangeAbout(e)}
+                  />
+                </Grid>
+              </>
+            )}
+
+            {
+              {
+                news: postSection(item, "News"),
+                event: postSection(item, "Events"),
+                gallery: postSection(item, "Pictures")
+              }[item.original]
+            }
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  style={{ color: "#0074aa" }}
+                  checked={!item.isActive}
+                  onChange={() =>
+                    handleChangeActive(item._id, site, setActiveHomeItems)
+                  }
+                />
+              }
+              label={
+                <p style={{ fontSize: 13, color: "#555d66" }}>
+                  Hide this section
+                </p>
+              }
+            />
+          </Grid>
         </ExpansionPanel>
       )
     );
@@ -759,7 +899,7 @@ class HomepageEditorTab extends React.Component {
           are automatically shown on your site but you can decide which content
           to display manually.
         </Grid>
-
+        {postDialog()}
         <Divider
           style={{ height: 40, width: "100%", backgroundColor: "#ffffff00" }}
         />
@@ -824,7 +964,8 @@ const mapStateToProps = state => ({
   site: state.site.siteEdit,
   newCover: state.site.newCover,
   isChanged: state.site.isChanged,
-  posts: state.post.posts
+  posts: state.post.posts,
+  about: state.site.siteEdit.about && state.site.siteEdit.about
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -832,7 +973,6 @@ const mapDispatchToProps = dispatch => ({
   setNewCover: file => dispatch(setNewCover(file)),
   removeCover: cover => dispatch(removeCover(cover)),
   savePosts: posts => dispatch(savePosts(posts)),
-  setActivePost: (post, status) => dispatch(setActivePost(post, status)),
   changeHomeItems: items => dispatch(changeHomeItems(items)),
   changeHomeItemName: site => dispatch(changeHomeItemName(site)),
   setActiveHomeItems: site => dispatch(setActiveNavItems(site)),

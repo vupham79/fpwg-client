@@ -14,7 +14,8 @@ class Theme1News extends React.Component {
       siteView,
       siteEdit,
       fromHome,
-      homeTitle
+      homeTitle,
+      homeList
     } = this.props;
 
     const useStyles = () => ({
@@ -132,7 +133,7 @@ class Theme1News extends React.Component {
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
-                  posts={siteEdit.posts}
+                  posts={(fromHome && homeList) ? homeList : siteEdit.posts}
                   siteInfo={{
                     logo: siteEdit.logo,
                     title: siteEdit.title,
@@ -150,7 +151,7 @@ class Theme1News extends React.Component {
           ) : siteView && siteView.posts ? (
             <Grid container>
               <PostTypeComponent
-                posts={siteView.posts}
+                posts={(fromHome && homeList) ? homeList : siteView.posts}
                 siteInfo={{
                   logo: siteView.logo,
                   title: siteView.title,

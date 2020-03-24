@@ -14,7 +14,8 @@ class Theme1Gallery extends React.Component {
       bodyEdit,
       bodyView,
       fromHome,
-      homeTitle
+      homeTitle,
+      homeList
     } = this.props;
 
     const useStyles = theme => ({
@@ -107,13 +108,16 @@ class Theme1Gallery extends React.Component {
       <Grid container>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "G"}</span>{fromHome ? homeTitle.substring(1) : "ALLERY"}
+            <span style={classes.changableFirst}>
+              {fromHome ? homeTitle.charAt(0) : "G"}
+            </span>
+            {fromHome ? homeTitle.substring(1) : "ALLERY"}
           </p>
         </Grid>
         {isEdit ? (
           siteEdit && siteEdit.galleries ? (
             <GalleryComponent
-              galleries={siteEdit.galleries}
+              galleries={fromHome && homeList ? homeList : siteEdit.galleries}
               siteInfo={siteEdit.id}
             />
           ) : (
@@ -123,7 +127,7 @@ class Theme1Gallery extends React.Component {
           )
         ) : siteView && siteView.galleries ? (
           <GalleryComponent
-            galleries={siteView.galleries}
+            galleries={fromHome && homeList ? homeList : siteView.galleries}
             siteInfo={siteView.sitePath}
           />
         ) : (

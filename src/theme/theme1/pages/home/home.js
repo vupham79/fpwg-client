@@ -24,7 +24,6 @@ class Theme1Home extends React.Component {
 
   render() {
     const { siteEdit, isEdit, siteView } = this.props;
-
     return (
       <Grid container>
         <Grid item xs={12}>
@@ -52,7 +51,11 @@ class Theme1Home extends React.Component {
                     key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
-                    <EventPage fromHome homeTitle={row.name} />
+                    <EventPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
                   </Grid>
                 ),
                 gallery: (
@@ -62,7 +65,11 @@ class Theme1Home extends React.Component {
                     key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
-                    <GalleryPage fromHome homeTitle={row.name} />
+                    <GalleryPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
                   </Grid>
                 ),
                 contact: (
@@ -82,7 +89,11 @@ class Theme1Home extends React.Component {
                     key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
-                    <NewsPage fromHome homeTitle={row.name} />
+                    <NewsPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
                   </Grid>
                 )
               }[row.original])
@@ -110,7 +121,11 @@ class Theme1Home extends React.Component {
                     key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
-                    <EventPage fromHome homeTitle={row.name} />
+                    <EventPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
                   </Grid>
                 ),
                 gallery: (
@@ -120,7 +135,11 @@ class Theme1Home extends React.Component {
                     key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
-                    <GalleryPage fromHome homeTitle={row.name} />
+                    <GalleryPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
                   </Grid>
                 ),
                 contact: (
@@ -140,7 +159,11 @@ class Theme1Home extends React.Component {
                     key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
-                    <NewsPage fromHome homeTitle={row.name} />
+                    <NewsPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
                   </Grid>
                 )
               }[row.original])
