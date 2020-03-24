@@ -282,8 +282,8 @@ class CustomNavBarEditor extends React.Component {
               required
               label="Sitepath"
               onChange={e => this.handleChangeSitepath(e)}
-              inputProps={{ maxLength: 30 }}
               value={sitepath ? sitepath : ""}
+              maxLength={30}
             />
             <SwitchButton
               isPublish={isPublish}

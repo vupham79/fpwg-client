@@ -30,14 +30,14 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { connect } from "react-redux";
 import {
+  applyAutoSync,
   closeDialog,
   openDialog,
+  setAutoSync,
   syncDataFromFB,
   syncEventFromFB,
   syncGalleryFromFB,
-  syncPostFromFB,
-  setAutoSync,
-  applyAutoSync
+  syncPostFromFB
 } from "../actions";
 import ButtonComponent from "./Button";
 

@@ -99,11 +99,11 @@ function EmptyListSite() {
             You don't have any FBWG sites yet.
           </Typography>
         </Grid>
-        <Grid item xs={12} className={style.body1}>
+        {/* <Grid item xs={12} className={style.body1}>
           <Typography variant="body1">Would you like to start one?</Typography>
-        </Grid>
+        </Grid> */}
       </Grid>
-      <Grid
+      {/* <Grid
         container
         justify="center"
         item
@@ -116,7 +116,7 @@ function EmptyListSite() {
             Create New
           </Button>
         </Grid>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }
@@ -288,8 +288,10 @@ class MainPage extends Component {
                                   siteName: siteEdit.title
                                 })
                           }
-                          label={`Make ${
-                            siteEdit.isPublish ? "Unpublish" : "Publish"
+                          label={`${
+                            siteEdit.isPublish
+                              ? "Unpublish Site"
+                              : "Publish Site"
                           }`}
                         />
                       </Grid>

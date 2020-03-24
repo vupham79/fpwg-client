@@ -14,9 +14,9 @@ import {
   withStyles
 } from "@material-ui/core";
 import FacebookIcon from "@material-ui/icons/Facebook";
+import Pagination from "@material-ui/lab/Pagination";
 import moment from "moment";
 import React from "react";
-import ReactPaginate from "react-paginate";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import Truncate from "react-truncate";
@@ -25,7 +25,6 @@ import {
   setPostsToSiteEdit,
   setPostsToSiteView
 } from "../../actions";
-import Pagination from "@material-ui/lab/Pagination";
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -206,6 +205,7 @@ function TypePhoto({ post, openDialog, style, dark, siteInfo }) {
       ? style.bodyEdit.fontFamily
       : style.bodyView.fontFamily
   };
+  console.log(post.message);
   return (
     <React.Fragment>
       <Grid
@@ -253,23 +253,22 @@ function TypePhoto({ post, openDialog, style, dark, siteInfo }) {
               image={post.attachments.images[0]}
             />
           </CardActionArea>
-
-          <CardContent
-            className={classes.cardContent}
-            style={{ paddingBottom: "0.5rem" }}
-          >
-            {post.message && (
-              <div style={{ padding: "0.5rem" }}>
+          {post.message && (
+            <CardContent
+              className={classes.cardContent}
+              style={{ paddingBottom: "0.5rem" }}
+            >
+              <div style={{ padding: "0.5rem", display: "block" }}>
                 <Truncate
                   style={{ ...txtStyle }}
-                  lines={1}
+                  lines={4}
                   ellipsis={<span> ...</span>}
                 >
                   {post.message}
                 </Truncate>
               </div>
-            )}
-          </CardContent>
+            </CardContent>
+          )}
         </Card>
       </Grid>
     </React.Fragment>

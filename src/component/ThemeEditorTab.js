@@ -58,31 +58,28 @@ const useStyles = theme => ({
 
 class ThemeEditorTab extends React.Component {
   state = {
-    id: this.props.site.theme.id,
+    id: this.props.site.theme.id
   };
 
-  handleChangeTheme = (selectId) => {
+  handleChangeTheme = selectId => {
     const { changeTheme, themes, site, updateNavItemValue } = this.props;
     const theme = themes.find(e => e.id === selectId);
     site.theme = theme;
     site.color = theme.mainColor;
     this.setState({
-      id: selectId,
+      id: selectId
     });
     changeTheme(site);
 
     //go to home tab of new theme
-    let searchResult = site.navItems.filter(function (nav) {
-      return nav.original == "home";
+    let searchResult = site.navItems.filter(function(nav) {
+      return nav.original === "home";
     });
     updateNavItemValue(searchResult[0].order - 1);
   };
 
   render() {
-    const {
-      themes
-    } = this.props;
-    const { id } = this.state;
+    const { themes } = this.props;
     return (
       <div style={{ padding: 20 }}>
         <Grid
@@ -98,7 +95,7 @@ class ThemeEditorTab extends React.Component {
           }}
         >
           Pick a theme for your site.
-          </Grid>
+        </Grid>
 
         <Grid container direction="column">
           {themes.map((theme, i) => {
@@ -108,7 +105,10 @@ class ThemeEditorTab extends React.Component {
                   onClick={() => this.handleChangeTheme(theme.id)}
                   variant={"outlined"}
                   style={{
-                    border: theme.id === this.props.site.theme.id ? "0.2rem solid #0074aa" : ""
+                    border:
+                      theme.id === this.props.site.theme.id
+                        ? "0.2rem solid #0074aa"
+                        : ""
                   }}
                 >
                   <CardActionArea>
@@ -143,7 +143,7 @@ const mapStateToProps = state => ({
   themes: state.theme.data,
   isShow: state.theme.isShow,
   site: state.site.siteEdit,
-  titleEdit: state.site.titleEdit,
+  titleEdit: state.site.titleEdit
 });
 
 const mapDispatchToProps = dispatch => ({
