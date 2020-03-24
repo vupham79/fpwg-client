@@ -193,6 +193,31 @@ class HomepageEditorTab extends React.Component {
     currentExpandItem: null
   };
 
+  handleUploadCover = async e => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    //validating the file
+    //check if the file is exists
+    if (!file) {
+      toastr.error("No image is selected!", "Error");
+      return;
+    }
+    //check if the image size is larger than 1MB
+    if (file.size > 1048576) {
+      toastr.error("Image size must be less than 1MB!", "Error");
+      return;
+    }
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/jpg"
+    ) {
+      this.props.setNewCover(file);
+    } else {
+      toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
+    }
+  };
+
   PostsList() {
     return (
       <>
@@ -244,9 +269,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -309,9 +334,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -372,9 +397,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -480,7 +505,7 @@ class HomepageEditorTab extends React.Component {
         toastr.error("Maximum item selected");
       } else index.filter.items = [...index.filter.items, row];
     } else {
-      index.filter.items = index.filter.items.filter(function(post) {
+      index.filter.items = index.filter.items.filter(function (post) {
         return post._id !== row._id;
       });
     }
@@ -490,7 +515,7 @@ class HomepageEditorTab extends React.Component {
     this.setState({ currentExpandItem: index });
   };
 
-  componentDidMount() {}
+  componentDidMount() { }
 
   // shouldComponentUpdate(nextProps, nextState) {
   //   if (nextProps.site == this.props.site) {
@@ -733,7 +758,7 @@ class HomepageEditorTab extends React.Component {
         <ExpansionPanel
           expanded={
             this.state.currentExpandItemId === item._id &&
-            this.state.isExpanding
+              this.state.isExpanding
               ? true
               : false
           }
