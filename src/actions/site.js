@@ -373,7 +373,7 @@ export function saveDesignSite({
           type: "SET_LOGOUT"
         });
       }
-      if (error.response && toerror.response.data) {
+      if (error.response && error.response.data) {
         toastr.error(error.response.data.msg, "Error");
       } else {
         toastr.error("There are something wrong when save your site", "Error");
