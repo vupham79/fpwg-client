@@ -302,19 +302,23 @@ class Header extends Component {
   };
 
   renderHeader = () => {
-    const { isEdit, siteEdit, siteView, classes } = this.props;
+    const {
+      isEdit,
+      siteEdit,
+      siteView,
+      classes,
+      titleEdit,
+      titleView
+    } = this.props;
+    const infoStyle = {
+      background: isEdit
+        ? hexToRGB(titleEdit.color)
+        : hexToRGB(titleView.color),
+      fontFamily: isEdit ? siteEdit.fontFamily : siteView.fontFamily
+    };
     return (
       <Grid container justify="center" className={classes.rootHeader}>
-        <Grid
-          item
-          xs={12}
-          className={classes.title}
-          style={
-            isEdit
-              ? siteEdit && siteEdit.fontFamily
-              : siteView && siteView.fontFamily
-          }
-        >
+        <Grid item xs={12} className={classes.title} style={infoStyle}>
           {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
         </Grid>
         <Grid className={classes.tab}>{this.renderNavItems()}</Grid>
@@ -499,7 +503,6 @@ class Header extends Component {
           justify="center"
           alignItems="flex-end"
           className={classes.navItem}
-          style={{ ...infoStyle }}
         >
           {this.renderHeader()}
         </Grid>

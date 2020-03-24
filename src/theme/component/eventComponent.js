@@ -3,7 +3,44 @@ import moment from "moment";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./event.module.css";
+import {
+  getDataByPageNumber,
+  setGalleriesToSiteEdit,
+  setGalleriesToSiteView
+} from "../../actions";
+import Pagination from "@material-ui/lab/Pagination";
 class EventComponent extends React.Component {
+  state = {
+    pageEdit: 1,
+    pageView: 1
+  };
+  handlePageClick = async (event, value) => {
+    const {
+      siteInfo,
+      getDataByPageNumber,
+      isEdit,
+      setGalleriesToSiteEdit,
+      setGalleriesToSiteView
+    } = this.props;
+    if (isEdit) {
+      this.setState({ pageEdit: value });
+      const data = await getDataByPageNumber({
+        siteId: siteInfo,
+        page: "gallery",
+        pageNumber: value
+      });
+      data && setGalleriesToSiteEdit(data);
+    } else {
+      this.setState({ pageView: value });
+      const data = await getDataByPageNumber({
+        sitePath: siteInfo,
+        page: "gallery",
+        pageNumber: value
+      });
+      data && setGalleriesToSiteView(data);
+    }
+  };
+
   render() {
     const {
       isEdit,
@@ -12,7 +49,9 @@ class EventComponent extends React.Component {
       titleEdit,
       titleView,
       bodyEdit,
-      bodyView
+      bodyView,
+      pageCountEdit,
+      pageCountView
     } = this.props;
 
     const useStyles = () => ({
@@ -529,6 +568,39 @@ class EventComponent extends React.Component {
                   );
                 })}
             </Grid>
+            {isEdit
+              ? pageCountEdit > 1 && (
+                  <Grid
+                    container
+                    justify="center"
+                    style={{ marginTop: "5rem" }}
+                  >
+                    <Pagination
+                      color="primary"
+                      variant="outlined"
+                      shape="rounded"
+                      count={pageCountEdit}
+                      page={this.state.pageEdit}
+                      onChange={this.handlePageClick}
+                    />
+                  </Grid>
+                )
+              : pageCountView > 1 && (
+                  <Grid
+                    container
+                    justify="center"
+                    style={{ marginTop: "5rem" }}
+                  >
+                    <Pagination
+                      color="primary"
+                      variant="outlined"
+                      shape="rounded"
+                      count={pageCountView}
+                      page={this.state.pageView}
+                      onChange={this.handlePageClick}
+                    />
+                  </Grid>
+                )}
           </Grid>
         </Grid>
       </Grid>
@@ -547,4 +619,11 @@ const mapStateToProps = state => ({
   bodyView: state.site.bodyView
 });
 
-export default connect(mapStateToProps, null)(EventComponent);
+const mapDispatchToProps = dispatch => ({
+  getDataByPageNumber: ({ sitePath, page, siteId, pageNumber }) =>
+    dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
+  setGalleriesToSiteEdit: event => dispatch(setGalleriesToSiteEdit(event)),
+  setGalleriesToSiteView: event => dispatch(setGalleriesToSiteView(event))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventComponent);
