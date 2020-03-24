@@ -365,15 +365,20 @@ export function saveDesignSite({
         toastr.error("There are something wrong when save your site", "Error");
       }
     } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      console.log(error.response);
       if (error.response && error.response.status === 401) {
         dispatch({
           type: "SET_LOGOUT"
         });
       }
-      dispatch({
-        type: "CLOSE_LOADING"
-      });
-      toastr.error("There are something wrong when save your site", "Error");
+      if (error.response.data) {
+        toastr.error(error.response.data.msg, "Error");
+      } else {
+        toastr.error("There are something wrong when save your site", "Error");
+      }
     }
   };
 }
