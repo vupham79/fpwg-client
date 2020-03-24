@@ -444,7 +444,7 @@ class PostTypeComponent extends React.Component {
           {posts &&
             posts.map(
               (post, index) =>
-                (post.attachments.media_type === "photo" && post.isActive && (
+                (post.attachments && post.attachments.media_type === "photo" && post.isActive && (
                   <TypePhoto
                     key={index}
                     post={post}
@@ -454,7 +454,7 @@ class PostTypeComponent extends React.Component {
                     siteInfo={siteInfo}
                   />
                 )) ||
-                (post.attachments.media_type === "album" && post.isActive && (
+                (post.attachments && post.attachments.media_type === "album" && post.isActive && (
                   <TypeAlbum
                     key={index}
                     post={post}
@@ -464,7 +464,7 @@ class PostTypeComponent extends React.Component {
                     siteInfo={siteInfo}
                   />
                 )) ||
-                (post.attachments.media_type === "video" && post.isActive && (
+                (post.attachments && post.attachments.media_type === "video" && post.isActive && (
                   <TypeVideo
                     key={index}
                     post={post}
@@ -481,7 +481,7 @@ class PostTypeComponent extends React.Component {
             fullWidth
             maxWidth={
               this.state.postOpen &&
-              this.state.postOpen.attachments.media_type === "album"
+                this.state.postOpen.attachments.media_type === "album"
                 ? "md"
                 : "sm"
             }
@@ -546,29 +546,29 @@ class PostTypeComponent extends React.Component {
         </Grid>
         {isEdit
           ? pageCountEdit > 1 && (
-              <Grid container justify="center" style={{ marginTop: "5rem" }}>
-                <Pagination
-                  color="primary"
-                  variant="outlined"
-                  shape="rounded"
-                  count={pageCountEdit}
-                  page={this.state.pageEdit}
-                  onChange={this.handlePageClick}
-                />
-              </Grid>
-            )
+            <Grid container justify="center" style={{ marginTop: "5rem" }}>
+              <Pagination
+                color="primary"
+                variant="outlined"
+                shape="rounded"
+                count={pageCountEdit}
+                page={this.state.pageEdit}
+                onChange={this.handlePageClick}
+              />
+            </Grid>
+          )
           : pageCountView > 1 && (
-              <Grid container justify="center" style={{ marginTop: "5rem" }}>
-                <Pagination
-                  color="primary"
-                  variant="outlined"
-                  shape="rounded"
-                  count={pageCountView}
-                  page={this.state.pageView}
-                  onChange={this.handlePageClick}
-                />
-              </Grid>
-            )}
+            <Grid container justify="center" style={{ marginTop: "5rem" }}>
+              <Pagination
+                color="primary"
+                variant="outlined"
+                shape="rounded"
+                count={pageCountView}
+                page={this.state.pageView}
+                onChange={this.handlePageClick}
+              />
+            </Grid>
+          )}
       </Container>
     );
   }
