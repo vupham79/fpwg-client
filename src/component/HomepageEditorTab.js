@@ -186,7 +186,7 @@ class HomepageEditorTab extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 8,
+    itemPerPage: 2,
     currentExpandItemId: null,
     previousExpandItemId: null,
     isExpanding: false,
@@ -331,6 +331,7 @@ class HomepageEditorTab extends React.Component {
   }
 
   GalleryList() {
+
     return (
       <>
         <TableContainer style={{ maxHeight: "70vh" }}>
@@ -465,6 +466,13 @@ class HomepageEditorTab extends React.Component {
 
 
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   if (nextProps.site == this.props.site) {
+  //     return false;
+  //   }
+  //   return true;
+  // }
 
   renderNewCovers = () => {
     const { newCover, removeCover } = this.props;
@@ -690,7 +698,7 @@ class HomepageEditorTab extends React.Component {
               Select
           </button>
           </Grid>
-          {postDialog()}
+
         </Grid>
       </>
     );
@@ -870,7 +878,7 @@ class HomepageEditorTab extends React.Component {
           are automatically shown on your site but you can decide which content
           to display manually.
         </Grid>
-
+        {postDialog()}
         <Divider
           style={{ height: 40, width: "100%", backgroundColor: "#ffffff00" }}
         />
