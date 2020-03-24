@@ -664,7 +664,7 @@ class HomepageEditorTab extends React.Component {
                       rows={5}
                       spellCheck={false}
                       variant={"outlined"}
-                      value={site.about}
+                      value={site.about ? site.about : ""}
                       onChange={e => this.handleChangeAbout(e)}
                     />
                   </Grid>
