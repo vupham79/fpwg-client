@@ -5,7 +5,7 @@ import EventComponent from "../../../component/eventComponent";
 
 class Theme1Event extends React.Component {
   render() {
-    const { isEdit, titleEdit, titleView, bodyEdit, bodyView, fromHome, homeTitle } = this.props;
+    const { isEdit, titleEdit, titleView, bodyEdit, bodyView, fromHome, homeTitle, homeList, siteEdit, siteView } = this.props;
 
     const useStyles = () => ({
       changableLink: {
@@ -102,7 +102,7 @@ class Theme1Event extends React.Component {
           </p>
         </Grid>
         <Grid item xs={12}>
-          <EventComponent />
+          <EventComponent homeList={fromHome ? homeList : (isEdit ? siteEdit.events : siteView.events)} />
         </Grid>
       </Grid>
     );
