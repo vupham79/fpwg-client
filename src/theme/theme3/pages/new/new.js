@@ -24,11 +24,11 @@ class NewPage extends Component {
             align="center"
             gutterBottom
             className={styles.title}
-            style={isEdit ? titleEdit : titleView}
+            style={(isEdit ? titleEdit : titleView, { color: "white" })}
           >
             News
           </Typography>
-          <Divider variant="fullWidth" />
+          <Divider style={{ backgroundColor: "white" }} variant="fullWidth" />
         </Grid>
         <Grid item sm={12} xs={12} container spacing={3}>
           {isEdit ? (

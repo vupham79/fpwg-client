@@ -548,7 +548,6 @@ class PostTypeComponent extends React.Component {
               <Grid container justify="center" style={{ marginTop: "5rem" }}>
                 <Pagination
                   color="primary"
-                  variant="outlined"
                   shape="rounded"
                   count={pageCountEdit}
                   page={this.state.pageEdit}
@@ -560,7 +559,6 @@ class PostTypeComponent extends React.Component {
               <Grid container justify="center" style={{ marginTop: "5rem" }}>
                 <Pagination
                   color="primary"
-                  variant="outlined"
                   shape="rounded"
                   count={pageCountView}
                   page={this.state.pageView}

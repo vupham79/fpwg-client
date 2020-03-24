@@ -39,14 +39,20 @@ class Layout extends Component {
   };
 
   render() {
-    const { isEdit } = this.props;
+    const { isEdit, siteEdit, siteView } = this.props;
 
     return (
-      <>
+      <Grid
+        style={{
+          backgroundColor: isEdit
+            ? siteEdit && siteEdit.color
+            : siteView && siteView.color
+        }}
+      >
         <Header />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
-      </>
+      </Grid>
     );
   }
 }

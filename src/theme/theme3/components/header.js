@@ -111,7 +111,7 @@ class Header extends Component {
       fontFamily: titleEdit.fontFamily,
       color: "white",
       fontSize: "1.2rem",
-      minWidth: "12vh",
+      minWidth: "20vh",
       "&:hover": {
         color: "red",
         opacity: 1
@@ -267,6 +267,7 @@ class Header extends Component {
           fullWidth
           IconComponent={"false"}
           inputProps={{ style: { ...selectStyle } }}
+          value={this.props.tabValue}
         >
           {isEdit
             ? siteEdit &&
