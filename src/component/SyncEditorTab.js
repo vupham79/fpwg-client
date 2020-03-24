@@ -17,7 +17,14 @@ import {
   Select,
   Tab,
   Tabs,
-  Typography
+  Typography,
+  TableContainer,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
+  Paper
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import {
@@ -127,6 +134,73 @@ const DialogTitle = withStyles(styles)(props => {
     </MuiDialogTitle>
   );
 });
+
+const data = [
+  {
+    createAt: "01/01/2020",
+    dataType: "Event",
+    syncType: "All",
+    status: "success"
+  },
+  {
+    createAt: "01/01/2020",
+    dataType: "Post",
+    syncType: "range Day",
+    status: "success"
+  },
+  {
+    createAt: "01/01/2020",
+    dataType: "News",
+    syncType: "range Day",
+    status: "success"
+  },
+  {
+    createAt: "01/01/2020",
+    dataType: "All",
+    syncType: "All",
+    status: "fail"
+  },
+  {
+    createAt: "01/01/2020",
+    dataType: "Gallery",
+    syncType: "range Date",
+    status: "success"
+  },
+  {
+    createAt: "01/01/2020",
+    dataType: "Gallery",
+    syncType: "All",
+    status: "success"
+  }
+];
+
+function createTable(data) {
+  return (
+    <TableContainer component={Paper}>
+      <Table size="small" stickyHeader>
+        <TableHead style={{ backgroundColor: "#ccccb3" }}>
+          <TableRow>
+            <TableCell>Sync At</TableCell>
+            <TableCell align="left">Data Type</TableCell>
+            <TableCell align="left">Sync Type</TableCell>
+            <TableCell align="left">Status</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data &&
+            data.map((row, index) => (
+              <TableRow key={index}>
+                <TableCell align="left">{row.createAt}</TableCell>
+                <TableCell align="left">{row.dataType}</TableCell>
+                <TableCell align="left">{row.syncType}</TableCell>
+                <TableCell align="left">{row.status}</TableCell>
+              </TableRow>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+  );
+}
 class SyncEditorTab extends React.Component {
   state = {
     open: false,
@@ -226,20 +300,32 @@ class SyncEditorTab extends React.Component {
       syncGalleryFromFB,
       syncPostFromFB
     } = this.props;
-    const { startDate, endDate, radioValue } = this.state;
+    const { startDate, endDate, radioValue, selectValue } = this.state;
     const msg = "Please choose the data type you want to sync.";
 
     if (radioValue === "") {
       this.setState({ msg: msg });
     } else if (radioValue === "post") {
       this.setState({ msg: "" });
-      syncPostFromFB(site.id, startDate, endDate);
+      syncPostFromFB(
+        site.id,
+        selectValue === "All" ? null : startDate,
+        selectValue === "All" ? null : endDate
+      );
     } else if (radioValue === "event") {
       this.setState({ msg: "" });
-      syncEventFromFB(site.id, startDate, endDate);
+      syncEventFromFB(
+        site.id,
+        selectValue === "All" ? null : startDate,
+        selectValue === "All" ? null : endDate
+      );
     } else if (radioValue === "gallery") {
       this.setState({ msg: "" });
-      syncGalleryFromFB(site.id, startDate, endDate);
+      syncGalleryFromFB(
+        site.id,
+        selectValue === "All" ? null : startDate,
+        selectValue === "All" ? null : endDate
+      );
     } else if (radioValue === "all") {
       this.setState({ msg: "" });
       syncDataFromFB(site.id);
@@ -314,32 +400,7 @@ class SyncEditorTab extends React.Component {
                         ? moment(site.lastSync).format("LLL")
                         : "Not yet"}
                     </DialogTitle>
-                    <DialogContent dividers>
-                      <AppBar
-                        color={"default"}
-                        variant="outlined"
-                        position="static"
-                      >
-                        <Tabs
-                          value={tab}
-                          onChange={this.selectTab}
-                          aria-label="simple tabs example"
-                        >
-                          <Tab label="Post" {...a11yProps(0)} />
-                          <Tab label="Event" {...a11yProps(1)} />
-                          <Tab label="Contact" {...a11yProps(2)} />
-                        </Tabs>
-                      </AppBar>
-                      <TabPanel value={tab} index={0}>
-                        Post
-                      </TabPanel>
-                      <TabPanel value={tab} index={1}>
-                        Event
-                      </TabPanel>
-                      <TabPanel value={tab} index={2}>
-                        Contact
-                      </TabPanel>
-                    </DialogContent>
+                    <DialogContent>{createTable(data)}</DialogContent>
                   </Dialog>
                 </Grid>
               </Grid>

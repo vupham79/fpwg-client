@@ -1,11 +1,16 @@
 import React, { Component } from "react";
 import HomePage from "./home";
 import { connect } from "react-redux";
-import { setNavItemActive, setNavItemInActive } from "../../../../actions";
+import {
+  setNavItemActive,
+  setNavItemInActive,
+  getDataByPageNumber
+} from "../../../../actions";
 
 class PreHomePageT1 extends Component {
   componentDidMount() {
     const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
+    this.setDataToSite();
     if (site && !isEdit) {
       if (site.navItems) {
         const navItem = site.navItems.find(e => e.original === "home");
@@ -17,19 +22,40 @@ class PreHomePageT1 extends Component {
       }
     }
   }
+  setDataToSite = async () => {
+    const { getDataByPageNumber, isEdit, siteView, siteEdit } = this.props;
+
+    if (isEdit) {
+      const data = await getDataByPageNumber({
+        siteId: siteEdit.id,
+        page: "home"
+      });
+      console.log(data);
+      // data && setGalleriesToSiteEdit(data);
+    } else {
+      const data = await getDataByPageNumber({
+        sitePath: siteView.sitePath,
+        page: "home"
+      });
+      // data && setGalleriesToSiteView(data);
+    }
+  };
   render() {
     return <HomePage />;
   }
 }
 
 const mapStateToProps = state => ({
-  site: state.site.siteView,
+  siteView: state.site.siteView,
+  siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit
 });
 
 const mapDispatchToProps = dispatch => ({
   setNavItemInActive: () => dispatch(setNavItemInActive()),
-  setNavItemActive: () => dispatch(setNavItemActive())
+  setNavItemActive: () => dispatch(setNavItemActive()),
+  getDataByPageNumber: ({ sitePath, page, siteId }) =>
+    dispatch(getDataByPageNumber({ sitePath, page, siteId }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreHomePageT1);
