@@ -21,7 +21,7 @@ class HomePage extends React.Component {
     const { siteEdit, siteView, isEdit } = this.props;
     return (
       <>
-        {this.renderCarousel()}
+        {/* {this.renderCarousel()} */}
         {isEdit
           ? siteEdit &&
             siteEdit.navItems &&

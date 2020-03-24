@@ -108,16 +108,33 @@ class Theme1Gallery extends React.Component {
       <Grid container>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "G"}</span>{fromHome ? homeTitle.substring(1) : "ALLERY"}
+            <span style={classes.changableFirst}>
+              {fromHome ? homeTitle.charAt(0) : "G"}
+            </span>
+            {fromHome ? homeTitle.substring(1) : "ALLERY"}
           </p>
         </Grid>
-
         {isEdit ? (
-          <GalleryComponent galleries={(fromHome && homeList) ? homeList : siteEdit.galleries} />
+          siteEdit && siteEdit.galleries ? (
+            <GalleryComponent
+              galleries={fromHome && homeList ? homeList : siteEdit.galleries}
+              siteInfo={siteEdit.id}
+            />
+          ) : (
+            <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+              Current no image to show .
+            </p>
+          )
+        ) : siteView && siteView.galleries ? (
+          <GalleryComponent
+            galleries={fromHome && homeList ? homeList : siteView.galleries}
+            siteInfo={siteView.sitePath}
+          />
         ) : (
-            <GalleryComponent galleries={(fromHome && homeList) ? homeList : siteView.galleries} />
-          )}
-
+          <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+            Current no image to show .
+          </p>
+        )}
       </Grid>
     );
   }

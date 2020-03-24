@@ -179,17 +179,19 @@ function TypeAlbum({ post, openDialog, style, dark, siteInfo }) {
               </Grid>
             </CardMedia>
           </CardActionArea>
-          <CardContent className={classes.cardContent}>
-            <div style={{ padding: "0.5rem" }}>
-              <Truncate
-                style={{ ...txtStyle }}
-                lines={1}
-                ellipsis={<span> ...</span>}
-              >
-                {post.message}
-              </Truncate>
-            </div>
-          </CardContent>
+          {post.message && (
+            <CardContent className={classes.cardContent}>
+              <div style={{ padding: "0.5rem" }}>
+                <Truncate
+                  style={{ ...txtStyle }}
+                  lines={1}
+                  ellipsis={<span> ...</span>}
+                >
+                  {post.message}
+                </Truncate>
+              </div>
+            </CardContent>
+          )}
         </Card>
       </Grid>
     </React.Fragment>
@@ -252,23 +254,22 @@ function TypePhoto({ post, openDialog, style, dark, siteInfo }) {
               image={post.attachments.images[0]}
             />
           </CardActionArea>
-
-          <CardContent
-            className={classes.cardContent}
-            style={{ paddingBottom: "0.5rem" }}
-          >
-            {post.message && (
-              <div style={{ padding: "0.5rem" }}>
+          {post.message && (
+            <CardContent
+              className={classes.cardContent}
+              style={{ paddingBottom: "0.5rem" }}
+            >
+              <div style={{ padding: "0.5rem", display: "block" }}>
                 <Truncate
                   style={{ ...txtStyle }}
-                  lines={1}
+                  lines={4}
                   ellipsis={<span> ...</span>}
                 >
                   {post.message}
                 </Truncate>
               </div>
-            )}
-          </CardContent>
+            </CardContent>
+          )}
         </Card>
       </Grid>
     </React.Fragment>
@@ -333,9 +334,8 @@ function TypeVideo({ post, openDialog, style, dark, siteInfo }) {
               height="50vh"
             />
           </CardActionArea>
-
-          <CardContent className={classes.cardContent}>
-            {post.message && (
+          {post.message && (
+            <CardContent className={classes.cardContent}>
               <div style={{ padding: "0.5rem" }}>
                 <Truncate
                   style={{ ...txtStyle }}
@@ -345,8 +345,8 @@ function TypeVideo({ post, openDialog, style, dark, siteInfo }) {
                   {post.message}
                 </Truncate>
               </div>
-            )}
-          </CardContent>
+            </CardContent>
+          )}
         </Card>
       </Grid>
     </React.Fragment>
@@ -388,10 +388,6 @@ class PostTypeComponent extends React.Component {
       });
       data && setPostToSiteView(data);
     }
-  };
-
-  handleClick = (event, value) => {
-    this.setState({ page: value });
   };
 
   handleOpen = post => {
@@ -582,8 +578,8 @@ const mapStateToProps = state => ({
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
   bodyView: state.site.bodyView,
-  pageCountEdit: state.post.pageCountEdit,
-  pageCountView: state.post.pageCountView
+  pageCountEdit: state.post.pageCountNewsEdit,
+  pageCountView: state.post.pageCountNewsView
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -90,7 +90,7 @@ export const setPostsToSiteView = posts => {
       payload: posts.data.posts
     });
     dispatch({
-      type: "SET_PAGECOUNT_VIEW",
+      type: "SET_PAGECOUNT_NEWS_VIEW",
       payload: posts.pageCount
     });
   };
@@ -103,8 +103,60 @@ export const setPostsToSiteEdit = posts => {
       payload: posts.data.posts
     });
     dispatch({
-      type: "SET_PAGECOUNT_EDIT",
+      type: "SET_PAGECOUNT_NEWS_EDIT",
       payload: posts.pageCount
+    });
+  };
+};
+
+export const setGalleriesToSiteView = galleries => {
+  return dispatch => {
+    dispatch({
+      type: "SET_SITEVIEW_GALLERIES",
+      payload: galleries.data
+    });
+    dispatch({
+      type: "SET_PAGECOUNT_GALLERIES_VIEW",
+      payload: galleries.pageCount
+    });
+  };
+};
+
+export const setGalleriesToSiteEdit = galleries => {
+  return dispatch => {
+    dispatch({
+      type: "SET_SITEEDIT_GALLERIES",
+      payload: galleries.data
+    });
+    dispatch({
+      type: "SET_PAGECOUNT_GALLERIES_EDIT",
+      payload: galleries.pageCount
+    });
+  };
+};
+
+export const setEventsToSiteView = event => {
+  return dispatch => {
+    dispatch({
+      type: "SET_SITEVIEW_EVENTS",
+      payload: event.events
+    });
+    dispatch({
+      type: "SET_PAGECOUNT_EVENT_VIEW",
+      payload: event.pageCount
+    });
+  };
+};
+
+export const setEventsToSiteEdit = event => {
+  return dispatch => {
+    dispatch({
+      type: "SET_SITEEDIT_EVENTS",
+      payload: event.events
+    });
+    dispatch({
+      type: "SET_PAGECOUNT_EVENT_EDIT",
+      payload: event.pageCount
     });
   };
 };

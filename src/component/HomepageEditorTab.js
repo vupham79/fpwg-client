@@ -511,7 +511,6 @@ class HomepageEditorTab extends React.Component {
     }
 
     // this.props.setActiveHomeItems(this.props.site);
-    console.log(index);
     this.setState({ currentExpandItem: index });
   };
 
@@ -740,7 +739,7 @@ class HomepageEditorTab extends React.Component {
             Select which content from Facebook you want to see on your homepage.
           </Grid>
 
-          <Grid item xs={12} justify={"center"} style={{ marginTop: "1rem" }}>
+          <Grid item xs={12} style={{ marginTop: "1rem" }}>
             <button
               className={classes.logoButton}
               color={"default"}
@@ -765,13 +764,8 @@ class HomepageEditorTab extends React.Component {
           className={classes.gridItem}
         >
           <ExpansionPanelSummary
-            expandIcon={
-              <ExpandMoreIcon
-                onClick={() =>
-                  this.onChangePanel(item, !this.state.isExpanding)
-                }
-              />
-            }
+            expandIcon={<ExpandMoreIcon />}
+            onClick={() => this.onChangePanel(item, !this.state.isExpanding)}
             aria-controls="panel1a-content"
             style={{ backgroundColor: "white" }}
           >
@@ -800,11 +794,11 @@ class HomepageEditorTab extends React.Component {
                       focused: classes.focused
                     }
                   }}
+                  maxLength={50}
                   InputProps={{
                     classes: {
                       notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle,
-                      maxLength: 50
+                      input: classes.inputTitle
                     }
                   }}
                   autoFocus
@@ -840,11 +834,11 @@ class HomepageEditorTab extends React.Component {
                       InputProps={{
                         classes: {
                           notchedOutline: classes.notchedOutline,
-                          input: classes.inputTitle,
-                          maxLength: 200
+                          input: classes.inputTitle
                         }
                       }}
                       multiline
+                      maxLength={200}
                       // autoFocus
                       size="small"
                       style={{ backgroundColor: "white" }}
@@ -852,7 +846,7 @@ class HomepageEditorTab extends React.Component {
                       rows={5}
                       spellCheck={false}
                       variant={"outlined"}
-                      value={this.props.about}
+                      value={this.props.about ? this.props.about : ""}
                       onChange={e => this.handleChangeAbout(e)}
                     />
                   </Grid>

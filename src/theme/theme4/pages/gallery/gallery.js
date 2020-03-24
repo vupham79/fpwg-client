@@ -26,7 +26,7 @@ class Theme1Gallery extends React.Component {
         textAlign: "center",
         fontSize: 25,
         paddingBottom: 20,
-        textDecoration: "underline",
+        textDecoration: "underline"
       },
       changableBody: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
@@ -112,12 +112,27 @@ class Theme1Gallery extends React.Component {
             {fromHome ? homeTitle : "GALLERY"}
           </p>
         </Grid>
-
         {isEdit ? (
-          <GalleryComponent galleries={(fromHome && homeList) ? homeList : siteEdit.galleries} />
+          siteEdit && siteEdit.galleries ? (
+            <GalleryComponent
+              galleries={fromHome && homeList ? homeList : siteEdit.galleries}
+              siteInfo={siteEdit.id}
+            />
+          ) : (
+            <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+              Current no image to show .
+            </p>
+          )
+        ) : siteView && siteView.galleries ? (
+          <GalleryComponent
+            galleries={fromHome && homeList ? homeList : siteView.galleries}
+            siteInfo={siteView.sitePath}
+          />
         ) : (
-            <GalleryComponent galleries={(fromHome && homeList) ? homeList : siteView.galleries} />
-          )}
+          <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+            Current no image to show .
+          </p>
+        )}
       </Grid>
     );
   }

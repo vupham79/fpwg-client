@@ -196,7 +196,6 @@ export function applyAutoSync(id, autoSync) {
       type: "SHOW_LOADING"
     });
     try {
-      console.log(autoSync);
       const data = await axios({
         method: "patch",
         url: "/site/autoSync",

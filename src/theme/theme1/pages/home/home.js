@@ -5,10 +5,10 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import BannerComponent from "../../../component/bannerComponent";
+import AboutPage from "../about/about";
+import ContactPage from "../contact/contact";
 import EventPage from "../event/event";
 import GalleryPage from "../gallery/gallery";
-import ContactPage from "../contact/contact";
-import AboutPage from "../about/about";
 import NewsPage from "../new/new";
 
 class Theme1Home extends React.Component {
@@ -32,12 +32,13 @@ class Theme1Home extends React.Component {
         {isEdit &&
           siteEdit &&
           siteEdit.homepage.map(
-            row =>
+            (row, index) =>
               ({
                 about: (
                   <Grid
                     container
                     item
+                    key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <AboutPage fromHome homeTitle={row.name} />
@@ -47,6 +48,7 @@ class Theme1Home extends React.Component {
                   <Grid
                     container
                     item
+                    key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <EventPage
@@ -60,6 +62,7 @@ class Theme1Home extends React.Component {
                   <Grid
                     container
                     item
+                    key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <GalleryPage
@@ -73,6 +76,7 @@ class Theme1Home extends React.Component {
                   <Grid
                     container
                     item
+                    key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <ContactPage fromHome homeTitle={row.name} />
@@ -82,6 +86,7 @@ class Theme1Home extends React.Component {
                   <Grid
                     container
                     item
+                    key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <NewsPage
@@ -97,12 +102,13 @@ class Theme1Home extends React.Component {
         {!isEdit &&
           siteView &&
           siteView.homepage.map(
-            row =>
+            (row, index) =>
               ({
                 about: (
                   <Grid
                     container
                     item
+                    key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <AboutPage fromHome homeTitle={row.name} />
@@ -112,6 +118,7 @@ class Theme1Home extends React.Component {
                   <Grid
                     container
                     item
+                    key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <EventPage
@@ -125,6 +132,7 @@ class Theme1Home extends React.Component {
                   <Grid
                     container
                     item
+                    key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <GalleryPage
@@ -138,6 +146,7 @@ class Theme1Home extends React.Component {
                   <Grid
                     container
                     item
+                    key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <ContactPage fromHome homeTitle={row.name} />
@@ -147,6 +156,7 @@ class Theme1Home extends React.Component {
                   <Grid
                     container
                     item
+                    key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <NewsPage
