@@ -1,9 +1,13 @@
 import React from "react";
 import CarouselImages from "../../components/carousel";
-import New from "../../pages/new";
-import EventPage from "../../pages/event";
+import NewsPage from "../new/new";
+import AboutPage from "../about/about";
+import EventPage from "../event/event";
+import GalleryPage from "../gallery/gallery";
+import ContactPage from "../contact/contact";
 import { connect } from "react-redux";
 import BannerComponent from "../../../component/bannerComponent";
+import { Grid } from "@material-ui/core";
 
 class HomePage extends React.Component {
   renderCarousel = () => {
@@ -22,32 +26,148 @@ class HomePage extends React.Component {
   render() {
     const { siteEdit, siteView, isEdit } = this.props;
     return (
-      <>
+      <Grid container>
         <BannerComponent bannerType={2} />
-        {isEdit
-          ? siteEdit &&
-          siteEdit.navItems &&
-          siteEdit.navItems.map(
-            (item, index) =>
-              (item.original === "news" && item.isActive && (
-                <New key={index} />
-              )) ||
-              (item.original === "event" && item.isActive && (
-                <EventPage key={index} />
-              ))
-          )
-          : siteView &&
-          siteView.navItems &&
-          siteView.navItems.map(
-            (item, index) =>
-              (item.original === "news" && item.isActive && (
-                <New key={index} />
-              )) ||
-              (item.original === "event" && item.isActive && (
-                <EventPage key={index} />
-              ))
+        {isEdit &&
+          siteEdit &&
+          siteEdit.homepage.map(
+            (row, index) =>
+              ({
+                about: (
+                  <Grid
+                    container
+                    item
+                    key={index}
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <AboutPage fromHome homeTitle={row.name} />
+                  </Grid>
+                ),
+                event: (
+                  <Grid
+                    container
+                    item
+                    key={index}
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <EventPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
+                  </Grid>
+                ),
+                gallery: (
+                  <Grid
+                    container
+                    item
+                    key={index}
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <GalleryPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
+                  </Grid>
+                ),
+                contact: (
+                  <Grid
+                    container
+                    item
+                    key={index}
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <ContactPage fromHome homeTitle={row.name} />
+                  </Grid>
+                ),
+                news: (
+                  <Grid
+                    container
+                    item
+                    key={index}
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <NewsPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
+                  </Grid>
+                )
+              }[row.original])
           )}
-      </>
+
+        {!isEdit &&
+          siteView &&
+          siteView.homepage.map(
+            (row, index) =>
+              ({
+                about: (
+                  <Grid
+                    container
+                    item
+                    key={index}
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <AboutPage fromHome homeTitle={row.name} />
+                  </Grid>
+                ),
+                event: (
+                  <Grid
+                    container
+                    item
+                    key={index}
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <EventPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
+                  </Grid>
+                ),
+                gallery: (
+                  <Grid
+                    container
+                    item
+                    key={index}
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <GalleryPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
+                  </Grid>
+                ),
+                contact: (
+                  <Grid
+                    container
+                    item
+                    key={index}
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <ContactPage fromHome homeTitle={row.name} />
+                  </Grid>
+                ),
+                news: (
+                  <Grid
+                    container
+                    item
+                    key={index}
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <NewsPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
+                  </Grid>
+                )
+              }[row.original])
+          )}
+      </Grid>
     );
   }
 }
