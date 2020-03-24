@@ -422,8 +422,8 @@ class HomepageEditorTab extends React.Component {
 
   setPosts = (posts) => {
     const slicePosts = posts.slice(
-      this.state.offset,
-      this.state.itemPerPage + this.state.offset
+      0,
+      this.state.itemPerPage + 0
     );
     this.setState({
       filteredData: slicePosts
