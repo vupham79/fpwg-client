@@ -31,11 +31,11 @@ class ContactPage extends React.Component {
             align="center"
             gutterBottom
             className={styles.title}
-            style={isEdit ? titleEdit : titleView}
+            style={(isEdit ? titleEdit : titleView, { color: "white" })}
           >
             Contacts
           </Typography>
-          <Divider variant="fullWidth" />
+          <Divider style={{ backgroundColor: "white" }} variant="fullWidth" />
         </Grid>
         <Grid
           item
@@ -49,17 +49,21 @@ class ContactPage extends React.Component {
             <Typography
               variant="h4"
               className={styles.child_title}
-              style={isEdit ? bodyEdit : bodyView}
+              style={(isEdit ? bodyEdit : bodyView, { color: "white" })}
             >
-              <Box lineHeight={3}>Contacts</Box>
+              Contacts
             </Typography>
-            <Divider variant="fullWidth" className={styles.divider} />
+            <Divider
+              variant="fullWidth"
+              style={{ backgroundColor: "white" }}
+              className={styles.divider}
+            />
             <Typography
               variant="h5"
               className={styles.child_title}
-              style={isEdit ? bodyEdit : bodyView}
+              style={(isEdit ? bodyEdit : bodyView, { color: "white" })}
             >
-              <Box lineHeight={3}>Address</Box>
+              Address
             </Typography>
             <Typography
               variant="body1"
@@ -71,77 +75,18 @@ class ContactPage extends React.Component {
             <Typography
               variant="h5"
               className={styles.child_title}
-              style={isEdit ? bodyEdit : bodyView}
+              style={(isEdit ? bodyEdit : bodyView, { color: "white" })}
             >
-              <Box lineHeight={3}>Phone</Box>
+              Phone
             </Typography>
             <Typography
               variant="body1"
               className={styles.child_content}
-              style={isEdit ? bodyEdit : bodyView}
+              style={(isEdit ? bodyEdit : bodyView, { color: "white" })}
             >
               {isEdit ? siteEdit.phone : siteView.phone}
             </Typography>
           </Grid>
-        </Grid>
-        <Grid
-          item
-          sm={5}
-          xs={10}
-          container
-          justify="flex-start"
-          className={styles.child}
-        >
-          <Grid item sm={12} xs={12}>
-            <Typography
-              variant="h4"
-              className={styles.child_title}
-              style={isEdit ? bodyEdit : bodyView}
-            >
-              <Box lineHeight={3}>Message</Box>
-            </Typography>
-            <Divider variant="fullWidth" className={styles.divider} />
-          </Grid>
-          <form noValidate autoComplete="off">
-            <TextField
-              className={styles.txtInput}
-              label="Name"
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
-              className={styles.txtInput}
-              label="Email"
-              variant="outlined"
-              fullWidth
-            />
-            <TextField
-              className={styles.txtInput}
-              label="Phone"
-              variant="outlined"
-              fullWidth
-            />
-
-            <TextField
-              className={styles.txtInput}
-              label="Message"
-              variant="outlined"
-              multiline
-              rows="10"
-              fullWidth
-            />
-
-              <Button className={styles.btn_send}>
-                <Typography
-                  align="center"
-                  variant="h6"
-                  className={styles.btn_content}
-                  style={isEdit ? bodyEdit : bodyView}
-                >
-                  Send Message
-                </Typography>
-              </Button>
-          </form>
         </Grid>
       </Grid>
     );

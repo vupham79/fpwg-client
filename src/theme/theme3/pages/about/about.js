@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Divider } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./about.module.css";
@@ -24,10 +24,11 @@ class AboutPage extends React.Component {
               variant="h4"
               align="center"
               gutterBottom
-              style={isEdit ? titleEdit : titleView}
+              style={(isEdit ? titleEdit : titleView, { color: "white" })}
             >
               About
             </Typography>
+            <Divider style={{ backgroundColor: "white" }} variant="fullWidth" />
           </Grid>
         ) : (
           <></>
@@ -36,7 +37,7 @@ class AboutPage extends React.Component {
           <Typography
             variant="body1"
             color="textPrimary"
-            style={isEdit ? bodyEdit : bodyView}
+            style={(isEdit ? bodyEdit : bodyView, { color: "white" })}
             className={styles.about}
           >
             {isEdit

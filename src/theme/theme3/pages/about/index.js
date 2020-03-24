@@ -18,7 +18,7 @@ class PreAboutPage extends Component {
     }
   }
   render() {
-    return <AboutPage />;
+    return <AboutPage showTitle={true} />;
   }
 }
 

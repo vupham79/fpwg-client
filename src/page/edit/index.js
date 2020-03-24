@@ -15,7 +15,6 @@ class PreEditPage extends React.Component {
     const { isLogin, setEditOn } = this.props;
     if (isLogin) {
       this.getAllThemes();
-      this.getSite();
       setEditOn();
     }
   }
@@ -23,22 +22,6 @@ class PreEditPage extends React.Component {
   getAllThemes = async () => {
     const { getAllThemes } = this.props;
     await getAllThemes();
-  };
-
-  getSite = async () => {
-    const { getSiteById, setSiteEdit, currentEditId, getAllPost } = this.props;
-    const data = await getSiteById(currentEditId);
-    if (data) {
-      const titleStyle = {
-        fontFamily: data.fontTitle,
-        color: data.color
-      };
-      const bodyStyle = {
-        fontFamily: data.fontBody
-      };
-      await setSiteEdit(data, titleStyle, bodyStyle);
-      data.posts && getAllPost(data.posts);
-    }
   };
 
   render() {

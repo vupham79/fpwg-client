@@ -17,14 +17,16 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
     <>
       <Grid
         item
-        sm={3}
+        sm={5}
+        md={3}
         xs={8}
         container
         justify="center"
         className={styles.event_body}
+        style={{ backgroundColor: "white" }}
       >
         <Grid item sm={12} container>
-          <Grid item sm={3} xs={6}>
+          <Grid item sm={3} md={2} xs={6}>
             <div className={styles.image_page}>
               <img
                 alt=""
@@ -92,7 +94,7 @@ class EventPage extends React.Component {
             variant="h4"
             align="center"
             gutterBottom
-            style={isEdit ? titleEdit : titleView}
+            style={(isEdit ? titleEdit : titleView, { color: "white" })}
           >
             Events
           </Typography>
