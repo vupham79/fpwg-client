@@ -96,7 +96,7 @@ class Theme1Event extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50 }}>
+      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50, minHeight: "50vh" }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
             {fromHome ? homeTitle : "EVENTS"}

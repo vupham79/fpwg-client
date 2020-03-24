@@ -96,7 +96,7 @@ class Theme1Home extends React.Component {
     return (
       <Grid
         container
-        style={{ backgroundColor: "#1a1919", paddingBottom: 100 }}
+        style={{ backgroundColor: "#1a1919", paddingBottom: 100, minHeight: "50vh" }}
       >
         <Grid item xs={12}>
           <BannerComponent bannerType={1} />

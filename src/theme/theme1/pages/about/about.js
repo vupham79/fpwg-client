@@ -112,7 +112,7 @@ class Theme1About extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container>
+      <Grid container style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
             <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "A"}</span>{fromHome ? homeTitle.substring(1) : "BOUT"}

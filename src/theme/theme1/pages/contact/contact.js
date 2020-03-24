@@ -140,7 +140,7 @@ class Theme1Contact extends React.Component {
       ))
     );
     return (
-      <Grid container justify="center">
+      <Grid container justify="center" style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
             <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "C"}</span>{fromHome ? homeTitle.substring(1) : "ONTACT"}
