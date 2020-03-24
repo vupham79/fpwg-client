@@ -1,15 +1,13 @@
-import { Grid, Typography, Divider } from "@material-ui/core";
+import { Divider, Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import PostTypeComponent from "../../../component/postsType";
 import BannerComponent from "../../../component/bannerComponent";
+import ContactPage from "../contact/contact";
 import EventPage from "../event/event";
 import GalleryPage from "../gallery/gallery";
-import ContactPage from "../contact/contact";
 import NewsPage from "../new/new";
 
 class Theme1Home extends React.Component {
-
   render() {
     const {
       siteEdit,
@@ -18,8 +16,7 @@ class Theme1Home extends React.Component {
       titleEdit,
       siteView,
       bodyEdit,
-      bodyView,
-      posts
+      bodyView
     } = this.props;
 
     const useStyles = () => ({
@@ -105,74 +102,161 @@ class Theme1Home extends React.Component {
           <BannerComponent bannerType={1} />
         </Grid>
 
-        {isEdit && siteEdit && siteEdit.homepage.map((row) => (
-          {
-            "about":
-              <Grid container item xs={12} style={{ display: row.isActive ? "block" : "none", minHeight: 200, paddingTop: 50 }}>
-                <Grid item xs={12}>
-                  <p style={classes.changableBody3}>
-                    {siteEdit && siteEdit.about}
-                    {!siteEdit.about && "Welcome to our website!"}
-                  </p>
-                </Grid>
-                <Grid item xs={12}>
-                  <Divider style={{ backgroundColor: "#b3b2b2" }} />
-                </Grid>
-              </Grid>,
-            "event":
-              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <EventPage fromHome homeTitle={row.name} homeList={row.filter.items} />
-              </Grid>,
-            "gallery":
-              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <GalleryPage fromHome homeTitle={row.name} homeList={row.filter.items} />
-              </Grid>,
-            "contact":
-              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <ContactPage fromHome homeTitle={row.name} />
-              </Grid>,
-            "news":
-              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <NewsPage fromHome homeTitle={row.name} homeList={row.filter.items} />
-              </Grid>,
-          }[row.original]
-        ))}
+        {isEdit &&
+          siteEdit &&
+          siteEdit.homepage.map(
+            row =>
+              ({
+                about: (
+                  <Grid
+                    container
+                    item
+                    xs={12}
+                    style={{
+                      display: row.isActive ? "block" : "none",
+                      minHeight: 200,
+                      paddingTop: 50
+                    }}
+                  >
+                    <Grid item xs={12}>
+                      <p style={classes.changableBody3}>
+                        {siteEdit && siteEdit.about}
+                        {!siteEdit.about && "Welcome to our website!"}
+                      </p>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Divider style={{ backgroundColor: "#b3b2b2" }} />
+                    </Grid>
+                  </Grid>
+                ),
+                event: (
+                  <Grid
+                    container
+                    item
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <EventPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
+                  </Grid>
+                ),
+                gallery: (
+                  <Grid
+                    container
+                    item
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <GalleryPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
+                  </Grid>
+                ),
+                contact: (
+                  <Grid
+                    container
+                    item
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <ContactPage fromHome homeTitle={row.name} />
+                  </Grid>
+                ),
+                news: (
+                  <Grid
+                    container
+                    item
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <NewsPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
+                  </Grid>
+                )
+              }[row.original])
+          )}
 
-
-        {!isEdit && siteView && siteView.homepage.map((row) => (
-          {
-            "about":
-              <Grid container item xs={12} style={{ display: row.isActive ? "block" : "none", minHeight: 200, paddingTop: 50 }}>
-                <Grid item xs={12}>
-                  <p style={classes.changableBody3}>
-                    {siteView && siteView.about}
-                    {!siteView.about && "Welcome to our website!"}
-                  </p>
-                </Grid>
-                <Grid item xs={12}>
-                  <Divider style={{ backgroundColor: "#b3b2b2" }} />
-                </Grid>
-              </Grid>,
-            "event":
-              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <EventPage fromHome homeTitle={row.name} homeList={row.filter.items} />
-              </Grid>,
-            "gallery":
-              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <GalleryPage fromHome homeTitle={row.name} homeList={row.filter.items} />
-              </Grid>,
-            "contact":
-              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <ContactPage fromHome homeTitle={row.name} />
-              </Grid>,
-            "news":
-              <Grid container item style={{ display: row.isActive ? "block" : "none" }}>
-                <NewsPage fromHome homeTitle={row.name} homeList={row.filter.items} />
-              </Grid>,
-          }[row.original]
-        ))}
-
-
+        {!isEdit &&
+          siteView &&
+          siteView.homepage.map(
+            row =>
+              ({
+                about: (
+                  <Grid
+                    container
+                    item
+                    xs={12}
+                    style={{
+                      display: row.isActive ? "block" : "none",
+                      minHeight: 200,
+                      paddingTop: 50
+                    }}
+                  >
+                    <Grid item xs={12}>
+                      <p style={classes.changableBody3}>
+                        {siteView && siteView.about}
+                        {!siteView.about && "Welcome to our website!"}
+                      </p>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Divider style={{ backgroundColor: "#b3b2b2" }} />
+                    </Grid>
+                  </Grid>
+                ),
+                event: (
+                  <Grid
+                    container
+                    item
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <EventPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
+                  </Grid>
+                ),
+                gallery: (
+                  <Grid
+                    container
+                    item
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <GalleryPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
+                  </Grid>
+                ),
+                contact: (
+                  <Grid
+                    container
+                    item
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <ContactPage fromHome homeTitle={row.name} />
+                  </Grid>
+                ),
+                news: (
+                  <Grid
+                    container
+                    item
+                    style={{ display: row.isActive ? "block" : "none" }}
+                  >
+                    <NewsPage
+                      fromHome
+                      homeTitle={row.name}
+                      homeList={row.filter.items}
+                    />
+                  </Grid>
+                )
+              }[row.original])
+          )}
       </Grid>
     );
   }
