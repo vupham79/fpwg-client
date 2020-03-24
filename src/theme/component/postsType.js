@@ -441,39 +441,40 @@ class PostTypeComponent extends React.Component {
           justify="center"
           style={{ marginTop: "5rem" }}
         >
-          {posts.map(
-            (post, index) =>
-              (post.attachments.media_type === "photo" && post.isActive && (
-                <TypePhoto
-                  key={index}
-                  post={post}
-                  style={style}
-                  dark={this.props.darkMode}
-                  openDialog={this.handleOpen}
-                  siteInfo={siteInfo}
-                />
-              )) ||
-              (post.attachments.media_type === "album" && post.isActive && (
-                <TypeAlbum
-                  key={index}
-                  post={post}
-                  style={style}
-                  dark={this.props.darkMode}
-                  openDialog={this.handleOpen}
-                  siteInfo={siteInfo}
-                />
-              )) ||
-              (post.attachments.media_type === "video" && post.isActive && (
-                <TypeVideo
-                  key={index}
-                  post={post}
-                  style={style}
-                  dark={this.props.darkMode}
-                  openDialog={this.handleOpenVideo}
-                  siteInfo={siteInfo}
-                />
-              ))
-          )}
+          {posts &&
+            posts.map(
+              (post, index) =>
+                (post.attachments.media_type === "photo" && post.isActive && (
+                  <TypePhoto
+                    key={index}
+                    post={post}
+                    style={style}
+                    dark={this.props.darkMode}
+                    openDialog={this.handleOpen}
+                    siteInfo={siteInfo}
+                  />
+                )) ||
+                (post.attachments.media_type === "album" && post.isActive && (
+                  <TypeAlbum
+                    key={index}
+                    post={post}
+                    style={style}
+                    dark={this.props.darkMode}
+                    openDialog={this.handleOpen}
+                    siteInfo={siteInfo}
+                  />
+                )) ||
+                (post.attachments.media_type === "video" && post.isActive && (
+                  <TypeVideo
+                    key={index}
+                    post={post}
+                    style={style}
+                    dark={this.props.darkMode}
+                    openDialog={this.handleOpenVideo}
+                    siteInfo={siteInfo}
+                  />
+                ))
+            )}
           <Dialog
             open={this.state.open}
             onClose={this.handleClose}
