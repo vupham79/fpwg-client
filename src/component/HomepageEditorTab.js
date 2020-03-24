@@ -298,7 +298,7 @@ class HomepageEditorTab extends React.Component {
                       {moment(row.startTime).format("DD-MM-YYYY")}
                     </TableCell>
                     <TableCell align="center">
-                      {moment(row.endTime).format("DD-MM-YYYY")}
+                      {row.endTime ? moment(row.endTime).format("DD-MM-YYYY") : ""}
                     </TableCell>
                     <TableCell align="center">
                       <GreenCheckbox
@@ -443,9 +443,22 @@ class HomepageEditorTab extends React.Component {
     if (!index.filter.items) {
       index.filter.items = [];
     }
+    //set max item allowed for selected tab
+    let maxAllowable;
+    if (this.state.currentExpandType === "news" && this.props.posts) {
+      maxAllowable = 3;
+    }
+    if (this.state.currentExpandType === "gallery" && this.props.site.galleries) {
+      maxAllowable = 5;
+    }
+    if (this.state.currentExpandType === "event" && this.props.site.events) {
+      maxAllowable = 5;
+    }
+
+
 
     if (!index.filter.items.includes(row)) {
-      if (index.filter.items.length >= 3) {
+      if (index.filter.items.length >= maxAllowable) {
         toastr.error("Maximum item selected");
       }
       else index.filter.items = [...index.filter.items, row];
