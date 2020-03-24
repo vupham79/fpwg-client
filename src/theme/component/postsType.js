@@ -179,17 +179,19 @@ function TypeAlbum({ post, openDialog, style, dark, siteInfo }) {
               </Grid>
             </CardMedia>
           </CardActionArea>
-          <CardContent className={classes.cardContent}>
-            <div style={{ padding: "0.5rem" }}>
-              <Truncate
-                style={{ ...txtStyle }}
-                lines={1}
-                ellipsis={<span> ...</span>}
-              >
-                {post.message}
-              </Truncate>
-            </div>
-          </CardContent>
+          {post.message && (
+            <CardContent className={classes.cardContent}>
+              <div style={{ padding: "0.5rem" }}>
+                <Truncate
+                  style={{ ...txtStyle }}
+                  lines={1}
+                  ellipsis={<span> ...</span>}
+                >
+                  {post.message}
+                </Truncate>
+              </div>
+            </CardContent>
+          )}
         </Card>
       </Grid>
     </React.Fragment>
@@ -333,9 +335,8 @@ function TypeVideo({ post, openDialog, style, dark, siteInfo }) {
               height="50vh"
             />
           </CardActionArea>
-
-          <CardContent className={classes.cardContent}>
-            {post.message && (
+          {post.message && (
+            <CardContent className={classes.cardContent}>
               <div style={{ padding: "0.5rem" }}>
                 <Truncate
                   style={{ ...txtStyle }}
@@ -345,8 +346,8 @@ function TypeVideo({ post, openDialog, style, dark, siteInfo }) {
                   {post.message}
                 </Truncate>
               </div>
-            )}
-          </CardContent>
+            </CardContent>
+          )}
         </Card>
       </Grid>
     </React.Fragment>
