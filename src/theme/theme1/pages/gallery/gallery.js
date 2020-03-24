@@ -105,7 +105,7 @@ class Theme1Gallery extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container>
+      <Grid container style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
             <span style={classes.changableFirst}>
@@ -121,20 +121,20 @@ class Theme1Gallery extends React.Component {
               siteInfo={siteEdit.id}
             />
           ) : (
-            <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-              Current no image to show .
-            </p>
-          )
+              <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+                Current no image to show .
+              </p>
+            )
         ) : siteView && siteView.galleries ? (
           <GalleryComponent
             galleries={fromHome && homeList ? homeList : siteView.galleries}
             siteInfo={siteView.sitePath}
           />
         ) : (
-          <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-            Current no image to show .
-          </p>
-        )}
+              <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+                Current no image to show .
+              </p>
+            )}
       </Grid>
     );
   }
