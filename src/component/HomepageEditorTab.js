@@ -23,7 +23,11 @@ import {
   Dialog,
   DialogActions,
   CardMedia,
-  TableSortLabel
+  TableSortLabel,
+  DialogContent,
+  DialogTitle,
+  Paper,
+  InputBase
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Add, Cancel } from "@material-ui/icons";
@@ -50,6 +54,7 @@ import {
 import { green } from "@material-ui/core/colors";
 import DragHandleIcon from "@material-ui/icons/DragHandle";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = theme => ({
   content: {
@@ -141,6 +146,19 @@ const useStyles = theme => ({
     border: "1px solid #dddddd",
     width: "100%",
     backgroundColor: "#f0eded"
+  },
+  root: {
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    width: 400
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1
+  },
+  iconButton: {
+    padding: 10
   }
 });
 
@@ -161,7 +179,7 @@ const GreenCheckbox = withStyles({
 })(props => <Checkbox color="default" {...props} />);
 
 const columns = ["Avatar", "Title", "Message", "Created Date", "Show"];
-const columnsGallery = ["Picture", "Created Date", "Show"];
+const columnsGallery = ["Photo", "Created Date", "Show"];
 const columnsEvent = ["Name", "Description", "Start Time", "End Time", "Show"];
 
 const DragHandle = sortableHandle(() => (
@@ -181,6 +199,7 @@ function handleChangeNavName(id, site, newName, changeHomeItemName) {
 }
 
 class HomepageEditorTab extends React.Component {
+
   state = {
     openDiag: false,
     filteredData: [],
@@ -191,7 +210,8 @@ class HomepageEditorTab extends React.Component {
     previousExpandItemId: null,
     isExpanding: false,
     currentExpandType: "",
-    currentExpandItem: null
+    currentExpandItem: null,
+    currentFocusInput: "nameInput",
   };
 
   handleUploadCover = async e => {
@@ -222,7 +242,7 @@ class HomepageEditorTab extends React.Component {
   PostsList() {
     return (
       <>
-        <TableContainer style={{ maxHeight: "70vh" }}>
+        <TableContainer style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}>
           <Table stickyHeader>
             <TableHead>
               <TableRow>
@@ -253,7 +273,7 @@ class HomepageEditorTab extends React.Component {
                           ))}
                     </TableCell>
                     <TableCell align="center">{row.title}</TableCell>
-                    <TableCell align="left">
+                    <TableCell align="center">
                       <Grid
                         style={{
                           maxWidth: "20rem",
@@ -285,21 +305,6 @@ class HomepageEditorTab extends React.Component {
             </TableBody>
           </Table>
         </TableContainer>
-        <Grid container justify="center">
-          <ReactPaginate
-            previousLabel={"previous"}
-            nextLabel={"next"}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
-            pageCount={this.state.pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePageClick}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
-        </Grid>
       </>
     );
   }
@@ -307,7 +312,7 @@ class HomepageEditorTab extends React.Component {
   EventList() {
     return (
       <>
-        <TableContainer style={{ maxHeight: "70vh" }}>
+        <TableContainer style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}>
           <Table stickyHeader>
             <TableHead>
               <TableRow>
@@ -322,7 +327,7 @@ class HomepageEditorTab extends React.Component {
               {this.state.filteredData &&
                 this.state.filteredData.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>{row.name}</TableCell>
+                    <TableCell align="center">{row.name}</TableCell>
                     <TableCell align="center">{row.description}</TableCell>
                     <TableCell align="center">
                       {moment(row.startTime).format("DD-MM-YYYY")}
@@ -350,21 +355,6 @@ class HomepageEditorTab extends React.Component {
             </TableBody>
           </Table>
         </TableContainer>
-        <Grid container justify="center">
-          <ReactPaginate
-            previousLabel={"previous"}
-            nextLabel={"next"}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
-            pageCount={this.state.pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePageClick}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
-        </Grid>
       </>
     );
   }
@@ -372,7 +362,7 @@ class HomepageEditorTab extends React.Component {
   GalleryList() {
     return (
       <>
-        <TableContainer style={{ maxHeight: "70vh" }}>
+        <TableContainer style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}>
           <Table stickyHeader>
             <TableHead>
               <TableRow>
@@ -416,21 +406,6 @@ class HomepageEditorTab extends React.Component {
             </TableBody>
           </Table>
         </TableContainer>
-        <Grid container justify="center">
-          <ReactPaginate
-            previousLabel={"previous"}
-            nextLabel={"next"}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
-            pageCount={this.state.pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePageClick}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
-        </Grid>
       </>
     );
   }
@@ -453,6 +428,17 @@ class HomepageEditorTab extends React.Component {
     this.setState({
       openDiag: bool
     });
+    if (bool) {
+      if (this.state.currentExpandType === "news" && this.props.posts) {
+        this.setPosts(this.props.posts);
+      }
+      if (this.state.currentExpandType === "gallery" && this.props.site.galleries) {
+        this.setPosts(this.props.site.galleries);
+      }
+      if (this.state.currentExpandType === "event" && this.props.site.events) {
+        this.setPosts(this.props.site.events);
+      }
+    }
   };
 
   handleSave = () => {
@@ -519,7 +505,9 @@ class HomepageEditorTab extends React.Component {
     this.setState({ currentExpandItem: index });
   };
 
-  componentDidMount() { }
+  componentDidUpdate() {
+
+  }
 
   // shouldComponentUpdate(nextProps, nextState) {
   //   if (nextProps.site == this.props.site) {
@@ -577,6 +565,36 @@ class HomepageEditorTab extends React.Component {
 
   handleChangeAbout = e => {
     this.props.changeSiteAbout(e.target.value);
+    document.getElementById("aboutInput").focus();
+  };
+
+  handleSearch = keyword => {
+    let currentList;
+    let searchResult;
+    if (this.state.currentExpandType === "news" && this.props.posts) {
+      currentList = this.props.posts;
+      searchResult = currentList.filter(function (pos) {
+        return pos.message.toLowerCase().includes(keyword.toLowerCase());
+      });
+    }
+    if (this.state.currentExpandType === "gallery" && this.props.site.galleries) {
+      currentList = this.props.site.galleries;
+    }
+    if (this.state.currentExpandType === "event" && this.props.site.events) {
+      currentList = this.props.site.events;
+      searchResult = currentList.filter(function (pos) {
+        return pos.name.toLowerCase().includes(keyword.toLowerCase());
+      });
+    }
+
+    this.setListData(searchResult.slice(0, this.state.itemPerPage));
+    this.setPageCount(searchResult);
+  };
+
+  setListData = listData => {
+    this.setState({
+      filteredData: listData
+    });
   };
 
   onChangeItem = ({ oldIndex, newIndex }) => {
@@ -589,15 +607,6 @@ class HomepageEditorTab extends React.Component {
   };
 
   onChangePanel = (item, expand) => {
-    if (item.original === "news" && this.props.posts) {
-      this.setPosts(this.props.posts);
-    }
-    if (item.original === "gallery" && this.props.site.galleries) {
-      this.setPosts(this.props.site.galleries);
-    }
-    if (item.original === "event" && this.props.site.events) {
-      this.setPosts(this.props.site.events);
-    }
     if (item._id !== this.state.previousExpandItemId) {
       this.setState({
         currentExpandItemId: item._id,
@@ -620,10 +629,7 @@ class HomepageEditorTab extends React.Component {
     if (this.state.currentExpandType === "news" && this.props.posts) {
       currentList = this.props.posts;
     }
-    if (
-      this.state.currentExpandType === "gallery" &&
-      this.props.site.galleries
-    ) {
+    if (this.state.currentExpandType === "gallery" && this.props.site.galleries) {
       currentList = this.props.site.galleries;
     }
     if (this.state.currentExpandType === "event" && this.props.site.events) {
@@ -642,6 +648,18 @@ class HomepageEditorTab extends React.Component {
     });
   };
 
+  moveFocusAtEnd = e => {
+    var temp_value = e.target.value
+    e.target.value = ''
+    e.target.value = temp_value
+  }
+
+  setCurrentFocusInput = refName => {
+    this.setState({
+      currentFocusInput: refName
+    })
+  }
+
   render() {
     const {
       classes,
@@ -659,18 +677,77 @@ class HomepageEditorTab extends React.Component {
         maxWidth="md"
         fullWidth
       >
-        <Grid container alignItems="center">
+        <DialogTitle>
           {
             {
-              news: this.PostsList(),
-              gallery: this.GalleryList(),
-              event: this.EventList()
+              news: <Typography className={classes.title}>Search by message</Typography>,
+              event: <Typography className={classes.title}>Search by event name</Typography>
             }[this.state.currentExpandType]
           }
-        </Grid>
+          {this.state.currentExpandType !== "gallery" && (
+            <Paper component="form" className={classes.root}>
+              <InputBase
+                InputLabelProps={{
+                  classes: {
+                    focused: classes.focused
+                  }
+                }}
+                maxLength={50}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                    input: classes.inputTitle,
+                  }
+                }}
+                id="searchBox"
+                autoFocus={this.state.openDiag ? true : false}
+                className={classes.input}
+                onChange={() =>
+                  this.handleSearch(document.getElementById("searchBox").value)
+                }
+              />
+              <IconButton
+                className={classes.iconButton}
+                color="primary"
+                aria-label="search"
+                onClick={() =>
+                  this.handleSearch(document.getElementById("searchBox").value)
+                }
+              >
+                <SearchIcon />
+              </IconButton>
+            </Paper>
+          )}
+        </DialogTitle>
+        <DialogContent style={{ height: "50vh" }}>
+          <Grid container alignItems="center">
+            {
+              {
+                news: this.PostsList(),
+                gallery: this.GalleryList(),
+                event: this.EventList()
+              }[this.state.currentExpandType]
+            }
+          </Grid>
+
+        </DialogContent>
         <DialogActions>
+          <Grid container justify="center">
+            <ReactPaginate
+              previousLabel={"previous"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={this.state.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
+          </Grid>
           <Button
-            autoFocus
             variant="contained"
             onClick={() => this.handleOpenPostDialogue(false)}
             color="secondary"
@@ -803,15 +880,17 @@ class HomepageEditorTab extends React.Component {
                   InputProps={{
                     classes: {
                       notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle
+                      input: classes.inputTitle,
                     }
                   }}
-                  autoFocus
                   size="small"
                   style={{ backgroundColor: "white" }}
                   fullWidth
                   variant={"outlined"}
                   value={value}
+                  autoFocus
+                  disabled={this.state.openDiag ? true : false}
+                  onClick={() => this.setCurrentFocusInput("nameInput")}
                   onChange={e =>
                     handleChangeNavName(
                       item._id,
@@ -844,7 +923,9 @@ class HomepageEditorTab extends React.Component {
                       }}
                       multiline
                       maxLength={200}
-                      // autoFocus
+                      autoFocus={this.state.currentFocusInput === "aboutInput" ? true : false}
+                      onFocus={this.moveFocusAtEnd}
+                      onClick={() => this.setCurrentFocusInput("aboutInput")}
                       size="small"
                       style={{ backgroundColor: "white" }}
                       fullWidth
@@ -852,6 +933,7 @@ class HomepageEditorTab extends React.Component {
                       spellCheck={false}
                       variant={"outlined"}
                       value={this.props.about ? this.props.about : ""}
+                      id="aboutInput"
                       onChange={e => this.handleChangeAbout(e)}
                     />
                   </Grid>
@@ -862,7 +944,7 @@ class HomepageEditorTab extends React.Component {
                 {
                   news: postSection(item, "News"),
                   event: postSection(item, "Events"),
-                  gallery: postSection(item, "Pictures")
+                  gallery: postSection(item, "Photos")
                 }[item.original]
               }
 
@@ -901,7 +983,7 @@ class HomepageEditorTab extends React.Component {
             <Grid container alignItems="center">
               {items.map((value, index) => (
                 <SortableItem
-                  key={index}
+                  key={items._id}
                   index={index}
                   value={value.name}
                   item={value}

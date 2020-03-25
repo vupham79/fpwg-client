@@ -436,10 +436,10 @@ export function getSiteById(id) {
           modDat.posts = [];
         }
         if (!modDat.galleries) {
-          modDat.posts = [];
+          modDat.galleries = [];
         }
         if (!modDat.events) {
-          modDat.posts = [];
+          modDat.events = [];
         }
 
         for (let i = 0; i < modDat.homepage.length; i++) {
@@ -454,21 +454,21 @@ export function getSiteById(id) {
           ) {
             if (type === "news") {
               modDat.homepage[i].filter.items[index] = modDat.posts.filter(
-                function(pos) {
+                function (pos) {
                   return pos._id === modDat.homepage[i].filter.items[index];
                 }
               )[0];
             }
             if (type === "event") {
               modDat.homepage[i].filter.items[index] = modDat.events.filter(
-                function(pos) {
+                function (pos) {
                   return pos._id === modDat.homepage[i].filter.items[index];
                 }
               )[0];
             }
             if (type === "gallery") {
               modDat.homepage[i].filter.items[index] = modDat.galleries.filter(
-                function(pos) {
+                function (pos) {
                   return pos._id === modDat.homepage[i].filter.items[index];
                 }
               )[0];
