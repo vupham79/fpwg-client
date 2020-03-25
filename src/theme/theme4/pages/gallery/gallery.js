@@ -126,20 +126,20 @@ class Theme1Gallery extends React.Component {
               siteInfo={siteEdit.id}
             />
           ) : (
-            <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-              Current no image to show .
-            </p>
-          )
-        ) : siteView && siteView.galleries ? (
+              <p className={classes.changableBody}>
+                Currently no photo available.
+              </p>
+            )
+        ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
           <GalleryComponent
             galleries={fromHome && homeList ? homeList : siteView.galleries}
             siteInfo={siteView.sitePath}
           />
         ) : (
-          <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-            Current no image to show .
-          </p>
-        )}
+              <p className={classes.changableBody}>
+                Currently no photo available.
+              </p>
+            )}
       </Grid>
     );
   }

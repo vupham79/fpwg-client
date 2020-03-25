@@ -144,7 +144,7 @@ class Theme1News extends React.Component {
               </Grid>
             ) : (
                 <Grid container justify="center">
-                  <Typography variant="body1">
+                  <Typography className={classes.changableBody}>
                     Currently there are no news.
                 </Typography>
                 </Grid>
@@ -162,7 +162,7 @@ class Theme1News extends React.Component {
             </Grid>
           ) : (
                 <Grid container justify="center">
-                  <Typography variant="body1">
+                  <Typography className={classes.changableBody}>
                     Currently there are no news.
               </Typography>
                 </Grid>
