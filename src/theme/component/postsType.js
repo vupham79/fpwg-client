@@ -20,11 +20,8 @@ import React from "react";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import Truncate from "react-truncate";
-import {
-  getDataByPageNumber,
-  setPostsToSiteEdit,
-  setPostsToSiteView
-} from "../../actions";
+import { getDataByPageNumber, setPostsToSiteView } from "../../actions";
+import ReactPaginate from "react-paginate";
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -358,28 +355,22 @@ class PostTypeComponent extends React.Component {
     open: false,
     postOpen: null,
     openVideo: false,
-    pageEdit: 1,
-    pageView: 1
+    pageView: 1,
+    filteredData: [],
+    pageCount: 1,
+    offset: 0,
+    itemPerPage: 5
   };
 
-  handlePageClick = async (event, value) => {
+  handlePageViewClick = async (event, value) => {
     const {
       siteInfo,
       getDataByPageNumber,
       isEdit,
-      setPostToSiteEdit,
       setPostToSiteView
     } = this.props;
 
-    if (isEdit) {
-      this.setState({ pageEdit: value });
-      const data = await getDataByPageNumber({
-        siteId: siteInfo.id,
-        page: "news",
-        pageNumber: value
-      });
-      data && setPostToSiteEdit(data);
-    } else {
+    if (!isEdit) {
       this.setState({ pageView: value });
       const data = await getDataByPageNumber({
         sitePath: siteInfo.sitePath,
@@ -412,6 +403,50 @@ class PostTypeComponent extends React.Component {
     });
   };
 
+  setListData = listData => {
+    this.setState({
+      filteredData: listData
+    });
+  };
+
+  setPageCount = listData => {
+    this.setState({
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+    });
+  };
+
+  getList = async () => {
+    const { posts } = this.props;
+    this.setState({
+      filteredData: posts.slice(
+        this.state.offset,
+        this.state.itemPerPage + this.state.offset
+      ),
+      pageCount: Math.ceil(posts.length / this.state.itemPerPage)
+    });
+  };
+
+  componentDidMount() {
+    const { isEdit } = this.props;
+    if (isEdit) {
+      this.getList();
+    }
+  }
+
+  handlePageEditClick = data => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.state.itemPerPage);
+
+    this.setState({ offset: offset }, () => {
+      this.setListData(
+        this.props.posts.slice(
+          this.state.offset,
+          this.state.itemPerPage + this.state.offset
+        )
+      );
+    });
+  };
+
   render() {
     const {
       classes,
@@ -422,7 +457,6 @@ class PostTypeComponent extends React.Component {
       bodyView,
       siteInfo,
       posts,
-      pageCountEdit,
       pageCountView
     } = this.props;
     const post = this.state.postOpen;
@@ -441,46 +475,85 @@ class PostTypeComponent extends React.Component {
           justify="center"
           style={{ marginTop: "5rem" }}
         >
-          {posts &&
-            posts.map(
-              (post, index) =>
-                (post.attachments &&
-                  post.attachments.media_type === "photo" &&
-                  post.isActive && (
-                    <TypePhoto
-                      key={index}
-                      post={post}
-                      style={style}
-                      dark={this.props.darkMode}
-                      openDialog={this.handleOpen}
-                      siteInfo={siteInfo}
-                    />
-                  )) ||
-                (post.attachments &&
-                  post.attachments.media_type === "album" &&
-                  post.isActive && (
-                    <TypeAlbum
-                      key={index}
-                      post={post}
-                      style={style}
-                      dark={this.props.darkMode}
-                      openDialog={this.handleOpen}
-                      siteInfo={siteInfo}
-                    />
-                  )) ||
-                (post.attachments &&
-                  post.attachments.media_type === "video" &&
-                  post.isActive && (
-                    <TypeVideo
-                      key={index}
-                      post={post}
-                      style={style}
-                      dark={this.props.darkMode}
-                      openDialog={this.handleOpenVideo}
-                      siteInfo={siteInfo}
-                    />
-                  ))
-            )}
+          {isEdit
+            ? this.state.filteredData.map(
+                (post, index) =>
+                  (post.attachments &&
+                    post.attachments.media_type === "photo" &&
+                    post.isActive && (
+                      <TypePhoto
+                        key={index}
+                        post={post}
+                        style={style}
+                        dark={this.props.darkMode}
+                        openDialog={this.handleOpen}
+                        siteInfo={siteInfo}
+                      />
+                    )) ||
+                  (post.attachments &&
+                    post.attachments.media_type === "album" &&
+                    post.isActive && (
+                      <TypeAlbum
+                        key={index}
+                        post={post}
+                        style={style}
+                        dark={this.props.darkMode}
+                        openDialog={this.handleOpen}
+                        siteInfo={siteInfo}
+                      />
+                    )) ||
+                  (post.attachments &&
+                    post.attachments.media_type === "video" &&
+                    post.isActive && (
+                      <TypeVideo
+                        key={index}
+                        post={post}
+                        style={style}
+                        dark={this.props.darkMode}
+                        openDialog={this.handleOpenVideo}
+                        siteInfo={siteInfo}
+                      />
+                    ))
+              )
+            : posts.map(
+                (post, index) =>
+                  (post.attachments &&
+                    post.attachments.media_type === "photo" &&
+                    post.isActive && (
+                      <TypePhoto
+                        key={index}
+                        post={post}
+                        style={style}
+                        dark={this.props.darkMode}
+                        openDialog={this.handleOpen}
+                        siteInfo={siteInfo}
+                      />
+                    )) ||
+                  (post.attachments &&
+                    post.attachments.media_type === "album" &&
+                    post.isActive && (
+                      <TypeAlbum
+                        key={index}
+                        post={post}
+                        style={style}
+                        dark={this.props.darkMode}
+                        openDialog={this.handleOpen}
+                        siteInfo={siteInfo}
+                      />
+                    )) ||
+                  (post.attachments &&
+                    post.attachments.media_type === "video" &&
+                    post.isActive && (
+                      <TypeVideo
+                        key={index}
+                        post={post}
+                        style={style}
+                        dark={this.props.darkMode}
+                        openDialog={this.handleOpenVideo}
+                        siteInfo={siteInfo}
+                      />
+                    ))
+              )}
           <Dialog
             open={this.state.open}
             onClose={this.handleClose}
@@ -551,15 +624,20 @@ class PostTypeComponent extends React.Component {
           </Dialog>
         </Grid>
         {isEdit
-          ? pageCountEdit > 1 && (
-              <Grid container justify="center" style={{ marginTop: "5rem" }}>
-                <Pagination
-                  color="primary"
-                  variant="outlined"
-                  shape="rounded"
-                  count={pageCountEdit}
-                  page={this.state.pageEdit}
-                  onChange={this.handlePageClick}
+          ? this.state.pageCount > 1 && (
+              <Grid container justify="center" style={{ paddingTop: "2rem" }}>
+                <ReactPaginate
+                  previousLabel={"previous"}
+                  nextLabel={"next"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={this.state.pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={this.handlePageEditClick}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
                 />
               </Grid>
             )
@@ -567,11 +645,10 @@ class PostTypeComponent extends React.Component {
               <Grid container justify="center" style={{ marginTop: "5rem" }}>
                 <Pagination
                   color="primary"
-                  variant="outlined"
                   shape="rounded"
                   count={pageCountView}
                   page={this.state.pageView}
-                  onChange={this.handlePageClick}
+                  onChange={this.handlePageViewClick}
                 />
               </Grid>
             )}
@@ -585,14 +662,12 @@ const mapStateToProps = state => ({
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
   bodyView: state.site.bodyView,
-  pageCountEdit: state.post.pageCountNewsEdit,
   pageCountView: state.post.pageCountNewsView
 });
 
 const mapDispatchToProps = dispatch => ({
   getDataByPageNumber: ({ sitePath, page, siteId, pageNumber }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
-  setPostToSiteEdit: posts => dispatch(setPostsToSiteEdit(posts)),
   setPostToSiteView: posts => dispatch(setPostsToSiteView(posts))
 });
 

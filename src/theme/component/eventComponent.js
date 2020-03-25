@@ -3,42 +3,79 @@ import moment from "moment";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./event.module.css";
-import {
-  getDataByPageNumber,
-  setGalleriesToSiteEdit,
-  setGalleriesToSiteView
-} from "../../actions";
+import { getDataByPageNumber, setGalleriesToSiteView } from "../../actions";
+import ReactPaginate from "react-paginate";
+import Pagination from "@material-ui/lab/Pagination";
 
 class EventComponent extends React.Component {
   state = {
-    pageEdit: 1,
-    pageView: 1
+    pageView: 1,
+    filteredData: [],
+    pageCount: 1,
+    offset: 0,
+    itemPerPage: 5
   };
-  handlePageClick = async (event, value) => {
+
+  handlePageViewClick = async (event, value) => {
     const {
       siteInfo,
       getDataByPageNumber,
       isEdit,
-      setGalleriesToSiteEdit,
       setGalleriesToSiteView
     } = this.props;
-    if (isEdit) {
-      this.setState({ pageEdit: value });
-      const data = await getDataByPageNumber({
-        siteId: siteInfo,
-        page: "gallery",
-        pageNumber: value
-      });
-      data && setGalleriesToSiteEdit(data);
-    } else {
+    if (!isEdit) {
       this.setState({ pageView: value });
       const data = await getDataByPageNumber({
         sitePath: siteInfo,
-        page: "gallery",
+        page: "event",
         pageNumber: value
       });
       data && setGalleriesToSiteView(data);
     }
+  };
+
+  setListData = listData => {
+    this.setState({
+      filteredData: listData
+    });
+  };
+
+  setPageCount = listData => {
+    this.setState({
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+    });
+  };
+
+  getList = async () => {
+    const { homeList } = this.props;
+    this.setState({
+      filteredData: homeList.slice(
+        this.state.offset,
+        this.state.itemPerPage + this.state.offset
+      ),
+      pageCount: Math.ceil(homeList.length / this.state.itemPerPage)
+    });
+  };
+
+  componentDidMount() {
+    const { isEdit } = this.props;
+    if (isEdit) {
+      this.getList();
+    }
+  }
+
+  handlePageEditClick = data => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.state.itemPerPage);
+
+    this.setState({ offset: offset }, () => {
+      this.setListData(
+        this.props.homeList.slice(
+          this.state.offset,
+          this.state.itemPerPage + this.state.offset
+        )
+      );
+    });
   };
 
   render() {
@@ -48,7 +85,8 @@ class EventComponent extends React.Component {
       titleView,
       bodyEdit,
       bodyView,
-      homeList
+      homeList,
+      pageCountView
     } = this.props;
 
     const useStyles = () => ({
@@ -115,7 +153,7 @@ class EventComponent extends React.Component {
             container
             alignItems="center"
             direction="column"
-          // className={classes.eventPage}
+            // className={classes.eventPage}
           >
             <Grid
               item
@@ -142,8 +180,7 @@ class EventComponent extends React.Component {
                 </Grid>
               )}
 
-              {
-                homeList &&
+              {homeList &&
                 homeList.filter(
                   row =>
                     !row.isCancelled && moment(row.endTime).isAfter(moment())
@@ -153,8 +190,7 @@ class EventComponent extends React.Component {
                   </Grid>
                 )}
 
-              {
-                homeList &&
+              {homeList &&
                 homeList.map((row, index) => {
                   return (
                     !row.isCancelled &&
@@ -252,8 +288,7 @@ class EventComponent extends React.Component {
                 </Grid>
               )}
 
-              {
-                homeList &&
+              {homeList &&
                 homeList.filter(
                   row =>
                     row.isCancelled ||
@@ -265,8 +300,7 @@ class EventComponent extends React.Component {
                   </Grid>
                 )}
 
-              {
-                homeList &&
+              {homeList &&
                 homeList.map((row, index) => {
                   return (
                     (row.isCancelled ||
@@ -350,24 +384,24 @@ class EventComponent extends React.Component {
                     )
                   );
                 })}
-
             </Grid>
-            {/* {isEdit
-              ? pageCountEdit > 1 && (
-                  <Grid
-                    container
-                    justify="center"
-                    style={{ marginTop: "5rem" }}
-                  >
-                    <Pagination
-                      color="primary"
-                      variant="outlined"
-                      shape="rounded"
-                      count={pageCountEdit}
-                      page={this.state.pageEdit}
-                      onChange={this.handlePageClick}
+            {isEdit
+              ? this.state.pageCount > 1 && (
+                  <div className="commentBox">
+                    <ReactPaginate
+                      previousLabel={"previous"}
+                      nextLabel={"next"}
+                      breakLabel={"..."}
+                      breakClassName={"break-me"}
+                      pageCount={this.state.pageCount}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={this.handlePageClick}
+                      containerClassName={"pagination"}
+                      subContainerClassName={"pages pagination"}
+                      activeClassName={"active"}
                     />
-                  </Grid>
+                  </div>
                 )
               : pageCountView > 1 && (
                   <Grid
@@ -381,10 +415,10 @@ class EventComponent extends React.Component {
                       shape="rounded"
                       count={pageCountView}
                       page={this.state.pageView}
-                      onChange={this.handlePageClick}
+                      onChange={this.handlePageViewClick}
                     />
                   </Grid>
-                )} */}
+                )}
           </Grid>
         </Grid>
       </Grid>
@@ -398,13 +432,13 @@ const mapStateToProps = state => ({
   titleEdit: state.site.titleEdit,
   posts: state.post.posts,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
+  pageCountView: state.post.pageCountEventView
 });
 
 const mapDispatchToProps = dispatch => ({
   getDataByPageNumber: ({ sitePath, page, siteId, pageNumber }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
-  setGalleriesToSiteEdit: event => dispatch(setGalleriesToSiteEdit(event)),
   setGalleriesToSiteView: event => dispatch(setGalleriesToSiteView(event))
 });
 

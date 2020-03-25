@@ -1,11 +1,8 @@
 const defaultState = {
   posts: null,
   pageCountNewsView: 1,
-  pageCountNewsEdit: 1,
   pageCountGalleriesView: 1,
-  pageCountGalleriesEdit: 1,
-  pageCountEventView: 1,
-  pageCountEventEdit: 1
+  pageCountEventView: 1
 };
 
 const PostReducer = (state = defaultState, action) => {
@@ -41,30 +38,15 @@ const PostReducer = (state = defaultState, action) => {
         ...state,
         pageCountNewsView: action.payload
       };
-    case "SET_PAGECOUNT_NEWS_EDIT":
-      return {
-        ...state,
-        pageCountNewsEdit: action.payload
-      };
     case "SET_PAGECOUNT_GALLERIES_VIEW":
       return {
         ...state,
         pageCountGalleriesView: action.payload
       };
-    case "SET_PAGECOUNT_GALLERIES_EDIT":
-      return {
-        ...state,
-        pageCountGalleriesEdit: action.payload
-      };
     case "SET_PAGECOUNT_EVENT_VIEW":
       return {
         ...state,
         pageCountEventView: action.payload
-      };
-    case "SET_PAGECOUNT_EVENT_EDIT":
-      return {
-        ...state,
-        pageCountEventEdit: action.payload
       };
     default:
       return state;

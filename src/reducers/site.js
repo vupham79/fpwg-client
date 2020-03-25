@@ -342,14 +342,6 @@ const SiteReducer = (state = defaultState, action) => {
           about: action.payload
         }
       };
-    case "SET_SITEEDIT_EVENTS":
-      return {
-        ...state,
-        siteView: {
-          ...state.siteEdit,
-          events: action.payload
-        }
-      };
     case "SET_SITEVIEW_EVENTS":
       return {
         ...state,
@@ -366,27 +358,11 @@ const SiteReducer = (state = defaultState, action) => {
           galleries: action.payload
         }
       };
-    case "SET_SITEEDIT_GALLERIES":
-      return {
-        ...state,
-        siteEdit: {
-          ...state.siteEdit,
-          galleries: action.payload
-        }
-      };
     case "SET_SITEVIEW_NEWS":
       return {
         ...state,
         siteView: {
           ...state.siteView,
-          posts: action.payload
-        }
-      };
-    case "SET_SITEEDIT_NEWS":
-      return {
-        ...state,
-        siteEdit: {
-          ...state.siteEdit,
           posts: action.payload
         }
       };

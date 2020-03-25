@@ -37,8 +37,7 @@ class PreEventPage extends Component {
       siteView
     } = this.props;
 
-    if (isEdit) {
-    } else {
+    if (!isEdit) {
       const data = await getDataByPageNumber({
         sitePath: siteView.sitePath,
         page: "event"
@@ -54,7 +53,6 @@ class PreEventPage extends Component {
 
 const mapStateToProps = state => ({
   siteView: state.site.siteView,
-  siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit
 });
 
