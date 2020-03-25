@@ -343,7 +343,8 @@ export function saveDesignSite({
         for (let index = 0; index < saveDat[i].filter.items.length; index++) {
           saveDat[i].filter.items[index] = saveDat[i].filter.items[index]._id;
         }
-        if (saveDat[i].filter.items.length === 0) saveDat[i].filter.items = null;
+        if (saveDat[i].filter.items.length === 0)
+          saveDat[i].filter.items = null;
       }
 
       console.log(saveDat);
@@ -423,58 +424,62 @@ export function getSiteById(id) {
         params: {
           id: id
         }
-      })
-
-
+      });
 
       dispatch({
         type: "CLOSE_LOADING"
       });
       if (data.status === 200) {
-
         let modDat = data.data;
 
         if (!modDat.posts) {
-          modDat.posts = []
-        };
+          modDat.posts = [];
+        }
         if (!modDat.galleries) {
-          modDat.posts = []
-        };
+          modDat.posts = [];
+        }
         if (!modDat.events) {
-          modDat.posts = []
-        };
-
+          modDat.posts = [];
+        }
 
         for (let i = 0; i < modDat.homepage.length; i++) {
-
-          if (!modDat.homepage[i].filter.items) modDat.homepage[i].filter.items = [];
+          if (!modDat.homepage[i].filter.items)
+            modDat.homepage[i].filter.items = [];
           let type = modDat.homepage[i].original;
 
-          for (let index = 0; index < modDat.homepage[i].filter.items.length; index++) {
-
+          for (
+            let index = 0;
+            index < modDat.homepage[i].filter.items.length;
+            index++
+          ) {
             if (type === "news") {
-              modDat.homepage[i].filter.items[index] = modDat.posts.filter(function (pos) {
-                return pos._id === modDat.homepage[i].filter.items[index];
-              })[0];
+              modDat.homepage[i].filter.items[index] = modDat.posts.filter(
+                function(pos) {
+                  return pos._id === modDat.homepage[i].filter.items[index];
+                }
+              )[0];
             }
             if (type === "event") {
-              modDat.homepage[i].filter.items[index] = modDat.events.filter(function (pos) {
-                return pos._id === modDat.homepage[i].filter.items[index];
-              })[0];
+              modDat.homepage[i].filter.items[index] = modDat.events.filter(
+                function(pos) {
+                  return pos._id === modDat.homepage[i].filter.items[index];
+                }
+              )[0];
             }
             if (type === "gallery") {
-              modDat.homepage[i].filter.items[index] = modDat.galleries.filter(function (pos) {
-                return pos._id === modDat.homepage[i].filter.items[index];
-              })[0];
+              modDat.homepage[i].filter.items[index] = modDat.galleries.filter(
+                function(pos) {
+                  return pos._id === modDat.homepage[i].filter.items[index];
+                }
+              )[0];
             }
-
           }
-          if (modDat.homepage[i].filter.items.length === 0) modDat.homepage[i].filter.items = null;
+          if (modDat.homepage[i].filter.items.length === 0)
+            modDat.homepage[i].filter.items = null;
         }
         console.log(modDat);
         return modDat;
       }
-
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
@@ -805,11 +810,11 @@ export function setNavItemActive() {
   };
 }
 
-export function changeNavItemName(site) {
+export function changeNavItemName(item) {
   return dispatch => {
     dispatch({
       type: "CHANGE_NAV_ITEM_NAME",
-      payload: site
+      payload: item
     });
   };
 }

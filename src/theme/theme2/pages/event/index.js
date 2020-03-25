@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import {
   setNavItemActive,
   setNavItemInActive,
-  setEventsToSiteEdit,
   setEventsToSiteView,
   getDataByPageNumber
 } from "../../../../actions";
@@ -11,11 +10,16 @@ import EventPage from "./event";
 
 class PreEventPage extends Component {
   componentDidMount() {
-    const { site, isEdit, setNavItemActive, setNavItemInActive } = this.props;
+    const {
+      siteView,
+      isEdit,
+      setNavItemActive,
+      setNavItemInActive
+    } = this.props;
     this.setDataToSite();
-    if (site && !isEdit) {
-      if (site.navItems) {
-        const navItem = site.navItems.find(e => e.original === "event");
+    if (siteView && !isEdit) {
+      if (siteView.navItems) {
+        const navItem = siteView.navItems.find(e => e.original === "event");
         if (!navItem.isActive) {
           setNavItemInActive();
         } else {
@@ -28,19 +32,12 @@ class PreEventPage extends Component {
   setDataToSite = async () => {
     const {
       getDataByPageNumber,
-      setEventsToSiteEdit,
       setEventsToSiteView,
       isEdit,
-      siteView,
-      siteEdit
+      siteView
     } = this.props;
 
     if (isEdit) {
-      const data = await getDataByPageNumber({
-        siteId: siteEdit.id,
-        page: "event"
-      });
-      data && setEventsToSiteEdit(data);
     } else {
       const data = await getDataByPageNumber({
         sitePath: siteView.sitePath,
@@ -66,7 +63,6 @@ const mapDispatchToProps = dispatch => ({
   setNavItemActive: () => dispatch(setNavItemActive()),
   getDataByPageNumber: ({ sitePath, page, siteId }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId })),
-  setEventsToSiteEdit: events => dispatch(setEventsToSiteEdit(events)),
   setEventsToSiteView: events => dispatch(setEventsToSiteView(events))
 });
 

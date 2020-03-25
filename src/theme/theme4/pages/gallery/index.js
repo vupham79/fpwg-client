@@ -36,11 +36,11 @@ class PreGalleryPageT4 extends Component {
     } = this.props;
 
     if (isEdit) {
-      const data = await getDataByPageNumber({
-        siteId: siteEdit.id,
-        page: "gallery"
-      });
-      data && setGalleriesToSiteEdit(data);
+      // const data = await getDataByPageNumber({
+      //   siteId: siteEdit.id,
+      //   page: "gallery"
+      // });
+      // data && setGalleriesToSiteEdit(data);
     } else {
       const data = await getDataByPageNumber({
         sitePath: siteView.sitePath,

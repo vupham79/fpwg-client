@@ -278,9 +278,18 @@ const SiteReducer = (state = defaultState, action) => {
         newCover: [...filter]
       };
     case "CHANGE_NAV_ITEM_NAME":
+      let navItems = [];
+      if (state.siteEdit.navItems) {
+        navItems = state.siteEdit.navItems;
+        let index = navItems.findIndex(item => item._id === action.payload._id);
+        navItems[index] = action.payload;
+      }
       return {
         ...state,
-        siteEdit: { ...action.payload }
+        siteEdit: {
+          ...state.siteEdit,
+          navItems: [...navItems]
+        }
       };
     case "CHANGE_SITE_ABOUT":
       return {

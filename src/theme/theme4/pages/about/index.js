@@ -1,25 +1,11 @@
 import React, { Component } from "react";
 import AboutPage from "./about";
 import { connect } from "react-redux";
-import {
-  setNavItemActive,
-  setNavItemInActive,
-  getAbout
-} from "../../../../actions";
-
+import { setNavItemActive, setNavItemInActive } from "../../../../actions";
 class PreAboutPageT4 extends Component {
   componentDidMount() {
-    const {
-      site,
-      setNavItemActive,
-      setNavItemInActive,
-      isEdit,
-      getAbout,
-      sitepath
-    } = this.props;
-    if (sitepath) {
-      getAbout(sitepath);
-    }
+    const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
+
     if (site && !isEdit) {
       if (site.navItems) {
         const navItem = site.navItems.find(e => e.original === "about");
@@ -44,8 +30,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setNavItemInActive: () => dispatch(setNavItemInActive()),
-  setNavItemActive: () => dispatch(setNavItemActive()),
-  getAbout: sitepath => dispatch(getAbout(sitepath))
+  setNavItemActive: () => dispatch(setNavItemActive())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreAboutPageT4);

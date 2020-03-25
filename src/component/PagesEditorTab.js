@@ -150,7 +150,7 @@ function handleChangeActive(id, site, setActiveNavItems, updateNavItemValue) {
 function handleChangeNavName(id, site, newName, changeNavItemName) {
   const index = site && site.navItems && site.navItems.find(e => e._id === id);
   index.name = newName;
-  changeNavItemName(site);
+  changeNavItemName(index);
 }
 
 const GreenCheckbox = withStyles({
@@ -386,14 +386,14 @@ class PagesEditorTab extends React.Component {
                 fullWidth
                 variant={"outlined"}
                 value={value}
-                onChange={e =>
+                onChange={e => {
                   handleChangeNavName(
                     item._id,
                     site,
                     e.target.value,
                     changeNavItemName
-                  )
-                }
+                  );
+                }}
               />
             </Grid>
           </Grid>
@@ -536,7 +536,7 @@ class PagesEditorTab extends React.Component {
             marginBottom: "0.8rem"
           }}
         >
-          Reorder or hide pages of your site.
+          Reorder or hide pages of your menu.
         </Grid>
         <SortableList
           items={site.navItems}
@@ -565,7 +565,7 @@ const mapDispatchToProps = dispatch => ({
   setActivePost: (post, status) => dispatch(setActivePost(post, status)),
   updateNavItemValue: value => dispatch(updateNavItemValue(value)),
   savePosts: posts => dispatch(savePosts(posts)),
-  changeNavItemName: site => dispatch(changeNavItemName(site))
+  changeNavItemName: item => dispatch(changeNavItemName(item))
 });
 
 export default connect(

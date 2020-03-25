@@ -2,7 +2,6 @@ import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import PostTypeComponent from "../../../component/postsType";
-
 class Theme1News extends React.Component {
   render() {
     const {
@@ -124,7 +123,14 @@ class Theme1News extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50, minHeight: "50vh" }}>
+      <Grid
+        container
+        style={{
+          backgroundColor: "#1a1919",
+          paddingBottom: 50,
+          minHeight: "50vh"
+        }}
+      >
         <Grid item xs={12}>
           <p style={classes.changableTitle5}>{fromHome ? homeTitle : "NEWS"}</p>
         </Grid>
@@ -133,7 +139,7 @@ class Theme1News extends React.Component {
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
-                  posts={(fromHome && homeList) ? homeList : siteEdit.posts}
+                  posts={fromHome && homeList ? homeList : siteEdit.posts}
                   siteInfo={{
                     logo: siteEdit.logo,
                     title: siteEdit.title,
@@ -142,16 +148,16 @@ class Theme1News extends React.Component {
                 />
               </Grid>
             ) : (
-                <Grid container justify="center">
-                  <Typography variant="body1" style={bodyEdit}>
-                    Currently there are no news.
+              <Grid container justify="center">
+                <Typography variant="body1" style={bodyEdit}>
+                  Currently there are no news.
                 </Typography>
-                </Grid>
-              )
+              </Grid>
+            )
           ) : siteView && siteView.posts ? (
             <Grid container>
               <PostTypeComponent
-                posts={(fromHome && homeList) ? homeList : siteView.posts}
+                posts={fromHome && homeList ? homeList : siteView.posts}
                 siteInfo={{
                   logo: siteView.logo,
                   title: siteView.title,
@@ -160,12 +166,12 @@ class Theme1News extends React.Component {
               />
             </Grid>
           ) : (
-                <Grid container justify="center">
-                  <Typography variant="body1" style={bodyView}>
-                    Currently there are no news.
+            <Grid container justify="center">
+              <Typography variant="body1" style={bodyView}>
+                Currently there are no news.
               </Typography>
-                </Grid>
-              )}
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );

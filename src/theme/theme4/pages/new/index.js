@@ -37,11 +37,11 @@ class PreNewPage extends Component {
     } = this.props;
 
     if (isEdit) {
-      const data = await getDataByPageNumber({
-        siteId: siteEdit.id,
-        page: "news"
-      });
-      data && setPostToSiteEdit(data);
+      // const data = await getDataByPageNumber({
+      //   siteId: siteEdit.id,
+      //   page: "news"
+      // });
+      // data && setPostToSiteEdit(data);
     } else {
       const data = await getDataByPageNumber({
         sitePath: siteView.sitePath,

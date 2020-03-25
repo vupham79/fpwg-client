@@ -6,14 +6,18 @@ import {
   setNavItemActive,
   getDataByPageNumber
 } from "../../../../actions";
-
 class PreHomePage extends Component {
   componentDidMount() {
-    const { site, isEdit, setNavItemActive, setNavItemInActive } = this.props;
+    const {
+      siteView,
+      isEdit,
+      setNavItemActive,
+      setNavItemInActive
+    } = this.props;
     this.setDataToSite();
-    if (site && !isEdit) {
-      if (site.navItems) {
-        const navItem = site.navItems.find(e => e.original === "home");
+    if (siteView && !isEdit) {
+      if (siteView.navItems) {
+        const navItem = siteView.navItems.find(e => e.original === "home");
         if (!navItem.isActive) {
           setNavItemInActive();
         } else {
@@ -25,18 +29,12 @@ class PreHomePage extends Component {
   setDataToSite = async () => {
     const { getDataByPageNumber, isEdit, siteView, siteEdit } = this.props;
 
-    if (isEdit) {
-      const data = await getDataByPageNumber({
-        siteId: siteEdit.id,
-        page: "home"
-      });
-      console.log(data);
-      // data && setGalleriesToSiteEdit(data);
-    } else {
+    if (!isEdit) {
       const data = await getDataByPageNumber({
         sitePath: siteView.sitePath,
         page: "home"
       });
+      console.log(data);
       // data && setGalleriesToSiteView(data);
     }
   };
