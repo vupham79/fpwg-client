@@ -1,7 +1,6 @@
 import { Grid, CardMedia } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-
 class Theme1About extends React.Component {
   renderImage = () => {
     const { isEdit, siteEdit, siteView, newLogo } = this.props;
@@ -111,7 +110,14 @@ class Theme1About extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50, minHeight: "50vh" }}>
+      <Grid
+        container
+        style={{
+          backgroundColor: "#1a1919",
+          paddingBottom: 50,
+          minHeight: "50vh"
+        }}
+      >
         <Grid item xs={12}>
           <p style={classes.changableTitle}>ABOUT</p>
         </Grid>

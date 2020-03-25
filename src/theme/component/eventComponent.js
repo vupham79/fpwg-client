@@ -48,7 +48,7 @@ class EventComponent extends React.Component {
 
   getList = async () => {
     const { homeList } = this.props;
-    homeList &&
+    if (homeList) {
       this.setState({
         filteredData: homeList.slice(
           this.state.offset,
@@ -56,6 +56,7 @@ class EventComponent extends React.Component {
         ),
         pageCount: Math.ceil(homeList.length / this.state.itemPerPage)
       });
+    }
   };
 
   componentDidMount() {
