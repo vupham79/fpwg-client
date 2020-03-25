@@ -92,10 +92,12 @@ class GalleryComponent extends React.Component {
                 className={classes.gridItems}
               >
                 <img
-                  src={item._id.url}
+                  src={item._id && item._id.url}
                   alt="Title"
                   style={imgStyles}
-                  onClick={() => this.handleOpenDialog(item._id.url)}
+                  onClick={() =>
+                    this.handleOpenDialog(item._id && item._id.url)
+                  }
                   aria-labelledby="form-dialog-title"
                 />
               </Grid>
@@ -106,6 +108,7 @@ class GalleryComponent extends React.Component {
                 <Grid container justify="center" style={{ marginTop: "5rem" }}>
                   <Pagination
                     color="primary"
+                    variant="outlined"
                     shape="rounded"
                     count={pageCountEdit}
                     page={this.state.pageEdit}
@@ -117,6 +120,7 @@ class GalleryComponent extends React.Component {
                 <Grid container justify="center" style={{ marginTop: "5rem" }}>
                   <Pagination
                     color="primary"
+                    variant="outlined"
                     shape="rounded"
                     count={pageCountView}
                     page={this.state.pageView}
