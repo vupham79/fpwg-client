@@ -22,7 +22,8 @@ import {
   TextField,
   Dialog,
   DialogActions,
-  CardMedia
+  CardMedia,
+  TableSortLabel
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Add, Cancel } from "@material-ui/icons";
@@ -159,8 +160,8 @@ const GreenCheckbox = withStyles({
   checked: {}
 })(props => <Checkbox color="default" {...props} />);
 
-const columns = ["Avatar", "Title", "Message", "Created At", "Show"];
-const columnsGallery = ["Picture", "Show"];
+const columns = ["Avatar", "Title", "Message", "Created Date", "Show"];
+const columnsGallery = ["Picture", "Created Date", "Show"];
 const columnsEvent = ["Name", "Description", "Start Time", "End Time", "Show"];
 
 const DragHandle = sortableHandle(() => (
@@ -227,6 +228,7 @@ class HomepageEditorTab extends React.Component {
               <TableRow>
                 {columns.map((column, index) => (
                   <TableCell align="center" key={index}>
+                    {column === "Created At" && <TableSortLabel>date</TableSortLabel>}
                     {column}
                   </TableCell>
                 ))}
@@ -236,7 +238,7 @@ class HomepageEditorTab extends React.Component {
               {this.state.filteredData &&
                 this.state.filteredData.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell>
+                    <TableCell align="center">
                       {(row.attachments &&
                         row.attachments.media_type === "photo" && (
                           <Avatar src={row.attachments.images[0]} />
@@ -263,7 +265,7 @@ class HomepageEditorTab extends React.Component {
                       </Grid>
                     </TableCell>
                     <TableCell align="center">
-                      {moment(row.createdAt).format("DD-MM-YYYY")}
+                      {moment(row.createdTime).format("DD-MM-YYYY")}
                     </TableCell>
                     <TableCell align="center">
                       <GreenCheckbox
@@ -393,7 +395,10 @@ class HomepageEditorTab extends React.Component {
                         image={row.url}
                       />
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell align="center">
+                      {moment(row.createdTime).format("DD-MM-YYYY")}
+                    </TableCell>
+                    <TableCell align="center">
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
@@ -509,7 +514,7 @@ class HomepageEditorTab extends React.Component {
         return post._id !== row._id;
       });
     }
-
+    console.log(index.filter.items);
     // this.props.setActiveHomeItems(this.props.site);
     this.setState({ currentExpandItem: index });
   };

@@ -212,7 +212,7 @@ function PostsList({
                     </Grid>
                   </TableCell>
                   <TableCell align="center">
-                    {moment(row.createdAt).format("DD-MM-YYYY")}
+                    {moment(row.createdTime).format("DD-MM-YYYY")}
                   </TableCell>
                   <TableCell align="center">
                     <GreenCheckbox
