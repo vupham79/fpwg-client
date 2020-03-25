@@ -13,9 +13,9 @@ class Theme1Event extends React.Component {
       bodyView,
       fromHome,
       homeTitle,
+      homeList,
       siteEdit,
-      siteView,
-      homeList
+      siteView
     } = this.props;
 
     const useStyles = () => ({
