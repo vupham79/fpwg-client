@@ -161,10 +161,21 @@ function createTable(data) {
           {data &&
             data.map((row, index) => (
               <TableRow key={index}>
-                <TableCell align="left">{row.createAt}</TableCell>
+                <TableCell align="left">
+                  {moment(row.createdAt).format("DD-MM-YYYY")}
+                </TableCell>
                 <TableCell align="left">{row.dataType}</TableCell>
-                <TableCell align="left">{row.syncType}</TableCell>
-                <TableCell align="left">{row.status}</TableCell>
+                <TableCell align="left">
+                  {!row.dateFrom && !row.dateTo ? (
+                    "All"
+                  ) : (
+                    <Grid container>
+                      <Grid>From: {row.dateFrom}</Grid>
+                      <Grid>To: {row.dateTo}</Grid>
+                    </Grid>
+                  )}
+                </TableCell>
+                <TableCell align="left">{row.status.toString()}</TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -299,7 +310,11 @@ class SyncEditorTab extends React.Component {
       );
     } else if (radioValue === "all") {
       this.setState({ msg: "" });
-      syncDataFromFB(site.id);
+      syncDataFromFB(
+        site.id,
+        selectValue === "All" ? null : startDate,
+        selectValue === "All" ? null : endDate
+      );
     }
   };
 
@@ -343,7 +358,9 @@ class SyncEditorTab extends React.Component {
                         ? moment(site.lastSync).format("LLL")
                         : "Not yet"}
                     </DialogTitle>
-                    <DialogContent>{createTable(data)}</DialogContent>
+                    <DialogContent>
+                      {site.syncRecords && createTable(site.syncRecords)}
+                    </DialogContent>
                   </Dialog>
                 </Grid>
               </Grid>
@@ -609,7 +626,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   openDialog: () => dispatch(openDialog()),
   closeDialog: () => dispatch(closeDialog()),
-  syncDataFromFB: pagId => dispatch(syncDataFromFB(pagId)),
+  syncDataFromFB: (pageId, dateFrom, dateTo) =>
+    dispatch(syncDataFromFB(pageId, dateFrom, dateTo)),
   syncPostFromFB: (pageId, dateFrom, dateTo) =>
     dispatch(syncPostFromFB(pageId, dateFrom, dateTo)),
   syncEventFromFB: (pageId, dateFrom, dateTo) =>

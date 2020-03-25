@@ -25,6 +25,7 @@ class GalleryPage extends React.Component {
       bodyView
     } = this.props;
     const { tabValue } = this.state;
+    console.log(siteView);
     return (
       <Grid
         container
@@ -38,7 +39,10 @@ class GalleryPage extends React.Component {
             variant="h4"
             align="center"
             gutterBottom
-            style={(isEdit ? titleEdit : titleView, { color: "white" })}
+            style={{
+              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+              color: "white"
+            }}
           >
             Gallery
           </Typography>
@@ -50,21 +54,20 @@ class GalleryPage extends React.Component {
             onChange={this.handleChangeTabValue}
           >
             <Tab
-              style={
-                (isEdit ? bodyEdit : bodyView,
-                {
-                  color: "white",
-                  borderRight: "1px solid white",
-                  fontWeight: "700"
-                })
-              }
+              style={{
+                fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                color: "white",
+                borderRight: "1px solid white",
+                fontWeight: "700"
+              }}
               label="Photos"
             />
             <Tab
-              style={
-                (isEdit ? bodyEdit : bodyView,
-                { color: "white", fontWeight: "700" })
-              }
+              style={{
+                fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                color: "white",
+                fontWeight: "700"
+              }}
               label="Videos"
             />
           </Tabs>
@@ -81,7 +84,14 @@ class GalleryPage extends React.Component {
                   </Grid>
                 ) : (
                   <Grid container justify="center">
-                    <Typography variant="body1" style={bodyEdit}>
+                    <Typography
+                      variant="body1"
+                      style={{
+                        fontFamily: bodyEdit.fontFamily,
+                        color: "white",
+                        padding: "5rem 0"
+                      }}
+                    >
                       Current no Photos to show.
                     </Typography>
                   </Grid>
@@ -95,7 +105,14 @@ class GalleryPage extends React.Component {
                 </Grid>
               ) : (
                 <Grid container justify="center">
-                  <Typography variant="body1" style={bodyEdit}>
+                  <Typography
+                    variant="body1"
+                    style={{
+                      fontFamily: bodyView.fontFamily,
+                      color: "white",
+                      padding: "5rem 0"
+                    }}
+                  >
                     Current no Photos to show.
                   </Typography>
                 </Grid>
@@ -121,7 +138,14 @@ class GalleryPage extends React.Component {
                   </Grid>
                 ) : (
                   <Grid container justify="center">
-                    <Typography variant="body1" style={bodyEdit}>
+                    <Typography
+                      variant="body1"
+                      style={{
+                        fontFamily: bodyEdit.fontFamily,
+                        color: "white",
+                        padding: "5rem 0"
+                      }}
+                    >
                       Current no video to show.
                     </Typography>
                   </Grid>
@@ -129,7 +153,9 @@ class GalleryPage extends React.Component {
               ) : siteView && siteView.posts ? (
                 <Grid container>
                   <PostTypeComponent
-                    posts={siteView.posts}
+                    posts={siteView.posts.filter(
+                      item => item.attachments.media_type === "video"
+                    )}
                     siteInfo={{
                       logo: siteView.logo,
                       title: siteView.title,
@@ -139,7 +165,14 @@ class GalleryPage extends React.Component {
                 </Grid>
               ) : (
                 <Grid container justify="center">
-                  <Typography variant="body1" style={bodyView}>
+                  <Typography
+                    variant="body1"
+                    style={{
+                      fontFamily: bodyView.fontFamily,
+                      color: "white",
+                      padding: "5rem 0"
+                    }}
+                  >
                     Current no video to show.
                   </Typography>
                 </Grid>

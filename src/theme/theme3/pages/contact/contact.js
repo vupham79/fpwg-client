@@ -11,7 +11,8 @@ import {
 
 const usestyle = theme => ({
   title: {
-    textDecoration: "solid"
+    textDecoration: "solid",
+    padding: "1rem 0"
   },
   map: {
     maxHeight: ""
@@ -36,22 +37,26 @@ class ContactPage extends React.Component {
         <GoogleMap
           defaultZoom={15}
           defaultCenter={{
-            lat: isEdit
-              ? parseFloat(siteEdit.latitude)
-              : parseFloat(siteView.latitude),
-            lng: isEdit
-              ? parseFloat(siteEdit.longitude)
-              : parseFloat(siteView.longitude)
+            // lat: isEdit
+            //   ? parseFloat(siteEdit.latitude)
+            //   : parseFloat(siteView.latitude),
+            // lng: isEdit
+            //   ? parseFloat(siteEdit.longitude)
+            //   : parseFloat(siteView.longitude)
+            lat: 10.816929,
+            lng: 106.68859
           }}
         >
           <Marker
             position={{
-              lat: isEdit
-                ? parseFloat(siteEdit.latitude)
-                : parseFloat(siteView.latitude),
-              lng: isEdit
-                ? parseFloat(siteEdit.longitude)
-                : parseFloat(siteView.longitude)
+              // lat: isEdit
+              //   ? parseFloat(siteEdit.latitude)
+              //   : parseFloat(siteView.latitude),
+              // lng: isEdit
+              //   ? parseFloat(siteEdit.longitude)
+              //   : parseFloat(siteView.longitude)
+              lat: 10.819713,
+              lng: -106.691407
             }}
           />
         </GoogleMap>
@@ -66,7 +71,10 @@ class ContactPage extends React.Component {
             align="center"
             gutterBottom
             className={styles.title}
-            style={(isEdit ? titleEdit : titleView, { color: "white" })}
+            style={{
+              color: "white",
+              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
+            }}
           >
             Contacts
           </Typography>
@@ -78,7 +86,12 @@ class ContactPage extends React.Component {
                 <Typography
                   variant="h5"
                   className={classes.title}
-                  style={(isEdit ? bodyEdit : bodyView, { color: "white" })}
+                  style={{
+                    color: "white",
+                    fontFamily: isEdit
+                      ? bodyEdit.fontFamily
+                      : bodyView.fontFamily
+                  }}
                 >
                   Address
                 </Typography>
@@ -86,7 +99,12 @@ class ContactPage extends React.Component {
               <Grid item xs={12}>
                 <Typography
                   variant="body2"
-                  style={(isEdit ? bodyEdit : bodyView, { color: "white" })}
+                  style={{
+                    color: "white",
+                    fontFamily: isEdit
+                      ? bodyEdit.fontFamily
+                      : bodyView.fontFamily
+                  }}
                 >
                   {isEdit
                     ? siteEdit && siteEdit.address
@@ -101,7 +119,12 @@ class ContactPage extends React.Component {
                 <Typography
                   variant="h5"
                   className={classes.title}
-                  style={(isEdit ? bodyEdit : bodyView, { color: "white" })}
+                  style={{
+                    color: "white",
+                    fontFamily: isEdit
+                      ? bodyEdit.fontFamily
+                      : bodyView.fontFamily
+                  }}
                 >
                   Phone
                 </Typography>
@@ -109,7 +132,12 @@ class ContactPage extends React.Component {
               <Grid item xs={12}>
                 <Typography
                   variant="body2"
-                  style={(isEdit ? bodyEdit : bodyView, { color: "white" })}
+                  style={{
+                    color: "white",
+                    fontFamily: isEdit
+                      ? bodyEdit.fontFamily
+                      : bodyView.fontFamily
+                  }}
                 >
                   {isEdit
                     ? siteEdit && siteEdit.phone
