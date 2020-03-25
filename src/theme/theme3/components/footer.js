@@ -96,6 +96,7 @@ class FooterPage extends Component {
         justify="center"
         className={styles.footer}
         style={usestyle}
+        spacing={2}
       >
         <Grid item xs={3}>
           <Typography
@@ -105,7 +106,6 @@ class FooterPage extends Component {
             © {isEdit ? siteEdit.title : siteView.title}
           </Typography>
         </Grid>
-        <Grid item xs={1}></Grid>
         <Grid item xs={3}>
           <Grid style={{ border: "1px solid white", color: "white" }}>
             <Typography

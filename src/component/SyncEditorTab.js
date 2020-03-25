@@ -324,42 +324,14 @@ class SyncEditorTab extends React.Component {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Grid container>
-              <Grid
-                item
-                container
-                justify={"space-between"}
-                className={classes.sideBarBox}
-              >
-                <Grid item>
-                  <Typography variant={"subtitle2"}>Time</Typography>
-                </Grid>
-                <Grid item>
-                  <Typography variant={"subtitle2"}>
-                    {site.lastSync
-                      ? moment(site.lastSync).format("LLL")
-                      : "Not yet"}
-                  </Typography>
-                </Grid>
-              </Grid>
-              <Divider
-                style={{
-                  height: 10,
-                  width: "100%",
-                  backgroundColor: "#ffffff00"
-                }}
-              />
               <Grid item container justify={"center"}>
                 <Grid item>
-                  {site.lastSync && (
-                    <Button variant="contained" onClick={this.toggleDialog}>
-                      View Log
-                    </Button>
-                  )}
+                  <Button variant="contained" onClick={this.toggleDialog}>
+                    View Log
+                  </Button>
                   <Dialog
                     onClose={this.toggleDialog}
-                    aria-labelledby="simple-dialog-title"
                     open={open}
-                    maxWidth="lg"
                     fullWidth
                     fullScreen
                   >

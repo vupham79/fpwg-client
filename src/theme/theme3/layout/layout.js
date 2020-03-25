@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Footer from "../components/footer";
 import { connect } from "react-redux";
-import { Grid } from "@material-ui/core";
+import { Grid, Divider } from "@material-ui/core";
 import { themes as themesConstant } from "../../../constant/constant";
 import Header from "../components/header";
 
@@ -51,6 +51,10 @@ class Layout extends Component {
       >
         <Header />
         {isEdit ? this.renderTabItem() : this.props.children}
+        <Divider
+          variant="middle"
+          style={{ backgroundColor: "white", height: "0.1rem" }}
+        />
         <Footer />
       </Grid>
     );

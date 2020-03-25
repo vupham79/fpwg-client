@@ -12,9 +12,10 @@ import EditPage from "./edit";
 import WebFont from "webfontloader";
 class PreEditPage extends React.Component {
   componentDidMount() {
-    const { isLogin, setEditOn } = this.props;
+    const { isLogin, setEditOn, currentEditId } = this.props;
     if (isLogin) {
       this.getAllThemes();
+      this.getSite(currentEditId);
       setEditOn();
     }
   }
@@ -22,6 +23,22 @@ class PreEditPage extends React.Component {
   getAllThemes = async () => {
     const { getAllThemes } = this.props;
     await getAllThemes();
+  };
+
+  getSite = async id => {
+    const { getSiteById, setSiteEdit, getAllPost } = this.props;
+    const data = await getSiteById(id);
+    if (data) {
+      const titleStyle = {
+        fontFamily: data.fontTitle,
+        color: data.color
+      };
+      const bodyStyle = {
+        fontFamily: data.fontBody
+      };
+      await setSiteEdit(data, titleStyle, bodyStyle);
+      data.posts && getAllPost(data.posts);
+    }
   };
 
   render() {

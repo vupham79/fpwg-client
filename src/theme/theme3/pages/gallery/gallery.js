@@ -44,16 +44,27 @@ class GalleryPage extends React.Component {
           </Typography>
         </Grid>
         <Grid container justify="center" item sm={10} xs={10}>
-          <Tabs value={tabValue} onChange={this.handleChangeTabValue}>
+          <Tabs
+            TabIndicatorProps={{ style: { display: "none" } }}
+            value={tabValue}
+            onChange={this.handleChangeTabValue}
+          >
             <Tab
               style={
                 (isEdit ? bodyEdit : bodyView,
-                { color: "white", borderRight: "1px solid white" })
+                {
+                  color: "white",
+                  borderRight: "1px solid white",
+                  fontWeight: "700"
+                })
               }
               label="Photos"
             />
             <Tab
-              style={(isEdit ? bodyEdit : bodyView, { color: "white" })}
+              style={
+                (isEdit ? bodyEdit : bodyView,
+                { color: "white", fontWeight: "700" })
+              }
               label="Videos"
             />
           </Tabs>

@@ -48,13 +48,14 @@ class EventComponent extends React.Component {
 
   getList = async () => {
     const { homeList } = this.props;
-    this.setState({
-      filteredData: homeList.slice(
-        this.state.offset,
-        this.state.itemPerPage + this.state.offset
-      ),
-      pageCount: Math.ceil(homeList.length / this.state.itemPerPage)
-    });
+    homeList &&
+      this.setState({
+        filteredData: homeList.slice(
+          this.state.offset,
+          this.state.itemPerPage + this.state.offset
+        ),
+        pageCount: Math.ceil(homeList.length / this.state.itemPerPage)
+      });
   };
 
   componentDidMount() {

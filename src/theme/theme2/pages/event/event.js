@@ -24,7 +24,7 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
         className={styles.event_body}
       >
         <Grid item sm={12} container>
-          <Grid item sm={3} xs={6}>
+          <Grid item sm={3} xs={2} md={2}>
             <div className={styles.image_page}>
               <img
                 alt=""
@@ -33,7 +33,7 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
               />
             </div>
           </Grid>
-          <Grid item sm={9} xs={6} container direction="column">
+          <Grid item sm={9} xs={10} container direction="column">
             <Grid>
               <Typography variant="h6" className={styles.shop_name}>
                 {isEdit ? siteEdit.title : siteView.title}
@@ -101,7 +101,14 @@ class EventPage extends React.Component {
         </Grid>
         {isEdit ? (
           siteEdit && siteEdit.events ? (
-            <EventComponent />
+            // <EventComponent />
+            <EmptyEvent
+              siteEdit={siteEdit}
+              titleEdit={titleEdit}
+              siteView={siteView}
+              titleView={titleView}
+              isEdit={isEdit}
+            />
           ) : (
             <EmptyEvent
               siteEdit={siteEdit}
