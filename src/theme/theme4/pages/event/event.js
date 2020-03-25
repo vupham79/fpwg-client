@@ -5,7 +5,18 @@ import EventComponent from "../../../component/eventComponent";
 
 class Theme1Event extends React.Component {
   render() {
-    const { isEdit, titleEdit, titleView, bodyEdit, bodyView, fromHome, homeTitle } = this.props;
+    const {
+      isEdit,
+      titleEdit,
+      titleView,
+      bodyEdit,
+      bodyView,
+      fromHome,
+      homeTitle,
+      siteEdit,
+      siteView,
+      homeList
+    } = this.props;
 
     const useStyles = () => ({
       changableLink: {
@@ -22,7 +33,7 @@ class Theme1Event extends React.Component {
         textAlign: "center",
         fontSize: 25,
         paddingBottom: 20,
-        textDecoration: "underline",
+        textDecoration: "underline"
       },
       changableTitle2: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -96,14 +107,25 @@ class Theme1Event extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50, minHeight: "50vh" }}>
+      <Grid
+        container
+        style={{
+          backgroundColor: "#1a1919",
+          paddingBottom: 50,
+          minHeight: "50vh"
+        }}
+      >
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
             {fromHome ? homeTitle : "EVENTS"}
           </p>
         </Grid>
         <Grid item xs={12}>
-          <EventComponent homeList={fromHome ? homeList : (isEdit ? siteEdit.events : siteView.events)} />
+          <EventComponent
+            homeList={
+              fromHome ? homeList : isEdit ? siteEdit.events : siteView.events
+            }
+          />
         </Grid>
       </Grid>
     );

@@ -5,7 +5,6 @@ import {
   setNavItemActive,
   setNavItemInActive,
   getDataByPageNumber,
-  setPostsToSiteEdit,
   setPostsToSiteView
 } from "../../../../actions";
 
@@ -36,13 +35,7 @@ class PreNewPage extends Component {
       siteEdit
     } = this.props;
 
-    if (isEdit) {
-      const data = await getDataByPageNumber({
-        siteId: siteEdit.id,
-        page: "news"
-      });
-      data && setPostToSiteEdit(data);
-    } else {
+    if (!isEdit) {
       const data = await getDataByPageNumber({
         sitePath: siteView.sitePath,
         page: "news"
@@ -58,7 +51,6 @@ class PreNewPage extends Component {
 
 const mapStateToProps = state => ({
   siteView: state.site.siteView,
-  siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit
 });
 
@@ -67,7 +59,6 @@ const mapDispatchToProps = dispatch => ({
   setNavItemActive: () => dispatch(setNavItemActive()),
   getDataByPageNumber: ({ sitePath, page, siteId }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId })),
-  setPostToSiteEdit: posts => dispatch(setPostsToSiteEdit(posts)),
   setPostToSiteView: posts => dispatch(setPostsToSiteView(posts))
 });
 

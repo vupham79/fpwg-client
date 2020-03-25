@@ -6,11 +6,8 @@ import {
   setActivePost,
   savePosts,
   getDataByPageNumber,
-  setPostsToSiteEdit,
   setPostsToSiteView,
-  setEventsToSiteEdit,
   setEventsToSiteView,
-  setGalleriesToSiteEdit,
   setGalleriesToSiteView
 } from "./post";
 import {
@@ -169,11 +166,8 @@ export {
   changeHomeItems,
   changeHomeItemName,
   getDataByPageNumber,
-  setPostsToSiteEdit,
   setPostsToSiteView,
   changeSiteAbout,
-  setEventsToSiteEdit,
   setEventsToSiteView,
-  setGalleriesToSiteEdit,
   setGalleriesToSiteView
 };

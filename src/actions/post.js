@@ -96,19 +96,6 @@ export const setPostsToSiteView = posts => {
   };
 };
 
-export const setPostsToSiteEdit = posts => {
-  return dispatch => {
-    dispatch({
-      type: "SET_SITEEDIT_NEWS",
-      payload: posts.data.posts
-    });
-    dispatch({
-      type: "SET_PAGECOUNT_NEWS_EDIT",
-      payload: posts.pageCount
-    });
-  };
-};
-
 export const setGalleriesToSiteView = galleries => {
   return dispatch => {
     dispatch({
@@ -122,19 +109,6 @@ export const setGalleriesToSiteView = galleries => {
   };
 };
 
-export const setGalleriesToSiteEdit = galleries => {
-  return dispatch => {
-    dispatch({
-      type: "SET_SITEEDIT_GALLERIES",
-      payload: galleries.data
-    });
-    dispatch({
-      type: "SET_PAGECOUNT_GALLERIES_EDIT",
-      payload: galleries.pageCount
-    });
-  };
-};
-
 export const setEventsToSiteView = event => {
   return dispatch => {
     dispatch({
@@ -143,19 +117,6 @@ export const setEventsToSiteView = event => {
     });
     dispatch({
       type: "SET_PAGECOUNT_EVENT_VIEW",
-      payload: event.pageCount
-    });
-  };
-};
-
-export const setEventsToSiteEdit = event => {
-  return dispatch => {
-    dispatch({
-      type: "SET_SITEEDIT_EVENTS",
-      payload: event.events
-    });
-    dispatch({
-      type: "SET_PAGECOUNT_EVENT_EDIT",
       payload: event.pageCount
     });
   };

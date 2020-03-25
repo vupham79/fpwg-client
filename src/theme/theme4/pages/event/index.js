@@ -3,7 +3,6 @@ import EventPage from "./event";
 import {
   setNavItemActive,
   setNavItemInActive,
-  setEventsToSiteEdit,
   setEventsToSiteView,
   getDataByPageNumber
 } from "../../../../actions";
@@ -28,20 +27,12 @@ class PreEventPageT4 extends Component {
   setDataToSite = async () => {
     const {
       getDataByPageNumber,
-      setEventsToSiteEdit,
       setEventsToSiteView,
       isEdit,
-      siteView,
-      siteEdit
+      siteView
     } = this.props;
 
-    if (isEdit) {
-      const data = await getDataByPageNumber({
-        siteId: siteEdit.id,
-        page: "event"
-      });
-      data && setEventsToSiteEdit(data);
-    } else {
+    if (!isEdit) {
       const data = await getDataByPageNumber({
         sitePath: siteView.sitePath,
         page: "event"
@@ -57,7 +48,6 @@ class PreEventPageT4 extends Component {
 
 const mapStateToProps = state => ({
   siteView: state.site.siteView,
-  siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit
 });
 
@@ -66,7 +56,6 @@ const mapDispatchToProps = dispatch => ({
   setNavItemActive: () => dispatch(setNavItemActive()),
   getDataByPageNumber: ({ sitePath, page, siteId }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId })),
-  setEventsToSiteEdit: events => dispatch(setEventsToSiteEdit(events)),
   setEventsToSiteView: events => dispatch(setEventsToSiteView(events))
 });
 

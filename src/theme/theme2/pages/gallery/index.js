@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import {
   setNavItemActive,
   setNavItemInActive,
-  setGalleriesToSiteEdit,
   setGalleriesToSiteView,
   getDataByPageNumber
 } from "../../../../actions";
@@ -35,13 +34,7 @@ class PreGalleryPage extends Component {
       siteEdit
     } = this.props;
 
-    if (isEdit) {
-      const data = await getDataByPageNumber({
-        siteId: siteEdit.id,
-        page: "gallery"
-      });
-      data && setGalleriesToSiteEdit(data);
-    } else {
+    if (!isEdit) {
       const data = await getDataByPageNumber({
         sitePath: siteView.sitePath,
         page: "gallery"
@@ -57,7 +50,6 @@ class PreGalleryPage extends Component {
 
 const mapStateToProps = state => ({
   siteView: state.site.siteView,
-  siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit
 });
 
@@ -66,8 +58,6 @@ const mapDispatchToProps = dispatch => ({
   setNavItemActive: () => dispatch(setNavItemActive()),
   getDataByPageNumber: ({ sitePath, page, siteId }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId })),
-  setGalleriesToSiteEdit: galleries =>
-    dispatch(setGalleriesToSiteEdit(galleries)),
   setGalleriesToSiteView: galleries =>
     dispatch(setGalleriesToSiteView(galleries))
 });
