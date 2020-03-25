@@ -10,10 +10,12 @@ import { Grid, Typography, withStyles } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import styles from "./index.module.css";
+import classes from "./index.module.css";
 
 const useStyle = theme => ({
-  root: {
-    background: style => style.color
+  footer: {
+    padding: "1rem 0",
+    margin: 0
   }
 });
 
@@ -79,29 +81,30 @@ class FooterPage extends Component {
   };
 
   render() {
-    const { isEdit, siteEdit, siteView, titleEdit, titleView } = this.props;
-
-    const usestyle = isEdit
-      ? {
-          background: titleEdit.color
-        }
-      : {
-          background: titleView.color
-        };
+    const {
+      isEdit,
+      siteEdit,
+      siteView,
+      titleEdit,
+      titleView,
+      classes
+    } = this.props;
 
     return (
       <Grid
         container
         alignItems="center"
         justify="center"
-        className={styles.footer}
-        style={usestyle}
-        spacing={2}
+        className={classes.footer}
       >
         <Grid item xs={3}>
           <Typography
             variant="body1"
-            style={{ color: "white", textAlign: "end" }}
+            style={{
+              color: "white",
+              textAlign: "center",
+              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
+            }}
           >
             © {isEdit ? siteEdit.title : siteView.title}
           </Typography>
@@ -112,7 +115,8 @@ class FooterPage extends Component {
               style={{
                 padding: "1rem",
                 fontWeight: "800",
-                textAlign: "center"
+                textAlign: "center",
+                fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
               }}
               variant="body1"
             >

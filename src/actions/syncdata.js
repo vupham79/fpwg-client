@@ -1,7 +1,7 @@
 import axios from "../utils/axios";
 import toastr from "toastr";
 
-export function syncDataFromFB(pageId) {
+export function syncDataFromFB(pageId, dateFrom, dateTo) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -12,7 +12,8 @@ export function syncDataFromFB(pageId) {
         url: "/site/syncData",
         data: {
           pageId: pageId,
-          lastSync: new Date()
+          dateFrom: dateFrom,
+          dateTo: dateTo
         }
       });
       dispatch({

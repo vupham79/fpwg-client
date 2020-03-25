@@ -13,11 +13,12 @@ import {
   Select,
   Tab,
   Tabs,
-  withStyles
+  withStyles,
+  MenuItem
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { NavLink } from "react-router-dom";
+import Link from "../../../component/link";
 import { updateNavItemValue } from "../../../actions";
 
 const useStyles = theme => ({
@@ -43,7 +44,7 @@ const useStyles = theme => ({
     [theme.breakpoints.up("md")]: {
       position: "absolute",
       top: "70%",
-      minHeight: "11vh"
+      minHeight: "13vh"
     },
     position: "absolute",
     top: "60%",
@@ -62,21 +63,16 @@ const useStyles = theme => ({
       display: "none"
     }
   },
-  select: {
-    "& option": {
-      padding: "0.5rem"
-    }
-  },
   title: {
     minWidth: "20vh",
     color: "white",
-    fontSize: "2.5rem",
+    fontSize: "3rem",
     overflow: "hidden",
     textAlign: "center",
     [theme.breakpoints.up("md")]: {
       display: "block",
       position: "absolute",
-      top: "-2rem"
+      top: "-2.3rem"
     }
   }
 });
@@ -210,7 +206,7 @@ class Header extends Component {
       fontFamily: titleView.fontFamily,
       color: "white",
       fontSize: "1.2rem",
-      minWidth: "12vh",
+      minWidth: "20vh",
       textDecoration: "none",
       height: "auto"
     };
@@ -222,14 +218,14 @@ class Header extends Component {
             siteView.navItems &&
             siteView.navItems.map((item, index) =>
               item.isActive ? (
-                <NavLink
+                <Link
                   key={index}
                   style={navLinkStyle}
                   activeStyle={{ backgroundColor: siteView.color }}
                   to={`/${siteView.sitePath}/${item.original}`}
                 >
                   {item.name}
-                </NavLink>
+                </Link>
               ) : null
             )}
       </Grid>
@@ -245,14 +241,15 @@ class Header extends Component {
   };
 
   renderSelect = () => {
-    const { siteEdit, siteView, isEdit, classes } = this.props;
+    const { siteEdit, siteView, isEdit, titleEdit, titleView } = this.props;
     const selectStyle = {
       color: "white",
       backgroundColor: isEdit
         ? siteEdit && siteEdit.color
         : siteView && siteView.color,
       border: "1px solid white",
-      fontSize: 14
+      textAlign: "center",
+      fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
     };
     return (
       <FormControl
@@ -261,12 +258,10 @@ class Header extends Component {
         style={{ width: "-webkit-fill-available" }}
       >
         <Select
-          className={classes.select}
           onChange={this.hangleChangeSelect}
-          native
           fullWidth
-          IconComponent={"false"}
-          inputProps={{ style: { ...selectStyle } }}
+          IconComponent={() => <></>}
+          style={selectStyle}
           value={this.props.tabValue}
         >
           {isEdit
@@ -274,27 +269,23 @@ class Header extends Component {
               siteEdit.navItems &&
               siteEdit.navItems.map((item, index) =>
                 item.isActive ? (
-                  <option
-                    style={{ ...selectStyle, height: "2rem" }}
-                    key={index}
-                    value={index}
-                  >
+                  <MenuItem key={index} value={index}>
                     {item.name}
-                  </option>
+                  </MenuItem>
                 ) : null
               )
             : siteView &&
               siteView.navItems &&
               siteView.navItems.map((item, index) =>
                 item.isActive ? (
-                  <option>
-                    <NavLink
-                      key={index}
+                  <MenuItem key={index}>
+                    <Link
                       to={`/${siteView.sitePath}/${item.original}`}
+                      style={{ width: "-webkit-fill-available" }}
                     >
                       {item.name}
-                    </NavLink>
-                  </option>
+                    </Link>
+                  </MenuItem>
                 ) : null
               )}
         </Select>
@@ -315,10 +306,10 @@ class Header extends Component {
       background: isEdit
         ? hexToRGB(titleEdit.color)
         : hexToRGB(titleView.color),
-      fontFamily: isEdit ? siteEdit.fontFamily : siteView.fontFamily
+      fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
     };
     return (
-      <Grid container justify="center" className={classes.rootHeader}>
+      <Grid container justify="center" style={{ padding: "1rem" }}>
         <Grid item xs={12} className={classes.title} style={infoStyle}>
           {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
         </Grid>
@@ -504,6 +495,7 @@ class Header extends Component {
           justify="center"
           alignItems="flex-end"
           className={classes.navItem}
+          style={{ backgroundColor: isEdit ? siteEdit.color : siteView.color }}
         >
           {this.renderHeader()}
         </Grid>

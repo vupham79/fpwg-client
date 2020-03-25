@@ -51,10 +51,7 @@ class Layout extends Component {
       >
         <Header />
         {isEdit ? this.renderTabItem() : this.props.children}
-        <Divider
-          variant="middle"
-          style={{ backgroundColor: "white", height: "0.1rem" }}
-        />
+        <Divider style={{ backgroundColor: "white" }} variant="fullWidth" />
         <Footer />
       </Grid>
     );
@@ -64,6 +61,7 @@ class Layout extends Component {
 const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
   siteEdit: state.site.siteEdit,
+  siteView: state.site.siteView,
   navItemValue: state.tab.navItemValue,
   themes: state.theme.data,
   titleView: state.site.titleView,

@@ -24,7 +24,10 @@ class NewPage extends Component {
             align="center"
             gutterBottom
             className={styles.title}
-            style={(isEdit ? titleEdit : titleView, { color: "white" })}
+            style={{
+              color: "white",
+              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
+            }}
           >
             News
           </Typography>

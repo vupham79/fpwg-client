@@ -24,11 +24,15 @@ class AboutPage extends React.Component {
               variant="h4"
               align="center"
               gutterBottom
-              style={(isEdit ? titleEdit : titleView, { color: "white" })}
+              style={{
+                fontFamily: isEdit
+                  ? titleEdit.fontFamily
+                  : titleView.fontFamily,
+                color: "white"
+              }}
             >
               About
             </Typography>
-            <Divider style={{ backgroundColor: "white" }} variant="fullWidth" />
           </Grid>
         ) : (
           <></>
@@ -37,7 +41,10 @@ class AboutPage extends React.Component {
           <Typography
             variant="body1"
             color="textPrimary"
-            style={(isEdit ? bodyEdit : bodyView, { color: "white" })}
+            style={{
+              color: "white",
+              fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
+            }}
             className={styles.about}
           >
             {isEdit
