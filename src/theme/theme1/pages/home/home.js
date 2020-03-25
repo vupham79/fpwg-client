@@ -121,6 +121,7 @@ class Theme1Home extends React.Component {
                     key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
+                    {console.log(row.filter.items)}
                     <EventPage
                       fromHome
                       homeTitle={row.name}

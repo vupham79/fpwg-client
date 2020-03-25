@@ -149,7 +149,7 @@ class Theme1News extends React.Component {
                 </Typography>
                 </Grid>
               )
-          ) : siteView && siteView.posts ? (
+          ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
                 posts={(fromHome && homeList) ? homeList : siteView.posts}

@@ -155,7 +155,7 @@ class EventComponent extends React.Component {
             container
             alignItems="center"
             direction="column"
-            // className={classes.eventPage}
+          // className={classes.eventPage}
           >
             <Grid
               item
@@ -387,7 +387,7 @@ class EventComponent extends React.Component {
                   );
                 })}
             </Grid>
-            {isEdit
+            {/* {isEdit
               ? this.state.pageCount > 1 && (
                   <div className="commentBox">
                     <ReactPaginate
@@ -420,7 +420,7 @@ class EventComponent extends React.Component {
                       onChange={this.handlePageViewClick}
                     />
                   </Grid>
-                )}
+                )} */}
           </Grid>
         </Grid>
       </Grid>

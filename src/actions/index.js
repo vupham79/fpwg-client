@@ -8,7 +8,8 @@ import {
   getDataByPageNumber,
   setPostsToSiteView,
   setEventsToSiteView,
-  setGalleriesToSiteView
+  setGalleriesToSiteView,
+  setHomepageToSiteView
 } from "./post";
 import {
   changeColor,
@@ -169,5 +170,6 @@ export {
   setPostsToSiteView,
   changeSiteAbout,
   setEventsToSiteView,
-  setGalleriesToSiteView
+  setGalleriesToSiteView,
+  setHomepageToSiteView
 };

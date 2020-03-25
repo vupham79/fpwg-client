@@ -125,7 +125,7 @@ class Theme1Gallery extends React.Component {
                 Current no image to show .
               </p>
             )
-        ) : siteView && siteView.galleries ? (
+        ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
           <GalleryComponent
             galleries={fromHome && homeList ? homeList : siteView.galleries}
             siteInfo={siteView.sitePath}
