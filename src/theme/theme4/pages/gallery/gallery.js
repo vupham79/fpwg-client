@@ -36,9 +36,10 @@ class Theme1Gallery extends React.Component {
       },
       changableBody2: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
-        color: "#212121",
-        textAlign: "left",
-        fontSize: 16
+        color: "#b3b2b2",
+        textAlign: "center",
+        fontSize: 16,
+        fontWeight: 400
       },
       changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -113,6 +114,7 @@ class Theme1Gallery extends React.Component {
           paddingBottom: 50,
           minHeight: "50vh"
         }}
+        justify="center"
       >
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
@@ -126,20 +128,20 @@ class Theme1Gallery extends React.Component {
               siteInfo={siteEdit.id}
             />
           ) : (
-            <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-              Current no image to show .
-            </p>
-          )
-        ) : siteView && siteView.galleries ? (
+              <p style={classes.changableBody2}>
+                Currently no photo available.
+              </p>
+            )
+        ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
           <GalleryComponent
             galleries={fromHome && homeList ? homeList : siteView.galleries}
             siteInfo={siteView.sitePath}
           />
         ) : (
-          <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-            Current no image to show .
-          </p>
-        )}
+              <p style={classes.changableBody2}>
+                Currently no photo available.
+              </p>
+            )}
       </Grid>
     );
   }

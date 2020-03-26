@@ -203,6 +203,14 @@ const SiteReducer = (state = defaultState, action) => {
         titleView: { ...action.payload.titleView },
         bodyView: { ...action.payload.bodyView }
       };
+    case "SET_HOME_LIST_SITEVIEW":
+      return {
+        ...state,
+        siteView: {
+          ...state.siteView,
+          homepage: action.payload
+        }
+      };
     case "SET_CURRENT_EDIT_ID":
       return {
         ...state,

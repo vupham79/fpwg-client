@@ -565,7 +565,6 @@ class HomepageEditorTab extends React.Component {
 
   handleChangeAbout = e => {
     this.props.changeSiteAbout(e.target.value);
-    document.getElementById("aboutInput").focus();
   };
 
   handleSearch = keyword => {
@@ -573,18 +572,22 @@ class HomepageEditorTab extends React.Component {
     let searchResult;
     if (this.state.currentExpandType === "news" && this.props.posts) {
       currentList = this.props.posts;
-      searchResult = currentList.filter(function (pos) {
-        return pos.message.toLowerCase().includes(keyword.toLowerCase());
-      });
+      if (currentList) {
+        searchResult = currentList.filter(function (pos) {
+          return pos.message.toLowerCase().includes(keyword.toLowerCase());
+        });
+      }
     }
     if (this.state.currentExpandType === "gallery" && this.props.site.galleries) {
       currentList = this.props.site.galleries;
     }
     if (this.state.currentExpandType === "event" && this.props.site.events) {
       currentList = this.props.site.events;
-      searchResult = currentList.filter(function (pos) {
-        return pos.name.toLowerCase().includes(keyword.toLowerCase());
-      });
+      if (currentList) {
+        searchResult = currentList.filter(function (pos) {
+          return pos.name.toLowerCase().includes(keyword.toLowerCase());
+        });
+      }
     }
 
     this.setListData(searchResult.slice(0, this.state.itemPerPage));

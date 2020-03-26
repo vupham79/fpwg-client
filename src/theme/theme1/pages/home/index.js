@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import {
   setNavItemActive,
   setNavItemInActive,
-  getDataByPageNumber
+  getDataByPageNumber,
 } from "../../../../actions";
 
 class PreHomePageT1 extends Component {
@@ -23,14 +23,13 @@ class PreHomePageT1 extends Component {
     }
   }
   setDataToSite = async () => {
-    const { getDataByPageNumber, isEdit, siteView, siteEdit } = this.props;
+    const { getDataByPageNumber, isEdit, siteView } = this.props;
 
     if (!isEdit) {
-      const data = await getDataByPageNumber({
+      await getDataByPageNumber({
         sitePath: siteView.sitePath,
         page: "home"
       });
-      // data && setGalleriesToSiteView(data);
     }
   };
   render() {
@@ -48,7 +47,7 @@ const mapDispatchToProps = dispatch => ({
   setNavItemInActive: () => dispatch(setNavItemInActive()),
   setNavItemActive: () => dispatch(setNavItemActive()),
   getDataByPageNumber: ({ sitePath, page, siteId }) =>
-    dispatch(getDataByPageNumber({ sitePath, page, siteId }))
+    dispatch(getDataByPageNumber({ sitePath, page, siteId })),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreHomePageT1);

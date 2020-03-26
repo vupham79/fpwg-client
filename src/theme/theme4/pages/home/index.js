@@ -26,11 +26,10 @@ class PreHomePageT4 extends Component {
     const { getDataByPageNumber, isEdit, siteView, siteEdit } = this.props;
 
     if (!isEdit) {
-      const data = await getDataByPageNumber({
+      await getDataByPageNumber({
         sitePath: siteView.sitePath,
         page: "home"
       });
-      console.log("data: ", data);
     }
   };
   render() {

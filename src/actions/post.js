@@ -69,7 +69,14 @@ export const getDataByPageNumber = ({ siteId, page, pageNumber, sitePath }) => {
       dispatch({
         type: "CLOSE_LOADING"
       });
+      console.log(data);
       if (data.status === 200) {
+        if (page === "home") {
+          dispatch({
+            type: "SET_HOME_LIST_SITEVIEW",
+            payload: data.data
+          });
+        }
         return data.data;
       } else {
         return null;
@@ -80,6 +87,15 @@ export const getDataByPageNumber = ({ siteId, page, pageNumber, sitePath }) => {
       });
       return null;
     }
+  };
+};
+
+export const setHomepageToSiteView = homepages => {
+  return dispatch => {
+    dispatch({
+      type: "SET_HOME_LIST_SITEVIEW",
+      payload: homepages.data
+    });
   };
 };
 
@@ -113,7 +129,7 @@ export const setEventsToSiteView = event => {
   return dispatch => {
     dispatch({
       type: "SET_SITEVIEW_EVENTS",
-      payload: event.events
+      payload: event.data.events
     });
     dispatch({
       type: "SET_PAGECOUNT_EVENT_VIEW",

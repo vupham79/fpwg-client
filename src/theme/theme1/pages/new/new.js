@@ -144,12 +144,12 @@ class Theme1News extends React.Component {
               </Grid>
             ) : (
                 <Grid container justify="center">
-                  <Typography variant="body1">
+                  <Typography className={classes.changableBody}>
                     Currently there are no news.
                 </Typography>
                 </Grid>
               )
-          ) : siteView && siteView.posts ? (
+          ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
                 posts={(fromHome && homeList) ? homeList : siteView.posts}
@@ -162,7 +162,7 @@ class Theme1News extends React.Component {
             </Grid>
           ) : (
                 <Grid container justify="center">
-                  <Typography variant="body1">
+                  <Typography className={classes.changableBody}>
                     Currently there are no news.
               </Typography>
                 </Grid>
