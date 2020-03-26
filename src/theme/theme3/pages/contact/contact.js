@@ -29,7 +29,9 @@ class ContactPage extends React.Component {
       bodyView,
       siteEdit,
       siteView,
-      classes
+      classes,
+      fromHome,
+      homeTitle
     } = this.props;
 
     const MapWithAMarker = withScriptjs(
@@ -76,7 +78,7 @@ class ContactPage extends React.Component {
               fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
             }}
           >
-            Contacts
+            {fromHome ? homeTitle : "Contacts"}
           </Typography>
         </Grid>
         <Grid container spacing={2} item xs={12} justify="center">
@@ -157,13 +159,13 @@ class ContactPage extends React.Component {
                 mapElement={<div style={{ height: `100%` }} />}
               />
             ) : (
-              <MapWithAMarker
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `15rem` }} />}
-                mapElement={<div style={{ height: `100%` }} />}
-              />
-            )}
+                <MapWithAMarker
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `15rem` }} />}
+                  mapElement={<div style={{ height: `100%` }} />}
+                />
+              )}
           </Grid>
         </Grid>
       </Grid>
