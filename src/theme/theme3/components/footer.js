@@ -9,8 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Grid, Typography, withStyles } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import styles from "./index.module.css";
-import classes from "./index.module.css";
 
 const useStyle = theme => ({
   footer: {

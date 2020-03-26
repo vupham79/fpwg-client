@@ -96,7 +96,7 @@ function EmptyListSite() {
       <Grid container item xs={12}>
         <Grid item xs={12}>
           <Typography variant="h4" className={style.h4}>
-            You don't have any FBWG sites yet.
+            You don't have any FPWG sites yet.
           </Typography>
         </Grid>
         {/* <Grid item xs={12} className={style.body1}>

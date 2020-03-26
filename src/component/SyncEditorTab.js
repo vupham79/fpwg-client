@@ -340,7 +340,7 @@ class SyncEditorTab extends React.Component {
       <>
         <ExpansionPanel style={expanStyle}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="button">Last Sync</Typography>
+            <Typography variant="button">Sync Records</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Grid container>

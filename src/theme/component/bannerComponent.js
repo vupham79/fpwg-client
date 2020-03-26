@@ -82,12 +82,12 @@ class BannerComponent extends React.Component {
                   height="400"
                   image={URL.createObjectURL(cover)}
                 />
-                <p className="legend">
+                {/* <p className="legend">
                   {isEdit && siteEdit && siteEdit.about}
                   {!isEdit && siteView && siteView.about}
                   {isEdit && !siteEdit.about && "Welcome to our website!"}
                   {!isEdit && !siteView.about && "Welcome to our website!"}
-                </p>
+                </p> */}
               </div>
             );
           } else
@@ -99,10 +99,10 @@ class BannerComponent extends React.Component {
                   height="400"
                   image={cover}
                 />
-                <p className="legend">
+                {/* <p className="legend">
                   {isEdit && siteEdit && siteEdit.about}
                   {isEdit && !siteEdit.about && "Welcome to our website!"}
-                </p>
+                </p> */}
               </div>
             );
         });
@@ -117,10 +117,10 @@ class BannerComponent extends React.Component {
               height="400"
               image={cover}
             />
-            <p className="legend">
+            {/* <p className="legend">
               {!isEdit && siteView && siteView.about}
               {!isEdit && !siteView.about && "Welcome to our website!"}
-            </p>
+            </p> */}
           </div>
         ));
       }
@@ -146,21 +146,21 @@ class BannerComponent extends React.Component {
         {isEdit && newCover && newCover.length === 0 ? (
           <div></div>
         ) : (
-            <Grid item xs={12}>
-              <Carousel
-                autoPlay
-                infiniteLoop
-                centerMode={false}
-                showArrows={false}
-                showIndicators={false}
-                dynamicHeight={false}
-                showStatus={false}
-                showThumbs={false}
-              >
-                {this.renderNewCoversCarousel()}
-              </Carousel>
-            </Grid>
-          )}
+          <Grid item xs={12}>
+            <Carousel
+              autoPlay
+              infiniteLoop
+              centerMode={false}
+              showArrows={false}
+              showIndicators={false}
+              dynamicHeight={false}
+              showStatus={false}
+              showThumbs={false}
+            >
+              {this.renderNewCoversCarousel()}
+            </Carousel>
+          </Grid>
+        )}
       </React.Fragment>
     );
   };
@@ -172,21 +172,21 @@ class BannerComponent extends React.Component {
         {isEdit && newCover && newCover.length === 0 ? (
           <div></div>
         ) : (
-            <Grid item xs={12}>
-              <Carousel
-                autoPlay
-                infiniteLoop
-                centerMode={false}
-                showArrows={false}
-                showIndicators={false}
-                dynamicHeight={false}
-                showStatus={false}
-                showThumbs={false}
-              >
-                {this.renderNewCoversCarouselWithTitle()}
-              </Carousel>
-            </Grid>
-          )}
+          <Grid item xs={12}>
+            <Carousel
+              autoPlay
+              infiniteLoop
+              centerMode={false}
+              showArrows={false}
+              showIndicators={false}
+              dynamicHeight={false}
+              showStatus={false}
+              showThumbs={false}
+            >
+              {this.renderNewCoversCarouselWithTitle()}
+            </Carousel>
+          </Grid>
+        )}
       </React.Fragment>
     );
   };
