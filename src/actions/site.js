@@ -332,7 +332,6 @@ export function saveDesignSite({
       }
       const uploadCoverAction = await uploadCover(cover, site);
       if (uploadCoverAction) {
-        console.log(uploadCoverAction);
         coverURL = uploadCoverAction;
       }
 
@@ -347,7 +346,6 @@ export function saveDesignSite({
           saveDat[i].filter.items = null;
       }
 
-      console.log(saveDat);
       const data = await axios({
         method: "patch",
         url: "/site/saveDesign",
@@ -454,21 +452,21 @@ export function getSiteById(id) {
           ) {
             if (type === "news") {
               modDat.homepage[i].filter.items[index] = modDat.posts.filter(
-                function (pos) {
+                function(pos) {
                   return pos._id === modDat.homepage[i].filter.items[index];
                 }
               )[0];
             }
             if (type === "event") {
               modDat.homepage[i].filter.items[index] = modDat.events.filter(
-                function (pos) {
+                function(pos) {
                   return pos._id === modDat.homepage[i].filter.items[index];
                 }
               )[0];
             }
             if (type === "gallery") {
               modDat.homepage[i].filter.items[index] = modDat.galleries.filter(
-                function (pos) {
+                function(pos) {
                   return pos._id === modDat.homepage[i].filter.items[index];
                 }
               )[0];
@@ -477,7 +475,6 @@ export function getSiteById(id) {
           if (modDat.homepage[i].filter.items.length === 0)
             modDat.homepage[i].filter.items = null;
         }
-        console.log(modDat);
         return modDat;
       }
     } catch (error) {

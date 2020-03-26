@@ -25,7 +25,6 @@ class GalleryPage extends React.Component {
       bodyView
     } = this.props;
     const { tabValue } = this.state;
-    console.log(siteView);
     return (
       <Grid
         container

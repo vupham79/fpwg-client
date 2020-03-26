@@ -149,12 +149,12 @@ class Theme1News extends React.Component {
                 />
               </Grid>
             ) : (
-                <Grid container justify="center">
-                  <Typography style={classes.changableBody2}>
-                    Currently there are no news.
+              <Grid container justify="center">
+                <Typography style={classes.changableBody2}>
+                  Currently there are no news.
                 </Typography>
-                </Grid>
-              )
+              </Grid>
+            )
           ) : siteView && siteView.posts ? (
             <Grid container>
               <PostTypeComponent
@@ -167,12 +167,12 @@ class Theme1News extends React.Component {
               />
             </Grid>
           ) : (
-                <Grid container justify="center">
-                  <Typography style={classes.changableBody2}>
-                    Currently there are no news.
+            <Grid container justify="center">
+              <Typography style={classes.changableBody2}>
+                Currently there are no news.
               </Typography>
-                </Grid>
-              )}
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );

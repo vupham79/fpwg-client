@@ -199,7 +199,6 @@ function handleChangeNavName(id, site, newName, changeHomeItemName) {
 }
 
 class HomepageEditorTab extends React.Component {
-
   state = {
     openDiag: false,
     filteredData: [],
@@ -211,7 +210,7 @@ class HomepageEditorTab extends React.Component {
     isExpanding: false,
     currentExpandType: "",
     currentExpandItem: null,
-    currentFocusInput: "nameInput",
+    currentFocusInput: "nameInput"
   };
 
   handleUploadCover = async e => {
@@ -242,13 +241,17 @@ class HomepageEditorTab extends React.Component {
   PostsList() {
     return (
       <>
-        <TableContainer style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}>
+        <TableContainer
+          style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}
+        >
           <Table stickyHeader>
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
                   <TableCell align="center" key={index}>
-                    {column === "Created At" && <TableSortLabel>date</TableSortLabel>}
+                    {column === "Created At" && (
+                      <TableSortLabel>date</TableSortLabel>
+                    )}
                     {column}
                   </TableCell>
                 ))}
@@ -291,9 +294,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -312,7 +315,9 @@ class HomepageEditorTab extends React.Component {
   EventList() {
     return (
       <>
-        <TableContainer style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}>
+        <TableContainer
+          style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}
+        >
           <Table stickyHeader>
             <TableHead>
               <TableRow>
@@ -341,9 +346,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -362,7 +367,9 @@ class HomepageEditorTab extends React.Component {
   GalleryList() {
     return (
       <>
-        <TableContainer style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}>
+        <TableContainer
+          style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}
+        >
           <Table stickyHeader>
             <TableHead>
               <TableRow>
@@ -392,9 +399,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -432,7 +439,10 @@ class HomepageEditorTab extends React.Component {
       if (this.state.currentExpandType === "news" && this.props.posts) {
         this.setPosts(this.props.posts);
       }
-      if (this.state.currentExpandType === "gallery" && this.props.site.galleries) {
+      if (
+        this.state.currentExpandType === "gallery" &&
+        this.props.site.galleries
+      ) {
         this.setPosts(this.props.site.galleries);
       }
       if (this.state.currentExpandType === "event" && this.props.site.events) {
@@ -496,25 +506,12 @@ class HomepageEditorTab extends React.Component {
         toastr.error("Maximum item selected");
       } else index.filter.items = [...index.filter.items, row];
     } else {
-      index.filter.items = index.filter.items.filter(function (post) {
+      index.filter.items = index.filter.items.filter(function(post) {
         return post._id !== row._id;
       });
     }
-    console.log(index.filter.items);
-    // this.props.setActiveHomeItems(this.props.site);
     this.setState({ currentExpandItem: index });
   };
-
-  componentDidUpdate() {
-
-  }
-
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   if (nextProps.site == this.props.site) {
-  //     return false;
-  //   }
-  //   return true;
-  // }
 
   renderNewCovers = () => {
     const { newCover, removeCover } = this.props;
@@ -573,18 +570,23 @@ class HomepageEditorTab extends React.Component {
     if (this.state.currentExpandType === "news" && this.props.posts) {
       currentList = this.props.posts;
       if (currentList) {
-        searchResult = currentList.filter(function (pos) {
-          return pos.message.toLowerCase().includes(keyword.toLowerCase());
+        searchResult = currentList.filter(function(pos) {
+          return pos.message
+            ? pos.message.toLowerCase().includes(keyword.toLowerCase())
+            : null;
         });
       }
     }
-    if (this.state.currentExpandType === "gallery" && this.props.site.galleries) {
+    if (
+      this.state.currentExpandType === "gallery" &&
+      this.props.site.galleries
+    ) {
       currentList = this.props.site.galleries;
     }
     if (this.state.currentExpandType === "event" && this.props.site.events) {
       currentList = this.props.site.events;
       if (currentList) {
-        searchResult = currentList.filter(function (pos) {
+        searchResult = currentList.filter(function(pos) {
           return pos.name.toLowerCase().includes(keyword.toLowerCase());
         });
       }
@@ -632,7 +634,10 @@ class HomepageEditorTab extends React.Component {
     if (this.state.currentExpandType === "news" && this.props.posts) {
       currentList = this.props.posts;
     }
-    if (this.state.currentExpandType === "gallery" && this.props.site.galleries) {
+    if (
+      this.state.currentExpandType === "gallery" &&
+      this.props.site.galleries
+    ) {
       currentList = this.props.site.galleries;
     }
     if (this.state.currentExpandType === "event" && this.props.site.events) {
@@ -652,16 +657,16 @@ class HomepageEditorTab extends React.Component {
   };
 
   moveFocusAtEnd = e => {
-    var temp_value = e.target.value
-    e.target.value = ''
-    e.target.value = temp_value
-  }
+    var temp_value = e.target.value;
+    e.target.value = "";
+    e.target.value = temp_value;
+  };
 
   setCurrentFocusInput = refName => {
     this.setState({
       currentFocusInput: refName
-    })
-  }
+    });
+  };
 
   render() {
     const {
@@ -683,14 +688,22 @@ class HomepageEditorTab extends React.Component {
         <DialogTitle>
           {
             {
-              news: <Typography className={classes.title}>Search by message</Typography>,
-              event: <Typography className={classes.title}>Search by event name</Typography>
+              news: (
+                <Typography className={classes.title}>
+                  Search by message
+                </Typography>
+              ),
+              event: (
+                <Typography className={classes.title}>
+                  Search by event name
+                </Typography>
+              )
             }[this.state.currentExpandType]
           }
           {this.state.currentExpandType !== "gallery" && (
             <Paper component="form" className={classes.root}>
               <InputBase
-                InputLabelProps={{
+                inputLabelProps={{
                   classes: {
                     focused: classes.focused
                   }
@@ -699,7 +712,7 @@ class HomepageEditorTab extends React.Component {
                 InputProps={{
                   classes: {
                     notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle,
+                    input: classes.inputTitle
                   }
                 }}
                 id="searchBox"
@@ -732,7 +745,6 @@ class HomepageEditorTab extends React.Component {
               }[this.state.currentExpandType]
             }
           </Grid>
-
         </DialogContent>
         <DialogActions>
           <Grid container justify="center">
@@ -842,7 +854,7 @@ class HomepageEditorTab extends React.Component {
         <ExpansionPanel
           expanded={
             this.state.currentExpandItemId === item._id &&
-              this.state.isExpanding
+            this.state.isExpanding
               ? true
               : false
           }
@@ -883,7 +895,7 @@ class HomepageEditorTab extends React.Component {
                   InputProps={{
                     classes: {
                       notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle,
+                      input: classes.inputTitle
                     }
                   }}
                   size="small"
@@ -926,7 +938,11 @@ class HomepageEditorTab extends React.Component {
                       }}
                       multiline
                       maxLength={200}
-                      autoFocus={this.state.currentFocusInput === "aboutInput" ? true : false}
+                      autoFocus={
+                        this.state.currentFocusInput === "aboutInput"
+                          ? true
+                          : false
+                      }
                       onFocus={this.moveFocusAtEnd}
                       onClick={() => this.setCurrentFocusInput("aboutInput")}
                       size="small"
@@ -986,7 +1002,7 @@ class HomepageEditorTab extends React.Component {
             <Grid container alignItems="center">
               {items.map((value, index) => (
                 <SortableItem
-                  key={items._id}
+                  key={index}
                   index={index}
                   value={value.name}
                   item={value}

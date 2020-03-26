@@ -69,7 +69,7 @@ export const getDataByPageNumber = ({ siteId, page, pageNumber, sitePath }) => {
       dispatch({
         type: "CLOSE_LOADING"
       });
-      console.log(data);
+      console.log(data.data);
       if (data.status === 200) {
         if (page === "home") {
           dispatch({

@@ -34,8 +34,6 @@ class PreHomePage extends Component {
         sitePath: siteView.sitePath,
         page: "home"
       });
-      console.log(data);
-      // data && setGalleriesToSiteView(data);
     }
   };
   render() {
