@@ -13,7 +13,9 @@ class NewPage extends Component {
       siteView,
       siteEdit,
       bodyEdit,
-      bodyView
+      bodyView,
+      fromHome,
+      homeList
     } = this.props;
     return (
       <Grid container justify="center" className={styles.news}>
@@ -35,7 +37,7 @@ class NewPage extends Component {
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
-                  posts={siteEdit.posts}
+                  posts={(fromHome && homeList) ? homeList : siteEdit.posts}
                   siteInfo={{
                     logo: siteEdit.logo,
                     title: siteEdit.title,
@@ -44,16 +46,16 @@ class NewPage extends Component {
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography variant="body1" style={bodyEdit}>
-                  You don't have any news.
+                <Grid container justify="center" style={{ minHeight: "30vh", marginTop: "10vh" }}>
+                  <Typography variant="body1" style={bodyEdit}>
+                    Currently there are no news.
                 </Typography>
-              </Grid>
-            )
-          ) : siteView && siteView.posts ? (
+                </Grid>
+              )
+          ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
-                posts={siteView.posts}
+                posts={(fromHome && homeList) ? homeList : siteView.posts}
                 siteInfo={{
                   logo: siteView.logo,
                   title: siteView.title,
@@ -62,12 +64,12 @@ class NewPage extends Component {
               />
             </Grid>
           ) : (
-            <Grid container justify="center">
-              <Typography variant="body1" style={bodyView}>
-                You don't have any news.
+                <Grid container justify="center" style={{ minHeight: "30vh", marginTop: "10vh" }}>
+                  <Typography variant="body1" style={bodyView}>
+                    Currently there are no news.
               </Typography>
-            </Grid>
-          )}
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );

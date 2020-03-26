@@ -13,7 +13,9 @@ class GalleryPage extends React.Component {
       siteView,
       siteEdit,
       bodyEdit,
-      bodyView
+      bodyView,
+      fromHome,
+      homeList
     } = this.props;
     return (
       <Grid
@@ -37,24 +39,28 @@ class GalleryPage extends React.Component {
         {isEdit ? (
           siteEdit && siteEdit.galleries ? (
             <GalleryComponent
-              galleries={siteEdit.galleries}
+              galleries={fromHome && homeList ? homeList : siteEdit.galleries}
               siteInfo={siteEdit.id}
             />
           ) : (
-            <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-              Current no image to show .
-            </p>
-          )
-        ) : siteView && siteView.galleries ? (
+              <Grid container justify="center" style={{ minHeight: "30vh", marginTop: "10vh" }}>
+                <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+                  Currently no photo available.
+                </p>
+              </Grid>
+            )
+        ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
           <GalleryComponent
-            galleries={siteView.galleries}
+            galleries={fromHome && homeList ? homeList : siteView.galleries}
             siteInfo={siteView.sitePath}
           />
         ) : (
-          <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-            Current no image to show .
-          </p>
-        )}
+              <Grid container justify="center" style={{ minHeight: "30vh", marginTop: "10vh" }}>
+                <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+                  Currently no photo available.
+                </p>
+              </Grid>
+            )}
       </Grid>
     );
   }

@@ -78,7 +78,7 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
 }
 class EventPage extends React.Component {
   render() {
-    const { titleEdit, titleView, isEdit, siteEdit, siteView } = this.props;
+    const { titleEdit, titleView, isEdit, siteEdit, siteView, fromHome, homeList } = this.props;
     return (
       <Grid
         container
@@ -101,34 +101,35 @@ class EventPage extends React.Component {
         </Grid>
         {isEdit ? (
           siteEdit && siteEdit.events ? (
-            // <EventComponent />
-            <EmptyEvent
-              siteEdit={siteEdit}
-              titleEdit={titleEdit}
-              siteView={siteView}
-              titleView={titleView}
-              isEdit={isEdit}
+            <EventComponent
+              homeList={
+                fromHome ? homeList : (isEdit ? siteEdit.events : siteView.events)
+              }
             />
           ) : (
-            <EmptyEvent
-              siteEdit={siteEdit}
-              titleEdit={titleEdit}
-              siteView={siteView}
-              titleView={titleView}
-              isEdit={isEdit}
-            />
-          )
-        ) : siteView && siteView.events ? (
-          <EventComponent />
-        ) : (
-          <EmptyEvent
-            siteEdit={siteEdit}
-            titleEdit={titleEdit}
-            siteView={siteView}
-            titleView={titleView}
-            isEdit={isEdit}
+              <EmptyEvent
+                siteEdit={siteEdit}
+                titleEdit={titleEdit}
+                siteView={siteView}
+                titleView={titleView}
+                isEdit={isEdit}
+              />
+            )
+        ) : (siteView && siteView.events) || (fromHome && homeList) ? (
+          <EventComponent
+            homeList={
+              fromHome ? homeList : (isEdit ? siteEdit.events : siteView.events)
+            }
           />
-        )}
+        ) : (
+              <EmptyEvent
+                siteEdit={siteEdit}
+                titleEdit={titleEdit}
+                siteView={siteView}
+                titleView={titleView}
+                isEdit={isEdit}
+              />
+            )}
       </Grid>
     );
   }
