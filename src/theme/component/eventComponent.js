@@ -155,7 +155,7 @@ class EventComponent extends React.Component {
             container
             alignItems="center"
             direction="column"
-          // className={classes.eventPage}
+            // className={classes.eventPage}
           >
             <Grid
               item
@@ -412,6 +412,11 @@ class EventComponent extends React.Component {
                     style={{ marginTop: "5rem" }}
                   >
                     <Pagination
+                    style={{
+                    backgroundColor: "white",
+                    border: "1px solid black",
+                    padding: "0.2rem"
+                  }}
                       color="primary"
                       variant="outlined"
                       shape="rounded"

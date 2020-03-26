@@ -41,9 +41,17 @@ class GalleryPage extends React.Component {
               siteInfo={siteEdit.id}
             />
           ) : (
-            <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-              Current no image to show .
-            </p>
+            <Grid container justify="center">
+              <Typography
+                variant="body1"
+                style={{
+                  fontFamily: bodyEdit.fontFamily,
+                  padding: "5rem 0"
+                }}
+              >
+                Current no images to show.
+              </Typography>
+            </Grid>
           )
         ) : siteView && siteView.galleries ? (
           <GalleryComponent
@@ -51,9 +59,17 @@ class GalleryPage extends React.Component {
             siteInfo={siteView.sitePath}
           />
         ) : (
-          <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-            Current no image to show .
-          </p>
+          <Grid container justify="center">
+            <Typography
+              variant="body1"
+              style={{
+                fontFamily: bodyView.fontFamily,
+                padding: "5rem 0"
+              }}
+            >
+              Current no images to show.
+            </Typography>
+          </Grid>
         )}
       </Grid>
     );

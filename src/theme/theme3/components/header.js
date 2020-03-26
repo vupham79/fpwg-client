@@ -26,7 +26,6 @@ const useStyles = theme => ({
     position: "relative"
   },
   info: {
-    margin: "0.2rem 0.4rem",
     fontSize: "1rem",
     padding: "0 0.4rem",
     color: "white"
@@ -57,7 +56,7 @@ const useStyles = theme => ({
     }
   },
   dropdownSelect: {
-    marginTop: "1rem",
+    marginTop: "3rem",
     display: "block",
     [theme.breakpoints.up("md")]: {
       display: "none"
@@ -383,6 +382,7 @@ class Header extends Component {
           alignItems="flex-end"
           justify="flex-end"
           className={classes.contact}
+          style={{ padding: "0.5rem" }}
         >
           {isEdit
             ? siteEdit &&

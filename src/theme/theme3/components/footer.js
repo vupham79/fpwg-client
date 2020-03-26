@@ -109,7 +109,7 @@ class FooterPage extends Component {
             © {isEdit ? siteEdit.title : siteView.title}
           </Typography>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={4} sm={3}>
           <Grid style={{ border: "1px solid white", color: "white" }}>
             <Typography
               style={{

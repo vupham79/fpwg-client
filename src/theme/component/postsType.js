@@ -657,6 +657,11 @@ class PostTypeComponent extends React.Component {
           : pageCountView > 1 && (
               <Grid container justify="center" style={{ marginTop: "5rem" }}>
                 <Pagination
+                  style={{
+                    backgroundColor: "white",
+                    border: "1px solid black",
+                    padding: "0.2rem"
+                  }}
                   color="primary"
                   shape="rounded"
                   count={pageCountView}

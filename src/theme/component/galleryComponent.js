@@ -6,9 +6,6 @@ import { getDataByPageNumber, setGalleriesToSiteView } from "../../actions";
 import ReactPaginate from "react-paginate";
 
 const useStyles = theme => ({
-  root: {
-    margin: theme.spacing(10)
-  },
   gridItems: {
     maxHeight: 250
   },
@@ -110,14 +107,19 @@ class GalleryComponent extends React.Component {
     const { classes, galleries, pageCountView, isEdit } = this.props;
     return (
       <React.Fragment>
-        <Container className={classes.root}>
-          <Grid container spacing={1} justify="center">
+        <Container>
+          <Grid
+            container
+            spacing={2}
+            justify="center"
+            style={{ padding: "4rem" }}
+          >
             {isEdit
               ? this.state.filteredData.map((item, index) => (
                   <Grid
                     item
                     key={index}
-                    xs={6}
+                    xs={12}
                     sm={4}
                     md={3}
                     className={classes.gridItems}
@@ -135,7 +137,7 @@ class GalleryComponent extends React.Component {
                   <Grid
                     item
                     key={index}
-                    xs={6}
+                    xs={12}
                     sm={4}
                     md={3}
                     className={classes.gridItems}
@@ -154,7 +156,7 @@ class GalleryComponent extends React.Component {
           </Grid>
           {isEdit
             ? this.state.pageCount > 1 && (
-                <Grid container justify="center" style={{ paddingTop: "2rem" }}>
+                <Grid container justify="center">
                   <ReactPaginate
                     previousLabel={"previous"}
                     nextLabel={"next"}
@@ -171,8 +173,13 @@ class GalleryComponent extends React.Component {
                 </Grid>
               )
             : pageCountView > 1 && (
-                <Grid container justify="center" style={{ marginTop: "5rem" }}>
+                <Grid container justify="center">
                   <Pagination
+                    style={{
+                      backgroundColor: "white",
+                      border: `1px solid black`,
+                      padding: "0.2rem"
+                    }}
                     color="primary"
                     shape="rounded"
                     count={pageCountView}

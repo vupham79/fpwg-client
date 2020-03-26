@@ -17,14 +17,21 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
     <>
       <Grid
         item
-        sm={3}
+        sm={6}
+        md={3}
         xs={8}
         container
         justify="center"
         className={styles.event_body}
       >
-        <Grid item sm={12} container>
-          <Grid item sm={3} xs={2} md={2}>
+        <Grid
+          item
+          sm={12}
+          container
+          alignItems="center"
+          style={{ padding: "0.5rem 0.1rem" }}
+        >
+          <Grid item sm={3} xs={2} md={3}>
             <div className={styles.image_page}>
               <img
                 alt=""
@@ -33,7 +40,7 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
               />
             </div>
           </Grid>
-          <Grid item sm={9} xs={10} container direction="column">
+          <Grid item sm={9} xs={10}>
             <Grid>
               <Typography variant="h6" className={styles.shop_name}>
                 {isEdit ? siteEdit.title : siteView.title}
@@ -51,8 +58,14 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
             </Grid> */}
           </Grid>
         </Grid>
-        <Grid item container sm={12} className={styles.contain_event}>
-          <Grid className={styles.event}>
+        <Grid
+          item
+          container
+          sm={12}
+          className={styles.contain_event}
+          style={{ padding: "1rem" }}
+        >
+          <Grid className={styles.event} style={{ padding: "3rem" }}>
             <Typography className={styles.event_content}>
               {isEdit ? siteEdit.title : siteView.title} does not have any
               upcoming events.
@@ -60,7 +73,7 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item container sm={3} justify="center">
+      <Grid item container sm={6} justify="center">
         <Button className={styles.btn_view}>
           <a href={isEdit ? siteEdit.url : siteView.url}>
             <Typography
