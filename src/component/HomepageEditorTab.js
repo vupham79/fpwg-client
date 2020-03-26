@@ -703,18 +703,7 @@ class HomepageEditorTab extends React.Component {
           {this.state.currentExpandType !== "gallery" && (
             <Paper component="form" className={classes.root}>
               <InputBase
-                inputLabelProps={{
-                  classes: {
-                    focused: classes.focused
-                  }
-                }}
                 maxLength={50}
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle
-                  }
-                }}
                 id="searchBox"
                 autoFocus={this.state.openDiag ? true : false}
                 className={classes.input}
@@ -892,12 +881,6 @@ class HomepageEditorTab extends React.Component {
                     }
                   }}
                   maxLength={50}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle
-                    }
-                  }}
                   size="small"
                   style={{ backgroundColor: "white" }}
                   fullWidth
@@ -928,12 +911,6 @@ class HomepageEditorTab extends React.Component {
                       InputLabelProps={{
                         classes: {
                           focused: classes.focused
-                        }
-                      }}
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline,
-                          input: classes.inputTitle
                         }
                       }}
                       multiline
