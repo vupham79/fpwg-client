@@ -15,7 +15,8 @@ class NewPage extends Component {
       bodyEdit,
       bodyView,
       fromHome,
-      homeList
+      homeList,
+      homeTitle
     } = this.props;
     return (
       <Grid container justify="center" className={styles.news}>
@@ -28,7 +29,7 @@ class NewPage extends Component {
             className={styles.title}
             style={isEdit ? titleEdit : titleView}
           >
-            News
+            {fromHome ? homeTitle : "News"}
           </Typography>
           <Divider variant="fullWidth" />
         </Grid>

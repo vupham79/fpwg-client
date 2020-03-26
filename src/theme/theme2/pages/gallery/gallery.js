@@ -15,7 +15,8 @@ class GalleryPage extends React.Component {
       bodyEdit,
       bodyView,
       fromHome,
-      homeList
+      homeList,
+      homeTitle
     } = this.props;
     return (
       <Grid
@@ -32,7 +33,7 @@ class GalleryPage extends React.Component {
             gutterBottom
             style={isEdit ? titleEdit : titleView}
           >
-            Gallery
+            {fromHome ? homeTitle : "Gallery"}
           </Typography>
           <Divider variant="middle" />
         </Grid>

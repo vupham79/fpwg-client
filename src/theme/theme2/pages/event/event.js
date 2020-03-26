@@ -78,7 +78,7 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
 }
 class EventPage extends React.Component {
   render() {
-    const { titleEdit, titleView, isEdit, siteEdit, siteView, fromHome, homeList } = this.props;
+    const { titleEdit, titleView, isEdit, siteEdit, siteView, fromHome, homeList, homeTitle } = this.props;
     return (
       <Grid
         container
@@ -95,7 +95,7 @@ class EventPage extends React.Component {
             gutterBottom
             style={isEdit ? titleEdit : titleView}
           >
-            Events
+            {fromHome ? homeTitle : "Events"}
           </Typography>
           <Divider variant="fullWidth" />
         </Grid>
