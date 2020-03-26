@@ -55,10 +55,11 @@ class Theme1News extends React.Component {
         textAlign: "justify"
       },
       changableBody2: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#212121",
-        textAlign: "left",
-        fontSize: 16
+        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        color: "#b3b2b2",
+        textAlign: "center",
+        fontSize: 16,
+        fontWeight: 400
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -148,12 +149,12 @@ class Theme1News extends React.Component {
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography variant="body1" style={bodyEdit}>
-                  Currently there are no news.
+                <Grid container justify="center">
+                  <Typography style={classes.changableBody2}>
+                    Currently there are no news.
                 </Typography>
-              </Grid>
-            )
+                </Grid>
+              )
           ) : siteView && siteView.posts ? (
             <Grid container>
               <PostTypeComponent
@@ -166,12 +167,12 @@ class Theme1News extends React.Component {
               />
             </Grid>
           ) : (
-            <Grid container justify="center">
-              <Typography variant="body1" style={bodyView}>
-                Currently there are no news.
+                <Grid container justify="center">
+                  <Typography style={classes.changableBody2}>
+                    Currently there are no news.
               </Typography>
-            </Grid>
-          )}
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );

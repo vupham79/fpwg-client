@@ -72,10 +72,12 @@ class ThemeEditorTab extends React.Component {
     changeTheme(site);
 
     //go to home tab of new theme
-    let searchResult = site.navItems.filter(function(nav) {
+    let searchResult = site.navItems.filter(function (nav) {
       return nav.original === "home";
     });
-    updateNavItemValue(searchResult[0].order - 1);
+    if (searchResult) {
+      updateNavItemValue(searchResult[0].order - 1);
+    }
   };
 
   render() {
