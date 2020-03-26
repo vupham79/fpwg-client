@@ -1,6 +1,58 @@
 import axios from "../utils/axios";
 import toastr from "toastr";
 
+function revertSaveData(modDat) {
+
+  if (!modDat.posts) {
+    modDat.posts = [];
+  }
+  if (!modDat.galleries) {
+    modDat.galleries = [];
+  }
+  if (!modDat.events) {
+    modDat.events = [];
+  }
+
+  for (let i = 0; i < modDat.homepage.length; i++) {
+    if (!modDat.homepage[i].filter.items)
+      modDat.homepage[i].filter.items = [];
+    let type = modDat.homepage[i].original;
+
+    for (
+      let index = 0;
+      index < modDat.homepage[i].filter.items.length;
+      index++
+    ) {
+      if (type === "news") {
+        modDat.homepage[i].filter.items[index] = modDat.posts.filter(
+          function (pos) {
+            return pos._id === modDat.homepage[i].filter.items[index];
+          }
+        )[0];
+      }
+      if (type === "event") {
+        modDat.homepage[i].filter.items[index] = modDat.events.filter(
+          function (pos) {
+            return pos._id === modDat.homepage[i].filter.items[index];
+          }
+        )[0];
+      }
+      if (type === "gallery") {
+        modDat.homepage[i].filter.items[index] = modDat.galleries.filter(
+          function (pos) {
+            return pos._id === modDat.homepage[i].filter.items[index];
+          }
+        )[0];
+      }
+    }
+    if (modDat.homepage[i].filter.items.length === 0)
+      modDat.homepage[i].filter.items = null;
+  }
+
+  return modDat;
+
+}
+
 export function syncDataFromFB(pageId, dateFrom, dateTo) {
   return async dispatch => {
     dispatch({
@@ -31,7 +83,7 @@ export function syncDataFromFB(pageId, dateFrom, dateTo) {
         dispatch({
           type: "SET_SITE_EDIT",
           payload: {
-            data: site,
+            data: revertSaveData(site),
             titleEdit: titleStyle,
             bodyEdit: bodyStyle
           }
@@ -90,7 +142,7 @@ export function syncPostFromFB(pageId, dateFrom, dateTo) {
         dispatch({
           type: "SET_SITE_EDIT",
           payload: {
-            data: site,
+            data: revertSaveData(site),
             titleEdit: titleStyle,
             bodyEdit: bodyStyle
           }
@@ -149,7 +201,7 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
         dispatch({
           type: "SET_SITE_EDIT",
           payload: {
-            data: site,
+            data: revertSaveData(site),
             titleEdit: titleStyle,
             bodyEdit: bodyStyle
           }
@@ -208,7 +260,7 @@ export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
         dispatch({
           type: "SET_SITE_EDIT",
           payload: {
-            data: site,
+            data: revertSaveData(site),
             titleEdit: titleStyle,
             bodyEdit: bodyStyle
           }
@@ -246,8 +298,8 @@ export function setAutoSync(autoSync) {
         minute: autoSync.minute
           ? autoSync.minute
           : !autoSync.minute && !autoSync.hour && !autoSync.day
-          ? 2
-          : null,
+            ? 2
+            : null,
         hour: autoSync.hour ? autoSync.hour : null,
         day: autoSync.day ? autoSync.day : null
       }
