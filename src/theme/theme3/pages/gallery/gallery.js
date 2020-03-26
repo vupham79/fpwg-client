@@ -25,7 +25,6 @@ class GalleryPage extends React.Component {
       bodyView
     } = this.props;
     const { tabValue } = this.state;
-    console.log(siteView);
     return (
       <Grid
         container
@@ -150,7 +149,11 @@ class GalleryPage extends React.Component {
                     </Typography>
                   </Grid>
                 )
-              ) : siteView && siteView.posts ? (
+              ) : siteView &&
+                siteView.posts &&
+                siteView.posts.filter(
+                  item => item.attachments.media_type === "video"
+                ) ? (
                 <Grid container>
                   <PostTypeComponent
                     posts={siteView.posts.filter(
@@ -161,6 +164,7 @@ class GalleryPage extends React.Component {
                       title: siteView.title,
                       sitePath: siteView.sitePath
                     }}
+                    theme="theme3"
                   />
                 </Grid>
               ) : (

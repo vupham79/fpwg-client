@@ -457,7 +457,8 @@ class PostTypeComponent extends React.Component {
       bodyView,
       siteInfo,
       posts,
-      pageCountView
+      pageCountView,
+      theme
     } = this.props;
     const post = this.state.postOpen;
     const style = {
@@ -543,7 +544,19 @@ class PostTypeComponent extends React.Component {
                     )) ||
                   (post.attachments &&
                     post.attachments.media_type === "video" &&
-                    post.isActive && (
+                    post.isActive &&
+                    (theme && theme === "theme3" ? (
+                      index < 5 && (
+                        <TypeVideo
+                          key={index}
+                          post={post}
+                          style={style}
+                          dark={this.props.darkMode}
+                          openDialog={this.handleOpenVideo}
+                          siteInfo={siteInfo}
+                        />
+                      )
+                    ) : (
                       <TypeVideo
                         key={index}
                         post={post}
@@ -552,7 +565,7 @@ class PostTypeComponent extends React.Component {
                         openDialog={this.handleOpenVideo}
                         siteInfo={siteInfo}
                       />
-                    ))
+                    )))
               )}
           <Dialog
             open={this.state.open}

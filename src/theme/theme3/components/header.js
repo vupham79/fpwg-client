@@ -44,7 +44,7 @@ const useStyles = theme => ({
     [theme.breakpoints.up("md")]: {
       position: "absolute",
       top: "70%",
-      minHeight: "13vh"
+      minHeight: "14vh"
     },
     position: "absolute",
     top: "60%",
@@ -90,6 +90,10 @@ function hexToRGB(hex, alpha) {
 }
 
 class Header extends Component {
+  state = {
+    navValue: 0
+  };
+
   renderImage = () => {
     const { isEdit, siteEdit, siteView, newLogo } = this.props;
     if (isEdit) {
@@ -237,6 +241,9 @@ class Header extends Component {
     if (isEdit) {
       const newValue = parseInt(event.target.value);
       updateNavItemValue(newValue);
+    } else {
+      const newValue = parseInt(event.target.value);
+      this.setState({ navValue: newValue });
     }
   };
 
@@ -247,7 +254,12 @@ class Header extends Component {
       backgroundColor: isEdit
         ? siteEdit && siteEdit.color
         : siteView && siteView.color,
-      border: "1px solid white",
+      border: "solid white",
+      textAlign: "center",
+      fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
+    };
+    const selectNavStyle = {
+      backgroundColor: "white",
       textAlign: "center",
       fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
     };
@@ -261,8 +273,8 @@ class Header extends Component {
           onChange={this.hangleChangeSelect}
           fullWidth
           IconComponent={() => <></>}
-          style={selectStyle}
-          value={this.props.tabValue}
+          style={isEdit ? selectStyle : selectNavStyle}
+          value={isEdit ? this.props.tabValue : this.state.navValue}
         >
           {isEdit
             ? siteEdit &&
@@ -278,10 +290,17 @@ class Header extends Component {
               siteView.navItems &&
               siteView.navItems.map((item, index) =>
                 item.isActive ? (
-                  <MenuItem key={index}>
+                  <MenuItem
+                    key={index}
+                    value={index}
+                    style={{ color: "white" }}
+                  >
                     <Link
                       to={`/${siteView.sitePath}/${item.original}`}
-                      style={{ width: "-webkit-fill-available" }}
+                      style={{
+                        width: "-webkit-fill-available",
+                        color: "black"
+                      }}
                     >
                       {item.name}
                     </Link>

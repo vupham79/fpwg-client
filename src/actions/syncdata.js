@@ -20,6 +20,22 @@ export function syncDataFromFB(pageId, dateFrom, dateTo) {
         type: "CLOSE_LOADING"
       });
       if (data.status === 200) {
+        const site = data.data;
+        const titleStyle = {
+          fontFamily: site.fontTitle,
+          color: site.color
+        };
+        const bodyStyle = {
+          fontFamily: site.fontBody
+        };
+        dispatch({
+          type: "SET_SITE_EDIT",
+          payload: {
+            data: site,
+            titleEdit: titleStyle,
+            bodyEdit: bodyStyle
+          }
+        });
         toastr.success("You fetch data from FB success.", "Success");
       } else {
         toastr.error(
@@ -63,6 +79,22 @@ export function syncPostFromFB(pageId, dateFrom, dateTo) {
         type: "CLOSE_LOADING"
       });
       if (data.status === 200) {
+        const site = data.data;
+        const titleStyle = {
+          fontFamily: site.fontTitle,
+          color: site.color
+        };
+        const bodyStyle = {
+          fontFamily: site.fontBody
+        };
+        dispatch({
+          type: "SET_SITE_EDIT",
+          payload: {
+            data: site,
+            titleEdit: titleStyle,
+            bodyEdit: bodyStyle
+          }
+        });
         toastr.success("You fetch data from FB success.", "Success");
       } else {
         toastr.error(
@@ -106,6 +138,22 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
         type: "CLOSE_LOADING"
       });
       if (data.status === 200) {
+        const site = data.data;
+        const titleStyle = {
+          fontFamily: site.fontTitle,
+          color: site.color
+        };
+        const bodyStyle = {
+          fontFamily: site.fontBody
+        };
+        dispatch({
+          type: "SET_SITE_EDIT",
+          payload: {
+            data: site,
+            titleEdit: titleStyle,
+            bodyEdit: bodyStyle
+          }
+        });
         toastr.success("You fetch data from FB success.", "Success");
       } else {
         toastr.error(
@@ -149,6 +197,22 @@ export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
         type: "CLOSE_LOADING"
       });
       if (data.status === 200) {
+        const site = data.data;
+        const titleStyle = {
+          fontFamily: site.fontTitle,
+          color: site.color
+        };
+        const bodyStyle = {
+          fontFamily: site.fontBody
+        };
+        dispatch({
+          type: "SET_SITE_EDIT",
+          payload: {
+            data: site,
+            titleEdit: titleStyle,
+            bodyEdit: bodyStyle
+          }
+        });
         toastr.success("You fetch data from FB success.", "Success");
       } else {
         toastr.error(
