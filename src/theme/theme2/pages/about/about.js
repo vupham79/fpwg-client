@@ -12,7 +12,9 @@ class AboutPage extends React.Component {
       titleView,
       bodyView,
       siteEdit,
-      siteView
+      siteView,
+      fromHome,
+      homeTitle
     } = this.props;
     return (
       <Grid container justify="center" className={styles.about_page}>
@@ -24,7 +26,7 @@ class AboutPage extends React.Component {
             gutterBottom
             style={isEdit ? titleEdit : titleView}
           >
-            About
+            {fromHome ? homeTitle : "About"}
           </Typography>
           <Divider className="divider" variant="middle" />
         </Grid>
@@ -40,8 +42,8 @@ class AboutPage extends React.Component {
                 ? siteEdit.about
                 : "Welcome to our website! Take a look around and feel free to contact us for more information."
               : siteView && siteView.about
-              ? siteView.about
-              : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+                ? siteView.about
+                : "Welcome to our website! Take a look around and feel free to contact us for more information."}
           </Typography>
         </Grid>
       </Grid>

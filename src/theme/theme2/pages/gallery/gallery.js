@@ -13,7 +13,10 @@ class GalleryPage extends React.Component {
       siteView,
       siteEdit,
       bodyEdit,
-      bodyView
+      bodyView,
+      fromHome,
+      homeList,
+      homeTitle
     } = this.props;
     return (
       <Grid
@@ -30,45 +33,41 @@ class GalleryPage extends React.Component {
             gutterBottom
             style={isEdit ? titleEdit : titleView}
           >
-            Gallery
+            {fromHome ? homeTitle : "Gallery"}
           </Typography>
           <Divider variant="middle" />
         </Grid>
         {isEdit ? (
           siteEdit && siteEdit.galleries ? (
             <GalleryComponent
-              galleries={siteEdit.galleries}
+              galleries={fromHome && homeList ? homeList : siteEdit.galleries}
               siteInfo={siteEdit.id}
             />
           ) : (
-            <Grid container justify="center">
-              <Typography
-                variant="body1"
-                style={{
-                  fontFamily: bodyEdit.fontFamily,
-                  padding: "5rem 0"
-                }}
-              >
-                Current no images to show.
-              </Typography>
+            <Grid
+              container
+              justify="center"
+              style={{ minHeight: "30vh", marginTop: "10vh" }}
+            >
+              <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+                Currently no photo available.
+              </p>
             </Grid>
           )
-        ) : siteView && siteView.galleries ? (
+        ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
           <GalleryComponent
-            galleries={siteView.galleries}
+            galleries={fromHome && homeList ? homeList : siteView.galleries}
             siteInfo={siteView.sitePath}
           />
         ) : (
-          <Grid container justify="center">
-            <Typography
-              variant="body1"
-              style={{
-                fontFamily: bodyView.fontFamily,
-                padding: "5rem 0"
-              }}
-            >
-              Current no images to show.
-            </Typography>
+          <Grid
+            container
+            justify="center"
+            style={{ minHeight: "30vh", marginTop: "10vh" }}
+          >
+            <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+              Currently no photo available.
+            </p>
           </Grid>
         )}
       </Grid>

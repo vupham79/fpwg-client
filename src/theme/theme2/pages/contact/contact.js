@@ -12,7 +12,9 @@ class ContactPage extends React.Component {
       titleView,
       bodyView,
       siteEdit,
-      siteView
+      siteView,
+      fromHome,
+      homeTitle
     } = this.props;
 
     return (
@@ -26,7 +28,7 @@ class ContactPage extends React.Component {
             className={styles.title}
             style={isEdit ? titleEdit : titleView}
           >
-            Contacts
+            {fromHome ? homeTitle : "Contact"}
           </Typography>
           <Divider variant="fullWidth" />
         </Grid>

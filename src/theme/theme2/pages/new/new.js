@@ -13,7 +13,10 @@ class NewPage extends Component {
       siteView,
       siteEdit,
       bodyEdit,
-      bodyView
+      bodyView,
+      fromHome,
+      homeList,
+      homeTitle
     } = this.props;
     return (
       <Grid container justify="center" className={styles.news}>
@@ -26,7 +29,7 @@ class NewPage extends Component {
             className={styles.title}
             style={isEdit ? titleEdit : titleView}
           >
-            News
+            {fromHome ? homeTitle : "News"}
           </Typography>
           <Divider variant="fullWidth" />
         </Grid>
@@ -35,7 +38,7 @@ class NewPage extends Component {
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
-                  posts={siteEdit.posts}
+                  posts={fromHome && homeList ? homeList : siteEdit.posts}
                   siteInfo={{
                     logo: siteEdit.logo,
                     title: siteEdit.title,
@@ -44,19 +47,20 @@ class NewPage extends Component {
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography
-                  variant="body1"
-                  style={{ fontFamily: bodyEdit.fontFamily, padding: "5rem 0" }}
-                >
-                  You don't have any news.
+              <Grid
+                container
+                justify="center"
+                style={{ minHeight: "30vh", marginTop: "10vh" }}
+              >
+                <Typography variant="body1" style={bodyEdit}>
+                  Currently there are no news.
                 </Typography>
               </Grid>
             )
-          ) : siteView && siteView.posts ? (
+          ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
-                posts={siteView.posts}
+                posts={fromHome && homeList ? homeList : siteView.posts}
                 siteInfo={{
                   logo: siteView.logo,
                   title: siteView.title,
@@ -65,12 +69,13 @@ class NewPage extends Component {
               />
             </Grid>
           ) : (
-            <Grid container justify="center">
-              <Typography
-                variant="body1"
-                style={{ fontFamily: bodyView.fontFamily, padding: "5rem 0" }}
-              >
-                You don't have any news.
+            <Grid
+              container
+              justify="center"
+              style={{ minHeight: "30vh", marginTop: "10vh" }}
+            >
+              <Typography variant="body1" style={bodyView}>
+                Currently there are no news.
               </Typography>
             </Grid>
           )}
