@@ -13,7 +13,10 @@ class NewPage extends Component {
       siteView,
       siteEdit,
       bodyEdit,
-      bodyView
+      bodyView,
+      fromHome,
+      homeList,
+      homeTitle
     } = this.props;
     return (
       <Grid container justify="center" className={styles.news}>
@@ -29,7 +32,7 @@ class NewPage extends Component {
               fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
             }}
           >
-            News
+            {fromHome ? homeTitle : "News"}
           </Typography>
           <Divider style={{ backgroundColor: "white" }} variant="fullWidth" />
         </Grid>
@@ -38,7 +41,7 @@ class NewPage extends Component {
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
-                  posts={siteEdit.posts}
+                  posts={(fromHome && homeList) ? homeList : siteEdit.posts}
                   siteInfo={{
                     logo: siteEdit.logo,
                     title: siteEdit.title,
@@ -47,23 +50,23 @@ class NewPage extends Component {
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography
-                  variant="body1"
-                  style={{
-                    fontFamily: bodyEdit.fontFamily,
-                    color: "white",
-                    padding: "5rem 0"
-                  }}
-                >
-                  You don't have any news.
+                <Grid container justify="center">
+                  <Typography
+                    variant="body1"
+                    style={{
+                      fontFamily: bodyEdit.fontFamily,
+                      color: "white",
+                      padding: "5rem 0"
+                    }}
+                  >
+                    Currently there are no news.
                 </Typography>
-              </Grid>
-            )
-          ) : siteView && siteView.posts ? (
+                </Grid>
+              )
+          ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
-                posts={siteView.posts}
+                posts={(fromHome && homeList) ? homeList : siteView.posts}
                 siteInfo={{
                   logo: siteView.logo,
                   title: siteView.title,
@@ -72,19 +75,19 @@ class NewPage extends Component {
               />
             </Grid>
           ) : (
-            <Grid container justify="center">
-              <Typography
-                variant="body1"
-                style={{
-                  fontFamily: bodyView.fontFamily,
-                  color: "white",
-                  padding: "5rem 0"
-                }}
-              >
-                You don't have any news.
+                <Grid container justify="center">
+                  <Typography
+                    variant="body1"
+                    style={{
+                      fontFamily: bodyView.fontFamily,
+                      color: "white",
+                      padding: "5rem 0"
+                    }}
+                  >
+                    Currently there are no news.
               </Typography>
-            </Grid>
-          )}
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );

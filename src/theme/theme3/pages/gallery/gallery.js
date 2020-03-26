@@ -22,7 +22,10 @@ class GalleryPage extends React.Component {
       siteView,
       siteEdit,
       bodyEdit,
-      bodyView
+      bodyView,
+      fromHome,
+      homeTitle,
+      homeList
     } = this.props;
     const { tabValue } = this.state;
     return (
@@ -43,7 +46,7 @@ class GalleryPage extends React.Component {
               color: "white"
             }}
           >
-            Gallery
+            {fromHome ? homeTitle : "Gallery"}
           </Typography>
         </Grid>
         <Grid container justify="center" item sm={10} xs={10}>
@@ -77,45 +80,45 @@ class GalleryPage extends React.Component {
                 siteEdit && siteEdit.galleries ? (
                   <Grid container>
                     <GalleryComponent
-                      galleries={siteEdit.galleries}
+                      galleries={fromHome && homeList ? homeList : siteEdit.galleries}
                       siteInfo={siteEdit.id}
                     />
                   </Grid>
                 ) : (
-                  <Grid container justify="center">
-                    <Typography
-                      variant="body1"
-                      style={{
-                        fontFamily: bodyEdit.fontFamily,
-                        color: "white",
-                        padding: "5rem 0"
-                      }}
-                    >
-                      Current no Photos to show.
+                    <Grid container justify="center">
+                      <Typography
+                        variant="body1"
+                        style={{
+                          fontFamily: bodyEdit.fontFamily,
+                          color: "white",
+                          padding: "5rem 0"
+                        }}
+                      >
+                        Currently no photo available.
                     </Typography>
-                  </Grid>
-                )
+                    </Grid>
+                  )
               ) : siteView && siteView.galleries ? (
                 <Grid container>
                   <GalleryComponent
-                    galleries={siteView.galleries}
+                    galleries={fromHome && homeList ? homeList : siteView.galleries}
                     siteInfo={siteView.sitePath}
                   />
                 </Grid>
               ) : (
-                <Grid container justify="center">
-                  <Typography
-                    variant="body1"
-                    style={{
-                      fontFamily: bodyView.fontFamily,
-                      color: "white",
-                      padding: "5rem 0"
-                    }}
-                  >
-                    Current no Photos to show.
+                    <Grid container justify="center">
+                      <Typography
+                        variant="body1"
+                        style={{
+                          fontFamily: bodyView.fontFamily,
+                          color: "white",
+                          padding: "5rem 0"
+                        }}
+                      >
+                        Currently no photo available.
                   </Typography>
-                </Grid>
-              )}
+                    </Grid>
+                  )}
             </Grid>
           )}
 
@@ -136,51 +139,51 @@ class GalleryPage extends React.Component {
                     />
                   </Grid>
                 ) : (
-                  <Grid container justify="center">
-                    <Typography
-                      variant="body1"
-                      style={{
-                        fontFamily: bodyEdit.fontFamily,
-                        color: "white",
-                        padding: "5rem 0"
-                      }}
-                    >
-                      Current no video to show.
+                    <Grid container justify="center">
+                      <Typography
+                        variant="body1"
+                        style={{
+                          fontFamily: bodyEdit.fontFamily,
+                          color: "white",
+                          padding: "5rem 0"
+                        }}
+                      >
+                        Current no video to show.
                     </Typography>
-                  </Grid>
-                )
+                    </Grid>
+                  )
               ) : siteView &&
                 siteView.posts &&
                 siteView.posts.filter(
                   item => item.attachments.media_type === "video"
                 ) ? (
-                <Grid container>
-                  <PostTypeComponent
-                    posts={siteView.posts.filter(
-                      item => item.attachments.media_type === "video"
-                    )}
-                    siteInfo={{
-                      logo: siteView.logo,
-                      title: siteView.title,
-                      sitePath: siteView.sitePath
-                    }}
-                    theme="theme3"
-                  />
-                </Grid>
-              ) : (
-                <Grid container justify="center">
-                  <Typography
-                    variant="body1"
-                    style={{
-                      fontFamily: bodyView.fontFamily,
-                      color: "white",
-                      padding: "5rem 0"
-                    }}
-                  >
-                    Current no video to show.
+                    <Grid container>
+                      <PostTypeComponent
+                        posts={siteView.posts.filter(
+                          item => item.attachments.media_type === "video"
+                        )}
+                        siteInfo={{
+                          logo: siteView.logo,
+                          title: siteView.title,
+                          sitePath: siteView.sitePath
+                        }}
+                        theme="theme3"
+                      />
+                    </Grid>
+                  ) : (
+                    <Grid container justify="center">
+                      <Typography
+                        variant="body1"
+                        style={{
+                          fontFamily: bodyView.fontFamily,
+                          color: "white",
+                          padding: "5rem 0"
+                        }}
+                      >
+                        Current no video to show.
                   </Typography>
-                </Grid>
-              )}
+                    </Grid>
+                  )}
             </Grid>
           )}
         </Grid>
