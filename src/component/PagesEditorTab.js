@@ -14,7 +14,11 @@ import {
   TableHead,
   TableBody,
   TableContainer,
-  Checkbox
+  Checkbox,
+  DialogContent,
+  DialogTitle,
+  InputBase,
+  Paper
 } from "@material-ui/core";
 import moment from "moment";
 import { green } from "@material-ui/core/colors";
@@ -40,6 +44,7 @@ import {
   updateNavItemValue
 } from "../actions";
 import ReactPaginate from "react-paginate";
+import SearchIcon from "@material-ui/icons/Search";
 
 const useStyles = theme => ({
   content: {
@@ -116,6 +121,19 @@ const useStyles = theme => ({
     fontFamily: "Segoe UI, sans-serif !important",
     fontSize: 13,
     color: "#555d66"
+  },
+  root: {
+    padding: "2px 4px",
+    display: "flex",
+    alignItems: "center",
+    width: 400
+  },
+  input: {
+    marginLeft: theme.spacing(1),
+    flex: 1
+  },
+  iconButton: {
+    padding: 10
   }
 });
 
@@ -168,12 +186,10 @@ const columns = ["Avatar", "Title", "Message", "Created At", "Show"];
 function PostsList({
   filteredData,
   setActivePost,
-  pageCount,
-  handlePageClick
 }) {
   return (
     <>
-      <TableContainer style={{ maxHeight: "70vh" }}>
+      <TableContainer style={{ height: "70vh" }}>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
@@ -225,21 +241,6 @@ function PostsList({
           </TableBody>
         </Table>
       </TableContainer>
-      <Grid container justify="center">
-        <ReactPaginate
-          previousLabel={"previous"}
-          nextLabel={"next"}
-          breakLabel={"..."}
-          breakClassName={"break-me"}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handlePageClick}
-          containerClassName={"pagination"}
-          subContainerClassName={"pages pagination"}
-          activeClassName={"active"}
-        />
-      </Grid>
     </>
   );
 }
@@ -249,7 +250,7 @@ class PagesEditorTab extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5,
+    itemPerPage: 2,
     openDiag: false
   };
 
@@ -304,11 +305,13 @@ class PagesEditorTab extends React.Component {
   };
 
   handleSearch = keyword => {
-    let searchResult = this.props.paths.filter(function(user) {
-      return user.pathName.toLowerCase().includes(keyword.toLowerCase());
-    });
-    this.setListData(searchResult.slice(0, this.state.itemPerPage));
-    this.setPageCount(searchResult);
+    if (this.props.posts) {
+      let searchResult = this.props.posts.filter(function (pos) {
+        return pos.message.toLowerCase().includes(keyword.toLowerCase());
+      });
+      this.setListData(searchResult.slice(0, this.state.itemPerPage));
+      this.setPageCount(searchResult);
+    }
   };
 
   onChangeItem = ({ oldIndex, newIndex }) => {
@@ -355,73 +358,73 @@ class PagesEditorTab extends React.Component {
         updateNavItemValue,
         changeNavItemName
       }) => (
-        <Grid container style={gridItem}>
-          <Grid
-            container
-            item
-            alignItems="center"
-            xs={10}
-            sm={12}
-            md={10}
-            style={{ padding: "0.2rem 0" }}
-          >
-            <Grid container justify="center" item xs={2} md={2} sm={12}>
-              <DragHandle />
+          <Grid container style={gridItem}>
+            <Grid
+              container
+              item
+              alignItems="center"
+              xs={10}
+              sm={12}
+              md={10}
+              style={{ padding: "0.2rem 0" }}
+            >
+              <Grid container justify="center" item xs={2} md={2} sm={12}>
+                <DragHandle />
+              </Grid>
+              <Grid item xs={10} md={10} sm={12}>
+                <TextField
+                  InputLabelProps={{
+                    classes: {
+                      focused: classes.focused
+                    }
+                  }}
+                  InputProps={{
+                    classes: {
+                      notchedOutline: classes.notchedOutline,
+                      input: classes.inputTitle
+                    }
+                  }}
+                  size="small"
+                  style={{ backgroundColor: "white" }}
+                  fullWidth
+                  variant={"outlined"}
+                  value={value}
+                  onChange={e => {
+                    handleChangeNavName(
+                      item._id,
+                      site,
+                      e.target.value,
+                      changeNavItemName
+                    );
+                  }}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={10} md={10} sm={12}>
-              <TextField
-                InputLabelProps={{
-                  classes: {
-                    focused: classes.focused
-                  }
-                }}
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle
-                  }
-                }}
-                size="small"
-                style={{ backgroundColor: "white" }}
-                fullWidth
-                variant={"outlined"}
-                value={value}
-                onChange={e => {
-                  handleChangeNavName(
-                    item._id,
-                    site,
-                    e.target.value,
-                    changeNavItemName
-                  );
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container item justify="center" xs={2} sm={12} md={2}>
-            {item.original === "home" ? (
-              <></>
-            ) : (
-              <IconButton
-                style={viewButton}
-                onClick={() =>
-                  handleChangeActive(
-                    item._id,
-                    site,
-                    setActiveNavItems,
-                    updateNavItemValue
-                  )
-                }
-              >
-                {item.isActive && item.name !== "Home" ? (
-                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                ) : (
-                  <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+            <Grid container item justify="center" xs={2} sm={12} md={2}>
+              {item.original === "home" ? (
+                <></>
+              ) : (
+                  <IconButton
+                    style={viewButton}
+                    onClick={() =>
+                      handleChangeActive(
+                        item._id,
+                        site,
+                        setActiveNavItems,
+                        updateNavItemValue
+                      )
+                    }
+                  >
+                    {item.isActive && item.name !== "Home" ? (
+                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                    ) : (
+                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                      )}
+                  </IconButton>
                 )}
-              </IconButton>
-            )}
+            </Grid>
           </Grid>
-        </Grid>
-      )
+        )
     );
 
     const SortableList = sortableContainer(
@@ -485,16 +488,66 @@ class PagesEditorTab extends React.Component {
             maxWidth="md"
             fullWidth
           >
-            <Grid container alignItems="center">
-              <PostsList
-                posts={this.props.posts}
-                filteredData={this.state.filteredData}
-                setActivePost={this.setActivePost}
-                pageCount={this.state.pageCount}
-                handlePageClick={this.handlePageClick}
-              />
-            </Grid>
+            <DialogTitle>
+              <Paper component="form" className={classes.root}>
+                <InputBase
+                  InputLabelProps={{
+                    classes: {
+                      focused: classes.focused
+                    }
+                  }}
+                  maxLength={50}
+                  InputProps={{
+                    classes: {
+                      notchedOutline: classes.notchedOutline,
+                      input: classes.inputTitle,
+                    }
+                  }}
+                  id="searchBox"
+                  placeholder="Search by message..."
+                  autoFocus={this.state.openDiag ? true : false}
+                  className={classes.input}
+                  onChange={() =>
+                    this.handleSearch(document.getElementById("searchBox").value)
+                  }
+                />
+                <IconButton
+                  className={classes.iconButton}
+                  color="primary"
+                  aria-label="search"
+                  onClick={() =>
+                    this.handleSearch(document.getElementById("searchBox").value)
+                  }
+                >
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+            </DialogTitle>
+            <DialogContent>
+              <Grid container alignItems="center">
+                <PostsList
+                  posts={this.props.posts}
+                  filteredData={this.state.filteredData}
+                  setActivePost={this.setActivePost}
+                />
+              </Grid>
+            </DialogContent>
             <DialogActions>
+              <Grid container justify="center">
+                <ReactPaginate
+                  previousLabel={"previous"}
+                  nextLabel={"next"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={this.state.pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={this.handlePageClick}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
+                />
+              </Grid>
               <Button
                 autoFocus
                 variant="contained"
