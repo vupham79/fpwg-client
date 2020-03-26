@@ -48,7 +48,14 @@ class NewPage extends Component {
               </Grid>
             ) : (
               <Grid container justify="center">
-                <Typography variant="body1" style={bodyEdit}>
+                <Typography
+                  variant="body1"
+                  style={{
+                    fontFamily: bodyEdit.fontFamily,
+                    color: "white",
+                    padding: "5rem 0"
+                  }}
+                >
                   You don't have any news.
                 </Typography>
               </Grid>
@@ -66,7 +73,14 @@ class NewPage extends Component {
             </Grid>
           ) : (
             <Grid container justify="center">
-              <Typography variant="body1" style={bodyView}>
+              <Typography
+                variant="body1"
+                style={{
+                  fontFamily: bodyView.fontFamily,
+                  color: "white",
+                  padding: "5rem 0"
+                }}
+              >
                 You don't have any news.
               </Typography>
             </Grid>

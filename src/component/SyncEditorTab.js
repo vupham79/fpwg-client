@@ -22,7 +22,7 @@ import {
   TableRow,
   Typography
 } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import {
   Close as CloseIcon,
   ExpandMore as ExpandMoreIcon
@@ -106,76 +106,81 @@ const DialogTitle = withStyles(styles)(props => {
   );
 });
 
-const data = [
-  {
-    createAt: "01/01/2020",
-    dataType: "Event",
-    syncType: "All",
-    status: "success"
+const tableStyle = makeStyles({
+  success: {
+    borderRadius: "5px",
+    padding: "0.1rem 0.3rem",
+    background: "#5ea95a",
+    marginTop: "0.2rem",
+    color: "#fff",
+    textAlign: "center"
   },
-  {
-    createAt: "01/01/2020",
-    dataType: "Post",
-    syncType: "range Day",
-    status: "success"
-  },
-  {
-    createAt: "01/01/2020",
-    dataType: "News",
-    syncType: "range Day",
-    status: "success"
-  },
-  {
-    createAt: "01/01/2020",
-    dataType: "All",
-    syncType: "All",
-    status: "fail"
-  },
-  {
-    createAt: "01/01/2020",
-    dataType: "Gallery",
-    syncType: "range Date",
-    status: "success"
-  },
-  {
-    createAt: "01/01/2020",
-    dataType: "Gallery",
-    syncType: "All",
-    status: "success"
+  failed: {
+    borderRadius: "5px",
+    padding: "0.1rem 0.3rem",
+    background: "#cc2127",
+    marginTop: "0.2rem",
+    color: "#fff",
+    textAlign: "center"
   }
-];
+});
 
-function createTable(data) {
+function CreateTable({ data }) {
+  const classes = tableStyle();
   return (
     <TableContainer component={Paper}>
       <Table size="small" stickyHeader>
         <TableHead style={{ backgroundColor: "#ccccb3" }}>
           <TableRow>
-            <TableCell>Sync At</TableCell>
-            <TableCell align="left">Data Type</TableCell>
-            <TableCell align="left">Sync Type</TableCell>
-            <TableCell align="left">Status</TableCell>
+            <TableCell align="center">Sync At</TableCell>
+            <TableCell align="center">Data Type</TableCell>
+            <TableCell align="center">Sync Type</TableCell>
+            <TableCell align="center">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data &&
             data.map((row, index) => (
               <TableRow key={index}>
-                <TableCell align="left">
-                  {moment(row.createdAt).format("DD-MM-YYYY")}
+                <TableCell align="center">
+                  {moment(row.createdAt).format("LT-DD-MM-YYYY")}
                 </TableCell>
-                <TableCell align="left">{row.dataType}</TableCell>
-                <TableCell align="left">
+                <TableCell align="center">{row.dataType}</TableCell>
+                <TableCell align="center">
                   {!row.dateFrom && !row.dateTo ? (
                     "All"
                   ) : (
-                    <Grid container>
-                      <Grid>From: {row.dateFrom}</Grid>
-                      <Grid>To: {row.dateTo}</Grid>
+                    <Grid container justify="center">
+                      <Grid item xs={12}>
+                        From: {moment(row.dateFrom).format("DD-MM-YYYY")}
+                      </Grid>
+                      <Grid item xs={12}>
+                        To: {moment(row.dateTo).format("DD-MM-YYYY")}
+                      </Grid>
                     </Grid>
                   )}
                 </TableCell>
-                <TableCell align="left">{row.status.toString()}</TableCell>
+                <TableCell align="center">
+                  <Grid
+                    container
+                    className={"mainFont"}
+                    style={{ fontSize: "12px", overflow: "hidden" }}
+                    justify="center"
+                  >
+                    <Grid
+                      item
+                      className={
+                        row.status.toString() === "true"
+                          ? classes.success
+                          : classes.failed
+                      }
+                    >
+                      {row.status.toString() === "true"
+                        ? "Success "
+                        : "Failed "}
+                    </Grid>
+                  </Grid>
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -341,7 +346,11 @@ class SyncEditorTab extends React.Component {
             <Grid container>
               <Grid item container justify={"center"}>
                 <Grid item>
-                  <Button variant="contained" onClick={this.toggleDialog}>
+                  <Button
+                    variant="contained"
+                    style={btnSync}
+                    onClick={this.toggleDialog}
+                  >
                     View Log
                   </Button>
                   <Dialog
@@ -356,10 +365,12 @@ class SyncEditorTab extends React.Component {
                     >
                       {site.lastSync
                         ? moment(site.lastSync).format("LLL")
-                        : "Not yet"}
+                        : "Log"}
                     </DialogTitle>
                     <DialogContent>
-                      {site.syncRecords && createTable(site.syncRecords)}
+                      {site.syncRecords && (
+                        <CreateTable data={site.syncRecords} />
+                      )}
                     </DialogContent>
                   </Dialog>
                 </Grid>
