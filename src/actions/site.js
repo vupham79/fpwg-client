@@ -2,6 +2,59 @@ import toastr from "toastr";
 import axios from "../utils/axios";
 import { firebase } from "../utils/firebase";
 
+
+function revertSaveData(modDat) {
+
+  if (!modDat.posts) {
+    modDat.posts = [];
+  }
+  if (!modDat.galleries) {
+    modDat.galleries = [];
+  }
+  if (!modDat.events) {
+    modDat.events = [];
+  }
+
+  for (let i = 0; i < modDat.homepage.length; i++) {
+    if (!modDat.homepage[i].filter.items)
+      modDat.homepage[i].filter.items = [];
+    let type = modDat.homepage[i].original;
+
+    for (
+      let index = 0;
+      index < modDat.homepage[i].filter.items.length;
+      index++
+    ) {
+      if (type === "news") {
+        modDat.homepage[i].filter.items[index] = modDat.posts.filter(
+          function (pos) {
+            return pos._id === modDat.homepage[i].filter.items[index];
+          }
+        )[0];
+      }
+      if (type === "event") {
+        modDat.homepage[i].filter.items[index] = modDat.events.filter(
+          function (pos) {
+            return pos._id === modDat.homepage[i].filter.items[index];
+          }
+        )[0];
+      }
+      if (type === "gallery") {
+        modDat.homepage[i].filter.items[index] = modDat.galleries.filter(
+          function (pos) {
+            return pos._id === modDat.homepage[i].filter.items[index];
+          }
+        )[0];
+      }
+    }
+    if (modDat.homepage[i].filter.items.length === 0)
+      modDat.homepage[i].filter.items = null;
+  }
+
+  return modDat;
+
+}
+
 export function getAllSites() {
   return async dispatch => {
     dispatch({
@@ -372,6 +425,9 @@ export function saveDesignSite({
         type: "CLOSE_LOADING"
       });
       if (data.status === 200) {
+
+        revertSaveData(site);
+
         toastr.success(`Save site ${site.title} sucess`, "Success");
       } else {
         toastr.error("There are something wrong when save your site", "Error");
@@ -428,54 +484,7 @@ export function getSiteById(id) {
         type: "CLOSE_LOADING"
       });
       if (data.status === 200) {
-        let modDat = data.data;
-
-        if (!modDat.posts) {
-          modDat.posts = [];
-        }
-        if (!modDat.galleries) {
-          modDat.galleries = [];
-        }
-        if (!modDat.events) {
-          modDat.events = [];
-        }
-
-        for (let i = 0; i < modDat.homepage.length; i++) {
-          if (!modDat.homepage[i].filter.items)
-            modDat.homepage[i].filter.items = [];
-          let type = modDat.homepage[i].original;
-
-          for (
-            let index = 0;
-            index < modDat.homepage[i].filter.items.length;
-            index++
-          ) {
-            if (type === "news") {
-              modDat.homepage[i].filter.items[index] = modDat.posts.filter(
-                function(pos) {
-                  return pos._id === modDat.homepage[i].filter.items[index];
-                }
-              )[0];
-            }
-            if (type === "event") {
-              modDat.homepage[i].filter.items[index] = modDat.events.filter(
-                function(pos) {
-                  return pos._id === modDat.homepage[i].filter.items[index];
-                }
-              )[0];
-            }
-            if (type === "gallery") {
-              modDat.homepage[i].filter.items[index] = modDat.galleries.filter(
-                function(pos) {
-                  return pos._id === modDat.homepage[i].filter.items[index];
-                }
-              )[0];
-            }
-          }
-          if (modDat.homepage[i].filter.items.length === 0)
-            modDat.homepage[i].filter.items = null;
-        }
-        return modDat;
+        return revertSaveData(data.data);
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
