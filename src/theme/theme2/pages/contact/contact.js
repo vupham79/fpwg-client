@@ -49,7 +49,7 @@ class ContactPage extends React.Component {
               {isEdit
                 ? siteEdit && siteEdit.address
                   ? siteEdit.address
-                  : "This information is not publish"
+                  : "This information current are not have to show."
                 : siteView && siteView.address}
             </Typography>
           </Grid>
@@ -69,7 +69,7 @@ class ContactPage extends React.Component {
               {isEdit
                 ? siteEdit && siteEdit.phone
                   ? siteEdit.phone
-                  : "This information is not publish"
+                  : "This information current are not have to show."
                 : siteView && siteView.phone}
             </Typography>
           </Grid>

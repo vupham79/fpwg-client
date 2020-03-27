@@ -80,45 +80,49 @@ class GalleryPage extends React.Component {
                 siteEdit && siteEdit.galleries ? (
                   <Grid container>
                     <GalleryComponent
-                      galleries={fromHome && homeList ? homeList : siteEdit.galleries}
+                      galleries={
+                        fromHome && homeList ? homeList : siteEdit.galleries
+                      }
                       siteInfo={siteEdit.id}
                     />
                   </Grid>
                 ) : (
-                    <Grid container justify="center">
-                      <Typography
-                        variant="body1"
-                        style={{
-                          fontFamily: bodyEdit.fontFamily,
-                          color: "white",
-                          padding: "5rem 0"
-                        }}
-                      >
-                        Currently no photo available.
+                  <Grid container justify="center">
+                    <Typography
+                      variant="body1"
+                      style={{
+                        fontFamily: bodyEdit.fontFamily,
+                        color: "white",
+                        padding: "5rem 0"
+                      }}
+                    >
+                      Currently no photo available.
                     </Typography>
-                    </Grid>
-                  )
+                  </Grid>
+                )
               ) : siteView && siteView.galleries ? (
                 <Grid container>
                   <GalleryComponent
-                    galleries={fromHome && homeList ? homeList : siteView.galleries}
+                    galleries={
+                      fromHome && homeList ? homeList : siteView.galleries
+                    }
                     siteInfo={siteView.sitePath}
                   />
                 </Grid>
               ) : (
-                    <Grid container justify="center">
-                      <Typography
-                        variant="body1"
-                        style={{
-                          fontFamily: bodyView.fontFamily,
-                          color: "white",
-                          padding: "5rem 0"
-                        }}
-                      >
-                        Currently no photo available.
+                <Grid container justify="center">
+                  <Typography
+                    variant="body1"
+                    style={{
+                      fontFamily: bodyView.fontFamily,
+                      color: "white",
+                      padding: "5rem 0"
+                    }}
+                  >
+                    Currently no photo available.
                   </Typography>
-                    </Grid>
-                  )}
+                </Grid>
+              )}
             </Grid>
           )}
 
@@ -129,7 +133,9 @@ class GalleryPage extends React.Component {
                   <Grid container>
                     <PostTypeComponent
                       posts={siteEdit.posts.filter(
-                        item => item.attachments.media_type === "video"
+                        item =>
+                          item.attachments &&
+                          item.attachments.media_type === "video"
                       )}
                       siteInfo={{
                         logo: siteEdit.logo,
@@ -139,51 +145,53 @@ class GalleryPage extends React.Component {
                     />
                   </Grid>
                 ) : (
-                    <Grid container justify="center">
-                      <Typography
-                        variant="body1"
-                        style={{
-                          fontFamily: bodyEdit.fontFamily,
-                          color: "white",
-                          padding: "5rem 0"
-                        }}
-                      >
-                        Current no video to show.
+                  <Grid container justify="center">
+                    <Typography
+                      variant="body1"
+                      style={{
+                        fontFamily: bodyEdit.fontFamily,
+                        color: "white",
+                        padding: "5rem 0"
+                      }}
+                    >
+                      Current no video to show.
                     </Typography>
-                    </Grid>
-                  )
+                  </Grid>
+                )
               ) : siteView &&
                 siteView.posts &&
                 siteView.posts.filter(
                   item => item.attachments.media_type === "video"
                 ) ? (
-                    <Grid container>
-                      <PostTypeComponent
-                        posts={siteView.posts.filter(
-                          item => item.attachments.media_type === "video"
-                        )}
-                        siteInfo={{
-                          logo: siteView.logo,
-                          title: siteView.title,
-                          sitePath: siteView.sitePath
-                        }}
-                        theme="theme3"
-                      />
-                    </Grid>
-                  ) : (
-                    <Grid container justify="center">
-                      <Typography
-                        variant="body1"
-                        style={{
-                          fontFamily: bodyView.fontFamily,
-                          color: "white",
-                          padding: "5rem 0"
-                        }}
-                      >
-                        Current no video to show.
+                <Grid container>
+                  <PostTypeComponent
+                    posts={siteView.posts.filter(
+                      item =>
+                        item.attachments &&
+                        item.attachments.media_type === "video"
+                    )}
+                    siteInfo={{
+                      logo: siteView.logo,
+                      title: siteView.title,
+                      sitePath: siteView.sitePath
+                    }}
+                    theme="theme3"
+                  />
+                </Grid>
+              ) : (
+                <Grid container justify="center">
+                  <Typography
+                    variant="body1"
+                    style={{
+                      fontFamily: bodyView.fontFamily,
+                      color: "white",
+                      padding: "5rem 0"
+                    }}
+                  >
+                    Current no video to show.
                   </Typography>
-                    </Grid>
-                  )}
+                </Grid>
+              )}
             </Grid>
           )}
         </Grid>
