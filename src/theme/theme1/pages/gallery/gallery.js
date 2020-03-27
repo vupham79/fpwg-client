@@ -119,6 +119,7 @@ class Theme1Gallery extends React.Component {
             <GalleryComponent
               galleries={fromHome && homeList ? homeList : siteEdit.galleries}
               siteInfo={siteEdit.id}
+              fromHome={fromHome}
             />
           ) : (
               <p className={classes.changableBody}>
@@ -129,6 +130,7 @@ class Theme1Gallery extends React.Component {
           <GalleryComponent
             galleries={fromHome && homeList ? homeList : siteView.galleries}
             siteInfo={siteView.sitePath}
+            fromHome={fromHome}
           />
         ) : (
               <p className={classes.changableBody}>
