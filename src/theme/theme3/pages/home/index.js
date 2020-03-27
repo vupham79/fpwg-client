@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import HomePage from "./home";
 import { connect } from "react-redux";
 import {
-  setNavItemInActive,
+  getDataByPageNumber,
   setNavItemActive,
-  getDataByPageNumber
+  setNavItemInActive
 } from "../../../../actions";
+import HomePage from "./home";
 
 class PreHomePage extends Component {
   componentDidMount() {
@@ -23,7 +23,7 @@ class PreHomePage extends Component {
     }
   }
   setDataToSite = async () => {
-    const { getDataByPageNumber, isEdit, siteView, siteEdit } = this.props;
+    const { getDataByPageNumber, isEdit, siteView } = this.props;
 
     if (!isEdit) {
       const data = await getDataByPageNumber({

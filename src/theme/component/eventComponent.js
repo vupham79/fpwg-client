@@ -2,10 +2,8 @@ import { Divider, Grid } from "@material-ui/core";
 import moment from "moment";
 import React from "react";
 import { connect } from "react-redux";
-import styles from "./event.module.css";
 import { getDataByPageNumber, setGalleriesToSiteView } from "../../actions";
-import ReactPaginate from "react-paginate";
-import Pagination from "@material-ui/lab/Pagination";
+import styles from "./event.module.css";
 
 class EventComponent extends React.Component {
   state = {
@@ -155,7 +153,7 @@ class EventComponent extends React.Component {
             container
             alignItems="center"
             direction="column"
-          // className={classes.eventPage}
+            // className={classes.eventPage}
           >
             <Grid
               item
@@ -185,7 +183,9 @@ class EventComponent extends React.Component {
               {homeList &&
                 homeList.filter(
                   row =>
-                    row && !row.isCancelled && moment(row.endTime).isAfter(moment())
+                    row &&
+                    !row.isCancelled &&
+                    moment(row.endTime).isAfter(moment())
                 ).length === 0 && (
                   <Grid className={styles.event}>
                     <p style={classes.changableBody}>No upcoming event.</p>
@@ -195,7 +195,8 @@ class EventComponent extends React.Component {
               {homeList &&
                 homeList.map((row, index) => {
                   return (
-                    row && !row.isCancelled &&
+                    row &&
+                    !row.isCancelled &&
                     moment(row.endTime).isAfter(moment()) && (
                       <Grid
                         item
@@ -293,7 +294,8 @@ class EventComponent extends React.Component {
               {homeList &&
                 homeList.filter(
                   row =>
-                    row && (row.isCancelled ||
+                    row &&
+                    (row.isCancelled ||
                       moment(row.endTime).isSameOrBefore(moment()) ||
                       !row.endTime)
                 ).length === 0 && (
@@ -305,7 +307,8 @@ class EventComponent extends React.Component {
               {homeList &&
                 homeList.map((row, index) => {
                   return (
-                    row && (row.isCancelled ||
+                    row &&
+                    (row.isCancelled ||
                       moment(row.endTime).isSameOrBefore(moment()) ||
                       !row.endTime) && (
                       <Grid

@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography, withStyles } from "@material-ui/core";
+import { Grid, Typography, withStyles } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./contact.module.css";
@@ -159,13 +159,13 @@ class ContactPage extends React.Component {
                 mapElement={<div style={{ height: `100%` }} />}
               />
             ) : (
-                <MapWithAMarker
-                  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-                  loadingElement={<div style={{ height: `100%` }} />}
-                  containerElement={<div style={{ height: `15rem` }} />}
-                  mapElement={<div style={{ height: `100%` }} />}
-                />
-              )}
+              <MapWithAMarker
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+                loadingElement={<div style={{ height: `100%` }} />}
+                containerElement={<div style={{ height: `15rem` }} />}
+                mapElement={<div style={{ height: `100%` }} />}
+              />
+            )}
           </Grid>
         </Grid>
       </Grid>

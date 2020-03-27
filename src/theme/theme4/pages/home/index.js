@@ -23,7 +23,7 @@ class PreHomePageT4 extends Component {
     }
   }
   setDataToSite = async () => {
-    const { getDataByPageNumber, isEdit, siteView, siteEdit } = this.props;
+    const { getDataByPageNumber, isEdit, siteView } = this.props;
 
     if (!isEdit) {
       await getDataByPageNumber({

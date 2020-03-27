@@ -1,60 +1,60 @@
 import {
-  Typography,
+  Avatar,
   Button,
+  CardMedia,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  FormControlLabel,
   Grid,
   IconButton,
   Input,
+  InputBase,
+  Paper,
+  Radio,
+  RadioGroup,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
-  Avatar,
-  Checkbox,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-  TextField,
-  Dialog,
-  DialogActions,
-  CardMedia,
   TableSortLabel,
-  DialogContent,
-  DialogTitle,
-  Paper,
-  InputBase
+  TextField,
+  Typography
 } from "@material-ui/core";
+import { green } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
 import { Add, Cancel } from "@material-ui/icons";
+import DragHandleIcon from "@material-ui/icons/DragHandle";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import SearchIcon from "@material-ui/icons/Search";
 import moment from "moment";
 import React from "react";
 import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import {
-  removeCover,
-  savePosts,
-  setNewCover,
-  setNewLogo,
-  changeHomeItemName,
-  changeHomeItems,
-  setActiveNavItems,
-  changeSiteAbout
-} from "../actions";
-import toastr from "./Toastr";
-import {
   sortableContainer,
   sortableElement,
   sortableHandle
 } from "react-sortable-hoc";
-import { green } from "@material-ui/core/colors";
-import DragHandleIcon from "@material-ui/icons/DragHandle";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import SearchIcon from "@material-ui/icons/Search";
+import {
+  changeHomeItemName,
+  changeHomeItems,
+  changeSiteAbout,
+  removeCover,
+  savePosts,
+  setActiveNavItems,
+  setNewCover,
+  setNewLogo
+} from "../actions";
+import toastr from "./Toastr";
 
 const useStyles = theme => ({
   content: {
@@ -294,9 +294,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -346,9 +346,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -399,9 +399,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -506,7 +506,7 @@ class HomepageEditorTab extends React.Component {
         toastr.error("Maximum item selected");
       } else index.filter.items = [...index.filter.items, row];
     } else {
-      index.filter.items = index.filter.items.filter(function (post) {
+      index.filter.items = index.filter.items.filter(function(post) {
         return post._id !== row._id;
       });
     }
@@ -570,7 +570,7 @@ class HomepageEditorTab extends React.Component {
     if (this.state.currentExpandType === "news" && this.props.posts) {
       currentList = this.props.posts;
       if (currentList) {
-        searchResult = currentList.filter(function (pos) {
+        searchResult = currentList.filter(function(pos) {
           return pos.message
             ? pos.message.toLowerCase().includes(keyword.toLowerCase())
             : null;
@@ -586,7 +586,7 @@ class HomepageEditorTab extends React.Component {
     if (this.state.currentExpandType === "event" && this.props.site.events) {
       currentList = this.props.site.events;
       if (currentList) {
-        searchResult = currentList.filter(function (pos) {
+        searchResult = currentList.filter(function(pos) {
           return pos.name.toLowerCase().includes(keyword.toLowerCase());
         });
       }
@@ -854,7 +854,7 @@ class HomepageEditorTab extends React.Component {
         <ExpansionPanel
           expanded={
             this.state.currentExpandItemId === item._id &&
-              this.state.isExpanding
+            this.state.isExpanding
               ? true
               : false
           }
@@ -938,7 +938,6 @@ class HomepageEditorTab extends React.Component {
                         }
                       }}
                       multiline
-                      maxLength={200}
                       autoFocus={
                         this.state.currentFocusInput === "aboutInput"
                           ? true
