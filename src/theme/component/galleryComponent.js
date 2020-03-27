@@ -116,78 +116,78 @@ class GalleryComponent extends React.Component {
           >
             {isEdit
               ? this.state.filteredData.map((item, index) => (
-                  <Grid
-                    item
-                    key={index}
-                    xs={12}
-                    sm={4}
-                    md={3}
-                    className={classes.gridItems}
-                  >
-                    <img
-                      src={item.url && item.url}
-                      alt="Title"
-                      style={imgStyles}
-                      onClick={() => this.handleOpenDialog(item.url)}
-                      aria-labelledby="form-dialog-title"
-                    />
-                  </Grid>
-                ))
+                <Grid
+                  item
+                  key={index}
+                  xs={12}
+                  sm={4}
+                  md={3}
+                  className={classes.gridItems}
+                >
+                  <img
+                    src={item && item.url}
+                    alt="Title"
+                    style={imgStyles}
+                    onClick={() => this.handleOpenDialog(item.url)}
+                    aria-labelledby="form-dialog-title"
+                  />
+                </Grid>
+              ))
               : galleries.map((item, index) => (
-                  <Grid
-                    item
-                    key={index}
-                    xs={12}
-                    sm={4}
-                    md={3}
-                    className={classes.gridItems}
-                  >
-                    <img
-                      src={item._id && item._id.url}
-                      alt="Title"
-                      style={imgStyles}
-                      onClick={() =>
-                        this.handleOpenDialog(item._id && item._id.url)
-                      }
-                      aria-labelledby="form-dialog-title"
-                    />
-                  </Grid>
-                ))}
+                <Grid
+                  item
+                  key={index}
+                  xs={12}
+                  sm={4}
+                  md={3}
+                  className={classes.gridItems}
+                >
+                  <img
+                    src={item._id && item._id.url}
+                    alt="Title"
+                    style={imgStyles}
+                    onClick={() =>
+                      this.handleOpenDialog(item._id && item._id.url)
+                    }
+                    aria-labelledby="form-dialog-title"
+                  />
+                </Grid>
+              ))}
           </Grid>
           {isEdit
             ? this.state.pageCount > 1 && (
-                <Grid container justify="center">
-                  <ReactPaginate
-                    previousLabel={"previous"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={this.state.pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageEditClick}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
-                  />
-                </Grid>
-              )
+              <Grid container justify="center">
+                <ReactPaginate
+                  previousLabel={"previous"}
+                  nextLabel={"next"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={this.state.pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={this.handlePageEditClick}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
+                />
+              </Grid>
+            )
             : pageCountView > 1 && (
-                <Grid container justify="center">
-                  <Pagination
-                    style={{
-                      backgroundColor: "white",
-                      border: `1px solid black`,
-                      padding: "0.2rem"
-                    }}
-                    color="primary"
-                    shape="rounded"
-                    count={pageCountView}
-                    page={this.state.pageView}
-                    onChange={this.handlePageViewClick}
-                  />
-                </Grid>
-              )}
+              <Grid container justify="center">
+                <Pagination
+                  style={{
+                    backgroundColor: "white",
+                    border: `1px solid black`,
+                    padding: "0.2rem"
+                  }}
+                  color="primary"
+                  shape="rounded"
+                  count={pageCountView}
+                  page={this.state.pageView}
+                  onChange={this.handlePageViewClick}
+                />
+              </Grid>
+            )}
           <Dialog
             open={this.state.open}
             onClose={this.handleClose}

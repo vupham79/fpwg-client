@@ -155,7 +155,7 @@ class EventComponent extends React.Component {
             container
             alignItems="center"
             direction="column"
-            // className={classes.eventPage}
+          // className={classes.eventPage}
           >
             <Grid
               item
@@ -185,7 +185,7 @@ class EventComponent extends React.Component {
               {homeList &&
                 homeList.filter(
                   row =>
-                    !row.isCancelled && moment(row.endTime).isAfter(moment())
+                    row && !row.isCancelled && moment(row.endTime).isAfter(moment())
                 ).length === 0 && (
                   <Grid className={styles.event}>
                     <p style={classes.changableBody}>No upcoming event.</p>
@@ -195,7 +195,7 @@ class EventComponent extends React.Component {
               {homeList &&
                 homeList.map((row, index) => {
                   return (
-                    !row.isCancelled &&
+                    row && !row.isCancelled &&
                     moment(row.endTime).isAfter(moment()) && (
                       <Grid
                         item
@@ -293,9 +293,9 @@ class EventComponent extends React.Component {
               {homeList &&
                 homeList.filter(
                   row =>
-                    row.isCancelled ||
-                    moment(row.endTime).isSameOrBefore(moment()) ||
-                    !row.endTime
+                    row && (row.isCancelled ||
+                      moment(row.endTime).isSameOrBefore(moment()) ||
+                      !row.endTime)
                 ).length === 0 && (
                   <Grid className={styles.event}>
                     <p style={classes.changableBody}>No past event.</p>
@@ -305,7 +305,7 @@ class EventComponent extends React.Component {
               {homeList &&
                 homeList.map((row, index) => {
                   return (
-                    (row.isCancelled ||
+                    row && (row.isCancelled ||
                       moment(row.endTime).isSameOrBefore(moment()) ||
                       !row.endTime) && (
                       <Grid
