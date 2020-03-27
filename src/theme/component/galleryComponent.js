@@ -104,7 +104,7 @@ class GalleryComponent extends React.Component {
   };
 
   render() {
-    const { classes, galleries, pageCountView, isEdit } = this.props;
+    const { classes, galleries, pageCountView, isEdit, fromHome } = this.props;
     return (
       <React.Fragment>
         <Container>
@@ -114,7 +114,7 @@ class GalleryComponent extends React.Component {
             justify="center"
             style={{ padding: "4rem" }}
           >
-            {isEdit
+            {isEdit && !fromHome
               ? this.state.filteredData.map((item, index) => (
                 <Grid
                   item
@@ -128,7 +128,9 @@ class GalleryComponent extends React.Component {
                     src={item && item.url}
                     alt="Title"
                     style={imgStyles}
-                    onClick={() => this.handleOpenDialog(item.url)}
+                    onClick={() =>
+                      this.handleOpenDialog(item && item.url)
+                    }
                     aria-labelledby="form-dialog-title"
                   />
                 </Grid>
@@ -143,11 +145,11 @@ class GalleryComponent extends React.Component {
                   className={classes.gridItems}
                 >
                   <img
-                    src={item._id && item._id.url}
+                    src={item && item.url}
                     alt="Title"
                     style={imgStyles}
                     onClick={() =>
-                      this.handleOpenDialog(item._id && item._id.url)
+                      this.handleOpenDialog(item && item.url)
                     }
                     aria-labelledby="form-dialog-title"
                   />
@@ -155,7 +157,7 @@ class GalleryComponent extends React.Component {
               ))}
           </Grid>
           {isEdit
-            ? this.state.pageCount > 1 && (
+            ? this.state.pageCount > 1 && !fromHome && (
               <Grid container justify="center">
                 <ReactPaginate
                   previousLabel={"previous"}
@@ -172,7 +174,7 @@ class GalleryComponent extends React.Component {
                 />
               </Grid>
             )
-            : pageCountView > 1 && (
+            : pageCountView > 1 && !fromHome && (
               <Grid container justify="center">
                 <Pagination
                   style={{

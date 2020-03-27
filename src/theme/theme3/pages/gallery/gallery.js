@@ -84,6 +84,7 @@ class GalleryPage extends React.Component {
                         fromHome && homeList ? homeList : siteEdit.galleries
                       }
                       siteInfo={siteEdit.id}
+                      fromHome={fromHome}
                     />
                   </Grid>
                 ) : (
@@ -100,13 +101,14 @@ class GalleryPage extends React.Component {
                     </Typography>
                   </Grid>
                 )
-              ) : siteView && siteView.galleries ? (
+              ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
                 <Grid container>
                   <GalleryComponent
                     galleries={
                       fromHome && homeList ? homeList : siteView.galleries
                     }
                     siteInfo={siteView.sitePath}
+                    fromHome={fromHome}
                   />
                 </Grid>
               ) : (
