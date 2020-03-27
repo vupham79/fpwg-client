@@ -7,20 +7,20 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
+  CardMedia,
   FormControl,
   Grid,
   IconButton,
+  MenuItem,
   Select,
   Tab,
   Tabs,
-  withStyles,
-  MenuItem,
-  CardMedia
+  withStyles
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Link from "../../../component/link";
 import { updateNavItemValue } from "../../../actions";
+import Link from "../../../component/link";
 import BannerComponent from "../../component/bannerComponent";
 
 const useStyles = theme => ({
@@ -406,15 +406,8 @@ class Header extends Component {
       titleView,
       classes,
       bodyEdit,
-      bodyView,
-      newCover
+      bodyView
     } = this.props;
-
-    const imgStyles = {
-      backgroundSize: "cover",
-      backgroundPosition: "center",
-      backgroundRepeat: "no-repeat"
-    };
 
     const infoStyle = {
       background: isEdit

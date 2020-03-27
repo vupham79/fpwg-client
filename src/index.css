@@ -64,6 +64,10 @@ code {
   animation: blink 1.5s linear infinite;
 }
 
+video {
+  object-fit: unset;
+}
+
 @keyframes blink {
   0% {
     opacity: 0;
