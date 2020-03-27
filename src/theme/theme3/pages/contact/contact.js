@@ -84,7 +84,7 @@ class ContactPage extends React.Component {
         <Grid container spacing={2} item xs={12} justify="center">
           <Grid container item xs={6} sm={6} md={3}>
             <Grid item xs={12}>
-              <Grid item xs={6}>
+              <Grid item xs={12}>
                 <Typography
                   variant="h5"
                   className={classes.title}

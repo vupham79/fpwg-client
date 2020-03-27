@@ -309,9 +309,7 @@ class HeaderComponent extends Component {
               {this.renderMenuButton()}
               {this.showHideDrawer({ anchor: "left", pos: "right" })}
             </Grid>
-            <Grid style={{ width: "inherit", padding: "1rem 0" }}>
-              {this.renderNavItems()}
-            </Grid>
+            <Grid style={{ width: "inherit" }}>{this.renderNavItems()}</Grid>
           </Grid>
           {displayImg ? (
             <Grid container item md={5} sm={12} xs={4}>

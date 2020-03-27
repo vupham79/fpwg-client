@@ -26,7 +26,7 @@ class BannerComponent extends React.Component {
   };
 
   renderNewCoversCarousel = () => {
-    const { isEdit, newCover, siteView } = this.props;
+    const { isEdit, newCover, siteView, theme } = this.props;
     if (isEdit) {
       if (newCover && newCover.length > 0) {
         return newCover.map((cover, index) => {
@@ -36,7 +36,7 @@ class BannerComponent extends React.Component {
                 key={index}
                 component="img"
                 alt="Contemplative Reptile"
-                height="400"
+                height={theme ? "600" : "400"}
                 image={URL.createObjectURL(cover)}
               />
             );
@@ -46,7 +46,7 @@ class BannerComponent extends React.Component {
                 key={index}
                 component="img"
                 alt="Contemplative Reptile"
-                height="400"
+                height={theme ? "600" : "400"}
                 image={cover}
               />
             );
@@ -59,7 +59,7 @@ class BannerComponent extends React.Component {
             key={i}
             component="img"
             alt="Contemplative Reptile"
-            height="400"
+            height={theme ? "600" : "400"}
             image={cover}
           />
         ));

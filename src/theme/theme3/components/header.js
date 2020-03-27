@@ -14,12 +14,14 @@ import {
   Tab,
   Tabs,
   withStyles,
-  MenuItem
+  MenuItem,
+  CardMedia
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import Link from "../../../component/link";
 import { updateNavItemValue } from "../../../actions";
+import BannerComponent from "../../component/bannerComponent";
 
 const useStyles = theme => ({
   root: {
@@ -28,13 +30,15 @@ const useStyles = theme => ({
   info: {
     fontSize: "1rem",
     padding: "0 0.4rem",
-    color: "white"
+    color: "white",
+    marginTop: "0.3rem"
   },
   contact: {
     position: "absolute"
   },
   gridIcon: {
-    borderRadius: "0.3rem"
+    borderRadius: "0.4rem",
+    padding: "0 0.2rem"
   },
   icon: {
     maxHeight: "2rem"
@@ -46,7 +50,7 @@ const useStyles = theme => ({
       minHeight: "14vh"
     },
     position: "absolute",
-    top: "60%",
+    top: "40%",
     minHeight: "auto"
   },
   tab: {
@@ -56,22 +60,22 @@ const useStyles = theme => ({
     }
   },
   dropdownSelect: {
-    marginTop: "3rem",
     display: "block",
     [theme.breakpoints.up("md")]: {
       display: "none"
     }
   },
   title: {
-    minWidth: "20vh",
     color: "white",
-    fontSize: "3rem",
+    fontSize: "2rem",
     overflow: "hidden",
     textAlign: "center",
     [theme.breakpoints.up("md")]: {
+      fontSize: "3rem",
       display: "block",
       position: "absolute",
-      top: "-2.3rem"
+      top: "-2rem"
+      // minWidth: "20vh",
     }
   }
 });
@@ -101,6 +105,49 @@ class Header extends Component {
       } else return `url('${siteEdit.logo}')`;
     }
     return `url('${siteView.logo}')`;
+  };
+
+  renderNewCoversCarousel = () => {
+    const { isEdit, newCover, siteView } = this.props;
+    if (isEdit) {
+      if (newCover && newCover.length > 0) {
+        return newCover.map((cover, index) => {
+          if (cover && typeof cover === "object" && cover.size > 0) {
+            return (
+              <CardMedia
+                key={index}
+                component="img"
+                alt="Contemplative Reptile"
+                height="400"
+                image={URL.createObjectURL(cover)}
+              />
+            );
+          } else
+            return (
+              <CardMedia
+                key={index}
+                component="img"
+                alt="Contemplative Reptile"
+                height="400"
+                image={cover}
+              />
+            );
+        });
+      }
+    } else {
+      if (siteView.cover && siteView.cover.length > 0) {
+        return siteView.cover.map((cover, i) => (
+          <CardMedia
+            key={i}
+            component="img"
+            alt="Contemplative Reptile"
+            height="400"
+            image={cover}
+          />
+        ));
+      }
+    }
+    //mỗi img phải bọc div để component carousel phân biệt chia slide
   };
 
   renderTabItems = () => {
@@ -214,7 +261,12 @@ class Header extends Component {
       height: "auto"
     };
     return (
-      <Grid container justify="center" alignItems="center">
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        style={{ height: "7.5vh" }}
+      >
         {isEdit
           ? this.renderTabItems()
           : siteView &&
@@ -321,13 +373,19 @@ class Header extends Component {
       titleView
     } = this.props;
     const infoStyle = {
-      background: isEdit
-        ? hexToRGB(titleEdit.color)
-        : hexToRGB(titleView.color),
       fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
     };
     return (
-      <Grid container justify="center" style={{ padding: "1rem" }}>
+      <Grid
+        container
+        justify="center"
+        style={{
+          padding: "1rem",
+          backgroundColor: isEdit
+            ? hexToRGB(siteEdit.color, 0.6)
+            : hexToRGB(siteView.color, 0.6)
+        }}
+      >
         <Grid item xs={12} className={classes.title} style={infoStyle}>
           {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
         </Grid>
@@ -360,8 +418,8 @@ class Header extends Component {
 
     const infoStyle = {
       background: isEdit
-        ? hexToRGB(titleEdit.color)
-        : hexToRGB(titleView.color),
+        ? hexToRGB(titleEdit.color, 0.6)
+        : hexToRGB(titleView.color, 0.6),
       fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
     };
     return (
@@ -370,11 +428,13 @@ class Header extends Component {
           container
           item
           style={{
-            backgroundImage: `url(${isEdit ? newCover[0] : siteView.cover})`,
-            minHeight: "90vh",
-            ...imgStyles
+            // backgroundImage: `url(${isEdit ? newCover[0] : siteView.cover})`,
+            minHeight: "90vh"
+            // ...imgStyles
           }}
-        />
+        >
+          <BannerComponent bannerType={0} theme="theme3" />
+        </Grid>
         <Grid
           container
           item
@@ -514,7 +574,6 @@ class Header extends Component {
           justify="center"
           alignItems="flex-end"
           className={classes.navItem}
-          style={{ backgroundColor: isEdit ? siteEdit.color : siteView.color }}
         >
           {this.renderHeader()}
         </Grid>
