@@ -134,6 +134,7 @@ class Theme1News extends React.Component {
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
+                  fromHome={fromHome}
                   posts={(fromHome && homeList) ? homeList : siteEdit.posts}
                   siteInfo={{
                     logo: siteEdit.logo,
@@ -152,6 +153,7 @@ class Theme1News extends React.Component {
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
+                fromHome={fromHome}
                 posts={(fromHome && homeList) ? homeList : siteView.posts}
                 siteInfo={{
                   logo: siteView.logo,

@@ -205,18 +205,18 @@ function PostsList({
               filteredData.map((row, index) => (
                 <TableRow key={index}>
                   <TableCell>
-                    {(row.attachments.media_type === "photo" && (
-                      <Avatar src={row.attachments.images[0]} />
+                    {(row.attachments && row.attachments.media_type === "photo" && (
+                      <Avatar src={row.attachments && row.attachments.images[0]} />
                     )) ||
-                      (row.attachments.media_type === "video" && (
-                        <Avatar src={row.attachments.video} />
+                      (row.attachments && row.attachments.media_type === "video" && (
+                        <Avatar src={row.attachments && row.attachments.video} />
                       )) ||
-                      (row.attachments.media_type === "album" && (
-                        <Avatar src={row.attachments.images[0]} />
+                      (row.attachments && row.attachments.media_type === "album" && (
+                        <Avatar src={row.attachments && row.attachments.images[0]} />
                       ))}
                   </TableCell>
                   <TableCell align="center">{row.title}</TableCell>
-                  <TableCell align="left">
+                  <TableCell align="center">
                     <Grid
                       style={{
                         maxWidth: "20rem",
