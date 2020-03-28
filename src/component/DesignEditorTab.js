@@ -1,4 +1,3 @@
-import GoogleFontPicker from "@bit/take2.components.google-font-picker";
 import {
   Button,
   Divider,
@@ -139,7 +138,7 @@ class DesignEditorTab extends React.Component {
     this.setState({
       logo: site.logo
     });
-    img.addEventListener("load", async function () {
+    img.addEventListener("load", async function() {
       const color = await colorThief.getPalette(img, 11);
       const colors = await color.map(rgb =>
         onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
@@ -369,7 +368,8 @@ class DesignEditorTab extends React.Component {
         <Grid container className={classes.sideBarBox} justify={"space-evenly"}>
           <Grid item xs={12}>
             <Typography className={classes.title2}>Title</Typography>
-            <GoogleFontPicker
+            GoogleFontPicker
+            {/* <GoogleFontPicker
               searchable
               buttonColor={"default"}
               buttonVariant={"outlined"}
@@ -381,11 +381,12 @@ class DesignEditorTab extends React.Component {
               }}
               children={<Add />}
               placement={"bottom"}
-            />
+            /> */}
           </Grid>
           <Grid item xs={12}>
             <Typography className={classes.title2}>Body</Typography>
-            <GoogleFontPicker
+            GoogleFontPicker
+            {/* <GoogleFontPicker
               searchable
               buttonVariant={"outlined"}
               defaultFont={isChanged ? site.theme.fontBody : site.fontBody}
@@ -395,7 +396,7 @@ class DesignEditorTab extends React.Component {
                 root: classes.fontPickerRoot
               }}
               placement={"bottom"}
-            />
+            /> */}
           </Grid>
         </Grid>
         <Divider

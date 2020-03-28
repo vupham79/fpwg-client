@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@bit/take2.components.google-font-picker": "file:./components/google-font-picker",
     "@fortawesome/fontawesome-free": "^5.12.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.26",
     "@fortawesome/free-brands-svg-icons": "^5.12.0",
@@ -17,7 +16,6 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^8.1.0",
     "axios": "^0.19.2",
-    "bit-bin": "^14.7.6",
     "color-thief": "^2.2.5",
     "dotenv": "^8.2.0",
     "firebase": "^7.8.2",
@@ -68,10 +66,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "bit": {
-    "env": {},
-    "componentsDefaultDirectory": "components/{name}",
-    "packageManager": "npm"
   }
 }
