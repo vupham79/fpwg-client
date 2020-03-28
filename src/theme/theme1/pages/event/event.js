@@ -118,7 +118,7 @@ class Theme1Event extends React.Component {
         <Grid item xs={12}>
           <EventComponent
             homeList={
-              fromHome ? homeList : (isEdit ? siteEdit.events : siteView.events)
+              (fromHome && homeList) ? homeList : (isEdit ? siteEdit.events : siteView.events)
             }
           />
         </Grid>

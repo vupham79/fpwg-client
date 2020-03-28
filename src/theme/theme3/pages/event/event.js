@@ -104,7 +104,7 @@ class EventPage extends React.Component {
           siteEdit && siteEdit.events ? (
             <EventComponent
               homeList={
-                fromHome ? homeList : (isEdit ? siteEdit.events : siteView.events)
+                (fromHome && homeList) ? homeList : (isEdit ? siteEdit.events : siteView.events)
               }
             />
           ) : (
@@ -119,7 +119,7 @@ class EventPage extends React.Component {
         ) : siteView && siteView.events ? (
           <EventComponent
             homeList={
-              fromHome ? homeList : (isEdit ? siteEdit.events : siteView.events)
+              (fromHome && homeList) ? homeList : (isEdit ? siteEdit.events : siteView.events)
             }
           />
         ) : (

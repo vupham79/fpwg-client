@@ -391,8 +391,10 @@ export function saveDesignSite({
         for (let index = 0; index < saveDat[i].filter.items.length; index++) {
           saveDat[i].filter.items[index] = saveDat[i].filter.items[index]._id;
         }
-        if (saveDat[i].filter.items.length === 0)
+        if (saveDat[i].filter.items.length === 0) {
           saveDat[i].filter.items = null;
+          saveDat[i].filter.type = "latest";
+        }
       }
 
       const data = await axios({

@@ -20,7 +20,6 @@ import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
 import "./adminStyleSheet.css";
 import { ChromePicker } from "react-color";
-import GoogleFontPicker from "@bit/take2.components.google-font-picker";
 
 const useStyles = theme => ({
   seeMore: {
@@ -303,25 +302,27 @@ class TableTheme extends Component {
                 </Grid>
 
                 <Grid item xs={12}>
-                  <GoogleFontPicker
+                  GoogleFontPicker
+                  {/* <GoogleFontPicker
                     label="Body"
                     searchable
                     buttonColor={"primary"}
                     buttonVariant={"text"}
                     defaultFont={this.state.updateData.fontBody}
                     onFontSelected={this.handleChangeFontBody}
-                  />
+                  /> */}
                 </Grid>
 
                 <Grid item xs={12}>
-                  <GoogleFontPicker
+                  GoogleFontPicker
+                  {/* <GoogleFontPicker
                     label="Title"
                     searchable
                     buttonColor={"primary"}
                     buttonVariant={"text"}
                     defaultFont={this.state.updateData.fontTitle}
                     onFontSelected={this.handleChangeFontTitle}
-                  />
+                  /> */}
                 </Grid>
               </Grid>
               <Grid item xs={4}>
