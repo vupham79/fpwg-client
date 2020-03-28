@@ -36,8 +36,6 @@ import {
 import {
   changeNavItemName,
   changeNavItems,
-  closeDialog,
-  openDialog,
   savePosts,
   setActiveNavItems,
   setActivePost,
@@ -181,7 +179,7 @@ const GreenCheckbox = withStyles({
   checked: {}
 })(props => <Checkbox color="default" {...props} />);
 
-const columns = ["Avatar", "Title", "Message", "Created At", "Show"];
+const columns = ["", "Title", "Message", "Created At", "Show"];
 
 function PostsList({ filteredData, setActivePost }) {
   return (
@@ -201,7 +199,7 @@ function PostsList({ filteredData, setActivePost }) {
             {filteredData &&
               filteredData.map((row, index) => (
                 <TableRow key={index}>
-                  <TableCell>
+                  <TableCell align="center">
                     {(row.attachments &&
                       row.attachments.media_type === "photo" && (
                         <Avatar
@@ -239,7 +237,7 @@ function PostsList({ filteredData, setActivePost }) {
                   <TableCell align="center">
                     <GreenCheckbox
                       checked={row.isActive}
-                      onChange={() => setActivePost(row, !row.isActive)}
+                      onChange={() => setActivePost(row)}
                     />
                   </TableCell>
                 </TableRow>
@@ -312,7 +310,7 @@ class PagesEditorTab extends React.Component {
 
   handleSearch = keyword => {
     if (this.props.posts) {
-      let searchResult = this.props.posts.filter(function(pos) {
+      let searchResult = this.props.posts.filter(function (pos) {
         if (pos.message) {
           return pos.message.toLowerCase().includes(keyword.toLowerCase());
         } else return null;
@@ -331,21 +329,40 @@ class PagesEditorTab extends React.Component {
     changeNavItems(site);
   };
 
-  setActivePost = (post, status) => {
-    const { posts, setActivePost } = this.props;
-    setActivePost(post, status);
-    this.setState({ filteredData: [...posts] });
+  setActivePost = (post) => {
+    post.isActive = !post.isActive;
+    let list = this.props.site.homepage;
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].original === "news") {
+        if (!list[i].filter.items) list[i].filter.items = [];
+
+        list[i].filter.items.filter(function (pos) {
+          return pos._id !== post._id;
+        });
+
+        if (list[i].filter.items.length === 0) {
+          list[i].filter.items = null;
+          list[i].filter.type = "latest";
+        }
+        break;
+      }
+    }
+    this.setState({ filteredData: this.state.filteredData });
   };
 
   handleSave = async posts => {
-    await this.props.savePosts(posts);
-    this.props.closeDialog();
+    // await this.props.savePosts(posts);
+    this.props.setActiveNavItems(this.props.site);
+    this.handleOpenDialogue(false);
   };
 
   handleOpenDialogue = bool => {
     this.setState({
       openDiag: bool
     });
+    if (bool) {
+      this.setPosts(this.props.posts);
+    }
   };
 
   render() {
@@ -366,73 +383,73 @@ class PagesEditorTab extends React.Component {
         updateNavItemValue,
         changeNavItemName
       }) => (
-        <Grid container style={gridItem}>
-          <Grid
-            container
-            item
-            alignItems="center"
-            xs={10}
-            sm={12}
-            md={10}
-            style={{ padding: "0.2rem 0" }}
-          >
-            <Grid container justify="center" item xs={2} md={2} sm={12}>
-              <DragHandle />
+          <Grid container style={gridItem}>
+            <Grid
+              container
+              item
+              alignItems="center"
+              xs={10}
+              sm={12}
+              md={10}
+              style={{ padding: "0.2rem 0" }}
+            >
+              <Grid container justify="center" item xs={2} md={2} sm={12}>
+                <DragHandle />
+              </Grid>
+              <Grid item xs={10} md={10} sm={12}>
+                <TextField
+                  InputLabelProps={{
+                    classes: {
+                      focused: classes.focused
+                    }
+                  }}
+                  InputProps={{
+                    classes: {
+                      notchedOutline: classes.notchedOutline,
+                      input: classes.inputTitle
+                    }
+                  }}
+                  size="small"
+                  style={{ backgroundColor: "white" }}
+                  fullWidth
+                  variant={"outlined"}
+                  value={value}
+                  onChange={e => {
+                    handleChangeNavName(
+                      item._id,
+                      site,
+                      e.target.value,
+                      changeNavItemName
+                    );
+                  }}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={10} md={10} sm={12}>
-              <TextField
-                InputLabelProps={{
-                  classes: {
-                    focused: classes.focused
-                  }
-                }}
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle
-                  }
-                }}
-                size="small"
-                style={{ backgroundColor: "white" }}
-                fullWidth
-                variant={"outlined"}
-                value={value}
-                onChange={e => {
-                  handleChangeNavName(
-                    item._id,
-                    site,
-                    e.target.value,
-                    changeNavItemName
-                  );
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container item justify="center" xs={2} sm={12} md={2}>
-            {item.original === "home" ? (
-              <></>
-            ) : (
-              <IconButton
-                style={viewButton}
-                onClick={() =>
-                  handleChangeActive(
-                    item._id,
-                    site,
-                    setActiveNavItems,
-                    updateNavItemValue
-                  )
-                }
-              >
-                {item.isActive && item.name !== "Home" ? (
-                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                ) : (
-                  <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+            <Grid container item justify="center" xs={2} sm={12} md={2}>
+              {item.original === "home" ? (
+                <></>
+              ) : (
+                  <IconButton
+                    style={viewButton}
+                    onClick={() =>
+                      handleChangeActive(
+                        item._id,
+                        site,
+                        setActiveNavItems,
+                        updateNavItemValue
+                      )
+                    }
+                  >
+                    {item.isActive && item.name !== "Home" ? (
+                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                    ) : (
+                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                      )}
+                  </IconButton>
                 )}
-              </IconButton>
-            )}
+            </Grid>
           </Grid>
-        </Grid>
-      )
+        )
     );
 
     const SortableList = sortableContainer(
@@ -625,8 +642,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   changeNavItems: value => dispatch(changeNavItems(value)),
   setActiveNavItems: site => dispatch(setActiveNavItems(site)),
-  openDialog: () => dispatch(openDialog()),
-  closeDialog: () => dispatch(closeDialog()),
   setActivePost: (post, status) => dispatch(setActivePost(post, status)),
   updateNavItemValue: value => dispatch(updateNavItemValue(value)),
   savePosts: posts => dispatch(savePosts(posts)),

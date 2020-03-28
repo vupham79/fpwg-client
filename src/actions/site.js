@@ -365,7 +365,8 @@ export function saveDesignSite({
   instagram,
   whatsapp,
   email,
-  phone
+  phone,
+  posts
 }) {
   return async dispatch => {
     dispatch({
@@ -400,6 +401,14 @@ export function saveDesignSite({
           saveDat[i].filter.type = "latest";
         }
       }
+
+      const dataPost = await axios({
+        method: "PATCH",
+        url: "post/activePosts",
+        data: {
+          posts: posts
+        }
+      });
 
       const data = await axios({
         method: "patch",

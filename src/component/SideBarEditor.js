@@ -59,7 +59,8 @@ class ClippedDrawer extends React.Component {
       instagram,
       whatsapp,
       email,
-      phone
+      phone,
+      posts
     } = this.props;
     return (
       <AppBar className={classes.root} position="sticky">
@@ -118,7 +119,8 @@ class ClippedDrawer extends React.Component {
                     instagram,
                     whatsapp,
                     email,
-                    phone
+                    phone,
+                    posts
                   })
                 }
               >
@@ -231,7 +233,8 @@ const mapStateToProps = state => ({
   whatsapp: state.site.whatsapp,
   email: state.site.email,
   phone: state.site.phone,
-  isPreview: state.site.isPreview
+  isPreview: state.site.isPreview,
+  posts: state.post.posts
 });
 
 const mapDispatchToProps = dispatch => ({
