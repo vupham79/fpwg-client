@@ -483,34 +483,75 @@ class PostTypeComponent extends React.Component {
         >
           {isEdit && !fromHome
             ? this.state.filteredData.map(
-                (post, index) =>
-                  (post.attachments &&
-                    post.attachments.media_type === "photo" &&
-                    post.isActive && (
-                      <TypePhoto
-                        key={index}
-                        post={post}
-                        style={style}
-                        dark={this.props.darkMode}
-                        openDialog={this.handleOpen}
-                        siteInfo={siteInfo}
-                      />
-                    )) ||
-                  (post.attachments &&
-                    post.attachments.media_type === "album" &&
-                    post.isActive && (
-                      <TypeAlbum
-                        key={index}
-                        post={post}
-                        style={style}
-                        dark={this.props.darkMode}
-                        openDialog={this.handleOpen}
-                        siteInfo={siteInfo}
-                      />
-                    )) ||
-                  (post.attachments &&
-                    post.attachments.media_type === "video" &&
-                    post.isActive && (
+              (post, index) =>
+                (post.attachments &&
+                  post.attachments.media_type === "photo" &&
+                  post.isActive && (
+                    <TypePhoto
+                      key={index}
+                      post={post}
+                      style={style}
+                      dark={this.props.darkMode}
+                      openDialog={this.handleOpen}
+                      siteInfo={siteInfo}
+                    />
+                  )) ||
+                (post.attachments &&
+                  post.attachments.media_type === "album" &&
+                  post.isActive && (
+                    <TypeAlbum
+                      key={index}
+                      post={post}
+                      style={style}
+                      dark={this.props.darkMode}
+                      openDialog={this.handleOpen}
+                      siteInfo={siteInfo}
+                    />
+                  )) ||
+                (post.attachments &&
+                  post.attachments.media_type === "video" &&
+                  post.isActive && (
+                    <TypeVideo
+                      key={index}
+                      post={post}
+                      style={style}
+                      dark={this.props.darkMode}
+                      openDialog={this.handleOpenVideo}
+                      siteInfo={siteInfo}
+                    />
+                  ))
+            )
+            : posts.slice(0, 5).map(
+              (post, index) =>
+                (post.attachments &&
+                  post.attachments.media_type === "photo" &&
+                  post.isActive && (
+                    <TypePhoto
+                      key={index}
+                      post={post}
+                      style={style}
+                      dark={this.props.darkMode}
+                      openDialog={this.handleOpen}
+                      siteInfo={siteInfo}
+                    />
+                  )) ||
+                (post.attachments &&
+                  post.attachments.media_type === "album" &&
+                  post.isActive && (
+                    <TypeAlbum
+                      key={index}
+                      post={post}
+                      style={style}
+                      dark={this.props.darkMode}
+                      openDialog={this.handleOpen}
+                      siteInfo={siteInfo}
+                    />
+                  )) ||
+                (post.attachments &&
+                  post.attachments.media_type === "video" &&
+                  post.isActive &&
+                  (theme && theme === "theme3" ? (
+                    index < 5 && (
                       <TypeVideo
                         key={index}
                         post={post}
@@ -519,49 +560,8 @@ class PostTypeComponent extends React.Component {
                         openDialog={this.handleOpenVideo}
                         siteInfo={siteInfo}
                       />
-                    ))
-              )
-            : posts.map(
-                (post, index) =>
-                  (post.attachments &&
-                    post.attachments.media_type === "photo" &&
-                    post.isActive && (
-                      <TypePhoto
-                        key={index}
-                        post={post}
-                        style={style}
-                        dark={this.props.darkMode}
-                        openDialog={this.handleOpen}
-                        siteInfo={siteInfo}
-                      />
-                    )) ||
-                  (post.attachments &&
-                    post.attachments.media_type === "album" &&
-                    post.isActive && (
-                      <TypeAlbum
-                        key={index}
-                        post={post}
-                        style={style}
-                        dark={this.props.darkMode}
-                        openDialog={this.handleOpen}
-                        siteInfo={siteInfo}
-                      />
-                    )) ||
-                  (post.attachments &&
-                    post.attachments.media_type === "video" &&
-                    post.isActive &&
-                    (theme && theme === "theme3" ? (
-                      index < 5 && (
-                        <TypeVideo
-                          key={index}
-                          post={post}
-                          style={style}
-                          dark={this.props.darkMode}
-                          openDialog={this.handleOpenVideo}
-                          siteInfo={siteInfo}
-                        />
-                      )
-                    ) : (
+                    )
+                  ) : (
                       <TypeVideo
                         key={index}
                         post={post}
@@ -571,14 +571,14 @@ class PostTypeComponent extends React.Component {
                         siteInfo={siteInfo}
                       />
                     )))
-              )}
+            )}
           <Dialog
             open={this.state.open}
             onClose={this.handleClose}
             fullWidth
             maxWidth={
               this.state.postOpen &&
-              this.state.postOpen.attachments.media_type === "album"
+                this.state.postOpen.attachments.media_type === "album"
                 ? "md"
                 : "sm"
             }
@@ -643,40 +643,40 @@ class PostTypeComponent extends React.Component {
         </Grid>
         {isEdit
           ? this.state.pageCount > 1 &&
-            !fromHome && (
-              <Grid container justify="center" style={{ paddingTop: "2rem" }}>
-                <ReactPaginate
-                  previousLabel={"previous"}
-                  nextLabel={"next"}
-                  breakLabel={"..."}
-                  breakClassName={"break-me"}
-                  pageCount={this.state.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageEditClick}
-                  containerClassName={"pagination"}
-                  subContainerClassName={"pages pagination"}
-                  activeClassName={"active"}
-                />
-              </Grid>
-            )
+          !fromHome && (
+            <Grid container justify="center" style={{ paddingTop: "2rem" }}>
+              <ReactPaginate
+                previousLabel={"previous"}
+                nextLabel={"next"}
+                breakLabel={"..."}
+                breakClassName={"break-me"}
+                pageCount={this.state.pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={this.handlePageEditClick}
+                containerClassName={"pagination"}
+                subContainerClassName={"pages pagination"}
+                activeClassName={"active"}
+              />
+            </Grid>
+          )
           : pageCountView > 1 &&
-            !fromHome && (
-              <Grid container justify="center" style={{ marginTop: "5rem" }}>
-                <Pagination
-                  style={{
-                    backgroundColor: "white",
-                    border: "1px solid black",
-                    padding: "0.2rem"
-                  }}
-                  color="primary"
-                  shape="rounded"
-                  count={pageCountView}
-                  page={this.state.pageView}
-                  onChange={this.handlePageViewClick}
-                />
-              </Grid>
-            )}
+          !fromHome && (
+            <Grid container justify="center" style={{ marginTop: "5rem" }}>
+              <Pagination
+                style={{
+                  backgroundColor: "white",
+                  border: "1px solid black",
+                  padding: "0.2rem"
+                }}
+                color="primary"
+                shape="rounded"
+                count={pageCountView}
+                page={this.state.pageView}
+                onChange={this.handlePageViewClick}
+              />
+            </Grid>
+          )}
       </Container>
     );
   }
