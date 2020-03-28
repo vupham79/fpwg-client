@@ -1,4 +1,11 @@
-import { Container, Dialog, Grid, withStyles } from "@material-ui/core";
+import {
+  Container,
+  Dialog,
+  Grid,
+  withStyles,
+  CardActionArea,
+  CardMedia
+} from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import Pagination from "@material-ui/lab/Pagination";
@@ -7,10 +14,16 @@ import ReactPaginate from "react-paginate";
 
 const useStyles = theme => ({
   gridItems: {
-    maxHeight: 250
+    // maxHeight: 250
   },
   icon: {
     color: "rgba(255, 255, 255, 0.54)"
+  },
+  media: {
+    paddingTop: "56.25%",
+    backgroundSize: "contain",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat"
   }
 });
 
@@ -114,89 +127,119 @@ class GalleryComponent extends React.Component {
             justify="center"
             style={{ padding: "4rem" }}
           >
-            {isEdit && !fromHome
-              ? this.state.filteredData.map((item, index) => (
-                <Grid
-                  item
-                  key={index}
-                  xs={12}
-                  sm={4}
-                  md={3}
-                  className={classes.gridItems}
-                >
-                  <img
-                    src={item && item.url}
-                    alt="Title"
-                    style={imgStyles}
-                    onClick={() =>
-                      this.handleOpenDialog(item && item.url)
-                    }
-                    aria-labelledby="form-dialog-title"
-                  />
-                </Grid>
-              ))
+            {isEdit
+              ? !fromHome
+                ? this.state.filteredData.map((item, index) => (
+                    <Grid
+                      item
+                      key={index}
+                      xs={12}
+                      sm={4}
+                      md={3}
+                      className={classes.gridItems}
+                    >
+                      <CardActionArea>
+                        <CardMedia
+                          className={classes.media}
+                          image={item && item.url}
+                          title="Gallery image"
+                          onClick={() =>
+                            this.handleOpenDialog(item && item.url)
+                          }
+                        />
+                      </CardActionArea>
+                    </Grid>
+                  ))
+                : galleries.slice(0, 5).map((item, index) => (
+                    <Grid
+                      item
+                      key={index}
+                      xs={12}
+                      sm={4}
+                      md={3}
+                      className={classes.gridItems}
+                    >
+                      <CardActionArea>
+                        <CardMedia
+                          className={classes.media}
+                          image={item && item.url}
+                          title="Gallery image"
+                          onClick={() =>
+                            this.handleOpenDialog(item && item.url)
+                          }
+                        />
+                      </CardActionArea>
+                    </Grid>
+                  ))
               : galleries.map((item, index) => (
-                <Grid
-                  item
-                  key={index}
-                  xs={12}
-                  sm={4}
-                  md={3}
-                  className={classes.gridItems}
-                >
-                  <img
-                    src={item && item.url}
-                    alt="Title"
-                    style={imgStyles}
-                    onClick={() =>
-                      this.handleOpenDialog(item && item.url)
-                    }
-                    aria-labelledby="form-dialog-title"
-                  />
-                </Grid>
-              ))}
+                  <Grid
+                    item
+                    key={index}
+                    xs={12}
+                    sm={4}
+                    md={3}
+                    className={classes.gridItems}
+                  >
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.media}
+                        image={item && item._id.url}
+                        title="Gallery image"
+                        onClick={() =>
+                          this.handleOpenDialog(item && item._id.url)
+                        }
+                      />
+                    </CardActionArea>
+                  </Grid>
+                ))}
           </Grid>
           {isEdit
-            ? this.state.pageCount > 1 && !fromHome && (
-              <Grid container justify="center">
-                <ReactPaginate
-                  previousLabel={"previous"}
-                  nextLabel={"next"}
-                  breakLabel={"..."}
-                  breakClassName={"break-me"}
-                  pageCount={this.state.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageEditClick}
-                  containerClassName={"pagination"}
-                  subContainerClassName={"pages pagination"}
-                  activeClassName={"active"}
-                />
-              </Grid>
-            )
-            : pageCountView > 1 && !fromHome && (
-              <Grid container justify="center">
-                <Pagination
-                  style={{
-                    backgroundColor: "white",
-                    border: `1px solid black`,
-                    padding: "0.2rem"
-                  }}
-                  color="primary"
-                  shape="rounded"
-                  count={pageCountView}
-                  page={this.state.pageView}
-                  onChange={this.handlePageViewClick}
-                />
-              </Grid>
-            )}
+            ? this.state.pageCount > 1 &&
+              !fromHome && (
+                <Grid container justify="center">
+                  <ReactPaginate
+                    previousLabel={"previous"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={this.state.pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageEditClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
+                  />
+                </Grid>
+              )
+            : pageCountView > 1 &&
+              !fromHome && (
+                <Grid container justify="center">
+                  <Pagination
+                    style={{
+                      backgroundColor: "white",
+                      border: `1px solid black`,
+                      padding: "0.2rem"
+                    }}
+                    color="primary"
+                    shape="rounded"
+                    count={pageCountView}
+                    page={this.state.pageView}
+                    onChange={this.handlePageViewClick}
+                  />
+                </Grid>
+              )}
           <Dialog
             open={this.state.open}
             onClose={this.handleClose}
             maxWidth="sm"
             fullWidth
           >
-            <img style={imgStyles} src={this.state.img} alt="" />
+            <CardMedia
+              className={classes.media}
+              image={this.state.img}
+              title="Gallery image"
+            />
           </Dialog>
         </Container>
       </React.Fragment>
