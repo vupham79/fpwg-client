@@ -14,60 +14,40 @@ import styles from "./index.module.css";
 
 class FooterPage extends Component {
   renderUrl = () => {
-    const { isEdit, siteView, siteEdit } = this.props;
+    const { isEdit } = this.props;
     if (isEdit) {
-      if (siteEdit.url) {
-        return <FontAwesomeIcon icon={faFacebookF} color="white" size="2x" />;
-      }
-    } else if (siteView.url) {
+      return <FontAwesomeIcon icon={faFacebookF} color="white" size="2x" />;
+    } else {
       return <FontAwesomeIcon icon={faFacebookF} color="white" size="2x" />;
     }
     return <></>;
   };
 
   renderInstagram = () => {
-    const { isEdit, siteView, siteEdit } = this.props;
+    const { isEdit } = this.props;
     if (isEdit) {
-      if (siteEdit && siteEdit.instagram) {
-        return <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />;
-      }
-    } else if (siteView && siteView.instagram) {
+      return <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />;
+    } else {
       return <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />;
     }
     return <></>;
   };
 
   renderYoutube = () => {
-    const { isEdit, siteView, siteEdit } = this.props;
+    const { isEdit } = this.props;
     if (isEdit) {
-      if (siteEdit && siteEdit.youtube) {
-        return <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />;
-      }
-    } else if (siteView && siteView.youtube) {
+      return <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />;
+    } else {
       return <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />;
     }
     return <></>;
   };
 
-  renderEmail = () => {
-    const { isEdit, siteView, siteEdit } = this.props;
-    if (isEdit) {
-      if (siteEdit && siteEdit.email) {
-        return <FontAwesomeIcon icon={faMailchimp} color="white" size="2x" />;
-      }
-    } else if (siteView && siteView.email) {
-      return <FontAwesomeIcon icon={faMailchimp} color="white" size="2x" />;
-    }
-    return <></>;
-  };
-
   renderWhatsapp = () => {
-    const { isEdit, siteView, siteEdit } = this.props;
+    const { isEdit } = this.props;
     if (isEdit) {
-      if (siteEdit && siteEdit.whatsapp) {
-        return <FontAwesomeIcon icon={faWhatsapp} color="white" size="2x" />;
-      }
-    } else if (siteView && siteView.whatsapp) {
+      return <FontAwesomeIcon icon={faWhatsapp} color="white" size="2x" />;
+    } else {
       return <FontAwesomeIcon icon={faWhatsapp} color="white" size="2x" />;
     }
     return <></>;
@@ -81,7 +61,10 @@ class FooterPage extends Component {
       titleView,
       bodyView,
       siteEdit,
-      siteView
+      siteView,
+      youtube,
+      instagram,
+      whatsapp
     } = this.props;
     return (
       <Grid container direction="row" className={styles.footer}>
@@ -107,40 +90,56 @@ class FooterPage extends Component {
             xs={12}
             style={{ marginTop: "4rem" }}
           >
-            <Grid item>
-              <IconButton
-                aria-label=""
-                color="primary"
-                href={
-                  isEdit ? siteEdit && siteEdit.url : siteView && siteView.url
-                }
-              >
-                {this.renderUrl()}
-              </IconButton>
-            </Grid>
-            <Grid item>
-              <IconButton
-                aria-label=""
-                color="primary"
-                href={
-                  isEdit
-                    ? siteEdit && siteEdit.instagram
-                    : siteView && siteView.instagram
-                }
-              >
-                {this.renderInstagram()}
-              </IconButton>
-            </Grid>
-
-            <Grid item>
-              <IconButton
-                aria-label=""
-                color="primary"
-                href={isEdit ? siteEdit.youtube : siteView.youtube}
-              >
-                {this.renderYoutube()}
-              </IconButton>
-            </Grid>
+            {(siteEdit && siteEdit.url) || (siteView && siteView.url) ? (
+              <Grid item>
+                <IconButton
+                  aria-label=""
+                  color="primary"
+                  href={
+                    isEdit ? siteEdit && siteEdit.url : siteView && siteView.url
+                  }
+                >
+                  {this.renderUrl()}
+                </IconButton>
+              </Grid>
+            ) : null}
+            {(instagram && instagram) || (siteView && siteView.instagram) ? (
+              <Grid item>
+                <IconButton
+                  aria-label=""
+                  color="primary"
+                  href={
+                    isEdit
+                      ? siteEdit && siteEdit.instagram
+                      : siteView && siteView.instagram
+                  }
+                >
+                  {this.renderInstagram()}
+                </IconButton>
+              </Grid>
+            ) : null}
+            {(siteView && siteView.youtube) || (youtube && youtube) ? (
+              <Grid item>
+                <IconButton
+                  aria-label=""
+                  color="primary"
+                  href={isEdit ? siteEdit.youtube : siteView.youtube}
+                >
+                  {this.renderYoutube()}
+                </IconButton>
+              </Grid>
+            ) : null}
+            {(siteView && siteView.whatsapp) || (whatsapp && whatsapp) ? (
+              <Grid item>
+                <IconButton
+                  aria-label=""
+                  color="primary"
+                  href={isEdit ? siteEdit.whatsapp : siteView.whatsapp}
+                >
+                  {this.renderWhatsapp()}
+                </IconButton>
+              </Grid>
+            ) : null}
           </Grid>
         </Grid>
         <Grid item sm={4} xs={12} className={styles.content}>
@@ -227,7 +226,10 @@ const mapStateToProps = state => ({
   titleEdit: state.site.titleEdit,
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
+  youtube: state.site.youtube,
+  instagram: state.site.instagram,
+  whatsapp: state.site.whatsapp
 });
 
 export default connect(mapStateToProps, null)(FooterPage);

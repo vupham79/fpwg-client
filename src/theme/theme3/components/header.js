@@ -29,9 +29,13 @@ const useStyles = theme => ({
   },
   info: {
     fontSize: "1rem",
-    padding: "0 0.4rem",
     color: "white",
-    marginTop: "0.3rem"
+    paddingTop: "0.4rem"
+  },
+  infoContent: {
+    color: "white",
+    padding: "0.1rem 0.9rem",
+    fontSize: "1rem"
   },
   contact: {
     position: "absolute"
@@ -40,9 +44,7 @@ const useStyles = theme => ({
     borderRadius: "0.4rem",
     padding: "0 0.2rem"
   },
-  icon: {
-    maxHeight: "2rem"
-  },
+  icon: {},
   navItem: {
     [theme.breakpoints.up("md")]: {
       position: "absolute",
@@ -191,60 +193,40 @@ class Header extends Component {
   };
 
   renderUrl = () => {
-    const { isEdit, siteView, siteEdit } = this.props;
+    const { isEdit } = this.props;
     if (isEdit) {
-      if (siteEdit.url) {
-        return <FontAwesomeIcon icon={faFacebookF} color="white" size="1x" />;
-      }
-    } else if (siteView.url) {
+      return <FontAwesomeIcon icon={faFacebookF} color="white" size="1x" />;
+    } else {
       return <FontAwesomeIcon icon={faFacebookF} color="white" size="1x" />;
     }
     return <></>;
   };
 
   renderInstagram = () => {
-    const { isEdit, siteView, siteEdit } = this.props;
+    const { isEdit } = this.props;
     if (isEdit) {
-      if (siteEdit && siteEdit.instagram) {
-        return <FontAwesomeIcon icon={faInstagram} color="white" size="1x" />;
-      }
-    } else if (siteView && siteView.instagram) {
+      return <FontAwesomeIcon icon={faInstagram} color="white" size="1x" />;
+    } else {
       return <FontAwesomeIcon icon={faInstagram} color="white" size="1x" />;
     }
     return <></>;
   };
 
   renderYoutube = () => {
-    const { isEdit, siteView, siteEdit } = this.props;
+    const { isEdit } = this.props;
     if (isEdit) {
-      if (siteEdit && siteEdit.youtube) {
-        return <FontAwesomeIcon icon={faYoutube} color="white" size="1x" />;
-      }
-    } else if (siteView && siteView.youtube) {
+      return <FontAwesomeIcon icon={faYoutube} color="white" size="1x" />;
+    } else {
       return <FontAwesomeIcon icon={faYoutube} color="white" size="1x" />;
     }
     return <></>;
   };
 
-  renderEmail = () => {
-    const { isEdit, siteView, siteEdit } = this.props;
-    if (isEdit) {
-      if (siteEdit && siteEdit.email) {
-        return <FontAwesomeIcon icon={faMailchimp} color="white" size="1x" />;
-      }
-    } else if (siteView && siteView.email) {
-      return <FontAwesomeIcon icon={faMailchimp} color="white" size="1x" />;
-    }
-    return <></>;
-  };
-
   renderWhatsapp = () => {
-    const { isEdit, siteView, siteEdit } = this.props;
+    const { isEdit } = this.props;
     if (isEdit) {
-      if (siteEdit && siteEdit.whatsapp) {
-        return <FontAwesomeIcon icon={faWhatsapp} color="white" size="1x" />;
-      }
-    } else if (siteView && siteView.whatsapp) {
+      return <FontAwesomeIcon icon={faWhatsapp} color="white" size="1x" />;
+    } else {
       return <FontAwesomeIcon icon={faWhatsapp} color="white" size="1x" />;
     }
     return <></>;
@@ -406,7 +388,11 @@ class Header extends Component {
       titleView,
       classes,
       bodyEdit,
-      bodyView
+      bodyView,
+      youtube,
+      instagram,
+      whatsapp,
+      phone
     } = this.props;
 
     const infoStyle = {
@@ -435,7 +421,7 @@ class Header extends Component {
           alignItems="flex-end"
           justify="flex-end"
           className={classes.contact}
-          style={{ padding: "0.5rem" }}
+          style={{ padding: "1rem" }}
         >
           {isEdit
             ? siteEdit &&
@@ -443,7 +429,7 @@ class Header extends Component {
                 <Grid
                   item
                   sm={6}
-                  className={classes.info}
+                  className={classes.infoContent}
                   style={{ ...infoStyle }}
                 >
                   {siteEdit.address}
@@ -454,22 +440,22 @@ class Header extends Component {
                 <Grid
                   item
                   sm={6}
-                  className={classes.info}
+                  className={classes.infoContent}
                   style={{ ...infoStyle }}
                 >
                   {siteView.address}
                 </Grid>
               )}
           {isEdit
-            ? siteEdit &&
-              siteEdit.phone && (
+            ? phone &&
+              phone && (
                 <Grid
                   item
                   sm={6}
-                  className={classes.info}
+                  className={classes.infoContent}
                   style={{ ...infoStyle }}
                 >
-                  {siteEdit.phone}
+                  {phone}
                 </Grid>
               )
             : siteView &&
@@ -477,7 +463,7 @@ class Header extends Component {
                 <Grid
                   item
                   sm={6}
-                  className={classes.info}
+                  className={classes.infoContent}
                   style={{ ...infoStyle }}
                 >
                   {siteView.phone}
@@ -493,10 +479,9 @@ class Header extends Component {
             className={classes.info}
           >
             {(siteEdit && siteEdit.url) || (siteView && siteView.url) ? (
-              <Grid className={classes.gridIcon} item style={{ ...infoStyle }}>
+              <Grid item style={{ ...infoStyle }}>
                 <IconButton
                   className={classes.icon}
-                  aria-label=""
                   color="primary"
                   href={
                     isEdit ? siteEdit && siteEdit.url : siteView && siteView.url
@@ -506,54 +491,38 @@ class Header extends Component {
                 </IconButton>
               </Grid>
             ) : null}
-
-            {(siteEdit && siteEdit.youtube) ||
-            (siteView && siteView.youtube) ? (
-              <Grid className={classes.gridIcon} item style={{ ...infoStyle }}>
+            {(siteView && siteView.instagram) || (instagram && instagram) ? (
+              <Grid item style={{ ...infoStyle }}>
                 <IconButton
                   className={classes.icon}
-                  aria-label=""
                   color="primary"
                   href={
                     isEdit
-                      ? siteEdit && siteEdit.youtube
-                      : siteView && siteView.youtube
+                      ? siteEdit && siteEdit.instagram
+                      : siteView && siteView.instagram
                   }
+                >
+                  {this.renderInstagram()}
+                </IconButton>
+              </Grid>
+            ) : null}
+            {(siteView && siteView.youtube) || (youtube && youtube) ? (
+              <Grid item style={{ ...infoStyle }}>
+                <IconButton
+                  className={classes.icon}
+                  color="primary"
+                  href={isEdit ? siteEdit.youtube : siteView.youtube}
                 >
                   {this.renderYoutube()}
                 </IconButton>
               </Grid>
             ) : null}
-
-            {(siteEdit && siteEdit.email) || (siteView && siteView.email) ? (
-              <Grid className={classes.gridIcon} item style={{ ...infoStyle }}>
+            {(siteView && siteView.whatsapp) || (whatsapp && whatsapp) ? (
+              <Grid item style={{ ...infoStyle }}>
                 <IconButton
                   className={classes.icon}
-                  aria-label=""
                   color="primary"
-                  href={
-                    isEdit
-                      ? siteEdit && siteEdit.email
-                      : siteView && siteView.email
-                  }
-                >
-                  {this.renderEmail()}
-                </IconButton>
-              </Grid>
-            ) : null}
-
-            {(siteEdit && siteEdit.whatsapp) ||
-            (siteView && siteView.whatsapp) ? (
-              <Grid className={classes.gridIcon} item style={{ ...infoStyle }}>
-                <IconButton
-                  className={classes.icon}
-                  aria-label=""
-                  color="primary"
-                  href={
-                    isEdit
-                      ? siteEdit && siteEdit.whatsapp
-                      : siteView && siteView.whatsapp
-                  }
+                  href={isEdit ? siteEdit.whatsapp : siteView.whatsapp}
                 >
                   {this.renderWhatsapp()}
                 </IconButton>
@@ -586,7 +555,11 @@ const mapStateToProps = state => ({
   bodyView: state.site.bodyView,
   navItemIsActive: state.site.navItemIsActive,
   newLogo: state.site.newLogo,
-  newCover: state.site.newCover
+  newCover: state.site.newCover,
+  youtube: state.site.youtube,
+  instagram: state.site.instagram,
+  whatsapp: state.site.whatsapp,
+  phone: state.site.phone
 });
 
 const mapDispatchToProps = dispatch => ({
