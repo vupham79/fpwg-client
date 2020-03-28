@@ -27,14 +27,6 @@ const useStyles = theme => ({
   }
 });
 
-const imgStyles = {
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-  backgroundRepeat: "no-repeat",
-  width: "100%",
-  height: "100%"
-};
-
 class GalleryComponent extends React.Component {
   state = {
     img: "",

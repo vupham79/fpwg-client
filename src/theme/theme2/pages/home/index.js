@@ -27,10 +27,9 @@ class PreHomePage extends Component {
     }
   }
   setDataToSite = async () => {
-    const { getDataByPageNumber, isEdit, siteView, siteEdit } = this.props;
-
+    const { getDataByPageNumber, isEdit, siteView } = this.props;
     if (!isEdit) {
-      const data = await getDataByPageNumber({
+      await getDataByPageNumber({
         sitePath: siteView.sitePath,
         page: "home"
       });

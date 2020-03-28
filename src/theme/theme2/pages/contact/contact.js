@@ -1,10 +1,10 @@
-import { Box, Divider, Grid, Typography, withStyles } from "@material-ui/core";
+import { Divider, Grid, Typography, withStyles } from "@material-ui/core";
+import AddLocationIcon from "@material-ui/icons/AddLocation";
+import EmailIcon from "@material-ui/icons/Email";
+import LocalPhoneIcon from "@material-ui/icons/LocalPhone";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./contact.module.css";
-import AddLocationIcon from "@material-ui/icons/AddLocation";
-import LocalPhoneIcon from "@material-ui/icons/LocalPhone";
-import EmailIcon from "@material-ui/icons/Email";
 const useStyle = theme => ({
   root: {
     padding: "5rem 0"
@@ -66,8 +66,10 @@ class ContactPage extends React.Component {
                 {isEdit
                   ? siteEdit && siteEdit.address
                     ? siteEdit.address
-                    : "This information current are not have to show."
-                  : siteView && siteView.address}
+                    : "Currently no data"
+                  : siteView && siteView.address
+                  ? siteView.address
+                  : "Currently no data"}
               </Typography>
             </Grid>
           </Grid>
@@ -93,10 +95,10 @@ class ContactPage extends React.Component {
                 {isEdit
                   ? phone && phone
                     ? phone
-                    : "This information current are not have to show."
+                    : "Currently no data"
                   : siteView && siteView.phone
                   ? siteView.phone
-                  : "This information current are not have to show."}
+                  : "Currently no data"}
               </Typography>
             </Grid>
           </Grid>
@@ -122,10 +124,10 @@ class ContactPage extends React.Component {
                 {isEdit
                   ? email && email
                     ? email
-                    : "This information current are not have to show."
+                    : "Currently no data"
                   : siteView && siteView.mail
                   ? siteView.email
-                  : "This information current are not have to show."}
+                  : "Currently no data"}
               </Typography>
             </Grid>
           </Grid>

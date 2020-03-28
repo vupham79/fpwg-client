@@ -1,7 +1,6 @@
 import {
   faFacebookF,
   faInstagram,
-  faMailchimp,
   faWhatsapp,
   faYoutube
 } from "@fortawesome/free-brands-svg-icons";
@@ -20,7 +19,6 @@ class FooterPage extends Component {
     } else {
       return <FontAwesomeIcon icon={faFacebookF} color="white" size="2x" />;
     }
-    return <></>;
   };
 
   renderInstagram = () => {
@@ -30,7 +28,6 @@ class FooterPage extends Component {
     } else {
       return <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />;
     }
-    return <></>;
   };
 
   renderYoutube = () => {
@@ -40,7 +37,6 @@ class FooterPage extends Component {
     } else {
       return <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />;
     }
-    return <></>;
   };
 
   renderWhatsapp = () => {
@@ -50,7 +46,6 @@ class FooterPage extends Component {
     } else {
       return <FontAwesomeIcon icon={faWhatsapp} color="white" size="2x" />;
     }
-    return <></>;
   };
 
   render() {

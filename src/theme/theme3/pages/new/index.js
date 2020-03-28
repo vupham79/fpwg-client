@@ -26,11 +26,9 @@ class PreNewPage extends Component {
   setDataToSite = async () => {
     const {
       getDataByPageNumber,
-      setPostToSiteEdit,
       setPostToSiteView,
       isEdit,
-      siteView,
-      siteEdit
+      siteView
     } = this.props;
 
     if (!isEdit) {

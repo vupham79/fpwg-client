@@ -85,8 +85,7 @@ class EventComponent extends React.Component {
       titleView,
       bodyEdit,
       bodyView,
-      homeList,
-      pageCountView
+      homeList
     } = this.props;
 
     const useStyles = () => ({

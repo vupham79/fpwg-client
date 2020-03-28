@@ -8,7 +8,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { Add, Cancel } from "@material-ui/icons";
+import { Cancel } from "@material-ui/icons";
 import ColorThief from "color-thief";
 import onecolor from "onecolor";
 import React from "react";

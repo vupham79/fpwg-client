@@ -69,7 +69,7 @@ class BannerComponent extends React.Component {
   };
 
   renderNewCoversCarouselWithTitle = () => {
-    const { isEdit, newCover, siteView, siteEdit } = this.props;
+    const { isEdit, newCover, siteView } = this.props;
     if (isEdit) {
       if (newCover && newCover.length > 0) {
         return newCover.map((cover, index) => {
