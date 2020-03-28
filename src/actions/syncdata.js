@@ -2,7 +2,6 @@ import axios from "../utils/axios";
 import toastr from "toastr";
 
 function revertSaveData(modDat) {
-
   if (!modDat.posts) {
     modDat.posts = [];
   }
@@ -12,34 +11,31 @@ function revertSaveData(modDat) {
   if (!modDat.events) {
     modDat.events = [];
   }
-
   for (let i = 0; i < modDat.homepage.length; i++) {
-    if (!modDat.homepage[i].filter.items)
-      modDat.homepage[i].filter.items = [];
+    if (!modDat.homepage[i].filter.items) modDat.homepage[i].filter.items = [];
     let type = modDat.homepage[i].original;
-
     for (
       let index = 0;
       index < modDat.homepage[i].filter.items.length;
       index++
     ) {
       if (type === "news") {
-        modDat.homepage[i].filter.items[index] = modDat.posts.filter(
-          function (pos) {
-            return pos._id === modDat.homepage[i].filter.items[index];
-          }
-        )[0];
+        modDat.homepage[i].filter.items[index] = modDat.posts.filter(function(
+          pos
+        ) {
+          return pos._id === modDat.homepage[i].filter.items[index];
+        })[0];
       }
       if (type === "event") {
-        modDat.homepage[i].filter.items[index] = modDat.events.filter(
-          function (pos) {
-            return pos._id === modDat.homepage[i].filter.items[index];
-          }
-        )[0];
+        modDat.homepage[i].filter.items[index] = modDat.events.filter(function(
+          pos
+        ) {
+          return pos._id === modDat.homepage[i].filter.items[index];
+        })[0];
       }
       if (type === "gallery") {
         modDat.homepage[i].filter.items[index] = modDat.galleries.filter(
-          function (pos) {
+          function(pos) {
             return pos._id === modDat.homepage[i].filter.items[index];
           }
         )[0];
@@ -48,9 +44,7 @@ function revertSaveData(modDat) {
     if (modDat.homepage[i].filter.items.length === 0)
       modDat.homepage[i].filter.items = null;
   }
-
   return modDat;
-
 }
 
 export function syncDataFromFB(pageId, dateFrom, dateTo) {
@@ -190,22 +184,26 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
         type: "CLOSE_LOADING"
       });
       if (data.status === 200) {
-        const site = data.data;
-        const titleStyle = {
-          fontFamily: site.fontTitle,
-          color: site.color
-        };
-        const bodyStyle = {
-          fontFamily: site.fontBody
-        };
-        dispatch({
-          type: "SET_SITE_EDIT",
-          payload: {
-            data: revertSaveData(site),
-            titleEdit: titleStyle,
-            bodyEdit: bodyStyle
+        if (data.data) {
+          if (!data.data.msg) {
+            const site = data.data;
+            const titleStyle = {
+              fontFamily: site.fontTitle,
+              color: site.color
+            };
+            const bodyStyle = {
+              fontFamily: site.fontBody
+            };
+            dispatch({
+              type: "SET_SITE_EDIT",
+              payload: {
+                data: revertSaveData(site),
+                titleEdit: titleStyle,
+                bodyEdit: bodyStyle
+              }
+            });
           }
-        });
+        }
         toastr.success("You fetch data from FB success.", "Success");
       } else {
         toastr.error(
@@ -219,13 +217,17 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
           type: "SET_LOGOUT"
         });
       }
+      if (error.response && error.response.data.msg) {
+        toastr.error(error.response.data.msg, "Error");
+      } else {
+        toastr.error(
+          "There are something wrong when fetch data from your FB",
+          "Error"
+        );
+      }
       dispatch({
         type: "CLOSE_LOADING"
       });
-      toastr.error(
-        "There are something wrong when fetch data from your FB",
-        "Error"
-      );
     }
   };
 }
@@ -298,8 +300,8 @@ export function setAutoSync(autoSync) {
         minute: autoSync.minute
           ? autoSync.minute
           : !autoSync.minute && !autoSync.hour && !autoSync.day
-            ? 2
-            : null,
+          ? 2
+          : null,
         hour: autoSync.hour ? autoSync.hour : null,
         day: autoSync.day ? autoSync.day : null
       }
