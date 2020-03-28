@@ -162,7 +162,7 @@ function handleChangeActive(id, site, setActiveNavItems, updateNavItemValue) {
   } else {
     index.isActive = true;
   }
-  setActiveNavItems(site);
+  setActiveNavItems(site.navItems);
 }
 
 function handleChangeNavName(id, site, newName, changeNavItemName) {
@@ -183,10 +183,7 @@ const GreenCheckbox = withStyles({
 
 const columns = ["Avatar", "Title", "Message", "Created At", "Show"];
 
-function PostsList({
-  filteredData,
-  setActivePost,
-}) {
+function PostsList({ filteredData, setActivePost }) {
   return (
     <>
       <TableContainer style={{ height: "70vh" }}>
@@ -205,15 +202,24 @@ function PostsList({
               filteredData.map((row, index) => (
                 <TableRow key={index}>
                   <TableCell>
-                    {(row.attachments && row.attachments.media_type === "photo" && (
-                      <Avatar src={row.attachments && row.attachments.images[0]} />
-                    )) ||
-                      (row.attachments && row.attachments.media_type === "video" && (
-                        <Avatar src={row.attachments && row.attachments.video} />
+                    {(row.attachments &&
+                      row.attachments.media_type === "photo" && (
+                        <Avatar
+                          src={row.attachments && row.attachments.images[0]}
+                        />
                       )) ||
-                      (row.attachments && row.attachments.media_type === "album" && (
-                        <Avatar src={row.attachments && row.attachments.images[0]} />
-                      ))}
+                      (row.attachments &&
+                        row.attachments.media_type === "video" && (
+                          <Avatar
+                            src={row.attachments && row.attachments.video}
+                          />
+                        )) ||
+                      (row.attachments &&
+                        row.attachments.media_type === "album" && (
+                          <Avatar
+                            src={row.attachments && row.attachments.images[0]}
+                          />
+                        ))}
                   </TableCell>
                   <TableCell align="center">{row.title}</TableCell>
                   <TableCell align="center">
@@ -306,7 +312,7 @@ class PagesEditorTab extends React.Component {
 
   handleSearch = keyword => {
     if (this.props.posts) {
-      let searchResult = this.props.posts.filter(function (pos) {
+      let searchResult = this.props.posts.filter(function(pos) {
         return pos.message.toLowerCase().includes(keyword.toLowerCase());
       });
       this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -320,7 +326,7 @@ class PagesEditorTab extends React.Component {
     site.navItems[oldIndex] = site.navItems[newIndex];
     site.navItems[newIndex] = temp;
     site.navItems.map((item, index) => (item.order = index + 1));
-    changeNavItems(site);
+    changeNavItems(site.navItems);
   };
 
   setActivePost = (post, status) => {
@@ -358,73 +364,73 @@ class PagesEditorTab extends React.Component {
         updateNavItemValue,
         changeNavItemName
       }) => (
-          <Grid container style={gridItem}>
-            <Grid
-              container
-              item
-              alignItems="center"
-              xs={10}
-              sm={12}
-              md={10}
-              style={{ padding: "0.2rem 0" }}
-            >
-              <Grid container justify="center" item xs={2} md={2} sm={12}>
-                <DragHandle />
-              </Grid>
-              <Grid item xs={10} md={10} sm={12}>
-                <TextField
-                  InputLabelProps={{
-                    classes: {
-                      focused: classes.focused
-                    }
-                  }}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle
-                    }
-                  }}
-                  size="small"
-                  style={{ backgroundColor: "white" }}
-                  fullWidth
-                  variant={"outlined"}
-                  value={value}
-                  onChange={e => {
-                    handleChangeNavName(
-                      item._id,
-                      site,
-                      e.target.value,
-                      changeNavItemName
-                    );
-                  }}
-                />
-              </Grid>
+        <Grid container style={gridItem}>
+          <Grid
+            container
+            item
+            alignItems="center"
+            xs={10}
+            sm={12}
+            md={10}
+            style={{ padding: "0.2rem 0" }}
+          >
+            <Grid container justify="center" item xs={2} md={2} sm={12}>
+              <DragHandle />
             </Grid>
-            <Grid container item justify="center" xs={2} sm={12} md={2}>
-              {item.original === "home" ? (
-                <></>
-              ) : (
-                  <IconButton
-                    style={viewButton}
-                    onClick={() =>
-                      handleChangeActive(
-                        item._id,
-                        site,
-                        setActiveNavItems,
-                        updateNavItemValue
-                      )
-                    }
-                  >
-                    {item.isActive && item.name !== "Home" ? (
-                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                    ) : (
-                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
-                      )}
-                  </IconButton>
-                )}
+            <Grid item xs={10} md={10} sm={12}>
+              <TextField
+                InputLabelProps={{
+                  classes: {
+                    focused: classes.focused
+                  }
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                    input: classes.inputTitle
+                  }
+                }}
+                size="small"
+                style={{ backgroundColor: "white" }}
+                fullWidth
+                variant={"outlined"}
+                value={value}
+                onChange={e => {
+                  handleChangeNavName(
+                    item._id,
+                    site,
+                    e.target.value,
+                    changeNavItemName
+                  );
+                }}
+              />
             </Grid>
           </Grid>
-        )
+          <Grid container item justify="center" xs={2} sm={12} md={2}>
+            {item.original === "home" ? (
+              <></>
+            ) : (
+              <IconButton
+                style={viewButton}
+                onClick={() =>
+                  handleChangeActive(
+                    item._id,
+                    site,
+                    setActiveNavItems,
+                    updateNavItemValue
+                  )
+                }
+              >
+                {item.isActive && item.name !== "Home" ? (
+                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                ) : (
+                  <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                )}
+              </IconButton>
+            )}
+          </Grid>
+        </Grid>
+      )
     );
 
     const SortableList = sortableContainer(
@@ -500,7 +506,7 @@ class PagesEditorTab extends React.Component {
                   InputProps={{
                     classes: {
                       notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle,
+                      input: classes.inputTitle
                     }
                   }}
                   id="searchBox"
@@ -508,7 +514,9 @@ class PagesEditorTab extends React.Component {
                   autoFocus={this.state.openDiag ? true : false}
                   className={classes.input}
                   onChange={() =>
-                    this.handleSearch(document.getElementById("searchBox").value)
+                    this.handleSearch(
+                      document.getElementById("searchBox").value
+                    )
                   }
                 />
                 <IconButton
@@ -516,7 +524,9 @@ class PagesEditorTab extends React.Component {
                   color="primary"
                   aria-label="search"
                   onClick={() =>
-                    this.handleSearch(document.getElementById("searchBox").value)
+                    this.handleSearch(
+                      document.getElementById("searchBox").value
+                    )
                   }
                 >
                   <SearchIcon />

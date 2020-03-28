@@ -46,11 +46,11 @@ class PreEditPage extends React.Component {
     if (!isLogin || !currentEditId) {
       return <Redirect to="/" />;
     } else if (siteEdit && isEdit) {
-      WebFont.load({
-        google: {
-          families: [siteEdit.fontTitle, siteEdit.fontBody]
-        }
-      });
+      // WebFont.load({
+      //   google: {
+      //     families: [siteEdit.fontTitle, siteEdit.fontBody]
+      //   }
+      // });
       return <EditPage />;
     } else return <></>;
   }

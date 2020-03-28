@@ -1,4 +1,3 @@
-import GoogleFontPicker from "@bit/take2.components.google-font-picker";
 import {
   Button,
   Divider,
@@ -9,7 +8,7 @@ import {
   Typography
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { Add, Cancel } from "@material-ui/icons";
+import { Cancel } from "@material-ui/icons";
 import ColorThief from "color-thief";
 import onecolor from "onecolor";
 import React from "react";
@@ -20,7 +19,6 @@ import {
   changeFontBody,
   changeFontTitle,
   changeSiteTitle,
-  changeTheme,
   removeCover,
   setColorPallete,
   setNewCover,
@@ -28,6 +26,7 @@ import {
   setShowCustomColor
 } from "../actions";
 import toastr from "./Toastr";
+import FontPickerComponent from "./fontPicker";
 
 const useStyles = theme => ({
   content: {
@@ -139,7 +138,7 @@ class DesignEditorTab extends React.Component {
     this.setState({
       logo: site.logo
     });
-    img.addEventListener("load", async function () {
+    img.addEventListener("load", async function() {
       const color = await colorThief.getPalette(img, 11);
       const colors = await color.map(rgb =>
         onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
@@ -154,30 +153,19 @@ class DesignEditorTab extends React.Component {
     });
   };
 
-  handleChangeTheme = event => {
-    const { changeTheme, themes, site } = this.props;
-    const theme = themes.find(e => e.id === event.target.value);
-    site.theme = theme;
-    this.setState({ changeTheme: true });
-    changeTheme(site);
-  };
-
   handleChangeFontTitle = font => {
-    const { site, changeFontTitle } = this.props;
-    site.fontTitle = font.family;
-    changeFontTitle(site);
+    const { changeFontTitle } = this.props;
+    changeFontTitle(font);
   };
 
   handleChangeColor = color => {
-    const { site, changeColor } = this.props;
-    site.color = color.hex;
-    changeColor(site);
+    const { changeColor } = this.props;
+    changeColor(color.hex);
   };
 
   handleChangeFontBody = font => {
-    const { site, changeFontBody } = this.props;
-    site.fontBody = font.family;
-    changeFontBody(site);
+    const { changeFontBody } = this.props;
+    changeFontBody(font);
   };
 
   handleBrowseLogo = async e => {
@@ -236,9 +224,8 @@ class DesignEditorTab extends React.Component {
   };
 
   handleChangeSiteTitle = e => {
-    const { site, changeSiteTitle } = this.props;
-    site.title = e.target.value;
-    changeSiteTitle(site);
+    const { changeSiteTitle } = this.props;
+    changeSiteTitle(e.target.value);
   };
 
   renderNewCovers = () => {
@@ -295,8 +282,7 @@ class DesignEditorTab extends React.Component {
       setShowCustomColor,
       classes,
       site,
-      colorPallete,
-      isChanged
+      colorPallete
     } = this.props;
 
     return (
@@ -367,13 +353,15 @@ class DesignEditorTab extends React.Component {
         />
         <Typography className={classes.title}>Font</Typography>
         <Grid container className={classes.sideBarBox} justify={"space-evenly"}>
-          <Grid item xs={12}>
-            <Typography className={classes.title2}>Title</Typography>
-            <GoogleFontPicker
+          <Grid container item xs={12} style={{ padding: "1rem 0" }}>
+            <Grid item xs={4} sm={6} md={3}>
+              <Typography className={classes.title2}>Title</Typography>
+            </Grid>
+            {/* <GoogleFontPicker
               searchable
               buttonColor={"default"}
               buttonVariant={"outlined"}
-              defaultFont={isChanged ? site.theme.fontTitle : site.fontTitle}
+              defaultFont={site.fontTitle}
               onFontSelected={this.handleChangeFontTitle}
               classes={{
                 pickerButton: classes.pickerButton,
@@ -381,21 +369,35 @@ class DesignEditorTab extends React.Component {
               }}
               children={<Add />}
               placement={"bottom"}
-            />
+            /> */}
+            <Grid item xs={8} sm={12} md={8}>
+              <FontPickerComponent
+                selectedValue={site.fontTitle}
+                onChange={this.handleChangeFontTitle}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Typography className={classes.title2}>Body</Typography>
-            <GoogleFontPicker
+          <Grid container item xs={12}>
+            <Grid item xs={4} sm={6} md={3}>
+              <Typography className={classes.title2}>Body</Typography>
+            </Grid>
+            {/* <GoogleFontPicker
               searchable
               buttonVariant={"outlined"}
-              defaultFont={isChanged ? site.theme.fontBody : site.fontBody}
+              defaultFont={site.fontBody}
               onFontSelected={this.handleChangeFontBody}
               classes={{
                 pickerButton: classes.pickerButton,
                 root: classes.fontPickerRoot
               }}
               placement={"bottom"}
-            />
+            /> */}
+            <Grid item xs={8} sm={12} md={8}>
+              <FontPickerComponent
+                selectedValue={site.fontBody}
+                onChange={this.handleChangeFontBody}
+              />
+            </Grid>
           </Grid>
         </Grid>
         <Divider
@@ -411,7 +413,7 @@ class DesignEditorTab extends React.Component {
               <CirclePicker
                 width={"fit-content"}
                 circleSize={20}
-                color={isChanged ? site.theme.mainColor : site.color}
+                color={site.color}
                 colors={colorPallete}
                 onChangeComplete={this.handleChangeColor}
               />
@@ -493,12 +495,11 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  changeTheme: site => dispatch(changeTheme(site)),
   changeColor: site => dispatch(changeColor(site)),
   changeFontTitle: site => dispatch(changeFontTitle(site)),
   changeFontBody: site => dispatch(changeFontBody(site)),
   setShowCustomColor: isShow => dispatch(setShowCustomColor(isShow)),
-  changeSiteTitle: site => dispatch(changeSiteTitle(site)),
+  changeSiteTitle: title => dispatch(changeSiteTitle(title)),
   setColorPallete: pallete => dispatch(setColorPallete(pallete)),
   setNewLogo: file => dispatch(setNewLogo(file)),
   setNewCover: file => dispatch(setNewCover(file)),
