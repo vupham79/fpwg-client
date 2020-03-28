@@ -294,9 +294,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -346,9 +346,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -399,9 +399,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -462,6 +462,15 @@ class HomepageEditorTab extends React.Component {
     // if (this.state.currentExpandType === "event" && this.props.site.events) {
     //   currentList = this.props.site.events;
     // }
+    let list = this.props.site.homepage;
+
+    for (let i = 0; i < list.length; i++) {
+      if (!list[i].filter.items) list[i].filter.items = [];
+      if (list[i].filter.items.length === 0) {
+        list[i].filter.items = null;
+        list[i].filter.type = "latest";
+      }
+    }
     this.props.setActiveHomeItems(this.props.site);
     this.handleOpenPostDialogue(false);
   };
@@ -506,7 +515,7 @@ class HomepageEditorTab extends React.Component {
         toastr.error("Maximum item selected");
       } else index.filter.items = [...index.filter.items, row];
     } else {
-      index.filter.items = index.filter.items.filter(function(post) {
+      index.filter.items = index.filter.items.filter(function (post) {
         return post._id !== row._id;
       });
     }
@@ -570,7 +579,7 @@ class HomepageEditorTab extends React.Component {
     if (this.state.currentExpandType === "news" && this.props.posts) {
       currentList = this.props.posts;
       if (currentList) {
-        searchResult = currentList.filter(function(pos) {
+        searchResult = currentList.filter(function (pos) {
           return pos.message
             ? pos.message.toLowerCase().includes(keyword.toLowerCase())
             : null;
@@ -586,7 +595,7 @@ class HomepageEditorTab extends React.Component {
     if (this.state.currentExpandType === "event" && this.props.site.events) {
       currentList = this.props.site.events;
       if (currentList) {
-        searchResult = currentList.filter(function(pos) {
+        searchResult = currentList.filter(function (pos) {
           return pos.name.toLowerCase().includes(keyword.toLowerCase());
         });
       }
@@ -854,7 +863,7 @@ class HomepageEditorTab extends React.Component {
         <ExpansionPanel
           expanded={
             this.state.currentExpandItemId === item._id &&
-            this.state.isExpanding
+              this.state.isExpanding
               ? true
               : false
           }
