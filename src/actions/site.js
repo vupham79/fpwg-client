@@ -457,7 +457,9 @@ export function saveDesignSite({
         dispatch({
           type: "SET_ISCHANGED_FALSE"
         });
-        toastr.error(error.response.data.msg, "Error");
+        if (error.response.data.msg) {
+          toastr.error(error.response.data.msg, "Error");
+        } else toastr.error(error.response.data.error, "Error");
       } else {
         dispatch({
           type: "SET_ISCHANGED_FALSE"
