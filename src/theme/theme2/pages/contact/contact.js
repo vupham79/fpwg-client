@@ -146,7 +146,7 @@ class ContactPage extends React.Component {
                   ? email
                     ? email
                     : "Currently no data"
-                  : siteView && siteView.mail
+                  : siteView && siteView.email
                   ? siteView.email
                   : "Currently no data"}
               </Typography>
