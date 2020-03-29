@@ -14,13 +14,17 @@ import {
   Select,
   Tab,
   Tabs,
-  withStyles
+  withStyles,
+  Tooltip,
+  Zoom,
+  Button
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateNavItemValue } from "../../../actions";
 import Link from "../../../component/link";
 import BannerComponent from "../../component/bannerComponent";
+import { faExclamation } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = theme => ({
   root: {
@@ -62,6 +66,7 @@ const useStyles = theme => ({
   },
   dropdownSelect: {
     display: "block",
+    paddingTop: "2rem",
     [theme.breakpoints.up("md")]: {
       display: "none"
     }
@@ -78,6 +83,9 @@ const useStyles = theme => ({
       top: "-2rem"
       // minWidth: "20vh",
     }
+  },
+  tooltip: {
+    border: "2px solid orange"
   }
 });
 
@@ -264,6 +272,25 @@ class Header extends Component {
     );
   };
 
+  renderTooltip = () => {
+    const { navItemIsActive, isEdit, classes } = this.props;
+    return (
+      <Grid>
+        {!navItemIsActive && !isEdit && (
+          <Tooltip
+            className={[classes.tooltip, "blink"]}
+            TransitionComponent={Zoom}
+            title="This page is currently inactive"
+          >
+            <Button>
+              <FontAwesomeIcon color={"orange"} icon={faExclamation} />
+            </Button>
+          </Tooltip>
+        )}
+      </Grid>
+    );
+  };
+
   hangleChangeSelect = event => {
     const { updateNavItemValue, isEdit } = this.props;
     if (isEdit) {
@@ -307,13 +334,13 @@ class Header extends Component {
           {isEdit
             ? siteEdit &&
               siteEdit.navItems &&
-              siteEdit.navItems.map((item, index) =>
-                item.isActive ? (
+              siteEdit.navItems
+                .filter(item => item.isActive)
+                .map((item, index) => (
                   <MenuItem key={index} value={index}>
                     {item.name}
                   </MenuItem>
-                ) : null
-              )
+                ))
             : siteView &&
               siteView.navItems &&
               siteView.navItems.map((item, index) =>
@@ -321,13 +348,14 @@ class Header extends Component {
                   <MenuItem
                     key={index}
                     value={index}
-                    style={{ color: "white" }}
+                    style={{ color: "white", padding: "0" }}
                   >
                     <Link
                       to={`/${siteView.sitePath}/${item.original}`}
                       style={{
                         width: "-webkit-fill-available",
-                        color: "black"
+                        color: "black",
+                        padding: "0.5rem"
                       }}
                     >
                       {item.name}
@@ -423,9 +451,9 @@ class Header extends Component {
               siteEdit.address && (
                 <Grid
                   item
-                  sm={6}
+                  sm={12}
                   className={classes.infoContent}
-                  style={{ ...infoStyle }}
+                  style={{ ...infoStyle, marginBottom: "0.5rem" }}
                 >
                   {siteEdit.address}
                 </Grid>
@@ -434,9 +462,9 @@ class Header extends Component {
               siteView.address && (
                 <Grid
                   item
-                  sm={6}
+                  sm={12}
                   className={classes.infoContent}
-                  style={{ ...infoStyle }}
+                  style={{ ...infoStyle, marginBottom: "0.5rem" }}
                 >
                   {siteView.address}
                 </Grid>
@@ -464,7 +492,6 @@ class Header extends Component {
                   {siteView.phone}
                 </Grid>
               )}
-
           <Grid
             container
             direction="row"
@@ -523,6 +550,9 @@ class Header extends Component {
                 </IconButton>
               </Grid>
             ) : null}
+          </Grid>
+          <Grid item sm={6} style={{ backgroundColor: "black" }}>
+            {this.renderTooltip()}
           </Grid>
         </Grid>
         <Grid
