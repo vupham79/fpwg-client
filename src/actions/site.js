@@ -770,6 +770,15 @@ export function changeSitePhone(phone) {
   };
 }
 
+export function changeSiteAddress(address) {
+  return dispatch => {
+    dispatch({
+      type: "CHANGE_SITE_ADDRESS",
+      payload: address
+    });
+  };
+}
+
 export function setEditOn() {
   return dispatch => {
     dispatch({
