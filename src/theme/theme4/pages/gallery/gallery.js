@@ -105,7 +105,6 @@ class Theme1Gallery extends React.Component {
       }
     });
     const classes = useStyles();
-
     return (
       <Grid
         container
@@ -129,10 +128,8 @@ class Theme1Gallery extends React.Component {
               fromHome={fromHome}
             />
           ) : (
-              <p style={classes.changableBody2}>
-                Currently no photo available.
-              </p>
-            )
+            <p style={classes.changableBody2}>Currently no photo available.</p>
+          )
         ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
           <GalleryComponent
             galleries={fromHome && homeList ? homeList : siteView.galleries}
@@ -140,10 +137,8 @@ class Theme1Gallery extends React.Component {
             fromHome={fromHome}
           />
         ) : (
-              <p style={classes.changableBody2}>
-                Currently no photo available.
-              </p>
-            )}
+          <p style={classes.changableBody2}>Currently no photo available.</p>
+        )}
       </Grid>
     );
   }
