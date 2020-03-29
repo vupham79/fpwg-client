@@ -130,12 +130,12 @@ class ClippedDrawer extends React.Component {
                 aria-describedby="alert-dialog-description"
               >
                 <DialogTitle id="alert-dialog-title">
-                  Changed Unsave
+                  Unsaved Changes
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    Something in your site have been changed. Do you want to go
-                    back before save things you have been changed?
+                    You haven't save changes. Confirm if you want to discard all
+                    changes and back to homepage?
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>

@@ -82,7 +82,9 @@ const useStyles = theme => ({
     border: "1px solid #0071a1",
     borderRadius: 5,
     color: "#0071a1",
-    fontSize: 11
+    fontSize: 11,
+    backgroundColor: "rgb(255, 255, 255)",
+    boxShadow: "none"
   },
   logoButton: {
     marginTop: 5,
