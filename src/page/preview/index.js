@@ -3,17 +3,11 @@ import { themes as themesConstant } from "../../constant/constant";
 import { connect } from "react-redux";
 import { Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import WebFont from "webfontloader";
 class PreViewSite extends React.Component {
   render() {
     const { siteEdit } = this.props;
 
     if (siteEdit) {
-      // WebFont.load({
-      //   google: {
-      //     families: [siteEdit.fontTitle, siteEdit.fontBody]
-      //   }
-      // });
       return themesConstant.find(e => e.id === siteEdit.theme.id).component;
     }
     return (

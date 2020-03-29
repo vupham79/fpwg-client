@@ -398,7 +398,7 @@ export function saveDesignSite({
         }
       }
 
-      const dataPost = await axios({
+      await axios({
         method: "PATCH",
         url: "post/activePosts",
         data: {

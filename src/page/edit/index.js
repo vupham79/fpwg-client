@@ -5,11 +5,10 @@ import {
   getAllPost,
   getAllThemes,
   getSiteById,
-  setSiteEdit,
-  setEditOn
+  setEditOn,
+  setSiteEdit
 } from "../../actions";
 import EditPage from "./edit";
-import WebFont from "webfontloader";
 class PreEditPage extends React.Component {
   componentDidMount() {
     const { isLogin, setEditOn, currentEditId } = this.props;
@@ -46,11 +45,6 @@ class PreEditPage extends React.Component {
     if (!isLogin || !currentEditId) {
       return <Redirect to="/" />;
     } else if (siteEdit && isEdit) {
-      // WebFont.load({
-      //   google: {
-      //     families: [siteEdit.fontTitle, siteEdit.fontBody]
-      //   }
-      // });
       return <EditPage />;
     } else return <></>;
   }

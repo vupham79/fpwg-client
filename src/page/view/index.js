@@ -11,9 +11,7 @@ import {
 } from "../../actions";
 import { Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
-import WebFont from "webfontloader";
 import Helmet from "react-helmet";
-
 class PreViewSite extends React.Component {
   state = {
     sitepath: "",
@@ -64,11 +62,6 @@ class PreViewSite extends React.Component {
             </Grid>
           );
         }
-        // WebFont.load({
-        //   google: {
-        //     families: [siteView.fontTitle, siteView.fontBody]
-        //   }
-        // });
         return (
           <>
             <Helmet>

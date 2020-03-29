@@ -9,11 +9,16 @@ import HomePage from "./home";
 
 class PreHomePage extends Component {
   componentDidMount() {
-    const { site, isEdit, setNavItemActive, setNavItemInActive } = this.props;
+    const {
+      siteView,
+      isEdit,
+      setNavItemActive,
+      setNavItemInActive
+    } = this.props;
     this.setDataToSite();
-    if (site && !isEdit) {
-      if (site.navItems) {
-        const navItem = site.navItems.find(e => e.original === "home");
+    if (siteView && !isEdit) {
+      if (siteView.navItems) {
+        const navItem = siteView.navItems.find(e => e.original === "home");
         if (!navItem.isActive) {
           setNavItemInActive();
         } else {
@@ -26,11 +31,10 @@ class PreHomePage extends Component {
     const { getDataByPageNumber, isEdit, siteView } = this.props;
 
     if (!isEdit) {
-      const data = await getDataByPageNumber({
+      await getDataByPageNumber({
         sitePath: siteView.sitePath,
         page: "home"
       });
-      // data && setGalleriesToSiteView(data);
     }
   };
   render() {
@@ -40,7 +44,6 @@ class PreHomePage extends Component {
 
 const mapStateToProps = state => ({
   siteView: state.site.siteView,
-  siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit
 });
 

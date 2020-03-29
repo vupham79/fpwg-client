@@ -5,7 +5,6 @@ import { setNavItemActive, setNavItemInActive } from "../../../../actions";
 class PreAboutPageT4 extends Component {
   componentDidMount() {
     const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
-
     if (site && !isEdit) {
       if (site.navItems) {
         const navItem = site.navItems.find(e => e.original === "about");
@@ -24,8 +23,7 @@ class PreAboutPageT4 extends Component {
 
 const mapStateToProps = state => ({
   site: state.site.siteView,
-  isEdit: state.site.isEdit,
-  sitepath: state.path.currentSitepath
+  isEdit: state.site.isEdit
 });
 
 const mapDispatchToProps = dispatch => ({

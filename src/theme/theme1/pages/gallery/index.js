@@ -10,11 +10,16 @@ import { connect } from "react-redux";
 
 class PreGalleryPageT1 extends Component {
   componentDidMount() {
-    const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
+    const {
+      siteView,
+      setNavItemActive,
+      setNavItemInActive,
+      isEdit
+    } = this.props;
     this.setDataToSite();
-    if (site && !isEdit) {
-      if (site.navItems) {
-        const navItem = site.navItems.find(e => e.original === "gallery");
+    if (siteView && !isEdit) {
+      if (siteView.navItems) {
+        const navItem = siteView.navItems.find(e => e.original === "gallery");
         if (!navItem.isActive) {
           setNavItemInActive();
         } else {

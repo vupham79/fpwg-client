@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Select, MenuItem, FormControl, withStyles } from "@material-ui/core";
+import { Select, MenuItem, withStyles } from "@material-ui/core";
 
 const listFont = [
   "Arial",

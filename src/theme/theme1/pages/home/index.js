@@ -4,16 +4,21 @@ import { connect } from "react-redux";
 import {
   setNavItemActive,
   setNavItemInActive,
-  getDataByPageNumber,
+  getDataByPageNumber
 } from "../../../../actions";
 
 class PreHomePageT1 extends Component {
   componentDidMount() {
-    const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
+    const {
+      siteView,
+      setNavItemActive,
+      setNavItemInActive,
+      isEdit
+    } = this.props;
     this.setDataToSite();
-    if (site && !isEdit) {
-      if (site.navItems) {
-        const navItem = site.navItems.find(e => e.original === "home");
+    if (siteView && !isEdit) {
+      if (siteView.navItems) {
+        const navItem = siteView.navItems.find(e => e.original === "home");
         if (!navItem.isActive) {
           setNavItemInActive();
         } else {
@@ -24,7 +29,6 @@ class PreHomePageT1 extends Component {
   }
   setDataToSite = async () => {
     const { getDataByPageNumber, isEdit, siteView } = this.props;
-
     if (!isEdit) {
       await getDataByPageNumber({
         sitePath: siteView.sitePath,
@@ -39,7 +43,6 @@ class PreHomePageT1 extends Component {
 
 const mapStateToProps = state => ({
   siteView: state.site.siteView,
-  siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit
 });
 
@@ -47,7 +50,7 @@ const mapDispatchToProps = dispatch => ({
   setNavItemInActive: () => dispatch(setNavItemInActive()),
   setNavItemActive: () => dispatch(setNavItemActive()),
   getDataByPageNumber: ({ sitePath, page, siteId }) =>
-    dispatch(getDataByPageNumber({ sitePath, page, siteId })),
+    dispatch(getDataByPageNumber({ sitePath, page, siteId }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreHomePageT1);

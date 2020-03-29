@@ -10,11 +10,16 @@ import EventPage from "./event";
 
 class PreEventPage extends Component {
   componentDidMount() {
-    const { site, isEdit, setNavItemActive, setNavItemInActive } = this.props;
+    const {
+      siteView,
+      isEdit,
+      setNavItemActive,
+      setNavItemInActive
+    } = this.props;
     this.setDataToSite();
-    if (site && !isEdit) {
-      if (site.navItems) {
-        const navItem = site.navItems.find(e => e.original === "event");
+    if (siteView && !isEdit) {
+      if (siteView.navItems) {
+        const navItem = siteView.navItems.find(e => e.original === "event");
         if (!navItem.isActive) {
           setNavItemInActive();
         } else {

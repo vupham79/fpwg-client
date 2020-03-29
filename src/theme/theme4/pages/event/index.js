@@ -10,11 +10,16 @@ import { connect } from "react-redux";
 
 class PreEventPageT4 extends Component {
   componentDidMount() {
-    const { site, setNavItemActive, setNavItemInActive, isEdit } = this.props;
+    const {
+      siteView,
+      setNavItemActive,
+      setNavItemInActive,
+      isEdit
+    } = this.props;
     this.setDataToSite();
-    if (site && !isEdit) {
-      if (site.navItems) {
-        const navItem = site.navItems.find(e => e.original === "event");
+    if (siteView && !isEdit) {
+      if (siteView.navItems) {
+        const navItem = siteView.navItems.find(e => e.original === "event");
         if (!navItem.isActive) {
           setNavItemInActive();
         } else {

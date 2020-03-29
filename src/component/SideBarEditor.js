@@ -7,27 +7,27 @@ import {
   AppBar,
   Button,
   CssBaseline,
-  Drawer,
-  Grid,
   Dialog,
-  DialogTitle,
+  DialogActions,
   DialogContent,
   DialogContentText,
-  DialogActions
+  DialogTitle,
+  Drawer,
+  Grid
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
-import { saveDesignSite, updateTabValue, setIsChanged } from "../actions";
+import { withRouter } from "react-router-dom";
+import { saveDesignSite, setIsChanged, updateTabValue } from "../actions";
 import AccordionButton from "../theme/component/mainComponent";
 import DesignTab from "./DesignEditorTab";
+import HomepageEditorTab from "./HomepageEditorTab";
 import Link from "./link";
 import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
 import SyncEditorTab from "./SyncEditorTab";
 import ThemeEditorTab from "./ThemeEditorTab";
-import HomepageEditorTab from "./HomepageEditorTab";
-import { Redirect, withRouter } from "react-router-dom";
 
 const useStyles = theme => ({
   root: {

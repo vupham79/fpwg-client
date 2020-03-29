@@ -100,22 +100,20 @@ class Header extends Component {
               {isEdit
                 ? this.renderTabItems()
                 : siteView.navItems &&
-                siteView.navItems.map((item, index) =>
-                  item.isActive ? (
-                    <Grid item xs={2} sm={1} key={index}>
-                      <Link
-                        style={tabStylesView}
-                        to={`/${siteView.sitePath}/${item.name}`}
-                      >
-                        {item.name}
-                      </Link>
-                    </Grid>
-                  ) : null
-                )}
+                  siteView.navItems.map((item, index) =>
+                    item.isActive ? (
+                      <Grid item xs={2} sm={1} key={index}>
+                        <Link
+                          style={tabStylesView}
+                          to={`/${siteView.sitePath}/${item.name}`}
+                        >
+                          {item.name}
+                        </Link>
+                      </Grid>
+                    ) : null
+                  )}
             </Grid>
           </Grid>
-
-
         </Container>
       </AppBar>
     );
