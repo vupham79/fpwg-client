@@ -362,7 +362,8 @@ export function saveDesignSite({
   whatsapp,
   email,
   phone,
-  posts
+  posts,
+  address
 }) {
   return async dispatch => {
     dispatch({
@@ -425,7 +426,8 @@ export function saveDesignSite({
           phone,
           homepage: saveDat,
           logoURL,
-          coverURL
+          coverURL,
+          address
         }
       });
       dispatch({

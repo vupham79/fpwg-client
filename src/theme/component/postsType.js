@@ -602,7 +602,8 @@ class PostTypeComponent extends React.Component {
                       />
                     ))
               )
-            : posts
+            : fromHome
+            ? posts
                 .slice(0, 5)
                 .map(
                   (post, index) =>
@@ -666,7 +667,70 @@ class PostTypeComponent extends React.Component {
                           siteInfo={siteInfo}
                         />
                       ))
-                )}
+                )
+            : posts.map(
+                (post, index) =>
+                  (post.attachments &&
+                    post.attachments.media_type === "photo" &&
+                    post.isActive && (
+                      <TypePhoto
+                        key={index}
+                        post={post}
+                        style={style}
+                        dark={this.props.darkMode}
+                        openDialog={this.handleOpen}
+                        siteInfo={siteInfo}
+                      />
+                    )) ||
+                  (post.attachments &&
+                    post.attachments.media_type === "album" &&
+                    post.isActive && (
+                      <TypeAlbum
+                        key={index}
+                        post={post}
+                        style={style}
+                        dark={this.props.darkMode}
+                        openDialog={this.handleOpen}
+                        siteInfo={siteInfo}
+                      />
+                    )) ||
+                  (post.attachments &&
+                    post.attachments.media_type === "video" &&
+                    post.isActive &&
+                    (theme && theme === "theme3" ? (
+                      index < 5 && (
+                        <TypeVideo
+                          key={index}
+                          post={post}
+                          style={style}
+                          dark={this.props.darkMode}
+                          openDialog={this.handleOpenVideo}
+                          siteInfo={siteInfo}
+                        />
+                      )
+                    ) : (
+                      <TypeVideo
+                        key={index}
+                        post={post}
+                        style={style}
+                        dark={this.props.darkMode}
+                        openDialog={this.handleOpenVideo}
+                        siteInfo={siteInfo}
+                      />
+                    ))) ||
+                  (post.attachments &&
+                    post.attachments.images.length === 0 &&
+                    post.isActive && (
+                      <TypeMessage
+                        key={index}
+                        post={post}
+                        style={style}
+                        dark={this.props.darkMode}
+                        openDialog={this.handleOpenVideo}
+                        siteInfo={siteInfo}
+                      />
+                    ))
+              )}
           <Dialog
             open={this.state.open}
             onClose={this.handleClose}
@@ -756,6 +820,7 @@ class PostTypeComponent extends React.Component {
               </Grid>
             )
           : pageCountView > 1 &&
+            theme !== "theme3" &&
             !fromHome && (
               <Grid container justify="center" style={{ marginTop: "5rem" }}>
                 <Pagination

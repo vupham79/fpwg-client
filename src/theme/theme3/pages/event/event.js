@@ -1,4 +1,10 @@
-import { Button, Divider, Grid, Typography } from "@material-ui/core";
+import {
+  Button,
+  Divider,
+  Grid,
+  Typography,
+  makeStyles
+} from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import EventComponent from "../../../component/eventComponent";
@@ -12,7 +18,14 @@ const imgStyles = {
   height: "100%"
 };
 
+const btnStyle = makeStyles({
+  btn: {
+    backgroundColor: "white"
+  }
+});
+
 function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
+  const classes = btnStyle();
   return (
     <>
       <Grid
@@ -54,7 +67,7 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
           </Grid>
         </Grid>
         <Grid item container sm={12} className={styles.contain_event}>
-          <Grid className={styles.event}>
+          <Grid className={classes.root}>
             <Typography className={styles.event_content}>
               {isEdit ? siteEdit.title : siteView.title} does not have any
               upcoming events.
@@ -80,7 +93,16 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
 }
 class EventPage extends React.Component {
   render() {
-    const { titleEdit, titleView, isEdit, siteEdit, siteView, fromHome, homeTitle, homeList } = this.props;
+    const {
+      titleEdit,
+      titleView,
+      isEdit,
+      siteEdit,
+      siteView,
+      fromHome,
+      homeTitle,
+      homeList
+    } = this.props;
     return (
       <Grid
         container
@@ -98,39 +120,34 @@ class EventPage extends React.Component {
           >
             {fromHome ? homeTitle : "Events"}
           </Typography>
-          <Divider variant="fullWidth" />
         </Grid>
         {isEdit ? (
-          siteEdit && siteEdit.events ? (
+          (homeList && homeList) || (siteEdit && siteEdit.events) ? (
             <EventComponent
-              homeList={
-                (fromHome && homeList) ? homeList : (isEdit ? siteEdit.events : siteView.events)
-              }
+              homeList={fromHome && homeList ? homeList : siteEdit.events}
             />
           ) : (
-              <EmptyEvent
-                siteEdit={siteEdit}
-                titleEdit={titleEdit}
-                siteView={siteView}
-                titleView={titleView}
-                isEdit={isEdit}
-              />
-            )
-        ) : siteView && siteView.events ? (
+            <EmptyEvent
+              siteEdit={siteEdit}
+              titleEdit={titleEdit}
+              siteView={siteView}
+              titleView={titleView}
+              isEdit={isEdit}
+            />
+          )
+        ) : (homeList && homeList) || (siteView && siteView.events) ? (
           <EventComponent
-            homeList={
-              (fromHome && homeList) ? homeList : (isEdit ? siteEdit.events : siteView.events)
-            }
+            homeList={fromHome && homeList ? homeList : siteView.events}
           />
         ) : (
-              <EmptyEvent
-                siteEdit={siteEdit}
-                titleEdit={titleEdit}
-                siteView={siteView}
-                titleView={titleView}
-                isEdit={isEdit}
-              />
-            )}
+          <EmptyEvent
+            siteEdit={siteEdit}
+            titleEdit={titleEdit}
+            siteView={siteView}
+            titleView={titleView}
+            isEdit={isEdit}
+          />
+        )}
       </Grid>
     );
   }

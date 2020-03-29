@@ -7,7 +7,11 @@ import {
   Marker,
   withScriptjs
 } from "react-google-maps";
-import { faPhone, faAddressBook, faMailBulk } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPhone,
+  faAddressBook,
+  faMailBulk
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class Theme1Contact extends React.Component {
@@ -23,7 +27,8 @@ class Theme1Contact extends React.Component {
       phone,
       email,
       fromHome,
-      homeTitle
+      homeTitle,
+      address
     } = this.props;
 
     const useStyles = theme => ({
@@ -143,7 +148,10 @@ class Theme1Contact extends React.Component {
       <Grid container justify="center" style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "C"}</span>{fromHome ? homeTitle.substring(1) : "ONTACT"}
+            <span style={classes.changableFirst}>
+              {fromHome ? homeTitle.charAt(0) : "C"}
+            </span>
+            {fromHome ? homeTitle.substring(1) : "ONTACT"}
           </p>
         </Grid>
 
@@ -181,11 +189,11 @@ class Theme1Contact extends React.Component {
           </Grid>
         )}
 
-        {isEdit && siteEdit.address && siteEdit.adress !== "" && (
+        {isEdit && address && address !== "" && (
           <Grid container item xs={12}>
             <p style={classes.changableBody2}>
               <FontAwesomeIcon icon={faAddressBook} size="2x" />
-              {" " + siteEdit.address}
+              {" " + address}
             </p>
           </Grid>
         )}
@@ -220,11 +228,14 @@ class Theme1Contact extends React.Component {
               Currently setting up our location.
             </p>
           )}
-          {!isEdit && !siteView.phone && !siteView.address && !siteView.email && (
-            <p style={classes.changableBody3}>
-              Currently setting up our location.
-            </p>
-          )}
+          {!isEdit &&
+            !siteView.phone &&
+            !siteView.address &&
+            !siteView.email && (
+              <p style={classes.changableBody3}>
+                Currently setting up our location.
+              </p>
+            )}
         </Grid>
       </Grid>
     );
@@ -240,7 +251,8 @@ const mapStateToProps = state => ({
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
   phone: state.site.phone,
-  email: state.site.email
+  email: state.site.email,
+  address: state.site.address
 });
 
 export default connect(mapStateToProps, null)(Theme1Contact);

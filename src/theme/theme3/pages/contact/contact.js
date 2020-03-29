@@ -31,7 +31,10 @@ class ContactPage extends React.Component {
       siteView,
       classes,
       fromHome,
-      homeTitle
+      homeTitle,
+      email,
+      phone,
+      address
     } = this.props;
 
     const MapWithAMarker = withScriptjs(
@@ -39,26 +42,22 @@ class ContactPage extends React.Component {
         <GoogleMap
           defaultZoom={15}
           defaultCenter={{
-            // lat: isEdit
-            //   ? parseFloat(siteEdit.latitude)
-            //   : parseFloat(siteView.latitude),
-            // lng: isEdit
-            //   ? parseFloat(siteEdit.longitude)
-            //   : parseFloat(siteView.longitude)
-            lat: 10.816929,
-            lng: 106.68859
+            lat: isEdit
+              ? parseFloat(siteEdit.latitude)
+              : parseFloat(siteView.latitude),
+            lng: isEdit
+              ? parseFloat(siteEdit.longitude)
+              : parseFloat(siteView.longitude)
           }}
         >
           <Marker
             position={{
-              // lat: isEdit
-              //   ? parseFloat(siteEdit.latitude)
-              //   : parseFloat(siteView.latitude),
-              // lng: isEdit
-              //   ? parseFloat(siteEdit.longitude)
-              //   : parseFloat(siteView.longitude)
-              lat: 10.819713,
-              lng: -106.691407
+              lat: isEdit
+                ? parseFloat(siteEdit.latitude)
+                : parseFloat(siteView.latitude),
+              lng: isEdit
+                ? parseFloat(siteEdit.longitude)
+                : parseFloat(siteView.longitude)
             }}
           />
         </GoogleMap>
@@ -82,8 +81,29 @@ class ContactPage extends React.Component {
           </Typography>
         </Grid>
         <Grid container spacing={2} item xs={12} justify="center">
-          <Grid container item xs={6} sm={6} md={3}>
-            <Grid item xs={12}>
+          <Grid
+            container
+            item
+            xs={12}
+            sm={6}
+            md={
+              (siteEdit.latitude && siteEdit.longitude) ||
+              (siteView.latitude && siteView.longitude)
+                ? 3
+                : 6
+            }
+            style={{ padding: "0 2rem" }}
+          >
+            <Grid
+              item
+              xs={10}
+              sm={
+                (siteEdit.latitude && siteEdit.longitude) ||
+                (siteView.latitude && siteView.longitude)
+                  ? 12
+                  : 6
+              }
+            >
               <Grid item xs={12}>
                 <Typography
                   variant="h5"
@@ -98,7 +118,7 @@ class ContactPage extends React.Component {
                   Address
                 </Typography>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={10}>
                 <Typography
                   variant="body2"
                   style={{
@@ -109,14 +129,69 @@ class ContactPage extends React.Component {
                   }}
                 >
                   {isEdit
-                    ? siteEdit && siteEdit.address
-                      ? siteEdit.address
+                    ? address
+                      ? address
                       : "Curent no phone to address to show."
-                    : siteView && siteView.address}
+                    : siteView && siteView.address
+                    ? siteView.address
+                    : "Curent no phone to address to show."}
                 </Typography>
               </Grid>
             </Grid>
-            <Grid item xs={12}>
+            <Grid
+              item
+              xs={10}
+              sm={
+                (siteEdit.latitude && siteEdit.longitude) ||
+                (siteView.latitude && siteView.longitude)
+                  ? 12
+                  : 6
+              }
+            >
+              <Grid item xs={12}>
+                <Typography
+                  variant="h5"
+                  className={classes.title}
+                  style={{
+                    color: "white",
+                    fontFamily: isEdit
+                      ? bodyEdit.fontFamily
+                      : bodyView.fontFamily
+                  }}
+                >
+                  Email
+                </Typography>
+              </Grid>
+              <Grid item xs={10}>
+                <Typography
+                  variant="body2"
+                  style={{
+                    color: "white",
+                    fontFamily: isEdit
+                      ? bodyEdit.fontFamily
+                      : bodyView.fontFamily
+                  }}
+                >
+                  {isEdit
+                    ? email
+                      ? email
+                      : "Curent no Email to show."
+                    : siteView && siteView.email
+                    ? siteView.email
+                    : "Curent no Email to show."}
+                </Typography>
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              xs={10}
+              sm={
+                (siteEdit.latitude && siteEdit.longitude) ||
+                (siteView.latitude && siteView.longitude)
+                  ? 12
+                  : 6
+              }
+            >
               <Grid item xs={12}>
                 <Typography
                   variant="h5"
@@ -142,31 +217,42 @@ class ContactPage extends React.Component {
                   }}
                 >
                   {isEdit
-                    ? siteEdit && siteEdit.phone
-                      ? siteEdit.phone
+                    ? phone
+                      ? phone
                       : "Curent no phone to show."
-                    : siteView && siteView.phone}
+                    : siteView && siteView.phone
+                    ? siteView.phone
+                    : "Curent no phone to show."}
                 </Typography>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item md={7} sm={10} xs={10} className={classes.map}>
-            {isEdit ? (
-              <MapWithAMarker
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `15rem` }} />}
-                mapElement={<div style={{ height: `100%` }} />}
-              />
-            ) : (
-              <MapWithAMarker
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `15rem` }} />}
-                mapElement={<div style={{ height: `100%` }} />}
-              />
-            )}
-          </Grid>
+
+          {isEdit
+            ? siteEdit &&
+              siteEdit.latitude &&
+              siteEdit.longitude && (
+                <Grid item md={7} sm={10} xs={10} className={classes.map}>
+                  <MapWithAMarker
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `15rem` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                  />
+                </Grid>
+              )
+            : siteView &&
+              siteView.latitude &&
+              siteView.longitude && (
+                <Grid item md={7} sm={10} xs={10} className={classes.map}>
+                  <MapWithAMarker
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `15rem` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                  />
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );
@@ -181,7 +267,10 @@ const mapStateToProps = state => ({
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
   bodyView: state.site.bodyView,
-  profile: state.user.profile
+  profile: state.user.profile,
+  email: state.site.email,
+  address: state.site.address,
+  phone: state.site.phone
 });
 
 export default connect(

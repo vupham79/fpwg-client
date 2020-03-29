@@ -163,6 +163,30 @@ class GalleryComponent extends React.Component {
                       </CardActionArea>
                     </Grid>
                   ))
+              : !fromHome
+              ? galleries.map((item, index) => (
+                  <Grid
+                    item
+                    key={index}
+                    xs={12}
+                    sm={4}
+                    md={3}
+                    className={classes.gridItems}
+                  >
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.media}
+                        image={item && item._id && item._id.url}
+                        title="Gallery image"
+                        onClick={() =>
+                          this.handleOpenDialog(
+                            item && item._id && item._id.url
+                          )
+                        }
+                      />
+                    </CardActionArea>
+                  </Grid>
+                ))
               : galleries.map((item, index) => (
                   <Grid
                     item
@@ -175,10 +199,10 @@ class GalleryComponent extends React.Component {
                     <CardActionArea>
                       <CardMedia
                         className={classes.media}
-                        image={item && item._id.url}
+                        image={item && item.url && item.url}
                         title="Gallery image"
                         onClick={() =>
-                          this.handleOpenDialog(item && item._id.url)
+                          this.handleOpenDialog(item && item.url && item.url)
                         }
                       />
                     </CardActionArea>

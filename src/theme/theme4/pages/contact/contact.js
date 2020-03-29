@@ -21,7 +21,8 @@ class Theme1Contact extends React.Component {
       phone,
       email,
       fromHome,
-      homeTitle
+      homeTitle,
+      address
     } = this.props;
 
     const useStyles = theme => ({
@@ -32,7 +33,7 @@ class Theme1Contact extends React.Component {
         textAlign: "center",
         fontSize: 25,
         paddingBottom: 20,
-        textDecoration: "underline",
+        textDecoration: "underline"
       },
       changableBody: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
@@ -121,15 +122,31 @@ class Theme1Contact extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container style={{ backgroundColor: "#1a1919", paddingBottom: 50, minHeight: "60vh" }}>
+      <Grid
+        container
+        style={{
+          backgroundColor: "#1a1919",
+          paddingBottom: 50,
+          minHeight: "60vh"
+        }}
+      >
         <Grid item xs={12}>
-          <p style={classes.changableTitle}>{fromHome ? homeTitle : "CONTACT"}</p>
+          <p style={classes.changableTitle}>
+            {fromHome ? homeTitle : "CONTACT"}
+          </p>
         </Grid>
 
         {isEdit && phone && (
           <Grid container item xs={12} justify="center" alignItems="center">
             <Grid item xs={12}>
-              <p style={classes.changableBody3}><FontAwesomeIcon icon={faPhoneAlt} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Phone</p>
+              <p style={classes.changableBody3}>
+                <FontAwesomeIcon
+                  icon={faPhoneAlt}
+                  color={isEdit ? titleEdit.color : titleView.color}
+                  size="1x"
+                />{" "}
+                Phone
+              </p>
             </Grid>
             <Grid item xs={12}>
               <p style={classes.changableBody2}>{phone}</p>
@@ -139,7 +156,14 @@ class Theme1Contact extends React.Component {
         {!isEdit && siteView.phone && (
           <Grid container item xs={12} justify="center" alignItems="center">
             <Grid item xs={12}>
-              <p style={classes.changableBody3}><FontAwesomeIcon icon={faPhoneAlt} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Phone</p>
+              <p style={classes.changableBody3}>
+                <FontAwesomeIcon
+                  icon={faPhoneAlt}
+                  color={isEdit ? titleEdit.color : titleView.color}
+                  size="1x"
+                />{" "}
+                Phone
+              </p>
             </Grid>
             <Grid item xs={12}>
               <p style={classes.changableBody2}>{siteView.phone}</p>
@@ -150,7 +174,14 @@ class Theme1Contact extends React.Component {
         {isEdit && email && email !== "" && (
           <Grid container item xs={12} justify="center" alignItems="center">
             <Grid item xs={12}>
-              <p style={classes.changableBody3}><FontAwesomeIcon icon={faNewspaper} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Email</p>
+              <p style={classes.changableBody3}>
+                <FontAwesomeIcon
+                  icon={faNewspaper}
+                  color={isEdit ? titleEdit.color : titleView.color}
+                  size="1x"
+                />{" "}
+                Email
+              </p>
             </Grid>
             <Grid item xs={12}>
               <p style={classes.changableBody2}>{email}</p>
@@ -160,7 +191,14 @@ class Theme1Contact extends React.Component {
         {!isEdit && siteView.email && siteView.email !== "" && (
           <Grid container item xs={12} justify="center" alignItems="center">
             <Grid item xs={12}>
-              <p style={classes.changableBody3}><FontAwesomeIcon icon={faNewspaper} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Email</p>
+              <p style={classes.changableBody3}>
+                <FontAwesomeIcon
+                  icon={faNewspaper}
+                  color={isEdit ? titleEdit.color : titleView.color}
+                  size="1x"
+                />{" "}
+                Email
+              </p>
             </Grid>
             <Grid item xs={12}>
               <p style={classes.changableBody2}>{siteView.email}</p>
@@ -168,20 +206,34 @@ class Theme1Contact extends React.Component {
           </Grid>
         )}
 
-        {isEdit && siteEdit.address && siteEdit.adress !== "" && (
+        {isEdit && address && address !== "" && (
           <Grid container item xs={12} justify="center" alignItems="center">
             <Grid item xs={12}>
-              <p style={classes.changableBody3}><FontAwesomeIcon icon={faSearchLocation} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Location</p>
+              <p style={classes.changableBody3}>
+                <FontAwesomeIcon
+                  icon={faSearchLocation}
+                  color={isEdit ? titleEdit.color : titleView.color}
+                  size="1x"
+                />{" "}
+                Location
+              </p>
             </Grid>
             <Grid item xs={12}>
-              <p style={classes.changableBody2}>{siteEdit.address}</p>
+              <p style={classes.changableBody2}>{address}</p>
             </Grid>
           </Grid>
         )}
         {!isEdit && siteView.address && siteView.adress !== "" && (
           <Grid container item xs={12} justify="center" alignItems="center">
             <Grid item xs={12}>
-              <p style={classes.changableBody3}><FontAwesomeIcon icon={faSearchLocation} color={isEdit ? titleEdit.color : titleView.color} size="1x" /> Location</p>
+              <p style={classes.changableBody3}>
+                <FontAwesomeIcon
+                  icon={faSearchLocation}
+                  color={isEdit ? titleEdit.color : titleView.color}
+                  size="1x"
+                />{" "}
+                Location
+              </p>
             </Grid>
             <Grid item xs={12}>
               <p style={classes.changableBody2}>{siteView.address}</p>
@@ -190,14 +242,11 @@ class Theme1Contact extends React.Component {
         )}
 
         <Grid item xs={12}>
-          {isEdit &&
-            !phone &&
-            !siteEdit.address &&
-            !email && (
-              <p style={classes.changableBody4}>
-                Currently setting up our location.
-              </p>
-            )}
+          {isEdit && !phone && !siteEdit.address && !email && (
+            <p style={classes.changableBody4}>
+              Currently setting up our location.
+            </p>
+          )}
           {!isEdit &&
             !siteView.phone &&
             !siteView.address &&
@@ -221,7 +270,8 @@ const mapStateToProps = state => ({
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
   phone: state.site.phone,
-  email: state.site.email
+  email: state.site.email,
+  address: state.site.address
 });
 
 export default connect(mapStateToProps, null)(Theme1Contact);

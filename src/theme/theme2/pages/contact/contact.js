@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import styles from "./contact.module.css";
 const useStyle = theme => ({
   root: {
-    padding: "5rem 0"
+    paddingTop: "5rem"
   }
 });
 
@@ -19,13 +19,13 @@ class ContactPage extends React.Component {
       bodyEdit,
       titleView,
       bodyView,
-      siteEdit,
       siteView,
       fromHome,
       homeTitle,
       classes,
       phone,
-      email
+      email,
+      address
     } = this.props;
 
     return (
@@ -43,19 +43,26 @@ class ContactPage extends React.Component {
           </Typography>
           <Divider variant="fullWidth" />
         </Grid>
-        <Grid item xs={8} container justify="center" className={classes.root}>
-          <Grid container item xs={10} justify="flex-start">
-            <Grid item xs={1}>
+        <Grid item xs={11} container justify="center" className={classes.root}>
+          <Grid
+            container
+            item
+            xs={12}
+            sm={10}
+            md={7}
+            justify="flex-start"
+            alignItems="center"
+          >
+            <Grid item xs={2} sm={1} md={1}>
               <AddLocationIcon fontSize="large" />
             </Grid>
-            <Grid item xs={5}>
-              <Typography
-                variant="h5"
+            <Grid item xs={4} md={5}>
+              <p
                 className={styles.child_title}
                 style={isEdit ? bodyEdit : bodyView}
               >
                 Address
-              </Typography>
+              </p>
             </Grid>
             <Grid item xs={6}>
               <Typography
@@ -64,8 +71,8 @@ class ContactPage extends React.Component {
                 style={isEdit ? bodyEdit : bodyView}
               >
                 {isEdit
-                  ? siteEdit && siteEdit.address
-                    ? siteEdit.address
+                  ? address
+                    ? address
                     : "Currently no data"
                   : siteView && siteView.address
                   ? siteView.address
@@ -73,18 +80,25 @@ class ContactPage extends React.Component {
               </Typography>
             </Grid>
           </Grid>
-          <Grid container item xs={10} justify="flex-start">
-            <Grid item xs={1}>
+          <Grid
+            container
+            item
+            xs={12}
+            sm={10}
+            md={7}
+            justify="flex-start"
+            alignItems="center"
+          >
+            <Grid item xs={2} sm={1} md={1}>
               <LocalPhoneIcon fontSize="large" />
             </Grid>
-            <Grid item xs={5}>
-              <Typography
-                variant="h5"
+            <Grid item xs={4} md={5}>
+              <p
                 className={styles.child_title}
                 style={isEdit ? bodyEdit : bodyView}
               >
                 Phone
-              </Typography>
+              </p>
             </Grid>
             <Grid item xs={6}>
               <Typography
@@ -93,7 +107,7 @@ class ContactPage extends React.Component {
                 style={isEdit ? bodyEdit : bodyView}
               >
                 {isEdit
-                  ? phone && phone
+                  ? phone
                     ? phone
                     : "Currently no data"
                   : siteView && siteView.phone
@@ -102,18 +116,25 @@ class ContactPage extends React.Component {
               </Typography>
             </Grid>
           </Grid>
-          <Grid container item xs={10} justify="flex-start">
-            <Grid item xs={1}>
+          <Grid
+            container
+            item
+            xs={12}
+            sm={10}
+            md={7}
+            justify="flex-start"
+            alignItems="center"
+          >
+            <Grid item xs={2} sm={1} md={1}>
               <EmailIcon fontSize="large" />
             </Grid>
-            <Grid item xs={5}>
-              <Typography
-                variant="h5"
+            <Grid item xs={4} md={5}>
+              <p
                 className={styles.child_title}
                 style={isEdit ? bodyEdit : bodyView}
               >
                 Email
-              </Typography>
+              </p>
             </Grid>
             <Grid item xs={6}>
               <Typography
@@ -122,7 +143,7 @@ class ContactPage extends React.Component {
                 style={isEdit ? bodyEdit : bodyView}
               >
                 {isEdit
-                  ? email && email
+                  ? email
                     ? email
                     : "Currently no data"
                   : siteView && siteView.mail
@@ -147,7 +168,8 @@ const mapStateToProps = state => ({
   bodyView: state.site.bodyView,
   profile: state.user.profile,
   phone: state.site.phone,
-  email: state.site.email
+  email: state.site.email,
+  address: state.site.address
 });
 
 export default connect(
