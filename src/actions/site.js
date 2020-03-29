@@ -552,11 +552,11 @@ export function setCurrentEditId(id) {
   };
 }
 
-export function setActiveNavItems(navItems) {
+export function setActiveNavItems(site) {
   return dispatch => {
     dispatch({
       type: "SET_ACTIVE_NAV_ITEMS",
-      payload: navItems
+      payload: site
     });
   };
 }

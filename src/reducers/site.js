@@ -239,8 +239,7 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         siteEdit: {
-          ...state.siteEdit,
-          navItems: action.payload
+          ...action.payload
         },
         isChanged: true
       };
