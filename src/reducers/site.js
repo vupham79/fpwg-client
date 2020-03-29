@@ -22,7 +22,8 @@ const defaultState = {
   sitepath: null,
   phone: null,
   email: null,
-  whatsapp: null
+  whatsapp: null,
+  address: null
 };
 
 let index;
@@ -114,7 +115,7 @@ const SiteReducer = (state = defaultState, action) => {
           color: action.payload
         },
         titleEdit: {
-          fontFamily: state.siteEdit.fontFamily,
+          fontFamily: state.siteEdit.fontTitle,
           color: action.payload
         },
         isChanged: true
@@ -128,7 +129,7 @@ const SiteReducer = (state = defaultState, action) => {
         },
         titleEdit: {
           fontFamily: action.payload,
-          color: state.siteEdit.fontTitle
+          color: state.siteEdit.color
         },
         isChanged: true
       };
@@ -212,7 +213,8 @@ const SiteReducer = (state = defaultState, action) => {
         whatsapp: action.payload.data.whatsapp,
         phone: action.payload.data.phone,
         instagram: action.payload.data.instagram,
-        email: action.payload.data.email
+        email: action.payload.data.email,
+        address: action.payload.data.address
       };
     case "SET_SITE_VIEW":
       return {
@@ -450,6 +452,12 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         isChanged: false
+      };
+    case "CHANGE_SITE_ADDRESS":
+      return {
+        ...state,
+        address: action.payload,
+        isChanged: true
       };
     default:
       return state;

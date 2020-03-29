@@ -3,7 +3,11 @@ import {
   faWhatsapp,
   faYoutube
 } from "@fortawesome/free-brands-svg-icons";
-import { faEnvelope, faPhoneAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEnvelope,
+  faPhoneAlt,
+  faMapMarkedAlt
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Divider, Grid, TextField, Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -16,7 +20,8 @@ import {
   changeSitePhone,
   changeSiteSitepath,
   changeSiteWhatsapp,
-  changeSiteYoutube
+  changeSiteYoutube,
+  changeSiteAddress
 } from "../actions";
 import toastr from "./Toastr";
 const useStyles = theme => ({
@@ -133,6 +138,11 @@ class SettingEditorTab extends React.Component {
     changeSiteSitepath(e.target.value);
   };
 
+  handleChangeAddress = e => {
+    const { changeSiteAddress } = this.props;
+    changeSiteAddress(e.target.value);
+  };
+
   handleBrowseFavicon = async e => {
     e.preventDefault();
     const file = e.target.files[0];
@@ -170,7 +180,8 @@ class SettingEditorTab extends React.Component {
       instagram,
       phone,
       whatsapp,
-      sitepath
+      sitepath,
+      address
     } = this.props;
     return (
       <div style={{ padding: 10 }}>
@@ -357,6 +368,46 @@ class SettingEditorTab extends React.Component {
             style={{ marginTop: 10 }}
           >
             <Grid container item xs={2} sm={12} md={2}>
+              <FontAwesomeIcon
+                icon={faMapMarkedAlt}
+                size="2x"
+                color="#555d66"
+              />
+            </Grid>
+            <Grid item xs={10} sm={12} md={10}>
+              <TextField
+                variant="outlined"
+                label="Address"
+                size="small"
+                inputMode={"Address"}
+                fullWidth
+                value={address ? address : ""}
+                onChange={e => this.handleChangeAddress(e)}
+                InputLabelProps={{
+                  classes: {
+                    focused: classes.focused,
+                    root: classes.inputLabel
+                  }
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                    input: classes.inputTitle
+                  }
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid
+            container
+            item
+            direction="row"
+            alignItems="center"
+            justify="center"
+            xs={12}
+            style={{ marginTop: 10 }}
+          >
+            <Grid container item xs={2} sm={12} md={2}>
               <FontAwesomeIcon icon={faEnvelope} size="2x" color="#555d66" />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
@@ -431,7 +482,8 @@ const mapStateToProps = state => ({
   instagram: state.site.instagram,
   phone: state.site.phone,
   whatsapp: state.site.whatsapp,
-  sitepath: state.site.sitepath
+  sitepath: state.site.sitepath,
+  address: state.site.address
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -440,7 +492,8 @@ const mapDispatchToProps = dispatch => ({
   changeSitePhone: phone => dispatch(changeSitePhone(phone)),
   changeSiteSitepath: sitepath => dispatch(changeSiteSitepath(sitepath)),
   changeSiteWhatsapp: whatsapp => dispatch(changeSiteWhatsapp(whatsapp)),
-  changeSiteYoutube: youtube => dispatch(changeSiteYoutube(youtube))
+  changeSiteYoutube: youtube => dispatch(changeSiteYoutube(youtube)),
+  changeSiteAddress: address => dispatch(changeSiteAddress(address))
 });
 
 export default connect(

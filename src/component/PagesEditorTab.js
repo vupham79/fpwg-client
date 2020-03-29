@@ -160,7 +160,7 @@ function handleChangeActive(id, site, setActiveNavItems, updateNavItemValue) {
   } else {
     index.isActive = true;
   }
-  setActiveNavItems(site.navItems);
+  setActiveNavItems(site);
 }
 
 function handleChangeNavName(id, site, newName, changeNavItemName) {

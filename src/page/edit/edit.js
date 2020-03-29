@@ -6,6 +6,7 @@ import EditLayout from "../../layout/editor";
 class EditPage extends Component {
   render() {
     const { siteEdit } = this.props;
+    console.log(siteEdit);
     if (siteEdit) {
       const theme = siteEdit
         ? themesConstant.find(e => e.id === siteEdit.theme.id)
