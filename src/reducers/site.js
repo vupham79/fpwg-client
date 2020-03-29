@@ -107,53 +107,72 @@ const SiteReducer = (state = defaultState, action) => {
         data: [action.payload]
       };
     case "CHANGE_COLOR":
-      const color = {
-        fontFamily: action.payload.fontTitle,
-        color: action.payload.color
-      };
       return {
         ...state,
-        siteEdit: { ...action.payload },
-        titleEdit: { ...color }
+        siteEdit: {
+          ...state.siteEdit,
+          color: action.payload
+        },
+        titleEdit: {
+          fontFamily: state.siteEdit.fontFamily,
+          color: action.payload
+        },
+        isChanged: true
       };
     case "CHANGE_FONT_TITLE":
-      const fontTitle = {
-        fontFamily: action.payload.fontTitle,
-        color: action.payload.color
-      };
       return {
         ...state,
-        siteEdit: { ...action.payload },
-        titleEdit: { ...fontTitle }
+        siteEdit: {
+          ...state.siteEdit,
+          fontTitle: action.payload
+        },
+        titleEdit: {
+          fontFamily: action.payload,
+          color: state.siteEdit.fontTitle
+        },
+        isChanged: true
       };
     case "CHANGE_FONT_BODY":
-      const fontBody = {
-        fontFamily: action.payload.fontBody
-      };
       return {
         ...state,
-        siteEdit: { ...action.payload },
-        bodyEdit: { ...fontBody }
+        siteEdit: {
+          ...state.siteEdit,
+          fontBody: action.payload
+        },
+        bodyEdit: {
+          fontFamily: action.payload
+        },
+        isChanged: true
       };
     case "CHANGE_NAV_ITEMS":
       return {
         ...state,
-        siteEdit: { ...action.payload }
+        siteEdit: {
+          ...state.siteEdit,
+          navItems: action.payload
+        },
+        isChanged: true
       };
     case "CHANGE_HOME_ITEMS":
       return {
         ...state,
-        siteEdit: { ...action.payload }
+        siteEdit: { ...action.payload },
+        isChanged: true
       };
     case "CHANGE_THEME":
-      const newColor = {
-        fontFamily: action.payload.fontTitle,
-        color: action.payload.color
-      };
       return {
         ...state,
-        siteEdit: { ...action.payload },
-        titleEdit: { ...newColor },
+        siteEdit: {
+          ...state.siteEdit,
+          fontTitle: action.payload.fontTitle,
+          fontBody: action.payload.fontBody,
+          color: action.payload.mainColor,
+          theme: action.payload
+        },
+        titleEdit: {
+          fontFamily: action.payload.fontTitle,
+          color: action.payload.mainColor
+        },
         isChanged: true
       };
     case "SET_LOGOUT":
@@ -219,27 +238,38 @@ const SiteReducer = (state = defaultState, action) => {
     case "SET_ACTIVE_NAV_ITEMS":
       return {
         ...state,
-        siteEdit: { ...action.payload }
+        siteEdit: {
+          ...state.siteEdit,
+          navItems: action.payload
+        },
+        isChanged: true
       };
     case "CHANGE_SITE_TITLE":
       return {
         ...state,
-        siteEdit: { ...action.payload }
+        siteEdit: {
+          ...state.siteEdit,
+          title: action.payload
+        },
+        isChanged: true
       };
     case "CHANGE_SITE_LINKS":
       return {
         ...state,
-        siteEdit: { ...action.payload }
+        siteEdit: { ...action.payload },
+        isChanged: true
       };
     case "UPLOAD_LOGO":
       return {
         ...state,
-        siteEdit: { ...action.payload }
+        siteEdit: { ...state.siteEdit, logo: action.payload },
+        isChanged: true
       };
     case "UPLOAD_FAVICON":
       return {
         ...state,
-        siteEdit: { ...action.payload }
+        siteEdit: { ...action.payload },
+        isChanged: true
       };
     case "SET_COLOR_PALLETE":
       return {
@@ -259,13 +289,15 @@ const SiteReducer = (state = defaultState, action) => {
     case "SET_NEW_LOGO":
       return {
         ...state,
-        newLogo: action.payload
+        newLogo: action.payload,
+        isChanged: true
       };
     case "SET_NEW_COVER":
       let array = [...state.newCover, action.payload];
       return {
         ...state,
-        newCover: [...array]
+        newCover: [...array],
+        isChanged: true
       };
     case "SET_PREVIEW_MODE":
       return {
@@ -283,7 +315,8 @@ const SiteReducer = (state = defaultState, action) => {
       });
       return {
         ...state,
-        newCover: [...filter]
+        newCover: [...filter],
+        isChanged: true
       };
     case "CHANGE_NAV_ITEM_NAME":
       let navItems = [];
@@ -297,7 +330,8 @@ const SiteReducer = (state = defaultState, action) => {
         siteEdit: {
           ...state.siteEdit,
           navItems: [...navItems]
-        }
+        },
+        isChanged: true
       };
     case "CHANGE_SITE_ABOUT":
       return {
@@ -305,42 +339,50 @@ const SiteReducer = (state = defaultState, action) => {
         siteEdit: {
           ...state.siteEdit,
           about: action.payload
-        }
+        },
+        isChanged: true
       };
     case "CHANGE_HOME_ITEM_NAME":
       return {
         ...state,
-        siteEdit: { ...action.payload }
+        siteEdit: { ...action.payload },
+        isChanged: true
       };
     case "CHANGE_SITE_SITEPATH":
       return {
         ...state,
-        sitepath: action.payload
+        sitepath: action.payload,
+        isChanged: true
       };
     case "CHANGE_SITE_WHATSAPP":
       return {
         ...state,
-        whatsapp: action.payload
+        whatsapp: action.payload,
+        isChanged: true
       };
     case "CHANGE_SITE_INSTAGRAM":
       return {
         ...state,
-        instagram: action.payload
+        instagram: action.payload,
+        isChanged: true
       };
     case "CHANGE_SITE_YOUTUBE":
       return {
         ...state,
-        youtube: action.payload
+        youtube: action.payload,
+        isChanged: true
       };
     case "CHANGE_SITE_EMAIL":
       return {
         ...state,
-        email: action.payload
+        email: action.payload,
+        isChanged: true
       };
     case "CHANGE_SITE_PHONE":
       return {
         ...state,
-        phone: action.payload
+        phone: action.payload,
+        isChanged: true
       };
     case "SET_SITEVIEW_ABOUT":
       return {
@@ -402,7 +444,13 @@ const SiteReducer = (state = defaultState, action) => {
             ...action.payload,
             convertAutoSyncValue
           }
-        }
+        },
+        isChanged: true
+      };
+    case "SET_ISCHANGED_FALSE":
+      return {
+        ...state,
+        isChanged: false
       };
     default:
       return state;

@@ -2,9 +2,7 @@ import toastr from "toastr";
 import axios from "../utils/axios";
 import { firebase } from "../utils/firebase";
 
-
 function revertSaveData(modDat) {
-
   if (!modDat.posts) {
     modDat.posts = [];
   }
@@ -16,8 +14,7 @@ function revertSaveData(modDat) {
   }
 
   for (let i = 0; i < modDat.homepage.length; i++) {
-    if (!modDat.homepage[i].filter.items)
-      modDat.homepage[i].filter.items = [];
+    if (!modDat.homepage[i].filter.items) modDat.homepage[i].filter.items = [];
     let type = modDat.homepage[i].original;
 
     for (
@@ -26,22 +23,22 @@ function revertSaveData(modDat) {
       index++
     ) {
       if (type === "news") {
-        modDat.homepage[i].filter.items[index] = modDat.posts.filter(
-          function (pos) {
-            return pos._id === modDat.homepage[i].filter.items[index];
-          }
-        )[0];
+        modDat.homepage[i].filter.items[index] = modDat.posts.filter(function(
+          pos
+        ) {
+          return pos._id === modDat.homepage[i].filter.items[index];
+        })[0];
       }
       if (type === "event") {
-        modDat.homepage[i].filter.items[index] = modDat.events.filter(
-          function (pos) {
-            return pos._id === modDat.homepage[i].filter.items[index];
-          }
-        )[0];
+        modDat.homepage[i].filter.items[index] = modDat.events.filter(function(
+          pos
+        ) {
+          return pos._id === modDat.homepage[i].filter.items[index];
+        })[0];
       }
       if (type === "gallery") {
         modDat.homepage[i].filter.items[index] = modDat.galleries.filter(
-          function (pos) {
+          function(pos) {
             return pos._id === modDat.homepage[i].filter.items[index];
           }
         )[0];
@@ -52,7 +49,6 @@ function revertSaveData(modDat) {
   }
 
   return modDat;
-
 }
 
 export function getAllSites() {
@@ -311,38 +307,38 @@ export const publishSite = ({ siteId, siteName }) => {
   };
 };
 
-export function changeColor(site) {
+export function changeColor(color) {
   return dispatch => {
     dispatch({
       type: "CHANGE_COLOR",
-      payload: site
+      payload: color
     });
   };
 }
 
-export function changeFontTitle(site) {
+export function changeFontTitle(fontTitle) {
   return dispatch => {
     dispatch({
       type: "CHANGE_FONT_TITLE",
-      payload: site
+      payload: fontTitle
     });
   };
 }
 
-export function changeFontBody(site) {
+export function changeFontBody(fontBody) {
   return dispatch => {
     dispatch({
       type: "CHANGE_FONT_BODY",
-      payload: site
+      payload: fontBody
     });
   };
 }
 
-export function changeNavItems(items) {
+export function changeNavItems(navItems) {
   return dispatch => {
     dispatch({
       type: "CHANGE_NAV_ITEMS",
-      payload: items
+      payload: navItems
     });
   };
 }
@@ -381,7 +377,7 @@ export function saveDesignSite({
         site.logo = uploadLogoAction;
         dispatch({
           type: "UPLOAD_LOGO",
-          payload: site
+          payload: site.logo
         });
       }
       const uploadCoverAction = await uploadCover(cover, site);
@@ -436,9 +432,10 @@ export function saveDesignSite({
         type: "CLOSE_LOADING"
       });
       if (data.status === 200) {
-
         revertSaveData(site);
-
+        dispatch({
+          type: "SET_ISCHANGED_FALSE"
+        });
         toastr.success(`Save site ${site.title} sucess`, "Success");
       } else {
         toastr.error("There are something wrong when save your site", "Error");
@@ -448,28 +445,37 @@ export function saveDesignSite({
       dispatch({
         type: "CLOSE_LOADING"
       });
+      dispatch({
+        type: "SET_ISCHANGED_FALSE"
+      });
       if (error.response && error.response.status === 401) {
         dispatch({
           type: "SET_LOGOUT"
         });
       }
       if (error.response && error.response.data) {
+        dispatch({
+          type: "SET_ISCHANGED_FALSE"
+        });
         toastr.error(error.response.data.msg, "Error");
       } else {
+        dispatch({
+          type: "SET_ISCHANGED_FALSE"
+        });
         toastr.error("There are something wrong when save your site", "Error");
       }
     }
   };
 }
 
-export function changeTheme(site) {
+export function changeTheme(theme) {
   return dispatch => {
     dispatch({
       type: "SHOW_LOADING"
     });
     dispatch({
       type: "CHANGE_THEME",
-      payload: site
+      payload: theme
     });
     dispatch({
       type: "CLOSE_LOADING"
@@ -546,11 +552,11 @@ export function setCurrentEditId(id) {
   };
 }
 
-export function setActiveNavItems(site) {
+export function setActiveNavItems(navItems) {
   return dispatch => {
     dispatch({
       type: "SET_ACTIVE_NAV_ITEMS",
-      payload: site
+      payload: navItems
     });
   };
 }
@@ -699,11 +705,11 @@ export function changeSiteAbout(about) {
   };
 }
 
-export function changeSiteTitle(site) {
+export function changeSiteTitle(title) {
   return dispatch => {
     dispatch({
       type: "CHANGE_SITE_TITLE",
-      payload: site
+      payload: title
     });
   };
 }
@@ -1017,5 +1023,13 @@ export function getGalleries(sitepath) {
       });
       toastr.error("Get site data failed!", "Error");
     }
+  };
+}
+
+export function setIsChanged() {
+  return dispatch => {
+    dispatch({
+      type: "SET_ISCHANGED_FALSE"
+    });
   };
 }

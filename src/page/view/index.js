@@ -64,11 +64,11 @@ class PreViewSite extends React.Component {
             </Grid>
           );
         }
-        WebFont.load({
-          google: {
-            families: [siteView.fontTitle, siteView.fontBody]
-          }
-        });
+        // WebFont.load({
+        //   google: {
+        //     families: [siteView.fontTitle, siteView.fontBody]
+        //   }
+        // });
         return (
           <>
             <Helmet>

@@ -3,11 +3,22 @@ import {
   faTimes as faWindowClose
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AppBar, Button, CssBaseline, Drawer, Grid } from "@material-ui/core";
+import {
+  AppBar,
+  Button,
+  CssBaseline,
+  Drawer,
+  Grid,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
-import { saveDesignSite, updateTabValue } from "../actions";
+import { saveDesignSite, updateTabValue, setIsChanged } from "../actions";
 import AccordionButton from "../theme/component/mainComponent";
 import DesignTab from "./DesignEditorTab";
 import Link from "./link";
@@ -16,6 +27,7 @@ import SettingEditorTab from "./SettingEditorTab";
 import SyncEditorTab from "./SyncEditorTab";
 import ThemeEditorTab from "./ThemeEditorTab";
 import HomepageEditorTab from "./HomepageEditorTab";
+import { Redirect, withRouter } from "react-router-dom";
 
 const useStyles = theme => ({
   root: {
@@ -37,7 +49,8 @@ const useStyles = theme => ({
 class ClippedDrawer extends React.Component {
   state = {
     currentNavName: "",
-    navigating: false
+    navigating: false,
+    open: false
   };
 
   setNavigating = (bool, name) => {
@@ -45,6 +58,25 @@ class ClippedDrawer extends React.Component {
       navigating: bool,
       currentNavName: name
     });
+  };
+
+  openDialog = () => {
+    const { isChanged } = this.props;
+    if (isChanged) {
+      this.setState({ open: true });
+    } else {
+      this.props.history.push("/view");
+    }
+  };
+
+  closeDialog = () => {
+    this.setState({ open: false });
+  };
+
+  handleConfirm = () => {
+    const { setIsChangedToFalse } = this.props;
+    setIsChangedToFalse();
+    this.setState({ open: false });
   };
 
   render() {
@@ -74,25 +106,53 @@ class ClippedDrawer extends React.Component {
         >
           <Grid container style={{ border: "1px solid #dddddd" }}>
             <Grid item xs={2}>
-              <Link to="/view">
-                <Button
-                  fullWidth
-                  style={{
-                    borderRight: "1px solid #dddddd",
-                    borderRadius: 0,
-                    color: "#565d66",
-                    fontSize: 14,
-                    fontWeight: "bold",
-                    height: 40
-                  }}
-                >
-                  <FontAwesomeIcon
-                    icon={faWindowClose}
-                    // color="#0074aa"
-                    size="sm"
-                  />
-                </Button>
-              </Link>
+              <Button
+                fullWidth
+                style={{
+                  borderRight: "1px solid #dddddd",
+                  borderRadius: 0,
+                  color: "#565d66",
+                  fontSize: 14,
+                  fontWeight: "bold",
+                  height: 40
+                }}
+                onClick={this.openDialog}
+              >
+                <FontAwesomeIcon
+                  icon={faWindowClose}
+                  // color="#0074aa"
+                  size="sm"
+                />
+              </Button>
+              <Dialog
+                open={this.state.open}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  Changed Unsave
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    Something in your site have been changed. Do you want to go
+                    back before save things you have been changed?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={this.closeDialog} color="primary">
+                    Cancel
+                  </Button>
+                  <Link to="/view">
+                    <Button
+                      onClick={this.handleConfirm}
+                      color="primary"
+                      autoFocus
+                    >
+                      Confirm
+                    </Button>
+                  </Link>
+                </DialogActions>
+              </Dialog>
             </Grid>
             <Grid
               item
@@ -234,15 +294,17 @@ const mapStateToProps = state => ({
   email: state.site.email,
   phone: state.site.phone,
   isPreview: state.site.isPreview,
-  posts: state.post.posts
+  posts: state.post.posts,
+  isChanged: state.site.isChanged
 });
 
 const mapDispatchToProps = dispatch => ({
   updateTabValue: value => dispatch(updateTabValue(value)),
-  saveDesignSite: data => dispatch(saveDesignSite(data))
+  saveDesignSite: data => dispatch(saveDesignSite(data)),
+  setIsChangedToFalse: () => dispatch(setIsChanged())
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(useStyles)(ClippedDrawer));
+)(withStyles(useStyles)(withRouter(ClippedDrawer)));

@@ -160,7 +160,7 @@ function handleChangeActive(id, site, setActiveNavItems, updateNavItemValue) {
   } else {
     index.isActive = true;
   }
-  setActiveNavItems(site);
+  setActiveNavItems(site.navItems);
 }
 
 function handleChangeNavName(id, site, newName, changeNavItemName) {
@@ -310,10 +310,8 @@ class PagesEditorTab extends React.Component {
 
   handleSearch = keyword => {
     if (this.props.posts) {
-      let searchResult = this.props.posts.filter(function (pos) {
-        if (pos.message) {
-          return pos.message.toLowerCase().includes(keyword.toLowerCase());
-        } else return null;
+      let searchResult = this.props.posts.filter(function(pos) {
+        return pos.message.toLowerCase().includes(keyword.toLowerCase());
       });
       this.setListData(searchResult.slice(0, this.state.itemPerPage));
       this.setPageCount(searchResult);
@@ -326,17 +324,17 @@ class PagesEditorTab extends React.Component {
     site.navItems[oldIndex] = site.navItems[newIndex];
     site.navItems[newIndex] = temp;
     site.navItems.map((item, index) => (item.order = index + 1));
-    changeNavItems(site);
+    changeNavItems(site.navItems);
   };
 
-  setActivePost = (post) => {
+  setActivePost = post => {
     post.isActive = !post.isActive;
     let list = this.props.site.homepage;
     for (let i = 0; i < list.length; i++) {
       if (list[i].original === "news") {
         if (!list[i].filter.items) list[i].filter.items = [];
 
-        list[i].filter.items.filter(function (pos) {
+        list[i].filter.items.filter(function(pos) {
           return pos._id !== post._id;
         });
 
@@ -383,73 +381,73 @@ class PagesEditorTab extends React.Component {
         updateNavItemValue,
         changeNavItemName
       }) => (
-          <Grid container style={gridItem}>
-            <Grid
-              container
-              item
-              alignItems="center"
-              xs={10}
-              sm={12}
-              md={10}
-              style={{ padding: "0.2rem 0" }}
-            >
-              <Grid container justify="center" item xs={2} md={2} sm={12}>
-                <DragHandle />
-              </Grid>
-              <Grid item xs={10} md={10} sm={12}>
-                <TextField
-                  InputLabelProps={{
-                    classes: {
-                      focused: classes.focused
-                    }
-                  }}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle
-                    }
-                  }}
-                  size="small"
-                  style={{ backgroundColor: "white" }}
-                  fullWidth
-                  variant={"outlined"}
-                  value={value}
-                  onChange={e => {
-                    handleChangeNavName(
-                      item._id,
-                      site,
-                      e.target.value,
-                      changeNavItemName
-                    );
-                  }}
-                />
-              </Grid>
+        <Grid container style={gridItem}>
+          <Grid
+            container
+            item
+            alignItems="center"
+            xs={10}
+            sm={12}
+            md={10}
+            style={{ padding: "0.2rem 0" }}
+          >
+            <Grid container justify="center" item xs={2} md={2} sm={12}>
+              <DragHandle />
             </Grid>
-            <Grid container item justify="center" xs={2} sm={12} md={2}>
-              {item.original === "home" ? (
-                <></>
-              ) : (
-                  <IconButton
-                    style={viewButton}
-                    onClick={() =>
-                      handleChangeActive(
-                        item._id,
-                        site,
-                        setActiveNavItems,
-                        updateNavItemValue
-                      )
-                    }
-                  >
-                    {item.isActive && item.name !== "Home" ? (
-                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                    ) : (
-                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
-                      )}
-                  </IconButton>
-                )}
+            <Grid item xs={10} md={10} sm={12}>
+              <TextField
+                InputLabelProps={{
+                  classes: {
+                    focused: classes.focused
+                  }
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                    input: classes.inputTitle
+                  }
+                }}
+                size="small"
+                style={{ backgroundColor: "white" }}
+                fullWidth
+                variant={"outlined"}
+                value={value}
+                onChange={e => {
+                  handleChangeNavName(
+                    item._id,
+                    site,
+                    e.target.value,
+                    changeNavItemName
+                  );
+                }}
+              />
             </Grid>
           </Grid>
-        )
+          <Grid container item justify="center" xs={2} sm={12} md={2}>
+            {item.original === "home" ? (
+              <></>
+            ) : (
+              <IconButton
+                style={viewButton}
+                onClick={() =>
+                  handleChangeActive(
+                    item._id,
+                    site,
+                    setActiveNavItems,
+                    updateNavItemValue
+                  )
+                }
+              >
+                {item.isActive && item.name !== "Home" ? (
+                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                ) : (
+                  <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                )}
+              </IconButton>
+            )}
+          </Grid>
+        </Grid>
+      )
     );
 
     const SortableList = sortableContainer(

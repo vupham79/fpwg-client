@@ -64,15 +64,15 @@ class ThemeEditorTab extends React.Component {
   handleChangeTheme = selectId => {
     const { changeTheme, themes, site, updateNavItemValue } = this.props;
     const theme = themes.find(e => e.id === selectId);
-    site.theme = theme;
-    site.color = theme.mainColor;
+    // site.theme = theme;
+    // site.color = theme.mainColor;
     this.setState({
       id: selectId
     });
-    changeTheme(site);
+    changeTheme(theme);
 
     //go to home tab of new theme
-    let searchResult = site.navItems.filter(function (nav) {
+    let searchResult = site.navItems.filter(function(nav) {
       return nav.original === "home";
     });
     if (searchResult) {
