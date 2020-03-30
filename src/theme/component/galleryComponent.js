@@ -255,6 +255,7 @@ class GalleryComponent extends React.Component {
               className={classes.media}
               image={this.state.img}
               title="Gallery image"
+              style={{ backgroundSize: "contain" }}
             />
           </Dialog>
         </Container>

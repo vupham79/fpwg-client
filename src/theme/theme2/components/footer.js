@@ -103,11 +103,9 @@ class FooterPage extends Component {
                 <IconButton
                   aria-label=""
                   color="primary"
-                  href={
-                    isEdit
-                      ? siteEdit && siteEdit.instagram
-                      : siteView && siteView.instagram
-                  }
+                  href={`https://instagram.com/${
+                    isEdit ? instagram : siteView.instagram
+                  }`}
                 >
                   {this.renderInstagram()}
                 </IconButton>
@@ -118,7 +116,7 @@ class FooterPage extends Component {
                 <IconButton
                   aria-label=""
                   color="primary"
-                  href={isEdit ? siteEdit.youtube : siteView.youtube}
+                  href={isEdit ? youtube : siteView.youtube}
                 >
                   {this.renderYoutube()}
                 </IconButton>
@@ -129,7 +127,9 @@ class FooterPage extends Component {
                 <IconButton
                   aria-label=""
                   color="primary"
-                  href={isEdit ? siteEdit.whatsapp : siteView.whatsapp}
+                  href={`https://wa.me/${
+                    isEdit ? whatsapp : siteView.whatsapp
+                  }`}
                 >
                   {this.renderWhatsapp()}
                 </IconButton>

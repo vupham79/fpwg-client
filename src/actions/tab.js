@@ -15,3 +15,12 @@ export function updateNavItemValue(value) {
     });
   };
 }
+
+export function updateSelectNavItemValue(value) {
+  return dispatch => {
+    dispatch({
+      type: "UPDATE_SELECT_NAVITEM_VALUE",
+      payload: value
+    });
+  };
+}

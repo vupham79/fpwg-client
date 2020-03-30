@@ -21,7 +21,7 @@ import {
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updateNavItemValue } from "../../../actions";
+import { updateNavItemValue, updateSelectNavItemValue } from "../../../actions";
 import Link from "../../../component/link";
 import BannerComponent from "../../component/bannerComponent";
 import { faExclamation } from "@fortawesome/free-solid-svg-icons";
@@ -102,10 +102,6 @@ function hexToRGB(hex, alpha) {
 }
 
 class Header extends Component {
-  state = {
-    navValue: 0
-  };
-
   renderImage = () => {
     const { isEdit, siteEdit, siteView, newLogo } = this.props;
     if (isEdit) {
@@ -292,13 +288,13 @@ class Header extends Component {
   };
 
   hangleChangeSelect = event => {
-    const { updateNavItemValue, isEdit } = this.props;
+    const { updateNavItemValue, isEdit, updateSelectNavItemValue } = this.props;
     if (isEdit) {
       const newValue = parseInt(event.target.value);
       updateNavItemValue(newValue);
     } else {
       const newValue = parseInt(event.target.value);
-      this.setState({ navValue: newValue });
+      updateSelectNavItemValue(newValue);
     }
   };
 
@@ -329,7 +325,7 @@ class Header extends Component {
           fullWidth
           IconComponent={() => <></>}
           style={isEdit ? selectStyle : selectNavStyle}
-          value={isEdit ? this.props.tabValue : this.state.navValue}
+          value={isEdit ? this.props.tabValue : this.props.selectValue}
         >
           {isEdit
             ? siteEdit &&
@@ -518,11 +514,9 @@ class Header extends Component {
                 <IconButton
                   className={classes.icon}
                   color="primary"
-                  href={
-                    isEdit
-                      ? siteEdit && siteEdit.instagram
-                      : siteView && siteView.instagram
-                  }
+                  href={`https://instagram.com/${
+                    isEdit ? instagram : siteView.instagram
+                  }`}
                 >
                   {this.renderInstagram()}
                 </IconButton>
@@ -533,7 +527,7 @@ class Header extends Component {
                 <IconButton
                   className={classes.icon}
                   color="primary"
-                  href={isEdit ? siteEdit.youtube : siteView.youtube}
+                  href={isEdit ? youtube : siteView.youtube}
                 >
                   {this.renderYoutube()}
                 </IconButton>
@@ -544,7 +538,9 @@ class Header extends Component {
                 <IconButton
                   className={classes.icon}
                   color="primary"
-                  href={isEdit ? siteEdit.whatsapp : siteView.whatsapp}
+                  href={`https://wa.me/${
+                    isEdit ? whatsapp : siteView.whatsapp
+                  }`}
                 >
                   {this.renderWhatsapp()}
                 </IconButton>
@@ -584,11 +580,13 @@ const mapStateToProps = state => ({
   youtube: state.site.youtube,
   instagram: state.site.instagram,
   whatsapp: state.site.whatsapp,
-  phone: state.site.phone
+  phone: state.site.phone,
+  selectValue: state.tab.selectNavItemValue
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateNavItemValue: value => dispatch(updateNavItemValue(value))
+  updateNavItemValue: value => dispatch(updateNavItemValue(value)),
+  updateSelectNavItemValue: value => dispatch(updateSelectNavItemValue(value))
 });
 
 export default connect(

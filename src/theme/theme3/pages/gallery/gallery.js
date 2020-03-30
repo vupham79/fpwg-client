@@ -6,14 +6,6 @@ import PostTypeComponent from "../../../component/postsType";
 import styles from "./gallery.module.css";
 
 class GalleryPage extends React.Component {
-  state = {
-    tabValue: 0
-  };
-
-  handleChangeTabValue = (event, newValue) => {
-    this.setState({ tabValue: newValue });
-  };
-
   render() {
     const {
       isEdit,
@@ -27,7 +19,6 @@ class GalleryPage extends React.Component {
       homeTitle,
       homeList
     } = this.props;
-    const { tabValue } = this.state;
     return (
       <Grid
         container
@@ -49,151 +40,53 @@ class GalleryPage extends React.Component {
             {fromHome ? homeTitle : "Gallery"}
           </Typography>
         </Grid>
-        <Grid container justify="center" item sm={10} xs={10}>
-          <Tabs
-            TabIndicatorProps={{ style: { display: "none" } }}
-            value={tabValue}
-            onChange={this.handleChangeTabValue}
-          >
-            <Tab
-              style={{
-                fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-                color: "white",
-                borderRight: "1px solid white",
-                fontWeight: "700"
-              }}
-              label="Photos"
-            />
-            <Tab
-              style={{
-                fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-                color: "white",
-                fontWeight: "700"
-              }}
-              label="Videos"
-            />
-          </Tabs>
 
-          {tabValue === 0 && (
+        <Grid item xs={10} sm={12}>
+          {isEdit ? (
+            siteEdit && siteEdit.galleries ? (
+              <Grid container>
+                <GalleryComponent
+                  galleries={
+                    fromHome && homeList ? homeList : siteEdit.galleries
+                  }
+                  siteInfo={siteEdit.id}
+                  fromHome={fromHome}
+                />
+              </Grid>
+            ) : (
+              <Grid container justify="center">
+                <Typography
+                  variant="body1"
+                  style={{
+                    fontFamily: bodyEdit.fontFamily,
+                    color: "white",
+                    padding: "5rem 0"
+                  }}
+                >
+                  Currently no photo available.
+                </Typography>
+              </Grid>
+            )
+          ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
             <Grid container>
-              {isEdit ? (
-                siteEdit && siteEdit.galleries ? (
-                  <Grid container>
-                    <GalleryComponent
-                      galleries={
-                        fromHome && homeList ? homeList : siteEdit.galleries
-                      }
-                      siteInfo={siteEdit.id}
-                      fromHome={fromHome}
-                    />
-                  </Grid>
-                ) : (
-                  <Grid container justify="center">
-                    <Typography
-                      variant="body1"
-                      style={{
-                        fontFamily: bodyEdit.fontFamily,
-                        color: "white",
-                        padding: "5rem 0"
-                      }}
-                    >
-                      Currently no photo available.
-                    </Typography>
-                  </Grid>
-                )
-              ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
-                <Grid container>
-                  <GalleryComponent
-                    galleries={
-                      fromHome && homeList ? homeList : siteView.galleries
-                    }
-                    siteInfo={siteView.sitePath}
-                    fromHome={fromHome}
-                  />
-                </Grid>
-              ) : (
-                <Grid container justify="center">
-                  <Typography
-                    variant="body1"
-                    style={{
-                      fontFamily: bodyView.fontFamily,
-                      color: "white",
-                      padding: "5rem 0"
-                    }}
-                  >
-                    Currently no photo available.
-                  </Typography>
-                </Grid>
-              )}
+              <GalleryComponent
+                galleries={fromHome && homeList ? homeList : siteView.galleries}
+                siteInfo={siteView.sitePath}
+                fromHome={fromHome}
+              />
             </Grid>
-          )}
-
-          {tabValue === 1 && (
-            <Grid container>
-              {isEdit ? (
-                siteEdit && siteEdit.posts ? (
-                  <Grid container>
-                    <PostTypeComponent
-                      posts={siteEdit.posts.filter(
-                        item =>
-                          item.attachments &&
-                          item.attachments.media_type === "video"
-                      )}
-                      siteInfo={{
-                        logo: siteEdit.logo,
-                        title: siteEdit.title,
-                        id: siteEdit.id
-                      }}
-                    />
-                  </Grid>
-                ) : (
-                  <Grid container justify="center">
-                    <Typography
-                      variant="body1"
-                      style={{
-                        fontFamily: bodyEdit.fontFamily,
-                        color: "white",
-                        padding: "5rem 0"
-                      }}
-                    >
-                      Current no video to show.
-                    </Typography>
-                  </Grid>
-                )
-              ) : siteView &&
-                siteView.posts &&
-                siteView.posts.filter(
-                  item => item.attachments.media_type === "video"
-                ) ? (
-                <Grid container>
-                  <PostTypeComponent
-                    posts={siteView.posts.filter(
-                      item =>
-                        item.attachments &&
-                        item.attachments.media_type === "video"
-                    )}
-                    siteInfo={{
-                      logo: siteView.logo,
-                      title: siteView.title,
-                      sitePath: siteView.sitePath
-                    }}
-                    theme="theme3"
-                  />
-                </Grid>
-              ) : (
-                <Grid container justify="center">
-                  <Typography
-                    variant="body1"
-                    style={{
-                      fontFamily: bodyView.fontFamily,
-                      color: "white",
-                      padding: "5rem 0"
-                    }}
-                  >
-                    Current no video to show.
-                  </Typography>
-                </Grid>
-              )}
+          ) : (
+            <Grid container justify="center">
+              <Typography
+                variant="body1"
+                style={{
+                  fontFamily: bodyView.fontFamily,
+                  color: "white",
+                  padding: "5rem 0"
+                }}
+              >
+                Currently no photo available.
+              </Typography>
             </Grid>
           )}
         </Grid>

@@ -17,7 +17,7 @@ class Footer extends React.Component {
       siteView,
       youtube,
       instagram,
-      whatsapp,
+      whatsapp
     } = this.props;
 
     return (
@@ -47,27 +47,62 @@ class Footer extends React.Component {
         </Grid>
 
         <Grid container item direction="row" justify="center" xs={12}>
-          <Grid item style={isEdit ? (whatsapp ? null : { display: "none" }) : (siteView.whatsapp ? null : { display: "none" })}>
+          <Grid
+            item
+            style={
+              isEdit
+                ? whatsapp
+                  ? null
+                  : { display: "none" }
+                : siteView.whatsapp
+                ? null
+                : { display: "none" }
+            }
+          >
             <IconButton
               aria-label=""
               color="primary"
-              href={isEdit ? whatsapp : siteView.whatsapp}
+              href={`https://wa.me/${isEdit ? whatsapp : siteView.whatsapp}`}
             >
               <FontAwesomeIcon icon={faWhatsapp} color="white" size="2x" />
             </IconButton>
           </Grid>
 
-          <Grid item style={isEdit ? (instagram ? null : { display: "none" }) : (siteView.instagram ? null : { display: "none" })}>
+          <Grid
+            item
+            style={
+              isEdit
+                ? instagram
+                  ? null
+                  : { display: "none" }
+                : siteView.instagram
+                ? null
+                : { display: "none" }
+            }
+          >
             <IconButton
               aria-label=""
               color="primary"
-              href={isEdit ? instagram : siteView.instagram}
+              href={`https://instagram.com/${
+                isEdit ? instagram : siteView.instagram
+              }`}
             >
               <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />
             </IconButton>
           </Grid>
 
-          <Grid item style={isEdit ? (youtube ? null : { display: "none" }) : (siteView.youtube ? null : { display: "none" })}>
+          <Grid
+            item
+            style={
+              isEdit
+                ? youtube
+                  ? null
+                  : { display: "none" }
+                : siteView.youtube
+                ? null
+                : { display: "none" }
+            }
+          >
             <IconButton
               aria-label=""
               color="primary"
@@ -88,7 +123,7 @@ const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
   youtube: state.site.youtube,
   instagram: state.site.instagram,
-  whatsapp: state.site.whatsapp,
+  whatsapp: state.site.whatsapp
 });
 
 export default connect(mapStateToProps, null)(Footer);

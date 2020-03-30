@@ -61,7 +61,11 @@ import {
   changeSiteAddress
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
-import { updateNavItemValue, updateTabValue } from "./tab";
+import {
+  updateNavItemValue,
+  updateTabValue,
+  updateSelectNavItemValue
+} from "./tab";
 import {
   getAllThemes,
   getAllThemesAdmin,
@@ -175,5 +179,6 @@ export {
   setGalleriesToSiteView,
   setHomepageToSiteView,
   setIsChanged,
-  changeSiteAddress
+  changeSiteAddress,
+  updateSelectNavItemValue
 };

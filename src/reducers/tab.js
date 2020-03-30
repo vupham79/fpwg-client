@@ -1,6 +1,7 @@
 const defaultState = {
   value: 0,
-  navItemValue: 0
+  navItemValue: 0,
+  selectNavItemValue: 0
 };
 
 const TabReducer = (state = defaultState, action) => {
@@ -14,6 +15,11 @@ const TabReducer = (state = defaultState, action) => {
       return {
         ...state,
         navItemValue: action.payload
+      };
+    case "UPDATE_SELECT_NAVITEM_VALUE":
+      return {
+        ...state,
+        selectNavItemValue: action.payload
       };
     case "SET_LOGOUT":
       return {
