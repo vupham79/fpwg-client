@@ -398,11 +398,11 @@ class PagesEditorTab extends React.Component {
               <Grid item xs={10} md={10} sm={12}>
                 <TextField
                   autoFocus={
-                    this.state.currentFocusInput === item.original
+                    this.state.currentFocusInput === item._id
                       ? true
                       : false
                   }
-                  onClick={(e) => this.setState({ currentFocusInput: item.original })}
+                  onClick={(e) => this.setState({ currentFocusInput: item._id })}
                   InputLabelProps={{
                     classes: {
                       focused: classes.focused
