@@ -40,11 +40,11 @@ class Layout extends Component {
   };
 
   render() {
-    const { isEdit } = this.props;
+    const { isEdit, titleView, titleEdit } = this.props;
 
     return (
       <>
-        <HeaderComponent navPos={"left"} displayImg={false} headerColor="white" navColor="#212121" />
+        <HeaderComponent navPos={"left"} displayImg={false} headerColor="white" navColor={isEdit ? titleEdit.color : titleView.color} navTextColor="#212121" />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
       </>
@@ -56,7 +56,9 @@ const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
   siteEdit: state.site.siteEdit,
   navItemValue: state.tab.navItemValue,
-  themes: state.theme.data
+  themes: state.theme.data,
+  titleView: state.site.titleView,
+  titleEdit: state.site.titleEdit
 });
 
 export default connect(mapStateToProps, null)(Layout);
