@@ -88,11 +88,11 @@ class HeaderComponent extends Component {
   };
 
   renderTabItems = ({ type, pos }) => {
-    const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
+    const { tabValue, updateNavItemValue, siteEdit, titleEdit, navTextColor } = this.props;
     const tabStyles = {
       textTransform: "none",
       fontFamily: titleEdit.fontFamily,
-      color: this.props.navPos === "center" ? "white" : this.props.navColor,
+      color: navTextColor ? navTextColor : this.props.navColor,
       minWidth: "4vh",
       "&:hover": {
         color: "#40a9ff",
