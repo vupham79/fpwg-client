@@ -87,8 +87,8 @@ class ContactPage extends React.Component {
             xs={12}
             sm={6}
             md={
-              (siteEdit.latitude && siteEdit.longitude) ||
-              (siteView.latitude && siteView.longitude)
+              (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
+              (siteView && siteView.latitude && siteView.longitude)
                 ? 3
                 : 6
             }
@@ -98,8 +98,8 @@ class ContactPage extends React.Component {
               item
               xs={10}
               sm={
-                (siteEdit.latitude && siteEdit.longitude) ||
-                (siteView.latitude && siteView.longitude)
+                (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
+                (siteView && siteView.latitude && siteView.longitude)
                   ? 12
                   : 6
               }
@@ -142,8 +142,8 @@ class ContactPage extends React.Component {
               item
               xs={10}
               sm={
-                (siteEdit.latitude && siteEdit.longitude) ||
-                (siteView.latitude && siteView.longitude)
+                (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
+                (siteView && siteView.latitude && siteView.longitude)
                   ? 12
                   : 6
               }
@@ -186,8 +186,8 @@ class ContactPage extends React.Component {
               item
               xs={10}
               sm={
-                (siteEdit.latitude && siteEdit.longitude) ||
-                (siteView.latitude && siteView.longitude)
+                (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
+                (siteView && siteView.latitude && siteView.longitude)
                   ? 12
                   : 6
               }
