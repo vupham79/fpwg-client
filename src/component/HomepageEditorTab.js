@@ -55,6 +55,8 @@ import {
   setNewLogo
 } from "../actions";
 import toastr from "./Toastr";
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 
 const useStyles = theme => ({
   content: {
@@ -210,32 +212,67 @@ class HomepageEditorTab extends React.Component {
     isExpanding: false,
     currentExpandType: "",
     currentExpandItem: null,
-    currentFocusInput: "nameInput"
+    currentFocusInput: "nameInput",
+    openCropDiag: false,
+    currentResolve: null,
+    crop: {
+      x: 0,
+      y: 0,
+      width: 400,
+      height: 400
+    },
+    pixelCrop: {
+      unit: "%",
+      x: 20,
+      y: 20,
+      width: 50,
+      height: 50
+    },
+    selectedFile: null,
+    selectedFilePath: null,
+    cancelCrop: false,
   };
 
   handleUploadCover = async e => {
-    e.preventDefault();
-    const file = e.target.files[0];
-    //validating the file
-    //check if the file is exists
-    if (!file) {
-      toastr.error("No image is selected!", "Error");
-      return;
+    if (this.props.newCover.length < 5) {
+      e.preventDefault();
+      let file = e.target.files[0];
+      //validating the file
+      //check if the file is exists
+      if (!file) {
+        toastr.error("No image is selected!", "Error");
+        return;
+      }
+      //check if the image size is larger than 1MB
+      if (file.size > 1048576) {
+        toastr.error("Image size must be less than 1MB!", "Error");
+        return;
+      }
+      if (
+        file.type === "image/jpeg" ||
+        file.type === "image/png" ||
+        file.type === "image/jpg"
+      ) {
+        let cropImgFile = await new Promise(async (resolve, reject) => {
+          try {
+            this.setState({
+              selectedFile: file,
+              selectedFilePath: URL.createObjectURL(file)
+            });
+            this.handleOpenCropDialogue(true, resolve);
+          } catch (error) {
+            toastr.error(`Crop failed`, "Error");
+            resolve(null);
+          }
+        });
+        if (!this.state.cancelCrop) {
+          this.props.setNewCover(cropImgFile);
+        }
+      } else {
+        toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
+      }
     }
-    //check if the image size is larger than 1MB
-    if (file.size > 1048576) {
-      toastr.error("Image size must be less than 1MB!", "Error");
-      return;
-    }
-    if (
-      file.type === "image/jpeg" ||
-      file.type === "image/png" ||
-      file.type === "image/jpg"
-    ) {
-      this.props.setNewCover(file);
-    } else {
-      toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
-    }
+    else toastr.error("Maximum banner photo added.", "Error");
   };
 
   PostsList() {
@@ -294,9 +331,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -346,9 +383,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -399,9 +436,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -431,6 +468,68 @@ class HomepageEditorTab extends React.Component {
     setActiveHomeItems(this.props.site);
   };
 
+  urltoFile(url, filename, mimeType) {
+    return (fetch(url)
+      .then(function (res) { return res.arrayBuffer(); })
+      .then(function (buf) { return new File([buf], filename, { type: mimeType }); })
+    );
+  }
+
+  getCroppedImg(file) {
+
+    let pixelCrop = this.state.pixelCrop;
+    let img = new Image();
+    img.src = file;
+
+    let canvas = document.createElement('canvas');
+    canvas.width = (img.width * pixelCrop.width) / 100;
+    canvas.height = (img.height * pixelCrop.height) / 100;
+    let ctx = canvas.getContext('2d');
+
+    ctx.drawImage(
+      img,
+      (img.width * pixelCrop.x) / 100,
+      (img.height * pixelCrop.y) / 100,
+      canvas.width,
+      canvas.height,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    // As Base64 string
+    let base64Image = canvas.toDataURL('image/png');
+    let cropImgFile = this.urltoFile(base64Image, this.state.selectedFile.name, 'text/plain');
+    // As a blob
+    // const blob = new Promise((resolve, reject) => {
+    //   canvas.toBlob(file => {
+    //     resolve(file);
+    //   }, 'image/jpeg');
+    // });
+    // this.setState({
+    //   test: URL.createObjectURL(cropImgFile)
+    // });
+    return cropImgFile;
+  }
+
+  handleOpenCropDialogue = async (bool, resolve, isCancel) => {
+    this.setState({
+      openCropDiag: bool,
+      currentResolve: resolve
+    });
+    if (!bool) {
+      this.setState({
+        cancelCrop: isCancel
+      });
+      if (!isCancel) {
+        resolve(await this.getCroppedImg(this.state.selectedFilePath));
+      }
+      else {
+        resolve(null);
+      }
+    }
+  }
   handleOpenPostDialogue = bool => {
     this.setState({
       openDiag: bool
@@ -440,7 +539,7 @@ class HomepageEditorTab extends React.Component {
         let noLongerActive = [];
 
         this.setPosts(
-          this.props.posts.filter(function(pos) {
+          this.props.posts.filter(function (pos) {
             noLongerActive.push(pos);
             return pos.isActive;
           })
@@ -457,7 +556,7 @@ class HomepageEditorTab extends React.Component {
             )
           ) {
             this.state.currentExpandItem.filter.items = this.state.currentExpandItem.filter.items.filter(
-              function(item) {
+              function (item) {
                 return item._id !== noLongerActive[i]._id;
               }
             );
@@ -530,7 +629,7 @@ class HomepageEditorTab extends React.Component {
         toastr.error("Maximum item selected");
       } else index.filter.items = [...index.filter.items, row];
     } else {
-      index.filter.items = index.filter.items.filter(function(post) {
+      index.filter.items = index.filter.items.filter(function (post) {
         return post._id !== row._id;
       });
     }
@@ -592,12 +691,12 @@ class HomepageEditorTab extends React.Component {
     let currentList;
     let searchResult;
     if (this.state.currentExpandType === "news" && this.props.posts) {
-      currentList = this.props.posts.filter(function(pos) {
+      currentList = this.props.posts.filter(function (pos) {
         return pos.isActive;
       });
 
       if (currentList) {
-        searchResult = currentList.filter(function(pos) {
+        searchResult = currentList.filter(function (pos) {
           return pos.message
             ? pos.message.toLowerCase().includes(keyword.toLowerCase())
             : null;
@@ -613,7 +712,7 @@ class HomepageEditorTab extends React.Component {
     if (this.state.currentExpandType === "event" && this.props.site.events) {
       currentList = this.props.site.events;
       if (currentList) {
-        searchResult = currentList.filter(function(pos) {
+        searchResult = currentList.filter(function (pos) {
           return pos.name.toLowerCase().includes(keyword.toLowerCase());
         });
       }
@@ -659,7 +758,7 @@ class HomepageEditorTab extends React.Component {
   handlePageClick = data => {
     let currentList;
     if (this.state.currentExpandType === "news" && this.props.posts) {
-      currentList = this.props.posts.filter(function(pos) {
+      currentList = this.props.posts.filter(function (pos) {
         return pos.isActive;
       });
     }
@@ -793,6 +892,14 @@ class HomepageEditorTab extends React.Component {
           </Grid>
           <Button
             variant="contained"
+            style={{
+              float: "right",
+              backgroundColor: "#f0eded",
+              width: 70,
+              borderRadius: 5,
+              color: "#555d66",
+              fontSize: 11
+            }}
             onClick={() => this.handleOpenPostDialogue(false)}
             color="secondary"
           >
@@ -800,6 +907,14 @@ class HomepageEditorTab extends React.Component {
           </Button>
           <Button
             variant="contained"
+            style={{
+              float: "right",
+              backgroundColor: "#0074aa",
+              width: 70,
+              borderRadius: 5,
+              color: "white",
+              fontSize: 11
+            }}
             onClick={() => this.handleSave()}
             color={"primary"}
           >
@@ -883,7 +998,7 @@ class HomepageEditorTab extends React.Component {
         <ExpansionPanel
           expanded={
             this.state.currentExpandItemId === item._id &&
-            this.state.isExpanding
+              this.state.isExpanding
               ? true
               : false
           }
@@ -1063,6 +1178,54 @@ class HomepageEditorTab extends React.Component {
           are automatically shown on your site but you can decide which content
           to display manually.
         </Grid>
+        <Dialog
+          disableBackdropClick
+          disableEscapeKeyDown
+          open={this.state.openCropDiag}
+          maxWidth="md"
+          fullWidth
+        >
+          <DialogTitle>
+            {/* <Typography className={classes.title}>Crop dimension: {this.state.crop.width} x {this.state.crop.height} </Typography>
+            <Typography className={classes.title}>Recommended dimension: 750 x 400 </Typography> */}
+            <Typography className={classes.title}>Crop Image</Typography>
+          </DialogTitle>
+          <DialogContent style={{ height: "50vh" }}>
+            <ReactCrop src={this.state.selectedFilePath} crop={this.state.pixelCrop} onChange={(crop, pixelCrop) => this.setState({ pixelCrop: pixelCrop })} />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="contained"
+              style={{
+                float: "right",
+                backgroundColor: "#f0eded",
+                width: 70,
+                borderRadius: 5,
+                color: "#555d66",
+                fontSize: 11
+              }}
+              onClick={() => this.handleOpenCropDialogue(false, this.state.currentResolve, true)}
+              color="secondary"
+            >
+              Cancel
+          </Button>
+            <Button
+              variant="contained"
+              style={{
+                float: "right",
+                backgroundColor: "#0074aa",
+                width: 70,
+                borderRadius: 5,
+                color: "white",
+                fontSize: 11
+              }}
+              onClick={() => this.handleOpenCropDialogue(false, this.state.currentResolve, false)}
+              color={"primary"}
+            >
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
         {postDialog()}
         <Divider
           style={{ height: 40, width: "100%", backgroundColor: "#ffffff00" }}
@@ -1117,7 +1280,7 @@ class HomepageEditorTab extends React.Component {
             <Add fontSize="small" />
           </Grid>
         </Grid>
-      </div>
+      </div >
     );
   }
 }
