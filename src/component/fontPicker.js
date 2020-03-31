@@ -21,7 +21,8 @@ const listFont = [
 
 const useStyle = theme => ({
   root: {
-    padding: "0.5rem"
+    padding: "0.5rem",
+    fontSize: "13px"
   }
 });
 
