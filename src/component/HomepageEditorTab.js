@@ -215,12 +215,7 @@ class HomepageEditorTab extends React.Component {
     currentFocusInput: "nameInput",
     openCropDiag: false,
     currentResolve: null,
-    crop: {
-      x: 0,
-      y: 0,
-      width: 400,
-      height: 400
-    },
+    crop: null,
     pixelCrop: {
       unit: "%",
       x: 20,
@@ -230,7 +225,6 @@ class HomepageEditorTab extends React.Component {
     },
     selectedFile: null,
     selectedFilePath: null,
-    cancelCrop: false,
   };
 
   handleUploadCover = async e => {
@@ -257,7 +251,8 @@ class HomepageEditorTab extends React.Component {
           try {
             this.setState({
               selectedFile: file,
-              selectedFilePath: URL.createObjectURL(file)
+              selectedFilePath: URL.createObjectURL(file),
+              pixelCrop: { unit: "%", x: 20, y: 20, width: 50, height: 50 }
             });
             this.handleOpenCropDialogue(true, resolve);
           } catch (error) {
@@ -265,9 +260,8 @@ class HomepageEditorTab extends React.Component {
             resolve(null);
           }
         });
-        if (!this.state.cancelCrop) {
-          this.props.setNewCover(cropImgFile);
-        }
+        this.props.setNewCover(cropImgFile);
+
       } else {
         toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
       }
@@ -519,14 +513,11 @@ class HomepageEditorTab extends React.Component {
       currentResolve: resolve
     });
     if (!bool) {
-      this.setState({
-        cancelCrop: isCancel
-      });
       if (!isCancel) {
         resolve(await this.getCroppedImg(this.state.selectedFilePath));
       }
       else {
-        resolve(null);
+        resolve(this.state.selectedFile);
       }
     }
   }
@@ -1207,7 +1198,7 @@ class HomepageEditorTab extends React.Component {
               onClick={() => this.handleOpenCropDialogue(false, this.state.currentResolve, true)}
               color="secondary"
             >
-              Cancel
+              Skip
           </Button>
             <Button
               variant="contained"
