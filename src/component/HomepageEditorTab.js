@@ -257,7 +257,7 @@ class HomepageEditorTab extends React.Component {
             this.handleOpenCropDialogue(true, resolve);
           } catch (error) {
             toastr.error(`Crop failed`, "Error");
-            resolve(null);
+            resolve(file);
           }
         });
         this.props.setNewCover(cropImgFile);

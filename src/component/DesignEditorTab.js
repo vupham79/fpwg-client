@@ -5,7 +5,11 @@ import {
   IconButton,
   Input,
   TextField,
-  Typography
+  Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Cancel } from "@material-ui/icons";
@@ -27,6 +31,8 @@ import {
 } from "../actions";
 import toastr from "./Toastr";
 import FontPickerComponent from "./fontPicker";
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 
 const useStyles = theme => ({
   content: {
@@ -128,8 +134,70 @@ class DesignEditorTab extends React.Component {
     file: null,
     pallete: [],
     covers: [],
-    logo: ""
+    logo: "",
+    openCropDiag: false,
+    currentResolve: null,
+    crop: null,
+    pixelCrop: {
+      unit: "%",
+      x: 20,
+      y: 20,
+      width: 50,
+      height: 50
+    },
+    selectedFile: null,
+    selectedFilePath: null,
   };
+
+  urltoFile(url, filename, mimeType) {
+    return (fetch(url)
+      .then(function (res) { return res.arrayBuffer(); })
+      .then(function (buf) { return new File([buf], filename, { type: mimeType }); })
+    );
+  }
+
+  getCroppedImg(file) {
+
+    let pixelCrop = this.state.pixelCrop;
+    let img = new Image();
+    img.src = file;
+
+    let canvas = document.createElement('canvas');
+    canvas.width = (img.width * pixelCrop.width) / 100;
+    canvas.height = (img.height * pixelCrop.height) / 100;
+    let ctx = canvas.getContext('2d');
+
+    ctx.drawImage(
+      img,
+      (img.width * pixelCrop.x) / 100,
+      (img.height * pixelCrop.y) / 100,
+      canvas.width,
+      canvas.height,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+    let base64Image = canvas.toDataURL('image/png');
+    let cropImgFile = this.urltoFile(base64Image, this.state.selectedFile.name, 'text/plain');
+    return cropImgFile;
+  }
+
+  handleOpenCropDialogue = async (bool, resolve, isCancel) => {
+    this.setState({
+      openCropDiag: bool,
+      currentResolve: resolve
+    });
+    if (!bool) {
+      if (!isCancel) {
+        resolve(await this.getCroppedImg(this.state.selectedFilePath));
+      }
+      else {
+        resolve(this.state.selectedFile);
+      }
+    }
+  }
 
   async componentDidMount() {
     const { setColorPallete, site } = this.props;
@@ -140,7 +208,7 @@ class DesignEditorTab extends React.Component {
     this.setState({
       logo: site.logo
     });
-    img.addEventListener("load", async function() {
+    img.addEventListener("load", async function () {
       const color = await colorThief.getPalette(img, 11);
       const colors = await color.map(rgb =>
         onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
@@ -172,7 +240,7 @@ class DesignEditorTab extends React.Component {
 
   handleBrowseLogo = async e => {
     e.preventDefault();
-    const file = e.target.files[0];
+    let file = e.target.files[0];
     //validating the file
     //check if the file is exists
     if (!file) {
@@ -189,41 +257,57 @@ class DesignEditorTab extends React.Component {
       file.type === "image/png" ||
       file.type === "image/jpg"
     ) {
-      var output = document.getElementById("preview");
-      output.src = URL.createObjectURL(e.target.files[0]);
-      this.setState({
-        logo: e.target.files[0].name
+
+      let cropImgFile = await new Promise(async (resolve, reject) => {
+        try {
+          this.setState({
+            selectedFile: file,
+            selectedFilePath: URL.createObjectURL(file),
+            pixelCrop: { unit: "%", x: 20, y: 20, width: 50, height: 50 }
+          });
+          this.handleOpenCropDialogue(true, resolve);
+        } catch (error) {
+          toastr.error(`Crop failed`, "Error");
+          resolve(file);
+        }
       });
-      this.props.setNewLogo(file);
+
+      var output = document.getElementById("preview");
+      output.src = URL.createObjectURL(cropImgFile);
+      this.setState({
+        logo: cropImgFile.name
+      });
+      this.props.setNewLogo(cropImgFile);
+
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
     }
   };
 
-  handleUploadCover = async e => {
-    e.preventDefault();
-    const file = e.target.files[0];
-    //validating the file
-    //check if the file is exists
-    if (!file) {
-      toastr.error("No image is selected!", "Error");
-      return;
-    }
-    //check if the image size is larger than 1MB
-    if (file.size > 1048576) {
-      toastr.error("Image size must be less than 1MB!", "Error");
-      return;
-    }
-    if (
-      file.type === "image/jpeg" ||
-      file.type === "image/png" ||
-      file.type === "image/jpg"
-    ) {
-      this.props.setNewCover(file);
-    } else {
-      toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
-    }
-  };
+  // handleUploadCover = async e => {
+  //   e.preventDefault();
+  //   const file = e.target.files[0];
+  //   //validating the file
+  //   //check if the file is exists
+  //   if (!file) {
+  //     toastr.error("No image is selected!", "Error");
+  //     return;
+  //   }
+  //   //check if the image size is larger than 1MB
+  //   if (file.size > 1048576) {
+  //     toastr.error("Image size must be less than 1MB!", "Error");
+  //     return;
+  //   }
+  //   if (
+  //     file.type === "image/jpeg" ||
+  //     file.type === "image/png" ||
+  //     file.type === "image/jpg"
+  //   ) {
+  //     this.props.setNewCover(file);
+  //   } else {
+  //     toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
+  //   }
+  // };
 
   handleChangeSiteTitle = e => {
     const { changeSiteTitle } = this.props;
@@ -289,6 +373,56 @@ class DesignEditorTab extends React.Component {
 
     return (
       <div style={{ padding: 10 }}>
+
+        <Dialog
+          disableBackdropClick
+          disableEscapeKeyDown
+          open={this.state.openCropDiag}
+          maxWidth="md"
+          fullWidth
+        >
+          <DialogTitle>
+            {/* <Typography className={classes.title}>Crop dimension: {this.state.crop.width} x {this.state.crop.height} </Typography>
+            <Typography className={classes.title}>Recommended dimension: 750 x 400 </Typography> */}
+            <Typography className={classes.title}>Crop Image</Typography>
+          </DialogTitle>
+          <DialogContent style={{ height: "50vh" }}>
+            <ReactCrop src={this.state.selectedFilePath} crop={this.state.pixelCrop} onChange={(crop, pixelCrop) => this.setState({ pixelCrop: pixelCrop })} />
+          </DialogContent>
+          <DialogActions>
+            <Button
+              variant="contained"
+              style={{
+                float: "right",
+                backgroundColor: "#f0eded",
+                width: 70,
+                borderRadius: 5,
+                color: "#555d66",
+                fontSize: 11
+              }}
+              onClick={() => this.handleOpenCropDialogue(false, this.state.currentResolve, true)}
+              color="secondary"
+            >
+              Skip
+          </Button>
+            <Button
+              variant="contained"
+              style={{
+                float: "right",
+                backgroundColor: "#0074aa",
+                width: 70,
+                borderRadius: 5,
+                color: "white",
+                fontSize: 11
+              }}
+              onClick={() => this.handleOpenCropDialogue(false, this.state.currentResolve, false)}
+              color={"primary"}
+            >
+              Confirm
+          </Button>
+          </DialogActions>
+        </Dialog>
+
         <Typography className={classes.title}>Logo</Typography>
         <Grid container justify={"center"} direction={"column"}>
           <Grid
