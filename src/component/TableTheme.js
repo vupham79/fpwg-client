@@ -11,7 +11,8 @@ import {
   TextField,
   DialogTitle,
   DialogContent,
-  DialogActions
+  DialogActions,
+  Typography
 } from "@material-ui/core";
 import Title from "./Title";
 import { connect } from "react-redux";
@@ -20,6 +21,7 @@ import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
 import "./adminStyleSheet.css";
 import { ChromePicker } from "react-color";
+import FontPickerComponent from "./fontPicker";
 
 const useStyles = theme => ({
   seeMore: {
@@ -37,6 +39,14 @@ const useStyles = theme => ({
   },
   iconButton: {
     padding: 10
+  },
+  title2: {
+    fontSize: "13px",
+    marginTop: "0.25rem",
+    fontFamily: "Segoe UI, sans-serif",
+    fontWeight: 600,
+    marginBottom: "1rem",
+    color: "#555d66"
   }
 });
 
@@ -104,7 +114,7 @@ class TableTheme extends Component {
     this.setState({
       updateData: {
         ...this.state.updateData,
-        fontTitle: font.family
+        fontTitle: font
       }
     });
   };
@@ -112,7 +122,7 @@ class TableTheme extends Component {
     this.setState({
       updateData: {
         ...this.state.updateData,
-        fontBody: font.family
+        fontBody: font
       }
     });
   };
@@ -301,8 +311,7 @@ class TableTheme extends Component {
                   />
                 </Grid>
 
-                <Grid item xs={12}>
-                  GoogleFontPicker
+                <Grid container item xs={12}>
                   {/* <GoogleFontPicker
                     label="Body"
                     searchable
@@ -311,10 +320,18 @@ class TableTheme extends Component {
                     defaultFont={this.state.updateData.fontBody}
                     onFontSelected={this.handleChangeFontBody}
                   /> */}
+                  <Grid item xs={3} sm={2}>
+                    <Typography className={classes.title2}>F.Title</Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={5}>
+                    <FontPickerComponent
+                      selectedValue={this.state.updateData.fontTitle}
+                      onChange={this.handleChangeFontTitle}
+                    />
+                  </Grid>
                 </Grid>
 
-                <Grid item xs={12}>
-                  GoogleFontPicker
+                <Grid container item xs={12}>
                   {/* <GoogleFontPicker
                     label="Title"
                     searchable
@@ -323,6 +340,15 @@ class TableTheme extends Component {
                     defaultFont={this.state.updateData.fontTitle}
                     onFontSelected={this.handleChangeFontTitle}
                   /> */}
+                  <Grid item xs={3} sm={2}>
+                    <Typography className={classes.title2}>F.Body</Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={5}>
+                    <FontPickerComponent
+                      selectedValue={this.state.updateData.fontBody}
+                      onChange={this.handleChangeFontBody}
+                    />
+                  </Grid>
                 </Grid>
               </Grid>
               <Grid item xs={4}>
