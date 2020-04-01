@@ -37,6 +37,8 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import SearchIcon from "@material-ui/icons/Search";
 import moment from "moment";
 import React from "react";
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import {
@@ -55,8 +57,6 @@ import {
   setNewLogo
 } from "../actions";
 import toastr from "./Toastr";
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 
 const useStyles = theme => ({
   content: {
@@ -224,7 +224,7 @@ class HomepageEditorTab extends React.Component {
       height: 50
     },
     selectedFile: null,
-    selectedFilePath: null,
+    selectedFilePath: null
   };
 
   handleUploadCover = async e => {
@@ -261,12 +261,13 @@ class HomepageEditorTab extends React.Component {
           }
         });
         this.props.setNewCover(cropImgFile);
-
       } else {
-        toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
+        toastr.error(
+          "Please provide a valid image. (JPG, JPEG or PNG)",
+          "Error"
+        );
       }
-    }
-    else toastr.error("Maximum banner photo added.", "Error");
+    } else toastr.error("Maximum banner photo added.", "Error");
   };
 
   PostsList() {
@@ -325,9 +326,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -377,9 +378,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -430,9 +431,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -463,22 +464,24 @@ class HomepageEditorTab extends React.Component {
   };
 
   urltoFile(url, filename, mimeType) {
-    return (fetch(url)
-      .then(function (res) { return res.arrayBuffer(); })
-      .then(function (buf) { return new File([buf], filename, { type: mimeType }); })
-    );
+    return fetch(url)
+      .then(function(res) {
+        return res.arrayBuffer();
+      })
+      .then(function(buf) {
+        return new File([buf], filename, { type: mimeType });
+      });
   }
 
   getCroppedImg(file) {
-
     let pixelCrop = this.state.pixelCrop;
     let img = new Image();
     img.src = file;
 
-    let canvas = document.createElement('canvas');
+    let canvas = document.createElement("canvas");
     canvas.width = (img.width * pixelCrop.width) / 100;
     canvas.height = (img.height * pixelCrop.height) / 100;
-    let ctx = canvas.getContext('2d');
+    let ctx = canvas.getContext("2d");
 
     ctx.drawImage(
       img,
@@ -493,8 +496,12 @@ class HomepageEditorTab extends React.Component {
     );
 
     // As Base64 string
-    let base64Image = canvas.toDataURL('image/png');
-    let cropImgFile = this.urltoFile(base64Image, this.state.selectedFile.name, 'text/plain');
+    let base64Image = canvas.toDataURL("image/png");
+    let cropImgFile = this.urltoFile(
+      base64Image,
+      this.state.selectedFile.name,
+      "text/plain"
+    );
     // As a blob
     // const blob = new Promise((resolve, reject) => {
     //   canvas.toBlob(file => {
@@ -515,12 +522,11 @@ class HomepageEditorTab extends React.Component {
     if (!bool) {
       if (!isCancel) {
         resolve(await this.getCroppedImg(this.state.selectedFilePath));
-      }
-      else {
+      } else {
         resolve(this.state.selectedFile);
       }
     }
-  }
+  };
   handleOpenPostDialogue = bool => {
     this.setState({
       openDiag: bool
@@ -530,7 +536,7 @@ class HomepageEditorTab extends React.Component {
         let noLongerActive = [];
 
         this.setPosts(
-          this.props.posts.filter(function (pos) {
+          this.props.posts.filter(function(pos) {
             noLongerActive.push(pos);
             return pos.isActive;
           })
@@ -547,7 +553,7 @@ class HomepageEditorTab extends React.Component {
             )
           ) {
             this.state.currentExpandItem.filter.items = this.state.currentExpandItem.filter.items.filter(
-              function (item) {
+              function(item) {
                 return item._id !== noLongerActive[i]._id;
               }
             );
@@ -620,7 +626,7 @@ class HomepageEditorTab extends React.Component {
         toastr.error("Maximum item selected");
       } else index.filter.items = [...index.filter.items, row];
     } else {
-      index.filter.items = index.filter.items.filter(function (post) {
+      index.filter.items = index.filter.items.filter(function(post) {
         return post._id !== row._id;
       });
     }
@@ -682,12 +688,12 @@ class HomepageEditorTab extends React.Component {
     let currentList;
     let searchResult;
     if (this.state.currentExpandType === "news" && this.props.posts) {
-      currentList = this.props.posts.filter(function (pos) {
+      currentList = this.props.posts.filter(function(pos) {
         return pos.isActive;
       });
 
       if (currentList) {
-        searchResult = currentList.filter(function (pos) {
+        searchResult = currentList.filter(function(pos) {
           return pos.message
             ? pos.message.toLowerCase().includes(keyword.toLowerCase())
             : null;
@@ -703,7 +709,7 @@ class HomepageEditorTab extends React.Component {
     if (this.state.currentExpandType === "event" && this.props.site.events) {
       currentList = this.props.site.events;
       if (currentList) {
-        searchResult = currentList.filter(function (pos) {
+        searchResult = currentList.filter(function(pos) {
           return pos.name.toLowerCase().includes(keyword.toLowerCase());
         });
       }
@@ -749,7 +755,7 @@ class HomepageEditorTab extends React.Component {
   handlePageClick = data => {
     let currentList;
     if (this.state.currentExpandType === "news" && this.props.posts) {
-      currentList = this.props.posts.filter(function (pos) {
+      currentList = this.props.posts.filter(function(pos) {
         return pos.isActive;
       });
     }
@@ -989,7 +995,7 @@ class HomepageEditorTab extends React.Component {
         <ExpansionPanel
           expanded={
             this.state.currentExpandItemId === item._id &&
-              this.state.isExpanding
+            this.state.isExpanding
               ? true
               : false
           }
@@ -1182,7 +1188,13 @@ class HomepageEditorTab extends React.Component {
             <Typography className={classes.title}>Crop Image</Typography>
           </DialogTitle>
           <DialogContent style={{ height: "50vh" }}>
-            <ReactCrop src={this.state.selectedFilePath} crop={this.state.pixelCrop} onChange={(crop, pixelCrop) => this.setState({ pixelCrop: pixelCrop })} />
+            <ReactCrop
+              src={this.state.selectedFilePath}
+              crop={this.state.pixelCrop}
+              onChange={(crop, pixelCrop) =>
+                this.setState({ pixelCrop: pixelCrop })
+              }
+            />
           </DialogContent>
           <DialogActions>
             <Button
@@ -1195,11 +1207,17 @@ class HomepageEditorTab extends React.Component {
                 color: "#555d66",
                 fontSize: 11
               }}
-              onClick={() => this.handleOpenCropDialogue(false, this.state.currentResolve, true)}
+              onClick={() =>
+                this.handleOpenCropDialogue(
+                  false,
+                  this.state.currentResolve,
+                  true
+                )
+              }
               color="secondary"
             >
               Skip
-          </Button>
+            </Button>
             <Button
               variant="contained"
               style={{
@@ -1210,11 +1228,17 @@ class HomepageEditorTab extends React.Component {
                 color: "white",
                 fontSize: 11
               }}
-              onClick={() => this.handleOpenCropDialogue(false, this.state.currentResolve, false)}
+              onClick={() =>
+                this.handleOpenCropDialogue(
+                  false,
+                  this.state.currentResolve,
+                  false
+                )
+              }
               color={"primary"}
             >
               Confirm
-          </Button>
+            </Button>
           </DialogActions>
         </Dialog>
         {postDialog()}
@@ -1271,7 +1295,7 @@ class HomepageEditorTab extends React.Component {
             <Add fontSize="small" />
           </Grid>
         </Grid>
-      </div >
+      </div>
     );
   }
 }

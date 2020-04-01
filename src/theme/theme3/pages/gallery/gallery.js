@@ -1,8 +1,7 @@
-import { Grid, Typography, Tabs, Tab } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import GalleryComponent from "../../../component/galleryComponent";
-import PostTypeComponent from "../../../component/postsType";
 import styles from "./gallery.module.css";
 
 class GalleryPage extends React.Component {
