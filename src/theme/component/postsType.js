@@ -602,6 +602,9 @@ class PostTypeComponent extends React.Component {
               )
             : fromHome
             ? posts
+                .filter(function(pos) {
+                  return pos.isActive;
+                })
                 .slice(0, 5)
                 .map(
                   (post, index) =>

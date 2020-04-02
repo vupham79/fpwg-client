@@ -54,3 +54,19 @@
 .support_icon {
   margin-right: 0.5rem;
 }
+
+.fadeBox {
+  border-top: 1px solid #dddddd !important;
+}
+
+@media only screen and (max-width: 900px) {
+  .fadeShow {
+      display: none;
+  }
+}
+
+@media only screen and (max-width: 300px) {
+  .fadeShowPhone {
+      display: none;
+  }
+}
