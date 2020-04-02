@@ -210,11 +210,6 @@ class BannerComponent extends React.Component {
 }
 const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
-  titleEdit: state.site.titleEdit,
-  bodyEdit: state.site.bodyEdit,
-  titleView: state.site.titleView,
-  bodyView: state.site.bodyView,
-  newLogo: state.site.newLogo,
   newCover: state.site.newCover,
   siteEdit: state.site.siteEdit,
   siteView: state.site.siteView

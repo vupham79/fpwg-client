@@ -4,12 +4,18 @@ import {
   Grid,
   withStyles,
   CardActionArea,
-  CardMedia
+  CardMedia,
+  Typography
 } from "@material-ui/core";
+import Link from "../../component/link";
 import React from "react";
 import { connect } from "react-redux";
 import Pagination from "@material-ui/lab/Pagination";
-import { getDataByPageNumber, setGalleriesToSiteView } from "../../actions";
+import {
+  getDataByPageNumber,
+  setGalleriesToSiteView,
+  updateNavItemValue
+} from "../../actions";
 import ReactPaginate from "react-paginate";
 
 const useStyles = theme => ({
@@ -108,6 +114,125 @@ class GalleryComponent extends React.Component {
     });
   };
 
+  renderHomepageGallery = () => {
+    const { classes, galleries, siteView, titleView } = this.props;
+    return (
+      <>
+        {galleries.map((item, index) => (
+          <Grid
+            item
+            key={index}
+            xs={12}
+            sm={4}
+            md={3}
+            className={classes.gridItems}
+          >
+            <CardActionArea>
+              <CardMedia
+                className={classes.media}
+                image={item && item.url && item.url}
+                onClick={() =>
+                  this.handleOpenDialog(item && item.url && item.url)
+                }
+              />
+            </CardActionArea>
+          </Grid>
+        ))}
+        <Grid item xs={12} sm={4} md={3} className={classes.gridItems}>
+          <CardActionArea style={{ position: "relative" }}>
+            <CardMedia
+              className={classes.media}
+              style={{ opacity: "0.1" }}
+              image={siteView.logo}
+            />
+            <Link to="gallery">
+              <Typography
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: 0,
+                  right: 0,
+                  textAlign: "center",
+                  textDecoration: "underline",
+                  fontFamily: titleView.fontFamily,
+                  fontWeight: 700,
+                  color: titleView.color
+                }}
+              >
+                View Gallery
+              </Typography>
+            </Link>
+          </CardActionArea>
+        </Grid>
+      </>
+    );
+  };
+
+  renderHomepageGalleryEdit = () => {
+    const {
+      classes,
+      galleries,
+      siteEdit,
+      titleEdit,
+      updateNavItemValue
+    } = this.props;
+    return (
+      <>
+        {galleries.slice(0, 5).map((item, index) => (
+          <Grid
+            item
+            key={index}
+            xs={12}
+            sm={4}
+            md={3}
+            className={classes.gridItems}
+          >
+            <CardActionArea>
+              <CardMedia
+                className={classes.media}
+                image={item && item.url}
+                title="Gallery image"
+                onClick={() => this.handleOpenDialog(item && item.url)}
+              />
+            </CardActionArea>
+          </Grid>
+        ))}
+        <Grid item xs={12} sm={4} md={3} className={classes.gridItems}>
+          <CardActionArea
+            style={{ position: "relative" }}
+            onClick={(e, value) => {
+              const gallery = siteEdit.navItems.filter(item => {
+                return item.original === "gallery";
+              });
+              updateNavItemValue(gallery[0].order - 1);
+            }}
+          >
+            <CardMedia
+              className={classes.media}
+              style={{ opacity: "0.1" }}
+              image={siteEdit.logo}
+            />
+            <Typography
+              style={{
+                position: "absolute",
+                top: "50%",
+                left: 0,
+                right: 0,
+                textAlign: "center",
+                textDecoration: "underline",
+                fontFamily: titleEdit.fontFamily,
+                fontWeight: 700,
+                color: siteEdit.color
+              }}
+            >
+              View Gallery
+            </Typography>
+          </CardActionArea>
+        </Grid>
+      </>
+    );
+  };
+
   render() {
     const { classes, galleries, pageCountView, isEdit, fromHome } = this.props;
     return (
@@ -142,27 +267,7 @@ class GalleryComponent extends React.Component {
                       </CardActionArea>
                     </Grid>
                   ))
-                : galleries.slice(0, 5).map((item, index) => (
-                    <Grid
-                      item
-                      key={index}
-                      xs={12}
-                      sm={4}
-                      md={3}
-                      className={classes.gridItems}
-                    >
-                      <CardActionArea>
-                        <CardMedia
-                          className={classes.media}
-                          image={item && item.url}
-                          title="Gallery image"
-                          onClick={() =>
-                            this.handleOpenDialog(item && item.url)
-                          }
-                        />
-                      </CardActionArea>
-                    </Grid>
-                  ))
+                : this.renderHomepageGalleryEdit()
               : !fromHome
               ? galleries.map((item, index) => (
                   <Grid
@@ -187,27 +292,7 @@ class GalleryComponent extends React.Component {
                     </CardActionArea>
                   </Grid>
                 ))
-              : galleries.map((item, index) => (
-                  <Grid
-                    item
-                    key={index}
-                    xs={12}
-                    sm={4}
-                    md={3}
-                    className={classes.gridItems}
-                  >
-                    <CardActionArea>
-                      <CardMedia
-                        className={classes.media}
-                        image={item && item.url && item.url}
-                        title="Gallery image"
-                        onClick={() =>
-                          this.handleOpenDialog(item && item.url && item.url)
-                        }
-                      />
-                    </CardActionArea>
-                  </Grid>
-                ))}
+              : this.renderHomepageGallery()}
           </Grid>
           {isEdit
             ? this.state.pageCount > 1 &&
@@ -266,14 +351,19 @@ class GalleryComponent extends React.Component {
 
 const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
-  pageCountView: state.post.pageCountGalleriesView
+  pageCountView: state.post.pageCountGalleriesView,
+  siteEdit: state.site.siteEdit,
+  siteView: state.site.siteView,
+  titleView: state.site.titleView,
+  titleEdit: state.site.titleEdit
 });
 
 const mapDispatchToProps = dispatch => ({
   getDataByPageNumber: ({ sitePath, page, siteId, pageNumber }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
   setGalleriesToSiteView: galleries =>
-    dispatch(setGalleriesToSiteView(galleries))
+    dispatch(setGalleriesToSiteView(galleries)),
+  updateNavItemValue: value => dispatch(updateNavItemValue(value))
 });
 
 export default connect(
