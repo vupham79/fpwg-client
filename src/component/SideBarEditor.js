@@ -207,7 +207,7 @@ class ClippedDrawer extends React.Component {
                   color="primary"
                   onClick={() => this.props.setFramePreview(0)}
                 >
-                  <FontAwesomeIcon icon={faDesktop} color="#565d66" size="xs" />
+                  <FontAwesomeIcon icon={faDesktop} color="#565d66" size="sm" />
                 </IconButton>
               </Grid>
               <Grid item className={styles.fadeShow}>
@@ -225,7 +225,7 @@ class ClippedDrawer extends React.Component {
                   color="primary"
                   onClick={() => this.props.setFramePreview(2)}
                 >
-                  <FontAwesomeIcon icon={faTabletAlt} color="#565d66" size="sm" />
+                  <FontAwesomeIcon icon={faTabletAlt} color="#565d66" size="xs" />
                 </IconButton>
               </Grid>
             </Grid>
