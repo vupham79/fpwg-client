@@ -58,7 +58,8 @@ import {
   changeHomeItemName,
   changeSiteAbout,
   setIsChanged,
-  changeSiteAddress
+  changeSiteAddress,
+  setFramePreview
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import {
@@ -180,5 +181,6 @@ export {
   setHomepageToSiteView,
   setIsChanged,
   changeSiteAddress,
-  updateSelectNavItemValue
+  updateSelectNavItemValue,
+  setFramePreview
 };

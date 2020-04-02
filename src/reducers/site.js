@@ -16,6 +16,7 @@ const defaultState = {
   newLogo: null,
   newCover: [],
   isPreview: false,
+  framePreviewMode: 0,
   isChanged: false,
   youtube: null,
   instagram: null,
@@ -304,6 +305,11 @@ const SiteReducer = (state = defaultState, action) => {
       return {
         ...state,
         isPreview: action.payload
+      };
+    case "SET_FRAME_PREVIEW_MODE":
+      return {
+        ...state,
+        framePreviewMode: action.payload
       };
     case "REMOVE_COVER":
       const img = action.payload;

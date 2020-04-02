@@ -23,14 +23,14 @@ function revertSaveData(modDat) {
       index++
     ) {
       if (type === "news") {
-        modDat.homepage[i].filter.items[index] = modDat.posts.filter(function(
+        modDat.homepage[i].filter.items[index] = modDat.posts.filter(function (
           pos
         ) {
           return pos._id === modDat.homepage[i].filter.items[index];
         })[0];
       }
       if (type === "event") {
-        modDat.homepage[i].filter.items[index] = modDat.events.filter(function(
+        modDat.homepage[i].filter.items[index] = modDat.events.filter(function (
           pos
         ) {
           return pos._id === modDat.homepage[i].filter.items[index];
@@ -38,7 +38,7 @@ function revertSaveData(modDat) {
       }
       if (type === "gallery") {
         modDat.homepage[i].filter.items[index] = modDat.galleries.filter(
-          function(pos) {
+          function (pos) {
             return pos._id === modDat.homepage[i].filter.items[index];
           }
         )[0];
@@ -696,6 +696,15 @@ export function setPreviewMode(bool) {
     dispatch({
       type: "SET_PREVIEW_MODE",
       payload: bool
+    });
+  };
+}
+
+export function setFramePreview(mode) {
+  return dispatch => {
+    dispatch({
+      type: "SET_FRAME_PREVIEW_MODE",
+      payload: mode
     });
   };
 }

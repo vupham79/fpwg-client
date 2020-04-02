@@ -27,44 +27,46 @@ class EditLayout extends Component {
               sm={12}
               xs={12}
               justify="center"
-              style={{ background: "black" }}
+              style={{ background: "#191e23" }}
             >
               <Grid
                 item
-                xs={12}
                 style={{
+                  width: this.props.framePreviewMode === 0 ? "100%" : (this.props.framePreviewMode === 1 ? 700 : 300),
+                  height: this.props.framePreviewMode === 2 ? 450 : "auto",
                   background: "white",
                   overflowY: "scroll",
                   overflowX: "hidden",
-                  height: "100vh"
                 }}
               >
                 {this.props.children}
               </Grid>
             </Grid>
           ) : (
-            <Grid
-              container
-              item
-              sm={9}
-              xs={12}
-              justify="center"
-              style={{ background: "black" }}
-            >
               <Grid
+                container
                 item
+                sm={9}
                 xs={12}
-                style={{
-                  background: "white",
-                  overflowY: "scroll",
-                  overflowX: "hidden",
-                  height: "100vh"
-                }}
+                justify="center"
+                style={{ background: "#191e23" }}
               >
-                {this.props.children}
+                <Grid
+                  item
+                  style={{
+                    width: this.props.framePreviewMode === 0 ? "100%" : (this.props.framePreviewMode === 1 ? 700 : 300),
+                    height: this.props.framePreviewMode === 2 ? 450 : "auto",
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                    background: "white",
+                    overflowY: "scroll",
+                    overflowX: "hidden",
+                  }}
+                >
+                  {this.props.children}
+                </Grid>
               </Grid>
-            </Grid>
-          )}
+            )}
 
           <button
             onClick={() => this.props.setPreviewMode(!this.props.isPreview)}
@@ -85,11 +87,12 @@ class EditLayout extends Component {
 }
 
 const mapStateToProps = state => ({
-  isPreview: state.site.isPreview
+  isPreview: state.site.isPreview,
+  framePreviewMode: state.site.framePreviewMode
 });
 
 const mapDispatchToProps = dispatch => ({
-  setPreviewMode: bool => dispatch(setPreviewMode(bool))
+  setPreviewMode: bool => dispatch(setPreviewMode(bool)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditLayout);

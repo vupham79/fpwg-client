@@ -1,6 +1,9 @@
 import {
   faArrowLeft,
-  faTimes as faWindowClose
+  faTimes as faWindowClose,
+  faTablet,
+  faDesktop,
+  faTabletAlt
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,13 +16,14 @@ import {
   DialogContentText,
   DialogTitle,
   Drawer,
-  Grid
+  Grid,
+  IconButton
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { saveDesignSite, setIsChanged, updateTabValue } from "../actions";
+import { saveDesignSite, setIsChanged, updateTabValue, setFramePreview } from "../actions";
 import AccordionButton from "../theme/component/mainComponent";
 import DesignTab from "./DesignEditorTab";
 import HomepageEditorTab from "./HomepageEditorTab";
@@ -28,6 +32,7 @@ import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
 import SyncEditorTab from "./SyncEditorTab";
 import ThemeEditorTab from "./ThemeEditorTab";
+import styles from './index.module.css';
 
 const useStyles = theme => ({
   root: {
@@ -106,6 +111,7 @@ class ClippedDrawer extends React.Component {
           }}
         >
           <Grid container style={{ border: "1px solid #dddddd" }}>
+
             <Grid item xs={2}>
               <Button
                 fullWidth
@@ -121,7 +127,6 @@ class ClippedDrawer extends React.Component {
               >
                 <FontAwesomeIcon
                   icon={faWindowClose}
-                  // color="#0074aa"
                   size="sm"
                 />
               </Button>
@@ -155,6 +160,7 @@ class ClippedDrawer extends React.Component {
                 </DialogActions>
               </Dialog>
             </Grid>
+
             <Grid
               item
               xs={10}
@@ -165,7 +171,6 @@ class ClippedDrawer extends React.Component {
                 style={{
                   float: "right",
                   backgroundColor: "#0074aa",
-                  width: 70,
                   borderRadius: 5,
                   color: "white",
                   fontSize: 11
@@ -189,6 +194,48 @@ class ClippedDrawer extends React.Component {
                 Save
               </Button>
             </Grid>
+
+            <Grid
+              item
+              justify="center"
+              className={styles.fadeShow}
+              xs={12}>
+
+              <IconButton
+                aria-label=""
+                color="primary"
+                onClick={() => this.props.setFramePreview(2)}
+                style={{
+                  float: "right"
+                }}
+              >
+                <FontAwesomeIcon icon={faTabletAlt} color="#565d66" size="xs" />
+              </IconButton>
+
+              <IconButton
+                aria-label=""
+                color="primary"
+                onClick={() => this.props.setFramePreview(1)}
+                style={{
+                  float: "right"
+                }}
+              >
+                <FontAwesomeIcon icon={faTablet} color="#565d66" size="sm" />
+              </IconButton>
+
+              <IconButton
+                aria-label=""
+                color="primary"
+                onClick={() => this.props.setFramePreview(0)}
+                style={{
+                  float: "right"
+                }}
+              >
+                <FontAwesomeIcon icon={faDesktop} color="#565d66" size="sm" />
+              </IconButton>
+
+            </Grid>
+
           </Grid>
           <Grid container direction="row" style={{ backgroundColor: "white" }}>
             <Grid
@@ -304,7 +351,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   updateTabValue: value => dispatch(updateTabValue(value)),
   saveDesignSite: data => dispatch(saveDesignSite(data)),
-  setIsChangedToFalse: () => dispatch(setIsChanged())
+  setIsChangedToFalse: () => dispatch(setIsChanged()),
+  setFramePreview: mode => dispatch(setFramePreview(mode))
 });
 
 export default connect(
