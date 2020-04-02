@@ -1,4 +1,4 @@
-import { Divider, Grid } from "@material-ui/core";
+import { Divider, Grid, CardMedia } from "@material-ui/core";
 import moment from "moment";
 import React from "react";
 import { connect } from "react-redux";
@@ -85,7 +85,9 @@ class EventComponent extends React.Component {
       titleView,
       bodyEdit,
       bodyView,
-      homeList
+      homeList,
+      siteEdit,
+      siteView
     } = this.props;
 
     const useStyles = () => ({
@@ -152,12 +154,12 @@ class EventComponent extends React.Component {
             container
             alignItems="center"
             direction="column"
-            // className={classes.eventPage}
+          // className={classes.eventPage}
           >
             <Grid
               item
-              sm={6}
-              xs={10}
+              sm={10}
+              xs={12}
               container
               justify="center"
               className={styles.event_body}
@@ -203,8 +205,21 @@ class EventComponent extends React.Component {
                         sm={12}
                         className={styles.contain_event}
                         key={index}
-                        style={{ marginTop: 10, backgroundColor: "white" }}
+                        style={{ paddingTop: 10, paddingBottom: 10, backgroundColor: "white" }}
                       >
+                        <Grid
+                          item
+                          xs={2}
+                          style={{ display: isEdit ? (siteEdit.showCoverEvent ? "block" : "none") : (siteView.showCoverEvent ? "block" : "none") }}
+                        >
+                          <CardMedia
+                            component="img"
+                            alt=""
+                            height="100%"
+                            image={row.cover}
+                          />
+                        </Grid>
+
                         <Grid
                           container
                           direction="row"
@@ -222,8 +237,15 @@ class EventComponent extends React.Component {
                           </Grid>
                         </Grid>
 
-                        <Grid container direction="row" item xs={4}>
-                          <Grid item xs={12} style={{ fontWeight: "bold" }}>
+                        <Grid container direction="row" item xs={2}>
+                          <Grid item xs={12}
+                            style={{
+                              fontWeight: "bold",
+                              whiteSpace: "nowrap",
+                              textOverflow: "ellipsis",
+                              overflow: "hidden",
+                              display: "inline-block"
+                            }}>
                             <a
                               href={"https://" + row.url}
                               target="_blank"
@@ -244,7 +266,24 @@ class EventComponent extends React.Component {
                           </Grid>
                         </Grid>
 
-                        <Grid container direction="row" item xs={6}>
+                        <Grid
+                          item
+                          xs={3}
+                          style={{
+                            whiteSpace: "pre-wrap",
+                            wordWrap: "break-word",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            display: isEdit ? (siteEdit.showDesEvent ? "inline-block" : "none") : (siteView.showDesEvent ? "inline-block" : "none"),
+                            height: "6em",
+                            lineHeight: "1.5em",
+                            fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
+                          }}
+                        >
+                          {row.description}
+                        </Grid>
+
+                        <Grid container direction="row" item xs={3} style={{ display: isEdit ? (siteEdit.showPlaceEvent ? "block" : "none") : (siteView.showPlaceEvent ? "block" : "none") }}>
                           <Grid
                             item
                             xs={12}
@@ -255,7 +294,7 @@ class EventComponent extends React.Component {
                               display: "inline-block"
                             }}
                           >
-                            {row.place.name}
+                            {row.place && row.place.name}
                           </Grid>
 
                           <Grid
@@ -268,7 +307,7 @@ class EventComponent extends React.Component {
                               display: "inline-block"
                             }}
                           >
-                            {row.place.city}
+                            {row.place && row.place.city}
                           </Grid>
                         </Grid>
                       </Grid>
@@ -316,8 +355,22 @@ class EventComponent extends React.Component {
                         sm={12}
                         className={styles.contain_event}
                         key={index}
-                        style={{ marginTop: 10, backgroundColor: "white" }}
+                        style={{ paddingTop: 10, paddingBottom: 10, backgroundColor: "white" }}
                       >
+
+                        <Grid
+                          item
+                          xs={2}
+                          style={{ display: isEdit ? (siteEdit.showCoverEvent ? "block" : "none") : (siteView.showCoverEvent ? "block" : "none") }}
+                        >
+                          <CardMedia
+                            component="img"
+                            alt=""
+                            height="100%"
+                            image={row.cover}
+                          />
+                        </Grid>
+
                         <Grid
                           container
                           direction="row"
@@ -335,8 +388,15 @@ class EventComponent extends React.Component {
                           </Grid>
                         </Grid>
 
-                        <Grid container direction="row" item xs={4}>
-                          <Grid item xs={12} style={{ fontWeight: "bold" }}>
+                        <Grid container direction="row" item xs={2}>
+                          <Grid item xs={12}
+                            style={{
+                              fontWeight: "bold",
+                              whiteSpace: "nowrap",
+                              textOverflow: "ellipsis",
+                              overflow: "hidden",
+                              display: "inline-block"
+                            }}>
                             <a
                               href={"https://" + row.url}
                               target="_blank"
@@ -357,7 +417,24 @@ class EventComponent extends React.Component {
                           </Grid>
                         </Grid>
 
-                        <Grid container direction="row" item xs={6}>
+                        <Grid
+                          item
+                          xs={3}
+                          style={{
+                            whiteSpace: "pre-wrap",
+                            wordWrap: "break-word",
+                            textOverflow: "ellipsis",
+                            overflow: "hidden",
+                            display: isEdit ? (siteEdit.showDesEvent ? "inline-block" : "none") : (siteView.showDesEvent ? "inline-block" : "none"),
+                            height: "6em",
+                            lineHeight: "1.5em",
+                            fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
+                          }}
+                        >
+                          {row.description}
+                        </Grid>
+
+                        <Grid container direction="row" item xs={3} style={{ display: isEdit ? (siteEdit.showPlaceEvent ? "block" : "none") : (siteView.showPlaceEvent ? "block" : "none") }}>
                           <Grid
                             item
                             xs={12}
@@ -442,7 +519,9 @@ const mapStateToProps = state => ({
   posts: state.post.posts,
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
-  pageCountView: state.post.pageCountEventView
+  pageCountView: state.post.pageCountEventView,
+  siteEdit: state.site.siteEdit,
+  siteView: state.site.siteView,
 });
 
 const mapDispatchToProps = dispatch => ({

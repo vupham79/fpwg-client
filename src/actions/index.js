@@ -59,7 +59,8 @@ import {
   changeSiteAbout,
   setIsChanged,
   changeSiteAddress,
-  setFramePreview
+  setFramePreview,
+  setEventCustomize
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import {
@@ -182,5 +183,6 @@ export {
   setIsChanged,
   changeSiteAddress,
   updateSelectNavItemValue,
-  setFramePreview
+  setFramePreview,
+  setEventCustomize
 };

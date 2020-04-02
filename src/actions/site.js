@@ -500,7 +500,7 @@ export function getSiteById(id) {
           id: id
         }
       });
-
+      console.log(data);
       dispatch({
         type: "CLOSE_LOADING"
       });
@@ -1052,6 +1052,19 @@ export function setIsChanged() {
   return dispatch => {
     dispatch({
       type: "SET_ISCHANGED_FALSE"
+    });
+  };
+}
+
+export function setEventCustomize(cover, description, place) {
+  return async dispatch => {
+    dispatch({
+      type: "SET_EVENT_CUSTOMIZE",
+      payload: {
+        cover: cover,
+        description: description,
+        place: place
+      }
     });
   };
 }
