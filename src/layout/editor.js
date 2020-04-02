@@ -27,13 +27,15 @@ class EditLayout extends Component {
               sm={12}
               xs={12}
               justify="center"
-              style={{ background: "#191e23" }}
+              style={{ background: "#191e23", height: "100vh" }}
             >
               <Grid
                 item
                 style={{
                   width: this.props.framePreviewMode === 0 ? "100%" : (this.props.framePreviewMode === 1 ? 700 : 300),
                   height: this.props.framePreviewMode === 2 ? 450 : "100vh",
+                  marginTop: "auto",
+                  marginBottom: "auto",
                   background: "white",
                   overflowY: "scroll",
                   overflowX: "hidden",
@@ -49,7 +51,7 @@ class EditLayout extends Component {
                 sm={9}
                 xs={12}
                 justify="center"
-                style={{ background: "#191e23" }}
+                style={{ background: "#191e23", height: "100vh" }}
               >
                 <Grid
                   item
