@@ -33,7 +33,7 @@ class EditLayout extends Component {
                 item
                 style={{
                   width: this.props.framePreviewMode === 0 ? "100%" : (this.props.framePreviewMode === 1 ? 700 : 300),
-                  height: this.props.framePreviewMode === 2 ? 450 : "auto",
+                  height: this.props.framePreviewMode === 2 ? 450 : "100vh",
                   background: "white",
                   overflowY: "scroll",
                   overflowX: "hidden",
