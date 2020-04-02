@@ -10,6 +10,7 @@ import {
   CardMedia,
   CardContent
 } from "@material-ui/core";
+import CategoryPicker from "./CategoryPicker";
 
 const useStyles = theme => ({
   content: {
@@ -58,7 +59,33 @@ const useStyles = theme => ({
 
 class ThemeEditorTab extends React.Component {
   state = {
-    id: this.props.site.theme.id
+    id: this.props.site.theme.id,
+    currentCategory: "All",
+    filteredData: []
+  };
+
+  componentDidMount() {
+    this.setState({
+      filteredData: this.props.themes
+    })
+  }
+
+  handleChangeCategory = category => {
+    this.setState({
+      currentCategory: category
+    })
+    if (category === "All") {
+      this.setState({
+        filteredData: this.props.themes
+      })
+    }
+    else {
+      this.setState({
+        filteredData: this.props.themes.filter(function (theme) {
+          return theme.category === category;
+        })
+      })
+    }
   };
 
   handleChangeTheme = selectId => {
@@ -72,7 +99,7 @@ class ThemeEditorTab extends React.Component {
     changeTheme(theme);
 
     //go to home tab of new theme
-    let searchResult = site.navItems.filter(function(nav) {
+    let searchResult = site.navItems.filter(function (nav) {
       return nav.original === "home";
     });
     if (searchResult) {
@@ -81,9 +108,10 @@ class ThemeEditorTab extends React.Component {
   };
 
   render() {
-    const { themes } = this.props;
+    const { filteredData } = this.state;
     return (
       <div style={{ padding: 20 }}>
+
         <Grid
           container
           style={{
@@ -91,16 +119,35 @@ class ThemeEditorTab extends React.Component {
             textAlign: "left",
             fontStyle: "italic",
             fontFamily: "Segoe UI, sans-serif",
-            marginTop: "1rem",
+            fontSize: 14
+          }}
+        >
+          Find a category that suits your business.
+        </Grid>
+
+        <Grid container style={{ marginBottom: "3rem", marginTop: "0.5rem" }}>
+          <CategoryPicker
+            selectedValue={this.state.currentCategory}
+            onChange={this.handleChangeCategory}
+          />
+        </Grid>
+
+        <Grid
+          container
+          style={{
+            color: "#555d66",
+            textAlign: "left",
+            fontStyle: "italic",
+            fontFamily: "Segoe UI, sans-serif",
             marginBottom: "2rem",
             fontSize: 14
           }}
         >
-          Pick a theme for your site.
+          Pick a theme.
         </Grid>
 
         <Grid container direction="column">
-          {themes.map((theme, i) => {
+          {filteredData.map((theme, i) => {
             return (
               <Grid key={i} item sm={12} style={{ marginBottom: "1rem" }}>
                 <Card
