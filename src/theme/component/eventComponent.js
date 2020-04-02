@@ -205,18 +205,17 @@ class EventComponent extends React.Component {
                         sm={12}
                         className={styles.contain_event}
                         key={index}
-                        style={{ paddingTop: 10, paddingBottom: 10, backgroundColor: "white" }}
+                        style={{ padding: 10, backgroundColor: "white" }}
                       >
                         <Grid
                           item
                           xs={2}
                           style={{ display: isEdit ? (siteEdit.showCoverEvent ? "block" : "none") : (siteView.showCoverEvent ? "block" : "none") }}
                         >
-                          <CardMedia
-                            component="img"
+                          <img
+                            style={{ objectFit: "contain", width: "100%", height: "100%" }}
+                            src={row.cover}
                             alt=""
-                            height="100%"
-                            image={row.cover}
                           />
                         </Grid>
 
@@ -358,7 +357,7 @@ class EventComponent extends React.Component {
                         sm={12}
                         className={styles.contain_event}
                         key={index}
-                        style={{ paddingTop: 10, paddingBottom: 10, backgroundColor: "white" }}
+                        style={{ padding: 10, backgroundColor: "white" }}
                       >
 
                         <Grid
@@ -366,11 +365,10 @@ class EventComponent extends React.Component {
                           xs={2}
                           style={{ display: isEdit ? (siteEdit.showCoverEvent ? "block" : "none") : (siteView.showCoverEvent ? "block" : "none") }}
                         >
-                          <CardMedia
-                            component="img"
+                          <img
+                            style={{ objectFit: "contain", width: "100%", height: "100%" }}
+                            src={row.cover}
                             alt=""
-                            height="100%"
-                            image={row.cover}
                           />
                         </Grid>
 
