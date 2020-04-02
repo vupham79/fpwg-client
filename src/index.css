@@ -55,7 +55,7 @@ code {
 
 .slick-track .slick-slide {
   display: flex !important;
-  height: 40rem !important;
+  max-height: 40rem !important;
   align-items: center !important;
   justify-content: center !important;
 }
