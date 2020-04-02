@@ -197,43 +197,37 @@ class ClippedDrawer extends React.Component {
 
             <Grid
               item
+              container
               justify="center"
-              className={styles.fadeShow}
+              className={styles.fadeBox}
               xs={12}>
-
-              <IconButton
-                aria-label=""
-                color="primary"
-                onClick={() => this.props.setFramePreview(2)}
-                style={{
-                  float: "right"
-                }}
-              >
-                <FontAwesomeIcon icon={faTabletAlt} color="#565d66" size="xs" />
-              </IconButton>
-
-              <IconButton
-                aria-label=""
-                color="primary"
-                onClick={() => this.props.setFramePreview(1)}
-                style={{
-                  float: "right"
-                }}
-              >
-                <FontAwesomeIcon icon={faTablet} color="#565d66" size="sm" />
-              </IconButton>
-
-              <IconButton
-                aria-label=""
-                color="primary"
-                onClick={() => this.props.setFramePreview(0)}
-                style={{
-                  float: "right"
-                }}
-              >
-                <FontAwesomeIcon icon={faDesktop} color="#565d66" size="sm" />
-              </IconButton>
-
+              <Grid item className={styles.fadeShow}>
+                <IconButton
+                  aria-label=""
+                  color="primary"
+                  onClick={() => this.props.setFramePreview(0)}
+                >
+                  <FontAwesomeIcon icon={faDesktop} color="#565d66" size="xs" />
+                </IconButton>
+              </Grid>
+              <Grid item className={styles.fadeShow}>
+                <IconButton
+                  aria-label=""
+                  color="primary"
+                  onClick={() => this.props.setFramePreview(1)}
+                >
+                  <FontAwesomeIcon icon={faTablet} color="#565d66" size="sm" />
+                </IconButton>
+              </Grid>
+              <Grid item className={styles.fadeShowPhone}>
+                <IconButton
+                  aria-label=""
+                  color="primary"
+                  onClick={() => this.props.setFramePreview(2)}
+                >
+                  <FontAwesomeIcon icon={faTabletAlt} color="#565d66" size="sm" />
+                </IconButton>
+              </Grid>
             </Grid>
 
           </Grid>
