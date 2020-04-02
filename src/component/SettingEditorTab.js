@@ -227,6 +227,9 @@ class SettingEditorTab extends React.Component {
                   input: classes.inputTitle
                 }
               }}
+              inputProps={{
+                maxLength: 50
+              }}
             />
           </Grid>
         </Grid>
@@ -271,6 +274,9 @@ class SettingEditorTab extends React.Component {
                     input: classes.inputTitle
                   }
                 }}
+                inputProps={{
+                  maxLength: 15
+                }}
               />
             </Grid>
           </Grid>
@@ -311,6 +317,9 @@ class SettingEditorTab extends React.Component {
                     input: classes.inputTitle
                   }
                 }}
+                inputProps={{
+                  maxLength: 250
+                }}
               />
             </Grid>
           </Grid>
@@ -346,6 +355,9 @@ class SettingEditorTab extends React.Component {
                     notchedOutline: classes.notchedOutline,
                     input: classes.inputTitle
                   }
+                }}
+                inputProps={{
+                  maxLength: 250
                 }}
               />
             </Grid>
@@ -395,6 +407,9 @@ class SettingEditorTab extends React.Component {
                     input: classes.inputTitle
                   }
                 }}
+                inputProps={{
+                  maxLength: 250
+                }}
               />
             </Grid>
           </Grid>
@@ -431,6 +446,9 @@ class SettingEditorTab extends React.Component {
                     input: classes.inputTitle
                   }
                 }}
+                inputProps={{
+                  maxLength: 54
+                }}
               />
             </Grid>
           </Grid>
@@ -466,6 +484,9 @@ class SettingEditorTab extends React.Component {
                     notchedOutline: classes.notchedOutline,
                     input: classes.inputTitle
                   }
+                }}
+                inputProps={{
+                  maxLength: 75
                 }}
               />
             </Grid>

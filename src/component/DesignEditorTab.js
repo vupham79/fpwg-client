@@ -9,7 +9,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
+  DialogTitle
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Cancel } from "@material-ui/icons";
@@ -31,8 +31,8 @@ import {
 } from "../actions";
 import toastr from "./Toastr";
 import FontPickerComponent from "./fontPicker";
-import ReactCrop from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
+import ReactCrop from "react-image-crop";
+import "react-image-crop/dist/ReactCrop.css";
 
 const useStyles = theme => ({
   content: {
@@ -146,26 +146,28 @@ class DesignEditorTab extends React.Component {
       height: 50
     },
     selectedFile: null,
-    selectedFilePath: null,
+    selectedFilePath: null
   };
 
   urltoFile(url, filename, mimeType) {
-    return (fetch(url)
-      .then(function (res) { return res.arrayBuffer(); })
-      .then(function (buf) { return new File([buf], filename, { type: mimeType }); })
-    );
+    return fetch(url)
+      .then(function(res) {
+        return res.arrayBuffer();
+      })
+      .then(function(buf) {
+        return new File([buf], filename, { type: mimeType });
+      });
   }
 
   getCroppedImg(file) {
-
     let pixelCrop = this.state.pixelCrop;
     let img = new Image();
     img.src = file;
 
-    let canvas = document.createElement('canvas');
+    let canvas = document.createElement("canvas");
     canvas.width = (img.width * pixelCrop.width) / 100;
     canvas.height = (img.height * pixelCrop.height) / 100;
-    let ctx = canvas.getContext('2d');
+    let ctx = canvas.getContext("2d");
 
     ctx.drawImage(
       img,
@@ -179,8 +181,12 @@ class DesignEditorTab extends React.Component {
       canvas.height
     );
 
-    let base64Image = canvas.toDataURL('image/png');
-    let cropImgFile = this.urltoFile(base64Image, this.state.selectedFile.name, 'text/plain');
+    let base64Image = canvas.toDataURL("image/png");
+    let cropImgFile = this.urltoFile(
+      base64Image,
+      this.state.selectedFile.name,
+      "text/plain"
+    );
     return cropImgFile;
   }
 
@@ -192,12 +198,11 @@ class DesignEditorTab extends React.Component {
     if (!bool) {
       if (!isCancel) {
         resolve(await this.getCroppedImg(this.state.selectedFilePath));
-      }
-      else {
+      } else {
         resolve(this.state.selectedFile);
       }
     }
-  }
+  };
 
   async componentDidMount() {
     const { setColorPallete, site } = this.props;
@@ -208,7 +213,7 @@ class DesignEditorTab extends React.Component {
     this.setState({
       logo: site.logo
     });
-    img.addEventListener("load", async function () {
+    img.addEventListener("load", async function() {
       const color = await colorThief.getPalette(img, 11);
       const colors = await color.map(rgb =>
         onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
@@ -257,7 +262,6 @@ class DesignEditorTab extends React.Component {
       file.type === "image/png" ||
       file.type === "image/jpg"
     ) {
-
       let cropImgFile = await new Promise(async (resolve, reject) => {
         try {
           this.setState({
@@ -278,7 +282,6 @@ class DesignEditorTab extends React.Component {
         logo: cropImgFile.name
       });
       this.props.setNewLogo(cropImgFile);
-
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
     }
@@ -373,7 +376,6 @@ class DesignEditorTab extends React.Component {
 
     return (
       <div style={{ padding: 10 }}>
-
         <Dialog
           disableBackdropClick
           disableEscapeKeyDown
@@ -387,7 +389,13 @@ class DesignEditorTab extends React.Component {
             <Typography className={classes.title}>Crop Image</Typography>
           </DialogTitle>
           <DialogContent style={{ height: "50vh" }}>
-            <ReactCrop src={this.state.selectedFilePath} crop={this.state.pixelCrop} onChange={(crop, pixelCrop) => this.setState({ pixelCrop: pixelCrop })} />
+            <ReactCrop
+              src={this.state.selectedFilePath}
+              crop={this.state.pixelCrop}
+              onChange={(crop, pixelCrop) =>
+                this.setState({ pixelCrop: pixelCrop })
+              }
+            />
           </DialogContent>
           <DialogActions>
             <Button
@@ -400,11 +408,17 @@ class DesignEditorTab extends React.Component {
                 color: "#555d66",
                 fontSize: 11
               }}
-              onClick={() => this.handleOpenCropDialogue(false, this.state.currentResolve, true)}
+              onClick={() =>
+                this.handleOpenCropDialogue(
+                  false,
+                  this.state.currentResolve,
+                  true
+                )
+              }
               color="secondary"
             >
               Skip
-          </Button>
+            </Button>
             <Button
               variant="contained"
               style={{
@@ -415,11 +429,17 @@ class DesignEditorTab extends React.Component {
                 color: "white",
                 fontSize: 11
               }}
-              onClick={() => this.handleOpenCropDialogue(false, this.state.currentResolve, false)}
+              onClick={() =>
+                this.handleOpenCropDialogue(
+                  false,
+                  this.state.currentResolve,
+                  false
+                )
+              }
               color={"primary"}
             >
               Confirm
-          </Button>
+            </Button>
           </DialogActions>
         </Dialog>
 
@@ -479,6 +499,9 @@ class DesignEditorTab extends React.Component {
               notchedOutline: classes.notchedOutline,
               input: classes.inputTitle
             }
+          }}
+          inputProps={{
+            maxLength: 75
           }}
           style={{ backgroundColor: "white" }}
           value={site.title}

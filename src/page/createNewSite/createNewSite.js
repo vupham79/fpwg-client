@@ -221,6 +221,9 @@ class createNewSite extends Component {
                 fontSize: "12px"
               }
             }}
+            inputProps={{
+              maxLength: 250
+            }}
             onChange={this.handleChangeURL}
             fullWidth
             error={this.state.pageUrlError}
@@ -249,6 +252,9 @@ class createNewSite extends Component {
             }}
             error={this.state.sitepathError}
             fullWidth
+            inputProps={{
+              maxLength: 50
+            }}
             variant={"outlined"}
             value={sitepath}
             InputProps={{

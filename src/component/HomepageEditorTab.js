@@ -1032,7 +1032,9 @@ class HomepageEditorTab extends React.Component {
                       focused: classes.focused
                     }
                   }}
-                  maxLength={50}
+                  inputProps={{
+                    maxLength: 15
+                  }}
                   InputProps={{
                     classes: {
                       notchedOutline: classes.notchedOutline,
@@ -1071,7 +1073,9 @@ class HomepageEditorTab extends React.Component {
                           focused: classes.focused
                         }
                       }}
-                      maxLength={50}
+                      inputProps={{
+                        maxLength: 1000
+                      }}
                       InputProps={{
                         classes: {
                           notchedOutline: classes.notchedOutline,

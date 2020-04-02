@@ -308,6 +308,9 @@ class TableTheme extends Component {
                     color="primary"
                     value={this.state.updateData.name}
                     onChange={e => this.handleChangeName(e)}
+                    inputProps={{
+                      maxLength: 50
+                    }}
                   />
                 </Grid>
 

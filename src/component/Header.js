@@ -283,7 +283,9 @@ class CustomNavBarEditor extends React.Component {
               label="Sitepath"
               onChange={e => this.handleChangeSitepath(e)}
               value={sitepath ? sitepath : ""}
-              maxLength={30}
+              inputProps={{
+                maxLength: 50
+              }}
             />
             <SwitchButton
               isPublish={isPublish}
@@ -299,6 +301,9 @@ class CustomNavBarEditor extends React.Component {
               variant={"outlined"}
               label="Facebook Page Url"
               disabled
+              inputProps={{
+                maxLength: 250
+              }}
               onChange={e => this.handleChangeURL(e)}
               value={pageUrl ? pageUrl : ""}
             />

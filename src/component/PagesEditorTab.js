@@ -311,7 +311,7 @@ class PagesEditorTab extends React.Component {
 
   handleSearch = keyword => {
     if (this.props.posts) {
-      let searchResult = this.props.posts.filter(function (pos) {
+      let searchResult = this.props.posts.filter(function(pos) {
         return pos.message.toLowerCase().includes(keyword.toLowerCase());
       });
       this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -335,7 +335,7 @@ class PagesEditorTab extends React.Component {
       if (list[i].original === "news") {
         if (!list[i].filter.items) list[i].filter.items = [];
 
-        list[i].filter.items.filter(function (pos) {
+        list[i].filter.items.filter(function(pos) {
           return pos._id !== post._id;
         });
 
@@ -382,79 +382,80 @@ class PagesEditorTab extends React.Component {
         updateNavItemValue,
         changeNavItemName
       }) => (
-          <Grid container style={gridItem}>
-            <Grid
-              container
-              item
-              alignItems="center"
-              xs={10}
-              sm={12}
-              md={10}
-              style={{ padding: "0.2rem 0" }}
-            >
-              <Grid container justify="center" item xs={2} md={2} sm={12}>
-                <DragHandle />
-              </Grid>
-              <Grid item xs={10} md={10} sm={12}>
-                <TextField
-                  autoFocus={
-                    this.state.currentFocusInput === item._id
-                      ? true
-                      : false
-                  }
-                  onClick={(e) => this.setState({ currentFocusInput: item._id })}
-                  InputLabelProps={{
-                    classes: {
-                      focused: classes.focused
-                    }
-                  }}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle
-                    }
-                  }}
-                  size="small"
-                  style={{ backgroundColor: "white" }}
-                  fullWidth
-                  variant={"outlined"}
-                  value={value}
-                  onChange={e => {
-                    handleChangeNavName(
-                      item._id,
-                      site,
-                      e.target.value,
-                      changeNavItemName
-                    );
-                  }}
-                />
-              </Grid>
+        <Grid container style={gridItem}>
+          <Grid
+            container
+            item
+            alignItems="center"
+            xs={10}
+            sm={12}
+            md={10}
+            style={{ padding: "0.2rem 0" }}
+          >
+            <Grid container justify="center" item xs={2} md={2} sm={12}>
+              <DragHandle />
             </Grid>
-            <Grid container item justify="center" xs={2} sm={12} md={2}>
-              {item.original === "home" ? (
-                <></>
-              ) : (
-                  <IconButton
-                    style={viewButton}
-                    onClick={() =>
-                      handleChangeActive(
-                        item._id,
-                        site,
-                        setActiveNavItems,
-                        updateNavItemValue
-                      )
-                    }
-                  >
-                    {item.isActive && item.name !== "Home" ? (
-                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                    ) : (
-                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
-                      )}
-                  </IconButton>
-                )}
+            <Grid item xs={10} md={10} sm={12}>
+              <TextField
+                autoFocus={
+                  this.state.currentFocusInput === item._id ? true : false
+                }
+                onClick={e => this.setState({ currentFocusInput: item._id })}
+                InputLabelProps={{
+                  classes: {
+                    focused: classes.focused
+                  }
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                    input: classes.inputTitle
+                  }
+                }}
+                size="small"
+                style={{ backgroundColor: "white" }}
+                fullWidth
+                variant={"outlined"}
+                value={value}
+                inputProps={{
+                  maxLength: 15
+                }}
+                onChange={e => {
+                  handleChangeNavName(
+                    item._id,
+                    site,
+                    e.target.value,
+                    changeNavItemName
+                  );
+                }}
+              />
             </Grid>
           </Grid>
-        )
+          <Grid container item justify="center" xs={2} sm={12} md={2}>
+            {item.original === "home" ? (
+              <></>
+            ) : (
+              <IconButton
+                style={viewButton}
+                onClick={() =>
+                  handleChangeActive(
+                    item._id,
+                    site,
+                    setActiveNavItems,
+                    updateNavItemValue
+                  )
+                }
+              >
+                {item.isActive && item.name !== "Home" ? (
+                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                ) : (
+                  <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                )}
+              </IconButton>
+            )}
+          </Grid>
+        </Grid>
+      )
     );
 
     const SortableList = sortableContainer(

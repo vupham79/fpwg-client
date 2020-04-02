@@ -1,29 +1,38 @@
 import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { Button, Typography, Container, Box, Grid, TextField, CssBaseline, Avatar } from "@material-ui/core";
+import {
+  Button,
+  Typography,
+  Container,
+  Box,
+  Grid,
+  TextField,
+  CssBaseline,
+  Avatar
+} from "@material-ui/core";
 import { connect } from "react-redux";
 import { loginAdmin } from "../../actions";
 import { Redirect } from "react-router-dom";
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 
 const useStyles = theme => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center"
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.secondary.main
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
+    width: "100%", // Fix IE 11 issue.
+    marginTop: theme.spacing(3)
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
+    margin: theme.spacing(3, 0, 2)
+  }
 });
 
 class LoginPageAdmin extends Component {
@@ -53,7 +62,7 @@ class LoginPageAdmin extends Component {
     }
   };
 
-  componentDidMount() { }
+  componentDidMount() {}
 
   render() {
     const { classes } = this.props;
@@ -67,17 +76,19 @@ class LoginPageAdmin extends Component {
           </Avatar>
           <Typography component="h1" variant="h5">
             Admin
-         </Typography>
+          </Typography>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
-
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   required
                   fullWidth
                   label="Username"
-                  name="password"
+                  name="Username"
+                  inputProps={{
+                    maxLength: 20
+                  }}
                   autoComplete="email"
                   onChange={this.handleChangeUsername}
                 />
@@ -90,6 +101,9 @@ class LoginPageAdmin extends Component {
                   name="password"
                   label="Password"
                   type="password"
+                  inputProps={{
+                    maxLength: 20
+                  }}
                   autoComplete="current-password"
                   onChange={this.handleChangePassword}
                 />
@@ -103,18 +117,15 @@ class LoginPageAdmin extends Component {
               onClick={() => this.handleLogin()}
             >
               Login
-           </Button>
-
+            </Button>
           </form>
         </div>
-        <Box mt={5}>
-        </Box>
+        <Box mt={5}></Box>
       </Container>
     );
   }
 }
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
   loginAdmin: (username, password) => dispatch(loginAdmin(username, password))
