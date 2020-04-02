@@ -244,7 +244,8 @@ class EventComponent extends React.Component {
                               whiteSpace: "nowrap",
                               textOverflow: "ellipsis",
                               overflow: "hidden",
-                              display: "inline-block"
+                              display: "inline-block",
+                              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
                             }}>
                             <a
                               href={"https://" + row.url}
@@ -291,7 +292,8 @@ class EventComponent extends React.Component {
                               whiteSpace: "nowrap",
                               textOverflow: "ellipsis",
                               overflow: "hidden",
-                              display: "inline-block"
+                              display: "inline-block",
+                              fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
                             }}
                           >
                             {row.place && row.place.name}
@@ -304,7 +306,8 @@ class EventComponent extends React.Component {
                               whiteSpace: "nowrap",
                               textOverflow: "ellipsis",
                               overflow: "hidden",
-                              display: "inline-block"
+                              display: "inline-block",
+                              fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
                             }}
                           >
                             {row.place && row.place.city}
@@ -395,7 +398,8 @@ class EventComponent extends React.Component {
                               whiteSpace: "nowrap",
                               textOverflow: "ellipsis",
                               overflow: "hidden",
-                              display: "inline-block"
+                              display: "inline-block",
+                              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
                             }}>
                             <a
                               href={"https://" + row.url}
@@ -442,7 +446,8 @@ class EventComponent extends React.Component {
                               whiteSpace: "nowrap",
                               textOverflow: "ellipsis",
                               overflow: "hidden",
-                              display: "inline-block"
+                              display: "inline-block",
+                              fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
                             }}
                           >
                             {row.place && row.place.name}
@@ -455,7 +460,8 @@ class EventComponent extends React.Component {
                               whiteSpace: "nowrap",
                               textOverflow: "ellipsis",
                               overflow: "hidden",
-                              display: "inline-block"
+                              display: "inline-block",
+                              fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
                             }}
                           >
                             {row.place && row.place.city}

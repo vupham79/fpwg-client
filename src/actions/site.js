@@ -427,7 +427,10 @@ export function saveDesignSite({
           homepage: saveDat,
           logoURL,
           coverURL,
-          address
+          address,
+          showDesEvent: site.showDesEvent,
+          showPlaceEvent: site.showPlaceEvent,
+          showCoverEvent: site.showCoverEvent
         }
       });
       dispatch({
