@@ -1,19 +1,20 @@
 import axios from "../utils/axios";
 import toastr from "toastr";
 
-export function updateTheme({ id, name, fontBody, fontTitle, mainColor }) {
+export function updateTheme(id, name, fontBody, fontTitle, mainColor) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
     });
     try {
       const data = await axios({
+        method: "PATCH",
         url: `/theme/update/${id}`,
         data: {
           name: name,
           fontBody: fontBody,
           fontTitle: fontTitle,
-          mainColor: mainColor,
+          mainColor: mainColor
         }
       });
       dispatch({
@@ -27,7 +28,7 @@ export function updateTheme({ id, name, fontBody, fontTitle, mainColor }) {
             name: name,
             fontBody: fontBody,
             fontTitle: fontTitle,
-            mainColor: mainColor,
+            mainColor: mainColor
           }
         });
       } else {

@@ -13,8 +13,8 @@ const useStyles = theme => ({
   root: {
     padding: "2px 4px",
     display: "flex",
-    alignItems: "center",
-    width: 400
+    alignItems: "center"
+    // width: 400
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -76,7 +76,7 @@ class TableUser extends Component {
   };
 
   handleSearch = keyword => {
-    let searchResult = this.props.users.filter(function (user) {
+    let searchResult = this.props.users.filter(function(user) {
       return user.displayName.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -129,51 +129,49 @@ class TableUser extends Component {
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-            this.state.filteredData.map((row, index) => (
-              <div key={row.id}>
-                <Grid container direction="row">
-                  <Grid item xs={1}>
-                    <img
-                      style={{ height: 30, width: 30 }}
-                      src={row.picture}
-                      alt=""
-                    />
-                  </Grid>
-                  <Grid item xs={3}>
-                    {row.displayName}
-                  </Grid>
-                  <Grid item xs={3}>
-                    {row.email}
-                  </Grid>
-                  <Grid item xs={3}>
-                    {row.phone}
-                  </Grid>
-                  <Grid item xs={2}>
-                    <ActivateButton
-                      userId={row.id}
-                      isActivated={row.isActivated}
-                    />
-                  </Grid>
+          this.state.filteredData.map((row, index) => (
+            <div key={row.id}>
+              <Grid container direction="row">
+                <Grid item xs={1}>
+                  <img style={{ width: "3rem" }} src={row.picture} alt="" />
                 </Grid>
-                <Divider />
-              </div>
-            ))
-          )}
-        <div className="commentBox">
-          <ReactPaginate
-            previousLabel={"previous"}
-            nextLabel={"next"}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
-            pageCount={this.state.pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePageClick}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
-        </div>
+                <Grid item xs={3}>
+                  {row.displayName}
+                </Grid>
+                <Grid item xs={3}>
+                  {row.email}
+                </Grid>
+                <Grid item xs={3}>
+                  {row.phone}
+                </Grid>
+                <Grid item xs={2}>
+                  <ActivateButton
+                    userId={row.id}
+                    isActivated={row.isActivated}
+                  />
+                </Grid>
+              </Grid>
+              <Divider />
+            </div>
+          ))
+        )}
+        {this.state.pageCount > 1 && (
+          <div className="commentBox">
+            <ReactPaginate
+              previousLabel={"previous"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={this.state.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
+          </div>
+        )}
       </React.Fragment>
     );
   }

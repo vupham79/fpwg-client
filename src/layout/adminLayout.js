@@ -25,6 +25,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import PeopleIcon from "@material-ui/icons/People";
 import LayersIcon from "@material-ui/icons/Layers";
 import DomainIcon from "@material-ui/icons/Domain";
+import { CategoryOutlined as CategoryIcon } from "@material-ui/icons";
 import { updateAdminTabIndex } from "../actions/adminTab";
 import { connect } from "react-redux";
 import { setLogoutAdmin } from "../actions";
@@ -166,7 +167,6 @@ class Dashboard extends Component {
             <Button
               type="submit"
               variant="contained"
-              color="primary"
               onClick={() => this.handleLogout()}
             >
               Logout
@@ -230,19 +230,24 @@ class Dashboard extends Component {
               </ListItemIcon>
               <ListItemText primary="Paths" />
             </ListItem>
+            <ListItem
+              button
+              selected={selectedAdminIndex === 4}
+              onClick={(e, newValue) => updateAdminTabIndex(4)}
+            >
+              <ListItemIcon>
+                <CategoryIcon />
+              </ListItemIcon>
+              <ListItemText primary="Theme Category" />
+            </ListItem>
           </List>
-          {/* <Divider />
-          <List>{secondaryListItems}</List> */}
         </Drawer>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Container maxWidth="lg" className={classes.container}>
             <Grid container spacing={3}>
               <Grid item xs={12}>
-                <Paper className={classes.paper}>
-                  {/* <TableUser /> */}
-                  {this.props.children}
-                </Paper>
+                <Paper className={classes.paper}>{this.props.children}</Paper>
               </Grid>
             </Grid>
             <Box pt={4} />

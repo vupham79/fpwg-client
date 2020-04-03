@@ -4,12 +4,10 @@ import {
   Box,
   Container,
   CssBaseline,
-  Divider,
   Drawer,
   Grid,
   IconButton,
   Link,
-  List,
   Paper,
   Toolbar,
   Typography
@@ -22,7 +20,6 @@ import {
 } from "@material-ui/icons";
 import clsx from "clsx";
 import React from "react";
-import { mainListItems, secondaryListItems } from "../../component/listItems";
 import TableUser from "../../component/TableUser";
 
 function Copyright() {
@@ -176,10 +173,6 @@ export default function Dashboard() {
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        <Divider />
-        <List>{mainListItems}</List>
-        <Divider />
-        <List>{secondaryListItems}</List>
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />

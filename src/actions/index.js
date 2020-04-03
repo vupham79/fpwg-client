@@ -1,4 +1,10 @@
-import { loginAdmin, setLogoutAdmin } from "./admin";
+import {
+  loginAdmin,
+  setLogoutAdmin,
+  getAllCategoriesAdmin,
+  updateCategory,
+  insertCategory
+} from "./admin";
 import { updateAdminTabIndex } from "./adminTab";
 import { getAllPaths, updateSitepath } from "./path";
 import {
@@ -184,5 +190,8 @@ export {
   changeSiteAddress,
   updateSelectNavItemValue,
   setFramePreview,
-  setEventCustomize
+  setEventCustomize,
+  getAllCategoriesAdmin,
+  updateCategory,
+  insertCategory
 };

@@ -1,5 +1,6 @@
 const defaultState = {
-  isLoginAdmin: false
+  isLoginAdmin: false,
+  categories: null
 };
 
 const AdminReducer = (state = defaultState, action) => {
@@ -12,6 +13,11 @@ const AdminReducer = (state = defaultState, action) => {
     case "SET_LOGOUT_ADMIN":
       return {
         ...defaultState
+      };
+    case "SET_ALL_CATEGORIES":
+      return {
+        ...state,
+        categories: action.payload
       };
     default:
       return state;

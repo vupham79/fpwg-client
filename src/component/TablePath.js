@@ -15,8 +15,7 @@ const useStyles = theme => ({
   root: {
     padding: "2px 4px",
     display: "flex",
-    alignItems: "center",
-    width: 400
+    alignItems: "center"
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -48,13 +47,10 @@ class TablePath extends Component {
   };
 
   getPaths = async () => {
-    const { getAllPaths } = this.props;
+    const { getAllPaths, paths } = this.props;
     await getAllPaths();
     this.setListData(
-      this.props.paths.slice(
-        this.state.offset,
-        this.state.itemPerPage + this.state.offset
-      )
+      paths.slice(this.state.offset, this.state.itemPerPage + this.state.offset)
     );
     this.setPageCount(this.props.paths);
   };
@@ -78,8 +74,8 @@ class TablePath extends Component {
   };
 
   handleSearch = keyword => {
-    let searchResult = this.props.paths.filter(function (user) {
-      return user.pathName.toLowerCase().includes(keyword.toLowerCase());
+    let searchResult = this.props.paths.filter(function(path) {
+      return path.sitePath.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
     this.setPageCount(searchResult);
@@ -90,7 +86,7 @@ class TablePath extends Component {
     return (
       <React.Fragment>
         <Title>Paths</Title>
-        <Paper component="form" className={classes.root}>
+        <Paper className={classes.root}>
           <InputBase
             id="searchBox"
             className={classes.input}
@@ -111,44 +107,62 @@ class TablePath extends Component {
           </IconButton>
         </Paper>
         <Grid container direction="row">
-          <Grid item xs={3}>
-            <p style={{ fontWeight: "bold" }}>Path Name</p>
-          </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={5}>
             <p style={{ fontWeight: "bold" }}>Site</p>
+          </Grid>
+          <Grid item xs={5}>
+            <p style={{ fontWeight: "bold" }}>Path Name</p>
           </Grid>
         </Grid>
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-            this.state.filteredData.map((row, index) => (
-              <div key={row.id}>
+          this.state.filteredData.map((row, index) => {
+            return (
+              <div key={index} style={{ marginBottom: "1rem " }}>
                 <Grid container direction="row">
-                  <Grid item xs={3}>
-                    {row.pathName}
+                  <Grid
+                    item
+                    xs={5}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    <img
+                      src={row.logo}
+                      style={{ width: "5vh", marginRight: "1rem" }}
+                    />
+                    {row.title}
+                  </Grid>
+                  <Grid
+                    item
+                    xs={5}
+                    style={{ display: "flex", alignItems: "center" }}
+                  >
+                    {row.sitePath}
                     <div style={{ height: 20 }} />
                   </Grid>
-                  <Grid item xs={3}></Grid>
                 </Grid>
                 <Divider />
               </div>
-            ))
-          )}
-        <div className="commentBox">
-          <ReactPaginate
-            previousLabel={"previous"}
-            nextLabel={"next"}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
-            pageCount={this.state.pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePageClick}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
-        </div>
+            );
+          })
+        )}
+        {this.state.pageCount > 1 && (
+          <div className="commentBox">
+            <ReactPaginate
+              previousLabel={"previous"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={this.state.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
+          </div>
+        )}
       </React.Fragment>
     );
   }

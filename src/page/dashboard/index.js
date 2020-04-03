@@ -6,7 +6,7 @@ import TableSite from "../../component/TableSite";
 import TableTheme from "../../component/TableTheme";
 import LoginPage from "./loginAdmin";
 import TablePath from "../../component/TablePath";
-
+import TableCategory from "../../component/TableCategory";
 class PreDashboardPage extends Component {
   render() {
     const { selectedAdminIndex, isLoginAdmin } = this.props;
@@ -21,6 +21,7 @@ class PreDashboardPage extends Component {
             1: <TableSite />,
             2: <TableTheme />,
             3: <TablePath />,
+            4: <TableCategory />,
             default: <TableUser />
           }[selectedAdminIndex]
         }

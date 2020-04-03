@@ -67,24 +67,23 @@ class ThemeEditorTab extends React.Component {
   componentDidMount() {
     this.setState({
       filteredData: this.props.themes
-    })
+    });
   }
 
   handleChangeCategory = category => {
     this.setState({
       currentCategory: category
-    })
+    });
     if (category === "All") {
       this.setState({
         filteredData: this.props.themes
-      })
-    }
-    else {
+      });
+    } else {
       this.setState({
-        filteredData: this.props.themes.filter(function (theme) {
+        filteredData: this.props.themes.filter(function(theme) {
           return theme.category === category;
         })
-      })
+      });
     }
   };
 
@@ -99,7 +98,7 @@ class ThemeEditorTab extends React.Component {
     changeTheme(theme);
 
     //go to home tab of new theme
-    let searchResult = site.navItems.filter(function (nav) {
+    let searchResult = site.navItems.filter(function(nav) {
       return nav.original === "home";
     });
     if (searchResult) {
@@ -111,7 +110,6 @@ class ThemeEditorTab extends React.Component {
     const { filteredData } = this.state;
     return (
       <div style={{ padding: 20 }}>
-
         <Grid
           container
           style={{

@@ -12,11 +12,17 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Typography
+  Typography,
+  Select,
+  MenuItem
 } from "@material-ui/core";
 import Title from "./Title";
 import { connect } from "react-redux";
-import { getAllThemesAdmin, updateTheme } from "../actions";
+import {
+  getAllThemesAdmin,
+  updateTheme,
+  getAllCategoriesAdmin
+} from "../actions";
 import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
 import "./adminStyleSheet.css";
@@ -30,8 +36,8 @@ const useStyles = theme => ({
   root: {
     padding: "2px 4px",
     display: "flex",
-    alignItems: "center",
-    width: 400
+    alignItems: "center"
+    // width: 400
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -69,11 +75,15 @@ class TableTheme extends Component {
       mainColor: "#212121",
       name: "",
       fontBody: "",
-      fontTitle: ""
+      fontTitle: "",
+      previewImage: "",
+      preview: "",
+      category: ""
     }
   };
 
   setOpenDialogue = item => {
+    console.log(item.category._id);
     this.setState({
       showDialog: true,
       selectedItem: item,
@@ -82,7 +92,8 @@ class TableTheme extends Component {
         mainColor: item.mainColor,
         fontBody: item.fontBody,
         fontTitle: item.fontTitle,
-        name: item.name
+        name: item.name,
+        category: item.category._id
       }
     });
   };
@@ -164,6 +175,7 @@ class TableTheme extends Component {
 
   componentDidMount() {
     this.getThemes();
+    this.props.getAllCategoriesAdmin();
   }
 
   handlePageClick = data => {
@@ -186,6 +198,15 @@ class TableTheme extends Component {
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
     this.setPageCount(searchResult);
+  };
+
+  handleChangeCategory = e => {
+    this.setState({
+      updateData: {
+        ...this.state.updateData,
+        category: e.target.value
+      }
+    });
   };
 
   render() {
@@ -214,22 +235,23 @@ class TableTheme extends Component {
           </IconButton>
         </Paper>
         <Grid container direction="row">
-          <Grid item xs={1}>
+          <Grid item xs={2}></Grid>
+          <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Name</p>
           </Grid>
-          <Grid item xs={2}>
-            <p style={{ fontWeight: "bold" }}>F.Body</p>
+          <Grid item xs={1}>
+            <p style={{ fontWeight: "bold" }}>Font Body</p>
           </Grid>
-          <Grid item xs={2}>
-            <p style={{ fontWeight: "bold" }}>F.Title</p>
+          <Grid item xs={1}>
+            <p style={{ fontWeight: "bold" }}>Font Title</p>
           </Grid>
           <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Main Color</p>
           </Grid>
-          <Grid item xs={4}>
-            <p style={{ fontWeight: "bold" }}>Categories</p>
+          <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>Category</p>
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}></p>
           </Grid>
         </Grid>
@@ -239,14 +261,23 @@ class TableTheme extends Component {
           this.state.filteredData.map((row, index) => (
             <div key={row.id}>
               <Grid container direction="row">
-                <Grid item xs={1}>
+                <Grid item xs={2}>
+                  <img
+                    style={{
+                      width: "80%"
+                    }}
+                    alt=""
+                    src={row.previewImage}
+                  />
+                </Grid>
+                <Grid item xs={2}>
                   {row.name}
                   <div style={{ height: 20 }} />
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                   {row.fontBody}
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                   {row.fontTitle}
                 </Grid>
                 <Grid container item xs={2}>
@@ -260,10 +291,10 @@ class TableTheme extends Component {
                     {row.mainColor}
                   </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  {row.categories.map(c => c.name + ", ")}
+                <Grid item xs={2}>
+                  {row.category.name}
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2}>
                   <Button
                     color="primary"
                     onClick={() => this.setOpenDialogue(row)}
@@ -276,21 +307,23 @@ class TableTheme extends Component {
             </div>
           ))
         )}
-        <div className="commentBox">
-          <ReactPaginate
-            previousLabel={"previous"}
-            nextLabel={"next"}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
-            pageCount={this.state.pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePageClick}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
-        </div>
+        {this.state.pageCount > 1 && (
+          <div className="commentBox">
+            <ReactPaginate
+              previousLabel={"previous"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={this.state.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
+          </div>
+        )}
         <Dialog
           open={this.state.showDialog}
           onClose={() => this.setCloseDialogue()}
@@ -315,16 +348,10 @@ class TableTheme extends Component {
                 </Grid>
 
                 <Grid container item xs={12}>
-                  {/* <GoogleFontPicker
-                    label="Body"
-                    searchable
-                    buttonColor={"primary"}
-                    buttonVariant={"text"}
-                    defaultFont={this.state.updateData.fontBody}
-                    onFontSelected={this.handleChangeFontBody}
-                  /> */}
                   <Grid item xs={3} sm={2}>
-                    <Typography className={classes.title2}>F.Title</Typography>
+                    <Typography className={classes.title2}>
+                      Font Title
+                    </Typography>
                   </Grid>
                   <Grid item xs={6} sm={5}>
                     <FontPickerComponent
@@ -333,24 +360,43 @@ class TableTheme extends Component {
                     />
                   </Grid>
                 </Grid>
-
                 <Grid container item xs={12}>
-                  {/* <GoogleFontPicker
-                    label="Title"
-                    searchable
-                    buttonColor={"primary"}
-                    buttonVariant={"text"}
-                    defaultFont={this.state.updateData.fontTitle}
-                    onFontSelected={this.handleChangeFontTitle}
-                  /> */}
                   <Grid item xs={3} sm={2}>
-                    <Typography className={classes.title2}>F.Body</Typography>
+                    <Typography className={classes.title2}>
+                      Font Body
+                    </Typography>
                   </Grid>
                   <Grid item xs={6} sm={5}>
                     <FontPickerComponent
                       selectedValue={this.state.updateData.fontBody}
                       onChange={this.handleChangeFontBody}
                     />
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                  <Grid item xs={3} sm={2}>
+                    <Typography className={classes.title2}>Category</Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={5}>
+                    <Select
+                      classes={{
+                        root: classes.root
+                      }}
+                      fullWidth
+                      variant={"outlined"}
+                      value={this.state.updateData.category}
+                      onChange={this.handleChangeCategory}
+                    >
+                      {this.props.categories.map((category, index) => {
+                        if (category.name !== "All") {
+                          return (
+                            <MenuItem key={index} value={category._id}>
+                              {category.name}
+                            </MenuItem>
+                          );
+                        }
+                      })}
+                    </Select>
                   </Grid>
                 </Grid>
               </Grid>
@@ -381,14 +427,16 @@ class TableTheme extends Component {
 const mapStateToProps = state => ({
   themes: state.theme.data,
   accessToken: state.user.accessToken,
-  userId: state.user.profile.id
+  userId: state.user.profile.id,
+  categories: state.admin.categories
 });
 
 const mapDispatchToProps = dispatch => ({
   getAllThemesAdmin: (id, accessToken) =>
     dispatch(getAllThemesAdmin(id, accessToken)),
   updateTheme: (id, name, fontBody, fontTitle, mainColor) =>
-    dispatch(updateTheme(id, name, fontBody, fontTitle, mainColor))
+    dispatch(updateTheme(id, name, fontBody, fontTitle, mainColor)),
+  getAllCategoriesAdmin: () => dispatch(getAllCategoriesAdmin())
 });
 
 export default connect(

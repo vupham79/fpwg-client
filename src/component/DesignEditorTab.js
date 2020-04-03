@@ -287,31 +287,6 @@ class DesignEditorTab extends React.Component {
     }
   };
 
-  // handleUploadCover = async e => {
-  //   e.preventDefault();
-  //   const file = e.target.files[0];
-  //   //validating the file
-  //   //check if the file is exists
-  //   if (!file) {
-  //     toastr.error("No image is selected!", "Error");
-  //     return;
-  //   }
-  //   //check if the image size is larger than 1MB
-  //   if (file.size > 1048576) {
-  //     toastr.error("Image size must be less than 1MB!", "Error");
-  //     return;
-  //   }
-  //   if (
-  //     file.type === "image/jpeg" ||
-  //     file.type === "image/png" ||
-  //     file.type === "image/jpg"
-  //   ) {
-  //     this.props.setNewCover(file);
-  //   } else {
-  //     toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
-  //   }
-  // };
-
   handleChangeSiteTitle = e => {
     const { changeSiteTitle } = this.props;
     changeSiteTitle(e.target.value);
@@ -516,19 +491,6 @@ class DesignEditorTab extends React.Component {
             <Grid item xs={4} sm={6} md={3}>
               <Typography className={classes.title2}>Title</Typography>
             </Grid>
-            {/* <GoogleFontPicker
-              searchable
-              buttonColor={"default"}
-              buttonVariant={"outlined"}
-              defaultFont={site.fontTitle}
-              onFontSelected={this.handleChangeFontTitle}
-              classes={{
-                pickerButton: classes.pickerButton,
-                root: classes.fontPickerRoot
-              }}
-              children={<Add />}
-              placement={"bottom"}
-            /> */}
             <Grid item xs={8} sm={12} md={8}>
               <FontPickerComponent
                 selectedValue={site.fontTitle}
@@ -540,17 +502,6 @@ class DesignEditorTab extends React.Component {
             <Grid item xs={4} sm={6} md={3}>
               <Typography className={classes.title2}>Body</Typography>
             </Grid>
-            {/* <GoogleFontPicker
-              searchable
-              buttonVariant={"outlined"}
-              defaultFont={site.fontBody}
-              onFontSelected={this.handleChangeFontBody}
-              classes={{
-                pickerButton: classes.pickerButton,
-                root: classes.fontPickerRoot
-              }}
-              placement={"bottom"}
-            /> */}
             <Grid item xs={8} sm={12} md={8}>
               <FontPickerComponent
                 selectedValue={site.fontBody}
@@ -611,34 +562,6 @@ class DesignEditorTab extends React.Component {
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
-        {/* <Typography className={classes.title}>Homepage Images</Typography>
-        <Grid container className={classes.sideBarBox}>
-          {this.renderNewCovers()}
-          <Grid
-            item
-            container
-            justify={"center"}
-            alignItems="center"
-            md={4}
-            sm={6}
-            xs={6}
-            style={{
-              ...coverStyles,
-              backgroundColor: "#F3ECEC",
-              border: "1px dashed",
-              cursor: "pointer"
-            }}
-            onClick={() => document.getElementById("addCover").click()}
-          >
-            <Input
-              type="file"
-              id="addCover"
-              onChange={e => this.handleUploadCover(e)}
-              style={{ display: "none" }}
-            />
-            <Add fontSize="small" />
-          </Grid>
-        </Grid> */}
       </div>
     );
   }

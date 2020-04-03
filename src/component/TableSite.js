@@ -5,7 +5,6 @@ import React, { Component } from "react";
 import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import { getAllSites } from "../actions";
-import PublishButtonAdmin from "./PublishButtonAdmin";
 import Title from "./Title";
 import "./adminStyleSheet.css";
 
@@ -13,8 +12,8 @@ const useStyles = theme => ({
   root: {
     padding: "2px 4px",
     display: "flex",
-    alignItems: "center",
-    width: 400
+    alignItems: "center"
+    // width: 400
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -22,6 +21,22 @@ const useStyles = theme => ({
   },
   iconButton: {
     padding: 10
+  },
+  published: {
+    borderRadius: "5px",
+    padding: "0.1rem 0.3rem",
+    background: "#5ea95a",
+    marginTop: "0.2rem",
+    color: "#fff",
+    textAlign: "center"
+  },
+  unpublished: {
+    borderRadius: "5px",
+    padding: "0.1rem 0.3rem",
+    background: "#cc2127",
+    marginTop: "0.2rem",
+    color: "#fff",
+    textAlign: "center"
   }
 });
 
@@ -30,7 +45,7 @@ class TableSite extends Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 3
+    itemPerPage: 5
   };
 
   setListData = listData => {
@@ -76,7 +91,7 @@ class TableSite extends Component {
   };
 
   handleSearch = keyword => {
-    let searchResult = this.props.sites.filter(function (site) {
+    let searchResult = this.props.sites.filter(function(site) {
       return site.title.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -131,52 +146,68 @@ class TableSite extends Component {
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-            this.state.filteredData.map((row, index) => (
-              <div key={row._id}>
-                <Grid container direction="row">
-                  <Grid item xs={2}>
-                    {row.displayName}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.title}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.theme && row.theme.name}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.categories && row.categories.map(c => c.name + ", ")}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.sitePath}
-                  </Grid>
-                  <Grid item xs={2}>
-                    <PublishButtonAdmin
-                      siteId={row.id}
-                      siteName={row.title}
-                      isPublish={row.isPublish}
-                    />
+          this.state.filteredData.map((row, index) => (
+            <React.Fragment key={index}>
+              <Grid container direction="row">
+                <Grid item xs={2}>
+                  {row.displayName}
+                </Grid>
+                <Grid item xs={2}>
+                  {row.title}
+                </Grid>
+                <Grid item xs={2}>
+                  {row.theme && row.theme.name}
+                </Grid>
+                <Grid item xs={2}>
+                  {row.categories && row.categories.map(c => c.name + ", ")}
+                </Grid>
+                <Grid item xs={2}>
+                  {row.sitePath}
+                </Grid>
+                <Grid
+                  item
+                  xs={2}
+                  className={"mainFont"}
+                  style={{
+                    fontSize: "12px",
+                    overflow: "hidden",
+                    height: "4rem"
+                  }}
+                >
+                  <Grid
+                    item
+                    lg={6}
+                    sm={8}
+                    xs={8}
+                    className={
+                      row.isPublish ? classes.published : classes.unpublished
+                    }
+                  >
+                    {row.isPublish ? "Published " : "Unpublished "}
                   </Grid>
                 </Grid>
-                <Divider />
-              </div>
-            ))
-          )}
-
-        <div className="commentBox">
-          <ReactPaginate
-            previousLabel={"previous"}
-            nextLabel={"next"}
-            breakLabel={"..."}
-            breakClassName={"break-me"}
-            pageCount={this.state.pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePageClick}
-            containerClassName={"pagination"}
-            subContainerClassName={"pages pagination"}
-            activeClassName={"active"}
-          />
-        </div>
+              </Grid>
+              {/* <Divider /> */}
+            </React.Fragment>
+          ))
+        )}
+        {this.state.pageCount > 1 && (
+          <div className="commentBox">
+            <ReactPaginate
+              previousLabel={"previous"}
+              nextLabel={"next"}
+              breakLabel={"..."}
+              breakClassName={"break-me"}
+              pageCount={this.state.pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePageClick}
+              containerClassName={"pagination"}
+              subContainerClassName={"pages pagination"}
+              activeClassName={"active"}
+            />
+          </div>
+        )}
       </React.Fragment>
     );
   }
