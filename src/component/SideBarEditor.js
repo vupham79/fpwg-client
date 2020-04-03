@@ -303,7 +303,8 @@ class ClippedDrawer extends React.Component {
               borderTop: "1px solid #dddddd",
               bottom: 0,
               position: this.state.navigating ? "sticky" : "absolute",
-              backgroundColor: "#f0eded"
+              backgroundColor: "#f0eded",
+              zIndex: 999999
             }}
             xs={12}>
             <Grid item className={styles.fadeShow}>

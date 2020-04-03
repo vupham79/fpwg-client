@@ -145,7 +145,7 @@ const viewButton = {
 
 const gridItem = {
   padding: "0.2rem 0.5rem",
-  zIndex: "99999999",
+  zIndex: "999999",
   backgroundColor: "white",
   border: "1px solid #dddddd"
 };
