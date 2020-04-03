@@ -465,6 +465,17 @@ const SiteReducer = (state = defaultState, action) => {
         address: action.payload,
         isChanged: true
       };
+    case "SET_EVENT_CUSTOMIZE":
+      return {
+        ...state,
+        siteEdit: {
+          ...state.siteEdit,
+          showDesEvent: action.payload.description,
+          showCoverEvent: action.payload.cover,
+          showPlaceEvent: action.payload.place
+        },
+        isChanged: true
+      };
     default:
       return state;
   }
