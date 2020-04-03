@@ -57,6 +57,7 @@ import {
   setNewLogo
 } from "../actions";
 import toastr from "./Toastr";
+import Truncate from "react-truncate";
 
 const useStyles = theme => ({
   content: {
@@ -348,7 +349,7 @@ class HomepageEditorTab extends React.Component {
     return (
       <>
         <TableContainer
-          style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}
+        // style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}
         >
           <Table stickyHeader>
             <TableHead>
@@ -364,8 +365,16 @@ class HomepageEditorTab extends React.Component {
               {this.state.filteredData &&
                 this.state.filteredData.map((row, index) => (
                   <TableRow key={index}>
-                    <TableCell align="center">{row.name}</TableCell>
-                    <TableCell align="center">{row.description}</TableCell>
+                    <TableCell align="left">
+                      <Truncate lines={2} ellipsis={<span>...</span>}>
+                        {row.name}
+                      </Truncate>
+                    </TableCell>
+                    <TableCell align="left">
+                      <Truncate lines={2} ellipsis={<span>...</span>}>
+                        {row.description}
+                      </Truncate>
+                    </TableCell>
                     <TableCell align="center">
                       {moment(row.startTime).format("DD-MM-YYYY")}
                     </TableCell>

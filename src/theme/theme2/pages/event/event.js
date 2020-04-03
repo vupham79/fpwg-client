@@ -31,7 +31,7 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
           alignItems="center"
           style={{ padding: "0.5rem 0.1rem" }}
         >
-          <Grid item sm={3} xs={2} md={3}>
+          <Grid item sm={3} xs={2} md={2}>
             <div className={styles.image_page}>
               <img
                 alt=""
@@ -91,7 +91,16 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
 }
 class EventPage extends React.Component {
   render() {
-    const { titleEdit, titleView, isEdit, siteEdit, siteView, fromHome, homeList, homeTitle } = this.props;
+    const {
+      titleEdit,
+      titleView,
+      isEdit,
+      siteEdit,
+      siteView,
+      fromHome,
+      homeList,
+      homeTitle
+    } = this.props;
     return (
       <Grid
         container
@@ -116,33 +125,44 @@ class EventPage extends React.Component {
           siteEdit && siteEdit.events ? (
             <EventComponent
               homeList={
-                (fromHome && homeList) ? homeList : (isEdit ? siteEdit.events : siteView.events)
+                fromHome && homeList
+                  ? homeList
+                  : isEdit
+                  ? siteEdit.events
+                  : siteView.events
               }
+              fromHome={fromHome}
             />
           ) : (
-              <EmptyEvent
-                siteEdit={siteEdit}
-                titleEdit={titleEdit}
-                siteView={siteView}
-                titleView={titleView}
-                isEdit={isEdit}
-              />
-            )
+            <EmptyEvent
+              siteEdit={siteEdit}
+              titleEdit={titleEdit}
+              siteView={siteView}
+              titleView={titleView}
+              isEdit={isEdit}
+            />
+          )
         ) : (siteView && siteView.events) || (fromHome && homeList) ? (
           <EventComponent
             homeList={
-              (fromHome && homeList) ? homeList : (isEdit ? siteEdit.events : siteView.events)
+              fromHome && homeList
+                ? homeList
+                : isEdit
+                ? siteEdit.events
+                : siteView.events
             }
+            siteInfo={siteView.sitePath}
+            fromHome={fromHome}
           />
         ) : (
-              <EmptyEvent
-                siteEdit={siteEdit}
-                titleEdit={titleEdit}
-                siteView={siteView}
-                titleView={titleView}
-                isEdit={isEdit}
-              />
-            )}
+          <EmptyEvent
+            siteEdit={siteEdit}
+            titleEdit={titleEdit}
+            siteView={siteView}
+            titleView={titleView}
+            isEdit={isEdit}
+          />
+        )}
       </Grid>
     );
   }

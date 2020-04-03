@@ -1,22 +1,21 @@
 import {
+  CardActionArea,
+  CardMedia,
   Container,
   Dialog,
   Grid,
-  withStyles,
-  CardActionArea,
-  CardMedia,
-  Typography
+  Typography,
+  withStyles
 } from "@material-ui/core";
-import Link from "../../component/link";
+import Pagination from "@material-ui/lab/Pagination";
 import React from "react";
 import { connect } from "react-redux";
-import Pagination from "@material-ui/lab/Pagination";
 import {
   getDataByPageNumber,
   setGalleriesToSiteView,
   updateNavItemValue
 } from "../../actions";
-import ReactPaginate from "react-paginate";
+import Link from "../../component/link";
 
 const useStyles = theme => ({
   gridItems: {
@@ -41,10 +40,11 @@ class GalleryComponent extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5
+    itemPerPage: 5,
+    page: 1
   };
 
-  handlePageViewClick = async (event, value) => {
+  handlePageViewClick = async (event, newValue) => {
     const {
       siteInfo,
       getDataByPageNumber,
@@ -52,11 +52,11 @@ class GalleryComponent extends React.Component {
       setGalleriesToSiteView
     } = this.props;
     if (!isEdit) {
-      this.setState({ pageView: value });
+      this.setState({ pageView: newValue });
       const data = await getDataByPageNumber({
         sitePath: siteInfo,
         page: "gallery",
-        pageNumber: value
+        pageNumber: newValue
       });
       data && setGalleriesToSiteView(data);
     }
@@ -100,11 +100,11 @@ class GalleryComponent extends React.Component {
     }
   }
 
-  handlePageEditClick = data => {
-    let selected = data.selected;
+  handlePageEditClick = (event, newValue) => {
+    let selected = newValue - 1;
     let offset = Math.ceil(selected * this.state.itemPerPage);
 
-    this.setState({ offset: offset }, () => {
+    this.setState({ offset: offset, page: newValue }, () => {
       this.setListData(
         this.props.galleries.slice(
           this.state.offset,
@@ -297,33 +297,34 @@ class GalleryComponent extends React.Component {
           {isEdit
             ? this.state.pageCount > 1 &&
               !fromHome && (
-                <Grid container justify="center">
-                  <ReactPaginate
-                    previousLabel={"previous"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={this.state.pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageEditClick}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
+                <Grid container justify="center" style={{ padding: "2rem" }}>
+                  <Pagination
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0.4rem",
+                      borderRadius: "0.3rem"
+                    }}
+                    color="primary"
+                    shape="rounded"
+                    variant="outlined"
+                    count={this.state.pageCount}
+                    page={this.state.page}
+                    onChange={this.handlePageEditClick}
                   />
                 </Grid>
               )
             : pageCountView > 1 &&
               !fromHome && (
-                <Grid container justify="center">
+                <Grid container justify="center" style={{ padding: "2rem" }}>
                   <Pagination
                     style={{
                       backgroundColor: "white",
-                      border: `1px solid black`,
-                      padding: "0.2rem"
+                      padding: "0.4rem",
+                      borderRadius: "0.3rem"
                     }}
                     color="primary"
                     shape="rounded"
+                    variant="outlined"
                     count={pageCountView}
                     page={this.state.pageView}
                     onChange={this.handlePageViewClick}
