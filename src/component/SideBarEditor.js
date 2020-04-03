@@ -36,7 +36,7 @@ import styles from './index.module.css';
 
 const useStyles = theme => ({
   root: {
-    height: "100vh"
+    height: "100vh",
   },
   drawer: {
     flexShrink: 0,
@@ -45,9 +45,7 @@ const useStyles = theme => ({
   drawerPaper: {
     position: "relative",
     height: "100%",
-    backgroundColor: "#f0eded"
-    // minWidth: 300
-    // overflowY: "scroll"
+    backgroundColor: "#f0eded",
   }
 });
 
@@ -111,7 +109,6 @@ class ClippedDrawer extends React.Component {
           }}
         >
           <Grid container style={{ border: "1px solid #dddddd" }}>
-
             <Grid item xs={2}>
               <Button
                 fullWidth
@@ -121,7 +118,7 @@ class ClippedDrawer extends React.Component {
                   color: "#565d66",
                   fontSize: 14,
                   fontWeight: "bold",
-                  height: 40
+                  height: "100%"
                 }}
                 onClick={this.openDialog}
               >
@@ -194,43 +191,8 @@ class ClippedDrawer extends React.Component {
                 Save
               </Button>
             </Grid>
-
-            <Grid
-              item
-              container
-              justify="center"
-              className={styles.fadeBox}
-              xs={12}>
-              <Grid item className={styles.fadeShow}>
-                <IconButton
-                  aria-label=""
-                  color="primary"
-                  onClick={() => this.props.setFramePreview(0)}
-                >
-                  <FontAwesomeIcon icon={faDesktop} color="#565d66" size="sm" />
-                </IconButton>
-              </Grid>
-              <Grid item className={styles.fadeShow}>
-                <IconButton
-                  aria-label=""
-                  color="primary"
-                  onClick={() => this.props.setFramePreview(1)}
-                >
-                  <FontAwesomeIcon icon={faTablet} color="#565d66" size="sm" />
-                </IconButton>
-              </Grid>
-              <Grid item className={styles.fadeShowPhone}>
-                <IconButton
-                  aria-label=""
-                  color="primary"
-                  onClick={() => this.props.setFramePreview(2)}
-                >
-                  <FontAwesomeIcon icon={faTabletAlt} color="#565d66" size="xs" />
-                </IconButton>
-              </Grid>
-            </Grid>
-
           </Grid>
+
           <Grid container direction="row" style={{ backgroundColor: "white" }}>
             <Grid
               item
@@ -277,48 +239,101 @@ class ClippedDrawer extends React.Component {
 
           <Grid container style={{ height: 50 }} />
 
-          <AccordionButton
-            comp={<ThemeEditorTab />}
-            label="Select theme"
-            currentNav={this.state.currentNavName}
-            isNav={this.state.navigating}
-            setNav={this.setNavigating}
-          />
-          <AccordionButton
-            comp={<DesignTab />}
-            label="Customize theme"
-            currentNav={this.state.currentNavName}
-            isNav={this.state.navigating}
-            setNav={this.setNavigating}
-          />
-          <AccordionButton
-            comp={<PagesEditorTab />}
-            label="Pages"
-            currentNav={this.state.currentNavName}
-            isNav={this.state.navigating}
-            setNav={this.setNavigating}
-          />
-          <AccordionButton
-            comp={<HomepageEditorTab />}
-            label="Homepage Settings"
-            currentNav={this.state.currentNavName}
-            isNav={this.state.navigating}
-            setNav={this.setNavigating}
-          />
-          <AccordionButton
-            comp={<SettingEditorTab />}
-            label="Settings"
-            currentNav={this.state.currentNavName}
-            isNav={this.state.navigating}
-            setNav={this.setNavigating}
-          />
-          <AccordionButton
-            comp={<SyncEditorTab />}
-            label="Sync"
-            currentNav={this.state.currentNavName}
-            isNav={this.state.navigating}
-            setNav={this.setNavigating}
-          />
+          <Grid container>
+            <Grid item xs={12}>
+              <AccordionButton
+                comp={<ThemeEditorTab />}
+                label="Select theme"
+                currentNav={this.state.currentNavName}
+                isNav={this.state.navigating}
+                setNav={this.setNavigating}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <AccordionButton
+                comp={<DesignTab />}
+                label="Customize theme"
+                currentNav={this.state.currentNavName}
+                isNav={this.state.navigating}
+                setNav={this.setNavigating}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <AccordionButton
+                comp={<PagesEditorTab />}
+                label="Pages"
+                currentNav={this.state.currentNavName}
+                isNav={this.state.navigating}
+                setNav={this.setNavigating}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <AccordionButton
+                comp={<HomepageEditorTab />}
+                label="Homepage Settings"
+                currentNav={this.state.currentNavName}
+                isNav={this.state.navigating}
+                setNav={this.setNavigating}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <AccordionButton
+                comp={<SettingEditorTab />}
+                label="Settings"
+                currentNav={this.state.currentNavName}
+                isNav={this.state.navigating}
+                setNav={this.setNavigating}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <AccordionButton
+                comp={<SyncEditorTab />}
+                label="Sync"
+                currentNav={this.state.currentNavName}
+                isNav={this.state.navigating}
+                setNav={this.setNavigating}
+              />
+            </Grid>
+          </Grid>
+
+          <Grid
+            container
+            justify="center"
+            style={{
+              borderTop: "1px solid #dddddd",
+              bottom: 0,
+              position: this.state.navigating ? "sticky" : "absolute",
+              backgroundColor: "#f0eded"
+            }}
+            xs={12}>
+            <Grid item className={styles.fadeShow}>
+              <IconButton
+                aria-label=""
+                color="primary"
+                onClick={() => this.props.setFramePreview(0)}
+              >
+                <FontAwesomeIcon icon={faDesktop} color="#565d66" size="sm" />
+              </IconButton>
+            </Grid>
+            <Grid item className={styles.fadeShow}>
+              <IconButton
+                aria-label=""
+                color="primary"
+                onClick={() => this.props.setFramePreview(1)}
+              >
+                <FontAwesomeIcon icon={faTablet} color="#565d66" size="sm" />
+              </IconButton>
+            </Grid>
+            <Grid item className={styles.fadeShowPhone}>
+              <IconButton
+                aria-label=""
+                color="primary"
+                onClick={() => this.props.setFramePreview(2)}
+              >
+                <FontAwesomeIcon icon={faTabletAlt} color="#565d66" size="xs" />
+              </IconButton>
+            </Grid>
+          </Grid>
         </Drawer>
       </AppBar>
     );

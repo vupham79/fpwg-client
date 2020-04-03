@@ -18,6 +18,7 @@ export default function AccordionButton({
         onMouseLeave={() => setHover(false)}
         onClick={() => setNav(true, label)}
         style={{
+          width: "100%",
           border: "1px solid",
           borderLeft: onHover ? "4px solid" : "none",
           borderColor: onHover ? "#0074aa" : "#dddddd",
