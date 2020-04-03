@@ -1,22 +1,21 @@
 import {
+  CardActionArea,
+  CardMedia,
   Container,
   Dialog,
   Grid,
-  withStyles,
-  CardActionArea,
-  CardMedia,
-  Typography
+  Typography,
+  withStyles
 } from "@material-ui/core";
-import Link from "../../component/link";
 import React from "react";
+import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
-import Pagination from "@material-ui/lab/Pagination";
 import {
   getDataByPageNumber,
   setGalleriesToSiteView,
   updateNavItemValue
 } from "../../actions";
-import ReactPaginate from "react-paginate";
+import Link from "../../component/link";
 
 const useStyles = theme => ({
   gridItems: {
@@ -44,19 +43,20 @@ class GalleryComponent extends React.Component {
     itemPerPage: 5
   };
 
-  handlePageViewClick = async (event, value) => {
+  handlePageViewClick = async data => {
     const {
       siteInfo,
       getDataByPageNumber,
       isEdit,
       setGalleriesToSiteView
     } = this.props;
+    let selected = data.selected + 1;
     if (!isEdit) {
-      this.setState({ pageView: value });
+      this.setState({ pageView: selected });
       const data = await getDataByPageNumber({
         sitePath: siteInfo,
         page: "gallery",
-        pageNumber: value
+        pageNumber: selected
       });
       data && setGalleriesToSiteView(data);
     }
@@ -316,7 +316,7 @@ class GalleryComponent extends React.Component {
             : pageCountView > 1 &&
               !fromHome && (
                 <Grid container justify="center">
-                  <Pagination
+                  {/* <Pagination
                     style={{
                       backgroundColor: "white",
                       border: `1px solid black`,
@@ -327,6 +327,19 @@ class GalleryComponent extends React.Component {
                     count={pageCountView}
                     page={this.state.pageView}
                     onChange={this.handlePageViewClick}
+                  /> */}
+                  <ReactPaginate
+                    previousLabel={"previous"}
+                    nextLabel={"next"}
+                    breakLabel={"..."}
+                    breakClassName={"break-me"}
+                    pageCount={pageCountView}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageViewClick}
+                    containerClassName={"pagination"}
+                    subContainerClassName={"pages pagination"}
+                    activeClassName={"active"}
                   />
                 </Grid>
               )}

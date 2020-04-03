@@ -435,20 +435,20 @@ class PostTypeComponent extends React.Component {
     itemPerPage: 5
   };
 
-  handlePageViewClick = async (event, value) => {
+  handlePageViewClick = async data => {
     const {
       siteInfo,
       getDataByPageNumber,
       isEdit,
       setPostToSiteView
     } = this.props;
-
+    let selected = data.selected + 1;
     if (!isEdit) {
-      this.setState({ pageView: value });
+      this.setState({ pageView: selected });
       const data = await getDataByPageNumber({
         sitePath: siteInfo.sitePath,
         page: "news",
-        pageNumber: value
+        pageNumber: selected
       });
       data && setPostToSiteView(data);
     }
@@ -820,7 +820,7 @@ class PostTypeComponent extends React.Component {
             theme !== "theme3" &&
             !fromHome && (
               <Grid container justify="center" style={{ marginTop: "5rem" }}>
-                <Pagination
+                {/* <Pagination
                   style={{
                     backgroundColor: "white",
                     border: "1px solid black",
@@ -831,6 +831,19 @@ class PostTypeComponent extends React.Component {
                   count={pageCountView}
                   page={this.state.pageView}
                   onChange={this.handlePageViewClick}
+                /> */}
+                <ReactPaginate
+                  previousLabel={"previous"}
+                  nextLabel={"next"}
+                  breakLabel={"..."}
+                  breakClassName={"break-me"}
+                  pageCount={pageCountView}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  onPageChange={this.handlePageViewClick}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClassName={"active"}
                 />
               </Grid>
             )}

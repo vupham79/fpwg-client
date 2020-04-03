@@ -1,8 +1,9 @@
 import { Divider, Grid } from "@material-ui/core";
 import moment from "moment";
 import React from "react";
+import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
-import { getDataByPageNumber, setGalleriesToSiteView } from "../../actions";
+import { getDataByPageNumber, setEventsToSiteView } from "../../actions";
 import styles from "./event.module.css";
 
 class EventComponent extends React.Component {
@@ -14,21 +15,22 @@ class EventComponent extends React.Component {
     itemPerPage: 5
   };
 
-  handlePageViewClick = async (event, value) => {
+  handlePageViewClick = async data => {
     const {
       siteInfo,
       getDataByPageNumber,
       isEdit,
-      setGalleriesToSiteView
+      setEventsToSiteView
     } = this.props;
+    let selected = data.selected + 1;
     if (!isEdit) {
-      this.setState({ pageView: value });
+      this.setState({ pageView: selected });
       const data = await getDataByPageNumber({
         sitePath: siteInfo,
         page: "event",
-        pageNumber: value
+        pageNumber: selected
       });
-      data && setGalleriesToSiteView(data);
+      data && setEventsToSiteView(data);
     }
   };
 
@@ -85,7 +87,8 @@ class EventComponent extends React.Component {
       titleView,
       bodyEdit,
       bodyView,
-      homeList
+      homeList,
+      pageCountView
     } = this.props;
 
     const useStyles = () => ({
@@ -389,7 +392,7 @@ class EventComponent extends React.Component {
                   );
                 })}
             </Grid>
-            {/* {isEdit
+            {isEdit
               ? this.state.pageCount > 1 && (
                   <div className="commentBox">
                     <ReactPaginate
@@ -400,7 +403,7 @@ class EventComponent extends React.Component {
                       pageCount={this.state.pageCount}
                       marginPagesDisplayed={2}
                       pageRangeDisplayed={5}
-                      onPageChange={this.handlePageClick}
+                      onPageChange={this.handlePageEditClick}
                       containerClassName={"pagination"}
                       subContainerClassName={"pages pagination"}
                       activeClassName={"active"}
@@ -413,21 +416,33 @@ class EventComponent extends React.Component {
                     justify="center"
                     style={{ marginTop: "5rem" }}
                   >
-                    <Pagination
+                    {/* <Pagination
                     style={{
                     backgroundColor: "white",
                     border: "1px solid black",
                     padding: "0.2rem"
                   }}
                       color="primary"
-                      variant="outlined"
                       shape="rounded"
                       count={pageCountView}
                       page={this.state.pageView}
                       onChange={this.handlePageViewClick}
+                    />  */}
+                    <ReactPaginate
+                      previousLabel={"previous"}
+                      nextLabel={"next"}
+                      breakLabel={"..."}
+                      breakClassName={"break-me"}
+                      pageCount={pageCountView}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={5}
+                      onPageChange={this.handlePageViewClick}
+                      containerClassName={"pagination"}
+                      subContainerClassName={"pages pagination"}
+                      activeClassName={"active"}
                     />
                   </Grid>
-                )} */}
+                )}
           </Grid>
         </Grid>
       </Grid>
@@ -448,7 +463,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getDataByPageNumber: ({ sitePath, page, siteId, pageNumber }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
-  setGalleriesToSiteView: event => dispatch(setGalleriesToSiteView(event))
+  setEventsToSiteView: event => dispatch(setEventsToSiteView(event))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventComponent);

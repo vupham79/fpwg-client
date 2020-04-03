@@ -119,6 +119,7 @@ class EventPage extends React.Component {
           (homeList && homeList) || (siteEdit && siteEdit.events) ? (
             <EventComponent
               homeList={fromHome && homeList ? homeList : siteEdit.events}
+              fromHome={fromHome}
             />
           ) : (
             <EmptyEvent
@@ -132,6 +133,8 @@ class EventPage extends React.Component {
         ) : (homeList && homeList) || (siteView && siteView.events) ? (
           <EventComponent
             homeList={fromHome && homeList ? homeList : siteView.events}
+            siteInfo={siteView.sitePath}
+            fromHome={fromHome}
           />
         ) : (
           <EmptyEvent
