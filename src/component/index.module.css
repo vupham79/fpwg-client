@@ -57,6 +57,9 @@
 
 .fadeBox {
   border-top: 1px solid #dddddd !important;
+  bottom: 0;
+  position: sticky;
+  background-color: #f0eded;
 }
 
 @media only screen and (max-width: 900px) {
@@ -65,7 +68,7 @@
   }
 }
 
-@media only screen and (max-width: 300px) {
+@media only screen and (max-width: 600px) {
   .fadeShowPhone {
       display: none;
   }
