@@ -121,10 +121,10 @@ class Theme1Event extends React.Component {
               fromHome && homeList
                 ? homeList
                 : isEdit
-                ? siteEdit.events
-                : siteView.events
+                  ? siteEdit.events
+                  : siteView.events
             }
-            siteInfo={siteView.sitePath}
+            siteInfo={siteView && siteView.sitePath}
             fromHome={fromHome}
           />
         </Grid>
