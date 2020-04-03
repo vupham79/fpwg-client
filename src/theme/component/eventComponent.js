@@ -1,34 +1,33 @@
-import { Divider, Grid, CardMedia } from "@material-ui/core";
+import { Divider, Grid } from "@material-ui/core";
+import Pagination from "@material-ui/lab/Pagination";
 import moment from "moment";
 import React from "react";
-import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import { getDataByPageNumber, setEventsToSiteView } from "../../actions";
 import styles from "./event.module.css";
-
 class EventComponent extends React.Component {
   state = {
     pageView: 1,
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5
+    itemPerPage: 5,
+    page: 1
   };
 
-  handlePageViewClick = async data => {
+  handlePageViewClick = async (event, newValue) => {
     const {
       siteInfo,
       getDataByPageNumber,
       isEdit,
       setEventsToSiteView
     } = this.props;
-    let selected = data.selected + 1;
     if (!isEdit) {
-      this.setState({ pageView: selected });
+      this.setState({ pageView: newValue });
       const data = await getDataByPageNumber({
         sitePath: siteInfo,
         page: "event",
-        pageNumber: selected
+        pageNumber: newValue
       });
       data && setEventsToSiteView(data);
     }
@@ -56,6 +55,7 @@ class EventComponent extends React.Component {
         ),
         pageCount: Math.ceil(homeList.length / this.state.itemPerPage)
       });
+      console.log(this.filteredData);
     }
   };
 
@@ -66,11 +66,10 @@ class EventComponent extends React.Component {
     }
   }
 
-  handlePageEditClick = data => {
-    let selected = data.selected;
+  handlePageEditClick = (event, newValue) => {
+    let selected = newValue - 1;
     let offset = Math.ceil(selected * this.state.itemPerPage);
-
-    this.setState({ offset: offset }, () => {
+    this.setState({ offset: offset, page: newValue }, () => {
       this.setListData(
         this.props.homeList.slice(
           this.state.offset,
@@ -78,6 +77,375 @@ class EventComponent extends React.Component {
         )
       );
     });
+  };
+
+  renderUpComingEvent = (homeList, classes) => {
+    const {
+      isEdit,
+      titleEdit,
+      titleView,
+      bodyEdit,
+      bodyView,
+      siteEdit,
+      siteView
+    } = this.props;
+    return (
+      <>
+        {homeList &&
+          homeList.map((row, index) => {
+            return (
+              row &&
+              !row.isCancelled &&
+              moment(row.endTime).isAfter(moment()) && (
+                <Grid
+                  item
+                  container
+                  sm={12}
+                  className={styles.contain_event}
+                  key={index}
+                  style={{ padding: 10, backgroundColor: "white" }}
+                >
+                  <Grid
+                    item
+                    xs={2}
+                    style={{
+                      display: isEdit
+                        ? siteEdit.showCoverEvent
+                          ? "block"
+                          : "none"
+                        : siteView.showCoverEvent
+                        ? "block"
+                        : "none",
+                      backgroundColor: "#444950"
+                    }}
+                  >
+                    <img
+                      style={{
+                        // objectFit: "contain",
+                        width: "100%",
+                        height: "100%",
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center"
+                      }}
+                      src={row.cover}
+                      alt=""
+                    />
+                  </Grid>
+
+                  <Grid
+                    container
+                    direction="row"
+                    item
+                    xs={2}
+                    style={{ height: "5rem" }}
+                  >
+                    <Grid item xs={12} style={classes.changableFirst}>
+                      {moment(row.startTime)
+                        .format("MMM")
+                        .toUpperCase()}
+                    </Grid>
+                    <Grid item xs={12} style={classes.changableFirst2}>
+                      {moment(row.startTime).format("D") + " "}
+                    </Grid>
+                  </Grid>
+
+                  <Grid container direction="row" item xs={2}>
+                    <Grid
+                      item
+                      xs={12}
+                      style={{
+                        fontWeight: "bold",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        display: "inline-block",
+                        fontFamily: isEdit
+                          ? titleEdit.fontFamily
+                          : titleView.fontFamily
+                      }}
+                    >
+                      <a
+                        href={"https://" + row.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {row.name}
+                      </a>
+                    </Grid>
+                    <Grid item xs={12} style={{ color: "#3578e5" }}>
+                      {moment(row.startTime).format("MMMM DD")}
+                      {row.endTime &&
+                        !moment(moment(row.endTime).format("MMMM DD")).isSame(
+                          moment(row.startTime).format("MMMM DD")
+                        ) &&
+                        " - " + moment(row.endTime).format("MMMM DD")}
+                    </Grid>
+                  </Grid>
+
+                  <Grid
+                    item
+                    xs={3}
+                    style={{
+                      whiteSpace: "pre-wrap",
+                      wordWrap: "break-word",
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      display: isEdit
+                        ? siteEdit.showDesEvent
+                          ? "inline-block"
+                          : "none"
+                        : siteView.showDesEvent
+                        ? "inline-block"
+                        : "none",
+                      height: "6em",
+                      lineHeight: "1.5em",
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily
+                    }}
+                  >
+                    {row.description}
+                  </Grid>
+
+                  <Grid
+                    container
+                    direction="row"
+                    item
+                    xs={3}
+                    style={{
+                      display: isEdit
+                        ? siteEdit.showPlaceEvent
+                          ? "block"
+                          : "none"
+                        : siteView.showPlaceEvent
+                        ? "block"
+                        : "none"
+                    }}
+                  >
+                    <Grid
+                      item
+                      xs={12}
+                      style={{
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        display: "inline-block",
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily
+                      }}
+                    >
+                      {row.place && row.place.name}
+                    </Grid>
+
+                    <Grid
+                      item
+                      xs={12}
+                      style={{
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        display: "inline-block",
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily
+                      }}
+                    >
+                      {row.place && row.place.city}
+                    </Grid>
+                  </Grid>
+                </Grid>
+              )
+            );
+          })}
+      </>
+    );
+  };
+
+  renderPassEvent = (homeList, classes) => {
+    const {
+      isEdit,
+      titleEdit,
+      titleView,
+      bodyEdit,
+      bodyView,
+      siteEdit,
+      siteView
+    } = this.props;
+    return (
+      <>
+        {homeList &&
+          homeList.map((row, index) => {
+            return (
+              row &&
+              (row.isCancelled ||
+                moment(row.endTime).isSameOrBefore(moment()) ||
+                !row.endTime) && (
+                <Grid
+                  item
+                  container
+                  sm={12}
+                  className={styles.contain_event}
+                  key={index}
+                  style={{ padding: 10, backgroundColor: "white" }}
+                >
+                  <Grid
+                    item
+                    xs={2}
+                    style={{
+                      display: isEdit
+                        ? siteEdit.showCoverEvent
+                          ? "block"
+                          : "none"
+                        : siteView.showCoverEvent
+                        ? "block"
+                        : "none",
+                      backgroundColor: "#444950"
+                    }}
+                  >
+                    <img
+                      style={{
+                        // objectFit: "contain",
+                        width: "100%",
+                        height: "100%",
+                        backgroundRepeat: "no-repeat",
+                        backgroundSize: "cover",
+                        backgroundPosition: "center"
+                      }}
+                      src={row.cover}
+                      alt=""
+                    />
+                  </Grid>
+
+                  <Grid
+                    container
+                    direction="row"
+                    item
+                    xs={2}
+                    style={{ height: "5rem" }}
+                  >
+                    <Grid item xs={12} style={classes.changableFirst}>
+                      {moment(row.startTime)
+                        .format("MMM")
+                        .toUpperCase()}
+                    </Grid>
+                    <Grid item xs={12} style={classes.changableFirst2}>
+                      {moment(row.startTime).format("D") + " "}
+                    </Grid>
+                  </Grid>
+
+                  <Grid container direction="row" item xs={2}>
+                    <Grid
+                      item
+                      xs={12}
+                      style={{
+                        fontWeight: "bold",
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        display: "inline-block",
+                        fontFamily: isEdit
+                          ? titleEdit.fontFamily
+                          : titleView.fontFamily
+                      }}
+                    >
+                      <a
+                        href={"https://" + row.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {row.name}
+                      </a>
+                    </Grid>
+                    <Grid item xs={12} style={{ color: "#3578e5" }}>
+                      {moment(row.startTime).format("MMMM DD")}
+                      {row.endTime &&
+                        !moment(moment(row.endTime).format("MMMM DD")).isSame(
+                          moment(row.startTime).format("MMMM DD")
+                        ) &&
+                        " - " + moment(row.endTime).format("MMMM DD")}
+                    </Grid>
+                  </Grid>
+
+                  <Grid
+                    item
+                    xs={3}
+                    style={{
+                      whiteSpace: "pre-wrap",
+                      wordWrap: "break-word",
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      display: isEdit
+                        ? siteEdit.showDesEvent
+                          ? "inline-block"
+                          : "none"
+                        : siteView.showDesEvent
+                        ? "inline-block"
+                        : "none",
+                      height: "6em",
+                      lineHeight: "1.5em",
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily
+                    }}
+                  >
+                    {row.description}
+                  </Grid>
+
+                  <Grid
+                    container
+                    direction="row"
+                    item
+                    xs={3}
+                    style={{
+                      display: isEdit
+                        ? siteEdit.showPlaceEvent
+                          ? "block"
+                          : "none"
+                        : siteView.showPlaceEvent
+                        ? "block"
+                        : "none"
+                    }}
+                  >
+                    <Grid
+                      item
+                      xs={12}
+                      style={{
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        display: "inline-block",
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily
+                      }}
+                    >
+                      {row.place && row.place.name}
+                    </Grid>
+
+                    <Grid
+                      item
+                      xs={12}
+                      style={{
+                        whiteSpace: "nowrap",
+                        textOverflow: "ellipsis",
+                        overflow: "hidden",
+                        display: "inline-block",
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily
+                      }}
+                    >
+                      {row.place && row.place.city}
+                    </Grid>
+                  </Grid>
+                </Grid>
+              )
+            );
+          })}
+      </>
+    );
   };
 
   render() {
@@ -89,10 +457,8 @@ class EventComponent extends React.Component {
       bodyView,
       homeList,
       pageCountView,
-      siteEdit,
-      siteView
+      fromHome
     } = this.props;
-
     const useStyles = () => ({
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -184,7 +550,14 @@ class EventComponent extends React.Component {
                 </Grid>
               )}
 
+              {isEdit
+                ? fromHome
+                  ? this.renderUpComingEvent(homeList.slice(0, 5), classes)
+                  : this.renderUpComingEvent(this.state.filteredData, classes)
+                : this.renderUpComingEvent(homeList, classes)}
+
               {homeList &&
+                !fromHome &&
                 homeList.filter(
                   row =>
                     row &&
@@ -195,173 +568,6 @@ class EventComponent extends React.Component {
                     <p style={classes.changableBody}>No upcoming event.</p>
                   </Grid>
                 )}
-
-              {homeList &&
-                homeList.map((row, index) => {
-                  return (
-                    row &&
-                    !row.isCancelled &&
-                    moment(row.endTime).isAfter(moment()) && (
-                      <Grid
-                        item
-                        container
-                        sm={12}
-                        className={styles.contain_event}
-                        key={index}
-                        style={{ padding: 10, backgroundColor: "white" }}
-                      >
-                        <Grid
-                          item
-                          xs={2}
-                          style={{
-                            display: isEdit
-                              ? siteEdit.showCoverEvent
-                                ? "block"
-                                : "none"
-                              : siteView.showCoverEvent
-                              ? "block"
-                              : "none"
-                          }}
-                        >
-                          <img
-                            style={{
-                              objectFit: "contain",
-                              width: "100%",
-                              height: "100%"
-                            }}
-                            src={row.cover}
-                            alt=""
-                          />
-                        </Grid>
-
-                        <Grid
-                          container
-                          direction="row"
-                          item
-                          xs={2}
-                          style={{ height: "5rem" }}
-                        >
-                          <Grid item xs={12} style={classes.changableFirst}>
-                            {moment(row.startTime)
-                              .format("MMM")
-                              .toUpperCase()}
-                          </Grid>
-                          <Grid item xs={12} style={classes.changableFirst2}>
-                            {moment(row.startTime).format("D") + " "}
-                          </Grid>
-                        </Grid>
-
-                        <Grid container direction="row" item xs={2}>
-                          <Grid
-                            item
-                            xs={12}
-                            style={{
-                              fontWeight: "bold",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflow: "hidden",
-                              display: "inline-block",
-                              fontFamily: isEdit
-                                ? titleEdit.fontFamily
-                                : titleView.fontFamily
-                            }}
-                          >
-                            <a
-                              href={"https://" + row.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              {row.name}
-                            </a>
-                          </Grid>
-                          <Grid item xs={12} style={{ color: "#3578e5" }}>
-                            {moment(row.startTime).format("MMMM DD")}
-                            {row.endTime &&
-                              !moment(
-                                moment(row.endTime).format("MMMM DD")
-                              ).isSame(
-                                moment(row.startTime).format("MMMM DD")
-                              ) &&
-                              " - " + moment(row.endTime).format("MMMM DD")}
-                          </Grid>
-                        </Grid>
-
-                        <Grid
-                          item
-                          xs={3}
-                          style={{
-                            whiteSpace: "pre-wrap",
-                            wordWrap: "break-word",
-                            textOverflow: "ellipsis",
-                            overflow: "hidden",
-                            display: isEdit
-                              ? siteEdit.showDesEvent
-                                ? "inline-block"
-                                : "none"
-                              : siteView.showDesEvent
-                              ? "inline-block"
-                              : "none",
-                            height: "6em",
-                            lineHeight: "1.5em",
-                            fontFamily: isEdit
-                              ? bodyEdit.fontFamily
-                              : bodyView.fontFamily
-                          }}
-                        >
-                          {row.description}
-                        </Grid>
-
-                        <Grid
-                          container
-                          direction="row"
-                          item
-                          xs={3}
-                          style={{
-                            display: isEdit
-                              ? siteEdit.showPlaceEvent
-                                ? "block"
-                                : "none"
-                              : siteView.showPlaceEvent
-                              ? "block"
-                              : "none"
-                          }}
-                        >
-                          <Grid
-                            item
-                            xs={12}
-                            style={{
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflow: "hidden",
-                              display: "inline-block",
-                              fontFamily: isEdit
-                                ? bodyEdit.fontFamily
-                                : bodyView.fontFamily
-                            }}
-                          >
-                            {row.place && row.place.name}
-                          </Grid>
-
-                          <Grid
-                            item
-                            xs={12}
-                            style={{
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflow: "hidden",
-                              display: "inline-block",
-                              fontFamily: isEdit
-                                ? bodyEdit.fontFamily
-                                : bodyView.fontFamily
-                            }}
-                          >
-                            {row.place && row.place.city}
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    )
-                  );
-                })}
 
               <Grid item xs={12}>
                 <Divider color="#212121" />
@@ -377,7 +583,14 @@ class EventComponent extends React.Component {
                 </Grid>
               )}
 
+              {isEdit
+                ? fromHome
+                  ? this.renderPassEvent(homeList.slice(0, 5), classes)
+                  : this.renderPassEvent(this.state.filteredData, classes)
+                : this.renderPassEvent(homeList, classes)}
+
               {homeList &&
+                !fromHome &&
                 homeList.filter(
                   row =>
                     row &&
@@ -389,223 +602,41 @@ class EventComponent extends React.Component {
                     <p style={classes.changableBody}>No past event.</p>
                   </Grid>
                 )}
-
-              {homeList &&
-                homeList.map((row, index) => {
-                  return (
-                    row &&
-                    (row.isCancelled ||
-                      moment(row.endTime).isSameOrBefore(moment()) ||
-                      !row.endTime) && (
-                      <Grid
-                        item
-                        container
-                        sm={12}
-                        className={styles.contain_event}
-                        key={index}
-                        style={{ padding: 10, backgroundColor: "white" }}
-                      >
-                        <Grid
-                          item
-                          xs={2}
-                          style={{
-                            display: isEdit
-                              ? siteEdit.showCoverEvent
-                                ? "block"
-                                : "none"
-                              : siteView.showCoverEvent
-                              ? "block"
-                              : "none"
-                          }}
-                        >
-                          <img
-                            style={{
-                              objectFit: "contain",
-                              width: "100%",
-                              height: "100%"
-                            }}
-                            src={row.cover}
-                            alt=""
-                          />
-                        </Grid>
-
-                        <Grid
-                          container
-                          direction="row"
-                          item
-                          xs={2}
-                          style={{ height: "5rem" }}
-                        >
-                          <Grid item xs={12} style={classes.changableFirst}>
-                            {moment(row.startTime)
-                              .format("MMM")
-                              .toUpperCase()}
-                          </Grid>
-                          <Grid item xs={12} style={classes.changableFirst2}>
-                            {moment(row.startTime).format("D") + " "}
-                          </Grid>
-                        </Grid>
-
-                        <Grid container direction="row" item xs={2}>
-                          <Grid
-                            item
-                            xs={12}
-                            style={{
-                              fontWeight: "bold",
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflow: "hidden",
-                              display: "inline-block",
-                              fontFamily: isEdit
-                                ? titleEdit.fontFamily
-                                : titleView.fontFamily
-                            }}
-                          >
-                            <a
-                              href={"https://" + row.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              {row.name}
-                            </a>
-                          </Grid>
-                          <Grid item xs={12} style={{ color: "#3578e5" }}>
-                            {moment(row.startTime).format("MMMM DD")}
-                            {row.endTime &&
-                              !moment(
-                                moment(row.endTime).format("MMMM DD")
-                              ).isSame(
-                                moment(row.startTime).format("MMMM DD")
-                              ) &&
-                              " - " + moment(row.endTime).format("MMMM DD")}
-                          </Grid>
-                        </Grid>
-
-                        <Grid
-                          item
-                          xs={3}
-                          style={{
-                            whiteSpace: "pre-wrap",
-                            wordWrap: "break-word",
-                            textOverflow: "ellipsis",
-                            overflow: "hidden",
-                            display: isEdit
-                              ? siteEdit.showDesEvent
-                                ? "inline-block"
-                                : "none"
-                              : siteView.showDesEvent
-                              ? "inline-block"
-                              : "none",
-                            height: "6em",
-                            lineHeight: "1.5em",
-                            fontFamily: isEdit
-                              ? bodyEdit.fontFamily
-                              : bodyView.fontFamily
-                          }}
-                        >
-                          {row.description}
-                        </Grid>
-
-                        <Grid
-                          container
-                          direction="row"
-                          item
-                          xs={3}
-                          style={{
-                            display: isEdit
-                              ? siteEdit.showPlaceEvent
-                                ? "block"
-                                : "none"
-                              : siteView.showPlaceEvent
-                              ? "block"
-                              : "none"
-                          }}
-                        >
-                          <Grid
-                            item
-                            xs={12}
-                            style={{
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflow: "hidden",
-                              display: "inline-block",
-                              fontFamily: isEdit
-                                ? bodyEdit.fontFamily
-                                : bodyView.fontFamily
-                            }}
-                          >
-                            {row.place && row.place.name}
-                          </Grid>
-
-                          <Grid
-                            item
-                            xs={12}
-                            style={{
-                              whiteSpace: "nowrap",
-                              textOverflow: "ellipsis",
-                              overflow: "hidden",
-                              display: "inline-block",
-                              fontFamily: isEdit
-                                ? bodyEdit.fontFamily
-                                : bodyView.fontFamily
-                            }}
-                          >
-                            {row.place && row.place.city}
-                          </Grid>
-                        </Grid>
-                      </Grid>
-                    )
-                  );
-                })}
             </Grid>
             {isEdit
-              ? this.state.pageCount > 1 && (
-                  <div className="commentBox">
-                    <ReactPaginate
-                      previousLabel={"previous"}
-                      nextLabel={"next"}
-                      breakLabel={"..."}
-                      breakClassName={"break-me"}
-                      pageCount={this.state.pageCount}
-                      marginPagesDisplayed={2}
-                      pageRangeDisplayed={5}
-                      onPageChange={this.handlePageEditClick}
-                      containerClassName={"pagination"}
-                      subContainerClassName={"pages pagination"}
-                      activeClassName={"active"}
-                    />
-                  </div>
-                )
-              : pageCountView > 1 && (
-                  <Grid
-                    container
-                    justify="center"
-                    style={{ marginTop: "5rem" }}
-                  >
-                    {/* <Pagination
-                    style={{
-                    backgroundColor: "white",
-                    border: "1px solid black",
-                    padding: "0.2rem"
-                  }}
+              ? !fromHome &&
+                this.state.pageCount > 1 && (
+                  <Grid container justify="center" style={{ padding: "5rem" }}>
+                    <Pagination
+                      style={{
+                        backgroundColor: "white",
+                        padding: "0.4rem",
+                        borderRadius: "0.3rem"
+                      }}
                       color="primary"
+                      shape="rounded"
+                      variant="outlined"
+                      count={this.state.pageCount}
+                      page={this.state.page}
+                      onChange={this.handlePageEditClick}
+                    />
+                  </Grid>
+                )
+              : !fromHome &&
+                pageCountView > 1 && (
+                  <Grid container justify="center" style={{ padding: "5rem" }}>
+                    <Pagination
+                      style={{
+                        backgroundColor: "white",
+                        padding: "0.4rem",
+                        borderRadius: "0.3rem"
+                      }}
+                      color="primary"
+                      variant="outlined"
                       shape="rounded"
                       count={pageCountView}
                       page={this.state.pageView}
                       onChange={this.handlePageViewClick}
-                    />  */}
-                    <ReactPaginate
-                      previousLabel={"previous"}
-                      nextLabel={"next"}
-                      breakLabel={"..."}
-                      breakClassName={"break-me"}
-                      pageCount={pageCountView}
-                      marginPagesDisplayed={2}
-                      pageRangeDisplayed={5}
-                      onPageChange={this.handlePageViewClick}
-                      containerClassName={"pagination"}
-                      subContainerClassName={"pages pagination"}
-                      activeClassName={"active"}
                     />
                   </Grid>
                 )}

@@ -7,8 +7,8 @@ import {
   Typography,
   withStyles
 } from "@material-ui/core";
+import Pagination from "@material-ui/lab/Pagination";
 import React from "react";
-import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import {
   getDataByPageNumber,
@@ -40,23 +40,23 @@ class GalleryComponent extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5
+    itemPerPage: 5,
+    page: 1
   };
 
-  handlePageViewClick = async data => {
+  handlePageViewClick = async (event, newValue) => {
     const {
       siteInfo,
       getDataByPageNumber,
       isEdit,
       setGalleriesToSiteView
     } = this.props;
-    let selected = data.selected + 1;
     if (!isEdit) {
-      this.setState({ pageView: selected });
+      this.setState({ pageView: newValue });
       const data = await getDataByPageNumber({
         sitePath: siteInfo,
         page: "gallery",
-        pageNumber: selected
+        pageNumber: newValue
       });
       data && setGalleriesToSiteView(data);
     }
@@ -100,11 +100,11 @@ class GalleryComponent extends React.Component {
     }
   }
 
-  handlePageEditClick = data => {
-    let selected = data.selected;
+  handlePageEditClick = (event, newValue) => {
+    let selected = newValue - 1;
     let offset = Math.ceil(selected * this.state.itemPerPage);
 
-    this.setState({ offset: offset }, () => {
+    this.setState({ offset: offset, page: newValue }, () => {
       this.setListData(
         this.props.galleries.slice(
           this.state.offset,
@@ -297,49 +297,37 @@ class GalleryComponent extends React.Component {
           {isEdit
             ? this.state.pageCount > 1 &&
               !fromHome && (
-                <Grid container justify="center">
-                  <ReactPaginate
-                    previousLabel={"previous"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={this.state.pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageEditClick}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
+                <Grid container justify="center" style={{ padding: "2rem" }}>
+                  <Pagination
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0.4rem",
+                      borderRadius: "0.3rem"
+                    }}
+                    color="primary"
+                    shape="rounded"
+                    variant="outlined"
+                    count={this.state.pageCount}
+                    page={this.state.page}
+                    onChange={this.handlePageEditClick}
                   />
                 </Grid>
               )
             : pageCountView > 1 &&
               !fromHome && (
-                <Grid container justify="center">
-                  {/* <Pagination
+                <Grid container justify="center" style={{ padding: "2rem" }}>
+                  <Pagination
                     style={{
                       backgroundColor: "white",
-                      border: `1px solid black`,
-                      padding: "0.2rem"
+                      padding: "0.4rem",
+                      borderRadius: "0.3rem"
                     }}
                     color="primary"
                     shape="rounded"
+                    variant="outlined"
                     count={pageCountView}
                     page={this.state.pageView}
                     onChange={this.handlePageViewClick}
-                  /> */}
-                  <ReactPaginate
-                    previousLabel={"previous"}
-                    nextLabel={"next"}
-                    breakLabel={"..."}
-                    breakClassName={"break-me"}
-                    pageCount={pageCountView}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={5}
-                    onPageChange={this.handlePageViewClick}
-                    containerClassName={"pagination"}
-                    subContainerClassName={"pages pagination"}
-                    activeClassName={"active"}
                   />
                 </Grid>
               )}

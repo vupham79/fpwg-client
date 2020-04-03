@@ -130,6 +130,7 @@ class Theme1Event extends React.Component {
                 : siteView.events
             }
             siteInfo={siteView.sitePath}
+            fromHome={fromHome}
           />
         </Grid>
       </Grid>

@@ -131,10 +131,10 @@ class ContactPage extends React.Component {
                   {isEdit
                     ? address
                       ? address
-                      : "Curent no phone to address to show."
+                      : "Curent no address to show."
                     : siteView && siteView.address
                     ? siteView.address
-                    : "Curent no phone to address to show."}
+                    : "Curent no address to show."}
                 </Typography>
               </Grid>
             </Grid>
