@@ -73,7 +73,7 @@ class PreViewSite extends React.Component {
                 type="image/x-icon"
               />
             </Helmet>
-            {themesConstant.find(e => e.id === siteView.theme.id).component}
+            {themesConstant.find(e => e.id === siteView.theme._id).component}
           </>
         );
       }

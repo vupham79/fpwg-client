@@ -52,7 +52,7 @@ class DialogThemes extends Component {
   };
   handleChangeTheme = () => {
     const { changeTheme, themes, site } = this.props;
-    const theme = themes.find(e => e.id === this.state.id);
+    const theme = themes.find(e => e._id === this.state.id);
     site.theme = theme;
     changeTheme(site);
   };
@@ -108,10 +108,10 @@ class DialogThemes extends Component {
                 <Grid key={i} item style={{ margin: "1.5rem" }} sm={3}>
                   <Card
                     className={classes.root}
-                    onClick={() => this.handleSelect(theme.id, theme.name)}
+                    onClick={() => this.handleSelect(theme._id, theme.name)}
                     variant={"outlined"}
                     style={{
-                      border: theme.id === id ? "0.25rem solid #434d58" : ""
+                      border: theme._id === id ? "0.25rem solid #434d58" : ""
                     }}
                   >
                     <CardActionArea>

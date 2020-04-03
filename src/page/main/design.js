@@ -10,6 +10,7 @@ import {
   setSiteEdit,
   getUserSites
 } from "../../actions";
+require("dotenv").config();
 
 const imgStyle = {
   backgroundSize: "contain",
@@ -153,7 +154,7 @@ class Design extends Component {
               className={"mainFont"}
               style={{ fontSize: "12px", overflow: "hidden" }}
             >
-              {"http://localhost:3000/" + item.sitePath}
+              {`${process.env.REACT_APP_API_HOST}${item.sitePath}`}
             </Grid>
             <Grid
               item

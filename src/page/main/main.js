@@ -15,6 +15,7 @@ import Link from "../../component/link";
 import { themes as themesConstant } from "../../constant/constant";
 import imgUrl from "../../FBWGLogo.png";
 import DesignTab from "./design";
+require("dotenv").config();
 
 const useStyle = theme => ({
   root: {
@@ -99,24 +100,7 @@ function EmptyListSite() {
             You don't have any FPWG sites yet.
           </Typography>
         </Grid>
-        {/* <Grid item xs={12} className={style.body1}>
-          <Typography variant="body1">Would you like to start one?</Typography>
-        </Grid> */}
       </Grid>
-      {/* <Grid
-        container
-        justify="center"
-        item
-        xs={10}
-        sm={6}
-        className={style.button}
-      >
-        <Grid item xs={10} container justify="center">
-          <Button variant="contained" color="primary">
-            Create New
-          </Button>
-        </Grid>
-      </Grid> */}
     </Grid>
   );
 }
@@ -124,7 +108,7 @@ class MainPage extends Component {
   renderViewPage = siteEdit => {
     if (siteEdit) {
       const theme = siteEdit
-        ? themesConstant.find(e => e.id === siteEdit.theme.id)
+        ? themesConstant.find(e => e.id === siteEdit.theme._id)
         : null;
       return theme && theme.component;
     }
@@ -199,7 +183,7 @@ class MainPage extends Component {
                         }}
                         fullWidth
                         variant={"outlined"}
-                        value={"http://localhost:3000/" + siteEdit.sitePath}
+                        value={`${process.env.REACT_APP_API_HOST}${siteEdit.sitePath}`}
                         InputProps={{
                           endAdornment: (
                             <Button

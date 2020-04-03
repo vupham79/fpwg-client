@@ -14,20 +14,23 @@ import {
   DialogActions,
   Typography,
   Select,
-  MenuItem
+  MenuItem,
+  Input
 } from "@material-ui/core";
 import Title from "./Title";
 import { connect } from "react-redux";
 import {
   getAllThemesAdmin,
-  updateTheme,
-  getAllCategoriesAdmin
+  getAllCategoriesAdmin,
+  insertTheme,
+  updateTheme
 } from "../actions";
 import ReactPaginate from "react-paginate";
-import SearchIcon from "@material-ui/icons/Search";
+import { SearchOutlined as SearchIcon, Add } from "@material-ui/icons";
 import "./adminStyleSheet.css";
 import { ChromePicker } from "react-color";
 import FontPickerComponent from "./fontPicker";
+import toastr from "./Toastr";
 
 const useStyles = theme => ({
   seeMore: {
@@ -63,15 +66,18 @@ class TableTheme extends Component {
     offset: 0,
     itemPerPage: 5, // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
     showDialog: false,
-    selectedItem: {
-      id: "0",
+    showEditDialog: false,
+    newItem: {
       mainColor: "#212121",
       name: "",
       fontBody: "",
-      fontTitle: ""
+      fontTitle: "",
+      previewImage: "",
+      preview: "",
+      category: ""
     },
-    updateData: {
-      id: "0",
+    edit: {
+      id: "",
       mainColor: "#212121",
       name: "",
       fontBody: "",
@@ -82,19 +88,25 @@ class TableTheme extends Component {
     }
   };
 
-  setOpenDialogue = item => {
-    console.log(item.category._id);
+  setOpenEditDialogue = item => {
     this.setState({
-      showDialog: true,
-      selectedItem: item,
-      updateData: {
-        ...this.state.updateData,
+      showEditDialog: true,
+      edit: {
+        id: item._id,
         mainColor: item.mainColor,
         fontBody: item.fontBody,
         fontTitle: item.fontTitle,
         name: item.name,
-        category: item.category._id
+        category: item.category ? item.category._id : "",
+        previewImage: item.previewImage,
+        preview: item.previewImage
       }
+    });
+  };
+
+  setOpenDialogue = item => {
+    this.setState({
+      showDialog: true
     });
   };
 
@@ -104,10 +116,25 @@ class TableTheme extends Component {
     });
   };
 
+  setCloseEditDialogue = () => {
+    this.setState({
+      showEditDialog: false
+    });
+  };
+
   handleChangeName = e => {
     this.setState({
-      updateData: {
-        ...this.state.updateData,
+      newItem: {
+        ...this.state.newItem,
+        name: e.target.value
+      }
+    });
+  };
+
+  handleChangeNameEdit = e => {
+    this.setState({
+      edit: {
+        ...this.state.edit,
         name: e.target.value
       }
     });
@@ -115,38 +142,83 @@ class TableTheme extends Component {
 
   handleChangeColor = color => {
     this.setState({
-      updateData: {
-        ...this.state.updateData,
+      newItem: {
+        ...this.state.newItem,
         mainColor: color.hex
       }
     });
   };
+
   handleChangeFontTitle = font => {
     this.setState({
-      updateData: {
-        ...this.state.updateData,
+      newItem: {
+        ...this.state.newItem,
         fontTitle: font
       }
     });
   };
+
   handleChangeFontBody = font => {
     this.setState({
-      updateData: {
-        ...this.state.updateData,
+      newItem: {
+        ...this.state.newItem,
         fontBody: font
       }
     });
   };
 
-  handleUpdate = body => {
-    const { updateData } = this.state;
-    this.props.updateTheme(
-      updateData.id,
-      updateData.name,
-      updateData.fontBody,
-      updateData.fontTitle,
-      updateData.mainColor
+  handleChangeColorEdit = color => {
+    this.setState({
+      edit: {
+        ...this.state.edit,
+        mainColor: color.hex
+      }
+    });
+  };
+
+  handleChangeFontTitleEdit = font => {
+    this.setState({
+      edit: {
+        ...this.state.edit,
+        fontTitle: font
+      }
+    });
+  };
+
+  handleChangeFontBodyEdit = font => {
+    this.setState({
+      edit: {
+        ...this.state.edit,
+        fontBody: font
+      }
+    });
+  };
+
+  handleUpdate = async () => {
+    const { edit } = this.state;
+    await this.props.updateTheme(
+      edit.id,
+      edit.name,
+      edit.fontBody,
+      edit.fontTitle,
+      edit.mainColor,
+      edit.previewImage,
+      edit.category
     );
+    this.getThemes();
+  };
+
+  handleInsert = async () => {
+    const { newItem } = this.state;
+    await this.props.insertTheme(
+      newItem.name,
+      newItem.fontBody,
+      newItem.fontTitle,
+      newItem.mainColor,
+      newItem.previewImage,
+      newItem.category
+    );
+    this.getThemes();
   };
 
   setListData = listData => {
@@ -202,18 +274,84 @@ class TableTheme extends Component {
 
   handleChangeCategory = e => {
     this.setState({
-      updateData: {
-        ...this.state.updateData,
+      newItem: {
+        ...this.state.newItem,
         category: e.target.value
       }
     });
+  };
+
+  handleChangeCategoryEdit = e => {
+    this.setState({
+      edit: {
+        ...this.state.edit,
+        category: e.target.value
+      }
+    });
+  };
+
+  handleBrowsePicture = async e => {
+    e.preventDefault();
+    let file = e.target.files[0];
+    //validating the file
+    //check if the file is exists
+    if (!file) {
+      toastr.error("No image is selected!", "Error");
+      return;
+    }
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/jpg"
+    ) {
+      this.setState({
+        newItem: {
+          ...this.state.newItem,
+          previewImage: file,
+          preview: URL.createObjectURL(file)
+        }
+      });
+    } else {
+      toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
+    }
+  };
+
+  handleBrowsePictureEdit = async e => {
+    e.preventDefault();
+    let file = e.target.files[0];
+    //validating the file
+    //check if the file is exists
+    if (!file) {
+      toastr.error("No image is selected!", "Error");
+      return;
+    }
+    if (
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/jpg"
+    ) {
+      this.setState({
+        edit: {
+          ...this.state.edit,
+          previewImage: file,
+          preview: URL.createObjectURL(file)
+        }
+      });
+    } else {
+      toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
+    }
   };
 
   render() {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Title>Themes</Title>
+        <Title>
+          Themes
+          <IconButton onClick={this.setOpenDialogue}>
+            <Add />
+          </IconButton>
+        </Title>
         <Paper component="form" className={classes.root}>
           <InputBase
             id="searchBox"
@@ -259,7 +397,7 @@ class TableTheme extends Component {
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
           this.state.filteredData.map((row, index) => (
-            <div key={row.id}>
+            <div key={index}>
               <Grid container direction="row">
                 <Grid item xs={2}>
                   <img
@@ -292,12 +430,12 @@ class TableTheme extends Component {
                   </Grid>
                 </Grid>
                 <Grid item xs={2}>
-                  {row.category.name}
+                  {row.category && row.category.name}
                 </Grid>
                 <Grid item xs={2}>
                   <Button
                     color="primary"
-                    onClick={() => this.setOpenDialogue(row)}
+                    onClick={() => this.setOpenEditDialogue(row)}
                   >
                     Edit
                   </Button>
@@ -330,8 +468,7 @@ class TableTheme extends Component {
           maxWidth="sm"
           fullWidth
         >
-          <DialogTitle>Edit theme</DialogTitle>
-
+          <DialogTitle>Insert theme</DialogTitle>
           <DialogContent>
             <Grid container direction="row">
               <Grid container item xs={7}>
@@ -339,7 +476,7 @@ class TableTheme extends Component {
                   <TextField
                     label="Name"
                     color="primary"
-                    value={this.state.updateData.name}
+                    value={this.state.newItem.name}
                     onChange={e => this.handleChangeName(e)}
                     inputProps={{
                       maxLength: 50
@@ -355,7 +492,7 @@ class TableTheme extends Component {
                   </Grid>
                   <Grid item xs={6} sm={5}>
                     <FontPickerComponent
-                      selectedValue={this.state.updateData.fontTitle}
+                      selectedValue={this.state.newItem.fontTitle}
                       onChange={this.handleChangeFontTitle}
                     />
                   </Grid>
@@ -368,7 +505,7 @@ class TableTheme extends Component {
                   </Grid>
                   <Grid item xs={6} sm={5}>
                     <FontPickerComponent
-                      selectedValue={this.state.updateData.fontBody}
+                      selectedValue={this.state.newItem.fontBody}
                       onChange={this.handleChangeFontBody}
                     />
                   </Grid>
@@ -384,7 +521,7 @@ class TableTheme extends Component {
                       }}
                       fullWidth
                       variant={"outlined"}
-                      value={this.state.updateData.category}
+                      value={this.state.newItem.category}
                       onChange={this.handleChangeCategory}
                     >
                       {this.props.categories.map((category, index) => {
@@ -399,22 +536,181 @@ class TableTheme extends Component {
                     </Select>
                   </Grid>
                 </Grid>
+                <Grid container item xs={12}>
+                  <Grid item>
+                    <Typography>Picture</Typography>
+                    <Input
+                      type="file"
+                      id="selectedFile"
+                      onChange={e => this.handleBrowsePicture(e)}
+                      style={{ display: "none" }}
+                    />
+                    <img
+                      style={{
+                        height: "4rem"
+                      }}
+                      alt=""
+                      src={this.state.newItem.preview}
+                    />
+                  </Grid>
+                  <Grid container justify={"center"}>
+                    <button
+                      className={classes.logoButton}
+                      color={"default"}
+                      onClick={() =>
+                        document.getElementById("selectedFile").click()
+                      }
+                    >
+                      Browse
+                    </button>
+                  </Grid>
+                </Grid>
               </Grid>
               <Grid item xs={4}>
                 <ChromePicker
-                  color={this.state.updateData.mainColor}
+                  color={this.state.newItem.mainColor}
                   onChangeComplete={this.handleChangeColor}
                 />
               </Grid>
             </Grid>
           </DialogContent>
-
           <DialogActions>
             <Button
               autoFocus
               variant="contained"
               color="primary"
-              onClick={() => this.handleUpdate(this.state.updateData)}
+              onClick={() => this.handleInsert()}
+            >
+              Finish
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        <Dialog
+          open={this.state.showEditDialog}
+          onClose={() => this.setCloseEditDialogue()}
+          maxWidth="sm"
+          fullWidth
+        >
+          <DialogTitle>Edit theme</DialogTitle>
+          <DialogContent>
+            <Grid container direction="row">
+              <Grid container item xs={7}>
+                <Grid item xs={12}>
+                  <TextField
+                    label="ID"
+                    color="primary"
+                    value={this.state.edit.id}
+                    disabled
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    label="Name"
+                    color="primary"
+                    value={this.state.edit.name}
+                    onChange={e => this.handleChangeNameEdit(e)}
+                    inputProps={{
+                      maxLength: 50
+                    }}
+                  />
+                </Grid>
+                <Grid container item xs={12}>
+                  <Grid item xs={3} sm={2}>
+                    <Typography className={classes.title2}>
+                      Font Title
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={5}>
+                    <FontPickerComponent
+                      selectedValue={this.state.edit.fontTitle}
+                      onChange={this.handleChangeFontTitleEdit}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                  <Grid item xs={3} sm={2}>
+                    <Typography className={classes.title2}>
+                      Font Body
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={5}>
+                    <FontPickerComponent
+                      selectedValue={this.state.edit.fontBody}
+                      onChange={this.handleChangeFontBodyEdit}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                  <Grid item xs={3} sm={2}>
+                    <Typography className={classes.title2}>Category</Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={5}>
+                    <Select
+                      classes={{
+                        root: classes.root
+                      }}
+                      fullWidth
+                      variant={"outlined"}
+                      value={this.state.edit.category}
+                      onChange={this.handleChangeCategoryEdit}
+                    >
+                      {this.props.categories.map((category, index) => {
+                        if (category.name !== "All") {
+                          return (
+                            <MenuItem key={index} value={category._id}>
+                              {category.name}
+                            </MenuItem>
+                          );
+                        }
+                      })}
+                    </Select>
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12}>
+                  <Grid item>
+                    <Typography>Picture</Typography>
+                    <Input
+                      type="file"
+                      id="selectedEditFile"
+                      onChange={e => this.handleBrowsePictureEdit(e)}
+                      style={{ display: "none" }}
+                    />
+                    <img
+                      style={{
+                        height: "4rem"
+                      }}
+                      alt=""
+                      src={this.state.edit.preview}
+                    />
+                  </Grid>
+                  <Grid container justify={"center"}>
+                    <button
+                      className={classes.logoButton}
+                      color={"default"}
+                      onClick={() =>
+                        document.getElementById("selectedEditFile").click()
+                      }
+                    >
+                      Browse
+                    </button>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Grid item xs={4}>
+                <ChromePicker
+                  color={this.state.edit.mainColor}
+                  onChangeComplete={this.handleChangeColorEdit}
+                />
+              </Grid>
+            </Grid>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              autoFocus
+              variant="contained"
+              color="primary"
+              onClick={() => this.handleUpdate()}
             >
               Update
             </Button>
@@ -434,8 +730,14 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   getAllThemesAdmin: (id, accessToken) =>
     dispatch(getAllThemesAdmin(id, accessToken)),
-  updateTheme: (id, name, fontBody, fontTitle, mainColor) =>
-    dispatch(updateTheme(id, name, fontBody, fontTitle, mainColor)),
+  updateTheme: (id, name, fontTitle, fontBody, color, previewImage, category) =>
+    dispatch(
+      updateTheme(id, name, fontTitle, fontBody, color, previewImage, category)
+    ),
+  insertTheme: (name, fontTitle, fontBody, mainColor, previewImage, category) =>
+    dispatch(
+      insertTheme(name, fontTitle, fontBody, mainColor, previewImage, category)
+    ),
   getAllCategoriesAdmin: () => dispatch(getAllCategoriesAdmin())
 });
 

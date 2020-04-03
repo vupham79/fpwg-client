@@ -194,7 +194,6 @@ export function uploadPicture(file, category) {
             contentType: "image/jpeg"
           })
           .then(async () => {
-            console.log("up");
             firebase
               .storage()
               .ref(`category/`)
@@ -215,4 +214,159 @@ export function uploadPicture(file, category) {
       resolve(false);
     }
   });
+}
+
+export function uploadPictureTheme(file, name) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (file && typeof file === "object" && file.size > 0) {
+        firebase
+          .storage()
+          .ref(`theme/`)
+          .child(`${name}`)
+          .put(file, {
+            contentType: "image/jpeg"
+          })
+          .then(async () => {
+            firebase
+              .storage()
+              .ref(`theme/`)
+              .child(`${name}`)
+              .getDownloadURL()
+              .then(async url => {
+                resolve(url);
+              });
+          })
+          .catch(error => {
+            console.log("upload: ", error);
+            toastr.error(`Upload picture failed`, "Error");
+            resolve(false);
+          });
+      } else resolve(false);
+    } catch (error) {
+      toastr.error(`Upload picture failed`, "Error");
+      resolve(false);
+    }
+  });
+}
+
+export function updateTheme(
+  id,
+  name,
+  fontTitle,
+  fontBody,
+  color,
+  previewImage,
+  category
+) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      let upload = false;
+      if (previewImage && typeof previewImage !== "string") {
+        upload = await uploadPictureTheme(previewImage, name);
+        if (upload) {
+          console.log(upload);
+          await axios({
+            method: "PATCH",
+            url: `/theme/update/${id}`,
+            data: {
+              name,
+              fontTitle,
+              fontBody,
+              color,
+              previewImage: upload,
+              category
+            }
+          });
+          dispatch({
+            type: "CLOSE_LOADING"
+          });
+          toastr.success(`Update theme success`, "Success");
+        }
+      } else {
+        await axios({
+          method: "PATCH",
+          url: `/theme/update/${id}`,
+          data: {
+            name,
+            fontTitle,
+            fontBody,
+            color,
+            previewImage,
+            category
+          }
+        });
+        dispatch({
+          type: "CLOSE_LOADING"
+        });
+        toastr.success(`Update theme success`, "Success");
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Update theme failed`, "Error");
+    }
+  };
+}
+
+export function insertTheme(
+  name,
+  fontTitle,
+  fontBody,
+  mainColor,
+  previewImage,
+  category
+) {
+  return async dispatch => {
+    dispatch({
+      type: "SHOW_LOADING"
+    });
+    try {
+      const upload = await uploadPictureTheme(previewImage, name);
+      if (upload) {
+        console.log({
+          name,
+          fontTitle,
+          fontBody,
+          mainColor,
+          previewImage: upload,
+          category
+        });
+        const data = await axios({
+          method: "POST",
+          url: `/theme/insert`,
+          data: {
+            name,
+            fontTitle,
+            fontBody,
+            mainColor,
+            previewImage: upload,
+            category
+          }
+        });
+        dispatch({
+          type: "CLOSE_LOADING"
+        });
+        if (data.status === 200) {
+          toastr.success(`Insert theme success`, "Success");
+        } else {
+          toastr.error(`Insert theme failed`, "Error");
+        }
+      } else {
+        dispatch({
+          type: "CLOSE_LOADING"
+        });
+        toastr.error(`Invalid preview image leads to insert failed`, "Error");
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING"
+      });
+      toastr.error(`Insert theme failed`, "Error");
+    }
+  };
 }

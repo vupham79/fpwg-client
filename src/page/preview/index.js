@@ -8,7 +8,7 @@ class PreViewSite extends React.Component {
     const { siteEdit } = this.props;
 
     if (siteEdit) {
-      return themesConstant.find(e => e.id === siteEdit.theme.id).component;
+      return themesConstant.find(e => e.id === siteEdit.theme._id).component;
     }
     return (
       <Grid container justify="center">

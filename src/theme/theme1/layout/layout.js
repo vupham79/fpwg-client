@@ -26,7 +26,7 @@ class Layout extends Component {
     const { navItemValue, siteEdit } = this.props;
     const pages =
       siteEdit &&
-      themesConstant.find(element => element.id === siteEdit.theme.id).pages;
+      themesConstant.find(element => element.id === siteEdit.theme._id).pages;
 
     return (
       <TabItem
@@ -44,7 +44,13 @@ class Layout extends Component {
 
     return (
       <>
-        <HeaderComponent navPos={"left"} displayImg={false} headerColor="white" navColor={isEdit ? titleEdit.color : titleView.color} navTextColor="#212121" />
+        <HeaderComponent
+          navPos={"left"}
+          displayImg={false}
+          headerColor="white"
+          navColor={isEdit ? titleEdit.color : titleView.color}
+          navTextColor="#212121"
+        />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
       </>

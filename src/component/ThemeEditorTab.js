@@ -59,7 +59,7 @@ const useStyles = theme => ({
 
 class ThemeEditorTab extends React.Component {
   state = {
-    id: this.props.site.theme.id,
+    id: this.props.site.theme._id,
     currentCategory: "All",
     filteredData: []
   };
@@ -89,7 +89,8 @@ class ThemeEditorTab extends React.Component {
 
   handleChangeTheme = selectId => {
     const { changeTheme, themes, site, updateNavItemValue } = this.props;
-    const theme = themes.find(e => e.id === selectId);
+    const theme = themes.find(e => e._id === selectId);
+    console.log(theme);
     // site.theme = theme;
     // site.color = theme.mainColor;
     this.setState({
@@ -149,11 +150,11 @@ class ThemeEditorTab extends React.Component {
             return (
               <Grid key={i} item sm={12} style={{ marginBottom: "1rem" }}>
                 <Card
-                  onClick={() => this.handleChangeTheme(theme.id)}
+                  onClick={() => this.handleChangeTheme(theme._id)}
                   variant={"outlined"}
                   style={{
                     border:
-                      theme.id === this.props.site.theme.id
+                      theme._id === this.props.site.theme._id
                         ? "0.2rem solid #0074aa"
                         : ""
                   }}
@@ -166,7 +167,7 @@ class ThemeEditorTab extends React.Component {
                       image={theme.previewImage}
                       title="preview"
                     />
-                    <CardContent>
+                    {/* <CardContent>
                       <Typography
                         align={"center"}
                         variant="subtitle2"
@@ -174,7 +175,7 @@ class ThemeEditorTab extends React.Component {
                       >
                         {theme.name}
                       </Typography>
-                    </CardContent>
+                    </CardContent> */}
                   </CardActionArea>
                 </Card>
               </Grid>

@@ -24,7 +24,7 @@ import {
 } from "../actions";
 import ReactPaginate from "react-paginate";
 import { SearchOutlined as SearchIcon, Add } from "@material-ui/icons";
-import toastr from "../component/Toastr";
+import toastr from "./Toastr";
 import "./adminStyleSheet.css";
 
 const useStyles = theme => ({
@@ -233,9 +233,6 @@ class TableCategory extends Component {
 
   render() {
     const { classes } = this.props;
-    const imgStyles = {
-      height: "4rem"
-    };
     return (
       <React.Fragment>
         <Title>
@@ -288,7 +285,7 @@ class TableCategory extends Component {
                 <Grid item xs={2}>
                   <img
                     style={{
-                      ...imgStyles
+                      height: "4rem"
                     }}
                     alt=""
                     src={row.picture}
@@ -356,7 +353,7 @@ class TableCategory extends Component {
                     />
                     <img
                       style={{
-                        ...imgStyles,
+                        height: "4rem",
                         display: this.state.preview ? "block" : "none"
                       }}
                       alt=""
@@ -422,7 +419,7 @@ class TableCategory extends Component {
                     />
                     <img
                       style={{
-                        ...imgStyles
+                        height: "4rem"
                       }}
                       alt=""
                       src={this.state.edit.preview}

@@ -36,7 +36,7 @@ import PreNewPageT4 from "../theme/theme4/pages/new";
 
 export const themes = [
   {
-    id: "k5e520ab785bc282f048799ce",
+    id: "5e520ab785bc282f048799ce",
     component: <Theme1 />,
     pages: [
       { name: "home", component: <PreHomePageT1 /> },
@@ -48,7 +48,7 @@ export const themes = [
     ]
   },
   {
-    id: "5e50a9d494f9d83350f7398d",
+    id: "5e521a561c9d44000020cd96",
     component: <Theme2 />,
     pages: [
       { name: "home", component: <PreHomePage /> },
@@ -60,7 +60,7 @@ export const themes = [
     ]
   },
   {
-    id: "k5e520ab785bc282f048799ce2",
+    id: "5e6941cf1c9d44000090c04a",
     component: <Theme3 />,
     pages: [
       { name: "home", component: <PreHomePageT3 /> },
@@ -72,7 +72,7 @@ export const themes = [
     ]
   },
   {
-    id: "z7e520ab785bc282f048799ce",
+    id: "5e77a7341c9d440000b5a08c",
     component: <Theme4 />,
     pages: [
       { name: "home", component: <PreHomePageT4 /> },

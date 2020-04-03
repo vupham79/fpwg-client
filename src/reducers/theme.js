@@ -40,16 +40,6 @@ const ThemeReducer = (state = defaultState, action) => {
         ...state,
         data: action.payload ? [...action.payload] : []
       };
-    case "SET_THEME_UPDATED":
-      index = state.data.findIndex(theme => theme.id === action.payload.id);
-      state.data[index].name = action.payload.name;
-      state.data[index].fontBody = action.payload.fontBody;
-      state.data[index].fontTitle = action.payload.fontTitle;
-      state.data[index].mainColor = action.payload.mainColor;
-      return {
-        ...state,
-        data: [...state.data]
-      };
     default:
       return state;
   }

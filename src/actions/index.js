@@ -3,7 +3,9 @@ import {
   setLogoutAdmin,
   getAllCategoriesAdmin,
   updateCategory,
-  insertCategory
+  insertCategory,
+  insertTheme,
+  updateTheme
 } from "./admin";
 import { updateAdminTabIndex } from "./adminTab";
 import { getAllPaths, updateSitepath } from "./path";
@@ -78,8 +80,8 @@ import {
   getAllThemes,
   getAllThemesAdmin,
   getNavItems,
-  setShowCustomColor,
-  updateTheme
+  setShowCustomColor
+  // updateTheme
 } from "./theme";
 import {
   activateUser,
@@ -154,7 +156,6 @@ export {
   setColorPallete,
   setNavItemActive,
   setNavItemInActive,
-  updateTheme,
   setNewCover,
   setNewLogo,
   setPreviewMode,
@@ -193,5 +194,7 @@ export {
   setEventCustomize,
   getAllCategoriesAdmin,
   updateCategory,
-  insertCategory
+  insertCategory,
+  insertTheme,
+  updateTheme
 };
