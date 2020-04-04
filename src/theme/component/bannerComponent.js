@@ -69,7 +69,7 @@ class BannerComponent extends React.Component {
   };
 
   renderNewCoversCarouselWithTitle = () => {
-    const { isEdit, newCover, siteView } = this.props;
+    const { isEdit, newCover, siteView, siteEdit, bodyEdit, bodyView } = this.props;
     if (isEdit) {
       if (newCover && newCover.length > 0) {
         return newCover.map((cover, index) => {
@@ -78,16 +78,27 @@ class BannerComponent extends React.Component {
               <div key={index} style={{ height: "100%", overflow: "hidden" }}>
                 <CardMedia
                   component="img"
-                  alt="Contemplative Reptile"
+                  alt=""
                   height="400"
                   image={URL.createObjectURL(cover)}
                 />
-                {/* <p className="legend">
+                <p
+                  style={{
+                    position: "absolute",
+                    marginLeft: "15%",
+                    width: "70%",
+                    backgroundColor: "black",
+                    opacity: 0.5,
+                    bottom: 30,
+                    fontSize: 22,
+                    color: "#fff",
+                    fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
+                  }}>
                   {isEdit && siteEdit && siteEdit.about}
                   {!isEdit && siteView && siteView.about}
                   {isEdit && !siteEdit.about && "Welcome to our website!"}
                   {!isEdit && !siteView.about && "Welcome to our website!"}
-                </p> */}
+                </p>
               </div>
             );
           } else
@@ -95,14 +106,25 @@ class BannerComponent extends React.Component {
               <div key={index} style={{ height: "100%", overflow: "hidden" }}>
                 <CardMedia
                   component="img"
-                  alt="Contemplative Reptile"
+                  alt=""
                   height="400"
                   image={cover}
                 />
-                {/* <p className="legend">
+                <p
+                  style={{
+                    position: "absolute",
+                    marginLeft: "15%",
+                    width: "70%",
+                    backgroundColor: "black",
+                    opacity: 0.5,
+                    bottom: 30,
+                    fontSize: 22,
+                    color: "#fff",
+                    fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
+                  }}>
                   {isEdit && siteEdit && siteEdit.about}
                   {isEdit && !siteEdit.about && "Welcome to our website!"}
-                </p> */}
+                </p>
               </div>
             );
         });
@@ -113,14 +135,25 @@ class BannerComponent extends React.Component {
           <div key={index} style={{ height: "100%", overflow: "hidden" }}>
             <CardMedia
               component="img"
-              alt="Contemplative Reptile"
+              alt=""
               height="400"
               image={cover}
             />
-            {/* <p className="legend">
+            <p
+              style={{
+                position: "absolute",
+                marginLeft: "15%",
+                width: "70%",
+                backgroundColor: "black",
+                opacity: 0.5,
+                bottom: 30,
+                fontSize: 22,
+                color: "#fff",
+                fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
+              }}>
               {!isEdit && siteView && siteView.about}
               {!isEdit && !siteView.about && "Welcome to our website!"}
-            </p> */}
+            </p>
           </div>
         ));
       }
@@ -219,7 +252,9 @@ const mapStateToProps = state => ({
   isEdit: state.site.isEdit,
   newCover: state.site.newCover,
   siteEdit: state.site.siteEdit,
-  siteView: state.site.siteView
+  siteView: state.site.siteView,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(BannerComponent);
