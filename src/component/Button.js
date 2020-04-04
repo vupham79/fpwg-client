@@ -9,7 +9,7 @@ export default class Button extends Component {
       color,
       disabled,
       backgroundColor,
-      style
+      style,
     } = this.props;
     return (
       <ButtonBase
@@ -35,7 +35,7 @@ export default class Button extends Component {
           backgroundColor: backgroundColor ? backgroundColor : "#fff",
           color: color ? color : "#3c434a",
           border: "1px solid #c3c4c7",
-          ...style
+          ...style,
         }}
       >
         {label}

@@ -8,8 +8,7 @@ import {
   ListItemText,
   TextField,
   Typography,
-  withStyles,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 import { ArrowBackIos, Public, Facebook } from "@material-ui/icons";
 import React, { Component } from "react";
@@ -17,17 +16,13 @@ import { connect } from "react-redux";
 import { confirmPage } from "../../actions";
 import Link from "../../component/link";
 import ButtonStyled from "../../component/Button";
+import { withStyles } from "@material-ui/core/styles";
+require("dotenv").config();
 
-const useStyle = theme => ({
+const useStyle = (theme) => ({
   textField: {
-    overflow: "hidden",
-    backgroundColor: "#fcfcfb",
-    "&:hover": {},
-    "&:focused": {
-      backgroundColor: "red !important",
-      borderColor: "red !important"
-    }
-  }
+    padding: "2px !important",
+  },
 });
 
 class createNewSite extends Component {
@@ -39,7 +34,7 @@ class createNewSite extends Component {
     pageUrlError: false,
     id: "",
     picture: "",
-    name: ""
+    name: "",
   };
 
   handleConfirm = async () => {
@@ -48,7 +43,7 @@ class createNewSite extends Component {
     if (pageUrl && sitepath) {
       this.setState({
         pageUrlError: false,
-        sitepathError: false
+        sitepathError: false,
       });
       const confirm = await confirmPage({
         pageId: id,
@@ -57,7 +52,7 @@ class createNewSite extends Component {
         profile,
         name,
         sitepath,
-        isPublish
+        isPublish,
       });
       if (confirm) {
         window.location.href = "/";
@@ -65,34 +60,34 @@ class createNewSite extends Component {
     } else {
       if (!pageUrl) {
         this.setState({
-          pageUrlError: true
+          pageUrlError: true,
         });
       } else {
         this.setState({
-          pageUrlError: false
+          pageUrlError: false,
         });
       }
       if (!sitepath) {
         this.setState({
-          sitepathError: true
+          sitepathError: true,
         });
       } else {
         this.setState({
-          sitepathError: false
+          sitepathError: false,
         });
       }
     }
   };
 
-  handleChangeURL = e => {
+  handleChangeURL = (e) => {
     this.setState({
-      pageUrl: e.target.value
+      pageUrl: e.target.value,
     });
   };
 
-  handleChangeSitepath = e => {
+  handleChangeSitepath = (e) => {
     this.setState({
-      sitepath: e.target.value
+      sitepath: e.target.value,
     });
   };
 
@@ -101,15 +96,15 @@ class createNewSite extends Component {
       pageUrl: link,
       id: id,
       name: name,
-      picture: picture
+      picture: picture,
     });
   };
 
   renderPagesNotGenerated = () => {
     const { pages, sites } = this.props;
-    let nonGenerated = pages && pages.map(page => page.id);
+    let nonGenerated = pages && pages.map((page) => page.id);
     let index = -1;
-    sites.forEach(site => {
+    sites.forEach((site) => {
       index = nonGenerated.indexOf(site.id);
       if (index >= 0) {
         nonGenerated.splice(index, 1);
@@ -119,7 +114,7 @@ class createNewSite extends Component {
       return (
         <>
           {pages.map(
-            page =>
+            (page) =>
               nonGenerated.includes(page.id) && (
                 <React.Fragment key={page.id}>
                   <ListItem
@@ -129,7 +124,7 @@ class createNewSite extends Component {
                         id: page.id,
                         link: page.link,
                         name: page.name,
-                        picture: page.picture.data.url
+                        picture: page.picture.data.url,
                       })
                     }
                   >
@@ -156,7 +151,7 @@ class createNewSite extends Component {
               style={{
                 textAlign: "center",
                 fontFamily: "Segoe UI,sans-serif",
-                fontSize: "16px"
+                fontSize: "16px",
               }}
             >
               No Facebook page to use or no page you authorized left.
@@ -183,6 +178,7 @@ class createNewSite extends Component {
 
   renderSelectedPage = () => {
     const { picture, pageUrl, name, sitepath } = this.state;
+    const { classes } = this.props;
     return (
       <>
         <Grid
@@ -198,7 +194,7 @@ class createNewSite extends Component {
               height: "5rem",
               width: "5rem",
               borderRadius: "100%",
-              border: !picture ? "1px dashed black" : ""
+              border: !picture ? "1px dashed black" : "",
             }}
           />
         </Grid>
@@ -218,11 +214,9 @@ class createNewSite extends Component {
                 padding: "7px 14px",
                 textAlign: "center",
                 fontFamily: "Segoe UI,sans-serif",
-                fontSize: "12px"
-              }
-            }}
-            inputProps={{
-              maxLength: 250
+                fontSize: "12px",
+              },
+              maxLength: 250,
             }}
             onChange={this.handleChangeURL}
             fullWidth
@@ -234,7 +228,7 @@ class createNewSite extends Component {
                 <Tooltip title="Facebook Page URL">
                   <Facebook />
                 </Tooltip>
-              )
+              ),
             }}
           />
         </Grid>
@@ -247,24 +241,22 @@ class createNewSite extends Component {
                 padding: "7px 14px",
                 textAlign: "center",
                 fontFamily: "Segoe UI,sans-serif",
-                fontSize: "12px"
-              }
+                fontSize: "12px",
+              },
+              maxLength: 50,
             }}
             error={this.state.sitepathError}
             fullWidth
-            inputProps={{
-              maxLength: 50
-            }}
             variant={"outlined"}
             value={sitepath}
             InputProps={{
               startAdornment: (
                 <Tooltip
-                  title={`Set a unique path name to your website. Example: Site path "abc" means your website url will be "https://fpwg.herokuapp.com/abc"`}
+                  title={`Set a unique path name to your website. Example: Site path "abc" means your website url will be "${process.env.REACT_APP_API_URL}/abc"`}
                 >
                   <Public />
                 </Tooltip>
-              )
+              ),
             }}
           />
         </Grid>
@@ -273,17 +265,16 @@ class createNewSite extends Component {
           sm={12}
           style={{
             borderTop: "1px solid #f6f7f7",
-            // margin: "24px -24px -24px",
             justifyContent: "flex-end",
             display: "flex",
-            flexDirection: "column"
+            flexDirection: "column",
           }}
         >
           <Typography
             style={{
               fontSize: "11px",
               margin: "0 0 16px",
-              textAlign: "center"
+              textAlign: "center",
             }}
           >
             By submit creating new site you agree to our{" "}
@@ -296,7 +287,7 @@ class createNewSite extends Component {
             style={{
               color: "#006088",
               borderColor: "#006088",
-              fontWeight: "bold"
+              fontWeight: "bold",
             }}
             label="Confirm"
             onClick={this.handleConfirm}
@@ -323,10 +314,9 @@ class createNewSite extends Component {
               marginBottom: ".35em",
               fontSize: "34px",
               fontWeight: 300,
-              color: "#3c434a"
+              color: "#3c434a",
             }}
             align={"center"}
-            // variant={"h5"}
           >
             Create New Site
           </Typography>
@@ -340,7 +330,7 @@ class createNewSite extends Component {
                 padding: "1.5rem",
                 boxShadow: "0 0 0 1px #dcdcde",
                 height: "40vh",
-                overflow: "auto"
+                overflow: "auto",
               }}
             >
               {this.renderPagesNotGenerated()}
@@ -354,7 +344,7 @@ class createNewSite extends Component {
                 padding: "1.5rem",
                 boxShadow: "0 0 0 1px #dcdcde",
                 height: "40vh",
-                overflow: "auto"
+                overflow: "auto",
               }}
             >
               {this.renderSelectedPage()}
@@ -366,15 +356,15 @@ class createNewSite extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   pages: state.user.pages,
   sites: state.site.data,
   accessToken: state.user.accessToken,
-  profile: state.user.profile
+  profile: state.user.profile,
 });
 
-const mapDispatchToProps = dispatch => ({
-  confirmPage: data => dispatch(confirmPage(data))
+const mapDispatchToProps = (dispatch) => ({
+  confirmPage: (data) => dispatch(confirmPage(data)),
 });
 
 export default connect(
