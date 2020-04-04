@@ -27,7 +27,7 @@ import {
   TableRow,
   TableSortLabel,
   TextField,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
@@ -44,7 +44,7 @@ import { connect } from "react-redux";
 import {
   sortableContainer,
   sortableElement,
-  sortableHandle
+  sortableHandle,
 } from "react-sortable-hoc";
 import {
   changeHomeItemName,
@@ -54,23 +54,23 @@ import {
   savePosts,
   setActiveNavItems,
   setNewCover,
-  setNewLogo
+  setNewLogo,
 } from "../actions";
 import toastr from "./Toastr";
 import Truncate from "react-truncate";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    paddingTop: 90
+    paddingTop: 90,
   },
   title: {
     fontFamily: "Segoe UI, sans-serif",
     marginBottom: theme.spacing(1),
     fontWeight: "600",
     color: "#555d66",
-    fontSize: 14
+    fontSize: 14,
   },
   title2: {
     fontSize: "14px",
@@ -78,7 +78,7 @@ const useStyles = theme => ({
     fontFamily: "Segoe UI, sans-serif",
     marginBottom: "1rem",
     color: "#555d66",
-    fontWeight: 600
+    fontWeight: 600,
   },
   title3: {
     fontFamily: "Segoe UI, sans-serif",
@@ -86,42 +86,42 @@ const useStyles = theme => ({
     fontWeight: "600",
     color: "#555d66",
     fontSize: 14,
-    textAlign: "center"
+    textAlign: "center",
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 400
+    minWidth: 400,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   sideBarBox: {
     borderStyle: "solid",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#b4c0cf",
-    padding: "1rem"
+    padding: "1rem",
   },
   notchedOutline: {
     borderWidth: "1px",
     borderColor: "#0087be !important",
-    color: "#434d58 !important"
+    color: "#434d58 !important",
   },
   focused: {
     borderWidth: "1px",
     borderColor: "#0087be !important",
-    color: "#434d58 !important"
+    color: "#434d58 !important",
   },
   pickerButton: {
     margin: 0,
     backgroundColor: "white",
-    marginBottom: "0.2rem"
+    marginBottom: "0.2rem",
   },
   customButton: {
     border: "1px solid #0071a1",
     borderRadius: 5,
     color: "#0071a1",
-    fontSize: 11
+    fontSize: 11,
   },
   logoButton: {
     marginTop: 5,
@@ -133,53 +133,53 @@ const useStyles = theme => ({
     height: 40,
     width: "100%",
     "&:hover": {
-      backgroundColor: "white"
-    }
+      backgroundColor: "white",
+    },
   },
   fontPickerRoot: {
-    width: "100% !important"
+    width: "100% !important",
   },
   inputTitle: {
     fontFamily: "Segoe UI, sans-serif !important",
     fontSize: 13,
-    color: "#555d66"
+    color: "#555d66",
   },
   gridItem: {
     zIndex: "999999",
     border: "1px solid #dddddd",
     width: "100%",
-    backgroundColor: "#f0eded"
+    backgroundColor: "#f0eded",
   },
   root: {
     padding: "2px 4px",
     display: "flex",
     alignItems: "center",
-    width: 400
+    width: 400,
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1
+    flex: 1,
   },
   iconButton: {
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
 const coverStyles = {
   backgroundSize: "cover",
   backgroundPosition: "center",
-  backgroundRepeat: "no-repeat"
+  backgroundRepeat: "no-repeat",
 };
 
 const GreenCheckbox = withStyles({
   root: {
     color: green[400],
     "&$checked": {
-      color: green[600]
-    }
+      color: green[600],
+    },
   },
-  checked: {}
-})(props => <Checkbox color="default" {...props} />);
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 const columns = ["", "Title", "Message", "Created Date", "Show"];
 const columnsGallery = ["Photo", "Created Date", "Show"];
@@ -190,13 +190,15 @@ const DragHandle = sortableHandle(() => (
 ));
 
 function handleChangeActive(id, site, setActiveHomeItems) {
-  const index = site && site.homepage && site.homepage.find(e => e._id === id);
+  const index =
+    site && site.homepage && site.homepage.find((e) => e._id === id);
   index.isActive = !index.isActive;
   setActiveHomeItems(site);
 }
 
 function handleChangeNavName(id, site, newName, changeHomeItemName) {
-  const index = site && site.homepage && site.homepage.find(e => e._id === id);
+  const index =
+    site && site.homepage && site.homepage.find((e) => e._id === id);
   index.name = newName;
   changeHomeItemName(site);
 }
@@ -222,13 +224,13 @@ class HomepageEditorTab extends React.Component {
       x: 20,
       y: 20,
       width: 50,
-      height: 50
+      height: 50,
     },
     selectedFile: null,
-    selectedFilePath: null
+    selectedFilePath: null,
   };
 
-  handleUploadCover = async e => {
+  handleUploadCover = async (e) => {
     if (this.props.newCover.length < 5) {
       e.preventDefault();
       let file = e.target.files[0];
@@ -239,8 +241,8 @@ class HomepageEditorTab extends React.Component {
         return;
       }
       //check if the image size is larger than 1MB
-      if (file.size > 1048576) {
-        toastr.error("Image size must be less than 1MB!", "Error");
+      if (file.size > 4194304) {
+        toastr.error("Image size must be less than 4MB!", "Error");
         return;
       }
       if (
@@ -253,7 +255,7 @@ class HomepageEditorTab extends React.Component {
             this.setState({
               selectedFile: file,
               selectedFilePath: URL.createObjectURL(file),
-              pixelCrop: { unit: "%", x: 20, y: 20, width: 50, height: 50 }
+              pixelCrop: { unit: "%", x: 20, y: 20, width: 50, height: 50 },
             });
             this.handleOpenCropDialogue(true, resolve);
           } catch (error) {
@@ -314,7 +316,7 @@ class HomepageEditorTab extends React.Component {
                         style={{
                           maxWidth: "20rem",
                           height: "2.5rem",
-                          overflow: "hidden"
+                          overflow: "hidden",
                         }}
                       >
                         {row.message}
@@ -327,9 +329,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -387,9 +389,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -440,9 +442,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -458,11 +460,11 @@ class HomepageEditorTab extends React.Component {
     );
   }
 
-  handleSetLatest = (item, setActiveHomeItems) => event => {
+  handleSetLatest = (item, setActiveHomeItems) => (event) => {
     const index =
       this.props.site &&
       this.props.site.homepage &&
-      this.props.site.homepage.find(e => e._id === item._id);
+      this.props.site.homepage.find((e) => e._id === item._id);
     index.filter.type = event.target.value;
     if (event.target.value === "latest") {
       index.filter.items = null;
@@ -526,7 +528,7 @@ class HomepageEditorTab extends React.Component {
   handleOpenCropDialogue = async (bool, resolve, isCancel) => {
     this.setState({
       openCropDiag: bool,
-      currentResolve: resolve
+      currentResolve: resolve,
     });
     if (!bool) {
       if (!isCancel) {
@@ -536,9 +538,9 @@ class HomepageEditorTab extends React.Component {
       }
     }
   };
-  handleOpenPostDialogue = bool => {
+  handleOpenPostDialogue = (bool) => {
     this.setState({
-      openDiag: bool
+      openDiag: bool,
     });
     if (bool) {
       if (this.state.currentExpandType === "news" && this.props.posts) {
@@ -595,21 +597,21 @@ class HomepageEditorTab extends React.Component {
     this.handleOpenPostDialogue(false);
   };
 
-  setPosts = posts => {
+  setPosts = (posts) => {
     const slicePosts = posts.slice(0, this.state.itemPerPage + 0);
     this.setState({
-      filteredData: slicePosts
+      filteredData: slicePosts,
     });
     this.setPageCount(posts);
   };
 
-  setPageCount = listData => {
+  setPageCount = (listData) => {
     this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage),
     });
   };
 
-  setActivePost = row => {
+  setActivePost = (row) => {
     // let index = this.props.site && this.props.site.homepage && this.props.site.homepage.find(e => e._id === this.state.currentExpandItemId);
     let index = this.state.currentExpandItem;
     if (!index.filter.items) {
@@ -656,7 +658,7 @@ class HomepageEditorTab extends React.Component {
               xs={6}
               style={{
                 ...coverStyles,
-                backgroundImage: `url(${URL.createObjectURL(cover)})`
+                backgroundImage: `url(${URL.createObjectURL(cover)})`,
               }}
             >
               <IconButton
@@ -689,11 +691,11 @@ class HomepageEditorTab extends React.Component {
     }
   };
 
-  handleChangeAbout = e => {
+  handleChangeAbout = (e) => {
     this.props.changeSiteAbout(e.target.value);
   };
 
-  handleSearch = keyword => {
+  handleSearch = (keyword) => {
     let currentList;
     let searchResult;
     if (this.state.currentExpandType === "news" && this.props.posts) {
@@ -728,9 +730,9 @@ class HomepageEditorTab extends React.Component {
     this.setPageCount(searchResult);
   };
 
-  setListData = listData => {
+  setListData = (listData) => {
     this.setState({
-      filteredData: listData
+      filteredData: listData,
     });
   };
 
@@ -750,18 +752,18 @@ class HomepageEditorTab extends React.Component {
         previousExpandItemId: item._id,
         isExpanding: true,
         currentExpandType: item.original,
-        currentExpandItem: item
+        currentExpandItem: item,
       });
     } else {
       this.setState({
         currentExpandItemId: item._id,
         isExpanding: expand,
-        currentExpandType: item.original
+        currentExpandType: item.original,
       });
     }
   };
 
-  handlePageClick = data => {
+  handlePageClick = (data) => {
     let currentList;
     if (this.state.currentExpandType === "news" && this.props.posts) {
       currentList = this.props.posts.filter(function (pos) {
@@ -785,20 +787,20 @@ class HomepageEditorTab extends React.Component {
         this.state.itemPerPage + this.state.offset
       );
       this.setState({
-        filteredData: slicePosts
+        filteredData: slicePosts,
       });
     });
   };
 
-  moveFocusAtEnd = e => {
+  moveFocusAtEnd = (e) => {
     var temp_value = e.target.value;
     e.target.value = "";
     e.target.value = temp_value;
   };
 
-  setCurrentFocusInput = refName => {
+  setCurrentFocusInput = (refName) => {
     this.setState({
-      currentFocusInput: refName
+      currentFocusInput: refName,
     });
   };
 
@@ -808,7 +810,7 @@ class HomepageEditorTab extends React.Component {
       site,
       setActiveHomeItems,
       updateHomeItemValue,
-      changeHomeItemName
+      changeHomeItemName,
     } = this.props;
 
     const postDialog = () => (
@@ -831,7 +833,7 @@ class HomepageEditorTab extends React.Component {
                 <Typography className={classes.title}>
                   Search by event name
                 </Typography>
-              )
+              ),
             }[this.state.currentExpandType]
           }
           {this.state.currentExpandType !== "gallery" && (
@@ -839,15 +841,15 @@ class HomepageEditorTab extends React.Component {
               <InputBase
                 InputLabelProps={{
                   classes: {
-                    focused: classes.focused
-                  }
+                    focused: classes.focused,
+                  },
                 }}
                 maxLength={50}
                 InputProps={{
                   classes: {
                     notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle
-                  }
+                    input: classes.inputTitle,
+                  },
                 }}
                 id="searchBox"
                 autoFocus={this.state.openDiag ? true : false}
@@ -875,7 +877,7 @@ class HomepageEditorTab extends React.Component {
               {
                 news: this.PostsList(),
                 gallery: this.GalleryList(),
-                event: this.EventList()
+                event: this.EventList(),
               }[this.state.currentExpandType]
             }
           </Grid>
@@ -904,7 +906,7 @@ class HomepageEditorTab extends React.Component {
               width: 70,
               borderRadius: 5,
               color: "#555d66",
-              fontSize: 11
+              fontSize: 11,
             }}
             onClick={() => this.handleOpenPostDialogue(false)}
             color="secondary"
@@ -919,7 +921,7 @@ class HomepageEditorTab extends React.Component {
               width: 70,
               borderRadius: 5,
               color: "white",
-              fontSize: 11
+              fontSize: 11,
             }}
             onClick={() => this.handleSave()}
             color={"primary"}
@@ -936,7 +938,7 @@ class HomepageEditorTab extends React.Component {
           style={{
             height: "1rem",
             width: "100%",
-            backgroundColor: "#ffffff00"
+            backgroundColor: "#ffffff00",
           }}
         />
 
@@ -980,7 +982,7 @@ class HomepageEditorTab extends React.Component {
               color: "#555d66",
               textAlign: "left",
               fontStyle: "italic",
-              fontFamily: "Segoe UI, sans-serif"
+              fontFamily: "Segoe UI, sans-serif",
             }}
           >
             Select which content from Facebook you want to see on your homepage.
@@ -1004,7 +1006,7 @@ class HomepageEditorTab extends React.Component {
         <ExpansionPanel
           expanded={
             this.state.currentExpandItemId === item._id &&
-              this.state.isExpanding
+            this.state.isExpanding
               ? true
               : false
           }
@@ -1038,17 +1040,17 @@ class HomepageEditorTab extends React.Component {
                 <TextField
                   InputLabelProps={{
                     classes: {
-                      focused: classes.focused
-                    }
+                      focused: classes.focused,
+                    },
                   }}
                   inputProps={{
-                    maxLength: 15
+                    maxLength: 15,
                   }}
                   InputProps={{
                     classes: {
                       notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle
-                    }
+                      input: classes.inputTitle,
+                    },
                   }}
                   size="small"
                   style={{ backgroundColor: "white" }}
@@ -1058,7 +1060,7 @@ class HomepageEditorTab extends React.Component {
                   autoFocus
                   disabled={this.state.openDiag ? true : false}
                   onClick={() => this.setCurrentFocusInput("nameInput")}
-                  onChange={e =>
+                  onChange={(e) =>
                     handleChangeNavName(
                       item._id,
                       site,
@@ -1079,17 +1081,17 @@ class HomepageEditorTab extends React.Component {
                     <TextField
                       InputLabelProps={{
                         classes: {
-                          focused: classes.focused
-                        }
+                          focused: classes.focused,
+                        },
                       }}
                       inputProps={{
-                        maxLength: 1000
+                        maxLength: 1000,
                       }}
                       InputProps={{
                         classes: {
                           notchedOutline: classes.notchedOutline,
-                          input: classes.inputTitle
-                        }
+                          input: classes.inputTitle,
+                        },
                       }}
                       multiline
                       autoFocus={
@@ -1107,7 +1109,7 @@ class HomepageEditorTab extends React.Component {
                       variant={"outlined"}
                       value={this.props.about ? this.props.about : ""}
                       id="aboutInput"
-                      onChange={e => this.handleChangeAbout(e)}
+                      onChange={(e) => this.handleChangeAbout(e)}
                     />
                   </Grid>
                 </>
@@ -1117,7 +1119,7 @@ class HomepageEditorTab extends React.Component {
                 {
                   news: postSection(item, "News"),
                   event: postSection(item, "Events"),
-                  gallery: postSection(item, "Photos")
+                  gallery: postSection(item, "Photos"),
                 }[item.original]
               }
 
@@ -1149,7 +1151,7 @@ class HomepageEditorTab extends React.Component {
         site,
         setActiveHomeItems,
         updateHomeItemValue,
-        changeHomeItemName
+        changeHomeItemName,
       }) => {
         if (items) {
           return (
@@ -1181,7 +1183,7 @@ class HomepageEditorTab extends React.Component {
             color: "#555d66",
             textAlign: "left",
             fontStyle: "italic",
-            fontFamily: "Segoe UI, sans-serif"
+            fontFamily: "Segoe UI, sans-serif",
           }}
         >
           Choose what’s displayed on the homepage of your site. Latest contents
@@ -1218,7 +1220,7 @@ class HomepageEditorTab extends React.Component {
                 width: 70,
                 borderRadius: 5,
                 color: "#555d66",
-                fontSize: 11
+                fontSize: 11,
               }}
               onClick={() =>
                 this.handleOpenCropDialogue(
@@ -1239,7 +1241,7 @@ class HomepageEditorTab extends React.Component {
                 width: 70,
                 borderRadius: 5,
                 color: "white",
-                fontSize: 11
+                fontSize: 11,
               }}
               onClick={() =>
                 this.handleOpenCropDialogue(
@@ -1295,14 +1297,14 @@ class HomepageEditorTab extends React.Component {
               border: "1px dashed #555d66",
               cursor: "pointer",
               color: "#555d66",
-              minHeight: 50 //maintain height when removing all images
+              minHeight: 50, //maintain height when removing all images
             }}
             onClick={() => document.getElementById("addCover").click()}
           >
             <Input
               type="file"
               id="addCover"
-              onChange={e => this.handleUploadCover(e)}
+              onChange={(e) => this.handleUploadCover(e)}
               style={{ display: "none" }}
             />
             <Add fontSize="small" />
@@ -1313,25 +1315,25 @@ class HomepageEditorTab extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   themes: state.theme.data,
   isShow: state.theme.isShow,
   site: state.site.siteEdit,
   newCover: state.site.newCover,
   isChanged: state.site.isChanged,
   posts: state.post.posts,
-  about: state.site.siteEdit.about && state.site.siteEdit.about
+  about: state.site.siteEdit.about && state.site.siteEdit.about,
 });
 
-const mapDispatchToProps = dispatch => ({
-  setNewLogo: file => dispatch(setNewLogo(file)),
-  setNewCover: file => dispatch(setNewCover(file)),
-  removeCover: cover => dispatch(removeCover(cover)),
-  savePosts: posts => dispatch(savePosts(posts)),
-  changeHomeItems: items => dispatch(changeHomeItems(items)),
-  changeHomeItemName: site => dispatch(changeHomeItemName(site)),
-  setActiveHomeItems: site => dispatch(setActiveNavItems(site)),
-  changeSiteAbout: about => dispatch(changeSiteAbout(about))
+const mapDispatchToProps = (dispatch) => ({
+  setNewLogo: (file) => dispatch(setNewLogo(file)),
+  setNewCover: (file) => dispatch(setNewCover(file)),
+  removeCover: (cover) => dispatch(removeCover(cover)),
+  savePosts: (posts) => dispatch(savePosts(posts)),
+  changeHomeItems: (items) => dispatch(changeHomeItems(items)),
+  changeHomeItemName: (site) => dispatch(changeHomeItemName(site)),
+  setActiveHomeItems: (site) => dispatch(setActiveNavItems(site)),
+  changeSiteAbout: (about) => dispatch(changeSiteAbout(about)),
   // updateHomeItemValue:
 });
 

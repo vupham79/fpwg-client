@@ -1,12 +1,12 @@
 import {
   faInstagramSquare,
   faWhatsapp,
-  faYoutube
+  faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import {
   faEnvelope,
   faPhoneAlt,
-  faMapMarkedAlt
+  faMapMarkedAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Divider, Grid, TextField, Typography } from "@material-ui/core";
@@ -21,21 +21,21 @@ import {
   changeSiteSitepath,
   changeSiteWhatsapp,
   changeSiteYoutube,
-  changeSiteAddress
+  changeSiteAddress,
 } from "../actions";
 import toastr from "./Toastr";
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    paddingTop: 90
+    paddingTop: 90,
   },
   title: {
     fontFamily: "Segoe UI, sans-serif",
     marginBottom: theme.spacing(1),
     fontWeight: "600",
     color: "#555d66",
-    fontSize: 14
+    fontSize: 14,
   },
   title2: {
     fontSize: "12px",
@@ -43,42 +43,42 @@ const useStyles = theme => ({
     fontFamily: "Segoe UI, sans-serif",
     fontWeight: 600,
     marginBottom: "1rem",
-    color: "#555d66"
+    color: "#555d66",
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 400
+    minWidth: 400,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   sideBarBox: {
     borderStyle: "solid",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#b4c0cf",
-    padding: "1rem"
+    padding: "1rem",
   },
   notchedOutline: {
     borderWidth: "1px",
     borderColor: "#0087be !important",
-    color: "#434d58 !important"
+    color: "#434d58 !important",
   },
   focused: {
     borderWidth: "1px",
     borderColor: "#0087be !important",
-    color: "#434d58 !important"
+    color: "#434d58 !important",
   },
   pickerButton: {
     margin: 0,
     backgroundColor: "white",
-    marginBottom: "0.2rem"
+    marginBottom: "0.2rem",
   },
   customButton: {
     border: "1px solid #0071a1",
     borderRadius: 5,
     color: "#0071a1",
-    fontSize: 11
+    fontSize: 11,
   },
   logoButton: {
     marginTop: 5,
@@ -90,60 +90,60 @@ const useStyles = theme => ({
     height: 40,
     width: "100%",
     "&:hover": {
-      backgroundColor: "white"
-    }
+      backgroundColor: "white",
+    },
   },
   fontPickerRoot: {
-    width: "100% !important"
+    width: "100% !important",
   },
   inputTitle: {
     fontFamily: "Segoe UI, sans-serif !important",
     fontSize: 13,
-    color: "#555d66"
+    color: "#555d66",
   },
   inputLabel: {
     fontFamily: "Segoe UI, sans-serif !important",
-    fontSize: 13
-  }
+    fontSize: 13,
+  },
 });
 
 class SettingEditorTab extends React.Component {
-  handleChangeWhatsapp = e => {
+  handleChangeWhatsapp = (e) => {
     const { changeSiteWhatsapp } = this.props;
     changeSiteWhatsapp(e.target.value);
   };
 
-  handleChangeInstagram = e => {
+  handleChangeInstagram = (e) => {
     const { changeSiteInstagram } = this.props;
     changeSiteInstagram(e.target.value);
   };
 
-  handleChangeYoutube = e => {
+  handleChangeYoutube = (e) => {
     const { changeSiteYoutube } = this.props;
     changeSiteYoutube(e.target.value);
   };
 
-  handleChangeMail = e => {
+  handleChangeMail = (e) => {
     const { changeSiteEmail } = this.props;
     changeSiteEmail(e.target.value);
   };
 
-  handleChangePhone = e => {
+  handleChangePhone = (e) => {
     const { changeSitePhone } = this.props;
     changeSitePhone(e.target.value);
   };
 
-  handleChangeSitepath = e => {
+  handleChangeSitepath = (e) => {
     const { changeSiteSitepath } = this.props;
     changeSiteSitepath(e.target.value);
   };
 
-  handleChangeAddress = e => {
+  handleChangeAddress = (e) => {
     const { changeSiteAddress } = this.props;
     changeSiteAddress(e.target.value);
   };
 
-  handleBrowseFavicon = async e => {
+  handleBrowseFavicon = async (e) => {
     e.preventDefault();
     const file = e.target.files[0];
     //validating the file
@@ -153,8 +153,8 @@ class SettingEditorTab extends React.Component {
       return;
     }
     //check if the image size is larger than 1MB
-    if (file.size > 1048576) {
-      toastr.error("Image size must be less than 1MB!", "Error");
+    if (file.size > 4194304) {
+      toastr.error("Image size must be less than 4MB!", "Error");
       return;
     }
     if (
@@ -181,7 +181,7 @@ class SettingEditorTab extends React.Component {
       phone,
       whatsapp,
       sitepath,
-      address
+      address,
     } = this.props;
     return (
       <div style={{ padding: 10 }}>
@@ -200,7 +200,7 @@ class SettingEditorTab extends React.Component {
               color: "#555d66",
               textAlign: "left",
               fontStyle: "italic",
-              fontFamily: "Segoe UI, sans-serif"
+              fontFamily: "Segoe UI, sans-serif",
             }}
           >
             Set a unique path name to your website. Example: Site path "abc"
@@ -213,22 +213,22 @@ class SettingEditorTab extends React.Component {
               inputMode={"url"}
               fullWidth
               value={sitepath ? sitepath : ""}
-              onChange={e => this.handleChangeSitepath(e)}
+              onChange={(e) => this.handleChangeSitepath(e)}
               style={{ marginTop: 10, backgroundColor: "white" }}
               InputLabelProps={{
                 classes: {
                   focused: classes.focused,
-                  root: classes.inputLabel
-                }
+                  root: classes.inputLabel,
+                },
               }}
               InputProps={{
                 classes: {
                   notchedOutline: classes.notchedOutline,
-                  input: classes.inputTitle
-                }
+                  input: classes.inputTitle,
+                },
               }}
               inputProps={{
-                maxLength: 50
+                maxLength: 50,
               }}
             />
           </Grid>
@@ -237,7 +237,7 @@ class SettingEditorTab extends React.Component {
           style={{
             height: "1rem",
             width: "100%",
-            backgroundColor: "#ffffff00"
+            backgroundColor: "#ffffff00",
           }}
         />
         <Typography className={classes.title}>Links</Typography>
@@ -261,21 +261,21 @@ class SettingEditorTab extends React.Component {
                 size="small"
                 fullWidth
                 value={whatsapp ? whatsapp : ""}
-                onChange={e => this.handleChangeWhatsapp(e)}
+                onChange={(e) => this.handleChangeWhatsapp(e)}
                 InputLabelProps={{
                   classes: {
                     focused: classes.focused,
-                    root: classes.inputLabel
-                  }
+                    root: classes.inputLabel,
+                  },
                 }}
                 InputProps={{
                   classes: {
                     notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle
-                  }
+                    input: classes.inputTitle,
+                  },
                 }}
                 inputProps={{
-                  maxLength: 15
+                  maxLength: 15,
                 }}
               />
             </Grid>
@@ -304,21 +304,21 @@ class SettingEditorTab extends React.Component {
                 inputMode={"url"}
                 fullWidth
                 value={instagram ? instagram : ""}
-                onChange={e => this.handleChangeInstagram(e)}
+                onChange={(e) => this.handleChangeInstagram(e)}
                 InputLabelProps={{
                   classes: {
                     focused: classes.focused,
-                    root: classes.inputLabel
-                  }
+                    root: classes.inputLabel,
+                  },
                 }}
                 InputProps={{
                   classes: {
                     notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle
-                  }
+                    input: classes.inputTitle,
+                  },
                 }}
                 inputProps={{
-                  maxLength: 250
+                  maxLength: 250,
                 }}
               />
             </Grid>
@@ -343,21 +343,21 @@ class SettingEditorTab extends React.Component {
                 inputMode={"url"}
                 fullWidth
                 value={youtube ? youtube : ""}
-                onChange={e => this.handleChangeYoutube(e)}
+                onChange={(e) => this.handleChangeYoutube(e)}
                 InputLabelProps={{
                   classes: {
                     focused: classes.focused,
-                    root: classes.inputLabel
-                  }
+                    root: classes.inputLabel,
+                  },
                 }}
                 InputProps={{
                   classes: {
                     notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle
-                  }
+                    input: classes.inputTitle,
+                  },
                 }}
                 inputProps={{
-                  maxLength: 250
+                  maxLength: 250,
                 }}
               />
             </Grid>
@@ -366,7 +366,7 @@ class SettingEditorTab extends React.Component {
             style={{
               height: "1rem",
               width: "100%",
-              backgroundColor: "#ffffff00"
+              backgroundColor: "#ffffff00",
             }}
           />
           <Typography className={classes.title}>Contact</Typography>
@@ -394,21 +394,21 @@ class SettingEditorTab extends React.Component {
                 inputMode={"Address"}
                 fullWidth
                 value={address ? address : ""}
-                onChange={e => this.handleChangeAddress(e)}
+                onChange={(e) => this.handleChangeAddress(e)}
                 InputLabelProps={{
                   classes: {
                     focused: classes.focused,
-                    root: classes.inputLabel
-                  }
+                    root: classes.inputLabel,
+                  },
                 }}
                 InputProps={{
                   classes: {
                     notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle
-                  }
+                    input: classes.inputTitle,
+                  },
                 }}
                 inputProps={{
-                  maxLength: 250
+                  maxLength: 250,
                 }}
               />
             </Grid>
@@ -433,21 +433,21 @@ class SettingEditorTab extends React.Component {
                 inputMode={"email"}
                 fullWidth
                 value={email ? email : ""}
-                onChange={e => this.handleChangeMail(e)}
+                onChange={(e) => this.handleChangeMail(e)}
                 InputLabelProps={{
                   classes: {
                     focused: classes.focused,
-                    root: classes.inputLabel
-                  }
+                    root: classes.inputLabel,
+                  },
                 }}
                 InputProps={{
                   classes: {
                     notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle
-                  }
+                    input: classes.inputTitle,
+                  },
                 }}
                 inputProps={{
-                  maxLength: 54
+                  maxLength: 54,
                 }}
               />
             </Grid>
@@ -472,21 +472,21 @@ class SettingEditorTab extends React.Component {
                 inputMode={"url"}
                 fullWidth
                 value={phone ? phone : ""}
-                onChange={e => this.handleChangePhone(e)}
+                onChange={(e) => this.handleChangePhone(e)}
                 InputLabelProps={{
                   classes: {
                     focused: classes.focused,
-                    root: classes.inputLabel
-                  }
+                    root: classes.inputLabel,
+                  },
                 }}
                 InputProps={{
                   classes: {
                     notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle
-                  }
+                    input: classes.inputTitle,
+                  },
                 }}
                 inputProps={{
-                  maxLength: 75
+                  maxLength: 75,
                 }}
               />
             </Grid>
@@ -496,7 +496,7 @@ class SettingEditorTab extends React.Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   site: state.site.siteEdit,
   email: state.site.email,
   youtube: state.site.youtube,
@@ -504,17 +504,17 @@ const mapStateToProps = state => ({
   phone: state.site.phone,
   whatsapp: state.site.whatsapp,
   sitepath: state.site.sitepath,
-  address: state.site.address
+  address: state.site.address,
 });
 
-const mapDispatchToProps = dispatch => ({
-  changeSiteEmail: email => dispatch(changeSiteEmail(email)),
-  changeSiteInstagram: instagram => dispatch(changeSiteInstagram(instagram)),
-  changeSitePhone: phone => dispatch(changeSitePhone(phone)),
-  changeSiteSitepath: sitepath => dispatch(changeSiteSitepath(sitepath)),
-  changeSiteWhatsapp: whatsapp => dispatch(changeSiteWhatsapp(whatsapp)),
-  changeSiteYoutube: youtube => dispatch(changeSiteYoutube(youtube)),
-  changeSiteAddress: address => dispatch(changeSiteAddress(address))
+const mapDispatchToProps = (dispatch) => ({
+  changeSiteEmail: (email) => dispatch(changeSiteEmail(email)),
+  changeSiteInstagram: (instagram) => dispatch(changeSiteInstagram(instagram)),
+  changeSitePhone: (phone) => dispatch(changeSitePhone(phone)),
+  changeSiteSitepath: (sitepath) => dispatch(changeSiteSitepath(sitepath)),
+  changeSiteWhatsapp: (whatsapp) => dispatch(changeSiteWhatsapp(whatsapp)),
+  changeSiteYoutube: (youtube) => dispatch(changeSiteYoutube(youtube)),
+  changeSiteAddress: (address) => dispatch(changeSiteAddress(address)),
 });
 
 export default connect(

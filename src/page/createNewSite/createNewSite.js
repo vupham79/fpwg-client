@@ -220,6 +220,7 @@ class createNewSite extends Component {
             }}
             onChange={this.handleChangeURL}
             fullWidth
+            disabled
             error={this.state.pageUrlError}
             variant={"outlined"}
             value={pageUrl}

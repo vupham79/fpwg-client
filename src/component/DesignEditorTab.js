@@ -9,7 +9,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle
+  DialogTitle,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Cancel } from "@material-ui/icons";
@@ -27,25 +27,25 @@ import {
   setColorPallete,
   setNewCover,
   setNewLogo,
-  setShowCustomColor
+  setShowCustomColor,
 } from "../actions";
 import toastr from "./Toastr";
 import FontPickerComponent from "./fontPicker";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    paddingTop: 90
+    paddingTop: 90,
   },
   title: {
     fontFamily: "Segoe UI, sans-serif",
     marginBottom: theme.spacing(1),
     fontWeight: "600",
     color: "#555d66",
-    fontSize: 14
+    fontSize: 14,
   },
   title2: {
     fontSize: "12px",
@@ -53,36 +53,36 @@ const useStyles = theme => ({
     fontFamily: "Segoe UI, sans-serif",
     fontWeight: 600,
     marginBottom: "1rem",
-    color: "#555d66"
+    color: "#555d66",
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 400
+    minWidth: 400,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   sideBarBox: {
     borderStyle: "solid",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#b4c0cf",
-    padding: "1rem"
+    padding: "1rem",
   },
   notchedOutline: {
     borderWidth: "1px",
     borderColor: "#0087be !important",
-    color: "#434d58 !important"
+    color: "#434d58 !important",
   },
   focused: {
     borderWidth: "1px",
     borderColor: "#0087be !important",
-    color: "#434d58 !important"
+    color: "#434d58 !important",
   },
   pickerButton: {
     margin: 0,
     backgroundColor: "white",
-    marginBottom: "0.2rem"
+    marginBottom: "0.2rem",
   },
   customButton: {
     border: "1px solid #0071a1",
@@ -90,7 +90,7 @@ const useStyles = theme => ({
     color: "#0071a1",
     fontSize: 11,
     backgroundColor: "rgb(255, 255, 255)",
-    boxShadow: "none"
+    boxShadow: "none",
   },
   logoButton: {
     marginTop: 5,
@@ -102,17 +102,17 @@ const useStyles = theme => ({
     height: 40,
     width: "100%",
     "&:hover": {
-      backgroundColor: "white"
-    }
+      backgroundColor: "white",
+    },
   },
   fontPickerRoot: {
-    width: "100% !important"
+    width: "100% !important",
   },
   inputTitle: {
     fontFamily: "Segoe UI, sans-serif !important",
     fontSize: 13,
-    color: "#555d66"
-  }
+    color: "#555d66",
+  },
 });
 
 const imgStyles = {
@@ -120,13 +120,13 @@ const imgStyles = {
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   width: "6rem",
-  height: "6rem"
+  height: "6rem",
 };
 
 const coverStyles = {
   backgroundSize: "cover",
   backgroundPosition: "center",
-  backgroundRepeat: "no-repeat"
+  backgroundRepeat: "no-repeat",
 };
 
 class DesignEditorTab extends React.Component {
@@ -143,18 +143,18 @@ class DesignEditorTab extends React.Component {
       x: 20,
       y: 20,
       width: 50,
-      height: 50
+      height: 50,
     },
     selectedFile: null,
-    selectedFilePath: null
+    selectedFilePath: null,
   };
 
   urltoFile(url, filename, mimeType) {
     return fetch(url)
-      .then(function(res) {
+      .then(function (res) {
         return res.arrayBuffer();
       })
-      .then(function(buf) {
+      .then(function (buf) {
         return new File([buf], filename, { type: mimeType });
       });
   }
@@ -193,7 +193,7 @@ class DesignEditorTab extends React.Component {
   handleOpenCropDialogue = async (bool, resolve, isCancel) => {
     this.setState({
       openCropDiag: bool,
-      currentResolve: resolve
+      currentResolve: resolve,
     });
     if (!bool) {
       if (!isCancel) {
@@ -211,39 +211,39 @@ class DesignEditorTab extends React.Component {
     img.crossOrigin = "Anonymous";
     img.src = site.logo;
     this.setState({
-      logo: site.logo
+      logo: site.logo,
     });
-    img.addEventListener("load", async function() {
+    img.addEventListener("load", async function () {
       const color = await colorThief.getPalette(img, 11);
-      const colors = await color.map(rgb =>
+      const colors = await color.map((rgb) =>
         onecolor("rgb( " + rgb[0] + "," + rgb[1] + "," + rgb[2] + ")").hex()
       );
       setColorPallete(colors);
     });
   }
 
-  handleSetColors = colors => {
+  handleSetColors = (colors) => {
     this.setState({
-      pallete: colors
+      pallete: colors,
     });
   };
 
-  handleChangeFontTitle = font => {
+  handleChangeFontTitle = (font) => {
     const { changeFontTitle } = this.props;
     changeFontTitle(font);
   };
 
-  handleChangeColor = color => {
+  handleChangeColor = (color) => {
     const { changeColor } = this.props;
     changeColor(color.hex);
   };
 
-  handleChangeFontBody = font => {
+  handleChangeFontBody = (font) => {
     const { changeFontBody } = this.props;
     changeFontBody(font);
   };
 
-  handleBrowseLogo = async e => {
+  handleBrowseLogo = async (e) => {
     e.preventDefault();
     let file = e.target.files[0];
     //validating the file
@@ -253,8 +253,8 @@ class DesignEditorTab extends React.Component {
       return;
     }
     //check if the image size is larger than 1MB
-    if (file.size > 1048576) {
-      toastr.error("Image size must be less than 1MB!", "Error");
+    if (file.size > 4194304) {
+      toastr.error("Image size must be less than 4MB!", "Error");
       return;
     }
     if (
@@ -267,7 +267,7 @@ class DesignEditorTab extends React.Component {
           this.setState({
             selectedFile: file,
             selectedFilePath: URL.createObjectURL(file),
-            pixelCrop: { unit: "%", x: 20, y: 20, width: 50, height: 50 }
+            pixelCrop: { unit: "%", x: 20, y: 20, width: 50, height: 50 },
           });
           this.handleOpenCropDialogue(true, resolve);
         } catch (error) {
@@ -279,7 +279,7 @@ class DesignEditorTab extends React.Component {
       var output = document.getElementById("preview");
       output.src = URL.createObjectURL(cropImgFile);
       this.setState({
-        logo: cropImgFile.name
+        logo: cropImgFile.name,
       });
       this.props.setNewLogo(cropImgFile);
     } else {
@@ -287,7 +287,7 @@ class DesignEditorTab extends React.Component {
     }
   };
 
-  handleChangeSiteTitle = e => {
+  handleChangeSiteTitle = (e) => {
     const { changeSiteTitle } = this.props;
     changeSiteTitle(e.target.value);
   };
@@ -306,7 +306,7 @@ class DesignEditorTab extends React.Component {
               xs={6}
               style={{
                 ...coverStyles,
-                backgroundImage: `url(${URL.createObjectURL(cover)})`
+                backgroundImage: `url(${URL.createObjectURL(cover)})`,
               }}
             >
               <IconButton
@@ -346,7 +346,7 @@ class DesignEditorTab extends React.Component {
       setShowCustomColor,
       classes,
       site,
-      colorPallete
+      colorPallete,
     } = this.props;
 
     return (
@@ -381,7 +381,7 @@ class DesignEditorTab extends React.Component {
                 width: 70,
                 borderRadius: 5,
                 color: "#555d66",
-                fontSize: 11
+                fontSize: 11,
               }}
               onClick={() =>
                 this.handleOpenCropDialogue(
@@ -402,7 +402,7 @@ class DesignEditorTab extends React.Component {
                 width: 70,
                 borderRadius: 5,
                 color: "white",
-                fontSize: 11
+                fontSize: 11,
               }}
               onClick={() =>
                 this.handleOpenCropDialogue(
@@ -426,7 +426,7 @@ class DesignEditorTab extends React.Component {
               color: "#555d66",
               textAlign: "left",
               fontStyle: "italic",
-              fontFamily: "Segoe UI, sans-serif"
+              fontFamily: "Segoe UI, sans-serif",
             }}
           >
             Add a logo to display on your site. Choose a file from your computer
@@ -436,7 +436,7 @@ class DesignEditorTab extends React.Component {
             <Input
               type="file"
               id="selectedFile"
-              onChange={e => this.handleBrowseLogo(e)}
+              onChange={(e) => this.handleBrowseLogo(e)}
               style={{ display: "none" }}
             />
             <img
@@ -466,21 +466,21 @@ class DesignEditorTab extends React.Component {
           size="small"
           InputLabelProps={{
             classes: {
-              focused: classes.focused
-            }
+              focused: classes.focused,
+            },
           }}
           InputProps={{
             classes: {
               notchedOutline: classes.notchedOutline,
-              input: classes.inputTitle
-            }
+              input: classes.inputTitle,
+            },
           }}
           inputProps={{
-            maxLength: 75
+            maxLength: 75,
           }}
           style={{ backgroundColor: "white" }}
           value={site.title}
-          onChange={e => this.handleChangeSiteTitle(e)}
+          onChange={(e) => this.handleChangeSiteTitle(e)}
         />
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
@@ -549,7 +549,7 @@ class DesignEditorTab extends React.Component {
                 color: "white",
                 borderRadius: 3,
                 zIndex: 1000,
-                top: "50%"
+                top: "50%",
               }}
             >
               <ChromePicker
@@ -567,25 +567,25 @@ class DesignEditorTab extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   themes: state.theme.data,
   isShow: state.theme.isShow,
   site: state.site.siteEdit,
   colorPallete: state.site.colorPallete,
   newCover: state.site.newCover,
-  isChanged: state.site.isChanged
+  isChanged: state.site.isChanged,
 });
 
-const mapDispatchToProps = dispatch => ({
-  changeColor: site => dispatch(changeColor(site)),
-  changeFontTitle: site => dispatch(changeFontTitle(site)),
-  changeFontBody: site => dispatch(changeFontBody(site)),
-  setShowCustomColor: isShow => dispatch(setShowCustomColor(isShow)),
-  changeSiteTitle: title => dispatch(changeSiteTitle(title)),
-  setColorPallete: pallete => dispatch(setColorPallete(pallete)),
-  setNewLogo: file => dispatch(setNewLogo(file)),
-  setNewCover: file => dispatch(setNewCover(file)),
-  removeCover: cover => dispatch(removeCover(cover))
+const mapDispatchToProps = (dispatch) => ({
+  changeColor: (site) => dispatch(changeColor(site)),
+  changeFontTitle: (site) => dispatch(changeFontTitle(site)),
+  changeFontBody: (site) => dispatch(changeFontBody(site)),
+  setShowCustomColor: (isShow) => dispatch(setShowCustomColor(isShow)),
+  changeSiteTitle: (title) => dispatch(changeSiteTitle(title)),
+  setColorPallete: (pallete) => dispatch(setColorPallete(pallete)),
+  setNewLogo: (file) => dispatch(setNewLogo(file)),
+  setNewCover: (file) => dispatch(setNewCover(file)),
+  removeCover: (cover) => dispatch(removeCover(cover)),
 });
 
 export default connect(
