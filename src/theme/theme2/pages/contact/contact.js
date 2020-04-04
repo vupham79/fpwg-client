@@ -37,7 +37,14 @@ class ContactPage extends React.Component {
             align="center"
             gutterBottom
             className={styles.title}
-            style={isEdit ? titleEdit : titleView}
+            style={{
+              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+              fontWeight: 500,
+              color: isEdit ? titleEdit.color : titleView.color,
+              textAlign: "center",
+              fontSize: 28,
+              paddingBottom: 20,
+            }}
           >
             {fromHome ? homeTitle : "Contact"}
           </Typography>
@@ -59,7 +66,14 @@ class ContactPage extends React.Component {
             <Grid item xs={4} md={5}>
               <p
                 className={styles.child_title}
-                style={isEdit ? bodyEdit : bodyView}
+                style={{
+                  fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                  fontWeight: 400,
+                  color: "black",
+                  textAlign: "left",
+                  fontSize: 20,
+                  paddingBottom: 20,
+                }}
               >
                 Address
               </p>
@@ -68,15 +82,22 @@ class ContactPage extends React.Component {
               <Typography
                 variant="body1"
                 className={styles.child_content}
-                style={isEdit ? bodyEdit : bodyView}
+                style={{
+                  fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                  fontWeight: 400,
+                  color: "#7c7c7c",
+                  textAlign: "left",
+                  fontSize: 16,
+                  paddingBottom: 20,
+                }}
               >
                 {isEdit
                   ? address
                     ? address
                     : "Currently no data"
                   : siteView && siteView.address
-                  ? siteView.address
-                  : "Currently no data"}
+                    ? siteView.address
+                    : "Currently no data"}
               </Typography>
             </Grid>
           </Grid>
@@ -95,7 +116,14 @@ class ContactPage extends React.Component {
             <Grid item xs={4} md={5}>
               <p
                 className={styles.child_title}
-                style={isEdit ? bodyEdit : bodyView}
+                style={{
+                  fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                  fontWeight: 400,
+                  color: "black",
+                  textAlign: "left",
+                  fontSize: 20,
+                  paddingBottom: 20,
+                }}
               >
                 Phone
               </p>
@@ -104,15 +132,22 @@ class ContactPage extends React.Component {
               <Typography
                 variant="body1"
                 className={styles.child_content}
-                style={isEdit ? bodyEdit : bodyView}
+                style={{
+                  fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                  fontWeight: 400,
+                  color: "#7c7c7c",
+                  textAlign: "left",
+                  fontSize: 16,
+                  paddingBottom: 20,
+                }}
               >
                 {isEdit
                   ? phone
                     ? phone
                     : "Currently no data"
                   : siteView && siteView.phone
-                  ? siteView.phone
-                  : "Currently no data"}
+                    ? siteView.phone
+                    : "Currently no data"}
               </Typography>
             </Grid>
           </Grid>
@@ -131,7 +166,14 @@ class ContactPage extends React.Component {
             <Grid item xs={4} md={5}>
               <p
                 className={styles.child_title}
-                style={isEdit ? bodyEdit : bodyView}
+                style={{
+                  fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                  fontWeight: 400,
+                  color: "black",
+                  textAlign: "left",
+                  fontSize: 20,
+                  paddingBottom: 20,
+                }}
               >
                 Email
               </p>
@@ -140,15 +182,22 @@ class ContactPage extends React.Component {
               <Typography
                 variant="body1"
                 className={styles.child_content}
-                style={isEdit ? bodyEdit : bodyView}
+                style={{
+                  fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                  fontWeight: 400,
+                  color: "#7c7c7c",
+                  textAlign: "left",
+                  fontSize: 16,
+                  paddingBottom: 20,
+                }}
               >
                 {isEdit
                   ? email
                     ? email
                     : "Currently no data"
                   : siteView && siteView.email
-                  ? siteView.email
-                  : "Currently no data"}
+                    ? siteView.email
+                    : "Currently no data"}
               </Typography>
             </Grid>
           </Grid>

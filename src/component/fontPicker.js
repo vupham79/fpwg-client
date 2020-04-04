@@ -16,7 +16,8 @@ const listFont = [
   "Comic Sans MS",
   "Candara",
   "Arial Black",
-  "Impact"
+  "Impact",
+  "Catamaran",
 ];
 
 const useStyle = theme => ({

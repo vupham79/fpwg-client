@@ -115,7 +115,14 @@ class EventPage extends React.Component {
             variant="h4"
             align="center"
             gutterBottom
-            style={isEdit ? titleEdit : titleView}
+            style={{
+              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+              fontWeight: 500,
+              color: isEdit ? titleEdit.color : titleView.color,
+              textAlign: "center",
+              fontSize: 28,
+              paddingBottom: 20,
+            }}
           >
             {fromHome ? homeTitle : "Events"}
           </Typography>
@@ -128,41 +135,41 @@ class EventPage extends React.Component {
                 fromHome && homeList
                   ? homeList
                   : isEdit
-                  ? siteEdit.events
-                  : siteView.events
+                    ? siteEdit.events
+                    : siteView.events
               }
               fromHome={fromHome}
             />
           ) : (
-            <EmptyEvent
-              siteEdit={siteEdit}
-              titleEdit={titleEdit}
-              siteView={siteView}
-              titleView={titleView}
-              isEdit={isEdit}
-            />
-          )
+              <EmptyEvent
+                siteEdit={siteEdit}
+                titleEdit={titleEdit}
+                siteView={siteView}
+                titleView={titleView}
+                isEdit={isEdit}
+              />
+            )
         ) : (siteView && siteView.events) || (fromHome && homeList) ? (
           <EventComponent
             homeList={
               fromHome && homeList
                 ? homeList
                 : isEdit
-                ? siteEdit.events
-                : siteView.events
+                  ? siteEdit.events
+                  : siteView.events
             }
             siteInfo={siteView.sitePath}
             fromHome={fromHome}
           />
         ) : (
-          <EmptyEvent
-            siteEdit={siteEdit}
-            titleEdit={titleEdit}
-            siteView={siteView}
-            titleView={titleView}
-            isEdit={isEdit}
-          />
-        )}
+              <EmptyEvent
+                siteEdit={siteEdit}
+                titleEdit={titleEdit}
+                siteView={siteView}
+                titleView={titleView}
+                isEdit={isEdit}
+              />
+            )}
       </Grid>
     );
   }

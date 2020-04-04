@@ -31,7 +31,14 @@ class GalleryPage extends React.Component {
             variant="h4"
             align="center"
             gutterBottom
-            style={isEdit ? titleEdit : titleView}
+            style={{
+              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+              fontWeight: 500,
+              color: isEdit ? titleEdit.color : titleView.color,
+              textAlign: "center",
+              fontSize: 28,
+              paddingBottom: 20,
+            }}
           >
             {fromHome ? homeTitle : "Gallery"}
           </Typography>

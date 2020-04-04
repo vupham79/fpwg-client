@@ -71,11 +71,21 @@ class FooterPage extends Component {
           >
             ABOUT
           </Typography>
-          <Typography component="div" style={isEdit ? bodyEdit : bodyView}>
-            Welcome to our website!
-            <br />
-            <br />
-            Take a look around and feel free to contact us for more information.
+          <Typography component="div"
+            style={{
+              fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+              fontWeight: 400,
+              color: "#fefbfc",
+              textAlign: "left",
+              fontSize: 16,
+            }}>
+            {isEdit
+              ? siteEdit && siteEdit.about
+                ? siteEdit.about
+                : "Welcome to our website! Take a look around and feel free to contact us for more information."
+              : siteView && siteView.about
+                ? siteView.about
+                : "Welcome to our website! Take a look around and feel free to contact us for more information."}
           </Typography>
           <Divider className="divider" variant="fullWidth" />
           <Grid
@@ -105,7 +115,7 @@ class FooterPage extends Component {
                   color="primary"
                   href={`https://instagram.com/${
                     isEdit ? instagram : siteView.instagram
-                  }`}
+                    }`}
                 >
                   {this.renderInstagram()}
                 </IconButton>
@@ -129,7 +139,7 @@ class FooterPage extends Component {
                   color="primary"
                   href={`https://wa.me/${
                     isEdit ? whatsapp : siteView.whatsapp
-                  }`}
+                    }`}
                 >
                   {this.renderWhatsapp()}
                 </IconButton>
@@ -148,46 +158,46 @@ class FooterPage extends Component {
           <Grid container justify="flex-start" direction="column">
             {isEdit
               ? siteEdit.navItems.map((item, index) => (
-                  <Grid
-                    item
-                    xs={4}
-                    sm={8}
-                    key={index}
-                    style={{ paddingBottom: "0.7rem" }}
+                <Grid
+                  item
+                  xs={4}
+                  sm={8}
+                  key={index}
+                  style={{ paddingBottom: "0.7rem" }}
+                >
+                  <Box
+                    style={{
+                      ...bodyEdit,
+                      color: "#fefbfc"
+                    }}
                   >
-                    <Box
-                      style={{
-                        ...bodyEdit,
-                        color: "white"
-                      }}
-                    >
-                      {item.name}
-                    </Box>
-                  </Grid>
-                ))
+                    {item.name}
+                  </Box>
+                </Grid>
+              ))
               : siteView.navItems.map((item, index) => (
-                  <Grid
-                    item
-                    xs={4}
-                    sm={8}
-                    key={index}
-                    style={{ paddingBottom: "0.7rem" }}
+                <Grid
+                  item
+                  xs={4}
+                  sm={8}
+                  key={index}
+                  style={{ paddingBottom: "0.7rem" }}
+                >
+                  <Link
+                    style={{
+                      ...bodyView,
+                      color: "#fefbfc"
+                    }}
+                    to={`/${siteView.sitePath}/${item.original}`}
                   >
-                    <Link
-                      style={{
-                        ...bodyView,
-                        color: "white"
-                      }}
-                      to={`/${siteView.sitePath}/${item.original}`}
-                    >
-                      {item.name}
-                    </Link>
-                  </Grid>
-                ))}
+                    {item.name}
+                  </Link>
+                </Grid>
+              ))}
           </Grid>
         </Grid>
         <Grid item sm={4} xs={12} className={styles.content}>
-          <Typography
+          {/* <Typography
             variant="h5"
             style={isEdit ? titleEdit : titleView}
             color="primary"
@@ -197,17 +207,30 @@ class FooterPage extends Component {
           </Typography>
           <Typography variant="body1" style={isEdit ? bodyEdit : bodyView}>
             Get exclusive updates and promotions straight to your email.
-          </Typography>
+          </Typography> */}
         </Grid>
         <Divider className={styles.bot_divider} variant="fullWidth" />
         <Grid item sm={12} xs={12} container className={styles.bot_footer}>
           <Grid item sm={9} container justify="flex-start">
-            <Typography variant="body1">
+            <Typography
+              style={{
+                fontWeight: 400,
+                color: "#7c7c7c",
+                textAlign: "left",
+                fontSize: 16,
+              }}>
               © {isEdit ? siteEdit.title : siteView.title}
             </Typography>
           </Grid>
           <Grid item sm={3} container justify="center">
-            <Typography variant="body1">POWERED BY FPWG</Typography>
+            <Typography
+              style={{
+                fontFamily: "pv-common",
+                fontWeight: 400,
+                color: "#fefbfc",
+                textAlign: "right",
+                fontSize: 24,
+              }}>POWERED BY FPWG</Typography>
           </Grid>
         </Grid>
       </Grid>
