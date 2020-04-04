@@ -17,7 +17,9 @@ class Footer extends React.Component {
       siteView,
       youtube,
       instagram,
-      whatsapp
+      whatsapp,
+      bodyEdit,
+      bodyView
     } = this.props;
 
     return (
@@ -41,7 +43,7 @@ class Footer extends React.Component {
           </IconButton>
         </Grid>
         <Grid container item xs={12} justify="center">
-          <p style={{ color: "white" }}>
+          <p style={{ color: "white", fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily }}>
             @{isEdit ? siteEdit.title : siteView.title}
           </p>
         </Grid>
@@ -55,8 +57,8 @@ class Footer extends React.Component {
                   ? null
                   : { display: "none" }
                 : siteView.whatsapp
-                ? null
-                : { display: "none" }
+                  ? null
+                  : { display: "none" }
             }
           >
             <IconButton
@@ -76,8 +78,8 @@ class Footer extends React.Component {
                   ? null
                   : { display: "none" }
                 : siteView.instagram
-                ? null
-                : { display: "none" }
+                  ? null
+                  : { display: "none" }
             }
           >
             <IconButton
@@ -85,7 +87,7 @@ class Footer extends React.Component {
               color="primary"
               href={`https://instagram.com/${
                 isEdit ? instagram : siteView.instagram
-              }`}
+                }`}
             >
               <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />
             </IconButton>
@@ -99,8 +101,8 @@ class Footer extends React.Component {
                   ? null
                   : { display: "none" }
                 : siteView.youtube
-                ? null
-                : { display: "none" }
+                  ? null
+                  : { display: "none" }
             }
           >
             <IconButton
@@ -123,7 +125,9 @@ const mapStateToProps = state => ({
   siteEdit: state.site.siteEdit,
   youtube: state.site.youtube,
   instagram: state.site.instagram,
-  whatsapp: state.site.whatsapp
+  whatsapp: state.site.whatsapp,
+  bodyEdit: state.site.bodyEdit,
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(Footer);

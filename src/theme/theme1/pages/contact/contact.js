@@ -34,87 +34,48 @@ class Theme1Contact extends React.Component {
     const useStyles = theme => ({
       changableTitle: {
         fontFamily: isEdit ? siteEdit.fontTitle : siteView.fontTitle,
-        fontWeight: "bold",
-        color: "#212121",
+        fontWeight: 300,
+        color: "#535353",
         textAlign: "center",
-        fontSize: 45,
-        paddingBottom: 20
+        fontSize: 30,
+        paddingBottom: 20,
+        textTransform: "uppercase"
       },
       changableBody: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
-        color: "#212121",
+        color: "#535353",
         textAlign: "center",
         fontSize: 16
       },
       changableBody2: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
-        color: "#212121",
+        color: "#535353",
         textAlign: "center",
         fontSize: 16,
         marginLeft: "30%"
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "black",
+        color: "#535353",
         textAlign: "center",
         fontSize: 16
       },
       pageName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: "#212121",
+        color: "#535353",
         fontSize: 20
       },
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
+        fontWeight: 300,
+        color: "#535353",
         textAlign: "center",
-        fontSize: 45,
+        fontSize: 30,
         textDecoration: "underline",
         textDecorationColor: isEdit ? titleEdit.color : titleView.color
       },
-      changableLegend: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "white",
-        zIndex: 5,
-        position: "absolute",
-        top: "50%",
-        left: "40%",
-        fontSize: 80,
-        textAlign: "center"
-      },
-      greyDiv: {
-        backgroundColor: "#e1ede4",
-        padding: 30,
-        textAlign: "center",
-        color: "#535353",
-        fontSize: 20
-      },
-      centerItem: {
-        display: "block",
-        width: 150,
-        marginLeft: "auto",
-        marginRight: "auto",
-        paddingTop: 50
-      },
-      centerItem2: {
-        display: "block",
-        height: 100,
-        justifyContent: "center",
-        alignItems: "center",
-        width: 400,
-        marginLeft: "auto",
-        marginRight: "auto"
-      },
-      changableAppBar: {
-        backgroundColor: "white",
-        opacity: 0.6,
-        position: "sticky",
-        color: "#535353",
-        textAlign: "right"
-      }
+
     });
     const classes = useStyles();
 

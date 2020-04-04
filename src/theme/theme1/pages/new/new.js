@@ -19,105 +19,29 @@ class Theme1News extends React.Component {
     } = this.props;
 
     const useStyles = () => ({
-      changableLink: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        textAlign: "center",
-        fontStyle: "italic",
-        fontSize: 20
-      },
-      changableTitle: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        textAlign: "center",
-        fontSize: 45,
-        paddingBottom: 20
-      },
-      changableTitle2: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        textAlign: "center",
-        fontSize: 20,
-        paddingBottom: 20
-      },
-      changableName: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: isEdit ? titleEdit.color : titleView.color,
-        textAlign: "left",
-        fontSize: 20
-      },
       changableBody: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#212121",
+        color: "#535353",
         fontSize: 16,
         textAlign: "justify"
       },
-      changableBody2: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#212121",
-        textAlign: "left",
-        fontSize: 16
-      },
-      changableBody3: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "black",
-        textAlign: "center",
-        fontSize: 16
-      },
-      changableBody4: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "black",
-        textAlign: "center",
-        fontSize: 16
-      },
-      pageName: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        fontSize: 20
-      },
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
+        fontWeight: 300,
+        color: "#535353",
         textAlign: "center",
-        fontSize: 45,
+        fontSize: 30,
         textDecoration: "underline",
         textDecorationColor: isEdit ? titleEdit.color : titleView.color
       },
-      changableFirst2: {
+      changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: isEdit ? titleEdit.color : titleView.color,
+        fontWeight: 300,
+        color: "#535353",
         textAlign: "center",
-        fontSize: 20
-      },
-      changableFirst5: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        textAlign: "center",
-        fontSize: 45,
-        textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color
-      },
-      centerItem3: {
-        display: "block",
-        marginLeft: "auto",
-        marginRight: "auto",
-        height: "100%",
-        backgroundColor: "white"
-      },
-      changableTitle5: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        textAlign: "center",
-        fontSize: 45,
-        paddingBottom: 20
+        fontSize: 30,
+        paddingBottom: 20,
+        textTransform: "uppercase"
       }
     });
     const classes = useStyles();
@@ -125,7 +49,7 @@ class Theme1News extends React.Component {
     return (
       <Grid container style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
-          <p style={classes.changableTitle5}>
+          <p style={classes.changableTitle}>
             <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "N"}</span>{fromHome ? homeTitle.substring(1) : "EWS"}
           </p>
         </Grid>
