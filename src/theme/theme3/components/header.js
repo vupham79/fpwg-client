@@ -172,7 +172,8 @@ class Header extends Component {
       },
       "&:focus": {
         color: "#40a9ff"
-      }
+      },
+      textTransform: "uppercase"
     };
     return (
       <Tabs
@@ -239,7 +240,8 @@ class Header extends Component {
       fontSize: "1.2rem",
       minWidth: "20vh",
       textDecoration: "none",
-      height: "auto"
+      height: "auto",
+      textTransform: "uppercase"
     };
     return (
       <Grid

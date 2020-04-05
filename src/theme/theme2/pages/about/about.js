@@ -49,16 +49,15 @@ class AboutPage extends React.Component {
           <Divider className="divider" variant="middle" style={{ marginBottom: 50 }} />
         </Grid>
 
-        <Grid container item sm={10} xs={10} justify="center" style={{ display: fromHome ? "none" : "block" }}>
+        <Grid container item sm={3} xs={5} justify="center" style={{ display: fromHome ? "none" : "block" }}>
           <CardMedia
             component="img"
             alt=""
-            height="auto"
             image={this.renderImage()}
           />
         </Grid>
 
-        <Grid container item sm={10} xs={10} justify="center" style={{ marginTop: 20 }}>
+        <Grid container item sm={10} xs={10} justify="center" style={{ marginTop: 50 }}>
           <Typography
             variant="body1"
             color="textPrimary"

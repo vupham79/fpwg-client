@@ -110,7 +110,9 @@ class HeaderComponent extends Component {
       "&:focus": {
         color: "#40a9ff"
       },
-      textAlign: "left"
+      textAlign: "left",
+      textTransform: "uppercase",
+      fontSize: 12
     };
     return (
       <Tabs
@@ -175,7 +177,9 @@ class HeaderComponent extends Component {
                     ...titleView,
                     textDecoration: "none",
                     color: navTextColor ? navTextColor : this.props.navColor,
-                    backgroundColor: this.props.headerColor
+                    backgroundColor: this.props.headerColor,
+                    textTransform: "uppercase",
+                    fontSize: 12
                   }}
                   activeStyle={{
                     borderBottom: "1px solid",
