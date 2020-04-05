@@ -626,10 +626,10 @@ class HomepageEditorTab extends React.Component {
       this.state.currentExpandType === "gallery" &&
       this.props.site.galleries
     ) {
-      maxAllowable = 5;
+      maxAllowable = 3;
     }
     if (this.state.currentExpandType === "event" && this.props.site.events) {
-      maxAllowable = 5;
+      maxAllowable = 3;
     }
 
     if (!index.filter.items.includes(row)) {

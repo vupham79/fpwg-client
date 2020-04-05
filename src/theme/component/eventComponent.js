@@ -114,8 +114,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showCoverEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       backgroundColor: "#444950"
                     }}
                   >
@@ -196,8 +196,8 @@ class EventComponent extends React.Component {
                           ? "inline-block"
                           : "none"
                         : siteView.showDesEvent
-                        ? "inline-block"
-                        : "none",
+                          ? "inline-block"
+                          : "none",
                       height: "6em",
                       lineHeight: "1.5em",
                       fontFamily: isEdit
@@ -219,8 +219,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showPlaceEvent
-                        ? "block"
-                        : "none"
+                          ? "block"
+                          : "none"
                     }}
                   >
                     <Grid
@@ -299,8 +299,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showCoverEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       backgroundColor: "#444950"
                     }}
                   >
@@ -381,8 +381,8 @@ class EventComponent extends React.Component {
                           ? "inline-block"
                           : "none"
                         : siteView.showDesEvent
-                        ? "inline-block"
-                        : "none",
+                          ? "inline-block"
+                          : "none",
                       height: "6em",
                       lineHeight: "1.5em",
                       fontFamily: isEdit
@@ -404,8 +404,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showPlaceEvent
-                        ? "block"
-                        : "none"
+                          ? "block"
+                          : "none"
                     }}
                   >
                     <Grid
@@ -523,7 +523,7 @@ class EventComponent extends React.Component {
             container
             alignItems="center"
             direction="column"
-            // className={classes.eventPage}
+          // className={classes.eventPage}
           >
             <Grid
               item
@@ -552,7 +552,7 @@ class EventComponent extends React.Component {
 
               {isEdit
                 ? fromHome
-                  ? this.renderUpComingEvent(homeList.slice(0, 5), classes)
+                  ? this.renderUpComingEvent(homeList.slice(0, 3), classes)
                   : this.renderUpComingEvent(this.state.filteredData, classes)
                 : this.renderUpComingEvent(homeList, classes)}
 
@@ -585,7 +585,7 @@ class EventComponent extends React.Component {
 
               {isEdit
                 ? fromHome
-                  ? this.renderPassEvent(homeList.slice(0, 5), classes)
+                  ? this.renderPassEvent(homeList.slice(0, 3), classes)
                   : this.renderPassEvent(this.state.filteredData, classes)
                 : this.renderPassEvent(homeList, classes)}
 
@@ -605,41 +605,41 @@ class EventComponent extends React.Component {
             </Grid>
             {isEdit
               ? !fromHome &&
-                this.state.pageCount > 1 && (
-                  <Grid container justify="center" style={{ padding: "5rem" }}>
-                    <Pagination
-                      style={{
-                        backgroundColor: "white",
-                        padding: "0.4rem",
-                        borderRadius: "0.3rem"
-                      }}
-                      color="primary"
-                      shape="rounded"
-                      variant="outlined"
-                      count={this.state.pageCount}
-                      page={this.state.page}
-                      onChange={this.handlePageEditClick}
-                    />
-                  </Grid>
-                )
+              this.state.pageCount > 1 && (
+                <Grid container justify="center" style={{ padding: "5rem" }}>
+                  <Pagination
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0.4rem",
+                      borderRadius: "0.3rem"
+                    }}
+                    color="primary"
+                    shape="rounded"
+                    variant="outlined"
+                    count={this.state.pageCount}
+                    page={this.state.page}
+                    onChange={this.handlePageEditClick}
+                  />
+                </Grid>
+              )
               : !fromHome &&
-                pageCountView > 1 && (
-                  <Grid container justify="center" style={{ padding: "5rem" }}>
-                    <Pagination
-                      style={{
-                        backgroundColor: "white",
-                        padding: "0.4rem",
-                        borderRadius: "0.3rem"
-                      }}
-                      color="primary"
-                      variant="outlined"
-                      shape="rounded"
-                      count={pageCountView}
-                      page={this.state.pageView}
-                      onChange={this.handlePageViewClick}
-                    />
-                  </Grid>
-                )}
+              pageCountView > 1 && (
+                <Grid container justify="center" style={{ padding: "5rem" }}>
+                  <Pagination
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0.4rem",
+                      borderRadius: "0.3rem"
+                    }}
+                    color="primary"
+                    variant="outlined"
+                    shape="rounded"
+                    count={pageCountView}
+                    page={this.state.pageView}
+                    onChange={this.handlePageViewClick}
+                  />
+                </Grid>
+              )}
           </Grid>
         </Grid>
       </Grid>
