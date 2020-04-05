@@ -253,7 +253,7 @@ class createNewSite extends Component {
             InputProps={{
               startAdornment: (
                 <Tooltip
-                  title={`Set a unique path name to your website. Example: Site path "abc" means your website url will be "${process.env.REACT_APP_API_URL}/abc"`}
+                  title={`Set a unique path name to your website. Example: Site path "your_sitepath" means your website url will be "${process.env.REACT_APP_HOST}your_sitepath"`}
                 >
                   <Public />
                 </Tooltip>

@@ -184,9 +184,9 @@ class MainPage extends Component {
                         fullWidth
                         variant={"outlined"}
                         value={
-                          process.env.REACT_APP_API_HOST
-                            ? `${process.env.REACT_APP_API_HOST}${item.sitePath}`
-                            : `http://localhost:3000/${item.sitePath}`
+                          process.env.REACT_APP_HOST
+                            ? `${process.env.REACT_APP_HOST}${siteEdit.sitePath}`
+                            : `http://localhost:3000/${siteEdit.sitePath}`
                         }
                         InputProps={{
                           endAdornment: (
