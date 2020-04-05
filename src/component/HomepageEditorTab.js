@@ -329,9 +329,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -389,9 +389,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -442,9 +442,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -909,7 +909,6 @@ class HomepageEditorTab extends React.Component {
               fontSize: 11,
             }}
             onClick={() => this.handleOpenPostDialogue(false)}
-            color="secondary"
           >
             Cancel
           </Button>
@@ -924,7 +923,6 @@ class HomepageEditorTab extends React.Component {
               fontSize: 11,
             }}
             onClick={() => this.handleSave()}
-            color={"primary"}
           >
             Save
           </Button>
@@ -1006,7 +1004,7 @@ class HomepageEditorTab extends React.Component {
         <ExpansionPanel
           expanded={
             this.state.currentExpandItemId === item._id &&
-            this.state.isExpanding
+              this.state.isExpanding
               ? true
               : false
           }

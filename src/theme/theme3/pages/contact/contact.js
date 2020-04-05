@@ -88,7 +88,7 @@ class ContactPage extends React.Component {
             sm={6}
             md={
               (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
-              (siteView && siteView.latitude && siteView.longitude)
+                (siteView && siteView.latitude && siteView.longitude)
                 ? 3
                 : 6
             }
@@ -99,7 +99,7 @@ class ContactPage extends React.Component {
               xs={10}
               sm={
                 (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
-                (siteView && siteView.latitude && siteView.longitude)
+                  (siteView && siteView.latitude && siteView.longitude)
                   ? 12
                   : 6
               }
@@ -112,7 +112,8 @@ class ContactPage extends React.Component {
                     color: "white",
                     fontFamily: isEdit
                       ? bodyEdit.fontFamily
-                      : bodyView.fontFamily
+                      : bodyView.fontFamily,
+                    fontSize: 20
                   }}
                 >
                   Address
@@ -125,7 +126,8 @@ class ContactPage extends React.Component {
                     color: "white",
                     fontFamily: isEdit
                       ? bodyEdit.fontFamily
-                      : bodyView.fontFamily
+                      : bodyView.fontFamily,
+                    fontSize: 16
                   }}
                 >
                   {isEdit
@@ -133,8 +135,8 @@ class ContactPage extends React.Component {
                       ? address
                       : "Curent no address to show."
                     : siteView && siteView.address
-                    ? siteView.address
-                    : "Curent no address to show."}
+                      ? siteView.address
+                      : "Curent no address to show."}
                 </Typography>
               </Grid>
             </Grid>
@@ -143,7 +145,7 @@ class ContactPage extends React.Component {
               xs={10}
               sm={
                 (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
-                (siteView && siteView.latitude && siteView.longitude)
+                  (siteView && siteView.latitude && siteView.longitude)
                   ? 12
                   : 6
               }
@@ -156,7 +158,8 @@ class ContactPage extends React.Component {
                     color: "white",
                     fontFamily: isEdit
                       ? bodyEdit.fontFamily
-                      : bodyView.fontFamily
+                      : bodyView.fontFamily,
+                    fontSize: 20
                   }}
                 >
                   Email
@@ -169,7 +172,8 @@ class ContactPage extends React.Component {
                     color: "white",
                     fontFamily: isEdit
                       ? bodyEdit.fontFamily
-                      : bodyView.fontFamily
+                      : bodyView.fontFamily,
+                    fontSize: 16
                   }}
                 >
                   {isEdit
@@ -177,8 +181,8 @@ class ContactPage extends React.Component {
                       ? email
                       : "Curent no Email to show."
                     : siteView && siteView.email
-                    ? siteView.email
-                    : "Curent no Email to show."}
+                      ? siteView.email
+                      : "Curent no Email to show."}
                 </Typography>
               </Grid>
             </Grid>
@@ -187,7 +191,7 @@ class ContactPage extends React.Component {
               xs={10}
               sm={
                 (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
-                (siteView && siteView.latitude && siteView.longitude)
+                  (siteView && siteView.latitude && siteView.longitude)
                   ? 12
                   : 6
               }
@@ -200,7 +204,8 @@ class ContactPage extends React.Component {
                     color: "white",
                     fontFamily: isEdit
                       ? bodyEdit.fontFamily
-                      : bodyView.fontFamily
+                      : bodyView.fontFamily,
+                    fontSize: 20
                   }}
                 >
                   Phone
@@ -213,7 +218,8 @@ class ContactPage extends React.Component {
                     color: "white",
                     fontFamily: isEdit
                       ? bodyEdit.fontFamily
-                      : bodyView.fontFamily
+                      : bodyView.fontFamily,
+                    fontSize: 16
                   }}
                 >
                   {isEdit
@@ -221,8 +227,8 @@ class ContactPage extends React.Component {
                       ? phone
                       : "Curent no phone to show."
                     : siteView && siteView.phone
-                    ? siteView.phone
-                    : "Curent no phone to show."}
+                      ? siteView.phone
+                      : "Curent no phone to show."}
                 </Typography>
               </Grid>
             </Grid>
@@ -230,29 +236,29 @@ class ContactPage extends React.Component {
 
           {isEdit
             ? siteEdit &&
-              siteEdit.latitude &&
-              siteEdit.longitude && (
-                <Grid item md={7} sm={10} xs={10} className={classes.map}>
-                  <MapWithAMarker
-                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `15rem` }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
-                  />
-                </Grid>
-              )
+            siteEdit.latitude &&
+            siteEdit.longitude && (
+              <Grid item md={7} sm={10} xs={10} className={classes.map}>
+                <MapWithAMarker
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `15rem` }} />}
+                  mapElement={<div style={{ height: `100%` }} />}
+                />
+              </Grid>
+            )
             : siteView &&
-              siteView.latitude &&
-              siteView.longitude && (
-                <Grid item md={7} sm={10} xs={10} className={classes.map}>
-                  <MapWithAMarker
-                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `15rem` }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
-                  />
-                </Grid>
-              )}
+            siteView.latitude &&
+            siteView.longitude && (
+              <Grid item md={7} sm={10} xs={10} className={classes.map}>
+                <MapWithAMarker
+                  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={<div style={{ height: `15rem` }} />}
+                  mapElement={<div style={{ height: `100%` }} />}
+                />
+              </Grid>
+            )}
         </Grid>
       </Grid>
     );

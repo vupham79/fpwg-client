@@ -669,14 +669,28 @@ class PagesEditorTab extends React.Component {
                 autoFocus
                 variant="contained"
                 onClick={() => this.handleOpenDialogue(false)}
-                color="secondary"
+                style={{
+                  float: "right",
+                  backgroundColor: "#f0eded",
+                  width: 70,
+                  borderRadius: 5,
+                  color: "#555d66",
+                  fontSize: 11,
+                }}
               >
                 Cancel
               </Button>
               <Button
                 variant="contained"
                 onClick={() => this.handleSave(this.props.posts)}
-                color={"primary"}
+                style={{
+                  float: "right",
+                  backgroundColor: "#0074aa",
+                  width: 70,
+                  borderRadius: 5,
+                  color: "white",
+                  fontSize: 11,
+                }}
               >
                 Save
               </Button>

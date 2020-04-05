@@ -265,7 +265,7 @@ class TableTheme extends Component {
   };
 
   handleSearch = keyword => {
-    let searchResult = this.props.themes.filter(function(theme) {
+    let searchResult = this.props.themes.filter(function (theme) {
       return theme.name.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -396,55 +396,55 @@ class TableTheme extends Component {
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-          this.state.filteredData.map((row, index) => (
-            <div key={index}>
-              <Grid container direction="row">
-                <Grid item xs={2}>
-                  <img
-                    style={{
-                      width: "80%"
-                    }}
-                    alt=""
-                    src={row.previewImage}
-                  />
-                </Grid>
-                <Grid item xs={2}>
-                  {row.name}
-                  <div style={{ height: 20 }} />
-                </Grid>
-                <Grid item xs={1}>
-                  {row.fontBody}
-                </Grid>
-                <Grid item xs={1}>
-                  {row.fontTitle}
-                </Grid>
-                <Grid container item xs={2}>
-                  <Grid item xs={1}>
-                    <div
-                      style={{ backgroundColor: row.mainColor, height: 18 }}
+            this.state.filteredData.map((row, index) => (
+              <div key={index}>
+                <Grid container direction="row">
+                  <Grid item xs={2}>
+                    <img
+                      style={{
+                        width: "80%"
+                      }}
+                      alt=""
+                      src={row.previewImage}
                     />
                   </Grid>
-                  <Grid item xs={1}></Grid>
-                  <Grid item xs={3}>
-                    {row.mainColor}
+                  <Grid item xs={2}>
+                    {row.name}
+                    <div style={{ height: 20 }} />
+                  </Grid>
+                  <Grid item xs={1}>
+                    {row.fontBody}
+                  </Grid>
+                  <Grid item xs={1}>
+                    {row.fontTitle}
+                  </Grid>
+                  <Grid container item xs={2}>
+                    <Grid item xs={1}>
+                      <div
+                        style={{ backgroundColor: row.mainColor, height: 18 }}
+                      />
+                    </Grid>
+                    <Grid item xs={1}></Grid>
+                    <Grid item xs={3}>
+                      {row.mainColor}
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={2}>
+                    {row.category && row.category.name}
+                  </Grid>
+                  <Grid item xs={2}>
+                    <Button
+                      color="primary"
+                      onClick={() => this.setOpenEditDialogue(row)}
+                    >
+                      Edit
+                  </Button>
                   </Grid>
                 </Grid>
-                <Grid item xs={2}>
-                  {row.category && row.category.name}
-                </Grid>
-                <Grid item xs={2}>
-                  <Button
-                    color="primary"
-                    onClick={() => this.setOpenEditDialogue(row)}
-                  >
-                    Edit
-                  </Button>
-                </Grid>
-              </Grid>
-              <Divider />
-            </div>
-          ))
-        )}
+                <Divider />
+              </div>
+            ))
+          )}
         {this.state.pageCount > 1 && (
           <div className="commentBox">
             <ReactPaginate
@@ -524,7 +524,7 @@ class TableTheme extends Component {
                       value={this.state.newItem.category}
                       onChange={this.handleChangeCategory}
                     >
-                      {this.props.categories.map((category, index) => {
+                      {this.props.categories && this.props.categories.map((category, index) => {
                         if (category.name !== "All") {
                           return (
                             <MenuItem key={index} value={category._id}>
@@ -655,7 +655,7 @@ class TableTheme extends Component {
                       value={this.state.edit.category}
                       onChange={this.handleChangeCategoryEdit}
                     >
-                      {this.props.categories.map((category, index) => {
+                      {this.props.categories && this.props.categories.map((category, index) => {
                         if (category.name !== "All") {
                           return (
                             <MenuItem key={index} value={category._id}>
