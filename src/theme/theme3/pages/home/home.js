@@ -6,7 +6,7 @@ import EventPage from "../event/event";
 import GalleryPage from "../gallery/gallery";
 import ContactPage from "../contact/contact";
 import { connect } from "react-redux";
-import { Grid } from "@material-ui/core";
+import { Grid, Divider } from "@material-ui/core";
 
 class HomePage extends React.Component {
   renderCarousel = () => {
@@ -39,6 +39,7 @@ class HomePage extends React.Component {
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <AboutPage fromHome homeTitle={row.name} />
+                    <Divider style={{ backgroundColor: "#646464", width: "60%", marginLeft: "20%", marginTop: 20 }} />
                   </Grid>
                 ),
                 event: (

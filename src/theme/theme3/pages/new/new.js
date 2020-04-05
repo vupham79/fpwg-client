@@ -34,7 +34,6 @@ class NewPage extends Component {
           >
             {fromHome ? homeTitle : "News"}
           </Typography>
-          <Divider style={{ backgroundColor: "white" }} variant="fullWidth" />
         </Grid>
         <Grid item sm={12} xs={12} container spacing={3}>
           {isEdit ? (

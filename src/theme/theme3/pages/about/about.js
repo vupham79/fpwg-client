@@ -1,9 +1,19 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, CardMedia } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./about.module.css";
 
 class AboutPage extends React.Component {
+  renderImage = () => {
+    const { isEdit, siteEdit, siteView, newLogo } = this.props;
+    if (isEdit) {
+      if (newLogo && typeof newLogo === "object" && newLogo.size > 0) {
+        return URL.createObjectURL(newLogo);
+      } else return siteEdit.logo;
+    }
+    return siteView.logo;
+  };
+
   render() {
     const {
       isEdit,
@@ -13,7 +23,8 @@ class AboutPage extends React.Component {
       bodyView,
       siteEdit,
       siteView,
-      showTitle
+      showTitle,
+      fromHome
     } = this.props;
     return (
       <Grid container justify="center" className={styles.about_page}>
@@ -35,27 +46,66 @@ class AboutPage extends React.Component {
             </Typography>
           </Grid>
         ) : (
-          <></>
-        )}
-        <Grid container item sm={10} xs={10} justify="center">
-          <Typography
-            variant="body1"
-            color="textPrimary"
-            style={{
-              color: "white",
-              fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
-            }}
-            className={styles.about}
-          >
-            {isEdit
-              ? siteEdit && siteEdit.about
-                ? siteEdit.about
-                : "Welcome to our website! Take a look around and feel free to contact us for more information."
-              : siteView && siteView.about
-              ? siteView.about
-              : "Welcome to our website! Take a look around and feel free to contact us for more information."}
-          </Typography>
-        </Grid>
+            <></>
+          )}
+        {fromHome ? (
+          <Grid container item sm={10} xs={10} justify="center">
+            <Typography
+              variant="body1"
+              color="textPrimary"
+              style={{
+                color: "white",
+                fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                fontWeight: 700,
+                fontSize: 30,
+                fontStyle: "italic"
+              }}
+            >
+              {isEdit
+                ? siteEdit && siteEdit.about
+                  ? siteEdit.about
+                  : "Welcome to our website! Take a look around and feel free to contact us for more information."
+                : siteView && siteView.about
+                  ? siteView.about
+                  : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+            </Typography>
+          </Grid>
+        ) : (
+            <Grid container justify="center" className={styles.about_page}>
+
+              <Grid container item sm={10} xs={10} justify="center">
+                <CardMedia
+                  component="img"
+                  alt=""
+                  height="auto"
+                  image={this.renderImage()}
+                />
+              </Grid>
+
+              <Grid container item sm={10} xs={10} justify="center" style={{ marginTop: 20 }}>
+                <Typography
+                  variant="body1"
+                  color="textPrimary"
+                  style={{
+                    fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                    fontWeight: 400,
+                    color: "white",
+                    textAlign: "left",
+                    fontSize: 16,
+                    paddingBottom: 20,
+                  }}
+                >
+                  {isEdit
+                    ? siteEdit && siteEdit.about
+                      ? siteEdit.about
+                      : "Welcome to our website! Take a look around and feel free to contact us for more information."
+                    : siteView && siteView.about
+                      ? siteView.about
+                      : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+                </Typography>
+              </Grid>
+            </Grid>
+          )}
       </Grid>
     );
   }
