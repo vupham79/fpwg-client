@@ -27,7 +27,7 @@ class HomePage extends React.Component {
     const { siteEdit, siteView, isEdit } = this.props;
     return (
       <Grid container>
-        <BannerComponent bannerType={2} />
+        <BannerComponent bannerType={0} />
         {isEdit &&
           siteEdit &&
           siteEdit.homepage.map(
