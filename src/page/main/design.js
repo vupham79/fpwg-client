@@ -154,8 +154,8 @@ class Design extends Component {
               className={"mainFont"}
               style={{ fontSize: "12px", overflow: "hidden" }}
             >
-              {process.env.REACT_APP_API_HOST
-                ? `${process.env.REACT_APP_API_HOST}${item.sitePath}`
+              {process.env.REACT_APP_HOST
+                ? `${process.env.REACT_APP_HOST}${item.sitePath}`
                 : `http://localhost:3000/${item.sitePath}`}
             </Grid>
             <Grid
