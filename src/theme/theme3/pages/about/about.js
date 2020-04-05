@@ -73,16 +73,15 @@ class AboutPage extends React.Component {
         ) : (
             <Grid container justify="center" className={styles.about_page}>
 
-              <Grid container item sm={10} xs={10} justify="center">
+              <Grid container item sm={3} xs={5} justify="center">
                 <CardMedia
                   component="img"
                   alt=""
-                  height="auto"
                   image={this.renderImage()}
                 />
               </Grid>
 
-              <Grid container item sm={10} xs={10} justify="center" style={{ marginTop: 20 }}>
+              <Grid container item sm={10} xs={10} justify="center" style={{ marginTop: 50 }}>
                 <Typography
                   variant="body1"
                   color="textPrimary"

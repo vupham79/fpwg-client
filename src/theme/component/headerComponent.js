@@ -29,7 +29,7 @@ const useStyles = theme => ({
     backgroundColor: "white"
   },
   shopName: {
-    fontSize: "3vh",
+    fontSize: 20,
     textAlign: "center",
     fontWeight: "700",
     overflow: "hidden"
@@ -110,7 +110,9 @@ class HeaderComponent extends Component {
       "&:focus": {
         color: "#40a9ff"
       },
-      textAlign: "left"
+      textAlign: "left",
+      textTransform: "uppercase",
+      fontSize: 14
     };
     return (
       <Tabs
@@ -175,7 +177,9 @@ class HeaderComponent extends Component {
                     ...titleView,
                     textDecoration: "none",
                     color: navTextColor ? navTextColor : this.props.navColor,
-                    backgroundColor: this.props.headerColor
+                    backgroundColor: this.props.headerColor,
+                    textTransform: "uppercase",
+                    fontSize: 14
                   }}
                   activeStyle={{
                     borderBottom: "1px solid",

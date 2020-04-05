@@ -49,7 +49,7 @@ class Layout extends Component {
           displayImg={false}
           headerColor="white"
           navColor={isEdit ? titleEdit.color : titleView.color}
-          navTextColor="#212121"
+          navTextColor="#535353"
         />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
