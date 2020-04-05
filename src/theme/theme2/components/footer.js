@@ -109,7 +109,17 @@ class FooterPage extends Component {
               </Grid>
             ) : null}
             {(instagram && instagram) || (siteView && siteView.instagram) ? (
-              <Grid item>
+              <Grid
+                item
+                style={
+                  isEdit
+                    ? instagram
+                      ? null
+                      : { display: "none" }
+                    : siteView.instagram
+                      ? null
+                      : { display: "none" }
+                }>
                 <IconButton
                   aria-label=""
                   color="primary"
@@ -122,7 +132,17 @@ class FooterPage extends Component {
               </Grid>
             ) : null}
             {(siteView && siteView.youtube) || (youtube && youtube) ? (
-              <Grid item>
+              <Grid
+                item
+                style={
+                  isEdit
+                    ? youtube
+                      ? null
+                      : { display: "none" }
+                    : siteView.youtube
+                      ? null
+                      : { display: "none" }
+                }>
                 <IconButton
                   aria-label=""
                   color="primary"
@@ -133,7 +153,17 @@ class FooterPage extends Component {
               </Grid>
             ) : null}
             {(siteView && siteView.whatsapp) || (whatsapp && whatsapp) ? (
-              <Grid item>
+              <Grid
+                item
+                style={
+                  isEdit
+                    ? whatsapp
+                      ? null
+                      : { display: "none" }
+                    : siteView.whatsapp
+                      ? null
+                      : { display: "none" }
+                }>
                 <IconButton
                   aria-label=""
                   color="primary"
