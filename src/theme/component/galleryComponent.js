@@ -5,7 +5,7 @@ import {
   Dialog,
   Grid,
   Typography,
-  withStyles
+  withStyles,
 } from "@material-ui/core";
 import Pagination from "@material-ui/lab/Pagination";
 import React from "react";
@@ -13,23 +13,23 @@ import { connect } from "react-redux";
 import {
   getDataByPageNumber,
   setGalleriesToSiteView,
-  updateNavItemValue
+  updateNavItemValue,
 } from "../../actions";
 import Link from "../../component/link";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   gridItems: {
     // maxHeight: 250
   },
   icon: {
-    color: "rgba(255, 255, 255, 0.54)"
+    color: "rgba(255, 255, 255, 0.54)",
   },
   media: {
     paddingTop: "76.25%",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    backgroundRepeat: "no-repeat"
-  }
+    backgroundRepeat: "no-repeat",
+  },
 });
 
 class GalleryComponent extends React.Component {
@@ -41,7 +41,7 @@ class GalleryComponent extends React.Component {
     pageCount: 1,
     offset: 0,
     itemPerPage: 5,
-    page: 1
+    page: 1,
   };
 
   handlePageViewClick = async (event, newValue) => {
@@ -49,14 +49,14 @@ class GalleryComponent extends React.Component {
       siteInfo,
       getDataByPageNumber,
       isEdit,
-      setGalleriesToSiteView
+      setGalleriesToSiteView,
     } = this.props;
     if (!isEdit) {
       this.setState({ pageView: newValue });
       const data = await getDataByPageNumber({
         sitePath: siteInfo,
         page: "gallery",
-        pageNumber: newValue
+        pageNumber: newValue,
       });
       data && setGalleriesToSiteView(data);
     }
@@ -66,19 +66,19 @@ class GalleryComponent extends React.Component {
     this.setState({ open: false });
   };
 
-  handleOpenDialog = image => {
+  handleOpenDialog = (image) => {
     this.setState({ img: image, open: true });
   };
 
-  setListData = listData => {
+  setListData = (listData) => {
     this.setState({
-      filteredData: listData
+      filteredData: listData,
     });
   };
 
-  setPageCount = listData => {
+  setPageCount = (listData) => {
     this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage),
     });
   };
 
@@ -89,7 +89,7 @@ class GalleryComponent extends React.Component {
         this.state.offset,
         this.state.itemPerPage + this.state.offset
       ),
-      pageCount: Math.ceil(galleries.length / this.state.itemPerPage)
+      pageCount: Math.ceil(galleries.length / this.state.itemPerPage),
     });
   };
 
@@ -145,7 +145,7 @@ class GalleryComponent extends React.Component {
               style={{ opacity: "0.1" }}
               image={siteView.logo}
             />
-            <Link to="gallery">
+            <Link to={`/${siteView.sitePath}/gallery`}>
               <Typography
                 style={{
                   position: "absolute",
@@ -156,7 +156,7 @@ class GalleryComponent extends React.Component {
                   textDecoration: "underline",
                   fontFamily: titleView.fontFamily,
                   fontWeight: 700,
-                  color: titleView.color
+                  color: titleView.color,
                 }}
               >
                 View Gallery
@@ -174,7 +174,7 @@ class GalleryComponent extends React.Component {
       galleries,
       siteEdit,
       titleEdit,
-      updateNavItemValue
+      updateNavItemValue,
     } = this.props;
     return (
       <>
@@ -201,7 +201,7 @@ class GalleryComponent extends React.Component {
           <CardActionArea
             style={{ position: "relative" }}
             onClick={(e, value) => {
-              const gallery = siteEdit.navItems.filter(item => {
+              const gallery = siteEdit.navItems.filter((item) => {
                 return item.original === "gallery";
               });
               updateNavItemValue(gallery[0].order - 1);
@@ -222,7 +222,7 @@ class GalleryComponent extends React.Component {
                 textDecoration: "underline",
                 fontFamily: titleEdit.fontFamily,
                 fontWeight: 700,
-                color: siteEdit.color
+                color: siteEdit.color,
               }}
             >
               View Gallery
@@ -302,7 +302,7 @@ class GalleryComponent extends React.Component {
                     style={{
                       backgroundColor: "white",
                       padding: "0.4rem",
-                      borderRadius: "0.3rem"
+                      borderRadius: "0.3rem",
                     }}
                     color="primary"
                     shape="rounded"
@@ -320,7 +320,7 @@ class GalleryComponent extends React.Component {
                     style={{
                       backgroundColor: "white",
                       padding: "0.4rem",
-                      borderRadius: "0.3rem"
+                      borderRadius: "0.3rem",
                     }}
                     color="primary"
                     shape="rounded"
@@ -350,21 +350,21 @@ class GalleryComponent extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isEdit: state.site.isEdit,
   pageCountView: state.post.pageCountGalleriesView,
   siteEdit: state.site.siteEdit,
   siteView: state.site.siteView,
   titleView: state.site.titleView,
-  titleEdit: state.site.titleEdit
+  titleEdit: state.site.titleEdit,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getDataByPageNumber: ({ sitePath, page, siteId, pageNumber }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
-  setGalleriesToSiteView: galleries =>
+  setGalleriesToSiteView: (galleries) =>
     dispatch(setGalleriesToSiteView(galleries)),
-  updateNavItemValue: value => dispatch(updateNavItemValue(value))
+  updateNavItemValue: (value) => dispatch(updateNavItemValue(value)),
 });
 
 export default connect(

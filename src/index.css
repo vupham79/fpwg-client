@@ -29,6 +29,10 @@ code {
   padding: 0 0 !important;
 }
 
+.slick-slide {
+  height: unset !important;
+}
+
 .slick-slide > div {
   width: 100%;
   height: 100%;
