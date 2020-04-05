@@ -29,7 +29,7 @@ const useStyles = theme => ({
     backgroundColor: "white"
   },
   shopName: {
-    fontSize: "3vh",
+    fontSize: 20,
     textAlign: "center",
     fontWeight: "700",
     overflow: "hidden"
@@ -112,7 +112,7 @@ class HeaderComponent extends Component {
       },
       textAlign: "left",
       textTransform: "uppercase",
-      fontSize: 12
+      fontSize: 14
     };
     return (
       <Tabs
@@ -179,7 +179,7 @@ class HeaderComponent extends Component {
                     color: navTextColor ? navTextColor : this.props.navColor,
                     backgroundColor: this.props.headerColor,
                     textTransform: "uppercase",
-                    fontSize: 12
+                    fontSize: 14
                   }}
                   activeStyle={{
                     borderBottom: "1px solid",
