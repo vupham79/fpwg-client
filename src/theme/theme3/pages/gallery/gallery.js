@@ -16,7 +16,8 @@ class GalleryPage extends React.Component {
       bodyView,
       fromHome,
       homeTitle,
-      homeList
+      homeList,
+      color,
     } = this.props;
     return (
       <Grid
@@ -33,7 +34,7 @@ class GalleryPage extends React.Component {
             gutterBottom
             style={{
               fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-              color: "white"
+              color: "white",
             }}
           >
             {fromHome ? homeTitle : "Gallery"}
@@ -50,6 +51,7 @@ class GalleryPage extends React.Component {
                   }
                   siteInfo={siteEdit.id}
                   fromHome={fromHome}
+                  color={color}
                 />
               </Grid>
             ) : (
@@ -59,7 +61,7 @@ class GalleryPage extends React.Component {
                   style={{
                     fontFamily: bodyEdit.fontFamily,
                     color: "white",
-                    padding: "5rem 0"
+                    padding: "5rem 0",
                   }}
                 >
                   Currently no photo available.
@@ -72,6 +74,7 @@ class GalleryPage extends React.Component {
                 galleries={fromHome && homeList ? homeList : siteView.galleries}
                 siteInfo={siteView.sitePath}
                 fromHome={fromHome}
+                color={color}
               />
             </Grid>
           ) : (
@@ -81,7 +84,7 @@ class GalleryPage extends React.Component {
                 style={{
                   fontFamily: bodyView.fontFamily,
                   color: "white",
-                  padding: "5rem 0"
+                  padding: "5rem 0",
                 }}
               >
                 Currently no photo available.
@@ -94,14 +97,14 @@ class GalleryPage extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
   siteView: state.site.siteView,
   titleView: state.site.titleView,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(GalleryPage);

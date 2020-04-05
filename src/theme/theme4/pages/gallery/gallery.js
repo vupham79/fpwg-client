@@ -3,7 +3,7 @@ import React from "react";
 import { connect } from "react-redux";
 import GalleryComponent from "../../../component/galleryComponent";
 
-class Theme1Gallery extends React.Component {
+class Theme4Gallery extends React.Component {
   render() {
     const {
       isEdit,
@@ -15,10 +15,10 @@ class Theme1Gallery extends React.Component {
       bodyView,
       fromHome,
       homeTitle,
-      homeList
+      homeList,
     } = this.props;
 
-    const useStyles = theme => ({
+    const useStyles = (theme) => ({
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
@@ -26,32 +26,32 @@ class Theme1Gallery extends React.Component {
         textAlign: "center",
         fontSize: 25,
         paddingBottom: 20,
-        textDecoration: "underline"
+        textDecoration: "underline",
       },
       changableBody: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#212121",
         textAlign: "center",
-        fontSize: 16
+        fontSize: 16,
       },
       changableBody2: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#b3b2b2",
         textAlign: "center",
         fontSize: 16,
-        fontWeight: 400
+        fontWeight: 400,
       },
       changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "black",
         textAlign: "center",
-        fontSize: 16
+        fontSize: 16,
       },
       pageName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
-        fontSize: 20
+        fontSize: 20,
       },
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -60,7 +60,7 @@ class Theme1Gallery extends React.Component {
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color,
       },
       changableLegend: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -71,21 +71,21 @@ class Theme1Gallery extends React.Component {
         top: "50%",
         left: "40%",
         fontSize: 80,
-        textAlign: "center"
+        textAlign: "center",
       },
       greyDiv: {
         backgroundColor: "#e1ede4",
         padding: 30,
         textAlign: "center",
         color: "#535353",
-        fontSize: 20
+        fontSize: 20,
       },
       centerItem: {
         display: "block",
         width: 150,
         marginLeft: "auto",
         marginRight: "auto",
-        paddingTop: 50
+        paddingTop: 50,
       },
       centerItem2: {
         display: "block",
@@ -94,15 +94,15 @@ class Theme1Gallery extends React.Component {
         alignItems: "center",
         width: 400,
         marginLeft: "auto",
-        marginRight: "auto"
+        marginRight: "auto",
       },
       changableAppBar: {
         backgroundColor: "white",
         opacity: 0.6,
         position: "sticky",
         color: "#535353",
-        textAlign: "right"
-      }
+        textAlign: "right",
+      },
     });
     const classes = useStyles();
     return (
@@ -111,7 +111,7 @@ class Theme1Gallery extends React.Component {
         style={{
           backgroundColor: "#1a1919",
           paddingBottom: 50,
-          minHeight: "50vh"
+          minHeight: "50vh",
         }}
         justify="center"
       >
@@ -144,14 +144,14 @@ class Theme1Gallery extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
 });
 
-export default connect(mapStateToProps, null)(Theme1Gallery);
+export default connect(mapStateToProps, null)(Theme4Gallery);

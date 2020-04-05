@@ -115,7 +115,7 @@ class GalleryComponent extends React.Component {
   };
 
   renderHomepageGallery = () => {
-    const { classes, galleries, siteView, titleView } = this.props;
+    const { classes, galleries, siteView, titleView, color } = this.props;
     return (
       <>
         {galleries.map((item, index) => (
@@ -156,7 +156,7 @@ class GalleryComponent extends React.Component {
                   textDecoration: "underline",
                   fontFamily: titleView.fontFamily,
                   fontWeight: 700,
-                  color: titleView.color,
+                  color: color ? color : titleView.color,
                 }}
               >
                 View Gallery
@@ -175,6 +175,7 @@ class GalleryComponent extends React.Component {
       siteEdit,
       titleEdit,
       updateNavItemValue,
+      color,
     } = this.props;
     return (
       <>
@@ -222,7 +223,7 @@ class GalleryComponent extends React.Component {
                 textDecoration: "underline",
                 fontFamily: titleEdit.fontFamily,
                 fontWeight: 700,
-                color: siteEdit.color,
+                color: color ? color : siteEdit.color,
               }}
             >
               View Gallery
@@ -304,8 +305,8 @@ class GalleryComponent extends React.Component {
                       padding: "0.4rem",
                       borderRadius: "0.3rem",
                     }}
-                    color="primary"
-                    shape="rounded"
+                    color="default"
+                    // shape="rounded"
                     variant="outlined"
                     count={this.state.pageCount}
                     page={this.state.page}
@@ -322,8 +323,8 @@ class GalleryComponent extends React.Component {
                       padding: "0.4rem",
                       borderRadius: "0.3rem",
                     }}
-                    color="primary"
-                    shape="rounded"
+                    color="default"
+                    // shape="rounded"
                     variant="outlined"
                     count={pageCountView}
                     page={this.state.pageView}

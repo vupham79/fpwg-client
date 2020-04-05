@@ -7,15 +7,16 @@ import {
   setEditOff,
   clearSiteView,
   updateSitepath,
-  getSiteBySitepath
+  getSiteBySitepath,
 } from "../../actions";
 import { Grid } from "@material-ui/core";
 import { withRouter } from "react-router-dom";
 import Helmet from "react-helmet";
+import WebFontLoader from "webfontloader";
 class PreViewSite extends React.Component {
   state = {
     sitepath: "",
-    isLoading: true
+    isLoading: true,
   };
 
   async componentDidMount() {
@@ -24,28 +25,28 @@ class PreViewSite extends React.Component {
       setSiteView,
       setEditOff,
       clearSiteView,
-      getSiteBySitepath
+      getSiteBySitepath,
     } = this.props;
     clearSiteView();
     setEditOff();
     const sitepath = await this.props.location.pathname.split("/")[1];
     this.setState({
-      sitepath: sitepath
+      sitepath: sitepath,
     });
     await updateSitepath(this.state.sitepath);
     const data = await getSiteBySitepath(this.state.sitepath);
     if (data) {
       const fontTitle = {
         fontFamily: data.fontTitle,
-        color: data.color
+        color: data.color,
       };
       const fontBody = {
-        fontFamily: data.fontBody
+        fontFamily: data.fontBody,
       };
       await setSiteView(data, fontTitle, fontBody);
     }
     this.setState({
-      isLoading: false
+      isLoading: false,
     });
   }
 
@@ -62,6 +63,11 @@ class PreViewSite extends React.Component {
             </Grid>
           );
         }
+        WebFontLoader.load({
+          google: {
+            families: [siteView.fontTitle, siteView.fontBody],
+          },
+        });
         return (
           <>
             <Helmet>
@@ -73,7 +79,7 @@ class PreViewSite extends React.Component {
                 type="image/x-icon"
               />
             </Helmet>
-            {themesConstant.find(e => e.id === siteView.theme._id).component}
+            {themesConstant.find((e) => e.id === siteView.theme._id).component}
           </>
         );
       }
@@ -88,17 +94,17 @@ class PreViewSite extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  siteView: state.site.siteView
+const mapStateToProps = (state) => ({
+  siteView: state.site.siteView,
 });
 
-const mapDispatchToProps = dispatch => ({
-  updateSiteId: id => dispatch(updateSiteId(id)),
+const mapDispatchToProps = (dispatch) => ({
+  updateSiteId: (id) => dispatch(updateSiteId(id)),
   setSiteView: (site, title, body) => dispatch(setSiteView(site, title, body)),
   setEditOff: () => dispatch(setEditOff()),
   clearSiteView: () => dispatch(clearSiteView()),
-  updateSitepath: sitepath => dispatch(updateSitepath(sitepath)),
-  getSiteBySitepath: sitepath => dispatch(getSiteBySitepath(sitepath))
+  updateSitepath: (sitepath) => dispatch(updateSitepath(sitepath)),
+  getSiteBySitepath: (sitepath) => dispatch(getSiteBySitepath(sitepath)),
 });
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(PreViewSite)

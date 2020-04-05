@@ -39,7 +39,14 @@ class HomePage extends React.Component {
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <AboutPage fromHome homeTitle={row.name} />
-                    <Divider style={{ backgroundColor: "#646464", width: "60%", marginLeft: "20%", marginTop: 20 }} />
+                    <Divider
+                      style={{
+                        backgroundColor: "#646464",
+                        width: "60%",
+                        marginLeft: "20%",
+                        marginTop: 20,
+                      }}
+                    />
                   </Grid>
                 ),
                 event: (
@@ -93,7 +100,7 @@ class HomePage extends React.Component {
                       homeList={row.filter.items}
                     />
                   </Grid>
-                )
+                ),
               }[row.original])
           )}
 
@@ -110,7 +117,14 @@ class HomePage extends React.Component {
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
                     <AboutPage fromHome homeTitle={row.name} />
-                    <Divider style={{ backgroundColor: "#646464", width: "60%", marginLeft: "20%", marginTop: 20 }} />
+                    <Divider
+                      style={{
+                        backgroundColor: "#646464",
+                        width: "60%",
+                        marginLeft: "20%",
+                        marginTop: 20,
+                      }}
+                    />
                   </Grid>
                 ),
                 event: (
@@ -138,6 +152,7 @@ class HomePage extends React.Component {
                       fromHome
                       homeTitle={row.name}
                       homeList={row.filter.items}
+                      color={"#fff"}
                     />
                   </Grid>
                 ),
@@ -164,18 +179,18 @@ class HomePage extends React.Component {
                       homeList={row.filter.items}
                     />
                   </Grid>
-                )
+                ),
               }[row.original])
           )}
       </Grid>
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteView: state.site.siteView,
   isEdit: state.site.isEdit,
   siteEdit: state.site.siteEdit,
-  covers: state.site.newCover
+  covers: state.site.newCover,
 });
 
 export default connect(mapStateToProps, null)(HomePage);

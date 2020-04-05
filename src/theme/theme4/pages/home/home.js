@@ -16,7 +16,7 @@ class Theme1Home extends React.Component {
       titleEdit,
       siteView,
       bodyEdit,
-      bodyView
+      bodyView,
     } = this.props;
 
     const useStyles = () => ({
@@ -25,7 +25,7 @@ class Theme1Home extends React.Component {
         color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         textAlign: "center",
         fontStyle: "italic",
-        fontSize: 20
+        fontSize: 20,
       },
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -33,7 +33,7 @@ class Theme1Home extends React.Component {
         color: "#b3b2b2",
         textAlign: "center",
         fontSize: 45,
-        paddingBottom: 20
+        paddingBottom: 20,
       },
       changableTitle2: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -41,45 +41,45 @@ class Theme1Home extends React.Component {
         color: "#b3b2b2",
         textAlign: "center",
         fontSize: 20,
-        paddingBottom: 20
+        paddingBottom: 20,
       },
       changableName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "left",
-        fontSize: 20
+        fontSize: 20,
       },
       changableBody: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         fontSize: 16,
-        textAlign: "justify"
+        textAlign: "justify",
       },
       changableBody2: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         textAlign: "left",
-        fontSize: 16
+        fontSize: 16,
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#b3b2b2",
         textAlign: "center",
         fontSize: 19,
-        fontWeight: 300
+        fontWeight: 300,
       },
       changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#b3b2b2",
         textAlign: "center",
-        fontSize: 16
+        fontSize: 16,
       },
       pageName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
-        fontSize: 20
+        fontSize: 20,
       },
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -88,8 +88,8 @@ class Theme1Home extends React.Component {
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color
-      }
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color,
+      },
     });
     const classes = useStyles();
     return (
@@ -98,7 +98,7 @@ class Theme1Home extends React.Component {
         style={{
           backgroundColor: "#1a1919",
           paddingBottom: 100,
-          minHeight: "50vh"
+          minHeight: "50vh",
         }}
       >
         <Grid item xs={12}>
@@ -119,7 +119,7 @@ class Theme1Home extends React.Component {
                     style={{
                       display: row.isActive ? "block" : "none",
                       minHeight: 200,
-                      paddingTop: 50
+                      paddingTop: 50,
                     }}
                   >
                     <Grid item xs={12}>
@@ -184,7 +184,7 @@ class Theme1Home extends React.Component {
                       homeList={row.filter.items}
                     />
                   </Grid>
-                )
+                ),
               }[row.original])
           )}
 
@@ -202,7 +202,7 @@ class Theme1Home extends React.Component {
                     style={{
                       display: row.isActive ? "block" : "none",
                       minHeight: 200,
-                      paddingTop: 50
+                      paddingTop: 50,
                     }}
                   >
                     <Grid item xs={12}>
@@ -267,7 +267,7 @@ class Theme1Home extends React.Component {
                       homeList={row.filter.items}
                     />
                   </Grid>
-                )
+                ),
               }[row.original])
           )}
       </Grid>
@@ -275,7 +275,7 @@ class Theme1Home extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   titleView: state.site.titleView,
@@ -285,7 +285,7 @@ const mapStateToProps = state => ({
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
   newLogo: state.site.newLogo,
-  newCover: state.site.newCover
+  newCover: state.site.newCover,
 });
 
 export default connect(mapStateToProps, null)(Theme1Home);

@@ -2,7 +2,7 @@ import {
   faFacebookF,
   faInstagram,
   faWhatsapp,
-  faYoutube
+  faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Divider, Grid, IconButton, Typography } from "@material-ui/core";
@@ -59,33 +59,39 @@ class FooterPage extends Component {
       siteView,
       youtube,
       instagram,
-      whatsapp
+      whatsapp,
     } = this.props;
     return (
       <Grid container direction="row" className={styles.footer}>
         <Grid item sm={4} xs={12} className={styles.content}>
           <Typography
             variant="h5"
-            style={isEdit ? titleEdit : titleView}
+            style={
+              isEdit
+                ? { ...titleEdit, color: "#fff" }
+                : { ...titleView, color: "#fff" }
+            }
             color="primary"
           >
             ABOUT
           </Typography>
-          <Typography component="div"
+          <Typography
+            component="div"
             style={{
               fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
               fontWeight: 400,
               color: "#fefbfc",
               textAlign: "left",
               fontSize: 16,
-            }}>
+            }}
+          >
             {isEdit
               ? siteEdit && siteEdit.about
                 ? siteEdit.about
                 : "Welcome to our website! Take a look around and feel free to contact us for more information."
               : siteView && siteView.about
-                ? siteView.about
-                : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+              ? siteView.about
+              : "Welcome to our website! Take a look around and feel free to contact us for more information."}
           </Typography>
           <Divider className="divider" variant="fullWidth" />
           <Grid
@@ -117,15 +123,16 @@ class FooterPage extends Component {
                       ? null
                       : { display: "none" }
                     : siteView.instagram
-                      ? null
-                      : { display: "none" }
-                }>
+                    ? null
+                    : { display: "none" }
+                }
+              >
                 <IconButton
                   aria-label=""
                   color="primary"
                   href={`https://instagram.com/${
                     isEdit ? instagram : siteView.instagram
-                    }`}
+                  }`}
                 >
                   {this.renderInstagram()}
                 </IconButton>
@@ -140,9 +147,10 @@ class FooterPage extends Component {
                       ? null
                       : { display: "none" }
                     : siteView.youtube
-                      ? null
-                      : { display: "none" }
-                }>
+                    ? null
+                    : { display: "none" }
+                }
+              >
                 <IconButton
                   aria-label=""
                   color="primary"
@@ -161,15 +169,16 @@ class FooterPage extends Component {
                       ? null
                       : { display: "none" }
                     : siteView.whatsapp
-                      ? null
-                      : { display: "none" }
-                }>
+                    ? null
+                    : { display: "none" }
+                }
+              >
                 <IconButton
                   aria-label=""
                   color="primary"
                   href={`https://wa.me/${
                     isEdit ? whatsapp : siteView.whatsapp
-                    }`}
+                  }`}
                 >
                   {this.renderWhatsapp()}
                 </IconButton>
@@ -180,7 +189,11 @@ class FooterPage extends Component {
         <Grid item sm={4} xs={12} className={styles.content}>
           <Typography
             variant="h5"
-            style={isEdit ? titleEdit : titleView}
+            style={
+              isEdit
+                ? { ...titleEdit, color: "#fff" }
+                : { ...titleView, color: "#fff" }
+            }
             color="primary"
           >
             QUICK LINKS
@@ -188,56 +201,43 @@ class FooterPage extends Component {
           <Grid container justify="flex-start" direction="column">
             {isEdit
               ? siteEdit.navItems.map((item, index) => (
-                <Grid
-                  item
-                  xs={4}
-                  sm={8}
-                  key={index}
-                  style={{ paddingBottom: "0.7rem" }}
-                >
-                  <Box
-                    style={{
-                      ...bodyEdit,
-                      color: "#fefbfc"
-                    }}
+                  <Grid
+                    item
+                    xs={4}
+                    sm={8}
+                    key={index}
+                    style={{ paddingBottom: "0.7rem" }}
                   >
-                    {item.name}
-                  </Box>
-                </Grid>
-              ))
+                    <Box
+                      style={{
+                        ...bodyEdit,
+                        color: "#fefbfc",
+                      }}
+                    >
+                      {item.name}
+                    </Box>
+                  </Grid>
+                ))
               : siteView.navItems.map((item, index) => (
-                <Grid
-                  item
-                  xs={4}
-                  sm={8}
-                  key={index}
-                  style={{ paddingBottom: "0.7rem" }}
-                >
-                  <Link
-                    style={{
-                      ...bodyView,
-                      color: "#fefbfc"
-                    }}
-                    to={`/${siteView.sitePath}/${item.original}`}
+                  <Grid
+                    item
+                    xs={4}
+                    sm={8}
+                    key={index}
+                    style={{ paddingBottom: "0.7rem" }}
                   >
-                    {item.name}
-                  </Link>
-                </Grid>
-              ))}
+                    <Link
+                      style={{
+                        ...bodyView,
+                        color: "#fefbfc",
+                      }}
+                      to={`/${siteView.sitePath}/${item.original}`}
+                    >
+                      {item.name}
+                    </Link>
+                  </Grid>
+                ))}
           </Grid>
-        </Grid>
-        <Grid item sm={4} xs={12} className={styles.content}>
-          {/* <Typography
-            variant="h5"
-            style={isEdit ? titleEdit : titleView}
-            color="primary"
-            className={styles.footerTitle}
-          >
-            SIGN UP FOR OUR NEWSLETTER
-          </Typography>
-          <Typography variant="body1" style={isEdit ? bodyEdit : bodyView}>
-            Get exclusive updates and promotions straight to your email.
-          </Typography> */}
         </Grid>
         <Divider className={styles.bot_divider} variant="fullWidth" />
         <Grid item sm={12} xs={12} container className={styles.bot_footer}>
@@ -248,7 +248,8 @@ class FooterPage extends Component {
                 color: "#7c7c7c",
                 textAlign: "left",
                 fontSize: 16,
-              }}>
+              }}
+            >
               © {isEdit ? siteEdit.title : siteView.title}
             </Typography>
           </Grid>
@@ -259,15 +260,18 @@ class FooterPage extends Component {
                 fontWeight: 400,
                 color: "#fefbfc",
                 textAlign: "right",
-                fontSize: 24,
-              }}>POWERED BY FPWG</Typography>
+                fontSize: 16,
+              }}
+            >
+              POWERED BY FPWG
+            </Typography>
           </Grid>
         </Grid>
       </Grid>
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   siteView: state.site.siteView,
   isEdit: state.site.isEdit,
@@ -277,7 +281,7 @@ const mapStateToProps = state => ({
   bodyView: state.site.bodyView,
   youtube: state.site.youtube,
   instagram: state.site.instagram,
-  whatsapp: state.site.whatsapp
+  whatsapp: state.site.whatsapp,
 });
 
 export default connect(mapStateToProps, null)(FooterPage);

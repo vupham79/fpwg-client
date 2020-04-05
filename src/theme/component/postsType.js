@@ -11,7 +11,7 @@ import {
   IconButton,
   makeStyles,
   Typography,
-  withStyles
+  withStyles,
 } from "@material-ui/core";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import Pagination from "@material-ui/lab/Pagination";
@@ -22,74 +22,74 @@ import { connect } from "react-redux";
 import Truncate from "react-truncate";
 import { getDataByPageNumber, setPostsToSiteView } from "../../actions";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   cardGrid: {
-    paddingTop: theme.spacing(8)
+    paddingTop: theme.spacing(8),
   },
   card: {
     width: "30vh",
     display: "flex",
     flexDirection: "column",
     height: "22rem",
-    border: style => "0.5px solid" + style.color
+    border: (style) => "0.5px solid" + style.color,
     // "&:hover": {
     //   border: style => "1.5px solid" + style.color
     // }
   },
   message: {
-    paddingLeft: "0.5rem"
+    paddingLeft: "0.5rem",
   },
   title: {
     overflow: "hidden",
-    paddingLeft: "1rem"
+    paddingLeft: "1rem",
   },
   cardMediaAlbum: {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-    backgroundSize: "contain"
+    backgroundSize: "contain",
   },
   cardMedia: {
     height: "30vh",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
-    overflow: "hidden"
+    overflow: "hidden",
   },
   album: {
     height: "30vh",
-    background: "rgba(24, 20, 20, 0.5)"
+    background: "rgba(24, 20, 20, 0.5)",
   },
   cardContent: {
     flexGrow: 1,
     padding: theme.spacing(1),
     paddingBottom: 0,
-    overflow: "hidden"
+    overflow: "hidden",
   },
   cardHeader: {
-    padding: "0.5rem"
+    padding: "0.5rem",
   },
   avatar: {
     width: "2rem",
-    height: "2rem"
+    height: "2rem",
   },
   gridItems: {
-    maxHeight: 350
+    maxHeight: 350,
   },
   btnReadMore: {
-    border: style => "0.5px solid" + style.color,
-    color: style => style.color,
+    border: (style) => "0.5px solid" + style.color,
+    color: (style) => style.color,
     "&:hover": {
-      border: style => "1.5px solid" + style.color,
+      border: (style) => "1.5px solid" + style.color,
       color: "white",
-      background: style => style.color
-    }
-  }
+      background: (style) => style.color,
+    },
+  },
 }));
 
-const gridStyle = theme => ({
+const gridStyle = (theme) => ({
   root: {
     marginTop: theme.spacing(2),
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
 
   images: {
@@ -98,13 +98,13 @@ const gridStyle = theme => ({
     backgroundRepeat: "no-repeat",
     width: "-webkit-fill-available",
     maxHeight: "100%",
-    maxWidth: "100%"
-  }
+    maxWidth: "100%",
+  },
 });
 
 const cardTitle = {
   fontSize: "11px",
-  fontFamily: "Segoe UI"
+  fontFamily: "Segoe UI",
 };
 
 function TypeAlbum({ post, openDialog, style, dark, siteInfo }) {
@@ -116,7 +116,7 @@ function TypeAlbum({ post, openDialog, style, dark, siteInfo }) {
     fontFamily: style.isEdit
       ? style.bodyEdit.fontFamily
       : style.bodyView.fontFamily,
-    fontSize: "11px"
+    fontSize: "11px",
   };
   return (
     <React.Fragment>
@@ -150,10 +150,10 @@ function TypeAlbum({ post, openDialog, style, dark, siteInfo }) {
               </IconButton>
             }
             subheaderTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
+              style: { ...cardTitle, ...txtStyle },
             }}
             titleTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
+              style: { ...cardTitle, ...txtStyle },
             }}
             title={siteInfo.title}
             subheader={moment(post.createAt).format("MMMM DD,YYYY")}
@@ -203,7 +203,7 @@ function TypePhoto({ post, openDialog, style, dark, siteInfo }) {
     fontFamily: style.isEdit
       ? style.bodyEdit.fontFamily
       : style.bodyView.fontFamily,
-    fontSize: "11px"
+    fontSize: "11px",
   };
   return (
     <React.Fragment>
@@ -237,10 +237,10 @@ function TypePhoto({ post, openDialog, style, dark, siteInfo }) {
               </IconButton>
             }
             subheaderTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
+              style: { ...cardTitle, ...txtStyle },
             }}
             titleTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
+              style: { ...cardTitle, ...txtStyle },
             }}
             title={siteInfo.title}
             subheader={moment(post.createAt).format("MMMM DD,YYYY")}
@@ -282,7 +282,7 @@ function TypeVideo({ post, openDialog, style, dark, siteInfo }) {
     fontFamily: style.isEdit
       ? style.bodyEdit.fontFamily
       : style.bodyView.fontFamily,
-    fontSize: "11px"
+    fontSize: "11px",
   };
   return (
     <React.Fragment>
@@ -316,10 +316,10 @@ function TypeVideo({ post, openDialog, style, dark, siteInfo }) {
               </IconButton>
             }
             subheaderTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
+              style: { ...cardTitle, ...txtStyle },
             }}
             titleTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
+              style: { ...cardTitle, ...txtStyle },
             }}
             title={siteInfo.title}
             subheader={moment(post.createAt).format("MMMM DD,YYYY")}
@@ -361,7 +361,7 @@ function TypeMessage({ post, openDialog, style, dark, siteInfo }) {
     fontFamily: style.isEdit
       ? style.bodyEdit.fontFamily
       : style.bodyView.fontFamily,
-    fontSize: "11px"
+    fontSize: "11px",
   };
   return (
     <React.Fragment>
@@ -395,10 +395,10 @@ function TypeMessage({ post, openDialog, style, dark, siteInfo }) {
               </IconButton>
             }
             subheaderTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
+              style: { ...cardTitle, ...txtStyle },
             }}
             titleTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
+              style: { ...cardTitle, ...txtStyle },
             }}
             title={siteInfo.title}
             subheader={moment(post.createAt).format("MMMM DD,YYYY")}
@@ -408,7 +408,7 @@ function TypeMessage({ post, openDialog, style, dark, siteInfo }) {
               style={{
                 ...txtStyle,
                 padding: "1rem ",
-                height: "-webkit-fill-available"
+                height: "-webkit-fill-available",
               }}
               lines={10}
               ellipsis={<span> ...</span>}
@@ -432,7 +432,7 @@ class PostTypeComponent extends React.Component {
     pageCount: 1,
     offset: 0,
     itemPerPage: 5,
-    page: 1
+    page: 1,
   };
 
   handlePageViewClick = async (event, newValue) => {
@@ -440,30 +440,30 @@ class PostTypeComponent extends React.Component {
       siteInfo,
       getDataByPageNumber,
       isEdit,
-      setPostToSiteView
+      setPostToSiteView,
     } = this.props;
     if (!isEdit) {
       this.setState({ pageView: newValue });
       const data = await getDataByPageNumber({
         sitePath: siteInfo.sitePath,
         page: "news",
-        pageNumber: newValue
+        pageNumber: newValue,
       });
       data && setPostToSiteView(data);
     }
   };
 
-  handleOpen = post => {
+  handleOpen = (post) => {
     this.setState({
       open: true,
-      postOpen: post
+      postOpen: post,
     });
   };
 
-  handleOpenVideo = post => {
+  handleOpenVideo = (post) => {
     this.setState({
       openVideo: true,
-      postOpen: post
+      postOpen: post,
     });
   };
 
@@ -471,19 +471,19 @@ class PostTypeComponent extends React.Component {
     this.setState({
       open: false,
       postOpen: null,
-      openVideo: false
+      openVideo: false,
     });
   };
 
-  setListData = listData => {
+  setListData = (listData) => {
     this.setState({
-      filteredData: listData
+      filteredData: listData,
     });
   };
 
-  setPageCount = listData => {
+  setPageCount = (listData) => {
     this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage),
     });
   };
 
@@ -494,7 +494,7 @@ class PostTypeComponent extends React.Component {
         this.state.offset,
         this.state.itemPerPage + this.state.offset
       ),
-      pageCount: Math.ceil(posts.length / this.state.itemPerPage)
+      pageCount: Math.ceil(posts.length / this.state.itemPerPage),
     });
   };
 
@@ -530,7 +530,7 @@ class PostTypeComponent extends React.Component {
       posts,
       pageCountView,
       theme,
-      fromHome
+      fromHome,
     } = this.props;
     const post = this.state.postOpen;
     const style = {
@@ -538,7 +538,7 @@ class PostTypeComponent extends React.Component {
       titleEdit: titleEdit,
       titleView: titleView,
       bodyEdit: bodyEdit,
-      bodyView: bodyView
+      bodyView: bodyView,
     };
     return (
       <Container>
@@ -600,7 +600,7 @@ class PostTypeComponent extends React.Component {
               )
             : fromHome
             ? posts
-                .filter(function(pos) {
+                .filter(function (pos) {
                   return pos.isActive;
                 })
                 .slice(0, 5)
@@ -803,10 +803,10 @@ class PostTypeComponent extends React.Component {
                   style={{
                     backgroundColor: "white",
                     padding: "0.4rem",
-                    borderRadius: "0.3rem"
+                    borderRadius: "0.3rem",
                   }}
-                  color="primary"
-                  shape="rounded"
+                  color="default"
+                  // shape="rounded"
                   variant="outlined"
                   count={this.state.pageCount}
                   page={this.state.page}
@@ -822,10 +822,10 @@ class PostTypeComponent extends React.Component {
                   style={{
                     backgroundColor: "white",
                     padding: "0.4rem",
-                    borderRadius: "0.3rem"
+                    borderRadius: "0.3rem",
                   }}
-                  color="primary"
-                  shape="rounded"
+                  color="default"
+                  // shape="rounded"
                   variant="outlined"
                   count={pageCountView}
                   page={this.state.pageView}
@@ -837,19 +837,19 @@ class PostTypeComponent extends React.Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
   bodyView: state.site.bodyView,
-  pageCountView: state.post.pageCountNewsView
+  pageCountView: state.post.pageCountNewsView,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getDataByPageNumber: ({ sitePath, page, siteId, pageNumber }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
-  setPostToSiteView: posts => dispatch(setPostsToSiteView(posts))
+  setPostToSiteView: (posts) => dispatch(setPostsToSiteView(posts)),
 });
 
 export default connect(
