@@ -4,7 +4,7 @@ import {
   makeStyles,
   TextField,
   Typography,
-  withStyles
+  withStyles,
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -17,22 +17,22 @@ import imgUrl from "../../FBWGLogo.png";
 import DesignTab from "./design";
 require("dotenv").config();
 
-const useStyle = theme => ({
+const useStyle = (theme) => ({
   root: {
     [theme.breakpoints.up("sm")]: {
       position: "absolute",
       marginTop: "9vh",
       bottom: 0,
-      top: 0
-    }
+      top: 0,
+    },
   },
   sites: {
     [theme.breakpoints.up("sm")]: {
       position: "absolute",
       bottom: 0,
       top: 0,
-      left: 0
-    }
+      left: 0,
+    },
   },
   view: {
     [theme.breakpoints.up("sm")]: {
@@ -40,19 +40,19 @@ const useStyle = theme => ({
       bottom: 0,
       top: 0,
       right: 0,
-      overflow: "auto"
-    }
+      overflow: "auto",
+    },
   },
   toolEdit: {
     height: "10vh",
-    position: "sticky"
+    position: "sticky",
   },
   img: {
-    width: "100%"
+    width: "100%",
   },
   h4: {
     textAlign: "center",
-    padding: "2rem 1rem"
+    padding: "2rem 1rem",
   },
   textField: {
     overflow: "hidden",
@@ -60,31 +60,31 @@ const useStyle = theme => ({
     backgroundColor: "#fcfcfb",
     // transition: theme.transitions.create(["border-color", "box-shadow"]),
     "&:hover": {
-      backgroundColor: "#fff"
+      backgroundColor: "#fff",
       // borderColor: "rgba(81,152,217,.7)"
     },
     "&$focused": {
       backgroundColor: "#fff",
-      borderColor: "black !important"
+      borderColor: "black !important",
       // boxShadow: `${fade(rgba(81, 152, 217, 0.7), 0.25)} 0 0 0 2px`
-    }
-  }
+    },
+  },
 });
 
-const siteStyle = makeStyles(theme => ({
+const siteStyle = makeStyles((theme) => ({
   h4: {
     textAlign: "center",
-    padding: "1rem"
+    padding: "1rem",
   },
   body1: {
-    textAlign: "center"
+    textAlign: "center",
   },
   button: {
-    padding: "2rem"
+    padding: "2rem",
   },
   img: {
-    width: "100%"
-  }
+    width: "100%",
+  },
 }));
 
 function EmptyListSite() {
@@ -105,17 +105,17 @@ function EmptyListSite() {
   );
 }
 class MainPage extends Component {
-  renderViewPage = siteEdit => {
+  renderViewPage = (siteEdit) => {
     if (siteEdit) {
       const theme = siteEdit
-        ? themesConstant.find(e => e.id === siteEdit.theme._id)
+        ? themesConstant.find((e) => e.id === siteEdit.theme._id)
         : null;
       return theme && theme.component;
     }
     return <></>;
   };
 
-  copyToClipboard = e => {
+  copyToClipboard = (e) => {
     var textField = document.getElementById("txtSitePath");
     textField.innerText = e.target.value;
     textField.select();
@@ -178,22 +178,26 @@ class MainPage extends Component {
                             padding: "0.5rem",
                             textAlign: "center",
                             fontFamily: "Segoe UI",
-                            fontSize: "14px"
-                          }
+                            fontSize: "14px",
+                          },
                         }}
                         fullWidth
                         variant={"outlined"}
-                        value={`${process.env.REACT_APP_API_HOST}${siteEdit.sitePath}`}
+                        value={
+                          process.env.REACT_APP_API_HOST
+                            ? `${process.env.REACT_APP_API_HOST}${item.sitePath}`
+                            : `http://localhost:3000/${item.sitePath}`
+                        }
                         InputProps={{
                           endAdornment: (
                             <Button
                               className={"mainFont"}
-                              onClick={e => this.copyToClipboard(e)}
+                              onClick={(e) => this.copyToClipboard(e)}
                               position="end"
                             >
                               Copy
                             </Button>
-                          )
+                          ),
                         }}
                       />
                     </Grid>
@@ -212,7 +216,7 @@ class MainPage extends Component {
                             style={{
                               borderColor: "rgb(0, 96, 136)",
                               color: "rgb(0, 96, 136)",
-                              fontWeight: "bold"
+                              fontWeight: "bold",
                             }}
                             onClick={() =>
                               this.props.setCurrentEditId(siteEdit.id)
@@ -233,7 +237,7 @@ class MainPage extends Component {
                               style={{
                                 borderColor: "rgb(0, 96, 136)",
                                 color: "rgb(0, 96, 136)",
-                                fontWeight: "bold"
+                                fontWeight: "bold",
                               }}
                               label="Visit"
                             />
@@ -253,23 +257,23 @@ class MainPage extends Component {
                               ? {
                                   backgroundColor: "#cc2127",
                                   color: "#fff",
-                                  fontWeight: "600"
+                                  fontWeight: "600",
                                 }
                               : {
                                   backgroundColor: "#5ea95a",
                                   color: "#fff",
-                                  fontWeight: "600"
+                                  fontWeight: "600",
                                 }
                           }
                           onClick={() =>
                             siteEdit.isPublish
                               ? unPublishSite({
                                   siteId: siteEdit.id,
-                                  siteName: siteEdit.title
+                                  siteName: siteEdit.title,
                                 })
                               : publishSite({
                                   siteId: siteEdit.id,
-                                  siteName: siteEdit.title
+                                  siteName: siteEdit.title,
                                 })
                           }
                           label={`${
@@ -305,18 +309,18 @@ class MainPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   sites: state.site.data,
   siteEdit: state.site.siteEdit,
-  isEdit: state.site.isEdit
+  isEdit: state.site.isEdit,
 });
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentEditId: id => dispatch(setCurrentEditId(id)),
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentEditId: (id) => dispatch(setCurrentEditId(id)),
   publishSite: ({ siteId, siteName }) =>
     dispatch(publishSite({ siteId, siteName })),
   unPublishSite: ({ siteId, siteName }) =>
-    dispatch(unPublishSite({ siteId, siteName }))
+    dispatch(unPublishSite({ siteId, siteName })),
 });
 
 export default connect(

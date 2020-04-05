@@ -8,33 +8,33 @@ import {
   setCurrentEditId,
   setEditOn,
   setSiteEdit,
-  getUserSites
+  getUserSites,
 } from "../../actions";
 require("dotenv").config();
 
 const imgStyle = {
   backgroundSize: "contain",
   backgroundRepeat: "no-repeat",
-  height: "2rem"
+  height: "2rem",
 };
 const useStyle = {
   listSites: {
     borderRight: "0.5px solid ",
     padding: 0,
-    width: " -webkit-fill-available"
+    width: " -webkit-fill-available",
   },
   numberSite: {
     border: "1px solid",
     textAlign: "center",
     borderRadius: "2px",
-    padding: "0.4rem 0"
+    padding: "0.4rem 0",
   },
   item: {
     minHeight: "4rem",
     "&:hover": {
       background: "#c3c4c7",
-      transitionDuration: ".5s"
-    }
+      transitionDuration: ".5s",
+    },
   },
   published: {
     borderRadius: "5px",
@@ -42,7 +42,7 @@ const useStyle = {
     background: "#5ea95a",
     marginTop: "0.2rem",
     color: "#fff",
-    textAlign: "center"
+    textAlign: "center",
   },
   unpublished: {
     borderRadius: "5px",
@@ -50,12 +50,12 @@ const useStyle = {
     background: "#cc2127",
     marginTop: "0.2rem",
     color: "#fff",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 };
 class Design extends Component {
   state = {
-    selectedIndex: -1
+    selectedIndex: -1,
   };
 
   getAllUserSites = async () => {
@@ -101,16 +101,16 @@ class Design extends Component {
     await getAllThemes();
   };
 
-  getSite = async id => {
+  getSite = async (id) => {
     const { getSiteById, setSiteEdit, getAllPost } = this.props;
     const data = await getSiteById(id);
     if (data) {
       const titleStyle = {
         fontFamily: data.fontTitle,
-        color: data.color
+        color: data.color,
       };
       const bodyStyle = {
-        fontFamily: data.fontBody
+        fontFamily: data.fontBody,
       };
       await setSiteEdit(data, titleStyle, bodyStyle);
       data.posts && getAllPost(data.posts);
@@ -154,7 +154,9 @@ class Design extends Component {
               className={"mainFont"}
               style={{ fontSize: "12px", overflow: "hidden" }}
             >
-              {`${process.env.REACT_APP_API_HOST}${item.sitePath}`}
+              {process.env.REACT_APP_API_HOST
+                ? `${process.env.REACT_APP_API_HOST}${item.sitePath}`
+                : `http://localhost:3000/${item.sitePath}`}
             </Grid>
             <Grid
               item
@@ -184,21 +186,21 @@ class Design extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   sites: state.site.data,
   accessToken: state.user.accessToken,
-  profile: state.user.profile
+  profile: state.user.profile,
 });
 
-const mapDispatchToProps = dispatch => ({
-  setCurrentEditId: id => dispatch(setCurrentEditId(id)),
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentEditId: (id) => dispatch(setCurrentEditId(id)),
   getAllThemes: () => dispatch(getAllThemes()),
-  getSiteById: id => dispatch(getSiteById(id)),
+  getSiteById: (id) => dispatch(getSiteById(id)),
   setSiteEdit: (site, titleStyle, bodyStyle) =>
     dispatch(setSiteEdit(site, titleStyle, bodyStyle)),
-  getAllPost: posts => dispatch(getAllPost(posts)),
+  getAllPost: (posts) => dispatch(getAllPost(posts)),
   setEditOn: () => dispatch(setEditOn()),
-  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken))
+  getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
 });
 
 export default connect(
