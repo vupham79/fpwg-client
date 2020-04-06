@@ -535,8 +535,27 @@ class EventComponent extends React.Component {
                 </Grid>
               )}
 
-              {homeList &&
+              {fromHome &&
+                homeList &&
                 homeList.filter(
+                  (row) =>
+                    row &&
+                    !row.isCancelled &&
+                    moment(row.endTime).isAfter(moment())
+                ).length > 0 && (
+                  <Grid container item>
+                    <Grid item xs={12}>
+                      <p style={classes.changableBody2}>Upcoming Events</p>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Divider color="#212121" />
+                    </Grid>
+                  </Grid>
+                )}
+
+              {!fromHome &&
+                this.state.filteredData &&
+                this.state.filteredData.filter(
                   (row) =>
                     row &&
                     !row.isCancelled &&
@@ -561,8 +580,29 @@ class EventComponent extends React.Component {
               <Grid item xs={12}>
                 <Divider color="#212121" />
               </Grid>
-              {homeList &&
+
+              {fromHome &&
+                homeList &&
                 homeList.filter(
+                  (row) =>
+                    row &&
+                    (row.isCancelled ||
+                      moment(row.endTime).isSameOrBefore(moment()) ||
+                      !row.endTime)
+                ).length > 0 && (
+                  <Grid container item>
+                    <Grid item xs={12}>
+                      <p style={classes.changableBody2}>Past Events</p>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <Divider color="#212121" />
+                    </Grid>
+                  </Grid>
+                )}
+
+              {!fromHome &&
+                this.state.filteredData &&
+                this.state.filteredData.filter(
                   (row) =>
                     row &&
                     (row.isCancelled ||
@@ -581,7 +621,7 @@ class EventComponent extends React.Component {
 
               {isEdit
                 ? fromHome
-                  ? this.renderPassEvent(homeList.slice(0, 5), classes)
+                  ? this.renderPassEvent(homeList.slice(0, 3), classes)
                   : this.renderPassEvent(this.state.filteredData, classes)
                 : this.renderPassEvent(homeList, classes)}
             </Grid>

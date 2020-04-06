@@ -4,11 +4,9 @@ import { connect } from "react-redux";
 import { changeTheme, updateNavItemValue } from "../actions";
 import {
   Grid,
-  Typography,
   Card,
   CardActionArea,
   CardMedia,
-  CardContent
 } from "@material-ui/core";
 import CategoryPicker from "./CategoryPicker";
 
@@ -66,7 +64,7 @@ class ThemeEditorTab extends React.Component {
 
   componentDidMount() {
     this.setState({
-      filteredData: this.props.themes
+      filteredData: this.props.themes,
     });
   }
 
@@ -74,14 +72,15 @@ class ThemeEditorTab extends React.Component {
     this.setState({
       currentCategory: category
     });
-    if (category.name === "All") {
+    console.log(category);
+    if (category === "All") {
       this.setState({
         filteredData: this.props.themes
       });
     } else {
       this.setState({
         filteredData: this.props.themes.filter(function (theme) {
-          return theme.category._id === category._id;
+          return theme.category.name === category;
         })
       });
     }
@@ -120,7 +119,7 @@ class ThemeEditorTab extends React.Component {
             fontSize: 14
           }}
         >
-          Find a category that suits your business.
+          Describe your page.
         </Grid>
 
         <Grid container style={{ marginBottom: "3rem", marginTop: "0.5rem" }}>
@@ -141,7 +140,7 @@ class ThemeEditorTab extends React.Component {
             fontSize: 14
           }}
         >
-          Pick a theme.
+          Pick a theme for your website.
         </Grid>
 
         <Grid container direction="column">
@@ -190,12 +189,13 @@ const mapStateToProps = state => ({
   themes: state.theme.data,
   isShow: state.theme.isShow,
   site: state.site.siteEdit,
-  titleEdit: state.site.titleEdit
+  titleEdit: state.site.titleEdit,
+  categories: state.admin.categories
 });
 
 const mapDispatchToProps = dispatch => ({
   changeTheme: site => dispatch(changeTheme(site)),
-  updateNavItemValue: value => dispatch(updateNavItemValue(value))
+  updateNavItemValue: value => dispatch(updateNavItemValue(value)),
 });
 
 export default connect(
