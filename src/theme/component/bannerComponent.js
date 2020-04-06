@@ -1,9 +1,9 @@
-import { Grid, CardMedia } from "@material-ui/core";
+import { CardMedia, Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { Carousel } from "react-responsive-carousel";
-import Slider from "react-slick";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import Slider from "react-slick";
 
 class BannerComponent extends React.Component {
   renderNewCoversSlider = () => {
@@ -177,7 +177,6 @@ class BannerComponent extends React.Component {
   };
 
   TypeCarousel = () => {
-    const { isEdit, newCover } = this.props;
     return (
       <React.Fragment>
         <Grid item xs={12}>

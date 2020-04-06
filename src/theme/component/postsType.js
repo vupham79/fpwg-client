@@ -114,7 +114,7 @@ class PostTypeComponent extends React.Component {
   };
 
   hanldeHomeClick = (post) => {
-    const { siteEdit, updateNavItemValue } = this.props;
+    // const { siteEdit, updateNavItemValue } = this.props;
     // const news = siteEdit.navItems.filter((item) => {
     //   return item.original === "news";
     // });
@@ -135,7 +135,7 @@ class PostTypeComponent extends React.Component {
       fontSize: "11px",
       border: `2px solid ${
         style && style.isEdit ? style.titleEdit.color : style.titleView.color
-        }`,
+      }`,
     };
 
     return (
@@ -217,22 +217,22 @@ class PostTypeComponent extends React.Component {
                   onClick={(e) => this.hanldeHomeClick(post)}
                 />
               ) : (
-                  <Link
-                    to={{
-                      pathname: `/${siteView.sitePath}/news`,
-                      postView: { post: post, view: true },
-                    }}
-                  >
-                    <ButtonComponent label="READ MORE" style={btnStyle} />
-                  </Link>
-                )
+                <Link
+                  to={{
+                    pathname: `/${siteView.sitePath}/news`,
+                    postView: { post: post, view: true },
+                  }}
+                >
+                  <ButtonComponent label="READ MORE" style={btnStyle} />
+                </Link>
+              )
             ) : (
-                <ButtonComponent
-                  label="READ MORE"
-                  style={btnStyle}
-                  onClick={() => this.handleOpen(post)}
-                />
-              )}
+              <ButtonComponent
+                label="READ MORE"
+                style={btnStyle}
+                onClick={() => this.handleOpen(post)}
+              />
+            )}
           </Grid>
         </Grid>
       </Grid>
@@ -252,7 +252,7 @@ class PostTypeComponent extends React.Component {
       fontSize: "11px",
       border: `2px solid ${
         style && style.isEdit ? style.titleEdit.color : style.titleView.color
-        }`,
+      }`,
     };
     return (
       <Grid
@@ -298,12 +298,12 @@ class PostTypeComponent extends React.Component {
                 onClick={() => this.handleOpen(post)}
               />
             ) : (
-                <ButtonComponent
-                  label="READ MORE"
-                  style={btnStyle}
-                  onClick={() => this.handleOpen(post)}
-                />
-              )}
+              <ButtonComponent
+                label="READ MORE"
+                style={btnStyle}
+                onClick={() => this.handleOpen(post)}
+              />
+            )}
           </Grid>
         </Grid>
       </Grid>
@@ -400,7 +400,7 @@ class PostTypeComponent extends React.Component {
       fontSize: "11px",
       border: `2px solid ${
         style && style.isEdit ? style.titleEdit.color : style.titleView.color
-        }`,
+      }`,
     };
     const txtStyle = {
       fontFamily: style.isEdit
@@ -410,6 +410,9 @@ class PostTypeComponent extends React.Component {
       color: bgWhite ? "black" : "white",
     };
     const type = post.attachments && post.attachments.media_type;
+    console.log(post.message.includes("/\n/ig"));
+    post.message = post.message.replace("/\n/ig", "<br /><br /><br />");
+    console.log(post.message.split("\u21b5").join("<br /><br /><br />"));
     return (
       <Grid
         container
@@ -489,7 +492,7 @@ class PostTypeComponent extends React.Component {
               xs={12}
               style={{ ...txtStyle, padding: "1rem 0", lineHeight: "1.5rem" }}
             >
-              {post.message.replace(/\u21B5/g, "<br/>")}
+              {post.message}
             </Grid>
             <Grid
               container
@@ -498,7 +501,11 @@ class PostTypeComponent extends React.Component {
               justify="flex-start"
               style={{ padding: "2rem 0" }}
             >
-              <a href={post.target && post.target}>
+              <a
+                href={post.target && post.target}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <ButtonComponent label="VIEW ON FACEBOOK" style={btnStyle} />
               </a>
             </Grid>
@@ -548,18 +555,18 @@ class PostTypeComponent extends React.Component {
             {this.renderViewNew(this.state.postOpen)}
           </Grid>
         ) : (
-            <Grid container item xs={10}>
-              <Grid
-                container
-                item
-                xs={12}
-                spacing={3}
-                justify="center"
-                style={{ padding: "5rem 0.5rem" }}
-              >
-                {isEdit
-                  ? !fromHome
-                    ? this.renderNews(
+          <Grid container item xs={10}>
+            <Grid
+              container
+              item
+              xs={12}
+              spacing={3}
+              justify="center"
+              style={{ padding: "5rem 0.5rem" }}
+            >
+              {isEdit
+                ? !fromHome
+                  ? this.renderNews(
                       posts.slice(
                         this.state.page > pageCount ? 0 : this.state.offset,
                         this.state.page > pageCount
@@ -567,14 +574,18 @@ class PostTypeComponent extends React.Component {
                           : this.state.itemPerPage + this.state.offset
                       )
                     )
-                    : this.renderNews(posts.filter(function (pos) {
-                      return pos.isActive === true;
-                    }).slice(0, 3))
-                  : this.renderNews(posts)}
-              </Grid>
+                  : this.renderNews(
+                      posts
+                        .filter(function (pos) {
+                          return pos.isActive === true;
+                        })
+                        .slice(0, 3)
+                    )
+                : this.renderNews(posts)}
+            </Grid>
 
-              {isEdit
-                ? pageCount > 1 &&
+            {isEdit
+              ? pageCount > 1 &&
                 !fromHome && (
                   <Grid container justify="center">
                     <Pagination
@@ -592,7 +603,7 @@ class PostTypeComponent extends React.Component {
                     />
                   </Grid>
                 )
-                : pageCountView > 1 &&
+              : pageCountView > 1 &&
                 !fromHome && (
                   <Grid container justify="center">
                     <Pagination
@@ -610,8 +621,8 @@ class PostTypeComponent extends React.Component {
                     />
                   </Grid>
                 )}
-            </Grid>
-          )}
+          </Grid>
+        )}
       </Grid>
     );
   }

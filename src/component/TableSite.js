@@ -1,26 +1,26 @@
-import { Divider, Grid, IconButton, InputBase, Paper } from "@material-ui/core";
+import { Grid, IconButton, InputBase, Paper } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { Component } from "react";
 import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import { getAllSites } from "../actions";
-import Title from "./Title";
 import "./adminStyleSheet.css";
+import Title from "./Title";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
     padding: "2px 4px",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
     // width: 400
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1
+    flex: 1,
   },
   iconButton: {
-    padding: 10
+    padding: 10,
   },
   published: {
     borderRadius: "5px",
@@ -28,7 +28,7 @@ const useStyles = theme => ({
     background: "#5ea95a",
     marginTop: "0.2rem",
     color: "#fff",
-    textAlign: "center"
+    textAlign: "center",
   },
   unpublished: {
     borderRadius: "5px",
@@ -36,8 +36,8 @@ const useStyles = theme => ({
     background: "#cc2127",
     marginTop: "0.2rem",
     color: "#fff",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 });
 
 class TableSite extends Component {
@@ -45,18 +45,18 @@ class TableSite extends Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5
+    itemPerPage: 5,
   };
 
-  setListData = listData => {
+  setListData = (listData) => {
     this.setState({
-      filteredData: listData
+      filteredData: listData,
     });
   };
 
-  setPageCount = listData => {
+  setPageCount = (listData) => {
     this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage),
     });
   };
 
@@ -68,7 +68,7 @@ class TableSite extends Component {
         this.state.offset,
         this.state.itemPerPage + this.state.offset
       ),
-      pageCount: Math.ceil(sites.length / this.state.itemPerPage)
+      pageCount: Math.ceil(sites.length / this.state.itemPerPage),
     });
   };
 
@@ -76,7 +76,7 @@ class TableSite extends Component {
     this.getSites();
   }
 
-  handlePageClick = data => {
+  handlePageClick = (data) => {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.itemPerPage);
 
@@ -90,8 +90,8 @@ class TableSite extends Component {
     });
   };
 
-  handleSearch = keyword => {
-    let searchResult = this.props.sites.filter(function(site) {
+  handleSearch = (keyword) => {
+    let searchResult = this.props.sites.filter(function (site) {
       return site.title.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -159,7 +159,7 @@ class TableSite extends Component {
                   {row.theme && row.theme.name}
                 </Grid>
                 <Grid item xs={2}>
-                  {row.categories && row.categories.map(c => c.name + ", ")}
+                  {row.categories && row.categories.map((c) => c.name + ", ")}
                 </Grid>
                 <Grid item xs={2}>
                   {row.sitePath}
@@ -171,7 +171,7 @@ class TableSite extends Component {
                   style={{
                     fontSize: "12px",
                     overflow: "hidden",
-                    height: "4rem"
+                    height: "4rem",
                   }}
                 >
                   <Grid
@@ -212,14 +212,14 @@ class TableSite extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   sites: state.site.adminData,
   accessToken: state.user.accessToken,
-  userId: state.user.profile.id
+  userId: state.user.profile.id,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getAllSites: (id, accessToken) => dispatch(getAllSites(id, accessToken))
+const mapDispatchToProps = (dispatch) => ({
+  getAllSites: (id, accessToken) => dispatch(getAllSites(id, accessToken)),
 });
 
 export default connect(

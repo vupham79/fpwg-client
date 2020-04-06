@@ -1,12 +1,12 @@
+import { Divider, Grid } from "@material-ui/core";
 import React from "react";
+import { connect } from "react-redux";
 import CarouselImages from "../../components/carousel";
-import NewsPage from "../new/new";
 import AboutPage from "../about/about";
+import ContactPage from "../contact/contact";
 import EventPage from "../event/event";
 import GalleryPage from "../gallery/gallery";
-import ContactPage from "../contact/contact";
-import { connect } from "react-redux";
-import { Grid, Divider } from "@material-ui/core";
+import NewsPage from "../new/new";
 
 class HomePage extends React.Component {
   renderCarousel = () => {
@@ -23,7 +23,7 @@ class HomePage extends React.Component {
     return <></>;
   };
   render() {
-    const { siteEdit, siteView, isEdit, color } = this.props;
+    const { siteEdit, siteView, isEdit } = this.props;
     return (
       <Grid container>
         {isEdit &&

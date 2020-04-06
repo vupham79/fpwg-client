@@ -9,7 +9,7 @@ const imgStyles = {
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   width: "100%",
-  height: "100%"
+  height: "100%",
 };
 
 function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
@@ -99,17 +99,16 @@ class EventPage extends React.Component {
       siteView,
       fromHome,
       homeList,
-      homeTitle
+      homeTitle,
     } = this.props;
     return (
       <Grid
         container
         alignItems="center"
         justify="center"
-        direction="column"
         className={styles.event_page}
       >
-        <Grid item sm={10} xs={10}>
+        <Grid item sm={10} xs={10} style={{ marginBottom: "4rem" }}>
           <Typography
             className={styles.title}
             variant="h4"
@@ -135,52 +134,52 @@ class EventPage extends React.Component {
                 fromHome && homeList
                   ? homeList
                   : isEdit
-                    ? siteEdit.events
-                    : siteView.events
+                  ? siteEdit.events
+                  : siteView.events
               }
               fromHome={fromHome}
             />
           ) : (
-              <EmptyEvent
-                siteEdit={siteEdit}
-                titleEdit={titleEdit}
-                siteView={siteView}
-                titleView={titleView}
-                isEdit={isEdit}
-              />
-            )
+            <EmptyEvent
+              siteEdit={siteEdit}
+              titleEdit={titleEdit}
+              siteView={siteView}
+              titleView={titleView}
+              isEdit={isEdit}
+            />
+          )
         ) : (siteView && siteView.events) || (fromHome && homeList) ? (
           <EventComponent
             homeList={
               fromHome && homeList
                 ? homeList
                 : isEdit
-                  ? siteEdit.events
-                  : siteView.events
+                ? siteEdit.events
+                : siteView.events
             }
             siteInfo={siteView.sitePath}
             fromHome={fromHome}
           />
         ) : (
-              <EmptyEvent
-                siteEdit={siteEdit}
-                titleEdit={titleEdit}
-                siteView={siteView}
-                titleView={titleView}
-                isEdit={isEdit}
-              />
-            )}
+          <EmptyEvent
+            siteEdit={siteEdit}
+            titleEdit={titleEdit}
+            siteView={siteView}
+            titleView={titleView}
+            isEdit={isEdit}
+          />
+        )}
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
-  siteView: state.site.siteView
+  siteView: state.site.siteView,
 });
 
 export default connect(mapStateToProps, null)(EventPage);

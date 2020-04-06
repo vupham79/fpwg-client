@@ -7,16 +7,16 @@ import {
   ListItemAvatar,
   ListItemText,
   TextField,
-  Typography,
   Tooltip,
+  Typography,
 } from "@material-ui/core";
-import { ArrowBackIos, Public, Facebook } from "@material-ui/icons";
+import { withStyles } from "@material-ui/core/styles";
+import { ArrowBackIos, Facebook, Public } from "@material-ui/icons";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { confirmPage } from "../../actions";
-import Link from "../../component/link";
 import ButtonStyled from "../../component/Button";
-import { withStyles } from "@material-ui/core/styles";
+import Link from "../../component/link";
 require("dotenv").config();
 
 const useStyle = (theme) => ({
@@ -178,7 +178,6 @@ class createNewSite extends Component {
 
   renderSelectedPage = () => {
     const { picture, pageUrl, name, sitepath } = this.state;
-    const { classes } = this.props;
     return (
       <>
         <Grid

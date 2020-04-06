@@ -16,7 +16,7 @@ class GalleryPage extends React.Component {
       bodyView,
       fromHome,
       homeList,
-      homeTitle
+      homeTitle,
     } = this.props;
     return (
       <Grid
@@ -42,7 +42,7 @@ class GalleryPage extends React.Component {
           >
             {fromHome ? homeTitle : "Gallery"}
           </Typography>
-          <Divider variant="middle" />
+          <Divider variant="fullWidth" />
         </Grid>
         {isEdit ? (
           siteEdit && siteEdit.galleries ? (
@@ -52,16 +52,16 @@ class GalleryPage extends React.Component {
               fromHome={fromHome}
             />
           ) : (
-              <Grid
-                container
-                justify="center"
-                style={{ minHeight: "30vh", marginTop: "10vh" }}
-              >
-                <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-                  Currently no photo available.
+            <Grid
+              container
+              justify="center"
+              style={{ minHeight: "30vh", marginTop: "10vh" }}
+            >
+              <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+                Currently no photo available.
               </p>
-              </Grid>
-            )
+            </Grid>
+          )
         ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
           <GalleryComponent
             galleries={fromHome && homeList ? homeList : siteView.galleries}
@@ -69,29 +69,29 @@ class GalleryPage extends React.Component {
             fromHome={fromHome}
           />
         ) : (
-              <Grid
-                container
-                justify="center"
-                style={{ minHeight: "30vh", marginTop: "10vh" }}
-              >
-                <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-                  Currently no photo available.
+          <Grid
+            container
+            justify="center"
+            style={{ minHeight: "30vh", marginTop: "10vh" }}
+          >
+            <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+              Currently no photo available.
             </p>
-              </Grid>
-            )}
+          </Grid>
+        )}
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
   siteView: state.site.siteView,
   titleView: state.site.titleView,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(GalleryPage);

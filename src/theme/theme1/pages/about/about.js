@@ -1,7 +1,6 @@
 import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import RoundedImage from "react-rounded-image";
 class Theme1About extends React.Component {
   renderImage = () => {
     const { isEdit, siteEdit, siteView, newLogo } = this.props;
@@ -100,7 +99,7 @@ class Theme1About extends React.Component {
           </p>
         </Grid>
         <Grid container item xs={12} justify={"center"}>
-          <img src={this.renderImage()} style={{ width: "20rem" }} />
+          <img src={this.renderImage()} alt="" style={{ width: "20rem" }} />
         </Grid>
         <Grid item xs={12} style={{ padding: 15, marginTop: 40 }}>
           <p style={classes.changableBody3}>

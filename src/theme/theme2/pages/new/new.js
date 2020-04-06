@@ -23,33 +23,30 @@ class NewPage extends Component {
       postView,
     } = this.props;
     return (
-      <Grid container justify="center" className={styles.news}>
-        <Grid container item sm={10} xs={10} justify="center">
-          <Grid item xs={12}>
-            <Typography
-              variant="h4"
-              color="textSecondary"
-              align="center"
-              gutterBottom
-              className={styles.title}
-              style={{
-                fontFamily: isEdit
-                  ? titleEdit.fontFamily
-                  : titleView.fontFamily,
-                fontWeight: 500,
-                color: isEdit ? titleEdit.color : titleView.color,
-                textAlign: "center",
-                fontSize: 28,
-                paddingBottom: 20,
-              }}
-            >
-              {fromHome ? homeTitle : "News"}
-            </Typography>
-          </Grid>
-
-          <Grid item xs={3}>
-            <Divider variant="fullWidth" />
-          </Grid>
+      <Grid
+        container
+        justify="center"
+        alignItems="center"
+        className={styles.news}
+      >
+        <Grid item sm={10} xs={10}>
+          <Typography
+            className={styles.title}
+            variant="h4"
+            align="center"
+            gutterBottom
+            style={{
+              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+              fontWeight: 500,
+              color: isEdit ? titleEdit.color : titleView.color,
+              textAlign: "center",
+              fontSize: 28,
+              paddingBottom: 20,
+            }}
+          >
+            {fromHome ? homeTitle : "News"}
+          </Typography>
+          <Divider variant="fullWidth" />
         </Grid>
         <Grid item sm={12} xs={12} container spacing={3}>
           {isEdit ? (

@@ -3,50 +3,48 @@ const defaultState = {
   categoriesUser: [],
 };
 
-let index;
-
 const ThemeReducer = (state = defaultState, action) => {
   switch (action.type) {
     case "SET_SHOW_CUSTOM_COLOR":
       return {
         ...state,
-        isShow: action.payload
+        isShow: action.payload,
       };
     case "OPEN_LOADING":
       return {
         ...state,
-        loading: true
+        loading: true,
       };
     case "CLOSE_LOADING":
       return {
         ...state,
-        loading: false
+        loading: false,
       };
     case "SET_LOGOUT":
       return {
-        ...defaultState
+        ...defaultState,
       };
     case "GET_NAV_ITEMS":
       return {
         ...state,
-        navItems: action.payload
+        navItems: action.payload,
       };
     case "GET_ALL_THEME":
       let uniqueCategories = [];
       if (action.payload) {
-        let categories = action.payload.map(x => x.category.name);
+        let categories = action.payload.map((x) => x.category.name);
         uniqueCategories = [...new Set(categories)];
         uniqueCategories.push("All");
       }
       return {
         ...state,
         data: [...action.payload],
-        categoriesUser: uniqueCategories
+        categoriesUser: uniqueCategories,
       };
     case "SET_ALL_THEMES":
       return {
         ...state,
-        data: action.payload ? [...action.payload] : []
+        data: action.payload ? [...action.payload] : [],
       };
     default:
       return state;

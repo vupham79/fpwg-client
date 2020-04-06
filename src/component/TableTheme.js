@@ -15,7 +15,7 @@ import {
   Typography,
   Select,
   MenuItem,
-  Input
+  Input,
 } from "@material-ui/core";
 import Title from "./Title";
 import { connect } from "react-redux";
@@ -23,7 +23,7 @@ import {
   getAllThemesAdmin,
   getAllCategoriesAdmin,
   insertTheme,
-  updateTheme
+  updateTheme,
 } from "../actions";
 import ReactPaginate from "react-paginate";
 import { SearchOutlined as SearchIcon, Add } from "@material-ui/icons";
@@ -32,22 +32,22 @@ import { ChromePicker } from "react-color";
 import FontPickerComponent from "./fontPicker";
 import toastr from "./Toastr";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   seeMore: {
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   root: {
     padding: "2px 4px",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
     // width: 400
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1
+    flex: 1,
   },
   iconButton: {
-    padding: 10
+    padding: 10,
   },
   title2: {
     fontSize: "13px",
@@ -55,8 +55,8 @@ const useStyles = theme => ({
     fontFamily: "Segoe UI, sans-serif",
     fontWeight: 600,
     marginBottom: "1rem",
-    color: "#555d66"
-  }
+    color: "#555d66",
+  },
 });
 
 class TableTheme extends Component {
@@ -74,7 +74,7 @@ class TableTheme extends Component {
       fontTitle: "",
       previewImage: "",
       preview: "",
-      category: ""
+      category: "",
     },
     edit: {
       id: "",
@@ -84,11 +84,11 @@ class TableTheme extends Component {
       fontTitle: "",
       previewImage: "",
       preview: "",
-      category: ""
-    }
+      category: "",
+    },
   };
 
-  setOpenEditDialogue = item => {
+  setOpenEditDialogue = (item) => {
     this.setState({
       showEditDialog: true,
       edit: {
@@ -99,98 +99,98 @@ class TableTheme extends Component {
         name: item.name,
         category: item.category ? item.category._id : "",
         previewImage: item.previewImage,
-        preview: item.previewImage
-      }
+        preview: item.previewImage,
+      },
     });
   };
 
-  setOpenDialogue = item => {
+  setOpenDialogue = (item) => {
     this.setState({
-      showDialog: true
+      showDialog: true,
     });
   };
 
   setCloseDialogue = () => {
     this.setState({
-      showDialog: false
+      showDialog: false,
     });
   };
 
   setCloseEditDialogue = () => {
     this.setState({
-      showEditDialog: false
+      showEditDialog: false,
     });
   };
 
-  handleChangeName = e => {
+  handleChangeName = (e) => {
     this.setState({
       newItem: {
         ...this.state.newItem,
-        name: e.target.value
-      }
+        name: e.target.value,
+      },
     });
   };
 
-  handleChangeNameEdit = e => {
+  handleChangeNameEdit = (e) => {
     this.setState({
       edit: {
         ...this.state.edit,
-        name: e.target.value
-      }
+        name: e.target.value,
+      },
     });
   };
 
-  handleChangeColor = color => {
+  handleChangeColor = (color) => {
     this.setState({
       newItem: {
         ...this.state.newItem,
-        mainColor: color.hex
-      }
+        mainColor: color.hex,
+      },
     });
   };
 
-  handleChangeFontTitle = font => {
+  handleChangeFontTitle = (font) => {
     this.setState({
       newItem: {
         ...this.state.newItem,
-        fontTitle: font
-      }
+        fontTitle: font,
+      },
     });
   };
 
-  handleChangeFontBody = font => {
+  handleChangeFontBody = (font) => {
     this.setState({
       newItem: {
         ...this.state.newItem,
-        fontBody: font
-      }
+        fontBody: font,
+      },
     });
   };
 
-  handleChangeColorEdit = color => {
+  handleChangeColorEdit = (color) => {
     this.setState({
       edit: {
         ...this.state.edit,
-        mainColor: color.hex
-      }
+        mainColor: color.hex,
+      },
     });
   };
 
-  handleChangeFontTitleEdit = font => {
+  handleChangeFontTitleEdit = (font) => {
     this.setState({
       edit: {
         ...this.state.edit,
-        fontTitle: font
-      }
+        fontTitle: font,
+      },
     });
   };
 
-  handleChangeFontBodyEdit = font => {
+  handleChangeFontBodyEdit = (font) => {
     this.setState({
       edit: {
         ...this.state.edit,
-        fontBody: font
-      }
+        fontBody: font,
+      },
     });
   };
 
@@ -221,15 +221,15 @@ class TableTheme extends Component {
     this.getThemes();
   };
 
-  setListData = listData => {
+  setListData = (listData) => {
     this.setState({
-      filteredData: listData
+      filteredData: listData,
     });
   };
 
-  setPageCount = listData => {
+  setPageCount = (listData) => {
     this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage),
     });
   };
 
@@ -250,7 +250,7 @@ class TableTheme extends Component {
     this.props.getAllCategoriesAdmin();
   }
 
-  handlePageClick = data => {
+  handlePageClick = (data) => {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.itemPerPage);
 
@@ -264,7 +264,7 @@ class TableTheme extends Component {
     });
   };
 
-  handleSearch = keyword => {
+  handleSearch = (keyword) => {
     let searchResult = this.props.themes.filter(function (theme) {
       return theme.name.toLowerCase().includes(keyword.toLowerCase());
     });
@@ -272,25 +272,25 @@ class TableTheme extends Component {
     this.setPageCount(searchResult);
   };
 
-  handleChangeCategory = e => {
+  handleChangeCategory = (e) => {
     this.setState({
       newItem: {
         ...this.state.newItem,
-        category: e.target.value
-      }
+        category: e.target.value,
+      },
     });
   };
 
-  handleChangeCategoryEdit = e => {
+  handleChangeCategoryEdit = (e) => {
     this.setState({
       edit: {
         ...this.state.edit,
-        category: e.target.value
-      }
+        category: e.target.value,
+      },
     });
   };
 
-  handleBrowsePicture = async e => {
+  handleBrowsePicture = async (e) => {
     e.preventDefault();
     let file = e.target.files[0];
     //validating the file
@@ -308,15 +308,15 @@ class TableTheme extends Component {
         newItem: {
           ...this.state.newItem,
           previewImage: file,
-          preview: URL.createObjectURL(file)
-        }
+          preview: URL.createObjectURL(file),
+        },
       });
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
     }
   };
 
-  handleBrowsePictureEdit = async e => {
+  handleBrowsePictureEdit = async (e) => {
     e.preventDefault();
     let file = e.target.files[0];
     //validating the file
@@ -334,8 +334,8 @@ class TableTheme extends Component {
         edit: {
           ...this.state.edit,
           previewImage: file,
-          preview: URL.createObjectURL(file)
-        }
+          preview: URL.createObjectURL(file),
+        },
       });
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
@@ -396,55 +396,55 @@ class TableTheme extends Component {
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-            this.state.filteredData.map((row, index) => (
-              <div key={index}>
-                <Grid container direction="row">
-                  <Grid item xs={2}>
-                    <img
-                      style={{
-                        width: "80%"
-                      }}
-                      alt=""
-                      src={row.previewImage}
+          this.state.filteredData.map((row, index) => (
+            <div key={index}>
+              <Grid container direction="row">
+                <Grid item xs={2}>
+                  <img
+                    style={{
+                      width: "80%",
+                    }}
+                    alt=""
+                    src={row.previewImage}
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  {row.name}
+                  <div style={{ height: 20 }} />
+                </Grid>
+                <Grid item xs={1}>
+                  {row.fontBody}
+                </Grid>
+                <Grid item xs={1}>
+                  {row.fontTitle}
+                </Grid>
+                <Grid container item xs={2}>
+                  <Grid item xs={1}>
+                    <div
+                      style={{ backgroundColor: row.mainColor, height: 18 }}
                     />
                   </Grid>
-                  <Grid item xs={2}>
-                    {row.name}
-                    <div style={{ height: 20 }} />
-                  </Grid>
-                  <Grid item xs={1}>
-                    {row.fontBody}
-                  </Grid>
-                  <Grid item xs={1}>
-                    {row.fontTitle}
-                  </Grid>
-                  <Grid container item xs={2}>
-                    <Grid item xs={1}>
-                      <div
-                        style={{ backgroundColor: row.mainColor, height: 18 }}
-                      />
-                    </Grid>
-                    <Grid item xs={1}></Grid>
-                    <Grid item xs={3}>
-                      {row.mainColor}
-                    </Grid>
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.category && row.category.name}
-                  </Grid>
-                  <Grid item xs={2}>
-                    <Button
-                      color="primary"
-                      onClick={() => this.setOpenEditDialogue(row)}
-                    >
-                      Edit
-                  </Button>
+                  <Grid item xs={1}></Grid>
+                  <Grid item xs={3}>
+                    {row.mainColor}
                   </Grid>
                 </Grid>
-                <Divider />
-              </div>
-            ))
-          )}
+                <Grid item xs={2}>
+                  {row.category && row.category.name}
+                </Grid>
+                <Grid item xs={2}>
+                  <Button
+                    color="primary"
+                    onClick={() => this.setOpenEditDialogue(row)}
+                  >
+                    Edit
+                  </Button>
+                </Grid>
+              </Grid>
+              <Divider />
+            </div>
+          ))
+        )}
         {this.state.pageCount > 1 && (
           <div className="commentBox">
             <ReactPaginate
@@ -477,9 +477,9 @@ class TableTheme extends Component {
                     label="Name"
                     color="primary"
                     value={this.state.newItem.name}
-                    onChange={e => this.handleChangeName(e)}
+                    onChange={(e) => this.handleChangeName(e)}
                     inputProps={{
-                      maxLength: 50
+                      maxLength: 50,
                     }}
                   />
                 </Grid>
@@ -517,22 +517,23 @@ class TableTheme extends Component {
                   <Grid item xs={6} sm={5}>
                     <Select
                       classes={{
-                        root: classes.root
+                        root: classes.root,
                       }}
                       fullWidth
                       variant={"outlined"}
                       value={this.state.newItem.category}
                       onChange={this.handleChangeCategory}
                     >
-                      {this.props.categories && this.props.categories.map((category, index) => {
-                        if (category.name !== "All") {
-                          return (
-                            <MenuItem key={index} value={category._id}>
-                              {category.name}
-                            </MenuItem>
-                          );
-                        }
-                      })}
+                      {this.props.categories &&
+                        this.props.categories.map((category, index) => {
+                          if (category.name !== "All") {
+                            return (
+                              <MenuItem key={index} value={category._id}>
+                                {category.name}
+                              </MenuItem>
+                            );
+                          } else return <></>;
+                        })}
                     </Select>
                   </Grid>
                 </Grid>
@@ -542,12 +543,12 @@ class TableTheme extends Component {
                     <Input
                       type="file"
                       id="selectedFile"
-                      onChange={e => this.handleBrowsePicture(e)}
+                      onChange={(e) => this.handleBrowsePicture(e)}
                       style={{ display: "none" }}
                     />
                     <img
                       style={{
-                        height: "4rem"
+                        height: "4rem",
                       }}
                       alt=""
                       src={this.state.newItem.preview}
@@ -609,9 +610,9 @@ class TableTheme extends Component {
                     label="Name"
                     color="primary"
                     value={this.state.edit.name}
-                    onChange={e => this.handleChangeNameEdit(e)}
+                    onChange={(e) => this.handleChangeNameEdit(e)}
                     inputProps={{
-                      maxLength: 50
+                      maxLength: 50,
                     }}
                   />
                 </Grid>
@@ -648,22 +649,23 @@ class TableTheme extends Component {
                   <Grid item xs={6} sm={5}>
                     <Select
                       classes={{
-                        root: classes.root
+                        root: classes.root,
                       }}
                       fullWidth
                       variant={"outlined"}
                       value={this.state.edit.category}
                       onChange={this.handleChangeCategoryEdit}
                     >
-                      {this.props.categories && this.props.categories.map((category, index) => {
-                        if (category.name !== "All") {
-                          return (
-                            <MenuItem key={index} value={category._id}>
-                              {category.name}
-                            </MenuItem>
-                          );
-                        }
-                      })}
+                      {this.props.categories &&
+                        this.props.categories.map((category, index) => {
+                          if (category.name !== "All") {
+                            return (
+                              <MenuItem key={index} value={category._id}>
+                                {category.name}
+                              </MenuItem>
+                            );
+                          } else return <></>;
+                        })}
                     </Select>
                   </Grid>
                 </Grid>
@@ -673,12 +675,12 @@ class TableTheme extends Component {
                     <Input
                       type="file"
                       id="selectedEditFile"
-                      onChange={e => this.handleBrowsePictureEdit(e)}
+                      onChange={(e) => this.handleBrowsePictureEdit(e)}
                       style={{ display: "none" }}
                     />
                     <img
                       style={{
-                        height: "4rem"
+                        height: "4rem",
                       }}
                       alt=""
                       src={this.state.edit.preview}
@@ -720,14 +722,14 @@ class TableTheme extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   themes: state.theme.data,
   accessToken: state.user.accessToken,
   userId: state.user.profile.id,
-  categories: state.admin.categories
+  categories: state.admin.categories,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getAllThemesAdmin: (id, accessToken) =>
     dispatch(getAllThemesAdmin(id, accessToken)),
   updateTheme: (id, name, fontTitle, fontBody, color, previewImage, category) =>
@@ -738,7 +740,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(
       insertTheme(name, fontTitle, fontBody, mainColor, previewImage, category)
     ),
-  getAllCategoriesAdmin: () => dispatch(getAllCategoriesAdmin())
+  getAllCategoriesAdmin: () => dispatch(getAllCategoriesAdmin()),
 });
 
 export default connect(

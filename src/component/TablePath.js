@@ -8,22 +8,22 @@ import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
 import "./adminStyleSheet.css";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   seeMore: {
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   root: {
     padding: "2px 4px",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1
+    flex: 1,
   },
   iconButton: {
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
 class TablePath extends Component {
@@ -31,18 +31,18 @@ class TablePath extends Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5 // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
+    itemPerPage: 5, // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
   };
 
-  setListData = listData => {
+  setListData = (listData) => {
     this.setState({
-      filteredData: listData
+      filteredData: listData,
     });
   };
 
-  setPageCount = listData => {
+  setPageCount = (listData) => {
     this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage),
     });
   };
 
@@ -59,7 +59,7 @@ class TablePath extends Component {
     this.getPaths();
   }
 
-  handlePageClick = data => {
+  handlePageClick = (data) => {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.itemPerPage);
 
@@ -73,8 +73,8 @@ class TablePath extends Component {
     });
   };
 
-  handleSearch = keyword => {
-    let searchResult = this.props.paths.filter(function(path) {
+  handleSearch = (keyword) => {
+    let searchResult = this.props.paths.filter(function (path) {
       return path.sitePath.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -128,6 +128,7 @@ class TablePath extends Component {
                   >
                     <img
                       src={row.logo}
+                      alt=""
                       style={{ width: "5vh", marginRight: "1rem" }}
                     />
                     {row.title}
@@ -167,14 +168,14 @@ class TablePath extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   paths: state.path.data,
   accessToken: state.user.accessToken,
-  userId: state.user.profile.id
+  userId: state.user.profile.id,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getAllPaths: () => dispatch(getAllPaths())
+const mapDispatchToProps = (dispatch) => ({
+  getAllPaths: () => dispatch(getAllPaths()),
 });
 
 export default connect(

@@ -1,8 +1,8 @@
-import { Grid, Typography, Divider } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import styles from "./new.module.css";
 import PostTypeComponent from "../../../component/postsType";
+import styles from "./new.module.css";
 
 class NewPage extends Component {
   state = {

@@ -1,26 +1,26 @@
+import { faExclamation } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   AppBar,
   Button,
+  Divider,
+  Drawer,
   Grid,
+  Hidden,
+  IconButton,
+  List,
+  ListItem,
   Tab,
   Tabs,
   Tooltip,
-  Zoom,
-  IconButton,
   withStyles,
-  ListItem,
-  List,
-  Divider,
-  Hidden,
-  Drawer,
+  Zoom,
 } from "@material-ui/core";
-import { faExclamation } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import MenuIcon from "@material-ui/icons/Menu";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updateNavItemValue } from "../../actions";
-import MenuIcon from "@material-ui/icons/Menu";
 import { NavLink } from "react-router-dom";
+import { updateNavItemValue } from "../../actions";
 
 const drawerWidth = 240;
 
@@ -96,7 +96,6 @@ class HeaderComponent extends Component {
       navTextColor,
     } = this.props;
     const tabStyles = {
-      textTransform: "none",
       fontFamily: titleEdit.fontFamily,
       color: navTextColor ? navTextColor : this.props.navColor,
       minWidth: "10vh",

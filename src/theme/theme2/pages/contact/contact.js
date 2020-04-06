@@ -224,7 +224,60 @@ class ContactPage extends React.Component {
           </Grid>
           {isEdit ? (
             email ? (
-              email
+              <Grid
+                container
+                item
+                xs={12}
+                sm={10}
+                md={7}
+                justify="flex-start"
+                alignItems="center"
+              >
+                <Grid item xs={2} sm={1} md={1}>
+                  <EmailIcon fontSize="large" />
+                </Grid>
+                <Grid item xs={4} md={5}>
+                  <p
+                    className={styles.child_title}
+                    style={{
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontWeight: 400,
+                      color: "#151515",
+                      textAlign: "left",
+                      fontSize: 20,
+                      // paddingBottom: 20,
+                    }}
+                  >
+                    Email
+                  </p>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography
+                    variant="body1"
+                    className={styles.child_content}
+                    style={{
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontWeight: 400,
+                      color: "#151515",
+                      textAlign: "left",
+                      fontSize: 16,
+                      paddingBottom: 20,
+                    }}
+                  >
+                    {isEdit
+                      ? email
+                        ? email
+                        : "Currently no data"
+                      : siteView && siteView.email
+                      ? siteView.email
+                      : "Currently no data"}
+                  </Typography>
+                </Grid>
+              </Grid>
             ) : (
               <></>
             )

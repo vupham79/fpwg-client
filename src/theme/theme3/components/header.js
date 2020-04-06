@@ -158,7 +158,6 @@ class Header extends Component {
   renderTabItems = () => {
     const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
     const tabStyles = {
-      textTransform: "none",
       fontFamily: titleEdit.fontFamily,
       color: "white",
       fontSize: "14px",

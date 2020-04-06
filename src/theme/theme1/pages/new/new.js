@@ -30,14 +30,6 @@ class Theme1News extends React.Component {
         fontStyle: "italic",
         fontSize: 20,
       },
-      changableTitle: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        textAlign: "center",
-        fontSize: 45,
-        paddingBottom: 20,
-      },
       changableTitle2: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",

@@ -5,10 +5,9 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Divider, Grid, IconButton, Typography } from "@material-ui/core";
+import { Divider, Grid, IconButton, Typography } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Link from "../../../component/link";
 import styles from "./index.module.css";
 
 class FooterPage extends Component {
@@ -52,9 +51,6 @@ class FooterPage extends Component {
     const {
       isEdit,
       titleEdit,
-      bodyEdit,
-      titleView,
-      bodyView,
       siteEdit,
       siteView,
       youtube,
