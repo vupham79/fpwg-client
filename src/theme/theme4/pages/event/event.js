@@ -15,7 +15,7 @@ class Theme1Event extends React.Component {
       homeTitle,
       homeList,
       siteEdit,
-      siteView
+      siteView,
     } = this.props;
 
     const useStyles = () => ({
@@ -24,7 +24,7 @@ class Theme1Event extends React.Component {
         color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         textAlign: "center",
         fontStyle: "italic",
-        fontSize: 20
+        fontSize: 20,
       },
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -33,7 +33,7 @@ class Theme1Event extends React.Component {
         textAlign: "center",
         fontSize: 25,
         paddingBottom: 20,
-        textDecoration: "underline"
+        textDecoration: "underline",
       },
       changableTitle2: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -41,44 +41,44 @@ class Theme1Event extends React.Component {
         color: "#212121",
         textAlign: "center",
         fontSize: 20,
-        paddingBottom: 20
+        paddingBottom: 20,
       },
       changableName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "left",
-        fontSize: 20
+        fontSize: 20,
       },
       changableBody: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         fontSize: 16,
-        textAlign: "justify"
+        textAlign: "justify",
       },
       changableBody2: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         textAlign: "left",
-        fontSize: 16
+        fontSize: 16,
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "black",
         textAlign: "center",
-        fontSize: 16
+        fontSize: 16,
       },
       changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "black",
         textAlign: "center",
-        fontSize: 16
+        fontSize: 16,
       },
       pageName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
-        fontSize: 20
+        fontSize: 20,
       },
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -87,22 +87,22 @@ class Theme1Event extends React.Component {
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color,
       },
       changableFirst2: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 20
+        fontSize: 20,
       },
       centerItem3: {
         display: "block",
         marginLeft: "auto",
         marginRight: "auto",
         height: "100%",
-        backgroundColor: "white"
-      }
+        backgroundColor: "white",
+      },
     });
     const classes = useStyles();
 
@@ -112,7 +112,7 @@ class Theme1Event extends React.Component {
         style={{
           backgroundColor: "#1a1919",
           paddingBottom: 50,
-          minHeight: "50vh"
+          minHeight: "50vh",
         }}
       >
         <Grid item xs={12}>
@@ -126,8 +126,8 @@ class Theme1Event extends React.Component {
               fromHome && homeList
                 ? homeList
                 : isEdit
-                  ? siteEdit.events
-                  : siteView.events
+                ? siteEdit.events
+                : siteView.events
             }
             siteInfo={siteView && siteView.sitePath}
             fromHome={fromHome}
@@ -138,14 +138,14 @@ class Theme1Event extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(Theme1Event);

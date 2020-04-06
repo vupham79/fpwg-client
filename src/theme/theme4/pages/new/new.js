@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PostTypeComponent from "../../../component/postsType";
 class Theme1News extends React.Component {
   state = {
-    itemPerPage: 5,
+    itemPerPage: 3,
   };
   render() {
     const {

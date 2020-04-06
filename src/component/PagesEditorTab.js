@@ -19,7 +19,7 @@ import {
   DialogTitle,
   InputBase,
   Paper,
-  FormControlLabel
+  FormControlLabel,
 } from "@material-ui/core";
 import moment from "moment";
 import { green } from "@material-ui/core/colors";
@@ -32,7 +32,7 @@ import { connect } from "react-redux";
 import {
   sortableContainer,
   sortableElement,
-  sortableHandle
+  sortableHandle,
 } from "react-sortable-hoc";
 import {
   changeNavItemName,
@@ -41,22 +41,22 @@ import {
   setActiveNavItems,
   setActivePost,
   updateNavItemValue,
-  setEventCustomize
+  setEventCustomize,
 } from "../actions";
 import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    paddingTop: 90
+    paddingTop: 90,
   },
   title: {
     fontFamily: "Segoe UI, sans-serif",
     fontWeight: "600",
     color: "#555d66",
-    fontSize: 14
+    fontSize: 14,
   },
   title2: {
     fontSize: "12px",
@@ -64,42 +64,42 @@ const useStyles = theme => ({
     fontFamily: "Segoe UI, sans-serif",
     fontWeight: 600,
     marginBottom: "1rem",
-    color: "#555d66"
+    color: "#555d66",
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 400
+    minWidth: 400,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   sideBarBox: {
     borderStyle: "solid",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#b4c0cf",
-    padding: "1rem"
+    padding: "1rem",
   },
   notchedOutline: {
     borderWidth: "1px",
     borderColor: "#0087be !important",
-    color: "#434d58 !important"
+    color: "#434d58 !important",
   },
   focused: {
     borderWidth: "1px",
     borderColor: "#0087be !important",
-    color: "#434d58 !important"
+    color: "#434d58 !important",
   },
   pickerButton: {
     margin: 0,
     backgroundColor: "white",
-    marginBottom: "0.2rem"
+    marginBottom: "0.2rem",
   },
   customButton: {
     border: "1px solid #0071a1",
     borderRadius: 5,
     color: "#0071a1",
-    fontSize: 11
+    fontSize: 11,
   },
   logoButton: {
     marginTop: 5,
@@ -111,43 +111,43 @@ const useStyles = theme => ({
     height: 40,
     width: "100%",
     "&:hover": {
-      backgroundColor: "white"
-    }
+      backgroundColor: "white",
+    },
   },
   fontPickerRoot: {
-    width: "100% !important"
+    width: "100% !important",
   },
   inputTitle: {
     fontFamily: "Segoe UI, sans-serif !important",
     fontSize: 13,
-    color: "#555d66"
+    color: "#555d66",
   },
   root: {
     padding: "2px 4px",
     display: "flex",
     alignItems: "center",
-    width: 400
+    width: 400,
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1
+    flex: 1,
   },
   iconButton: {
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
 const gridContainer = {};
 
 const viewButton = {
-  color: "black"
+  color: "black",
 };
 
 const gridItem = {
   padding: "0.2rem 0.5rem",
   zIndex: "999999",
   backgroundColor: "white",
-  border: "1px solid #dddddd"
+  border: "1px solid #dddddd",
 };
 
 const DragHandle = sortableHandle(() => (
@@ -155,7 +155,8 @@ const DragHandle = sortableHandle(() => (
 ));
 
 function handleChangeActive(id, site, setActiveNavItems, updateNavItemValue) {
-  const index = site && site.navItems && site.navItems.find(e => e._id === id);
+  const index =
+    site && site.navItems && site.navItems.find((e) => e._id === id);
   if (index.isActive) {
     index.isActive = false;
     updateNavItemValue(0);
@@ -166,7 +167,8 @@ function handleChangeActive(id, site, setActiveNavItems, updateNavItemValue) {
 }
 
 function handleChangeNavName(id, site, newName, changeNavItemName) {
-  const index = site && site.navItems && site.navItems.find(e => e._id === id);
+  const index =
+    site && site.navItems && site.navItems.find((e) => e._id === id);
   index.name = newName;
   changeNavItemName(index);
 }
@@ -175,11 +177,11 @@ const GreenCheckbox = withStyles({
   root: {
     color: green[400],
     "&$checked": {
-      color: green[600]
-    }
+      color: green[600],
+    },
   },
-  checked: {}
-})(props => <Checkbox color="default" {...props} />);
+  checked: {},
+})((props) => <Checkbox color="default" {...props} />);
 
 const columns = ["", "Title", "Message", "Created At", "Show"];
 
@@ -227,7 +229,7 @@ function PostsList({ filteredData, setActivePost }) {
                       style={{
                         maxWidth: "20rem",
                         height: "2.5rem",
-                        overflow: "hidden"
+                        overflow: "hidden",
                       }}
                     >
                       {row.message}
@@ -256,14 +258,14 @@ class PagesEditorTab extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5,
+    itemPerPage: 3,
     openDiag: false,
-    currentFocusInput: ""
+    currentFocusInput: "",
   };
 
-  setPageCount = listData => {
+  setPageCount = (listData) => {
     this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage),
     });
   };
 
@@ -274,7 +276,7 @@ class PagesEditorTab extends React.Component {
       this.state.itemPerPage + this.state.offset
     );
     this.setState({
-      filteredData: slicePosts
+      filteredData: slicePosts,
     });
     this.setPageCount(posts);
   };
@@ -286,11 +288,11 @@ class PagesEditorTab extends React.Component {
     }
   }
 
-  setStatePost = posts => {
+  setStatePost = (posts) => {
     this.setState({ filteredData: [...posts] });
   };
 
-  handlePageClick = data => {
+  handlePageClick = (data) => {
     const { posts } = this.props;
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.itemPerPage);
@@ -300,18 +302,18 @@ class PagesEditorTab extends React.Component {
         this.state.itemPerPage + this.state.offset
       );
       this.setState({
-        filteredData: slicePosts
+        filteredData: slicePosts,
       });
     });
   };
 
-  setListData = listData => {
+  setListData = (listData) => {
     this.setState({
-      filteredData: listData
+      filteredData: listData,
     });
   };
 
-  handleSearch = keyword => {
+  handleSearch = (keyword) => {
     if (this.props.posts) {
       let searchResult = this.props.posts.filter(function (pos) {
         return pos.message.toLowerCase().includes(keyword.toLowerCase());
@@ -330,7 +332,7 @@ class PagesEditorTab extends React.Component {
     changeNavItems(site.navItems);
   };
 
-  setActivePost = post => {
+  setActivePost = (post) => {
     post.isActive = !post.isActive;
     let list = this.props.site.homepage;
     for (let i = 0; i < list.length; i++) {
@@ -351,15 +353,15 @@ class PagesEditorTab extends React.Component {
     this.setState({ filteredData: this.state.filteredData });
   };
 
-  handleSave = async posts => {
+  handleSave = async (posts) => {
     // await this.props.savePosts(posts);
     this.props.setActiveNavItems(this.props.site);
     this.handleOpenDialogue(false);
   };
 
-  handleOpenDialogue = bool => {
+  handleOpenDialogue = (bool) => {
     this.setState({
-      openDiag: bool
+      openDiag: bool,
     });
     if (bool) {
       this.setPosts(this.props.posts);
@@ -373,7 +375,7 @@ class PagesEditorTab extends React.Component {
       updateNavItemValue,
       classes,
       changeNavItemName,
-      setEventCustomize
+      setEventCustomize,
     } = this.props;
 
     const SortableItem = sortableElement(
@@ -383,82 +385,82 @@ class PagesEditorTab extends React.Component {
         item,
         setActiveNavItems,
         updateNavItemValue,
-        changeNavItemName
+        changeNavItemName,
       }) => (
-          <Grid container style={gridItem}>
-            <Grid
-              container
-              item
-              alignItems="center"
-              xs={10}
-              sm={12}
-              md={10}
-              style={{ padding: "0.2rem 0" }}
-            >
-              <Grid container justify="center" item xs={2} md={2} sm={12}>
-                <DragHandle />
-              </Grid>
-              <Grid item xs={10} md={10} sm={12}>
-                <TextField
-                  autoFocus={
-                    this.state.currentFocusInput === item._id ? true : false
-                  }
-                  onClick={e => this.setState({ currentFocusInput: item._id })}
-                  InputLabelProps={{
-                    classes: {
-                      focused: classes.focused
-                    }
-                  }}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle
-                    }
-                  }}
-                  size="small"
-                  style={{ backgroundColor: "white" }}
-                  fullWidth
-                  variant={"outlined"}
-                  value={value}
-                  inputProps={{
-                    maxLength: 15
-                  }}
-                  onChange={e => {
-                    handleChangeNavName(
-                      item._id,
-                      site,
-                      e.target.value,
-                      changeNavItemName
-                    );
-                  }}
-                />
-              </Grid>
+        <Grid container style={gridItem}>
+          <Grid
+            container
+            item
+            alignItems="center"
+            xs={10}
+            sm={12}
+            md={10}
+            style={{ padding: "0.2rem 0" }}
+          >
+            <Grid container justify="center" item xs={2} md={2} sm={12}>
+              <DragHandle />
             </Grid>
-            <Grid container item justify="center" xs={2} sm={12} md={2}>
-              {item.original === "home" ? (
-                <></>
-              ) : (
-                  <IconButton
-                    style={viewButton}
-                    onClick={() =>
-                      handleChangeActive(
-                        item._id,
-                        site,
-                        setActiveNavItems,
-                        updateNavItemValue
-                      )
-                    }
-                  >
-                    {item.isActive && item.name !== "Home" ? (
-                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                    ) : (
-                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
-                      )}
-                  </IconButton>
-                )}
+            <Grid item xs={10} md={10} sm={12}>
+              <TextField
+                autoFocus={
+                  this.state.currentFocusInput === item._id ? true : false
+                }
+                onClick={(e) => this.setState({ currentFocusInput: item._id })}
+                InputLabelProps={{
+                  classes: {
+                    focused: classes.focused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                    input: classes.inputTitle,
+                  },
+                }}
+                size="small"
+                style={{ backgroundColor: "white" }}
+                fullWidth
+                variant={"outlined"}
+                value={value}
+                inputProps={{
+                  maxLength: 15,
+                }}
+                onChange={(e) => {
+                  handleChangeNavName(
+                    item._id,
+                    site,
+                    e.target.value,
+                    changeNavItemName
+                  );
+                }}
+              />
             </Grid>
           </Grid>
-        )
+          <Grid container item justify="center" xs={2} sm={12} md={2}>
+            {item.original === "home" ? (
+              <></>
+            ) : (
+              <IconButton
+                style={viewButton}
+                onClick={() =>
+                  handleChangeActive(
+                    item._id,
+                    site,
+                    setActiveNavItems,
+                    updateNavItemValue
+                  )
+                }
+              >
+                {item.isActive && item.name !== "Home" ? (
+                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                ) : (
+                  <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                )}
+              </IconButton>
+            )}
+          </Grid>
+        </Grid>
+      )
     );
 
     const SortableList = sortableContainer(
@@ -467,7 +469,7 @@ class PagesEditorTab extends React.Component {
         site,
         setActiveNavItems,
         updateNavItemValue,
-        changeNavItemName
+        changeNavItemName,
       }) => {
         if (items) {
           return (
@@ -493,31 +495,31 @@ class PagesEditorTab extends React.Component {
 
     return (
       <div style={{ padding: 10 }}>
-
         <Typography className={classes.title}>Events</Typography>
         <Divider
           style={{
             height: "1.2rem",
             width: "100%",
-            backgroundColor: "#ffffff00"
+            backgroundColor: "#ffffff00",
           }}
         />
         <Grid container>
-
           <FormControlLabel
             control={
               <Checkbox
                 style={{ color: "#0074aa" }}
                 checked={!site.showCoverEvent}
                 onChange={() =>
-                  setEventCustomize(!site.showCoverEvent, site.showDesEvent, site.showPlaceEvent)
+                  setEventCustomize(
+                    !site.showCoverEvent,
+                    site.showDesEvent,
+                    site.showPlaceEvent
+                  )
                 }
               />
             }
             label={
-              <p style={{ fontSize: 13, color: "#555d66" }}>
-                Hide event cover
-              </p>
+              <p style={{ fontSize: 13, color: "#555d66" }}>Hide event cover</p>
             }
           />
 
@@ -527,7 +529,11 @@ class PagesEditorTab extends React.Component {
                 style={{ color: "#0074aa" }}
                 checked={!site.showDesEvent}
                 onChange={() =>
-                  setEventCustomize(site.showCoverEvent, !site.showDesEvent, site.showPlaceEvent)
+                  setEventCustomize(
+                    site.showCoverEvent,
+                    !site.showDesEvent,
+                    site.showPlaceEvent
+                  )
                 }
               />
             }
@@ -544,21 +550,19 @@ class PagesEditorTab extends React.Component {
                 style={{ color: "#0074aa" }}
                 checked={!site.showPlaceEvent}
                 onChange={() =>
-                  setEventCustomize(site.showCoverEvent, site.showDesEvent, !site.showPlaceEvent)
+                  setEventCustomize(
+                    site.showCoverEvent,
+                    site.showDesEvent,
+                    !site.showPlaceEvent
+                  )
                 }
               />
             }
             label={
-              <p style={{ fontSize: 13, color: "#555d66" }}>
-                Hide event place
-              </p>
+              <p style={{ fontSize: 13, color: "#555d66" }}>Hide event place</p>
             }
           />
-
         </Grid>
-
-
-
 
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
@@ -568,7 +572,7 @@ class PagesEditorTab extends React.Component {
           style={{
             height: "1.2rem",
             width: "100%",
-            backgroundColor: "#ffffff00"
+            backgroundColor: "#ffffff00",
           }}
         />
 
@@ -579,7 +583,7 @@ class PagesEditorTab extends React.Component {
               color: "#555d66",
               textAlign: "left",
               fontStyle: "italic",
-              fontFamily: "Segoe UI, sans-serif"
+              fontFamily: "Segoe UI, sans-serif",
             }}
           >
             Select which post from Facebook you want to see on your site.
@@ -606,15 +610,15 @@ class PagesEditorTab extends React.Component {
                 <InputBase
                   InputLabelProps={{
                     classes: {
-                      focused: classes.focused
-                    }
+                      focused: classes.focused,
+                    },
                   }}
                   maxLength={50}
                   InputProps={{
                     classes: {
                       notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle
-                    }
+                      input: classes.inputTitle,
+                    },
                   }}
                   id="searchBox"
                   placeholder="Search by message..."
@@ -706,7 +710,7 @@ class PagesEditorTab extends React.Component {
           style={{
             height: "1.2rem",
             width: "100%",
-            backgroundColor: "#ffffff00"
+            backgroundColor: "#ffffff00",
           }}
         />
 
@@ -717,7 +721,7 @@ class PagesEditorTab extends React.Component {
             textAlign: "left",
             fontStyle: "italic",
             fontFamily: "Segoe UI, sans-serif",
-            marginBottom: "0.8rem"
+            marginBottom: "0.8rem",
           }}
         >
           Reorder or hide pages of your menu.
@@ -735,20 +739,21 @@ class PagesEditorTab extends React.Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   site: state.site.siteEdit,
   open: state.dialog.open,
-  posts: state.post.posts
+  posts: state.post.posts,
 });
 
-const mapDispatchToProps = dispatch => ({
-  changeNavItems: value => dispatch(changeNavItems(value)),
-  setActiveNavItems: site => dispatch(setActiveNavItems(site)),
+const mapDispatchToProps = (dispatch) => ({
+  changeNavItems: (value) => dispatch(changeNavItems(value)),
+  setActiveNavItems: (site) => dispatch(setActiveNavItems(site)),
   setActivePost: (post, status) => dispatch(setActivePost(post, status)),
-  updateNavItemValue: value => dispatch(updateNavItemValue(value)),
-  savePosts: posts => dispatch(savePosts(posts)),
-  changeNavItemName: item => dispatch(changeNavItemName(item)),
-  setEventCustomize: (cover, description, place) => dispatch(setEventCustomize(cover, description, place))
+  updateNavItemValue: (value) => dispatch(updateNavItemValue(value)),
+  savePosts: (posts) => dispatch(savePosts(posts)),
+  changeNavItemName: (item) => dispatch(changeNavItemName(item)),
+  setEventCustomize: (cover, description, place) =>
+    dispatch(setEventCustomize(cover, description, place)),
 });
 
 export default connect(

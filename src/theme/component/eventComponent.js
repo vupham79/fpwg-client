@@ -596,7 +596,7 @@ class EventComponent extends React.Component {
                         borderRadius: "0.3rem",
                       }}
                       color="default"
-                      // shape="rounded"
+                      shape="rounded"
                       variant="outlined"
                       count={this.state.pageCount}
                       page={this.state.page}
@@ -615,7 +615,7 @@ class EventComponent extends React.Component {
                       }}
                       color="default"
                       variant="outlined"
-                      // shape="rounded"
+                      shape="rounded"
                       count={pageCountView}
                       page={this.state.pageView}
                       onChange={this.handlePageViewClick}

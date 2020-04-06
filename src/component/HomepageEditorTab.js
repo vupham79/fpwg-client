@@ -209,7 +209,7 @@ class HomepageEditorTab extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5,
+    itemPerPage: 3,
     currentExpandItemId: null,
     previousExpandItemId: null,
     isExpanding: false,
@@ -329,9 +329,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -389,9 +389,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -442,9 +442,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -1004,7 +1004,7 @@ class HomepageEditorTab extends React.Component {
         <ExpansionPanel
           expanded={
             this.state.currentExpandItemId === item._id &&
-              this.state.isExpanding
+            this.state.isExpanding
               ? true
               : false
           }

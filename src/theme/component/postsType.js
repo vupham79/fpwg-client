@@ -441,7 +441,7 @@ class PostTypeComponent extends React.Component {
           container
           item
           xs={12}
-          md={8}
+          md={10}
           justify="center"
           style={{ paddingTop: "4rem", borderBottom: "1px solid black" }}
         >
@@ -489,7 +489,7 @@ class PostTypeComponent extends React.Component {
               xs={12}
               style={{ ...txtStyle, padding: "1rem 0", lineHeight: "1.5rem" }}
             >
-              {post.message}
+              {post.message.replace(/\u21B5/g, "<br/>")}
             </Grid>
             <Grid
               container
@@ -563,7 +563,7 @@ class PostTypeComponent extends React.Component {
                       posts.slice(
                         this.state.page > pageCount ? 0 : this.state.offset,
                         this.state.page > pageCount
-                          ? 5
+                          ? 3
                           : this.state.itemPerPage + this.state.offset
                       )
                     )
@@ -581,7 +581,7 @@ class PostTypeComponent extends React.Component {
                         padding: "0.4rem",
                         borderRadius: "0.3rem",
                       }}
-                      color="primary"
+                      color="default"
                       shape="rounded"
                       variant="outlined"
                       count={pageCount}
@@ -599,7 +599,7 @@ class PostTypeComponent extends React.Component {
                         padding: "0.4rem",
                         borderRadius: "0.3rem",
                       }}
-                      color="primary"
+                      color="default"
                       shape="rounded"
                       variant="outlined"
                       count={pageCountView}

@@ -429,11 +429,13 @@ class Header extends Component {
         <Grid
           container
           item
-          style={{
-            // backgroundImage: `url(${isEdit ? newCover[0] : siteView.cover})`,
-            minHeight: "90vh",
-            // ...imgStyles
-          }}
+          style={
+            {
+              // backgroundImage: `url(${isEdit ? newCover[0] : siteView.cover})`,
+              // minHeight: "90vh",
+              // ...imgStyles
+            }
+          }
         >
           <BannerComponent bannerType={0} theme="theme3" />
         </Grid>

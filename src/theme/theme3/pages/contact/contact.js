@@ -6,17 +6,17 @@ import {
   withScriptjs,
   withGoogleMap,
   GoogleMap,
-  Marker
+  Marker,
 } from "react-google-maps";
 
-const usestyle = theme => ({
+const usestyle = (theme) => ({
   title: {
     textDecoration: "solid",
-    padding: "1rem 0"
+    padding: "1rem 0",
   },
   map: {
-    maxHeight: ""
-  }
+    maxHeight: "",
+  },
 });
 
 class ContactPage extends React.Component {
@@ -34,11 +34,11 @@ class ContactPage extends React.Component {
       homeTitle,
       email,
       phone,
-      address
+      address,
     } = this.props;
 
     const MapWithAMarker = withScriptjs(
-      withGoogleMap(props => (
+      withGoogleMap((props) => (
         <GoogleMap
           defaultZoom={15}
           defaultCenter={{
@@ -47,7 +47,7 @@ class ContactPage extends React.Component {
               : parseFloat(siteView.latitude),
             lng: isEdit
               ? parseFloat(siteEdit.longitude)
-              : parseFloat(siteView.longitude)
+              : parseFloat(siteView.longitude),
           }}
         >
           <Marker
@@ -57,7 +57,7 @@ class ContactPage extends React.Component {
                 : parseFloat(siteView.latitude),
               lng: isEdit
                 ? parseFloat(siteEdit.longitude)
-                : parseFloat(siteView.longitude)
+                : parseFloat(siteView.longitude),
             }}
           />
         </GoogleMap>
@@ -74,7 +74,7 @@ class ContactPage extends React.Component {
             className={styles.title}
             style={{
               color: "white",
-              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
+              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
             }}
           >
             {fromHome ? homeTitle : "Contacts"}
@@ -88,184 +88,348 @@ class ContactPage extends React.Component {
             sm={6}
             md={
               (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
-                (siteView && siteView.latitude && siteView.longitude)
+              (siteView && siteView.latitude && siteView.longitude)
                 ? 3
                 : 6
             }
             style={{ padding: "0 2rem" }}
           >
-            <Grid
-              item
-              xs={10}
-              sm={
-                (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
+            {isEdit ? (
+              address ? (
+                <Grid
+                  item
+                  xs={10}
+                  sm={
+                    (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
+                    (siteView && siteView.latitude && siteView.longitude)
+                      ? 12
+                      : 6
+                  }
+                >
+                  <Grid item xs={12}>
+                    <Typography
+                      variant="h5"
+                      className={classes.title}
+                      style={{
+                        color: "white",
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily,
+                        fontSize: 20,
+                      }}
+                    >
+                      Address
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={10}>
+                    <Typography
+                      variant="body2"
+                      style={{
+                        color: "white",
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily,
+                        fontSize: 16,
+                      }}
+                    >
+                      {isEdit
+                        ? address
+                          ? address
+                          : "Curent no address to show."
+                        : siteView && siteView.address
+                        ? siteView.address
+                        : "Curent no address to show."}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              ) : (
+                <></>
+              )
+            ) : siteView && siteView.address ? (
+              <Grid
+                item
+                xs={10}
+                sm={
+                  (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
                   (siteView && siteView.latitude && siteView.longitude)
-                  ? 12
-                  : 6
-              }
-            >
-              <Grid item xs={12}>
-                <Typography
-                  variant="h5"
-                  className={classes.title}
-                  style={{
-                    color: "white",
-                    fontFamily: isEdit
-                      ? bodyEdit.fontFamily
-                      : bodyView.fontFamily,
-                    fontSize: 20
-                  }}
-                >
-                  Address
-                </Typography>
-              </Grid>
-              <Grid item xs={10}>
-                <Typography
-                  variant="body2"
-                  style={{
-                    color: "white",
-                    fontFamily: isEdit
-                      ? bodyEdit.fontFamily
-                      : bodyView.fontFamily,
-                    fontSize: 16
-                  }}
-                >
-                  {isEdit
-                    ? address
+                    ? 12
+                    : 6
+                }
+              >
+                <Grid item xs={12}>
+                  <Typography
+                    variant="h5"
+                    className={classes.title}
+                    style={{
+                      color: "white",
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontSize: 20,
+                    }}
+                  >
+                    Address
+                  </Typography>
+                </Grid>
+                <Grid item xs={10}>
+                  <Typography
+                    variant="body2"
+                    style={{
+                      color: "white",
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontSize: 16,
+                    }}
+                  >
+                    {isEdit
                       ? address
-                      : "Curent no address to show."
-                    : siteView && siteView.address
+                        ? address
+                        : "Curent no address to show."
+                      : siteView && siteView.address
                       ? siteView.address
                       : "Curent no address to show."}
-                </Typography>
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid
-              item
-              xs={10}
-              sm={
-                (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
+            ) : (
+              <></>
+            )}
+            {isEdit ? (
+              email ? (
+                <Grid
+                  item
+                  xs={10}
+                  sm={
+                    (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
+                    (siteView && siteView.latitude && siteView.longitude)
+                      ? 12
+                      : 6
+                  }
+                >
+                  <Grid item xs={12}>
+                    <Typography
+                      variant="h5"
+                      className={classes.title}
+                      style={{
+                        color: "white",
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily,
+                        fontSize: 20,
+                      }}
+                    >
+                      Email
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={10}>
+                    <Typography
+                      variant="body2"
+                      style={{
+                        color: "white",
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily,
+                        fontSize: 16,
+                      }}
+                    >
+                      {isEdit
+                        ? email
+                          ? email
+                          : "Curent no Email to show."
+                        : siteView && siteView.email
+                        ? siteView.email
+                        : "Curent no Email to show."}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              ) : (
+                <></>
+              )
+            ) : siteView && siteView.email ? (
+              <Grid
+                item
+                xs={10}
+                sm={
+                  (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
                   (siteView && siteView.latitude && siteView.longitude)
-                  ? 12
-                  : 6
-              }
-            >
-              <Grid item xs={12}>
-                <Typography
-                  variant="h5"
-                  className={classes.title}
-                  style={{
-                    color: "white",
-                    fontFamily: isEdit
-                      ? bodyEdit.fontFamily
-                      : bodyView.fontFamily,
-                    fontSize: 20
-                  }}
-                >
-                  Email
-                </Typography>
-              </Grid>
-              <Grid item xs={10}>
-                <Typography
-                  variant="body2"
-                  style={{
-                    color: "white",
-                    fontFamily: isEdit
-                      ? bodyEdit.fontFamily
-                      : bodyView.fontFamily,
-                    fontSize: 16
-                  }}
-                >
-                  {isEdit
-                    ? email
+                    ? 12
+                    : 6
+                }
+              >
+                <Grid item xs={12}>
+                  <Typography
+                    variant="h5"
+                    className={classes.title}
+                    style={{
+                      color: "white",
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontSize: 20,
+                    }}
+                  >
+                    Email
+                  </Typography>
+                </Grid>
+                <Grid item xs={10}>
+                  <Typography
+                    variant="body2"
+                    style={{
+                      color: "white",
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontSize: 16,
+                    }}
+                  >
+                    {isEdit
                       ? email
-                      : "Curent no Email to show."
-                    : siteView && siteView.email
+                        ? email
+                        : "Curent no Email to show."
+                      : siteView && siteView.email
                       ? siteView.email
                       : "Curent no Email to show."}
-                </Typography>
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid
-              item
-              xs={10}
-              sm={
-                (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
+            ) : (
+              <></>
+            )}
+            {isEdit ? (
+              phone ? (
+                <Grid
+                  item
+                  xs={10}
+                  sm={
+                    (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
+                    (siteView && siteView.latitude && siteView.longitude)
+                      ? 12
+                      : 6
+                  }
+                >
+                  <Grid item xs={12}>
+                    <Typography
+                      variant="h5"
+                      className={classes.title}
+                      style={{
+                        color: "white",
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily,
+                        fontSize: 20,
+                      }}
+                    >
+                      Phone
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography
+                      variant="body2"
+                      style={{
+                        color: "white",
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily,
+                        fontSize: 16,
+                      }}
+                    >
+                      {isEdit
+                        ? phone
+                          ? phone
+                          : "Curent no phone to show."
+                        : siteView && siteView.phone
+                        ? siteView.phone
+                        : "Curent no phone to show."}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              ) : (
+                <></>
+              )
+            ) : siteView && siteView.phone ? (
+              <Grid
+                item
+                xs={10}
+                sm={
+                  (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
                   (siteView && siteView.latitude && siteView.longitude)
-                  ? 12
-                  : 6
-              }
-            >
-              <Grid item xs={12}>
-                <Typography
-                  variant="h5"
-                  className={classes.title}
-                  style={{
-                    color: "white",
-                    fontFamily: isEdit
-                      ? bodyEdit.fontFamily
-                      : bodyView.fontFamily,
-                    fontSize: 20
-                  }}
-                >
-                  Phone
-                </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <Typography
-                  variant="body2"
-                  style={{
-                    color: "white",
-                    fontFamily: isEdit
-                      ? bodyEdit.fontFamily
-                      : bodyView.fontFamily,
-                    fontSize: 16
-                  }}
-                >
-                  {isEdit
-                    ? phone
+                    ? 12
+                    : 6
+                }
+              >
+                <Grid item xs={12}>
+                  <Typography
+                    variant="h5"
+                    className={classes.title}
+                    style={{
+                      color: "white",
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontSize: 20,
+                    }}
+                  >
+                    Phone
+                  </Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <Typography
+                    variant="body2"
+                    style={{
+                      color: "white",
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontSize: 16,
+                    }}
+                  >
+                    {isEdit
                       ? phone
-                      : "Curent no phone to show."
-                    : siteView && siteView.phone
+                        ? phone
+                        : "Curent no phone to show."
+                      : siteView && siteView.phone
                       ? siteView.phone
                       : "Curent no phone to show."}
-                </Typography>
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
+            ) : (
+              <></>
+            )}
           </Grid>
-
           {isEdit
             ? siteEdit &&
-            siteEdit.latitude &&
-            siteEdit.longitude && (
-              <Grid item md={7} sm={10} xs={10} className={classes.map}>
-                <MapWithAMarker
-                  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-                  loadingElement={<div style={{ height: `100%` }} />}
-                  containerElement={<div style={{ height: `15rem` }} />}
-                  mapElement={<div style={{ height: `100%` }} />}
-                />
-              </Grid>
-            )
+              siteEdit.latitude &&
+              siteEdit.longitude && (
+                <Grid item md={7} sm={10} xs={10} className={classes.map}>
+                  <MapWithAMarker
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `15rem` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                  />
+                </Grid>
+              )
             : siteView &&
-            siteView.latitude &&
-            siteView.longitude && (
-              <Grid item md={7} sm={10} xs={10} className={classes.map}>
-                <MapWithAMarker
-                  googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-                  loadingElement={<div style={{ height: `100%` }} />}
-                  containerElement={<div style={{ height: `15rem` }} />}
-                  mapElement={<div style={{ height: `100%` }} />}
-                />
-              </Grid>
-            )}
+              siteView.latitude &&
+              siteView.longitude && (
+                <Grid item md={7} sm={10} xs={10} className={classes.map}>
+                  <MapWithAMarker
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `15rem` }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                  />
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   siteView: state.site.siteView,
   isEdit: state.site.isEdit,
@@ -276,7 +440,7 @@ const mapStateToProps = state => ({
   profile: state.user.profile,
   email: state.site.email,
   address: state.site.address,
-  phone: state.site.phone
+  phone: state.site.phone,
 });
 
 export default connect(

@@ -24,7 +24,7 @@ class AboutPage extends React.Component {
       siteEdit,
       siteView,
       showTitle,
-      fromHome
+      fromHome,
     } = this.props;
     return (
       <Grid container justify="center" className={styles.about_page}>
@@ -39,15 +39,15 @@ class AboutPage extends React.Component {
                 fontFamily: isEdit
                   ? titleEdit.fontFamily
                   : titleView.fontFamily,
-                color: "white"
+                color: "white",
               }}
             >
               About
             </Typography>
           </Grid>
         ) : (
-            <></>
-          )}
+          <></>
+        )}
         {fromHome ? (
           <Grid container item sm={10} xs={10} justify="center">
             <Typography
@@ -58,7 +58,8 @@ class AboutPage extends React.Component {
                 fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
                 fontWeight: 700,
                 fontSize: 30,
-                fontStyle: "italic"
+                fontStyle: "italic",
+                textAlign: "center",
               }}
             >
               {isEdit
@@ -66,57 +67,61 @@ class AboutPage extends React.Component {
                   ? siteEdit.about
                   : "Welcome to our website! Take a look around and feel free to contact us for more information."
                 : siteView && siteView.about
-                  ? siteView.about
-                  : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+                ? siteView.about
+                : "Welcome to our website! Take a look around and feel free to contact us for more information."}
             </Typography>
           </Grid>
         ) : (
-            <Grid container justify="center" className={styles.about_page}>
-
-              <Grid container item sm={3} xs={5} justify="center">
-                <CardMedia
-                  component="img"
-                  alt=""
-                  image={this.renderImage()}
-                />
-              </Grid>
-
-              <Grid container item sm={10} xs={10} justify="center" style={{ marginTop: 50 }}>
-                <Typography
-                  variant="body1"
-                  color="textPrimary"
-                  style={{
-                    fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-                    fontWeight: 400,
-                    color: "white",
-                    textAlign: "left",
-                    fontSize: 16,
-                    paddingBottom: 20,
-                  }}
-                >
-                  {isEdit
-                    ? siteEdit && siteEdit.about
-                      ? siteEdit.about
-                      : "Welcome to our website! Take a look around and feel free to contact us for more information."
-                    : siteView && siteView.about
-                      ? siteView.about
-                      : "Welcome to our website! Take a look around and feel free to contact us for more information."}
-                </Typography>
-              </Grid>
+          <Grid container justify="center" className={styles.about_page}>
+            <Grid container item sm={3} xs={5} justify="center">
+              <CardMedia component="img" alt="" image={this.renderImage()} />
             </Grid>
-          )}
+
+            <Grid
+              container
+              item
+              sm={10}
+              xs={10}
+              justify="center"
+              style={{ marginTop: 50 }}
+            >
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                style={{
+                  fontFamily: isEdit
+                    ? bodyEdit.fontFamily
+                    : bodyView.fontFamily,
+                  fontWeight: 400,
+                  color: "white",
+                  textAlign: "left",
+                  fontSize: 16,
+                  paddingBottom: 20,
+                }}
+              >
+                {isEdit
+                  ? siteEdit && siteEdit.about
+                    ? siteEdit.about
+                    : "Welcome to our website! Take a look around and feel free to contact us for more information."
+                  : siteView && siteView.about
+                  ? siteView.about
+                  : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+              </Typography>
+            </Grid>
+          </Grid>
+        )}
       </Grid>
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   siteView: state.site.siteView,
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(AboutPage);

@@ -40,7 +40,7 @@ class GalleryComponent extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5,
+    itemPerPage: 3,
     page: 1,
   };
 
@@ -306,7 +306,7 @@ class GalleryComponent extends React.Component {
                       borderRadius: "0.3rem",
                     }}
                     color="default"
-                    // shape="rounded"
+                    shape="rounded"
                     variant="outlined"
                     count={this.state.pageCount}
                     page={this.state.page}
@@ -324,7 +324,7 @@ class GalleryComponent extends React.Component {
                       borderRadius: "0.3rem",
                     }}
                     color="default"
-                    // shape="rounded"
+                    shape="rounded"
                     variant="outlined"
                     count={pageCountView}
                     page={this.state.pageView}
