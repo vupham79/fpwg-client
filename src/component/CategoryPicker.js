@@ -1,13 +1,7 @@
 import React, { Component } from "react";
 import { Select, MenuItem, withStyles } from "@material-ui/core";
-
-const listCategory = [
-  "All",
-  "Art",
-  "Architecture",
-  "Fashion",
-  "Sports",
-];
+import { getAllCategoriesAdmin } from "../actions";
+import { connect } from "react-redux";
 
 const useStyle = theme => ({
   root: {
@@ -18,9 +12,15 @@ const useStyle = theme => ({
 });
 
 class CategoryPickerComponent extends Component {
+
+  componentDidMount() {
+    this.props.getAllCategoriesAdmin();
+  }
+
   handleLangChange = event => {
     this.props.onChange(event.target.value);
   };
+
   render() {
     const { selectedValue, classes } = this.props;
     return (
@@ -33,9 +33,9 @@ class CategoryPickerComponent extends Component {
         value={selectedValue}
         onChange={this.handleLangChange}
       >
-        {listCategory.map((category, index) => (
-          <MenuItem key={index} value={category} style={{ color: "#555d66" }}>
-            {category}
+        {this.props.categories && this.props.categories.map((category) => (
+          <MenuItem key={category.id} value={category} style={{ color: "#555d66" }}>
+            {category.name}
           </MenuItem>
         ))}
       </Select>
@@ -43,4 +43,15 @@ class CategoryPickerComponent extends Component {
   }
 }
 
-export default withStyles(useStyle)(CategoryPickerComponent);
+const mapStateToProps = state => ({
+  categories: state.admin.categories
+});
+
+const mapDispatchToProps = dispatch => ({
+  getAllCategoriesAdmin: () => dispatch(getAllCategoriesAdmin()),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(useStyle)(CategoryPickerComponent));

@@ -156,7 +156,7 @@ function TypeAlbum({ post, openDialog, style, dark, siteInfo }) {
               style: { ...cardTitle, ...txtStyle },
             }}
             title={siteInfo.title}
-            subheader={moment(post.createAt).format("MMMM DD,YYYY")}
+            subheader={moment(post.createdTime).format("MMMM DD,YYYY")}
           />
           <CardActionArea>
             <CardMedia
@@ -243,7 +243,7 @@ function TypePhoto({ post, openDialog, style, dark, siteInfo }) {
               style: { ...cardTitle, ...txtStyle },
             }}
             title={siteInfo.title}
-            subheader={moment(post.createAt).format("MMMM DD,YYYY")}
+            subheader={moment(post.createdTime).format("MMMM DD,YYYY")}
           />
           <CardActionArea>
             <CardMedia
@@ -322,7 +322,7 @@ function TypeVideo({ post, openDialog, style, dark, siteInfo }) {
               style: { ...cardTitle, ...txtStyle },
             }}
             title={siteInfo.title}
-            subheader={moment(post.createAt).format("MMMM DD,YYYY")}
+            subheader={moment(post.createdTime).format("MMMM DD,YYYY")}
           />
           <CardActionArea>
             <ReactPlayer
@@ -401,7 +401,7 @@ function TypeMessage({ post, openDialog, style, dark, siteInfo }) {
               style: { ...cardTitle, ...txtStyle },
             }}
             title={siteInfo.title}
-            subheader={moment(post.createAt).format("MMMM DD,YYYY")}
+            subheader={moment(post.createdTime).format("MMMM DD,YYYY")}
           />
           {post.message && (
             <Truncate
@@ -603,7 +603,7 @@ class PostTypeComponent extends React.Component {
                 .filter(function (pos) {
                   return pos.isActive;
                 })
-                .slice(0, 5)
+                .slice(0, 3)
                 .map(
                   (post, index) =>
                     (post.attachments &&

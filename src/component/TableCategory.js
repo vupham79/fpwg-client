@@ -215,7 +215,7 @@ class TableCategory extends Component {
   };
 
   handleSearch = keyword => {
-    let searchResult = this.props.categories.filter(function(category) {
+    let searchResult = this.props.categories.filter(function (category) {
       return category.name.toLowerCase().includes(keyword.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
@@ -275,35 +275,35 @@ class TableCategory extends Component {
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-          this.state.filteredData.map((row, index) => (
-            <div key={index}>
-              <Grid container direction="row">
-                <Grid item xs={1}>
-                  {row.name}
-                  <div style={{ height: 20 }} />
-                </Grid>
-                <Grid item xs={2}>
-                  <img
-                    style={{
-                      height: "4rem"
-                    }}
-                    alt=""
-                    src={row.picture}
-                  />
-                </Grid>
-                <Grid item xs={1}>
-                  <Button
-                    color="primary"
-                    onClick={() => this.setOpenEditDialogue(row)}
-                  >
-                    Edit
+            this.state.filteredData.map((row) => (
+              <div key={row._id}>
+                <Grid container direction="row">
+                  <Grid item xs={1}>
+                    {row.name}
+                    <div style={{ height: 20 }} />
+                  </Grid>
+                  <Grid item xs={2}>
+                    <img
+                      style={{
+                        height: "4rem"
+                      }}
+                      alt=""
+                      src={row.picture}
+                    />
+                  </Grid>
+                  <Grid item xs={1}>
+                    <Button
+                      color="primary"
+                      onClick={() => this.setOpenEditDialogue(row)}
+                    >
+                      Edit
                   </Button>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Divider />
-            </div>
-          ))
-        )}
+                <Divider />
+              </div>
+            ))
+          )}
         {this.state.pageCount > 1 && (
           <div className="commentBox">
             <ReactPaginate

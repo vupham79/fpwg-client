@@ -74,14 +74,14 @@ class ThemeEditorTab extends React.Component {
     this.setState({
       currentCategory: category
     });
-    if (category === "All") {
+    if (category.name === "All") {
       this.setState({
         filteredData: this.props.themes
       });
     } else {
       this.setState({
-        filteredData: this.props.themes.filter(function(theme) {
-          return theme.category === category;
+        filteredData: this.props.themes.filter(function (theme) {
+          return theme.category._id === category._id;
         })
       });
     }
@@ -90,7 +90,6 @@ class ThemeEditorTab extends React.Component {
   handleChangeTheme = selectId => {
     const { changeTheme, themes, site, updateNavItemValue } = this.props;
     const theme = themes.find(e => e._id === selectId);
-    console.log(theme);
     // site.theme = theme;
     // site.color = theme.mainColor;
     this.setState({
@@ -99,7 +98,7 @@ class ThemeEditorTab extends React.Component {
     changeTheme(theme);
 
     //go to home tab of new theme
-    let searchResult = site.navItems.filter(function(nav) {
+    let searchResult = site.navItems.filter(function (nav) {
       return nav.original === "home";
     });
     if (searchResult) {
@@ -146,9 +145,9 @@ class ThemeEditorTab extends React.Component {
         </Grid>
 
         <Grid container direction="column">
-          {filteredData.map((theme, i) => {
+          {filteredData.map((theme) => {
             return (
-              <Grid key={i} item sm={12} style={{ marginBottom: "1rem" }}>
+              <Grid key={theme._id} item sm={12} style={{ marginBottom: "1rem" }}>
                 <Card
                   onClick={() => this.handleChangeTheme(theme._id)}
                   variant={"outlined"}

@@ -179,7 +179,7 @@ class GalleryComponent extends React.Component {
     } = this.props;
     return (
       <>
-        {galleries.slice(0, 5).map((item, index) => (
+        {galleries.slice(0, 3).map((item, index) => (
           <Grid
             item
             key={index}

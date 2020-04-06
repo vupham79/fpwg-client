@@ -157,7 +157,7 @@ class EventComponent extends React.Component {
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
                         overflow: "hidden",
-                        display: "inline-block",
+                        display: "block",
                         fontFamily: isEdit
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
@@ -191,10 +191,10 @@ class EventComponent extends React.Component {
                       overflow: "hidden",
                       display: isEdit
                         ? siteEdit.showDesEvent
-                          ? "inline-block"
+                          ? "block"
                           : "none"
                         : siteView.showDesEvent
-                        ? "inline-block"
+                        ? "block"
                         : "none",
                       height: "6em",
                       lineHeight: "1.5em",
@@ -228,7 +228,7 @@ class EventComponent extends React.Component {
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
                         overflow: "hidden",
-                        display: "inline-block",
+                        display: "block",
                         fontFamily: isEdit
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
@@ -244,7 +244,7 @@ class EventComponent extends React.Component {
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
                         overflow: "hidden",
-                        display: "inline-block",
+                        display: "block",
                         fontFamily: isEdit
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
@@ -340,7 +340,7 @@ class EventComponent extends React.Component {
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
                         overflow: "hidden",
-                        display: "inline-block",
+                        display: "block",
                         fontFamily: isEdit
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
@@ -374,10 +374,10 @@ class EventComponent extends React.Component {
                       overflow: "hidden",
                       display: isEdit
                         ? siteEdit.showDesEvent
-                          ? "inline-block"
+                          ? "block"
                           : "none"
                         : siteView.showDesEvent
-                        ? "inline-block"
+                        ? "block"
                         : "none",
                       height: "6em",
                       lineHeight: "1.5em",
@@ -411,7 +411,7 @@ class EventComponent extends React.Component {
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
                         overflow: "hidden",
-                        display: "inline-block",
+                        display: "block",
                         fontFamily: isEdit
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
@@ -427,7 +427,7 @@ class EventComponent extends React.Component {
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
                         overflow: "hidden",
-                        display: "inline-block",
+                        display: "block",
                         fontFamily: isEdit
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
@@ -548,7 +548,7 @@ class EventComponent extends React.Component {
 
               {isEdit
                 ? fromHome
-                  ? this.renderUpComingEvent(homeList.slice(0, 5), classes)
+                  ? this.renderUpComingEvent(homeList.slice(0, 3), classes)
                   : this.renderUpComingEvent(this.state.filteredData, classes)
                 : this.renderUpComingEvent(homeList, classes)}
 
@@ -581,7 +581,7 @@ class EventComponent extends React.Component {
 
               {isEdit
                 ? fromHome
-                  ? this.renderPassEvent(homeList.slice(0, 5), classes)
+                  ? this.renderPassEvent(homeList.slice(0, 3), classes)
                   : this.renderPassEvent(this.state.filteredData, classes)
                 : this.renderPassEvent(homeList, classes)}
 
