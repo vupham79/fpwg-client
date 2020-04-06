@@ -3,7 +3,7 @@ import {
   faTimes as faWindowClose,
   faTablet,
   faDesktop,
-  faTabletAlt
+  faTabletAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,13 +17,18 @@ import {
   DialogTitle,
   Drawer,
   Grid,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import { saveDesignSite, setIsChanged, updateTabValue, setFramePreview } from "../actions";
+import {
+  saveDesignSite,
+  setIsChanged,
+  updateTabValue,
+  setFramePreview,
+} from "../actions";
 import AccordionButton from "../theme/component/mainComponent";
 import DesignTab from "./DesignEditorTab";
 import HomepageEditorTab from "./HomepageEditorTab";
@@ -32,34 +37,34 @@ import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
 import SyncEditorTab from "./SyncEditorTab";
 import ThemeEditorTab from "./ThemeEditorTab";
-import styles from './index.module.css';
+import styles from "./index.module.css";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
     height: "100vh",
   },
   drawer: {
     flexShrink: 0,
-    height: "100%"
+    height: "100%",
   },
   drawerPaper: {
     position: "relative",
     height: "100%",
     backgroundColor: "#f0eded",
-  }
+  },
 });
 
 class ClippedDrawer extends React.Component {
   state = {
     currentNavName: "",
     navigating: false,
-    open: false
+    open: false,
   };
 
   setNavigating = (bool, name) => {
     this.setState({
       navigating: bool,
-      currentNavName: name
+      currentNavName: name,
     });
   };
 
@@ -96,7 +101,7 @@ class ClippedDrawer extends React.Component {
       email,
       phone,
       posts,
-      address
+      address,
     } = this.props;
     return (
       <AppBar className={classes.root} position="sticky">
@@ -105,7 +110,7 @@ class ClippedDrawer extends React.Component {
           className={classes.drawer}
           variant="permanent"
           classes={{
-            paper: classes.drawerPaper
+            paper: classes.drawerPaper,
           }}
         >
           <Grid container style={{ border: "1px solid #dddddd" }}>
@@ -118,14 +123,11 @@ class ClippedDrawer extends React.Component {
                   color: "#565d66",
                   fontSize: 14,
                   fontWeight: "bold",
-                  height: "100%"
+                  height: "100%",
                 }}
                 onClick={this.openDialog}
               >
-                <FontAwesomeIcon
-                  icon={faWindowClose}
-                  size="sm"
-                />
+                <FontAwesomeIcon icon={faWindowClose} size="sm" />
               </Button>
               <Dialog
                 open={this.state.open}
@@ -170,7 +172,7 @@ class ClippedDrawer extends React.Component {
                   backgroundColor: "#0074aa",
                   borderRadius: 5,
                   color: "white",
-                  fontSize: 11
+                  fontSize: 11,
                 }}
                 onClick={() =>
                   saveDesignSite({
@@ -184,7 +186,7 @@ class ClippedDrawer extends React.Component {
                     email,
                     phone,
                     posts,
-                    address
+                    address,
                   })
                 }
               >
@@ -207,7 +209,7 @@ class ClippedDrawer extends React.Component {
                   borderRadius: 0,
                   borderLeft: "4px solid #0074aa",
                   height: 80,
-                  minWidth: "unset"
+                  minWidth: "unset",
                 }}
               >
                 <FontAwesomeIcon icon={faArrowLeft} color="#0074aa" size="2x" />
@@ -226,7 +228,7 @@ class ClippedDrawer extends React.Component {
                     whiteSpace: "nowrap",
                     textOverflow: "ellipsis",
                     display: "block",
-                    color: "#555d66"
+                    color: "#555d66",
                   }}
                 >
                   {this.state.navigating
@@ -298,15 +300,17 @@ class ClippedDrawer extends React.Component {
 
           <Grid
             container
+            item
             justify="center"
             style={{
               borderTop: "1px solid #dddddd",
               bottom: 0,
               position: this.state.navigating ? "sticky" : "absolute",
               backgroundColor: "#f0eded",
-              zIndex: 999999
+              zIndex: 999999,
             }}
-            xs={12}>
+            xs={12}
+          >
             <Grid item className={styles.fadeShow}>
               <IconButton
                 aria-label=""
@@ -341,7 +345,7 @@ class ClippedDrawer extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   tabValue: state.tab.value,
   siteEdit: state.site.siteEdit,
   newLogo: state.site.newLogo,
@@ -355,14 +359,14 @@ const mapStateToProps = state => ({
   isPreview: state.site.isPreview,
   posts: state.post.posts,
   isChanged: state.site.isChanged,
-  address: state.site.address
+  address: state.site.address,
 });
 
-const mapDispatchToProps = dispatch => ({
-  updateTabValue: value => dispatch(updateTabValue(value)),
-  saveDesignSite: data => dispatch(saveDesignSite(data)),
+const mapDispatchToProps = (dispatch) => ({
+  updateTabValue: (value) => dispatch(updateTabValue(value)),
+  saveDesignSite: (data) => dispatch(saveDesignSite(data)),
   setIsChangedToFalse: () => dispatch(setIsChanged()),
-  setFramePreview: mode => dispatch(setFramePreview(mode))
+  setFramePreview: (mode) => dispatch(setFramePreview(mode)),
 });
 
 export default connect(

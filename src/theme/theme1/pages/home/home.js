@@ -95,7 +95,7 @@ class Theme1Home extends React.Component {
                       homeList={row.filter.items}
                     />
                   </Grid>
-                )
+                ),
               }[row.original])
           )}
 
@@ -165,7 +165,7 @@ class Theme1Home extends React.Component {
                       homeList={row.filter.items}
                     />
                   </Grid>
-                )
+                ),
               }[row.original])
           )}
       </Grid>
@@ -173,7 +173,7 @@ class Theme1Home extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   titleView: state.site.titleView,
@@ -183,7 +183,7 @@ const mapStateToProps = state => ({
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
   newLogo: state.site.newLogo,
-  newCover: state.site.newCover
+  newCover: state.site.newCover,
 });
 
 export default connect(mapStateToProps, null)(Theme1Home);

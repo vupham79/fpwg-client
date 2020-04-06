@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import PostTypeComponent from "../../../component/postsType";
 
 class Theme1News extends React.Component {
+  state = {
+    itemPerPage: 5,
+  };
   render() {
     const {
       isEdit,
@@ -15,15 +18,46 @@ class Theme1News extends React.Component {
       siteEdit,
       fromHome,
       homeTitle,
-      homeList
+      homeList,
+      postView,
     } = this.props;
 
     const useStyles = () => ({
+      changableLink: {
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+        color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        textAlign: "center",
+        fontStyle: "italic",
+        fontSize: 20,
+      },
+      changableTitle: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        fontWeight: "bold",
+        color: "#212121",
+        textAlign: "center",
+        fontSize: 45,
+        paddingBottom: 20,
+      },
+      changableTitle2: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        fontWeight: "bold",
+        color: "#212121",
+        textAlign: "center",
+        fontSize: 20,
+        paddingBottom: 20,
+      },
+      changableName: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        fontWeight: "bold",
+        color: isEdit ? titleEdit.color : titleView.color,
+        textAlign: "left",
+        fontSize: 20,
+      },
       changableBody: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#535353",
         fontSize: 16,
-        textAlign: "justify"
+        textAlign: "justify",
       },
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -32,7 +66,7 @@ class Theme1News extends React.Component {
         textAlign: "center",
         fontSize: 30,
         textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color,
       },
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -41,72 +75,77 @@ class Theme1News extends React.Component {
         textAlign: "center",
         fontSize: 30,
         paddingBottom: 20,
-        textTransform: "uppercase"
-      }
+        textTransform: "uppercase",
+      },
     });
     const classes = useStyles();
-
     return (
       <Grid container style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "N"}</span>{fromHome ? homeTitle.substring(1) : "EWS"}
+            <span style={classes.changableFirst}>
+              {fromHome ? homeTitle.charAt(0) : "N"}
+            </span>
+            {fromHome ? homeTitle.substring(1) : "EWS"}
           </p>
         </Grid>
-        <Grid item sm={12} xs={12} container spacing={3}>
+        <Grid item xs={12} container>
           {isEdit ? (
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
                   fromHome={fromHome}
-                  posts={(fromHome && homeList) ? homeList : siteEdit.posts}
-                  siteInfo={{
-                    logo: siteEdit.logo,
-                    title: siteEdit.title,
-                    id: siteEdit.id
-                  }}
+                  posts={fromHome && homeList ? homeList : siteEdit.posts}
+                  pageCount={Math.ceil(
+                    (fromHome && homeList ? homeList : siteEdit.posts).length /
+                      this.state.itemPerPage
+                  )}
+                  itemPerPage={this.state.itemPerPage}
+                  bgWhite={true}
                 />
               </Grid>
             ) : (
-                <Grid container justify="center">
-                  <Typography className={classes.changableBody}>
-                    Currently there are no news.
+              <Grid container justify="center">
+                <Typography className={classes.changableBody}>
+                  Currently there are no news.
                 </Typography>
-                </Grid>
-              )
+              </Grid>
+            )
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
                 fromHome={fromHome}
-                posts={(fromHome && homeList) ? homeList : siteView.posts}
+                posts={fromHome && homeList ? homeList : siteView.posts}
                 siteInfo={{
                   logo: siteView.logo,
                   title: siteView.title,
-                  sitePath: siteView.sitePath
+                  sitePath: siteView.sitePath,
                 }}
+                bgWhite={true}
+                postView={postView}
               />
             </Grid>
           ) : (
-                <Grid container justify="center">
-                  <Typography className={classes.changableBody}>
-                    Currently there are no news.
+            <Grid container justify="center">
+              <Typography className={classes.changableBody}>
+                Currently there are no news.
               </Typography>
-                </Grid>
-              )}
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(Theme1News);
