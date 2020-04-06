@@ -122,14 +122,14 @@ class Theme1Home extends React.Component {
                       paddingTop: 50,
                     }}
                   >
-                    <Grid item xs={12}>
+                    <Grid item xs={12} style={{ padding: 20 }}>
                       <p style={classes.changableBody3}>
                         {siteEdit && siteEdit.about}
                         {!siteEdit.about && "Welcome to our website!"}
                       </p>
                     </Grid>
                     <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: "#b3b2b2" }} />
+                      <Divider style={{ backgroundColor: "#b3b2b2", marginTop: 50 }} />
                     </Grid>
                   </Grid>
                 ),

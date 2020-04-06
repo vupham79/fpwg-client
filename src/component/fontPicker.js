@@ -16,6 +16,7 @@ const listFont = [
   "Impact",
   "Catamaran",
   "Source Sans Pro",
+  "Candara"
 ];
 
 const useStyle = (theme) => ({
