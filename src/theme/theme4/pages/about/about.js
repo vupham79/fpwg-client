@@ -122,7 +122,7 @@ class Theme1About extends React.Component {
           <p style={classes.changableTitle}>ABOUT</p>
         </Grid>
 
-        <Grid container item xs={12} direction="row" justify="center">
+        <Grid container item xs={12} direction="column" justify="center" alignContent="center">
           <Grid container item xs={12} sm={4} justify="center">
             <CardMedia
               component="img"
