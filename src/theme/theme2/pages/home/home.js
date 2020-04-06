@@ -94,7 +94,7 @@ class HomePage extends React.Component {
                       homeList={row.filter.items}
                     />
                   </Grid>
-                )
+                ),
               }[row.original])
           )}
 
@@ -164,18 +164,18 @@ class HomePage extends React.Component {
                       homeList={row.filter.items}
                     />
                   </Grid>
-                )
+                ),
               }[row.original])
           )}
       </Grid>
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteView: state.site.siteView,
   isEdit: state.site.isEdit,
   siteEdit: state.site.siteEdit,
-  covers: state.site.newCover
+  covers: state.site.newCover,
 });
 
 export default connect(mapStateToProps, null)(HomePage);

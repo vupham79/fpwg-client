@@ -5,10 +5,10 @@ import LocalPhoneIcon from "@material-ui/icons/LocalPhone";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./contact.module.css";
-const useStyle = theme => ({
+const useStyle = (theme) => ({
   root: {
-    paddingTop: "5rem"
-  }
+    paddingTop: "5rem",
+  },
 });
 
 class ContactPage extends React.Component {
@@ -25,7 +25,7 @@ class ContactPage extends React.Component {
       classes,
       phone,
       email,
-      address
+      address,
     } = this.props;
 
     return (
@@ -51,56 +51,123 @@ class ContactPage extends React.Component {
           <Divider variant="fullWidth" />
         </Grid>
         <Grid item xs={11} container justify="center" className={classes.root}>
-          <Grid
-            container
-            item
-            xs={12}
-            sm={10}
-            md={7}
-            justify="flex-start"
-            alignItems="center"
-          >
-            <Grid item xs={2} sm={1} md={1}>
-              <AddLocationIcon fontSize="large" />
-            </Grid>
-            <Grid item xs={4} md={5}>
-              <p
-                className={styles.child_title}
-                style={{
-                  fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-                  fontWeight: 400,
-                  color: "black",
-                  textAlign: "left",
-                  fontSize: 20,
-                  paddingBottom: 20,
-                }}
+          {isEdit ? (
+            address ? (
+              <Grid
+                container
+                item
+                xs={12}
+                sm={10}
+                md={7}
+                justify="flex-start"
+                alignItems="center"
               >
-                Address
-              </p>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="body1"
-                className={styles.child_content}
-                style={{
-                  fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-                  fontWeight: 400,
-                  color: "#7c7c7c",
-                  textAlign: "left",
-                  fontSize: 16,
-                  paddingBottom: 20,
-                }}
-              >
-                {isEdit
-                  ? address
+                <Grid item xs={2} sm={1} md={1}>
+                  <AddLocationIcon fontSize="large" />
+                </Grid>
+                <Grid item xs={4} md={5}>
+                  <p
+                    className={styles.child_title}
+                    style={{
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontWeight: 400,
+                      color: "black",
+                      textAlign: "left",
+                      fontSize: 20,
+                      // paddingBottom: 20,
+                    }}
+                  >
+                    Address
+                  </p>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography
+                    variant="body1"
+                    className={styles.child_content}
+                    style={{
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontWeight: 400,
+                      color: "#151515",
+                      textAlign: "left",
+                      fontSize: 16,
+                      // paddingBottom: 20,
+                    }}
+                  >
+                    {isEdit
+                      ? address
+                        ? address
+                        : "Currently no data"
+                      : siteView && siteView.address
+                      ? siteView.address
+                      : "Currently no data"}
+                  </Typography>
+                </Grid>
+              </Grid>
+            ) : (
+              <></>
+            )
+          ) : siteView && siteView.address ? (
+            <Grid
+              container
+              item
+              xs={12}
+              sm={10}
+              md={7}
+              justify="flex-start"
+              alignItems="center"
+            >
+              <Grid item xs={2} sm={1} md={1}>
+                <AddLocationIcon fontSize="large" />
+              </Grid>
+              <Grid item xs={4} md={5}>
+                <p
+                  className={styles.child_title}
+                  style={{
+                    fontFamily: isEdit
+                      ? bodyEdit.fontFamily
+                      : bodyView.fontFamily,
+                    fontWeight: 400,
+                    color: "black",
+                    textAlign: "left",
+                    fontSize: 20,
+                    // paddingBottom: 20,
+                  }}
+                >
+                  Address
+                </p>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography
+                  variant="body1"
+                  className={styles.child_content}
+                  style={{
+                    fontFamily: isEdit
+                      ? bodyEdit.fontFamily
+                      : bodyView.fontFamily,
+                    fontWeight: 400,
+                    color: "#151515",
+                    textAlign: "left",
+                    fontSize: 16,
+                    // paddingBottom: 20,
+                  }}
+                >
+                  {isEdit
                     ? address
-                    : "Currently no data"
-                  : siteView && siteView.address
+                      ? address
+                      : "Currently no data"
+                    : siteView && siteView.address
                     ? siteView.address
                     : "Currently no data"}
-              </Typography>
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <></>
+          )}
           <Grid
             container
             item
@@ -117,12 +184,14 @@ class ContactPage extends React.Component {
               <p
                 className={styles.child_title}
                 style={{
-                  fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                  fontFamily: isEdit
+                    ? bodyEdit.fontFamily
+                    : bodyView.fontFamily,
                   fontWeight: 400,
-                  color: "black",
+                  color: "#151515",
                   textAlign: "left",
                   fontSize: 20,
-                  paddingBottom: 20,
+                  // paddingBottom: 20,
                 }}
               >
                 Phone
@@ -133,12 +202,14 @@ class ContactPage extends React.Component {
                 variant="body1"
                 className={styles.child_content}
                 style={{
-                  fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                  fontFamily: isEdit
+                    ? bodyEdit.fontFamily
+                    : bodyView.fontFamily,
                   fontWeight: 400,
-                  color: "#7c7c7c",
+                  color: "#151515",
                   textAlign: "left",
                   fontSize: 16,
-                  paddingBottom: 20,
+                  // paddingBottom: 20,
                 }}
               >
                 {isEdit
@@ -146,68 +217,82 @@ class ContactPage extends React.Component {
                     ? phone
                     : "Currently no data"
                   : siteView && siteView.phone
-                    ? siteView.phone
-                    : "Currently no data"}
+                  ? siteView.phone
+                  : "Currently no data"}
               </Typography>
             </Grid>
           </Grid>
-          <Grid
-            container
-            item
-            xs={12}
-            sm={10}
-            md={7}
-            justify="flex-start"
-            alignItems="center"
-          >
-            <Grid item xs={2} sm={1} md={1}>
-              <EmailIcon fontSize="large" />
-            </Grid>
-            <Grid item xs={4} md={5}>
-              <p
-                className={styles.child_title}
-                style={{
-                  fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-                  fontWeight: 400,
-                  color: "black",
-                  textAlign: "left",
-                  fontSize: 20,
-                  paddingBottom: 20,
-                }}
-              >
-                Email
-              </p>
-            </Grid>
-            <Grid item xs={6}>
-              <Typography
-                variant="body1"
-                className={styles.child_content}
-                style={{
-                  fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-                  fontWeight: 400,
-                  color: "#7c7c7c",
-                  textAlign: "left",
-                  fontSize: 16,
-                  paddingBottom: 20,
-                }}
-              >
-                {isEdit
-                  ? email
+          {isEdit ? (
+            email ? (
+              email
+            ) : (
+              <></>
+            )
+          ) : siteView && siteView.email ? (
+            <Grid
+              container
+              item
+              xs={12}
+              sm={10}
+              md={7}
+              justify="flex-start"
+              alignItems="center"
+            >
+              <Grid item xs={2} sm={1} md={1}>
+                <EmailIcon fontSize="large" />
+              </Grid>
+              <Grid item xs={4} md={5}>
+                <p
+                  className={styles.child_title}
+                  style={{
+                    fontFamily: isEdit
+                      ? bodyEdit.fontFamily
+                      : bodyView.fontFamily,
+                    fontWeight: 400,
+                    color: "#151515",
+                    textAlign: "left",
+                    fontSize: 20,
+                    // paddingBottom: 20,
+                  }}
+                >
+                  Email
+                </p>
+              </Grid>
+              <Grid item xs={6}>
+                <Typography
+                  variant="body1"
+                  className={styles.child_content}
+                  style={{
+                    fontFamily: isEdit
+                      ? bodyEdit.fontFamily
+                      : bodyView.fontFamily,
+                    fontWeight: 400,
+                    color: "#151515",
+                    textAlign: "left",
+                    fontSize: 16,
+                    paddingBottom: 20,
+                  }}
+                >
+                  {isEdit
                     ? email
-                    : "Currently no data"
-                  : siteView && siteView.email
+                      ? email
+                      : "Currently no data"
+                    : siteView && siteView.email
                     ? siteView.email
                     : "Currently no data"}
-              </Typography>
+                </Typography>
+              </Grid>
             </Grid>
-          </Grid>
+          ) : (
+            <></>
+          )}
         </Grid>
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   siteView: state.site.siteView,
   isEdit: state.site.isEdit,
@@ -218,7 +303,7 @@ const mapStateToProps = state => ({
   profile: state.user.profile,
   phone: state.site.phone,
   email: state.site.email,
-  address: state.site.address
+  address: state.site.address,
 });
 
 export default connect(

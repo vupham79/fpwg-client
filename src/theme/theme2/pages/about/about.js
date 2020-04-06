@@ -14,7 +14,6 @@ class AboutPage extends React.Component {
     return siteView.logo;
   };
 
-
   render() {
     const {
       isEdit,
@@ -25,48 +24,68 @@ class AboutPage extends React.Component {
       siteEdit,
       siteView,
       fromHome,
-      homeTitle
+      homeTitle,
     } = this.props;
     return (
       <Grid container justify="center" className={styles.about_page}>
         <Grid item sm={10} xs={10}>
-          <Typography
-            className={styles.title}
-            variant="h4"
-            align="center"
-            gutterBottom
-            style={{
-              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-              fontWeight: 500,
-              color: isEdit ? titleEdit.color : titleView.color,
-              textAlign: "center",
-              fontSize: 28,
-              paddingBottom: 20,
-            }}
-          >
-            {fromHome ? homeTitle : "About"}
-          </Typography>
-          <Divider className="divider" variant="middle" style={{ marginBottom: 50 }} />
+          {!fromHome && (
+            <>
+              <Typography
+                className={styles.title}
+                variant="h4"
+                align="center"
+                gutterBottom
+                style={{
+                  fontFamily: isEdit
+                    ? titleEdit.fontFamily
+                    : titleView.fontFamily,
+                  fontWeight: 500,
+                  color: isEdit ? titleEdit.color : titleView.color,
+                  textAlign: "center",
+                  fontSize: 28,
+                  paddingBottom: 20,
+                }}
+              >
+                {fromHome ? homeTitle : "About"}
+              </Typography>
+              <Divider
+                className="divider"
+                variant="middle"
+                style={{ marginBottom: 50 }}
+              />
+            </>
+          )}
         </Grid>
 
-        <Grid container item sm={3} xs={5} justify="center" style={{ display: fromHome ? "none" : "block" }}>
-          <CardMedia
-            component="img"
-            alt=""
-            image={this.renderImage()}
-          />
+        <Grid
+          container
+          item
+          sm={3}
+          xs={5}
+          justify="center"
+          style={{ display: fromHome ? "none" : "block" }}
+        >
+          <CardMedia component="img" alt="" image={this.renderImage()} />
         </Grid>
 
-        <Grid container item sm={10} xs={10} justify="center" style={{ marginTop: 50 }}>
+        <Grid
+          container
+          item
+          sm={10}
+          xs={10}
+          justify="center"
+          style={{ marginTop: !fromHome ? 50 : 0 }}
+        >
           <Typography
             variant="body1"
             color="textPrimary"
             style={{
               fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
               fontWeight: 400,
-              color: "#7c7c7c",
-              textAlign: "left",
-              fontSize: 16,
+              color: "#151515",
+              textAlign: "center",
+              fontSize: 24,
               paddingBottom: 20,
             }}
           >
@@ -75,22 +94,22 @@ class AboutPage extends React.Component {
                 ? siteEdit.about
                 : "Welcome to our website! Take a look around and feel free to contact us for more information."
               : siteView && siteView.about
-                ? siteView.about
-                : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+              ? siteView.about
+              : "Welcome to our website! Take a look around and feel free to contact us for more information."}
           </Typography>
         </Grid>
       </Grid>
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   siteView: state.site.siteView,
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(AboutPage);
