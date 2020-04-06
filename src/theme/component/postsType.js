@@ -1,95 +1,28 @@
 import {
-  Avatar,
-  Card,
-  CardActionArea,
-  CardContent,
-  CardHeader,
   CardMedia,
-  Container,
-  Dialog,
   Grid,
-  IconButton,
-  makeStyles,
   Typography,
-  withStyles
+  withStyles,
+  Button,
 } from "@material-ui/core";
-import FacebookIcon from "@material-ui/icons/Facebook";
 import Pagination from "@material-ui/lab/Pagination";
 import moment from "moment";
 import React from "react";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
-import Truncate from "react-truncate";
-import { getDataByPageNumber, setPostsToSiteView } from "../../actions";
+import {
+  getDataByPageNumber,
+  setPostsToSiteView,
+  updateNavItemValue,
+} from "../../actions";
+import ButtonComponent from "../../component/Button";
+import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
+import Link from "../../component/link";
 
-const useStyles = makeStyles(theme => ({
-  cardGrid: {
-    paddingTop: theme.spacing(8)
-  },
-  card: {
-    width: "30vh",
-    display: "flex",
-    flexDirection: "column",
-    height: "22rem",
-    border: style => "0.5px solid" + style.color
-    // "&:hover": {
-    //   border: style => "1.5px solid" + style.color
-    // }
-  },
-  message: {
-    paddingLeft: "0.5rem"
-  },
-  title: {
-    overflow: "hidden",
-    paddingLeft: "1rem"
-  },
-  cardMediaAlbum: {
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center",
-    backgroundSize: "contain"
-  },
-  cardMedia: {
-    height: "30vh",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    overflow: "hidden"
-  },
-  album: {
-    height: "30vh",
-    background: "rgba(24, 20, 20, 0.5)"
-  },
-  cardContent: {
-    flexGrow: 1,
-    padding: theme.spacing(1),
-    paddingBottom: 0,
-    overflow: "hidden"
-  },
-  cardHeader: {
-    padding: "0.5rem"
-  },
-  avatar: {
-    width: "2rem",
-    height: "2rem"
-  },
-  gridItems: {
-    maxHeight: 350
-  },
-  btnReadMore: {
-    border: style => "0.5px solid" + style.color,
-    color: style => style.color,
-    "&:hover": {
-      border: style => "1.5px solid" + style.color,
-      color: "white",
-      background: style => style.color
-    }
-  }
-}));
-
-const gridStyle = theme => ({
+const useStyles = (theme) => ({
   root: {
     marginTop: theme.spacing(2),
-    padding: theme.spacing(3)
+    padding: theme.spacing(3),
   },
 
   images: {
@@ -98,761 +31,608 @@ const gridStyle = theme => ({
     backgroundRepeat: "no-repeat",
     width: "-webkit-fill-available",
     maxHeight: "100%",
-    maxWidth: "100%"
-  }
+    maxWidth: "100%",
+  },
+  cardView: {
+    paddingTop: "70%",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
+  cardMediaAlbum: {
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    backgroundSize: "contain",
+  },
+  cardMedia: {
+    height: "30vh",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
+  cardAlbum: {
+    paddingTop: "60%",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  },
+  album: {
+    height: "30vh",
+    background: "rgba(24, 20, 20, 0.5)",
+  },
+  cardContent: {
+    flexGrow: 1,
+    padding: theme.spacing(1),
+    paddingBottom: 0,
+    overflow: "hidden",
+  },
+  gridItems: {
+    maxHeight: 350,
+  },
 });
 
-const cardTitle = {
-  fontSize: "11px",
-  fontFamily: "Segoe UI"
+const gridContent = {
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  display: "-webkit-box",
+  WebkitLineClamp: "2",
+  WebkitBoxOrient: "vertical",
 };
 
-function TypeAlbum({ post, openDialog, style, dark, siteInfo }) {
-  const classes = useStyles(
-    style && style.isEdit ? style.titleEdit : style.titleView
-  );
-
-  const txtStyle = {
-    fontFamily: style.isEdit
-      ? style.bodyEdit.fontFamily
-      : style.bodyView.fontFamily,
-    fontSize: "11px"
-  };
-  return (
-    <React.Fragment>
-      <Grid
-        item
-        // xs={12}
-        // sm={6}
-        // md={6}
-        // lg={4}
-        style={dark ? { backgroundColor: "#1a1919" } : null}
-      >
-        <Card className={classes.card}>
-          <CardHeader
-            className={classes.cardHeader}
-            avatar={
-              <Avatar
-                aria-label="recipe"
-                src={siteInfo.logo}
-                className={classes.avatar}
-              />
-            }
-            action={
-              <IconButton aria-label="settings" style={{ borderRadius: 0 }}>
-                <a
-                  href={post.target}
-                  target={"_blank"}
-                  rel="noopener noreferrer"
-                >
-                  <FacebookIcon color="primary" fontSize="inherit" />
-                </a>
-              </IconButton>
-            }
-            subheaderTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
-            }}
-            titleTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
-            }}
-            title={siteInfo.title}
-            subheader={moment(post.createAt).format("MMMM DD,YYYY")}
-          />
-          <CardActionArea>
-            <CardMedia
-              onClick={() => openDialog(post)}
-              className={classes.cardMediaAlbum}
-              image={post.attachments.images[0]}
-            >
-              <Grid
-                container
-                alignItems="center"
-                justify="center"
-                className={classes.album}
-              >
-                <Typography variant="h3" style={{ color: "white" }}>
-                  {post.attachments.images.length} +
-                </Typography>
-              </Grid>
-            </CardMedia>
-          </CardActionArea>
-          {post.message && (
-            <CardContent className={classes.cardContent}>
-              <div style={{ padding: "0.5rem" }}>
-                <Truncate
-                  style={{ ...txtStyle }}
-                  lines={2}
-                  ellipsis={<span> ...</span>}
-                >
-                  {post.message}
-                </Truncate>
-              </div>
-            </CardContent>
-          )}
-        </Card>
-      </Grid>
-    </React.Fragment>
-  );
-}
-
-function TypePhoto({ post, openDialog, style, dark, siteInfo }) {
-  const classes = useStyles(
-    style && style.isEdit ? style.titleEdit : style.titleView
-  );
-  const txtStyle = {
-    fontFamily: style.isEdit
-      ? style.bodyEdit.fontFamily
-      : style.bodyView.fontFamily,
-    fontSize: "11px"
-  };
-  return (
-    <React.Fragment>
-      <Grid
-        item
-        // xs={12}
-        // sm={6}
-        // md={6}
-        // lg={4}
-        style={dark ? { backgroundColor: "#1a1919" } : null}
-      >
-        <Card className={classes.card}>
-          <CardHeader
-            className={classes.cardHeader}
-            avatar={
-              <Avatar
-                aria-label="recipe"
-                src={siteInfo.logo}
-                className={classes.avatar}
-              />
-            }
-            action={
-              <IconButton aria-label="settings" style={{ borderRadius: 0 }}>
-                <a
-                  href={post.target}
-                  target={"_blank"}
-                  rel="noopener noreferrer"
-                >
-                  <FacebookIcon color="primary" fontSize="inherit" />
-                </a>
-              </IconButton>
-            }
-            subheaderTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
-            }}
-            titleTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
-            }}
-            title={siteInfo.title}
-            subheader={moment(post.createAt).format("MMMM DD,YYYY")}
-          />
-          <CardActionArea>
-            <CardMedia
-              onClick={() => openDialog(post)}
-              className={classes.cardMedia}
-              image={post.attachments.images[0]}
-            />
-          </CardActionArea>
-          {post.message && (
-            <CardContent
-              className={classes.cardContent}
-              style={{ paddingBottom: "0.5rem" }}
-            >
-              <div style={{ padding: "0.5rem", display: "block" }}>
-                <Truncate
-                  style={{ ...txtStyle }}
-                  lines={2}
-                  ellipsis={<span> ...</span>}
-                >
-                  {post.message}
-                </Truncate>
-              </div>
-            </CardContent>
-          )}
-        </Card>
-      </Grid>
-    </React.Fragment>
-  );
-}
-
-function TypeVideo({ post, openDialog, style, dark, siteInfo }) {
-  const classes = useStyles(
-    style && style.isEdit ? style.titleEdit : style.titleView
-  );
-  const txtStyle = {
-    fontFamily: style.isEdit
-      ? style.bodyEdit.fontFamily
-      : style.bodyView.fontFamily,
-    fontSize: "11px"
-  };
-  return (
-    <React.Fragment>
-      <Grid
-        item
-        // xs={12}
-        // sm={6}
-        // md={6}
-        // lg={4}
-        style={dark ? { backgroundColor: "#1a1919" } : null}
-      >
-        <Card className={classes.card}>
-          <CardHeader
-            className={classes.cardHeader}
-            avatar={
-              <Avatar
-                aria-label="recipe"
-                src={siteInfo.logo}
-                className={classes.avatar}
-              />
-            }
-            action={
-              <IconButton aria-label="settings" style={{ borderRadius: 0 }}>
-                <a
-                  href={post.target}
-                  target={"_blank"}
-                  rel="noopener noreferrer"
-                >
-                  <FacebookIcon color="primary" fontSize="inherit" />
-                </a>
-              </IconButton>
-            }
-            subheaderTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
-            }}
-            titleTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
-            }}
-            title={siteInfo.title}
-            subheader={moment(post.createAt).format("MMMM DD,YYYY")}
-          />
-          <CardActionArea>
-            <ReactPlayer
-              onClick={() => openDialog(post)}
-              url={post && post.attachments && post.attachments.video}
-              controls={true}
-              style={{ objectFit: "unset" }}
-              width="100%"
-              height="30vh"
-            />
-          </CardActionArea>
-          {post.message && (
-            <CardContent className={classes.cardContent}>
-              <div style={{ padding: "0.5rem" }}>
-                <Truncate
-                  style={{ ...txtStyle }}
-                  lines={2}
-                  ellipsis={<span> ...</span>}
-                >
-                  {post.message}
-                </Truncate>
-              </div>
-            </CardContent>
-          )}
-        </Card>
-      </Grid>
-    </React.Fragment>
-  );
-}
-
-function TypeMessage({ post, openDialog, style, dark, siteInfo }) {
-  const classes = useStyles(
-    style && style.isEdit ? style.titleEdit : style.titleView
-  );
-  const txtStyle = {
-    fontFamily: style.isEdit
-      ? style.bodyEdit.fontFamily
-      : style.bodyView.fontFamily,
-    fontSize: "11px"
-  };
-  return (
-    <React.Fragment>
-      <Grid
-        item
-        // xs={12}
-        // sm={6}
-        // md={6}
-        // lg={4}
-        style={dark ? { backgroundColor: "#1a1919" } : null}
-      >
-        <Card className={classes.card}>
-          <CardHeader
-            className={classes.cardHeader}
-            avatar={
-              <Avatar
-                aria-label="recipe"
-                src={siteInfo.logo}
-                className={classes.avatar}
-              />
-            }
-            action={
-              <IconButton aria-label="settings" style={{ borderRadius: 0 }}>
-                <a
-                  href={post.target}
-                  target={"_blank"}
-                  rel="noopener noreferrer"
-                >
-                  <FacebookIcon color="primary" fontSize="inherit" />
-                </a>
-              </IconButton>
-            }
-            subheaderTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
-            }}
-            titleTypographyProps={{
-              style: { ...cardTitle, ...txtStyle }
-            }}
-            title={siteInfo.title}
-            subheader={moment(post.createAt).format("MMMM DD,YYYY")}
-          />
-          {post.message && (
-            <Truncate
-              style={{
-                ...txtStyle,
-                padding: "1rem ",
-                height: "-webkit-fill-available"
-              }}
-              lines={10}
-              ellipsis={<span> ...</span>}
-            >
-              {post.message}
-            </Truncate>
-          )}
-        </Card>
-      </Grid>
-    </React.Fragment>
-  );
-}
+const gridMessage = {
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  display: "-webkit-box",
+  WebkitLineClamp: "11",
+  WebkitBoxOrient: "vertical",
+};
 
 class PostTypeComponent extends React.Component {
   state = {
     open: false,
-    postOpen: null,
+    postOpen:
+      this.props.postView && this.props.postView.post
+        ? this.props.postView.post
+        : null,
     openVideo: false,
     pageView: 1,
     filteredData: [],
-    pageCount: 1,
     offset: 0,
-    itemPerPage: 5,
-    page: 1
+    itemPerPage: this.props.itemPerPage,
+    page: 1,
+    viewPost:
+      this.props.postView && this.props.postView.view
+        ? this.props.postView.view
+        : false,
   };
+
+  handleOpen = (post) => {
+    this.setState({
+      viewPost: true,
+      postOpen: post,
+    });
+  };
+
+  hanldeHomeClick = (post) => {
+    const { siteEdit, updateNavItemValue } = this.props;
+    // const news = siteEdit.navItems.filter((item) => {
+    //   return item.original === "news";
+    // });
+    // updateNavItemValue(news[0].order - 1);
+  };
+
+  renderPostComponent(index, post, style, dark, type) {
+    const { fromHome, isEdit, siteView } = this.props;
+    const { classes } = this.props;
+    const txtStyle = {
+      fontFamily: style.isEdit
+        ? style.bodyEdit.fontFamily
+        : style.bodyView.fontFamily,
+      fontSize: "14px",
+    };
+    const btnStyle = {
+      padding: "0.5rem 1.5rem",
+      fontSize: "11px",
+      border: `2px solid ${
+        style && style.isEdit ? style.titleEdit.color : style.titleView.color
+      }`,
+    };
+
+    return (
+      <Grid
+        key={index}
+        container
+        item
+        xs={12}
+        sm={6}
+        md={6}
+        lg={4}
+        style={dark ? { backgroundColor: "#1a1919" } : null}
+      >
+        <Grid
+          container
+          item
+          xs={12}
+          style={{
+            padding: "0.5rem",
+            backgroundColor: "white",
+            borderRadius: "0.4rem",
+          }}
+        >
+          <Grid item xs={12} style={{ padding: "1rem 0" }}>
+            <Typography
+              variant={"body1"}
+              style={{ ...txtStyle, fontWeight: "700", fontSize: "16px" }}
+            >
+              {moment(post.createdAt).format("MMMM DD,YYYY")}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            {type === "photo" && (
+              <CardMedia
+                className={classes.cardMedia}
+                image={post.attachments.images[0]}
+              />
+            )}
+            {type === "video" && (
+              <ReactPlayer
+                url={post && post.attachments && post.attachments.video}
+                controls={true}
+                style={{ objectFit: "unset" }}
+                width="100%"
+                height="30vh"
+              />
+            )}
+            {type === "album" && (
+              <CardMedia
+                className={classes.cardMediaAlbum}
+                image={post.attachments.images[0]}
+              >
+                <Grid
+                  container
+                  alignItems="center"
+                  justify="center"
+                  className={classes.album}
+                >
+                  <Typography variant="h3" style={{ color: "white" }}>
+                    {post.attachments.images.length} +
+                  </Typography>
+                </Grid>
+              </CardMedia>
+            )}
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            style={{ ...txtStyle, padding: "1rem 0", height: "5rem" }}
+          >
+            <div style={gridContent}>{post.message}</div>
+          </Grid>
+          <Grid container item xs={12} justify="flex-start">
+            {fromHome ? (
+              isEdit ? (
+                <ButtonComponent
+                  label="READ MORE"
+                  style={btnStyle}
+                  onClick={(e) => this.hanldeHomeClick(post)}
+                />
+              ) : (
+                <Link
+                  to={{
+                    pathname: `/${siteView.sitePath}/news`,
+                    postView: { post: post, view: true },
+                  }}
+                >
+                  <ButtonComponent label="READ MORE" style={btnStyle} />
+                </Link>
+              )
+            ) : (
+              <ButtonComponent
+                label="READ MORE"
+                style={btnStyle}
+                onClick={() => this.handleOpen(post)}
+              />
+            )}
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  }
+
+  renderPostMessage(index, post, style, dark) {
+    const { fromHome } = this.props;
+    const txtStyle = {
+      fontFamily: style.isEdit
+        ? style.bodyEdit.fontFamily
+        : style.bodyView.fontFamily,
+      fontSize: "14px",
+    };
+    const btnStyle = {
+      padding: "0.5rem 1.5rem",
+      fontSize: "11px",
+      border: `2px solid ${
+        style && style.isEdit ? style.titleEdit.color : style.titleView.color
+      }`,
+    };
+    return (
+      <Grid
+        key={index}
+        container
+        item
+        xs={12}
+        sm={6}
+        md={6}
+        lg={4}
+        style={dark ? { backgroundColor: "#1a1919" } : null}
+      >
+        <Grid
+          container
+          item
+          xs={12}
+          style={{
+            padding: "0.5rem",
+            backgroundColor: "white",
+            borderRadius: "0.4rem",
+          }}
+        >
+          <Grid item xs={12} style={{ padding: "1rem 0" }}>
+            <Typography
+              variant={"body1"}
+              style={{ ...txtStyle, fontWeight: "700", fontSize: "16px" }}
+            >
+              {moment(post.createdAt).format("MMMM DD,YYYY")}
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            style={{ ...txtStyle, padding: "1rem 0", height: "43vh" }}
+          >
+            <div style={gridMessage}>{post.message}</div>
+          </Grid>
+          <Grid container item xs={12} justify="flex-start">
+            {fromHome ? (
+              <ButtonComponent
+                label="READ MORE"
+                style={btnStyle}
+                onClick={() => this.handleOpen(post)}
+              />
+            ) : (
+              <ButtonComponent
+                label="READ MORE"
+                style={btnStyle}
+                onClick={() => this.handleOpen(post)}
+              />
+            )}
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  }
 
   handlePageViewClick = async (event, newValue) => {
     const {
       siteInfo,
       getDataByPageNumber,
       isEdit,
-      setPostToSiteView
+      setPostToSiteView,
     } = this.props;
     if (!isEdit) {
       this.setState({ pageView: newValue });
       const data = await getDataByPageNumber({
         sitePath: siteInfo.sitePath,
         page: "news",
-        pageNumber: newValue
+        pageNumber: newValue,
       });
       data && setPostToSiteView(data);
     }
   };
 
-  handleOpen = post => {
-    this.setState({
-      open: true,
-      postOpen: post
-    });
-  };
-
-  handleOpenVideo = post => {
-    this.setState({
-      openVideo: true,
-      postOpen: post
-    });
-  };
-
-  handleClose = () => {
-    this.setState({
-      open: false,
-      postOpen: null,
-      openVideo: false
-    });
-  };
-
-  setListData = listData => {
-    this.setState({
-      filteredData: listData
-    });
-  };
-
-  setPageCount = listData => {
-    this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
-    });
-  };
-
-  getList = async () => {
-    const { posts } = this.props;
-    this.setState({
-      filteredData: posts.slice(
-        this.state.offset,
-        this.state.itemPerPage + this.state.offset
-      ),
-      pageCount: Math.ceil(posts.length / this.state.itemPerPage)
-    });
-  };
-
-  componentDidMount() {
-    const { isEdit } = this.props;
-    if (isEdit) {
-      this.getList();
-    }
-  }
-
   handlePageEditClick = (event, newValue) => {
     let selected = newValue - 1;
-    let offset = Math.ceil(selected * this.state.itemPerPage);
-    this.setState({ offset: offset, page: newValue }, () => {
-      this.setListData(
-        this.props.posts.slice(
-          this.state.offset,
-          this.state.itemPerPage + this.state.offset
-        )
-      );
+    let newOffset = Math.ceil(selected * this.state.itemPerPage);
+    this.setState({
+      offset: newOffset,
+      page: newValue,
     });
   };
 
-  render() {
+  renderNews = (posts) => {
     const {
-      classes,
       isEdit,
       titleEdit,
       titleView,
       bodyEdit,
       bodyView,
-      siteInfo,
-      posts,
-      pageCountView,
-      theme,
-      fromHome
+      dark,
     } = this.props;
-    const post = this.state.postOpen;
     const style = {
       isEdit: isEdit,
       titleEdit: titleEdit,
       titleView: titleView,
       bodyEdit: bodyEdit,
-      bodyView: bodyView
+      bodyView: bodyView,
     };
     return (
-      <Container>
+      <>
+        {posts.map(
+          (post, index) =>
+            (post.attachments &&
+              post.isActive &&
+              this.renderPostComponent(
+                index,
+                post,
+                style,
+                dark,
+                post.attachments.media_type
+              )) ||
+            (!post.attachments &&
+              post.isActive &&
+              this.renderPostMessage(index, post, style, dark))
+        )}
+      </>
+    );
+  };
+
+  handleBack = () => {
+    this.setState({ viewPost: false });
+  };
+
+  renderViewNew = (post) => {
+    const { posts, bgWhite } = this.props;
+    const {
+      isEdit,
+      titleEdit,
+      titleView,
+      bodyEdit,
+      bodyView,
+      classes,
+    } = this.props;
+    const style = {
+      isEdit: isEdit,
+      titleEdit: titleEdit,
+      titleView: titleView,
+      bodyEdit: bodyEdit,
+      bodyView: bodyView,
+    };
+    const btnStyle = {
+      padding: "0.5rem 1.5rem",
+      fontSize: "11px",
+      border: `2px solid ${
+        style && style.isEdit ? style.titleEdit.color : style.titleView.color
+      }`,
+    };
+    const txtStyle = {
+      fontFamily: style.isEdit
+        ? style.bodyEdit.fontFamily
+        : style.bodyView.fontFamily,
+      fontSize: "16px",
+      color: bgWhite ? "black" : "white",
+    };
+    const type = post.attachments && post.attachments.media_type;
+    return (
+      <Grid
+        container
+        item
+        xs={11}
+        justify="center"
+        style={{ paddingTop: "3rem" }}
+      >
         <Grid
           container
-          spacing={2}
-          justify="center"
-          style={{ paddingTop: "8rem" }}
+          item
+          xs={12}
+          style={{
+            padding: "1rem 0",
+            borderBottom: `1px solid ${bgWhite ? "black" : "white"}`,
+            fontSize: "20px",
+          }}
+          alignItems="center"
         >
-          {isEdit && !fromHome
-            ? this.state.filteredData.map(
-                (post, index) =>
-                  (post.attachments &&
-                    post.attachments.media_type === "photo" &&
-                    post.isActive && (
-                      <TypePhoto
-                        key={index}
-                        post={post}
-                        style={style}
-                        dark={this.props.darkMode}
-                        openDialog={this.handleOpen}
-                        siteInfo={siteInfo}
-                      />
-                    )) ||
-                  (post.attachments &&
-                    post.attachments.media_type === "album" &&
-                    post.isActive && (
-                      <TypeAlbum
-                        key={index}
-                        post={post}
-                        style={style}
-                        dark={this.props.darkMode}
-                        openDialog={this.handleOpen}
-                        siteInfo={siteInfo}
-                      />
-                    )) ||
-                  (post.attachments &&
-                    post.attachments.media_type === "video" &&
-                    post.isActive && (
-                      <TypeVideo
-                        key={index}
-                        post={post}
-                        style={style}
-                        dark={this.props.darkMode}
-                        openDialog={this.handleOpenVideo}
-                        siteInfo={siteInfo}
-                      />
-                    )) ||
-                  (!post.attachments && post.isActive && (
-                    <TypeMessage
-                      key={index}
-                      post={post}
-                      style={style}
-                      dark={this.props.darkMode}
-                      openDialog={this.handleOpenVideo}
-                      siteInfo={siteInfo}
-                    />
-                  ))
-              )
-            : fromHome
-            ? posts
-                .filter(function(pos) {
-                  return pos.isActive;
-                })
-                .slice(0, 5)
-                .map(
-                  (post, index) =>
-                    (post.attachments &&
-                      post.attachments.media_type === "photo" &&
-                      post.isActive && (
-                        <TypePhoto
-                          key={index}
-                          post={post}
-                          style={style}
-                          dark={this.props.darkMode}
-                          openDialog={this.handleOpen}
-                          siteInfo={siteInfo}
-                        />
-                      )) ||
-                    (post.attachments &&
-                      post.attachments.media_type === "album" &&
-                      post.isActive && (
-                        <TypeAlbum
-                          key={index}
-                          post={post}
-                          style={style}
-                          dark={this.props.darkMode}
-                          openDialog={this.handleOpen}
-                          siteInfo={siteInfo}
-                        />
-                      )) ||
-                    (post.attachments &&
-                      post.attachments.media_type === "video" &&
-                      post.isActive &&
-                      (theme && theme === "theme3" ? (
-                        index < 5 && (
-                          <TypeVideo
-                            key={index}
-                            post={post}
-                            style={style}
-                            dark={this.props.darkMode}
-                            openDialog={this.handleOpenVideo}
-                            siteInfo={siteInfo}
-                          />
-                        )
-                      ) : (
-                        <TypeVideo
-                          key={index}
-                          post={post}
-                          style={style}
-                          dark={this.props.darkMode}
-                          openDialog={this.handleOpenVideo}
-                          siteInfo={siteInfo}
-                        />
-                      ))) ||
-                    (!post.attachments && post.isActive && (
-                      <TypeMessage
-                        key={index}
-                        post={post}
-                        style={style}
-                        dark={this.props.darkMode}
-                        openDialog={this.handleOpenVideo}
-                        siteInfo={siteInfo}
-                      />
-                    ))
-                )
-            : posts.map(
-                (post, index) =>
-                  (post.attachments &&
-                    post.attachments.media_type === "photo" &&
-                    post.isActive && (
-                      <TypePhoto
-                        key={index}
-                        post={post}
-                        style={style}
-                        dark={this.props.darkMode}
-                        openDialog={this.handleOpen}
-                        siteInfo={siteInfo}
-                      />
-                    )) ||
-                  (post.attachments &&
-                    post.attachments.media_type === "album" &&
-                    post.isActive && (
-                      <TypeAlbum
-                        key={index}
-                        post={post}
-                        style={style}
-                        dark={this.props.darkMode}
-                        openDialog={this.handleOpen}
-                        siteInfo={siteInfo}
-                      />
-                    )) ||
-                  (post.attachments &&
-                    post.attachments.media_type === "video" &&
-                    post.isActive &&
-                    (theme && theme === "theme3" ? (
-                      index < 5 && (
-                        <TypeVideo
-                          key={index}
-                          post={post}
-                          style={style}
-                          dark={this.props.darkMode}
-                          openDialog={this.handleOpenVideo}
-                          siteInfo={siteInfo}
-                        />
-                      )
-                    ) : (
-                      <TypeVideo
-                        key={index}
-                        post={post}
-                        style={style}
-                        dark={this.props.darkMode}
-                        openDialog={this.handleOpenVideo}
-                        siteInfo={siteInfo}
-                      />
-                    ))) ||
-                  (!post.attachments && post.isActive && (
-                    <TypeMessage
-                      key={index}
-                      post={post}
-                      style={style}
-                      dark={this.props.darkMode}
-                      openDialog={this.handleOpenVideo}
-                      siteInfo={siteInfo}
-                    />
-                  ))
+          <Button
+            onClick={() => this.handleBack()}
+            startIcon={<KeyboardArrowLeftIcon />}
+            style={{ fontWeight: "bold", color: bgWhite ? "black" : "white" }}
+          >
+            Back To News
+          </Button>
+        </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          md={8}
+          justify="center"
+          style={{ paddingTop: "4rem", borderBottom: "1px solid black" }}
+        >
+          {post.attachments && (
+            <Grid item xs={10}>
+              {type === "photo" && (
+                <CardMedia
+                  className={classes.cardView}
+                  image={post.attachments.images[0]}
+                />
               )}
-          <Dialog
-            open={this.state.open}
-            onClose={this.handleClose}
-            fullWidth
-            maxWidth={
-              this.state.postOpen &&
-              this.state.postOpen.attachments.media_type === "album"
-                ? "md"
-                : "sm"
-            }
-          >
-            <Container className={classes.root}>
-              <Grid container spacing={3} justify="center">
-                {post &&
-                  post.attachments.images &&
-                  post.attachments.images.map((img, index) => (
-                    <Grid
-                      item
-                      key={index}
-                      xs={12}
-                      sm={10}
-                      md={8}
-                      className={classes.girdItems}
-                    >
-                      <img src={img} alt="" className={classes.images} />
-                    </Grid>
-                  ))}
-              </Grid>
-              <Grid container className={classes.root} justify="center">
-                <Grid item xs={12} style={{ textAlign: "center" }}>
-                  <Typography
-                    variant="body1"
-                    style={isEdit ? bodyEdit : bodyView}
-                  >
-                    {post && post.message}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Container>
-          </Dialog>
-          {/* dialogue for video type */}
-          <Dialog
-            open={this.state.openVideo}
-            onClose={this.handleClose}
-            fullWidth
-            maxWidth="sm"
-          >
-            <Container className={classes.root}>
-              <Grid container spacing={3} justify="center">
+              {type === "video" && (
                 <ReactPlayer
                   url={post && post.attachments && post.attachments.video}
                   controls={true}
+                  style={{ objectFit: "unset" }}
                   width="100%"
-                  height="50%"
                 />
-              </Grid>
-              <Grid container className={classes.root} justify="center">
-                <Grid item xs={12} style={{ textAlign: "center" }}>
-                  <Typography
-                    variant="body1"
-                    style={isEdit ? bodyEdit : bodyView}
-                  >
-                    {post && post.message}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Container>
-          </Dialog>
+              )}
+              {type === "album" &&
+                post.attachments.images.map((img, index) => (
+                  <CardMedia
+                    key={index}
+                    className={classes.cardAlbum}
+                    image={img}
+                  />
+                ))}
+            </Grid>
+          )}
+          <Grid container item xs={10} style={{ padding: "1rem 0" }}>
+            <Grid item xs={12}>
+              <Typography
+                variant={"body1"}
+                style={{
+                  fontWeight: "700",
+                  fontSize: "20px",
+                  color: bgWhite ? "black" : "white",
+                }}
+              >
+                {moment(post.createdAt).format("MMMM DD,YYYY")}
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              style={{ ...txtStyle, padding: "1rem 0", lineHeight: "1.5rem" }}
+            >
+              {post.message}
+            </Grid>
+            <Grid
+              container
+              item
+              xs={12}
+              justify="flex-start"
+              style={{ padding: "2rem 0" }}
+            >
+              <a href={post.target && post.target}>
+                <ButtonComponent label="VIEW ON FACEBOOK" style={btnStyle} />
+              </a>
+            </Grid>
+          </Grid>
         </Grid>
-        {isEdit
-          ? this.state.pageCount > 1 &&
-            !fromHome && (
-              <Grid container justify="center" style={{ paddingTop: "5rem" }}>
-                <Pagination
-                  style={{
-                    backgroundColor: "white",
-                    padding: "0.4rem",
-                    borderRadius: "0.3rem"
-                  }}
-                  color="primary"
-                  shape="rounded"
-                  variant="outlined"
-                  count={this.state.pageCount}
-                  page={this.state.page}
-                  onChange={this.handlePageEditClick}
-                />
-              </Grid>
-            )
-          : pageCountView > 1 &&
-            theme !== "theme3" &&
-            !fromHome && (
-              <Grid container justify="center" style={{ paddingTop: "5rem" }}>
-                <Pagination
-                  style={{
-                    backgroundColor: "white",
-                    padding: "0.4rem",
-                    borderRadius: "0.3rem"
-                  }}
-                  color="primary"
-                  shape="rounded"
-                  variant="outlined"
-                  count={pageCountView}
-                  page={this.state.pageView}
-                  onChange={this.handlePageViewClick}
-                />
-              </Grid>
+        <Grid
+          container
+          item
+          xs={12}
+          justify="center"
+          style={{ paddingTop: "4rem" }}
+        >
+          <Grid container item xs={12} justify="center">
+            <Typography
+              variant="h6"
+              style={{
+                textAlign: "center",
+                color: bgWhite ? "black" : "white",
+              }}
+            >
+              Lastest
+            </Typography>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={12}
+            spacing={3}
+            justify="center"
+            style={{ paddingTop: "5rem" }}
+          >
+            {this.renderNews(
+              posts.sort((a, b) => b.createdAt - a.createdAt).slice(0, 3)
             )}
-      </Container>
+          </Grid>
+        </Grid>
+      </Grid>
+    );
+  };
+
+  render() {
+    const { isEdit, posts, pageCountView, fromHome, pageCount } = this.props;
+    return (
+      <Grid container justify="center">
+        {this.state.viewPost ? (
+          <Grid container item xs={11} justify="center">
+            {this.renderViewNew(this.state.postOpen)}
+          </Grid>
+        ) : (
+          <Grid container item xs={10}>
+            <Grid
+              container
+              item
+              xs={12}
+              spacing={3}
+              justify="center"
+              style={{ padding: "5rem 0.5rem" }}
+            >
+              {isEdit
+                ? !fromHome
+                  ? this.renderNews(
+                      posts.slice(
+                        this.state.page > pageCount ? 0 : this.state.offset,
+                        this.state.page > pageCount
+                          ? 5
+                          : this.state.itemPerPage + this.state.offset
+                      )
+                    )
+                  : this.renderNews(posts.slice(0, 3))
+                : this.renderNews(posts)}
+            </Grid>
+
+            {isEdit
+              ? pageCount > 1 &&
+                !fromHome && (
+                  <Grid container justify="center">
+                    <Pagination
+                      style={{
+                        backgroundColor: "white",
+                        padding: "0.4rem",
+                        borderRadius: "0.3rem",
+                      }}
+                      color="primary"
+                      shape="rounded"
+                      variant="outlined"
+                      count={pageCount}
+                      page={this.state.page > pageCount ? 1 : this.state.page}
+                      onChange={this.handlePageEditClick}
+                    />
+                  </Grid>
+                )
+              : pageCountView > 1 &&
+                !fromHome && (
+                  <Grid container justify="center">
+                    <Pagination
+                      style={{
+                        backgroundColor: "white",
+                        padding: "0.4rem",
+                        borderRadius: "0.3rem",
+                      }}
+                      color="primary"
+                      shape="rounded"
+                      variant="outlined"
+                      count={pageCountView}
+                      page={this.state.pageView}
+                      onChange={this.handlePageViewClick}
+                    />
+                  </Grid>
+                )}
+          </Grid>
+        )}
+      </Grid>
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
+  siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
   bodyView: state.site.bodyView,
-  pageCountView: state.post.pageCountNewsView
+  pageCountView: state.post.pageCountNewsView,
+  siteView: state.site.siteView,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getDataByPageNumber: ({ sitePath, page, siteId, pageNumber }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
-  setPostToSiteView: posts => dispatch(setPostsToSiteView(posts))
+  setPostToSiteView: (posts) => dispatch(setPostsToSiteView(posts)),
+  updateNavItemValue: (value) => dispatch(updateNavItemValue(value)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(gridStyle)(PostTypeComponent));
+)(withStyles(useStyles)(PostTypeComponent));

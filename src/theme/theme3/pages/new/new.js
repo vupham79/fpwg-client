@@ -5,6 +5,9 @@ import styles from "./new.module.css";
 import PostTypeComponent from "../../../component/postsType";
 
 class NewPage extends Component {
+  state = {
+    itemPerPage: 5,
+  };
   render() {
     const {
       isEdit,
@@ -16,7 +19,8 @@ class NewPage extends Component {
       bodyView,
       fromHome,
       homeList,
-      homeTitle
+      homeTitle,
+      postView,
     } = this.props;
     return (
       <Grid container justify="center" className={styles.news}>
@@ -29,81 +33,83 @@ class NewPage extends Component {
             className={styles.title}
             style={{
               color: "white",
-              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
+              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
             }}
           >
             {fromHome ? homeTitle : "News"}
           </Typography>
           <Divider style={{ backgroundColor: "white" }} variant="fullWidth" />
         </Grid>
-        <Grid item sm={12} xs={12} container spacing={3}>
+        <Grid item sm={12} xs={12} container>
           {isEdit ? (
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
                   fromHome={fromHome}
-                  posts={(fromHome && homeList) ? homeList : siteEdit.posts}
-                  siteInfo={{
-                    logo: siteEdit.logo,
-                    title: siteEdit.title,
-                    id: siteEdit.id
-                  }}
+                  posts={fromHome && homeList ? homeList : siteEdit.posts}
+                  pageCount={Math.ceil(
+                    (fromHome && homeList ? homeList : siteEdit.posts).length /
+                      this.state.itemPerPage
+                  )}
+                  itemPerPage={this.state.itemPerPage}
+                  postView={postView}
                 />
               </Grid>
             ) : (
-                <Grid container justify="center">
-                  <Typography
-                    variant="body1"
-                    style={{
-                      fontFamily: bodyEdit.fontFamily,
-                      color: "white",
-                      padding: "5rem 0"
-                    }}
-                  >
-                    Currently there are no news.
+              <Grid container justify="center">
+                <Typography
+                  variant="body1"
+                  style={{
+                    fontFamily: bodyEdit.fontFamily,
+                    color: "white",
+                    padding: "5rem 0",
+                  }}
+                >
+                  Currently there are no news.
                 </Typography>
-                </Grid>
-              )
+              </Grid>
+            )
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
                 fromHome={fromHome}
-                posts={(fromHome && homeList) ? homeList : siteView.posts}
+                posts={fromHome && homeList ? homeList : siteView.posts}
                 siteInfo={{
                   logo: siteView.logo,
                   title: siteView.title,
-                  sitePath: siteView.sitePath
+                  sitePath: siteView.sitePath,
                 }}
+                postView={postView}
               />
             </Grid>
           ) : (
-                <Grid container justify="center">
-                  <Typography
-                    variant="body1"
-                    style={{
-                      fontFamily: bodyView.fontFamily,
-                      color: "white",
-                      padding: "5rem 0"
-                    }}
-                  >
-                    Currently there are no news.
+            <Grid container justify="center">
+              <Typography
+                variant="body1"
+                style={{
+                  fontFamily: bodyView.fontFamily,
+                  color: "white",
+                  padding: "5rem 0",
+                }}
+              >
+                Currently there are no news.
               </Typography>
-                </Grid>
-              )}
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   titleView: state.site.titleView,
   titleEdit: state.site.titleEdit,
   siteView: state.site.siteView,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(NewPage);
