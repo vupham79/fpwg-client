@@ -23,7 +23,7 @@ class HomePage extends React.Component {
     return <></>;
   };
   render() {
-    const { siteEdit, siteView, isEdit } = this.props;
+    const { siteEdit, siteView, isEdit, color } = this.props;
     return (
       <Grid container>
         {isEdit &&
@@ -74,6 +74,7 @@ class HomePage extends React.Component {
                       fromHome
                       homeTitle={row.name}
                       homeList={row.filter.items}
+                      color={"#fff"}
                     />
                   </Grid>
                 ),
