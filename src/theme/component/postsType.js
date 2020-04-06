@@ -560,7 +560,9 @@ class PostTypeComponent extends React.Component {
                 {isEdit
                   ? !fromHome
                     ? this.renderNews(
-                      posts.slice(
+                      posts.filter(function (pos) {
+                        return pos.isActive === true;
+                      }).slice(
                         this.state.page > pageCount ? 0 : this.state.offset,
                         this.state.page > pageCount
                           ? 3
