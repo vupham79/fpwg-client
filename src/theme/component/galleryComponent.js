@@ -337,6 +337,13 @@ class GalleryComponent extends React.Component {
             onClose={this.handleClose}
             maxWidth="sm"
             fullWidth
+            PaperProps={{
+              elevation: 0,
+              style: {
+                backgroundColor: "unset",
+                overflow: "hidden",
+              },
+            }}
           >
             <CardMedia
               className={classes.media}
