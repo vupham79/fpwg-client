@@ -294,8 +294,8 @@ class HomepageEditorTab extends React.Component {
             </TableHead>
             <TableBody>
               {this.state.filteredData &&
-                this.state.filteredData.map((row, index) => (
-                  <TableRow key={index}>
+                this.state.filteredData.map((row) => (
+                  <TableRow key={row._id}>
                     <TableCell align="center">
                       {(row.attachments &&
                         row.attachments.media_type === "photo" && (
@@ -365,8 +365,8 @@ class HomepageEditorTab extends React.Component {
             </TableHead>
             <TableBody>
               {this.state.filteredData &&
-                this.state.filteredData.map((row, index) => (
-                  <TableRow key={index}>
+                this.state.filteredData.map((row) => (
+                  <TableRow key={row._id}>
                     <TableCell align="left">
                       <Truncate lines={2} ellipsis={<span>...</span>}>
                         {row.name}
@@ -425,8 +425,8 @@ class HomepageEditorTab extends React.Component {
             </TableHead>
             <TableBody>
               {this.state.filteredData &&
-                this.state.filteredData.map((row, index) => (
-                  <TableRow key={index}>
+                this.state.filteredData.map((row) => (
+                  <TableRow key={row._id}>
                     <TableCell style={{ width: 300 }}>
                       <CardMedia
                         component="img"
