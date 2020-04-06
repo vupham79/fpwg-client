@@ -23,7 +23,7 @@ class Theme1About extends React.Component {
       bodyEdit,
       bodyView,
       fromHome,
-      homeTitle
+      homeTitle,
     } = this.props;
     const useStyles = () => ({
       changableTitle: {
@@ -33,31 +33,31 @@ class Theme1About extends React.Component {
         textAlign: "center",
         fontSize: 30,
         paddingBottom: 20,
-        textTransform: "uppercase"
+        textTransform: "uppercase",
       },
       changableBody: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#535353",
         textAlign: "justify",
-        fontSize: 16
+        fontSize: 16,
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#535353",
         textAlign: "center",
-        fontSize: 16
+        fontSize: 16,
       },
       changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#535353",
         textAlign: "center",
-        fontSize: 16
+        fontSize: 16,
       },
       pageName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#535353",
-        fontSize: 20
+        fontSize: 20,
       },
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -66,7 +66,7 @@ class Theme1About extends React.Component {
         textAlign: "center",
         fontSize: 30,
         textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color,
       },
       changableLegend: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -77,14 +77,14 @@ class Theme1About extends React.Component {
         top: "50%",
         left: "40%",
         fontSize: 80,
-        textAlign: "center"
+        textAlign: "center",
       },
       greyDiv: {
         backgroundColor: "#e1ede4",
         padding: 30,
         textAlign: "center",
         color: "#535353",
-        fontSize: 20
+        fontSize: 20,
       },
     });
     const classes = useStyles();
@@ -93,17 +93,14 @@ class Theme1About extends React.Component {
       <Grid container style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>{fromHome ? homeTitle.charAt(0) : "A"}</span>{fromHome ? homeTitle.substring(1) : "BOUT"}
+            <span style={classes.changableFirst}>
+              {fromHome ? homeTitle.charAt(0) : "A"}
+            </span>
+            {fromHome ? homeTitle.substring(1) : "BOUT"}
           </p>
         </Grid>
         <Grid container item xs={12} justify={"center"}>
-          <RoundedImage
-            image={this.renderImage()}
-            roundedColor={isEdit ? titleEdit.color : titleView.color}
-            imageWidth="300"
-            imageHeight="300"
-            roundedSize="0"
-          />
+          <img src={this.renderImage()} style={{ width: "20rem" }} />
         </Grid>
         <Grid item xs={12} style={{ padding: 15, marginTop: 40 }}>
           <p style={classes.changableBody3}>
@@ -118,7 +115,7 @@ class Theme1About extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
@@ -126,7 +123,7 @@ const mapStateToProps = state => ({
   titleView: state.site.titleView,
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
-  newLogo: state.site.newLogo
+  newLogo: state.site.newLogo,
 });
 
 export default connect(mapStateToProps, null)(Theme1About);

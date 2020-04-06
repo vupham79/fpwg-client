@@ -69,7 +69,14 @@ class BannerComponent extends React.Component {
   };
 
   renderNewCoversCarouselWithTitle = () => {
-    const { isEdit, newCover, siteView, siteEdit, bodyEdit, bodyView } = this.props;
+    const {
+      isEdit,
+      newCover,
+      siteView,
+      siteEdit,
+      bodyEdit,
+      bodyView,
+    } = this.props;
     if (isEdit) {
       if (newCover && newCover.length > 0) {
         return newCover.map((cover, index) => {
@@ -92,8 +99,11 @@ class BannerComponent extends React.Component {
                     bottom: 30,
                     fontSize: 22,
                     color: "#fff",
-                    fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
-                  }}>
+                    fontFamily: isEdit
+                      ? bodyEdit.fontFamily
+                      : bodyView.fontFamily,
+                  }}
+                >
                   {isEdit && siteEdit && siteEdit.about}
                   {!isEdit && siteView && siteView.about}
                   {isEdit && !siteEdit.about && "Welcome to our website!"}
@@ -104,12 +114,7 @@ class BannerComponent extends React.Component {
           } else
             return (
               <div key={index} style={{ height: "100%", overflow: "hidden" }}>
-                <CardMedia
-                  component="img"
-                  alt=""
-                  height="400"
-                  image={cover}
-                />
+                <CardMedia component="img" alt="" height="400" image={cover} />
                 <p
                   style={{
                     position: "absolute",
@@ -120,8 +125,11 @@ class BannerComponent extends React.Component {
                     bottom: 30,
                     fontSize: 22,
                     color: "#fff",
-                    fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
-                  }}>
+                    fontFamily: isEdit
+                      ? bodyEdit.fontFamily
+                      : bodyView.fontFamily,
+                  }}
+                >
                   {isEdit && siteEdit && siteEdit.about}
                   {isEdit && !siteEdit.about && "Welcome to our website!"}
                 </p>
@@ -133,12 +141,7 @@ class BannerComponent extends React.Component {
       if (siteView.cover && siteView.cover.length > 0) {
         return siteView.cover.map((cover, index) => (
           <div key={index} style={{ height: "100%", overflow: "hidden" }}>
-            <CardMedia
-              component="img"
-              alt=""
-              height="400"
-              image={cover}
-            />
+            <CardMedia component="img" alt="" height="400" image={cover} />
             <p
               style={{
                 position: "absolute",
@@ -149,8 +152,9 @@ class BannerComponent extends React.Component {
                 bottom: 30,
                 fontSize: 22,
                 color: "#fff",
-                fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily
-              }}>
+                fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+              }}
+            >
               {!isEdit && siteView && siteView.about}
               {!isEdit && !siteView.about && "Welcome to our website!"}
             </p>
@@ -164,7 +168,7 @@ class BannerComponent extends React.Component {
     return (
       <React.Fragment>
         <Grid item xs={12}>
-          <Slider fade speed={2000} autoplay>
+          <Slider speed={2000} autoplay autoplaySpeed={2500} arrows={true}>
             {this.renderNewCoversSlider()}
           </Slider>
         </Grid>
@@ -175,29 +179,9 @@ class BannerComponent extends React.Component {
   TypeCarousel = () => {
     const { isEdit, newCover } = this.props;
     return (
-      // <React.Fragment>
-      //   {isEdit && newCover && newCover.length === 0 ? (
-      //     <div></div>
-      //   ) : (
-      //     <Grid item xs={12}>
-      //       <Carousel
-      //         autoPlay
-      //         infiniteLoop
-      //         centerMode={false}
-      //         showArrows={false}
-      //         showIndicators={false}
-      //         dynamicHeight={false}
-      //         showStatus={false}
-      //         showThumbs={false}
-      //       >
-      //         {this.renderNewCoversCarousel()}
-      //       </Carousel>
-      //     </Grid>
-      //   )}
-      // </React.Fragment>
       <React.Fragment>
         <Grid item xs={12}>
-          <Slider speed={1000} autoplay>
+          <Slider speed={1000} autoplay autoplaySpeed={2500} arrows={true}>
             {this.renderNewCoversSlider()}
           </Slider>
         </Grid>
@@ -212,21 +196,21 @@ class BannerComponent extends React.Component {
         {isEdit && newCover && newCover.length === 0 ? (
           <div></div>
         ) : (
-            <Grid item xs={12}>
-              <Carousel
-                autoPlay
-                infiniteLoop
-                centerMode={false}
-                showArrows={false}
-                showIndicators={false}
-                dynamicHeight={false}
-                showStatus={false}
-                showThumbs={false}
-              >
-                {this.renderNewCoversCarouselWithTitle()}
-              </Carousel>
-            </Grid>
-          )}
+          <Grid item xs={12}>
+            <Carousel
+              autoPlay
+              infiniteLoop
+              centerMode={false}
+              showArrows={false}
+              showIndicators={false}
+              dynamicHeight={false}
+              showStatus={false}
+              showThumbs={false}
+            >
+              {this.renderNewCoversCarouselWithTitle()}
+            </Carousel>
+          </Grid>
+        )}
       </React.Fragment>
     );
   };
@@ -241,14 +225,14 @@ class BannerComponent extends React.Component {
             0: this.TypeCarousel(),
             1: this.TypeSlider(),
             2: this.TypeCarouselWithTitle(),
-            default: this.TypeCarousel()
+            default: this.TypeCarousel(),
           }[bannerType]
         }
       </Grid>
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isEdit: state.site.isEdit,
   newCover: state.site.newCover,
   siteEdit: state.site.siteEdit,

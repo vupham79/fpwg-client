@@ -12,7 +12,7 @@ import {
   List,
   Divider,
   Hidden,
-  Drawer
+  Drawer,
 } from "@material-ui/core";
 import { faExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -24,54 +24,54 @@ import { NavLink } from "react-router-dom";
 
 const drawerWidth = 240;
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   app_bar: {
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   shopName: {
     fontSize: 20,
     textAlign: "center",
     fontWeight: "700",
-    overflow: "hidden"
+    overflow: "hidden",
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
       width: drawerWidth,
-      flexShrink: 0
-    }
+      flexShrink: 0,
+    },
   },
   navItems: {
     display: "none",
     marginRight: "2rem",
     [theme.breakpoints.up("sm")]: {
-      display: "flex"
-    }
+      display: "flex",
+    },
   },
   appBar: {
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth
-    }
+      marginLeft: drawerWidth,
+    },
   },
   menuButton: {
     marginLeft: theme.spacing(2),
     [theme.breakpoints.up("sm")]: {
-      display: "none"
-    }
+      display: "none",
+    },
   },
   drawerPaper: {
-    width: drawerWidth
+    width: drawerWidth,
   },
   tooltip: {
-    border: "2px solid orange"
-  }
+    border: "2px solid orange",
+  },
 });
 
 class HeaderComponent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mobileOpen: false
+      mobileOpen: false,
     };
   }
   handleDrawerToggle = () => {
@@ -93,7 +93,7 @@ class HeaderComponent extends Component {
       updateNavItemValue,
       siteEdit,
       titleEdit,
-      navTextColor
+      navTextColor,
     } = this.props;
     const tabStyles = {
       textTransform: "none",
@@ -102,17 +102,17 @@ class HeaderComponent extends Component {
       minWidth: "10vh",
       "&:hover": {
         color: "#40a9ff",
-        opacity: 1
+        opacity: 1,
       },
       "&$selected": {
-        color: "#1890ff"
+        color: "#1890ff",
       },
       "&:focus": {
-        color: "#40a9ff"
+        color: "#40a9ff",
       },
       textAlign: "left",
       textTransform: "uppercase",
-      fontSize: 14
+      fontSize: 14,
     };
     return (
       <Tabs
@@ -124,22 +124,22 @@ class HeaderComponent extends Component {
           type === "vertical"
             ? pos === "right"
               ? {
-                style: {
-                  background: siteEdit.color,
-                  right: 0
+                  style: {
+                    background: siteEdit.color,
+                    right: 0,
+                  },
                 }
-              }
               : {
+                  style: {
+                    background: siteEdit.color,
+                    left: 0,
+                  },
+                }
+            : {
                 style: {
                   background: siteEdit.color,
-                  left: 0
-                }
+                },
               }
-            : {
-              style: {
-                background: siteEdit.color
-              }
-            }
         }
         onChange={(e, newValue) => updateNavItemValue(newValue)}
       >
@@ -160,38 +160,38 @@ class HeaderComponent extends Component {
         {isEdit
           ? this.renderTabItems({ type: "horizontal" })
           : siteView &&
-          siteView.navItems &&
-          siteView.navItems.map((item, index) =>
-            item.isActive ? (
-              <Grid
-                item
-                sm
-                md
-                key={index}
-                style={{
-                  textAlign: "end"
-                }}
-              >
-                <NavLink
+            siteView.navItems &&
+            siteView.navItems.map((item, index) =>
+              item.isActive ? (
+                <Grid
+                  item
+                  sm
+                  md
+                  key={index}
                   style={{
-                    ...titleView,
-                    textDecoration: "none",
-                    color: navTextColor ? navTextColor : this.props.navColor,
-                    backgroundColor: this.props.headerColor,
-                    textTransform: "uppercase",
-                    fontSize: 14
+                    textAlign: "end",
                   }}
-                  activeStyle={{
-                    borderBottom: "1px solid",
-                    borderColor: this.props.navColor
-                  }}
-                  to={`/${siteView.sitePath}/${item.original}`}
                 >
-                  {item.name}
-                </NavLink>
-              </Grid>
-            ) : null
-          )}
+                  <NavLink
+                    style={{
+                      ...titleView,
+                      textDecoration: "none",
+                      color: navTextColor ? navTextColor : this.props.navColor,
+                      backgroundColor: this.props.headerColor,
+                      textTransform: "uppercase",
+                      fontSize: 14,
+                    }}
+                    activeStyle={{
+                      borderBottom: "1px solid",
+                      borderColor: this.props.navColor,
+                    }}
+                    to={`/${siteView.sitePath}/${item.original}`}
+                  >
+                    {item.name}
+                  </NavLink>
+                </Grid>
+              ) : null
+            )}
       </Grid>
     );
   };
@@ -204,31 +204,31 @@ class HeaderComponent extends Component {
         {isEdit ? (
           siteEdit && this.renderTabItems({ type: "vertical", pos: pos })
         ) : (
-            <List>
-              {siteView &&
-                siteView.navItems.map((item, index) =>
-                  item.isActive ? (
-                    <ListItem button key={index}>
-                      <NavLink
-                        style={{
-                          ...titleView,
-                          width: "inherit",
-                          textAlign: "center",
-                          height: "inherit",
-                          textDecoration: "none"
-                        }}
-                        activeStyle={{
-                          borderBottom: "1px solid"
-                        }}
-                        to={`/${siteView.sitePath}/${item.name}`}
-                      >
-                        {item.name}
-                      </NavLink>
-                    </ListItem>
-                  ) : null
-                )}
-            </List>
-          )}
+          <List>
+            {siteView &&
+              siteView.navItems.map((item, index) =>
+                item.isActive ? (
+                  <ListItem button key={index}>
+                    <NavLink
+                      style={{
+                        ...titleView,
+                        width: "inherit",
+                        textAlign: "center",
+                        height: "inherit",
+                        textDecoration: "none",
+                      }}
+                      activeStyle={{
+                        borderBottom: "1px solid",
+                      }}
+                      to={`/${siteView.sitePath}/${item.name}`}
+                    >
+                      {item.name}
+                    </NavLink>
+                  </ListItem>
+                ) : null
+              )}
+          </List>
+        )}
       </div>
     );
   };
@@ -244,10 +244,10 @@ class HeaderComponent extends Component {
             open={this.state.mobileOpen}
             onClose={this.handleDrawerToggle}
             classes={{
-              paper: classes.drawerPaper
+              paper: classes.drawerPaper,
             }}
             ModalProps={{
-              keepMounted: true
+              keepMounted: true,
             }}
           >
             {this.renderDrawer({ pos: pos })}
@@ -298,7 +298,7 @@ class HeaderComponent extends Component {
       titleView,
       siteEdit,
       siteView,
-      classes
+      classes,
     } = this.props;
     return (
       <Grid className={classes.shopName} style={isEdit ? titleEdit : titleView}>
@@ -319,15 +319,17 @@ class HeaderComponent extends Component {
               : { padding: "1rem", backgroundColor: this.props.headerColor }
           }
         >
-          <Grid container item md={7} sm={12} xs={8} justify="flex-start">
+          <Grid container item md={7} sm={12} xs={5} justify="flex-start">
             <Grid item>
               {this.renderMenuButton()}
               {this.showHideDrawer({ anchor: "left", pos: "right" })}
             </Grid>
-            <Grid item sm={12} xs={12}>{this.renderNavItems()}</Grid>
+            <Grid item sm={12} xs={12}>
+              {this.renderNavItems()}
+            </Grid>
           </Grid>
           {displayImg ? (
-            <Grid container item md={5} sm={12} xs={4}>
+            <Grid container item md={5} sm={12} xs={5}>
               <Grid
                 container
                 alignItems="center"
@@ -344,22 +346,27 @@ class HeaderComponent extends Component {
                 md={2}
                 sm={2}
                 xs={4}
-                style={{ ...imgStyles, backgroundImage: this.renderImage(), marginTop: 10, marginBottom: 10 }}
+                style={{
+                  ...imgStyles,
+                  backgroundImage: this.renderImage(),
+                  marginTop: 10,
+                  marginBottom: 10,
+                }}
               />
             </Grid>
           ) : (
-              <Grid
-                container
-                item
-                md={5}
-                sm={7}
-                xs={4}
-                justify="flex-end"
-                alignItems="center"
-              >
-                {this.renderTitle()}
-              </Grid>
-            )}
+            <Grid
+              container
+              item
+              md={5}
+              sm={7}
+              xs={5}
+              justify="flex-end"
+              alignItems="center"
+            >
+              {this.renderTitle()}
+            </Grid>
+          )}
         </Grid>
       );
     } else if (navPos === "right") {
@@ -376,23 +383,28 @@ class HeaderComponent extends Component {
                 md={4}
                 sm={4}
                 xs={4}
-                style={{ ...imgStyles, backgroundImage: this.renderImage(), marginTop: 10, marginBottom: 10 }}
+                style={{
+                  ...imgStyles,
+                  backgroundImage: this.renderImage(),
+                  marginTop: 10,
+                  marginBottom: 10,
+                }}
               />
               <Grid container alignItems="center" item md={6} sm={6} xs={8}>
                 {this.renderTitle()}
               </Grid>
             </Grid>
           ) : (
-              <Grid container item md={6} sm={6} xs={8}>
-                <Grid
-                  container
-                  justify="flex-start"
-                  style={{ paddingLeft: "2rem" }}
-                >
-                  {this.renderTitle()}
-                </Grid>
+            <Grid container item md={6} sm={6} xs={8}>
+              <Grid
+                container
+                justify="flex-start"
+                style={{ paddingLeft: "2rem" }}
+              >
+                {this.renderTitle()}
               </Grid>
-            )}
+            </Grid>
+          )}
           <Grid
             container
             justify="center"
@@ -436,15 +448,15 @@ class HeaderComponent extends Component {
           alignItems="center"
           style={{ backgroundColor: this.props.headerColor }}
         >
-          <Grid item xs={11}>
+          <Grid item xs={10}>
             {this.renderHeader({
               imgStyles: imgStyles,
               navPos: navPos,
               displayImg: displayImg,
-              isEdit: isEdit
+              isEdit: isEdit,
             })}
           </Grid>
-          <Grid item xs={1}>
+          <Grid item sm={1} xs={2}>
             {this.renderTooltip()}
           </Grid>
         </Grid>
@@ -453,7 +465,7 @@ class HeaderComponent extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   tabValue: state.tab.navItemValue,
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
@@ -461,11 +473,11 @@ const mapStateToProps = state => ({
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
   navItemIsActive: state.site.navItemIsActive,
-  newLogo: state.site.newLogo
+  newLogo: state.site.newLogo,
 });
 
-const mapDispatchToProps = dispatch => ({
-  updateNavItemValue: value => dispatch(updateNavItemValue(value))
+const mapDispatchToProps = (dispatch) => ({
+  updateNavItemValue: (value) => dispatch(updateNavItemValue(value)),
 });
 
 export default connect(
