@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Select, MenuItem, withStyles } from "@material-ui/core";
-import { getAllCategoriesAdmin } from "../actions";
 import { connect } from "react-redux";
 
 const useStyle = theme => ({
@@ -12,10 +11,6 @@ const useStyle = theme => ({
 });
 
 class CategoryPickerComponent extends Component {
-
-  componentDidMount() {
-    this.props.getAllCategoriesAdmin();
-  }
 
   handleLangChange = event => {
     this.props.onChange(event.target.value);
@@ -30,12 +25,13 @@ class CategoryPickerComponent extends Component {
         }}
         fullWidth
         variant={"outlined"}
+        // defaultValue={{ name: "All" }}
         value={selectedValue}
         onChange={this.handleLangChange}
       >
         {this.props.categories && this.props.categories.map((category) => (
-          <MenuItem key={category.id} value={category} style={{ color: "#555d66" }}>
-            {category.name}
+          <MenuItem key={category} value={category} style={{ color: "#555d66" }}>
+            {category}
           </MenuItem>
         ))}
       </Select>
@@ -44,11 +40,10 @@ class CategoryPickerComponent extends Component {
 }
 
 const mapStateToProps = state => ({
-  categories: state.admin.categories
+  categories: state.theme.categoriesUser
 });
 
 const mapDispatchToProps = dispatch => ({
-  getAllCategoriesAdmin: () => dispatch(getAllCategoriesAdmin()),
 });
 
 export default connect(

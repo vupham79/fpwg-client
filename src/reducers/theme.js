@@ -1,5 +1,6 @@
 const defaultState = {
-  data: []
+  data: [],
+  categoriesUser: [],
 };
 
 let index;
@@ -31,9 +32,16 @@ const ThemeReducer = (state = defaultState, action) => {
         navItems: action.payload
       };
     case "GET_ALL_THEME":
+      let uniqueCategories = [];
+      if (action.payload) {
+        let categories = action.payload.map(x => x.category.name);
+        uniqueCategories = [...new Set(categories)];
+        uniqueCategories.push("All");
+      }
       return {
         ...state,
-        data: [...action.payload]
+        data: [...action.payload],
+        categoriesUser: uniqueCategories
       };
     case "SET_ALL_THEMES":
       return {
