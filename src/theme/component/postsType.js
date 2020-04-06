@@ -410,9 +410,7 @@ class PostTypeComponent extends React.Component {
       color: bgWhite ? "black" : "white",
     };
     const type = post.attachments && post.attachments.media_type;
-    console.log(post.message.includes("/\n/ig"));
-    post.message = post.message.replace("/\n/ig", "<br /><br /><br />");
-    console.log(post.message.split("\u21b5").join("<br /><br /><br />"));
+    const originalMessage = post.message ? post.message.split("\n") : null;
     return (
       <Grid
         container
@@ -492,7 +490,18 @@ class PostTypeComponent extends React.Component {
               xs={12}
               style={{ ...txtStyle, padding: "1rem 0", lineHeight: "1.5rem" }}
             >
-              {post.message}
+              {originalMessage &&
+                originalMessage.map((val) => {
+                  if (val === "") {
+                    return (
+                      <>
+                        <br />
+                        <br />
+                      </>
+                    );
+                  }
+                  return val;
+                })}
             </Grid>
             <Grid
               container

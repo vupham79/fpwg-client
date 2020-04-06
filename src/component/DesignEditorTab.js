@@ -363,7 +363,7 @@ class DesignEditorTab extends React.Component {
             <Typography className={classes.title}>Recommended dimension: 750 x 400 </Typography> */}
             <Typography className={classes.title}>Crop Image</Typography>
           </DialogTitle>
-          <DialogContent style={{ height: "50vh" }}>
+          <DialogContent style={{ height: "80vh" }}>
             <ReactCrop
               src={this.state.selectedFilePath}
               crop={this.state.pixelCrop}

@@ -29,7 +29,12 @@ class ContactPage extends React.Component {
     } = this.props;
 
     return (
-      <Grid container justify="center" className={styles.contact_page}>
+      <Grid
+        container
+        justify="center"
+        className={styles.contact_page}
+        style={{ marginBottom: fromHome && "0" }}
+      >
         <Grid item sm={10} xs={10}>
           <Typography
             variant="h4"
