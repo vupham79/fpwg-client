@@ -77,7 +77,7 @@ class HeaderComponent extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.tabValue !== this.props.tabValue)
-      window.location.href = "#topPos";
+      document.getElementById("topPos").scrollIntoView();
   }
 
   handleDrawerToggle = () => {

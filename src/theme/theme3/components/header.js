@@ -102,6 +102,11 @@ function hexToRGB(hex, alpha) {
 }
 
 class Header extends Component {
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.tabValue !== this.props.tabValue) document.getElementById("topPos").scrollIntoView();
+  }
+
   renderImage = () => {
     const { isEdit, siteEdit, siteView, newLogo } = this.props;
     if (isEdit) {
@@ -252,21 +257,21 @@ class Header extends Component {
         {isEdit
           ? this.renderTabItems()
           : siteView &&
-            siteView.navItems &&
-            siteView.navItems.map((item, index) =>
-              item.isActive ? (
-                <Grid item style={{ marginLeft: "2rem" }}>
-                  <Link
-                    key={index}
-                    style={navLinkStyle}
-                    activeStyle={{ backgroundColor: siteView.color }}
-                    to={`/${siteView.sitePath}/${item.original}`}
-                  >
-                    {item.name}
-                  </Link>
-                </Grid>
-              ) : null
-            )}
+          siteView.navItems &&
+          siteView.navItems.map((item, index) =>
+            item.isActive ? (
+              <Grid item style={{ marginLeft: "2rem" }}>
+                <Link
+                  key={index}
+                  style={navLinkStyle}
+                  activeStyle={{ backgroundColor: siteView.color }}
+                  to={`/${siteView.sitePath}/${item.original}`}
+                >
+                  {item.name}
+                </Link>
+              </Grid>
+            ) : null
+          )}
       </Grid>
     );
   };
@@ -332,36 +337,36 @@ class Header extends Component {
         >
           {isEdit
             ? siteEdit &&
-              siteEdit.navItems &&
-              siteEdit.navItems
-                .filter((item) => item.isActive)
-                .map((item, index) => (
-                  <MenuItem key={index} value={index}>
-                    {item.name}
-                  </MenuItem>
-                ))
+            siteEdit.navItems &&
+            siteEdit.navItems
+              .filter((item) => item.isActive)
+              .map((item, index) => (
+                <MenuItem key={index} value={index}>
+                  {item.name}
+                </MenuItem>
+              ))
             : siteView &&
-              siteView.navItems &&
-              siteView.navItems.map((item, index) =>
-                item.isActive ? (
-                  <MenuItem
-                    key={index}
-                    value={index}
-                    style={{ color: "white", padding: "0" }}
+            siteView.navItems &&
+            siteView.navItems.map((item, index) =>
+              item.isActive ? (
+                <MenuItem
+                  key={index}
+                  value={index}
+                  style={{ color: "white", padding: "0" }}
+                >
+                  <Link
+                    to={`/${siteView.sitePath}/${item.original}`}
+                    style={{
+                      width: "-webkit-fill-available",
+                      color: "black",
+                      padding: "0.5rem",
+                    }}
                   >
-                    <Link
-                      to={`/${siteView.sitePath}/${item.original}`}
-                      style={{
-                        width: "-webkit-fill-available",
-                        color: "black",
-                        padding: "0.5rem",
-                      }}
-                    >
-                      {item.name}
-                    </Link>
-                  </MenuItem>
-                ) : null
-              )}
+                    {item.name}
+                  </Link>
+                </MenuItem>
+              ) : null
+            )}
         </Select>
       </FormControl>
     );
@@ -426,6 +431,7 @@ class Header extends Component {
     return (
       <Grid container className={classes.root}>
         <Grid
+          id="topPos"
           container
           item
           style={
@@ -449,50 +455,50 @@ class Header extends Component {
         >
           {isEdit
             ? siteEdit &&
-              siteEdit.address && (
-                <Grid
-                  item
-                  sm={12}
-                  className={classes.infoContent}
-                  style={{ ...infoStyle, marginBottom: "0.5rem" }}
-                >
-                  {siteEdit.address}
-                </Grid>
-              )
+            siteEdit.address && (
+              <Grid
+                item
+                sm={12}
+                className={classes.infoContent}
+                style={{ ...infoStyle, marginBottom: "0.5rem" }}
+              >
+                {siteEdit.address}
+              </Grid>
+            )
             : siteView &&
-              siteView.address && (
-                <Grid
-                  item
-                  sm={12}
-                  className={classes.infoContent}
-                  style={{ ...infoStyle, marginBottom: "0.5rem" }}
-                >
-                  {siteView.address}
-                </Grid>
-              )}
+            siteView.address && (
+              <Grid
+                item
+                sm={12}
+                className={classes.infoContent}
+                style={{ ...infoStyle, marginBottom: "0.5rem" }}
+              >
+                {siteView.address}
+              </Grid>
+            )}
           {isEdit
             ? phone &&
-              phone && (
-                <Grid
-                  item
-                  sm={6}
-                  className={classes.infoContent}
-                  style={{ ...infoStyle }}
-                >
-                  {phone}
-                </Grid>
-              )
+            phone && (
+              <Grid
+                item
+                sm={6}
+                className={classes.infoContent}
+                style={{ ...infoStyle }}
+              >
+                {phone}
+              </Grid>
+            )
             : siteView &&
-              siteView.phone && (
-                <Grid
-                  item
-                  sm={6}
-                  className={classes.infoContent}
-                  style={{ ...infoStyle }}
-                >
-                  {siteView.phone}
-                </Grid>
-              )}
+            siteView.phone && (
+              <Grid
+                item
+                sm={6}
+                className={classes.infoContent}
+                style={{ ...infoStyle }}
+              >
+                {siteView.phone}
+              </Grid>
+            )}
           <Grid
             container
             direction="row"
@@ -523,8 +529,8 @@ class Header extends Component {
                       ? { ...infoStyle }
                       : { display: "none", ...infoStyle }
                     : siteView.instagram
-                    ? { ...infoStyle }
-                    : { display: "none", ...infoStyle }
+                      ? { ...infoStyle }
+                      : { display: "none", ...infoStyle }
                 }
               >
                 <IconButton
@@ -532,7 +538,7 @@ class Header extends Component {
                   color="primary"
                   href={`https://instagram.com/${
                     isEdit ? instagram : siteView.instagram
-                  }`}
+                    }`}
                 >
                   {this.renderInstagram()}
                 </IconButton>
@@ -547,8 +553,8 @@ class Header extends Component {
                       ? { ...infoStyle }
                       : { display: "none", ...infoStyle }
                     : siteView.youtube
-                    ? { ...infoStyle }
-                    : { display: "none", ...infoStyle }
+                      ? { ...infoStyle }
+                      : { display: "none", ...infoStyle }
                 }
               >
                 <IconButton
@@ -569,8 +575,8 @@ class Header extends Component {
                       ? { ...infoStyle }
                       : { display: "none", ...infoStyle }
                     : siteView.whatsapp
-                    ? { ...infoStyle }
-                    : { display: "none", ...infoStyle }
+                      ? { ...infoStyle }
+                      : { display: "none", ...infoStyle }
                 }
               >
                 <IconButton
@@ -578,7 +584,7 @@ class Header extends Component {
                   color="primary"
                   href={`https://wa.me/${
                     isEdit ? whatsapp : siteView.whatsapp
-                  }`}
+                    }`}
                 >
                   {this.renderWhatsapp()}
                 </IconButton>
