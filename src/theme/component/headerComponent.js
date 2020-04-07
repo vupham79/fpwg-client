@@ -15,19 +15,12 @@ import {
   Tooltip,
   withStyles,
   Zoom,
-  ListItem,
-  List,
-  Divider,
-  Hidden,
-  Drawer,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updateNavItemValue, setPostView } from "../../actions";
-import MenuIcon from "@material-ui/icons/Menu";
 import { NavLink } from "react-router-dom";
-import { updateNavItemValue } from "../../actions";
+import { setPostView, updateNavItemValue } from "../../actions";
 
 const drawerWidth = 240;
 
