@@ -9,6 +9,7 @@ import {
   setEditOn,
   setSiteEdit,
   getUserSites,
+  setPostView,
 } from "../../actions";
 require("dotenv").config();
 
@@ -118,11 +119,12 @@ class Design extends Component {
   };
 
   handleClickItem = (index, id) => {
-    const { setCurrentEditId } = this.props;
+    const { setCurrentEditId, setPostView } = this.props;
     setCurrentEditId(id);
     // this.getAllThemes();
     this.getSite(id);
     this.setState({ selectedIndex: index });
+    setPostView(null);
   };
 
   renderSiteItem = (item, index) => {
@@ -201,6 +203,7 @@ const mapDispatchToProps = (dispatch) => ({
   getAllPost: (posts) => dispatch(getAllPost(posts)),
   setEditOn: () => dispatch(setEditOn()),
   getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
+  setPostView: (post) => dispatch(setPostView(post)),
 });
 
 export default connect(

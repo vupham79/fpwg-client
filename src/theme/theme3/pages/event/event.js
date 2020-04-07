@@ -86,6 +86,9 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
   );
 }
 class EventPage extends React.Component {
+  state = {
+    itemPerPage: 3,
+  };
   render() {
     const {
       titleEdit,
@@ -127,6 +130,11 @@ class EventPage extends React.Component {
             <EventComponent
               homeList={fromHome && homeList ? homeList : siteEdit.events}
               fromHome={fromHome}
+              pageCount={Math.ceil(
+                (fromHome && homeList ? homeList : siteEdit.events).length /
+                  this.state.itemPerPage
+              )}
+              itemPerPage={this.state.itemPerPage}
             />
           ) : (
             <EmptyEvent

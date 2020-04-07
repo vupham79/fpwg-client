@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import GalleryComponent from "../../../component/galleryComponent";
 
 class Theme4Gallery extends React.Component {
+  state = {
+    itemPerPage: 3,
+  };
   render() {
     const {
       isEdit,
@@ -126,6 +129,11 @@ class Theme4Gallery extends React.Component {
               galleries={fromHome && homeList ? homeList : siteEdit.galleries}
               siteInfo={siteEdit.id}
               fromHome={fromHome}
+              pageCount={Math.ceil(
+                (fromHome && homeList ? homeList : siteEdit.galleries).length /
+                  this.state.itemPerPage
+              )}
+              itemPerPage={this.state.itemPerPage}
             />
           ) : (
             <p style={classes.changableBody2}>Currently no photo available.</p>

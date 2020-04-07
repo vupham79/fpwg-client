@@ -37,10 +37,8 @@ class GalleryComponent extends React.Component {
     img: "",
     open: false,
     pageView: 1,
-    filteredData: [],
-    pageCount: 1,
     offset: 0,
-    itemPerPage: 3,
+    itemPerPage: this.props.itemPerPage,
     page: 1,
   };
 
@@ -70,48 +68,10 @@ class GalleryComponent extends React.Component {
     this.setState({ img: image, open: true });
   };
 
-  setListData = (listData) => {
-    this.setState({
-      filteredData: listData,
-    });
-  };
-
-  setPageCount = (listData) => {
-    this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage),
-    });
-  };
-
-  getList = async () => {
-    const { galleries } = this.props;
-    this.setState({
-      filteredData: galleries.slice(
-        this.state.offset,
-        this.state.itemPerPage + this.state.offset
-      ),
-      pageCount: Math.ceil(galleries.length / this.state.itemPerPage),
-    });
-  };
-
-  componentDidMount() {
-    const { isEdit } = this.props;
-    if (isEdit) {
-      this.getList();
-    }
-  }
-
   handlePageEditClick = (event, newValue) => {
     let selected = newValue - 1;
     let offset = Math.ceil(selected * this.state.itemPerPage);
-
-    this.setState({ offset: offset, page: newValue }, () => {
-      this.setListData(
-        this.props.galleries.slice(
-          this.state.offset,
-          this.state.itemPerPage + this.state.offset
-        )
-      );
-    });
+    this.setState({ offset: offset, page: newValue });
   };
 
   renderHomepageGallery = () => {
@@ -235,7 +195,15 @@ class GalleryComponent extends React.Component {
   };
 
   render() {
-    const { classes, galleries, pageCountView, isEdit, fromHome } = this.props;
+    const {
+      classes,
+      galleries,
+      pageCountView,
+      isEdit,
+      fromHome,
+      pageCount,
+    } = this.props;
+    const { offset, itemPerPage, page } = this.state;
     return (
       <React.Fragment>
         <Container>
@@ -247,27 +215,32 @@ class GalleryComponent extends React.Component {
           >
             {isEdit
               ? !fromHome
-                ? this.state.filteredData.map((item, index) => (
-                    <Grid
-                      item
-                      key={index}
-                      xs={12}
-                      sm={4}
-                      md={3}
-                      className={classes.gridItems}
-                    >
-                      <CardActionArea>
-                        <CardMedia
-                          className={classes.media}
-                          image={item && item.url}
-                          title="Gallery image"
-                          onClick={() =>
-                            this.handleOpenDialog(item && item.url)
-                          }
-                        />
-                      </CardActionArea>
-                    </Grid>
-                  ))
+                ? galleries
+                    .slice(
+                      page > pageCount ? 0 : offset,
+                      page > pageCount ? 5 : itemPerPage + offset
+                    )
+                    .map((item, index) => (
+                      <Grid
+                        item
+                        key={index}
+                        xs={12}
+                        sm={4}
+                        md={3}
+                        className={classes.gridItems}
+                      >
+                        <CardActionArea>
+                          <CardMedia
+                            className={classes.media}
+                            image={item && item.url}
+                            title="Gallery image"
+                            onClick={() =>
+                              this.handleOpenDialog(item && item.url)
+                            }
+                          />
+                        </CardActionArea>
+                      </Grid>
+                    ))
                 : this.renderHomepageGalleryEdit()
               : !fromHome
               ? galleries.map((item, index) => (
@@ -296,7 +269,7 @@ class GalleryComponent extends React.Component {
               : this.renderHomepageGallery()}
           </Grid>
           {isEdit
-            ? this.state.pageCount > 1 &&
+            ? pageCount > 1 &&
               !fromHome && (
                 <Grid container justify="center" style={{ padding: "2rem" }}>
                   <Pagination
@@ -308,8 +281,8 @@ class GalleryComponent extends React.Component {
                     color="default"
                     shape="rounded"
                     variant="outlined"
-                    count={this.state.pageCount}
-                    page={this.state.page}
+                    count={pageCount}
+                    page={page > pageCount ? 1 : page}
                     onChange={this.handlePageEditClick}
                   />
                 </Grid>

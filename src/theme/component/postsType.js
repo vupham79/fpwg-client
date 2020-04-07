@@ -15,6 +15,7 @@ import {
   getDataByPageNumber,
   setPostsToSiteView,
   updateNavItemValue,
+  setPostView,
 } from "../../actions";
 import ButtonComponent from "../../component/Button";
 import Link from "../../component/link";
@@ -79,6 +80,16 @@ const gridContent = {
   WebkitBoxOrient: "vertical",
 };
 
+const gridTitle = {
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  display: "-webkit-box",
+  WebkitLineClamp: "1",
+  WebkitBoxOrient: "vertical",
+  fontWeight: "bold",
+  fontSize: "25px",
+};
+
 const gridMessage = {
   overflow: "hidden",
   textOverflow: "ellipsis",
@@ -90,35 +101,30 @@ const gridMessage = {
 class PostTypeComponent extends React.Component {
   state = {
     open: false,
-    postOpen:
-      this.props.postView && this.props.postView.post
-        ? this.props.postView.post
-        : null,
-    openVideo: false,
+    postOpen: this.props.postView && this.props.postView,
     pageView: 1,
-    filteredData: [],
     offset: 0,
     itemPerPage: this.props.itemPerPage,
     page: 1,
-    viewPost:
-      this.props.postView && this.props.postView.view
-        ? this.props.postView.view
-        : false,
   };
 
   handleOpen = (post) => {
     this.setState({
-      viewPost: true,
       postOpen: post,
     });
   };
 
   hanldeHomeClick = (post) => {
-    // const { siteEdit, updateNavItemValue } = this.props;
-    // const news = siteEdit.navItems.filter((item) => {
-    //   return item.original === "news";
-    // });
-    // updateNavItemValue(news[0].order - 1);
+    const { siteEdit, updateNavItemValue, setPostView, fromHome } = this.props;
+    if (fromHome) {
+      const news = siteEdit.navItems.filter((item) => {
+        return item.original === "news";
+      });
+      setPostView(post);
+      updateNavItemValue(news[0].order - 1);
+    } else {
+      setPostView(post);
+    }
   };
 
   renderPostComponent(index, post, style, dark, type) {
@@ -164,7 +170,7 @@ class PostTypeComponent extends React.Component {
               variant={"body1"}
               style={{ ...txtStyle, fontWeight: "700", fontSize: "16px" }}
             >
-              {moment(post.createdAt).format("MMMM DD,YYYY")}
+              {moment(post.createdTime).format("MMMM DD,YYYY")}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -209,28 +215,26 @@ class PostTypeComponent extends React.Component {
             <div style={gridContent}>{post.message}</div>
           </Grid>
           <Grid container item xs={12} justify="flex-start">
-            {fromHome ? (
-              isEdit ? (
-                <ButtonComponent
-                  label="READ MORE"
-                  style={btnStyle}
-                  onClick={(e) => this.hanldeHomeClick(post)}
-                />
-              ) : (
-                <Link
-                  to={{
-                    pathname: `/${siteView.sitePath}/news`,
-                    postView: { post: post, view: true },
-                  }}
-                >
-                  <ButtonComponent label="READ MORE" style={btnStyle} />
-                </Link>
-              )
-            ) : (
+            {isEdit ? (
               <ButtonComponent
                 label="READ MORE"
                 style={btnStyle}
+                onClick={(e) => this.hanldeHomeClick(post)}
+              />
+            ) : fromHome ? (
+              <Link
+                to={{
+                  pathname: `/${siteView.sitePath}/news`,
+                  postView: post,
+                }}
+              >
+                <ButtonComponent label="READ MORE" style={btnStyle} />
+              </Link>
+            ) : (
+              <ButtonComponent
                 onClick={() => this.handleOpen(post)}
+                label="READ MORE"
+                style={btnStyle}
               />
             )}
           </Grid>
@@ -240,7 +244,7 @@ class PostTypeComponent extends React.Component {
   }
 
   renderPostMessage(index, post, style, dark) {
-    const { fromHome } = this.props;
+    const { fromHome, isEdit, siteView } = this.props;
     const txtStyle = {
       fontFamily: style.isEdit
         ? style.bodyEdit.fontFamily
@@ -280,7 +284,7 @@ class PostTypeComponent extends React.Component {
               variant={"body1"}
               style={{ ...txtStyle, fontWeight: "700", fontSize: "16px" }}
             >
-              {moment(post.createdAt).format("MMMM DD,YYYY")}
+              {moment(post.createdTime).format("MMMM DD,YYYY")}
             </Typography>
           </Grid>
           <Grid
@@ -291,17 +295,26 @@ class PostTypeComponent extends React.Component {
             <div style={gridMessage}>{post.message}</div>
           </Grid>
           <Grid container item xs={12} justify="flex-start">
-            {fromHome ? (
+            {isEdit ? (
               <ButtonComponent
                 label="READ MORE"
                 style={btnStyle}
-                onClick={() => this.handleOpen(post)}
+                onClick={(e) => this.hanldeHomeClick(post)}
               />
+            ) : fromHome ? (
+              <Link
+                to={{
+                  pathname: `/${siteView.sitePath}/news`,
+                  postView: post,
+                }}
+              >
+                <ButtonComponent label="READ MORE" style={btnStyle} />
+              </Link>
             ) : (
               <ButtonComponent
+                onClick={() => this.handleOpen(post)}
                 label="READ MORE"
                 style={btnStyle}
-                onClick={() => this.handleOpen(post)}
               />
             )}
           </Grid>
@@ -358,6 +371,7 @@ class PostTypeComponent extends React.Component {
         {posts.map(
           (post, index) =>
             (post.attachments &&
+              post.attachments.media_type &&
               post.isActive &&
               this.renderPostComponent(
                 index,
@@ -366,7 +380,8 @@ class PostTypeComponent extends React.Component {
                 dark,
                 post.attachments.media_type
               )) ||
-            (!post.attachments &&
+            (post.attachments &&
+              !post.attachments.media_type &&
               post.isActive &&
               this.renderPostMessage(index, post, style, dark))
         )}
@@ -375,11 +390,13 @@ class PostTypeComponent extends React.Component {
   };
 
   handleBack = () => {
-    this.setState({ viewPost: false });
+    const { setPostView } = this.props;
+    this.setState({ postOpen: null });
+    setPostView(null);
   };
 
   renderViewNew = (post) => {
-    const { posts, bgWhite } = this.props;
+    const { siteEdit, bgWhite } = this.props;
     const {
       isEdit,
       titleEdit,
@@ -426,14 +443,17 @@ class PostTypeComponent extends React.Component {
           style={{
             padding: "1rem 0",
             borderBottom: `1px solid ${bgWhite ? "black" : "white"}`,
-            fontSize: "20px",
           }}
           alignItems="center"
         >
           <Button
             onClick={() => this.handleBack()}
             startIcon={<KeyboardArrowLeftIcon />}
-            style={{ fontWeight: "bold", color: bgWhite ? "black" : "white" }}
+            style={{
+              fontWeight: "bold",
+              color: bgWhite ? "black" : "white",
+              fontSize: "15px",
+            }}
           >
             Back To News
           </Button>
@@ -444,8 +464,11 @@ class PostTypeComponent extends React.Component {
           xs={12}
           md={10}
           justify="center"
-          style={{ paddingTop: "4rem", borderBottom: "1px solid black" }}
+          style={{ paddingTop: "2rem", borderBottom: "1px solid black" }}
         >
+          <Grid item xs={8} style={{ ...txtStyle, paddingBottom: "2rem" }}>
+            <div style={gridTitle}>{post.message}</div>
+          </Grid>
           {post.attachments && (
             <Grid item xs={10}>
               {type === "photo" && (
@@ -482,7 +505,7 @@ class PostTypeComponent extends React.Component {
                   color: bgWhite ? "black" : "white",
                 }}
               >
-                {moment(post.createdAt).format("MMMM DD,YYYY")}
+                {moment(post.createdTime).format("MMMM DD,YYYY")}
               </Typography>
             </Grid>
             <Grid
@@ -525,7 +548,7 @@ class PostTypeComponent extends React.Component {
           item
           xs={12}
           justify="center"
-          style={{ paddingTop: "4rem" }}
+          style={{ paddingTop: "3rem" }}
         >
           <Grid container item xs={12} justify="center">
             <Typography
@@ -533,6 +556,7 @@ class PostTypeComponent extends React.Component {
               style={{
                 textAlign: "center",
                 color: bgWhite ? "black" : "white",
+                fontWeight: "bold",
               }}
             >
               Lastest
@@ -547,7 +571,11 @@ class PostTypeComponent extends React.Component {
             style={{ paddingTop: "5rem" }}
           >
             {this.renderNews(
-              posts.sort((a, b) => b.createdAt - a.createdAt).slice(0, 3)
+              siteEdit &&
+                siteEdit.posts &&
+                siteEdit.posts
+                  .sort((a, b) => b.createdTime - a.createdTime)
+                  .slice(0, 3)
             )}
           </Grid>
         </Grid>
@@ -556,12 +584,20 @@ class PostTypeComponent extends React.Component {
   };
 
   render() {
-    const { isEdit, posts, pageCountView, fromHome, pageCount } = this.props;
+    const {
+      isEdit,
+      posts,
+      pageCountView,
+      fromHome,
+      pageCount,
+      editPostView,
+    } = this.props;
+    const { itemPerPage, offset, page, postOpen } = this.state;
     return (
       <Grid container justify="center">
-        {this.state.viewPost ? (
+        {!fromHome && (isEdit ? editPostView : postOpen) ? (
           <Grid container item xs={11} justify="center">
-            {this.renderViewNew(this.state.postOpen)}
+            {this.renderViewNew(isEdit ? editPostView : postOpen)}
           </Grid>
         ) : (
           <Grid container item xs={10}>
@@ -611,7 +647,7 @@ class PostTypeComponent extends React.Component {
                       shape="rounded"
                       variant="outlined"
                       count={pageCount}
-                      page={this.state.page > pageCount ? 1 : this.state.page}
+                      page={page > pageCount ? 1 : page}
                       onChange={this.handlePageEditClick}
                     />
                   </Grid>
@@ -649,6 +685,7 @@ const mapStateToProps = (state) => ({
   bodyView: state.site.bodyView,
   pageCountView: state.post.pageCountNewsView,
   siteView: state.site.siteView,
+  editPostView: state.post.postView,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -656,6 +693,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
   setPostToSiteView: (posts) => dispatch(setPostsToSiteView(posts)),
   updateNavItemValue: (value) => dispatch(updateNavItemValue(value)),
+  setPostView: (post) => dispatch(setPostView(post)),
 });
 
 export default connect(

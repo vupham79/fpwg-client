@@ -5,7 +5,7 @@ import {
   updateCategory,
   insertCategory,
   insertTheme,
-  updateTheme
+  updateTheme,
 } from "./admin";
 import { updateAdminTabIndex } from "./adminTab";
 import { getAllPaths, updateSitepath } from "./path";
@@ -17,7 +17,8 @@ import {
   setPostsToSiteView,
   setEventsToSiteView,
   setGalleriesToSiteView,
-  setHomepageToSiteView
+  setHomepageToSiteView,
+  setPostView,
 } from "./post";
 import {
   changeColor,
@@ -68,19 +69,19 @@ import {
   setIsChanged,
   changeSiteAddress,
   setFramePreview,
-  setEventCustomize
+  setEventCustomize,
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import {
   updateNavItemValue,
   updateTabValue,
-  updateSelectNavItemValue
+  updateSelectNavItemValue,
 } from "./tab";
 import {
   getAllThemes,
   getAllThemesAdmin,
   getNavItems,
-  setShowCustomColor
+  setShowCustomColor,
   // updateTheme
 } from "./theme";
 import {
@@ -90,7 +91,7 @@ import {
   getAllUsers,
   getUserPages,
   login,
-  setLogout
+  setLogout,
 } from "./user";
 import { closeDialog, openDialog } from "./dialog";
 import { setColorPallete } from "./color";
@@ -100,7 +101,7 @@ import {
   syncEventFromFB,
   syncPostFromFB,
   setAutoSync,
-  applyAutoSync
+  applyAutoSync,
 } from "./syncdata";
 
 export {
@@ -196,5 +197,6 @@ export {
   updateCategory,
   insertCategory,
   insertTheme,
-  updateTheme
+  updateTheme,
+  setPostView,
 };

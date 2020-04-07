@@ -61,6 +61,7 @@ class NewPage extends Component {
                   )}
                   itemPerPage={this.state.itemPerPage}
                   bgWhite={true}
+                  postView={postView}
                 />
               </Grid>
             ) : (

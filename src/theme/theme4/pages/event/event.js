@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import EventComponent from "../../../component/eventComponent";
 
 class Theme1Event extends React.Component {
+  state = {
+    itemPerPage: 3,
+  };
   render() {
     const {
       isEdit,
@@ -131,6 +134,11 @@ class Theme1Event extends React.Component {
             }
             siteInfo={siteView && siteView.sitePath}
             fromHome={fromHome}
+            pageCount={Math.ceil(
+              (fromHome && homeList ? homeList : siteEdit.events).length /
+                this.state.itemPerPage
+            )}
+            itemPerPage={this.state.itemPerPage}
           />
         </Grid>
       </Grid>

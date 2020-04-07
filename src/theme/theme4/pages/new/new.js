@@ -151,6 +151,7 @@ class Theme1News extends React.Component {
                       this.state.itemPerPage
                   )}
                   itemPerPage={this.state.itemPerPage}
+                  postView={postView}
                 />
               </Grid>
             ) : (
