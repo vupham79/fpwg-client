@@ -2,7 +2,8 @@ const defaultState = {
   posts: null,
   pageCountNewsView: 1,
   pageCountGalleriesView: 1,
-  pageCountEventView: 1
+  pageCountEventView: 1,
+  postView: null,
 };
 
 const PostReducer = (state = defaultState, action) => {
@@ -10,11 +11,11 @@ const PostReducer = (state = defaultState, action) => {
     case "SET_POSTS_EDIT":
       return {
         ...state,
-        posts: [...action.payload]
+        posts: [...action.payload],
       };
     case "SET_ACTIVE_POST":
       const { status } = action.payload;
-      let update = state.posts.map(post => {
+      let update = state.posts.map((post) => {
         if (post.id === action.payload.post.id) {
           post.isActive = status;
         }
@@ -22,31 +23,36 @@ const PostReducer = (state = defaultState, action) => {
       });
       return {
         ...state,
-        posts: [...update]
+        posts: [...update],
       };
     case "SET_LOGOUT":
       return {
-        ...defaultState
+        ...defaultState,
       };
     case "UDATE_POSTS":
       return {
         ...state,
-        posts: [...action.payload]
+        posts: [...action.payload],
       };
     case "SET_PAGECOUNT_NEWS_VIEW":
       return {
         ...state,
-        pageCountNewsView: action.payload
+        pageCountNewsView: action.payload,
       };
     case "SET_PAGECOUNT_GALLERIES_VIEW":
       return {
         ...state,
-        pageCountGalleriesView: action.payload
+        pageCountGalleriesView: action.payload,
       };
     case "SET_PAGECOUNT_EVENT_VIEW":
       return {
         ...state,
-        pageCountEventView: action.payload
+        pageCountEventView: action.payload,
+      };
+    case "SET_POST_VIEW":
+      return {
+        ...state,
+        postView: action.payload,
       };
     default:
       return state;

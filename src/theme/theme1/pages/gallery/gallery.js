@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import GalleryComponent from "../../../component/galleryComponent";
 
 class Theme1Gallery extends React.Component {
+  state = {
+    itemPerPage: 3,
+  };
   render() {
     const {
       isEdit,
@@ -13,10 +16,10 @@ class Theme1Gallery extends React.Component {
       siteView,
       fromHome,
       homeTitle,
-      homeList
+      homeList,
     } = this.props;
 
-    const useStyles = theme => ({
+    const useStyles = (theme) => ({
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: 300,
@@ -24,13 +27,13 @@ class Theme1Gallery extends React.Component {
         textAlign: "center",
         fontSize: 30,
         paddingBottom: 20,
-        textTransform: "uppercase"
+        textTransform: "uppercase",
       },
       changableBody: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#535353",
         textAlign: "center",
-        fontSize: 16
+        fontSize: 16,
       },
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -39,7 +42,7 @@ class Theme1Gallery extends React.Component {
         textAlign: "center",
         fontSize: 30,
         textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color,
       },
     });
     const classes = useStyles();
@@ -60,12 +63,17 @@ class Theme1Gallery extends React.Component {
               galleries={fromHome && homeList ? homeList : siteEdit.galleries}
               siteInfo={siteEdit.id}
               fromHome={fromHome}
+              pageCount={Math.ceil(
+                (fromHome && homeList ? homeList : siteEdit.galleries).length /
+                  this.state.itemPerPage
+              )}
+              itemPerPage={this.state.itemPerPage}
             />
           ) : (
-              <p className={classes.changableBody}>
-                Currently no photo available.
-              </p>
-            )
+            <p className={classes.changableBody}>
+              Currently no photo available.
+            </p>
+          )
         ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
           <GalleryComponent
             galleries={fromHome && homeList ? homeList : siteView.galleries}
@@ -73,23 +81,21 @@ class Theme1Gallery extends React.Component {
             fromHome={fromHome}
           />
         ) : (
-              <p className={classes.changableBody}>
-                Currently no photo available.
-              </p>
-            )}
+          <p className={classes.changableBody}>Currently no photo available.</p>
+        )}
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
   bodyEdit: state.site.bodyEdit,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(Theme1Gallery);

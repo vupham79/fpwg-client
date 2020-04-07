@@ -5,6 +5,9 @@ import GalleryComponent from "../../../component/galleryComponent";
 import styles from "./gallery.module.css";
 
 class GalleryPage extends React.Component {
+  state = {
+    itemPerPage: 3,
+  };
   render() {
     const {
       isEdit,
@@ -52,6 +55,11 @@ class GalleryPage extends React.Component {
                   siteInfo={siteEdit.id}
                   fromHome={fromHome}
                   color={color}
+                  pageCount={Math.ceil(
+                    (fromHome && homeList ? homeList : siteEdit.galleries)
+                      .length / this.state.itemPerPage
+                  )}
+                  itemPerPage={this.state.itemPerPage}
                 />
               </Grid>
             ) : (

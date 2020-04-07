@@ -1,59 +1,59 @@
 import axios from "../utils/axios";
 
 export const setActivePost = (post, status) => {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_ACTIVE_POST",
-      payload: { post, status }
+      payload: { post, status },
     });
   };
 };
 
-export const getAllPost = posts => {
-  return dispatch => {
+export const getAllPost = (posts) => {
+  return (dispatch) => {
     dispatch({
       type: "SET_POSTS_EDIT",
-      payload: posts
+      payload: posts,
     });
   };
 };
 
-export const savePosts = posts => {
-  return async dispatch => {
+export const savePosts = (posts) => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
         method: "PATCH",
         url: "post/activePosts",
         data: {
-          posts: posts
-        }
+          posts: posts,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         dispatch({
           type: "UDATE_POSTS",
           payload: {
-            posts: data
-          }
+            posts: data,
+          },
         });
       }
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
     }
   };
 };
 
 export const getDataByPageNumber = ({ siteId, page, pageNumber, sitePath }) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
@@ -63,17 +63,17 @@ export const getDataByPageNumber = ({ siteId, page, pageNumber, sitePath }) => {
           id: siteId,
           page: page,
           pageNumber: pageNumber,
-          sitePath: sitePath
-        }
+          sitePath: sitePath,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         if (page === "home") {
           dispatch({
             type: "SET_HOME_LIST_SITEVIEW",
-            payload: data.data
+            payload: data.data,
           });
         }
         return data.data;
@@ -82,57 +82,66 @@ export const getDataByPageNumber = ({ siteId, page, pageNumber, sitePath }) => {
       }
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       return null;
     }
   };
 };
 
-export const setHomepageToSiteView = homepages => {
-  return dispatch => {
+export const setHomepageToSiteView = (homepages) => {
+  return (dispatch) => {
     dispatch({
       type: "SET_HOME_LIST_SITEVIEW",
-      payload: homepages.data
+      payload: homepages.data,
     });
   };
 };
 
-export const setPostsToSiteView = posts => {
-  return dispatch => {
+export const setPostsToSiteView = (posts) => {
+  return (dispatch) => {
     dispatch({
       type: "SET_SITEVIEW_NEWS",
-      payload: posts.data.posts
+      payload: posts.data.posts,
     });
     dispatch({
       type: "SET_PAGECOUNT_NEWS_VIEW",
-      payload: posts.pageCount
+      payload: posts.pageCount,
     });
   };
 };
 
-export const setGalleriesToSiteView = galleries => {
-  return dispatch => {
+export const setGalleriesToSiteView = (galleries) => {
+  return (dispatch) => {
     dispatch({
       type: "SET_SITEVIEW_GALLERIES",
-      payload: galleries.data
+      payload: galleries.data,
     });
     dispatch({
       type: "SET_PAGECOUNT_GALLERIES_VIEW",
-      payload: galleries.pageCount
+      payload: galleries.pageCount,
     });
   };
 };
 
-export const setEventsToSiteView = event => {
-  return dispatch => {
+export const setEventsToSiteView = (event) => {
+  return (dispatch) => {
     dispatch({
       type: "SET_SITEVIEW_EVENTS",
-      payload: event.data.events
+      payload: event.data.events,
     });
     dispatch({
       type: "SET_PAGECOUNT_EVENT_VIEW",
-      payload: event.pageCount
+      payload: event.pageCount,
+    });
+  };
+};
+
+export const setPostView = (post) => {
+  return (dispatch) => {
+    dispatch({
+      type: "SET_POST_VIEW",
+      payload: post,
     });
   };
 };

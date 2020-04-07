@@ -6,7 +6,7 @@ import PostTypeComponent from "../../../component/postsType";
 
 class NewPage extends Component {
   state = {
-    itemPerPage: 5,
+    itemPerPage: 3,
   };
   render() {
     const {

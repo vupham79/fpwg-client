@@ -9,13 +9,13 @@ const imgStyles = {
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   width: "100%",
-  height: "100%"
+  height: "100%",
 };
 
 const btnStyle = makeStyles({
   btn: {
-    backgroundColor: "white"
-  }
+    backgroundColor: "white",
+  },
 });
 
 function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
@@ -86,6 +86,9 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
   );
 }
 class EventPage extends React.Component {
+  state = {
+    itemPerPage: 3,
+  };
   render() {
     const {
       titleEdit,
@@ -95,7 +98,7 @@ class EventPage extends React.Component {
       siteView,
       fromHome,
       homeTitle,
-      homeList
+      homeList,
     } = this.props;
     return (
       <Grid
@@ -120,6 +123,11 @@ class EventPage extends React.Component {
             <EventComponent
               homeList={fromHome && homeList ? homeList : siteEdit.events}
               fromHome={fromHome}
+              pageCount={Math.ceil(
+                (fromHome && homeList ? homeList : siteEdit.events).length /
+                  this.state.itemPerPage
+              )}
+              itemPerPage={this.state.itemPerPage}
             />
           ) : (
             <EmptyEvent
@@ -150,12 +158,12 @@ class EventPage extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
-  siteView: state.site.siteView
+  siteView: state.site.siteView,
 });
 
 export default connect(mapStateToProps, null)(EventPage);
