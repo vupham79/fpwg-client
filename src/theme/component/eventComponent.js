@@ -478,7 +478,6 @@ class EventComponent extends React.Component {
         sm={10}
         container
         justify="center"
-        spacing={2}
         style={{ marginTop: "2.5rem", marginBottom: "2.5rem" }}
       >
         <Grid item xs={12}>
@@ -609,7 +608,11 @@ class EventComponent extends React.Component {
             {isEdit
               ? !fromHome &&
                 pageCount > 1 && (
-                  <Grid container justify="center" style={{ padding: "5rem" }}>
+                  <Grid
+                    container
+                    justify="center"
+                    style={{ marginTop: "2.5rem" }}
+                  >
                     <Pagination
                       style={{
                         backgroundColor: "white",
@@ -627,7 +630,11 @@ class EventComponent extends React.Component {
                 )
               : !fromHome &&
                 pageCountView > 1 && (
-                  <Grid container justify="center" style={{ padding: "5rem" }}>
+                  <Grid
+                    container
+                    justify="center"
+                    style={{ marginTop: "2.5rem" }}
+                  >
                     <Pagination
                       style={{
                         backgroundColor: "white",

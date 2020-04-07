@@ -1,25 +1,7 @@
 import React, { Component } from "react";
 import { Select, MenuItem, withStyles } from "@material-ui/core";
 import WebFont from "webfontloader";
-
-const listFont = [
-  "Arial",
-  "Avenir",
-  "Roboto",
-  "Courier New",
-  "Courier",
-  "Verdana",
-  "Georgia",
-  "Palatino",
-  "Open Sans",
-  "Comic Sans MS",
-  "Arial Black",
-  "Impact",
-  "Catamaran",
-  "Source Sans Pro",
-  "Candara",
-];
-
+import { fontFamily } from "../constant/constant";
 const useStyle = (theme) => ({
   root: {
     padding: "0.5rem",
@@ -35,22 +17,7 @@ class FontPickerComponent extends Component {
     const { selectedValue, classes } = this.props;
     WebFont.load({
       google: {
-        families: [
-          "Arial",
-          "Avenir",
-          "Roboto",
-          "Courier New",
-          "Courier",
-          "Verdana",
-          "Georgia",
-          "Palatino",
-          "Open Sans",
-          "Comic Sans MS",
-          "Arial Black",
-          "Impact",
-          "Catamaran",
-          "Source Sans Pro",
-        ],
+        families: fontFamily,
       },
     });
     return (
@@ -63,7 +30,7 @@ class FontPickerComponent extends Component {
         value={selectedValue}
         onChange={this.handleLangChange}
       >
-        {listFont.map((font, index) => (
+        {fontFamily.map((font, index) => (
           <MenuItem key={index} value={font}>
             {font}
           </MenuItem>

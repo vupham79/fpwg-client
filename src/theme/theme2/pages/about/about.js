@@ -153,9 +153,7 @@ class AboutPage extends React.Component {
                     : bodyView.fontFamily,
                   fontWeight: 400,
                   color: "#151515",
-                  // textAlign: "center",
                   fontSize: 20,
-                  // paddingBottom: 10,
                 }}
               >
                 {isEdit
@@ -173,8 +171,8 @@ class AboutPage extends React.Component {
                     })
                   : siteView &&
                     siteView.story &&
-                    siteEdit.story.composedText &&
-                    siteEdit.story.composedText.map((text) => {
+                    siteView.story.composedText &&
+                    siteView.story.composedText.map((text) => {
                       const originalText = text.split("\n");
                       return originalText.map((val, index) => (
                         <React.Fragment key={index}>

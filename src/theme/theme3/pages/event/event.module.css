@@ -1,6 +1,6 @@
 .event_page {
-  margin-top: 15vh;
-  margin-bottom: 5vh;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .title {
@@ -15,7 +15,7 @@
 }
 
 .event_body {
-  margin-top: 10vh !important;
+  /* margin-top: 10vh !important; */
   border: 1px solid #d4e1db;
 }
 

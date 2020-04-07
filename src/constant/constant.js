@@ -44,8 +44,8 @@ export const themes = [
       { name: "contact", component: <PreContactPageT1 /> },
       { name: "event", component: <PreEventPageT1 /> },
       { name: "gallery", component: <PreGalleryPageT1 /> },
-      { name: "news", component: <PreNewPageT1 /> }
-    ]
+      { name: "news", component: <PreNewPageT1 /> },
+    ],
   },
   {
     id: "5e521a561c9d44000020cd96",
@@ -56,8 +56,8 @@ export const themes = [
       { name: "contact", component: <PreContactPage /> },
       { name: "event", component: <PreEventPage /> },
       { name: "gallery", component: <PreGalleryPage /> },
-      { name: "news", component: <PreNewPage /> }
-    ]
+      { name: "news", component: <PreNewPage /> },
+    ],
   },
   {
     id: "5e6941cf1c9d44000090c04a",
@@ -68,8 +68,8 @@ export const themes = [
       { name: "contact", component: <PreContactPageT3 /> },
       { name: "event", component: <PreEventPageT3 /> },
       { name: "gallery", component: <PreGalleryPageT3 /> },
-      { name: "news", component: <PreNewPageT3 /> }
-    ]
+      { name: "news", component: <PreNewPageT3 /> },
+    ],
   },
   {
     id: "5e77a7341c9d440000b5a08c",
@@ -80,9 +80,9 @@ export const themes = [
       { name: "contact", component: <PreContactPageT4 /> },
       { name: "event", component: <PreEventPageT4 /> },
       { name: "gallery", component: <PreGalleryPageT4 /> },
-      { name: "news", component: <PreNewPageT4 /> }
-    ]
-  }
+      { name: "news", component: <PreNewPageT4 /> },
+    ],
+  },
 ];
 
 export const pages = [
@@ -91,7 +91,7 @@ export const pages = [
   { name: "PreEdit", component: PreEditPage },
   { name: "Login", component: <LoginPage /> },
   { name: "Main", component: <MainPage /> },
-  { name: "Edit", component: EditPage }
+  { name: "Edit", component: EditPage },
 ];
 
 export const theme1Pages = [
@@ -100,7 +100,7 @@ export const theme1Pages = [
   { name: "contact", component: <PreContactPageT1 /> },
   { name: "event", component: <PreEventPageT1 /> },
   { name: "gallery", component: <PreGalleryPageT1 /> },
-  { name: "new", component: <PreNewPageT1 /> }
+  { name: "new", component: <PreNewPageT1 /> },
 ];
 
 export const theme2Pages = [
@@ -109,7 +109,7 @@ export const theme2Pages = [
   { name: "contact", component: <PreContactPage /> },
   { name: "event", component: <PreEventPage /> },
   { name: "gallery", component: <PreGalleryPage /> },
-  { name: "new", component: <PreNewPage /> }
+  { name: "new", component: <PreNewPage /> },
 ];
 
 export const theme4Pages = [
@@ -118,5 +118,25 @@ export const theme4Pages = [
   { name: "contact", component: <PreContactPageT4 /> },
   { name: "event", component: <PreEventPageT4 /> },
   { name: "gallery", component: <PreGalleryPageT4 /> },
-  { name: "new", component: <PreNewPageT4 /> }
+  { name: "new", component: <PreNewPageT4 /> },
+];
+
+export const fontFamily = [
+  "Arvo",
+  "Avenir",
+  "Dosis",
+  "Merriweather",
+  "Verdana",
+  "Helvetica",
+  "Montserrat",
+  "Palatino",
+  "Open Sans",
+  "Lato",
+  "Josefin Sans",
+  "Exo",
+  "Catamaran",
+  "Source Sans Pro",
+  "Roboto",
+  "League Spartan",
+  "Candara",
 ];

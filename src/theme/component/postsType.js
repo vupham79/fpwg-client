@@ -376,23 +376,24 @@ class PostTypeComponent extends React.Component {
     };
     return (
       <>
-        {posts.map(
-          (post, index) =>
-            (post.attachments &&
-              post.attachments.media_type &&
-              post.isActive &&
-              this.renderPostComponent(
-                index,
-                post,
-                style,
-                dark,
-                post.attachments.media_type
-              )) ||
-            (post.attachments &&
-              !post.attachments.media_type &&
-              post.isActive &&
-              this.renderPostMessage(index, post, style, dark))
-        )}
+        {posts &&
+          posts.map(
+            (post, index) =>
+              (post.attachments &&
+                post.attachments.media_type &&
+                post.isActive &&
+                this.renderPostComponent(
+                  index,
+                  post,
+                  style,
+                  dark,
+                  post.attachments.media_type
+                )) ||
+              (post.attachments &&
+                !post.attachments.media_type &&
+                post.isActive &&
+                this.renderPostMessage(index, post, style, dark))
+          )}
       </>
     );
   };
@@ -404,7 +405,7 @@ class PostTypeComponent extends React.Component {
   };
 
   renderViewNew = (post) => {
-    const { siteEdit, bgWhite } = this.props;
+    const { siteEdit, bgWhite, siteView } = this.props;
     const {
       isEdit,
       titleEdit,
@@ -579,11 +580,15 @@ class PostTypeComponent extends React.Component {
             style={{ paddingTop: "5rem" }}
           >
             {this.renderNews(
-              siteEdit &&
-                siteEdit.posts &&
-                siteEdit.posts
-                  .sort((a, b) => b.createdTime - a.createdTime)
-                  .slice(0, 3)
+              siteEdit
+                ? siteEdit.posts &&
+                    siteEdit.posts
+                      .sort((a, b) => b.createdTime - a.createdTime)
+                      .slice(0, 3)
+                : siteView.posts &&
+                    siteView.posts
+                      .sort((a, b) => b.createdTime - a.createdTime)
+                      .slice(0, 3)
             )}
           </Grid>
         </Grid>

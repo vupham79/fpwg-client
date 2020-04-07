@@ -73,7 +73,7 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item container sm={6} justify="center">
+      {/* <Grid item container sm={6} justify="center">
         <Button className={styles.btn_view}>
           <a href={isEdit ? siteEdit.url : siteView.url}>
             <Typography
@@ -85,7 +85,7 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
             </Typography>
           </a>
         </Button>
-      </Grid>
+      </Grid> */}
     </>
   );
 }
