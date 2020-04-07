@@ -72,21 +72,13 @@ class AboutPage extends React.Component {
         <Grid
           container
           item
-          sm={3}
-          xs={5}
-          justify="center"
-          style={{ display: fromHome ? "none" : "block", paddingTop: "2.5rem" }}
-        >
-          <CardMedia component="img" alt="" image={this.renderImage()} />
-        </Grid>
-
-        <Grid
-          container
-          item
-          sm={10}
+          sm={fromHome ? 10 : 6}
           xs={10}
           justify="center"
-          style={{ marginTop: "2.5rem" }}
+          style={{
+            marginTop: "2.5rem",
+            marginBottom: fromHome ? "2.5rem" : 0,
+          }}
         >
           <Typography
             variant="body1"
@@ -95,20 +87,49 @@ class AboutPage extends React.Component {
               fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
               fontWeight: 400,
               color: "#151515",
-              textAlign: "center",
-              fontSize: 28,
-              textTransform: "uppercase",
+              fontSize: fromHome ? 20 : 16,
             }}
           >
+            <CardMedia
+              component="img"
+              alt=""
+              image={this.renderImage()}
+              style={{
+                width: "30%",
+                float: "left",
+                marginRight: "1rem",
+                display: fromHome ? "none" : "inline-block",
+              }}
+            />
             {isEdit
               ? siteEdit && siteEdit.about
-                ? siteEdit.about
+                ? siteEdit.about.split("\n").map((val, index) => (
+                    <React.Fragment key={index}>
+                      {val}
+                      <br />
+                    </React.Fragment>
+                  ))
                 : "Welcome to our website! Take a look around and feel free to contact us for more information."
               : siteView && siteView.about
-              ? siteView.about
+              ? siteView.about.split("\n").map((val, index) => (
+                  <React.Fragment key={index}>
+                    {val}
+                    <br />
+                  </React.Fragment>
+                ))
               : "Welcome to our website! Take a look around and feel free to contact us for more information."}
           </Typography>
         </Grid>
+
+        {/* <Grid
+          container
+          item
+          sm={4}
+          xs={10}
+          justify="center"
+          style={{ marginTop: "2.5rem" }}
+        >
+        </Grid> */}
         {!fromHome && (
           <>
             <Grid
@@ -126,9 +147,8 @@ class AboutPage extends React.Component {
                     : bodyView.fontFamily,
                   fontWeight: 900,
                   color: "#151515",
-                  textAlign: "center",
-                  fontSize: 30,
-                  // paddingBottom: 10,
+                  textAlign: "left",
+                  fontSize: 20,
                 }}
               >
                 {isEdit
@@ -142,7 +162,10 @@ class AboutPage extends React.Component {
               sm={6}
               xs={10}
               justify="center"
-              style={{ marginTop: !fromHome ? "2.5rem" : 0 }}
+              style={{
+                marginTop: !fromHome ? "2.5rem" : 0,
+                marginBottom: !fromHome ? "2.5rem" : 0,
+              }}
             >
               <Typography
                 variant="body1"
@@ -153,7 +176,7 @@ class AboutPage extends React.Component {
                     : bodyView.fontFamily,
                   fontWeight: 400,
                   color: "#151515",
-                  fontSize: 20,
+                  fontSize: 16,
                 }}
               >
                 {isEdit

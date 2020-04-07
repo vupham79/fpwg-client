@@ -438,13 +438,7 @@ class PostTypeComponent extends React.Component {
     const type = post.attachments && post.attachments.media_type;
     const originalMessage = post.message ? post.message.split("\n") : null;
     return (
-      <Grid
-        container
-        item
-        xs={11}
-        justify="center"
-        style={{ paddingTop: "3rem" }}
-      >
+      <Grid container item xs={11} justify="center">
         <Grid
           container
           item
@@ -557,7 +551,7 @@ class PostTypeComponent extends React.Component {
           item
           xs={12}
           justify="center"
-          style={{ paddingTop: "3rem" }}
+          style={{ paddingTop: "2.5rem" }}
         >
           <Grid container item xs={12} justify="center">
             <Typography
@@ -577,7 +571,7 @@ class PostTypeComponent extends React.Component {
             xs={12}
             spacing={3}
             justify="center"
-            style={{ paddingTop: "5rem" }}
+            style={{ paddingTop: "2.5rem" }}
           >
             {this.renderNews(
               siteEdit

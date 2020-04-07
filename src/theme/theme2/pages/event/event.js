@@ -73,19 +73,6 @@ function EmptyEvent({ isEdit, titleEdit, titleView, siteView, siteEdit }) {
           </Grid>
         </Grid>
       </Grid>
-      {/* <Grid item container sm={6} justify="center">
-        <Button className={styles.btn_view}>
-          <a href={isEdit ? siteEdit.url : siteView.url}>
-            <Typography
-              align="center"
-              variant="h6"
-              className={styles.btn_content}
-            >
-              View Events On FaceBook
-            </Typography>
-          </a>
-        </Button>
-      </Grid> */}
     </>
   );
 }
@@ -122,6 +109,9 @@ class EventPage extends React.Component {
           sm={12}
           xs={12}
           className={styles.event_title}
+          style={{
+            height: fromHome && "6rem",
+          }}
         >
           <Typography
             className={styles.title}

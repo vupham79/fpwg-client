@@ -40,6 +40,9 @@ class NewPage extends Component {
           sm={12}
           xs={12}
           className={styles.news_title}
+          style={{
+            height: fromHome && "6rem",
+          }}
         >
           <Grid item>
             <Typography

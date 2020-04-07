@@ -58,9 +58,13 @@ class EventComponent extends React.Component {
                   item
                   container
                   sm={12}
+                  spacing={2}
                   className={styles.contain_event}
                   key={index}
-                  style={{ padding: 10, backgroundColor: "white" }}
+                  style={{
+                    padding: "1rem",
+                    backgroundColor: "white",
+                  }}
                 >
                   <Grid
                     item
@@ -73,29 +77,20 @@ class EventComponent extends React.Component {
                         : siteView.showCoverEvent
                         ? "block"
                         : "none",
-                      backgroundColor: "#444950",
+                      backgroundImage: `url('${row.cover}')`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      height: "6rem",
                     }}
-                  >
-                    <img
-                      style={{
-                        // objectFit: "contain",
-                        width: "100%",
-                        height: "100%",
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                      }}
-                      src={row.cover}
-                      alt=""
-                    />
-                  </Grid>
+                  ></Grid>
 
                   <Grid
                     container
                     direction="row"
                     item
-                    xs={2}
-                    style={{ height: "5rem" }}
+                    xs={1}
+                    style={{ height: "6rem" }}
                   >
                     <Grid item xs={12} style={classes.changableFirst}>
                       {moment(row.startTime).format("MMM").toUpperCase()}
@@ -105,21 +100,26 @@ class EventComponent extends React.Component {
                     </Grid>
                   </Grid>
 
-                  <Grid container direction="row" item xs={2}>
-                    <Grid
-                      item
-                      xs={12}
-                      style={{
-                        fontWeight: "bold",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        overflow: "hidden",
-                        display: "block",
-                        fontFamily: isEdit
-                          ? titleEdit.fontFamily
-                          : titleView.fontFamily,
-                      }}
-                    >
+                  <Grid
+                    container
+                    direction="row"
+                    item
+                    xs={2}
+                    style={{
+                      fontWeight: "bold",
+                      whiteSpace: "nowrap",
+                      textOverflow: "ellipsis",
+                      overflow: "auto",
+                      display: "block",
+                      fontFamily: isEdit
+                        ? titleEdit.fontFamily
+                        : titleView.fontFamily,
+                      whiteSpace: "pre-wrap",
+                      wordWrap: "break-word",
+                      height: "6rem",
+                    }}
+                  >
+                    <Grid item xs={12}>
                       <a
                         href={"https://" + row.url}
                         target="_blank"
@@ -140,12 +140,12 @@ class EventComponent extends React.Component {
 
                   <Grid
                     item
-                    xs={3}
+                    xs={4}
                     style={{
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
                       textOverflow: "ellipsis",
-                      overflow: "hidden",
+                      overflow: "auto",
                       display: isEdit
                         ? siteEdit.showDesEvent
                           ? "block"
@@ -153,7 +153,7 @@ class EventComponent extends React.Component {
                         : siteView.showDesEvent
                         ? "block"
                         : "none",
-                      height: "6em",
+                      height: "6rem",
                       lineHeight: "1.5em",
                       fontFamily: isEdit
                         ? bodyEdit.fontFamily
@@ -176,37 +176,22 @@ class EventComponent extends React.Component {
                         : siteView.showPlaceEvent
                         ? "block"
                         : "none",
+                      textOverflow: "ellipsis",
+                      overflow: "auto",
+                      display: "block",
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      whiteSpace: "pre-wrap",
+                      wordWrap: "break-word",
+                      height: "6rem",
                     }}
                   >
-                    <Grid
-                      item
-                      xs={12}
-                      style={{
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        overflow: "hidden",
-                        display: "block",
-                        fontFamily: isEdit
-                          ? bodyEdit.fontFamily
-                          : bodyView.fontFamily,
-                      }}
-                    >
+                    <Grid item xs={12}>
                       {row.place && row.place.name}
                     </Grid>
 
-                    <Grid
-                      item
-                      xs={12}
-                      style={{
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                        overflow: "hidden",
-                        display: "block",
-                        fontFamily: isEdit
-                          ? bodyEdit.fontFamily
-                          : bodyView.fontFamily,
-                      }}
-                    >
+                    <Grid item xs={12}>
                       {row.place && row.place.city}
                     </Grid>
                   </Grid>
@@ -243,6 +228,7 @@ class EventComponent extends React.Component {
                   sm={12}
                   className={styles.contain_event}
                   key={index}
+                  spacing={2}
                   style={{ padding: 10, backgroundColor: "white" }}
                 >
                   <Grid
@@ -256,29 +242,19 @@ class EventComponent extends React.Component {
                         : siteView.showCoverEvent
                         ? "block"
                         : "none",
-                      backgroundColor: "#444950",
+                      backgroundImage: `url('${row.cover}')`,
+                      backgroundRepeat: "no-repeat",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
                     }}
-                  >
-                    <img
-                      style={{
-                        // objectFit: "contain",
-                        width: "100%",
-                        height: "100%",
-                        backgroundRepeat: "no-repeat",
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                      }}
-                      src={row.cover}
-                      alt=""
-                    />
-                  </Grid>
+                  ></Grid>
 
                   <Grid
                     container
                     direction="row"
                     item
                     xs={2}
-                    style={{ height: "5rem" }}
+                    style={{ height: "6rem" }}
                   >
                     <Grid item xs={12} style={classes.changableFirst}>
                       {moment(row.startTime).format("MMM").toUpperCase()}
@@ -296,7 +272,7 @@ class EventComponent extends React.Component {
                         fontWeight: "bold",
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
-                        overflow: "hidden",
+                        overflow: "auto",
                         display: "block",
                         fontFamily: isEdit
                           ? titleEdit.fontFamily
@@ -328,7 +304,7 @@ class EventComponent extends React.Component {
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
                       textOverflow: "ellipsis",
-                      overflow: "hidden",
+                      overflow: "auto",
                       display: isEdit
                         ? siteEdit.showDesEvent
                           ? "block"
@@ -336,7 +312,7 @@ class EventComponent extends React.Component {
                         : siteView.showDesEvent
                         ? "block"
                         : "none",
-                      height: "6em",
+                      height: "6rem",
                       lineHeight: "1.5em",
                       fontFamily: isEdit
                         ? bodyEdit.fontFamily
@@ -359,6 +335,7 @@ class EventComponent extends React.Component {
                         : siteView.showPlaceEvent
                         ? "block"
                         : "none",
+                      height: "6rem",
                     }}
                   >
                     <Grid
@@ -367,7 +344,7 @@ class EventComponent extends React.Component {
                       style={{
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
-                        overflow: "hidden",
+                        overflow: "auto",
                         display: "block",
                         fontFamily: isEdit
                           ? bodyEdit.fontFamily
@@ -383,7 +360,7 @@ class EventComponent extends React.Component {
                       style={{
                         whiteSpace: "nowrap",
                         textOverflow: "ellipsis",
-                        overflow: "hidden",
+                        overflow: "auto",
                         display: "block",
                         fontFamily: isEdit
                           ? bodyEdit.fontFamily
@@ -460,7 +437,7 @@ class EventComponent extends React.Component {
         fontWeight: "bold",
         color: "#212121",
         textAlign: "center",
-        fontSize: 30,
+        // fontSize: 30,
       },
       eventPage: {
         marginTop: "5vh",

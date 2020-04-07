@@ -128,6 +128,9 @@ class ContactPage extends React.Component {
           sm={12}
           xs={12}
           className={styles.contact_title}
+          style={{
+            height: fromHome && "6rem",
+          }}
         >
           <Grid item>
             <Typography
@@ -596,7 +599,7 @@ class ContactPage extends React.Component {
                     <MapWithAMarker
                       googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
                       loadingElement={<div style={{ height: `100%` }} />}
-                      containerElement={<div style={{ height: `15rem` }} />}
+                      containerElement={<div style={{ height: `100%` }} />}
                       mapElement={<div style={{ height: `100%` }} />}
                     />
                   </Grid>
@@ -611,7 +614,7 @@ class ContactPage extends React.Component {
                       containerElement={
                         <div
                           style={{
-                            height: `15rem`,
+                            height: `100%`,
                           }}
                         />
                       }

@@ -39,6 +39,9 @@ class GalleryPage extends React.Component {
           sm={12}
           xs={12}
           className={styles.gallery_title}
+          style={{
+            height: fromHome && "6rem",
+          }}
         >
           <Typography
             className={styles.title}

@@ -8,8 +8,8 @@ class FooterPage extends Component {
     const { isEdit, titleEdit, siteEdit, siteView } = this.props;
     return (
       <Grid container direction="row" className={styles.footer}>
-        <Grid item sm={12} xs={12} container className={styles.bot_footer}>
-          <Container>
+        <Container>
+          <Grid item sm={12} xs={12} container className={styles.bot_footer}>
             <Grid item sm={9} container justify="flex-start">
               <Typography
                 style={{
@@ -40,8 +40,8 @@ class FooterPage extends Component {
                 POWERED BY FPWG
               </Typography>
             </Grid>
-          </Container>
-        </Grid>
+          </Grid>
+        </Container>
       </Grid>
     );
   }
