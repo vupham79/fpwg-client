@@ -98,6 +98,84 @@ class AboutPage extends React.Component {
               : "Welcome to our website! Take a look around and feel free to contact us for more information."}
           </Typography>
         </Grid>
+        {!fromHome && (
+          <>
+            <Grid
+              container
+              item
+              sm={10}
+              xs={10}
+              justify="center"
+              style={{ marginTop: !fromHome ? 50 : 0 }}
+            >
+              <Typography
+                style={{
+                  fontFamily: isEdit
+                    ? bodyEdit.fontFamily
+                    : bodyView.fontFamily,
+                  fontWeight: 900,
+                  color: "#151515",
+                  textAlign: "center",
+                  fontSize: 30,
+                  paddingBottom: 10,
+                }}
+              >
+                {isEdit
+                  ? siteEdit && siteEdit.story && siteEdit.story.title
+                  : siteView && siteView.story && siteView.story.title}
+              </Typography>
+            </Grid>
+            <Grid
+              container
+              item
+              sm={6}
+              xs={10}
+              justify="center"
+              style={{ marginTop: !fromHome ? 50 : 0 }}
+            >
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                style={{
+                  fontFamily: isEdit
+                    ? bodyEdit.fontFamily
+                    : bodyView.fontFamily,
+                  fontWeight: 400,
+                  color: "#151515",
+                  // textAlign: "center",
+                  fontSize: 20,
+                  paddingBottom: 10,
+                }}
+              >
+                {isEdit
+                  ? siteEdit &&
+                    siteEdit.story &&
+                    siteEdit.story.composedText &&
+                    siteEdit.story.composedText.map((text) => {
+                      const originalText = text.split("\n");
+                      return originalText.map((val) => (
+                        <>
+                          {val}
+                          <br />
+                        </>
+                      ));
+                    })
+                  : siteView &&
+                    siteView.story &&
+                    siteEdit.story.composedText &&
+                    siteEdit.story.composedText.map((text) => {
+                      const originalText = text.split("\n");
+                      return originalText.map((val) => (
+                        <>
+                          {val}
+                          <br />
+                        </>
+                      ));
+                    })}
+              </Typography>
+            </Grid>
+          </>
+        )}
       </Grid>
     );
   }
