@@ -1,4 +1,4 @@
-import { Button, Divider, Grid, Typography } from "@material-ui/core";
+import { Button, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import EventComponent from "../../../component/eventComponent";
@@ -107,28 +107,50 @@ class EventPage extends React.Component {
     return (
       <Grid
         container
-        alignItems="center"
         justify="center"
         className={styles.event_page}
+        style={{
+          marginBottom: fromHome && "0",
+          minHeight: !fromHome && "80vh",
+        }}
       >
-        <Grid item sm={10} xs={10} style={{ marginBottom: "4rem" }}>
+        <Grid
+          container
+          justify={"center"}
+          alignItems={"center"}
+          item
+          sm={12}
+          xs={12}
+          className={styles.event_title}
+        >
           <Typography
             className={styles.title}
             variant="h4"
             align="center"
-            gutterBottom
             style={{
               fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-              fontWeight: 500,
-              color: isEdit ? titleEdit.color : titleView.color,
+              fontWeight: "bold",
+              color: isEdit ? siteEdit.color : siteView.color,
               textAlign: "center",
               fontSize: 28,
-              paddingBottom: 20,
             }}
           >
-            {fromHome ? homeTitle : "Events"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "event") {
+                    return item.name;
+                  } else return "";
+                })
+              : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "event") {
+                    return item.name;
+                  } else return "";
+                })}
           </Typography>
-          <Divider variant="fullWidth" />
         </Grid>
         {isEdit ? (
           siteEdit && siteEdit.events ? (

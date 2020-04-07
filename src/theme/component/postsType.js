@@ -14,8 +14,8 @@ import { connect } from "react-redux";
 import {
   getDataByPageNumber,
   setPostsToSiteView,
-  updateNavItemValue,
   setPostView,
+  updateNavItemValue,
 } from "../../actions";
 import ButtonComponent from "../../component/Button";
 import Link from "../../component/link";
@@ -160,17 +160,25 @@ class PostTypeComponent extends React.Component {
           item
           xs={12}
           style={{
-            padding: "0.5rem",
+            // padding: "0.5rem",
             backgroundColor: "white",
             borderRadius: "0.4rem",
           }}
         >
-          <Grid item xs={12} style={{ padding: "1rem 0" }}>
+          <Grid
+            item
+            xs={12}
+            style={
+              {
+                // padding: "1rem 0"
+              }
+            }
+          >
             <Typography
               variant={"body1"}
               style={{ ...txtStyle, fontWeight: "700", fontSize: "16px" }}
             >
-              {moment(post.createdTime).format("MMMM DD,YYYY")}
+              {moment(post.createdTime).format("MMMM DD, YYYY")}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -274,7 +282,7 @@ class PostTypeComponent extends React.Component {
           item
           xs={12}
           style={{
-            padding: "0.5rem",
+            // padding: "0.5rem",
             backgroundColor: "white",
             borderRadius: "0.4rem",
           }}
@@ -592,7 +600,7 @@ class PostTypeComponent extends React.Component {
       pageCount,
       editPostView,
     } = this.props;
-    const { itemPerPage, offset, page, postOpen } = this.state;
+    const { page, postOpen } = this.state;
     return (
       <Grid container justify="center">
         {!fromHome && (isEdit ? editPostView : postOpen) ? (
@@ -600,14 +608,27 @@ class PostTypeComponent extends React.Component {
             {this.renderViewNew(isEdit ? editPostView : postOpen)}
           </Grid>
         ) : (
-          <Grid container item xs={10}>
+          <Grid
+            container
+            item
+            // xs={10}
+            spacing={2}
+            justify="center"
+            xs={12}
+            sm={10}
+            style={
+              {
+                //  marginTop: "2.5rem", marginBottom: "2.5rem"
+              }
+            }
+          >
             <Grid
               container
               item
               xs={12}
               spacing={3}
               justify="center"
-              style={{ padding: "5rem 0.5rem" }}
+              style={{ padding: "1rem 0rem" }}
             >
               {isEdit
                 ? !fromHome

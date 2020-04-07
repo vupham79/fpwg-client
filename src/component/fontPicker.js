@@ -4,6 +4,7 @@ import WebFont from "webfontloader";
 
 const listFont = [
   "Arial",
+  "Avenir",
   "Roboto",
   "Courier New",
   "Courier",
@@ -16,7 +17,7 @@ const listFont = [
   "Impact",
   "Catamaran",
   "Source Sans Pro",
-  "Candara"
+  "Candara",
 ];
 
 const useStyle = (theme) => ({
@@ -36,6 +37,7 @@ class FontPickerComponent extends Component {
       google: {
         families: [
           "Arial",
+          "Avenir",
           "Roboto",
           "Courier New",
           "Courier",

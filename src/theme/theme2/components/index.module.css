@@ -44,7 +44,7 @@
   position: relative;
   background: #000;
   color: white;
-  padding: 10vh 0vh;
+  padding: 2rem 0vh;
   bottom: 0;
 }
 
@@ -91,7 +91,7 @@ h5 {
 
 .bot_footer {
   position: relative;
-  top: 5vh;
+  /* top: 5vh; */
   padding-left: 3rem;
 }
 

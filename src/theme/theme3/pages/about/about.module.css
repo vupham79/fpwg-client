@@ -5,6 +5,7 @@
 .title {
   font-weight: 700 !important;
   padding-bottom: 5vh;
+  text-transform: uppercase;
 }
 .about {
   padding: 8vh 0vh;

@@ -33,6 +33,7 @@ const useStyles = (theme) => ({
     textAlign: "center",
     fontWeight: "700",
     overflow: "hidden",
+    textTransform: "uppercase",
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -186,6 +187,7 @@ class HeaderComponent extends Component {
                       backgroundColor: this.props.headerColor,
                       textTransform: "uppercase",
                       fontSize: 14,
+                      padding: "0.25rem",
                     }}
                     activeStyle={{
                       borderBottom: "1px solid",
@@ -222,11 +224,12 @@ class HeaderComponent extends Component {
                         textAlign: "center",
                         height: "inherit",
                         textDecoration: "none",
+                        textTransform: "uppercase",
                       }}
                       activeStyle={{
                         borderBottom: "1px solid",
                       }}
-                      to={`/${siteView.sitePath}/${item.name}`}
+                      to={`/${siteView.sitePath}/${item.original}`}
                     >
                       {item.name}
                     </NavLink>
@@ -439,7 +442,7 @@ class HeaderComponent extends Component {
     const { classes, navPos, displayImg, isEdit } = this.props;
     const imgStyles = {
       backgroundSize: "contain",
-      backgroundPosition: "center",
+      backgroundPosition: "right",
       backgroundRepeat: "no-repeat",
       height: "3.5rem",
     };

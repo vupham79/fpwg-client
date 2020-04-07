@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import GalleryComponent from "../../../component/galleryComponent";
@@ -25,27 +25,49 @@ class GalleryPage extends React.Component {
       <Grid
         container
         justify="center"
-        alignItems="center"
         className={styles.gallery_page}
+        style={{
+          marginBottom: fromHome && "0",
+          minHeight: !fromHome && "80vh",
+        }}
       >
-        <Grid item sm={10} xs={10}>
+        <Grid
+          item
+          container
+          justify={"center"}
+          alignItems={"center"}
+          sm={12}
+          xs={12}
+          className={styles.gallery_title}
+        >
           <Typography
             className={styles.title}
             variant="h4"
             align="center"
-            gutterBottom
             style={{
               fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
               fontWeight: 500,
-              color: isEdit ? titleEdit.color : titleView.color,
+              color: isEdit ? siteEdit.color : siteView.color,
               textAlign: "center",
               fontSize: 28,
-              paddingBottom: 20,
             }}
           >
-            {fromHome ? homeTitle : "Gallery"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "gallery") {
+                    return item.name;
+                  } else return "";
+                })
+              : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "gallery") {
+                    return item.name;
+                  } else return "";
+                })}
           </Typography>
-          <Divider variant="fullWidth" />
         </Grid>
         {isEdit ? (
           siteEdit && siteEdit.galleries ? (

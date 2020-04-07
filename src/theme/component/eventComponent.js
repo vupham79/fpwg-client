@@ -472,7 +472,15 @@ class EventComponent extends React.Component {
     const { itemPerPage, offset, page } = this.state;
 
     return (
-      <Grid container>
+      <Grid
+        item
+        xs={12}
+        sm={10}
+        container
+        justify="center"
+        spacing={2}
+        style={{ marginTop: "2.5rem", marginBottom: "2.5rem" }}
+      >
         <Grid item xs={12}>
           <Grid
             container

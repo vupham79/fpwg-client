@@ -1,12 +1,17 @@
 /*New*/
-.title {
-  font-weight: 700 !important;
-  padding-bottom: 5vh;
+.news {
+  margin-bottom: 2.5rem;
 }
 
-.news {
-  margin-top: 15vh;
-  margin-bottom: 20vh;
+.news_title {
+  background-color: #f9f7f6;
+  height: 8rem;
+}
+
+.title {
+  font-weight: 700 !important;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .card {

@@ -1,11 +1,15 @@
 .event_page {
-  margin-top: 15vh;
-  margin-bottom: 5vh;
+  margin-bottom: 2.5rem;
+}
+
+.event_title {
+  background-color: #f9f7f6;
+  height: 8rem;
 }
 
 .title {
   font-weight: 700 !important;
-  padding-bottom: 5vh;
+  text-transform: uppercase;
 }
 
 .event_body {

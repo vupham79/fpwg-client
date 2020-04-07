@@ -1,8 +1,8 @@
-import { Grid, Typography, Divider } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import styles from "./new.module.css";
 import PostTypeComponent from "../../../component/postsType";
+import styles from "./new.module.css";
 
 class NewPage extends Component {
   state = {
@@ -26,29 +26,67 @@ class NewPage extends Component {
       <Grid
         container
         justify="center"
-        alignItems="center"
         className={styles.news}
+        style={{
+          marginBottom: fromHome && "0",
+          minHeight: !fromHome && "80vh",
+        }}
       >
-        <Grid item sm={10} xs={10}>
-          <Typography
-            className={styles.title}
-            variant="h4"
-            align="center"
-            gutterBottom
-            style={{
-              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-              fontWeight: 500,
-              color: isEdit ? titleEdit.color : titleView.color,
-              textAlign: "center",
-              fontSize: 28,
-              paddingBottom: 20,
-            }}
-          >
-            {fromHome ? homeTitle : "News"}
-          </Typography>
-          <Divider variant="fullWidth" />
+        <Grid
+          container
+          justify={"center"}
+          alignItems={"center"}
+          item
+          sm={12}
+          xs={12}
+          className={styles.news_title}
+        >
+          <Grid item>
+            <Typography
+              variant="h4"
+              color="textSecondary"
+              align="center"
+              className={styles.title}
+              style={{
+                fontFamily: isEdit
+                  ? titleEdit.fontFamily
+                  : titleView.fontFamily,
+                fontWeight: "bold",
+                color: isEdit ? siteEdit.color : siteView.color,
+                textAlign: "center",
+                fontSize: 28,
+              }}
+            >
+              {fromHome
+                ? homeTitle
+                : isEdit
+                ? siteEdit &&
+                  siteEdit.navItems.map((item) => {
+                    if (item.original === "news") {
+                      return item.name;
+                    } else return "";
+                  })
+                : siteView &&
+                  siteView.navItems.map((item) => {
+                    if (item.original === "news") {
+                      return item.name;
+                    } else return "";
+                  })}
+            </Typography>
+          </Grid>
         </Grid>
-        <Grid item sm={12} xs={12} container spacing={3}>
+        <Grid
+          item
+          xs={12}
+          sm={10}
+          container
+          justify="center"
+          spacing={2}
+          style={{
+            marginTop: "2.5rem",
+            marginBottom: "2.5rem",
+          }}
+        >
           {isEdit ? (
             siteEdit && siteEdit.posts ? (
               <Grid container>
@@ -68,7 +106,10 @@ class NewPage extends Component {
               <Grid
                 container
                 justify="center"
-                style={{ minHeight: "30vh", marginTop: "10vh" }}
+                style={{
+                  minHeight: "30vh",
+                  //  marginTop: "10vh"
+                }}
               >
                 <Typography variant="body1" style={bodyEdit}>
                   Currently there are no news.

@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography, CardMedia } from "@material-ui/core";
+import { CardMedia, Grid, Typography } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./about.module.css";
@@ -24,47 +24,58 @@ class AboutPage extends React.Component {
       siteEdit,
       siteView,
       fromHome,
-      homeTitle,
     } = this.props;
     return (
       <Grid container justify="center" className={styles.about_page}>
-        <Grid item sm={10} xs={10}>
-          {!fromHome && (
+        {!fromHome && (
+          <Grid
+            item
+            container
+            justify={"center"}
+            alignItems={"center"}
+            sm={12}
+            xs={12}
+            className={styles.about_title}
+          >
             <>
               <Typography
                 className={styles.title}
                 variant="h4"
                 align="center"
-                gutterBottom
                 style={{
                   fontFamily: isEdit
                     ? titleEdit.fontFamily
                     : titleView.fontFamily,
                   fontWeight: 500,
-                  color: isEdit ? titleEdit.color : titleView.color,
+                  color: isEdit ? siteEdit.color : siteView.color,
                   textAlign: "center",
                   fontSize: 28,
-                  paddingBottom: 20,
                 }}
               >
-                {fromHome ? homeTitle : "About"}
+                {isEdit
+                  ? siteEdit &&
+                    siteEdit.navItems.map((item) => {
+                      if (item.original === "about") {
+                        return item.name;
+                      } else return "";
+                    })
+                  : siteView &&
+                    siteView.navItems.map((item) => {
+                      if (item.original === "about") {
+                        return item.name;
+                      } else return "";
+                    })}
               </Typography>
-              <Divider
-                className="divider"
-                variant="middle"
-                style={{ marginBottom: 50 }}
-              />
             </>
-          )}
-        </Grid>
-
+          </Grid>
+        )}
         <Grid
           container
           item
           sm={3}
           xs={5}
           justify="center"
-          style={{ display: fromHome ? "none" : "block" }}
+          style={{ display: fromHome ? "none" : "block", paddingTop: "2.5rem" }}
         >
           <CardMedia component="img" alt="" image={this.renderImage()} />
         </Grid>
@@ -75,7 +86,7 @@ class AboutPage extends React.Component {
           sm={10}
           xs={10}
           justify="center"
-          style={{ marginTop: !fromHome ? 50 : 0 }}
+          style={{ marginTop: "2.5rem" }}
         >
           <Typography
             variant="body1"
@@ -85,8 +96,8 @@ class AboutPage extends React.Component {
               fontWeight: 400,
               color: "#151515",
               textAlign: "center",
-              fontSize: 24,
-              paddingBottom: 20,
+              fontSize: 28,
+              textTransform: "uppercase",
             }}
           >
             {isEdit
@@ -106,7 +117,7 @@ class AboutPage extends React.Component {
               sm={10}
               xs={10}
               justify="center"
-              style={{ marginTop: !fromHome ? 50 : 0 }}
+              style={{ marginTop: !fromHome ? "2.5rem" : 0 }}
             >
               <Typography
                 style={{
@@ -117,7 +128,7 @@ class AboutPage extends React.Component {
                   color: "#151515",
                   textAlign: "center",
                   fontSize: 30,
-                  paddingBottom: 10,
+                  // paddingBottom: 10,
                 }}
               >
                 {isEdit
@@ -131,7 +142,7 @@ class AboutPage extends React.Component {
               sm={6}
               xs={10}
               justify="center"
-              style={{ marginTop: !fromHome ? 50 : 0 }}
+              style={{ marginTop: !fromHome ? "2.5rem" : 0 }}
             >
               <Typography
                 variant="body1"
@@ -144,7 +155,7 @@ class AboutPage extends React.Component {
                   color: "#151515",
                   // textAlign: "center",
                   fontSize: 20,
-                  paddingBottom: 10,
+                  // paddingBottom: 10,
                 }}
               >
                 {isEdit
@@ -153,11 +164,11 @@ class AboutPage extends React.Component {
                     siteEdit.story.composedText &&
                     siteEdit.story.composedText.map((text) => {
                       const originalText = text.split("\n");
-                      return originalText.map((val) => (
-                        <>
+                      return originalText.map((val, index) => (
+                        <React.Fragment key={index}>
                           {val}
                           <br />
-                        </>
+                        </React.Fragment>
                       ));
                     })
                   : siteView &&
@@ -165,11 +176,11 @@ class AboutPage extends React.Component {
                     siteEdit.story.composedText &&
                     siteEdit.story.composedText.map((text) => {
                       const originalText = text.split("\n");
-                      return originalText.map((val) => (
-                        <>
+                      return originalText.map((val, index) => (
+                        <React.Fragment key={index}>
                           {val}
                           <br />
-                        </>
+                        </React.Fragment>
                       ));
                     })}
               </Typography>
