@@ -212,7 +212,7 @@ class Theme1Home extends React.Component {
                       </p>
                     </Grid>
                     <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: "#b3b2b2" }} />
+                      <Divider style={{ backgroundColor: "#b3b2b2", marginTop: 50 }} />
                     </Grid>
                   </Grid>
                 ),
