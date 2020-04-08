@@ -201,7 +201,7 @@ class PostTypeComponent extends React.Component {
           style={{
             // padding: "0.5rem",
             backgroundColor: "white",
-            // borderRadius: "0.4rem",
+            borderRadius: "0.4rem",
           }}
         >
           <Grid
@@ -609,7 +609,7 @@ class PostTypeComponent extends React.Component {
           </Grid> */}
 
           {/* <div class="fb-comments" data-href={post.target && post.target} data-width="" data-numposts="5"></div> */}
-          <div class="fb-post" data-href={post.target && post.target} data-show-text="true" style={{ maxWidth: "100%", marginBottom: "30vh" }}>Loading...</div>
+          <div class="fb-post" data-href={post.target && post.target} data-show-text="true" style={{ maxWidth: "100%", marginBottom: "30vh", backgroundColor: "white" }}>Loading...</div>
 
         </Grid>
         <Grid
