@@ -104,7 +104,9 @@ class PostTypeComponent extends React.Component {
     postOpen: this.props.postView && this.props.postView,
     pageView: 1,
     offset: 0,
-    itemPerPage: this.props.itemPerPage,
+    itemPerPage: this.props.isEdit
+      ? this.props.siteEdit.limitNews
+      : this.props.siteView.limitNews,
     page: 1,
   };
 
@@ -640,7 +642,8 @@ class PostTypeComponent extends React.Component {
                           this.state.page > pageCount ? 0 : this.state.offset,
                           this.state.page > pageCount
                             ? 3
-                            : this.state.itemPerPage + this.state.offset
+                            : parseInt(this.state.itemPerPage) +
+                                parseInt(this.state.offset)
                         )
                     )
                   : this.renderNews(

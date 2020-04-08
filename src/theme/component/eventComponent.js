@@ -9,7 +9,9 @@ class EventComponent extends React.Component {
   state = {
     pageView: 1,
     offset: 0,
-    itemPerPage: this.props.itemPerPage,
+    itemPerPage: this.props.isEdit
+      ? this.props.siteEdit.limitEvent
+      : this.props.siteView.limitEvent,
     page: 1,
   };
 
@@ -33,6 +35,7 @@ class EventComponent extends React.Component {
   handlePageEditClick = (event, newValue) => {
     let selected = newValue - 1;
     let offset = Math.ceil(selected * this.state.itemPerPage);
+    // console.log(offset + "-" + (newValue - 1) + "-" + this.state.itemPerPage);
     this.setState({ offset: offset, page: newValue });
   };
 
@@ -213,6 +216,7 @@ class EventComponent extends React.Component {
       siteEdit,
       siteView,
     } = this.props;
+    console.log(homeList);
     return (
       <>
         {homeList &&
@@ -478,7 +482,7 @@ class EventComponent extends React.Component {
                 </Grid>
               )}
 
-              {(fromHome || !isEdit) &&
+              {fromHome &&
                 homeList &&
                 homeList.filter(
                   (row) =>
@@ -497,13 +501,20 @@ class EventComponent extends React.Component {
                 )}
 
               {!fromHome &&
-                this.state.filteredData &&
-                this.state.filteredData.filter(
-                  (row) =>
-                    row &&
-                    !row.isCancelled &&
-                    moment(row.endTime).isAfter(moment())
-                ).length > 0 && (
+                homeList &&
+                homeList
+                  .slice(
+                    page > pageCount ? 0 : offset,
+                    page > pageCount
+                      ? 3
+                      : parseInt(itemPerPage) + parseInt(offset)
+                  )
+                  .filter(
+                    (row) =>
+                      row &&
+                      !row.isCancelled &&
+                      moment(row.endTime).isAfter(moment())
+                  ).length > 0 && (
                   <Grid container item>
                     <Grid item xs={12}>
                       <p style={classes.changableBody2}>Upcoming Events</p>
@@ -519,10 +530,10 @@ class EventComponent extends React.Component {
                   ? this.renderUpComingEvent(homeList.slice(0, 3), classes)
                   : this.renderUpComingEvent(
                       homeList.slice(
-                        this.state.page > pageCount ? 0 : this.state.offset,
-                        this.state.page > pageCount
+                        page > pageCount ? 0 : offset,
+                        page > pageCount
                           ? 3
-                          : this.state.itemPerPage + this.state.offset
+                          : parseInt(itemPerPage) + parseInt(offset)
                       ),
                       classes
                     )
@@ -532,7 +543,7 @@ class EventComponent extends React.Component {
                 <Divider color="#212121" />
               </Grid>
 
-              {(fromHome || !isEdit) &&
+              {fromHome &&
                 homeList &&
                 homeList.filter(
                   (row) =>
@@ -552,14 +563,21 @@ class EventComponent extends React.Component {
                 )}
 
               {!fromHome &&
-                this.state.filteredData &&
-                this.state.filteredData.filter(
-                  (row) =>
-                    row &&
-                    (row.isCancelled ||
-                      moment(row.endTime).isSameOrBefore(moment()) ||
-                      !row.endTime)
-                ).length > 0 && (
+                homeList &&
+                homeList
+                  .slice(
+                    page > pageCount ? 0 : offset,
+                    page > pageCount
+                      ? 3
+                      : parseInt(itemPerPage) + parseInt(offset)
+                  )
+                  .filter(
+                    (row) =>
+                      row &&
+                      (row.isCancelled ||
+                        moment(row.endTime).isSameOrBefore(moment()) ||
+                        !row.endTime)
+                  ).length > 0 && (
                   <Grid container item>
                     <Grid item xs={12}>
                       <p style={classes.changableBody2}>Past Events</p>
@@ -569,14 +587,15 @@ class EventComponent extends React.Component {
                     </Grid>
                   </Grid>
                 )}
-
               {isEdit
                 ? fromHome
                   ? this.renderPassEvent(homeList.slice(0, 3), classes)
                   : this.renderPassEvent(
                       homeList.slice(
                         page > pageCount ? 0 : offset,
-                        page > pageCount ? 3 : itemPerPage + offset
+                        page > pageCount
+                          ? 3
+                          : parseInt(itemPerPage) + parseInt(offset)
                       ),
                       classes
                     )

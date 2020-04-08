@@ -406,7 +406,7 @@ export function saveDesignSite({
           posts: posts
         }
       });
-
+      console.log(site.limitNews);
       const data = await axios({
         method: "patch",
         url: "/site/saveDesign",
@@ -431,7 +431,10 @@ export function saveDesignSite({
           showDesEvent: site.showDesEvent,
           showPlaceEvent: site.showPlaceEvent,
           showCoverEvent: site.showCoverEvent,
-          about: site.about
+          about: site.about,
+          limitNews: site.limitNews,
+          limitEvent: site.limitEvent,
+          limitGallery: site.limitGallery
         }
       });
       dispatch({
@@ -1061,13 +1064,26 @@ export function setIsChanged() {
 }
 
 export function setEventCustomize(cover, description, place) {
-  return async dispatch => {
+  return dispatch => {
     dispatch({
       type: "SET_EVENT_CUSTOMIZE",
       payload: {
         cover: cover,
         description: description,
         place: place
+      }
+    });
+  };
+}
+
+export function setLimit(news, event, gallery) {
+  return dispatch => {
+    dispatch({
+      type: "SET_LIMIT",
+      payload: {
+        news: news,
+        event: event,
+        gallery: gallery
       }
     });
   };

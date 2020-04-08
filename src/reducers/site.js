@@ -476,6 +476,17 @@ const SiteReducer = (state = defaultState, action) => {
         },
         isChanged: true
       };
+    case "SET_LIMIT":
+      return {
+        ...state,
+        siteEdit: {
+          ...state.siteEdit,
+          limitNews: action.payload.news,
+          limitEvent: action.payload.event,
+          limitGallery: action.payload.gallery
+        },
+        isChanged: true
+      };
     default:
       return state;
   }

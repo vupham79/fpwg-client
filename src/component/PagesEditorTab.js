@@ -20,6 +20,7 @@ import {
   InputBase,
   Paper,
   FormControlLabel,
+  Input
 } from "@material-ui/core";
 import moment from "moment";
 import { green } from "@material-ui/core/colors";
@@ -42,6 +43,7 @@ import {
   setActivePost,
   updateNavItemValue,
   setEventCustomize,
+  setLimit,
 } from "../actions";
 import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
@@ -292,6 +294,18 @@ class PagesEditorTab extends React.Component {
     this.setState({ filteredData: [...posts] });
   };
 
+  handleSetLimit = (type) => (event) => {
+    if (type === 0) {
+      this.props.setLimit(event.target.value, this.props.site.limitEvent, this.props.site.limitGallery)
+    }
+    if (type === 1) {
+      this.props.setLimit(this.props.limitNews, event.target.value, this.props.site.limitGallery)
+    }
+    if (type === 2) {
+      this.props.setLimit(this.props.limitNews, this.props.site.limitEvent, event.target.value)
+    }
+  }
+
   handlePageClick = (data) => {
     const { posts } = this.props;
     let selected = data.selected;
@@ -387,80 +401,80 @@ class PagesEditorTab extends React.Component {
         updateNavItemValue,
         changeNavItemName,
       }) => (
-        <Grid container style={gridItem}>
-          <Grid
-            container
-            item
-            alignItems="center"
-            xs={10}
-            sm={12}
-            md={10}
-            style={{ padding: "0.2rem 0" }}
-          >
-            <Grid container justify="center" item xs={2} md={2} sm={12}>
-              <DragHandle />
+          <Grid container style={gridItem}>
+            <Grid
+              container
+              item
+              alignItems="center"
+              xs={10}
+              sm={12}
+              md={10}
+              style={{ padding: "0.2rem 0" }}
+            >
+              <Grid container justify="center" item xs={2} md={2} sm={12}>
+                <DragHandle />
+              </Grid>
+              <Grid item xs={10} md={10} sm={12}>
+                <TextField
+                  autoFocus={
+                    this.state.currentFocusInput === item._id ? true : false
+                  }
+                  onClick={(e) => this.setState({ currentFocusInput: item._id })}
+                  InputLabelProps={{
+                    classes: {
+                      focused: classes.focused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      notchedOutline: classes.notchedOutline,
+                      input: classes.inputTitle,
+                    },
+                  }}
+                  size="small"
+                  style={{ backgroundColor: "white" }}
+                  fullWidth
+                  variant={"outlined"}
+                  value={value}
+                  inputProps={{
+                    maxLength: 15,
+                  }}
+                  onChange={(e) => {
+                    handleChangeNavName(
+                      item._id,
+                      site,
+                      e.target.value,
+                      changeNavItemName
+                    );
+                  }}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={10} md={10} sm={12}>
-              <TextField
-                autoFocus={
-                  this.state.currentFocusInput === item._id ? true : false
-                }
-                onClick={(e) => this.setState({ currentFocusInput: item._id })}
-                InputLabelProps={{
-                  classes: {
-                    focused: classes.focused,
-                  },
-                }}
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle,
-                  },
-                }}
-                size="small"
-                style={{ backgroundColor: "white" }}
-                fullWidth
-                variant={"outlined"}
-                value={value}
-                inputProps={{
-                  maxLength: 15,
-                }}
-                onChange={(e) => {
-                  handleChangeNavName(
-                    item._id,
-                    site,
-                    e.target.value,
-                    changeNavItemName
-                  );
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container item justify="center" xs={2} sm={12} md={2}>
-            {item.original === "home" ? (
-              <></>
-            ) : (
-              <IconButton
-                style={viewButton}
-                onClick={() =>
-                  handleChangeActive(
-                    item._id,
-                    site,
-                    setActiveNavItems,
-                    updateNavItemValue
-                  )
-                }
-              >
-                {item.isActive && item.name !== "Home" ? (
-                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                ) : (
-                  <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+            <Grid container item justify="center" xs={2} sm={12} md={2}>
+              {item.original === "home" ? (
+                <></>
+              ) : (
+                  <IconButton
+                    style={viewButton}
+                    onClick={() =>
+                      handleChangeActive(
+                        item._id,
+                        site,
+                        setActiveNavItems,
+                        updateNavItemValue
+                      )
+                    }
+                  >
+                    {item.isActive && item.name !== "Home" ? (
+                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                    ) : (
+                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                      )}
+                  </IconButton>
                 )}
-              </IconButton>
-            )}
+            </Grid>
           </Grid>
-        </Grid>
-      )
+        )
     );
 
     const SortableList = sortableContainer(
@@ -564,6 +578,15 @@ class PagesEditorTab extends React.Component {
           />
         </Grid>
 
+        <Grid container justify={"center"} style={{ marginBottom: 30 }}>
+          <Grid item xs={12}>
+            <p style={{ fontSize: 13, color: "#555d66" }}>Set events per page</p>
+          </Grid>
+          <Grid item xs={12}>
+            <Input type="number" value={this.props.site.limitEvent} onChange={this.handleSetLimit(1)} />
+          </Grid>
+        </Grid>
+
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
@@ -588,6 +611,7 @@ class PagesEditorTab extends React.Component {
           >
             Select which post from Facebook you want to see on your site.
           </Grid>
+
           <Grid container justify={"center"}>
             <button
               className={classes.logoButton}
@@ -597,6 +621,36 @@ class PagesEditorTab extends React.Component {
               Select
             </button>
           </Grid>
+
+          <Grid container justify={"center"} style={{ marginBottom: 30 }}>
+            <Grid item xs={12}>
+              <p style={{ fontSize: 13, color: "#555d66" }}>Set posts per page</p>
+            </Grid>
+            <Grid item xs={12}>
+              <Input type="number" value={this.props.site.limitNews} onChange={this.handleSetLimit(0)} />
+            </Grid>
+          </Grid>
+
+          <Divider
+            style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
+          />
+          <Typography className={classes.title}>Gallery</Typography>
+          <Divider
+            style={{
+              height: "1.2rem",
+              width: "100%",
+              backgroundColor: "#ffffff00",
+            }}
+          />
+          <Grid container justify={"center"} style={{ marginBottom: 30 }}>
+            <Grid item xs={12}>
+              <p style={{ fontSize: 13, color: "#555d66" }}>Set photos per page</p>
+            </Grid>
+            <Grid item xs={12}>
+              <Input type="number" value={this.props.site.limitGallery} onChange={this.handleSetLimit(2)} />
+            </Grid>
+          </Grid>
+
 
           <Dialog
             disableBackdropClick
@@ -754,6 +808,8 @@ const mapDispatchToProps = (dispatch) => ({
   changeNavItemName: (item) => dispatch(changeNavItemName(item)),
   setEventCustomize: (cover, description, place) =>
     dispatch(setEventCustomize(cover, description, place)),
+  setLimit: (news, event, gallery) =>
+    dispatch(setLimit(news, event, gallery)),
 });
 
 export default connect(

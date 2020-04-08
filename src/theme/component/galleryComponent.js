@@ -37,7 +37,9 @@ class GalleryComponent extends React.Component {
     open: false,
     pageView: 1,
     offset: 0,
-    itemPerPage: this.props.itemPerPage,
+    itemPerPage: this.props.isEdit
+      ? this.props.siteEdit.limitGallery
+      : this.props.siteView.limitGallery,
     page: 1,
   };
 

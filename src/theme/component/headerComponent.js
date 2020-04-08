@@ -77,8 +77,10 @@ class HeaderComponent extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.tabValue !== this.props.tabValue)
-      document.getElementById("topPos").scrollIntoView();
+    if (prevProps.tabValue !== this.props.tabValue) {
+      window.location.href = "#topPos";
+      window.history.pushState("", "", "/edit");
+    }
   }
 
   handleDrawerToggle = () => {
