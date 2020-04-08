@@ -39,10 +39,10 @@ class NewPage extends Component {
             {fromHome ? homeTitle : "News"}
           </Typography>
         </Grid>
-        <Grid item sm={12} xs={12} container>
+        <Grid item container sm={12} xs={12} container justify="center">
           {isEdit ? (
             siteEdit && siteEdit.posts ? (
-              <Grid container>
+              <Grid container justify="center">
                 <PostTypeComponent
                   key={siteEdit.limitNews}
                   fromHome={fromHome}
@@ -64,7 +64,7 @@ class NewPage extends Component {
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
+              <Grid item container sm={12} xs={12} container justify="center">
                 <Typography
                   variant="body1"
                   style={{
@@ -78,7 +78,7 @@ class NewPage extends Component {
               </Grid>
             )
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
-            <Grid container>
+            <Grid item container sm={12} xs={12} container justify="center">
               <PostTypeComponent
                 fromHome={fromHome}
                 posts={fromHome && homeList ? homeList : siteView.posts}
@@ -92,7 +92,7 @@ class NewPage extends Component {
               />
             </Grid>
           ) : (
-            <Grid container justify="center">
+            <Grid item container sm={12} xs={12} container justify="center">
               <Typography
                 variant="body1"
                 style={{

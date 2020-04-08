@@ -47,34 +47,36 @@ class GalleryPage extends React.Component {
         <Grid item xs={10} sm={12}>
           {isEdit ? (
             siteEdit && siteEdit.galleries ? (
-              <Grid container>
+              <Grid container justify="center">
                 <GalleryComponent
                   key={siteEdit.limitGallery}
-                  galleries={fromHome && homeList ? homeList : siteEdit.galleries}
+                  galleries={
+                    fromHome && homeList ? homeList : siteEdit.galleries
+                  }
                   siteInfo={siteEdit.id}
                   fromHome={fromHome}
                   pageCount={Math.ceil(
-                    (fromHome && homeList ? homeList : siteEdit.galleries).length /
-                    siteEdit.limitGallery
+                    (fromHome && homeList ? homeList : siteEdit.galleries)
+                      .length / siteEdit.limitGallery
                   )}
                 />
               </Grid>
             ) : (
-                <Grid container justify="center">
-                  <Typography
-                    variant="body1"
-                    style={{
-                      fontFamily: bodyEdit.fontFamily,
-                      color: "white",
-                      padding: "5rem 0",
-                    }}
-                  >
-                    Currently no photo available.
+              <Grid container justify="center">
+                <Typography
+                  variant="body1"
+                  style={{
+                    fontFamily: bodyEdit.fontFamily,
+                    color: "white",
+                    padding: "5rem 0",
+                  }}
+                >
+                  Currently no photo available.
                 </Typography>
-                </Grid>
-              )
+              </Grid>
+            )
           ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
-            <Grid container>
+            <Grid container justify={"center"}>
               <GalleryComponent
                 galleries={fromHome && homeList ? homeList : siteView.galleries}
                 siteInfo={siteView.sitePath}
@@ -83,19 +85,19 @@ class GalleryPage extends React.Component {
               />
             </Grid>
           ) : (
-                <Grid container justify="center">
-                  <Typography
-                    variant="body1"
-                    style={{
-                      fontFamily: bodyView.fontFamily,
-                      color: "white",
-                      padding: "5rem 0",
-                    }}
-                  >
-                    Currently no photo available.
+            <Grid container justify="center">
+              <Typography
+                variant="body1"
+                style={{
+                  fontFamily: bodyView.fontFamily,
+                  color: "white",
+                  padding: "5rem 0",
+                }}
+              >
+                Currently no photo available.
               </Typography>
-                </Grid>
-              )}
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );
