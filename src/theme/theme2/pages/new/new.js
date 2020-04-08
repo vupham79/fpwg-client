@@ -53,28 +53,33 @@ class NewPage extends Component {
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
+                  key={siteEdit.limitNews}
                   fromHome={fromHome}
-                  posts={fromHome && homeList ? homeList : siteEdit.posts}
+                  posts={
+                    (fromHome && homeList ? homeList : siteEdit.posts).filter(function (pos) {
+                      return pos.isActive === true;
+                    })
+                  }
                   pageCount={Math.ceil(
-                    (fromHome && homeList ? homeList : siteEdit.posts).length /
-                      this.state.itemPerPage
+                    (fromHome && homeList ? homeList : siteEdit.posts).filter(function (pos) {
+                      return pos.isActive === true;
+                    }).length /
+                    siteEdit.limitNews
                   )}
-                  itemPerPage={this.state.itemPerPage}
                   bgWhite={true}
-                  postView={postView}
                 />
               </Grid>
             ) : (
-              <Grid
-                container
-                justify="center"
-                style={{ minHeight: "30vh", marginTop: "10vh" }}
-              >
-                <Typography variant="body1" style={bodyEdit}>
-                  Currently there are no news.
+                <Grid
+                  container
+                  justify="center"
+                  style={{ minHeight: "30vh", marginTop: "10vh" }}
+                >
+                  <Typography variant="body1" style={bodyEdit}>
+                    Currently there are no news.
                 </Typography>
-              </Grid>
-            )
+                </Grid>
+              )
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
@@ -90,16 +95,16 @@ class NewPage extends Component {
               />
             </Grid>
           ) : (
-            <Grid
-              container
-              justify="center"
-              style={{ minHeight: "30vh", marginTop: "10vh" }}
-            >
-              <Typography variant="body1" style={bodyView}>
-                Currently there are no news.
+                <Grid
+                  container
+                  justify="center"
+                  style={{ minHeight: "30vh", marginTop: "10vh" }}
+                >
+                  <Typography variant="body1" style={bodyView}>
+                    Currently there are no news.
               </Typography>
-            </Grid>
-          )}
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );

@@ -125,20 +125,20 @@ class Theme1Event extends React.Component {
         </Grid>
         <Grid item xs={12}>
           <EventComponent
+            key={this.props.isEdit ? this.props.siteEdit.limitEvent : this.props.siteView.limitEvent}
             homeList={
               fromHome && homeList
                 ? homeList
                 : isEdit
-                ? siteEdit.events
-                : siteView.events
+                  ? siteEdit.events
+                  : siteView.events
             }
             siteInfo={siteView && siteView.sitePath}
             fromHome={fromHome}
             pageCount={Math.ceil(
               (fromHome && homeList ? homeList : siteEdit.events).length /
-                this.state.itemPerPage
+              (this.props.isEdit ? this.props.siteEdit.limitEvent : this.props.siteView.limitEvent)
             )}
-            itemPerPage={this.state.itemPerPage}
           />
         </Grid>
       </Grid>

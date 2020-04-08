@@ -44,30 +44,36 @@ class NewPage extends Component {
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
+                  key={siteEdit.limitNews}
                   fromHome={fromHome}
-                  posts={fromHome && homeList ? homeList : siteEdit.posts}
+                  posts={
+                    (fromHome && homeList ? homeList : siteEdit.posts).filter(function (pos) {
+                      return pos.isActive === true;
+                    })
+                  }
                   pageCount={Math.ceil(
-                    (fromHome && homeList ? homeList : siteEdit.posts).length /
-                      this.state.itemPerPage
+                    (fromHome && homeList ? homeList : siteEdit.posts).filter(function (pos) {
+                      return pos.isActive === true;
+                    }).length /
+                    siteEdit.limitNews
                   )}
-                  itemPerPage={this.state.itemPerPage}
-                  postView={postView}
+                  bgWhite={true}
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography
-                  variant="body1"
-                  style={{
-                    fontFamily: bodyEdit.fontFamily,
-                    color: "white",
-                    padding: "5rem 0",
-                  }}
-                >
-                  Currently there are no news.
+                <Grid container justify="center">
+                  <Typography
+                    variant="body1"
+                    style={{
+                      fontFamily: bodyEdit.fontFamily,
+                      color: "white",
+                      padding: "5rem 0",
+                    }}
+                  >
+                    Currently there are no news.
                 </Typography>
-              </Grid>
-            )
+                </Grid>
+              )
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
@@ -82,19 +88,19 @@ class NewPage extends Component {
               />
             </Grid>
           ) : (
-            <Grid container justify="center">
-              <Typography
-                variant="body1"
-                style={{
-                  fontFamily: bodyView.fontFamily,
-                  color: "white",
-                  padding: "5rem 0",
-                }}
-              >
-                Currently there are no news.
+                <Grid container justify="center">
+                  <Typography
+                    variant="body1"
+                    style={{
+                      fontFamily: bodyView.fontFamily,
+                      color: "white",
+                      padding: "5rem 0",
+                    }}
+                  >
+                    Currently there are no news.
               </Typography>
-            </Grid>
-          )}
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );
