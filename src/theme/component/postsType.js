@@ -11,6 +11,7 @@ import moment from "moment";
 import React from "react";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
+import Slider from "react-slick";
 import {
   getDataByPageNumber,
   setPostsToSiteView,
@@ -19,8 +20,6 @@ import {
 } from "../../actions";
 import ButtonComponent from "../../component/Button";
 import Link from "../../component/link";
-import Slider from "react-slick";
-import CommentCoponnent from "../component/commentComponent";
 const useStyles = (theme) => ({
   root: {
     marginTop: theme.spacing(2),
@@ -36,7 +35,7 @@ const useStyles = (theme) => ({
     maxWidth: "100%",
   },
   cardView: {
-    paddingTop: "70%",
+    height: "30vh",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
@@ -48,6 +47,7 @@ const useStyles = (theme) => ({
   },
   cardMedia: {
     height: "30vh",
+    backgroundColor: "red",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
@@ -79,16 +79,6 @@ const gridContent = {
   display: "-webkit-box",
   WebkitLineClamp: "2",
   WebkitBoxOrient: "vertical",
-};
-
-const gridTitle = {
-  overflow: "hidden",
-  textOverflow: "ellipsis",
-  display: "-webkit-box",
-  WebkitLineClamp: "1",
-  WebkitBoxOrient: "vertical",
-  fontWeight: "bold",
-  fontSize: "25px",
 };
 
 const gridMessage = {
@@ -130,7 +120,7 @@ class PostTypeComponent extends React.Component {
     }
   };
 
-  renderPostComponent(index, post, dark, type) {
+  renderPostComponent(index, post, style, dark, type) {
     const {
       fromHome,
       isEdit,
@@ -150,7 +140,6 @@ class PostTypeComponent extends React.Component {
       fontSize: "11px",
       border: `2px solid ${isEdit ? titleEdit.color : titleView.color}`,
     };
-
     return (
       <Grid
         key={index}
@@ -169,7 +158,7 @@ class PostTypeComponent extends React.Component {
           style={{
             // padding: "0.5rem",
             backgroundColor: "white",
-            borderRadius: "0.4rem",
+            // borderRadius: "0.4rem",
           }}
         >
           <Grid
@@ -191,7 +180,7 @@ class PostTypeComponent extends React.Component {
           <Grid item xs={12}>
             {type === "photo" && (
               <CardMedia
-                className={classes.cardMedia}
+                className={classes.cardView}
                 image={post.attachments.images[0]}
               />
             )}
@@ -378,6 +367,7 @@ class PostTypeComponent extends React.Component {
       bodyView,
       dark,
     } = this.props;
+    console.log(dark);
     const style = {
       isEdit: isEdit,
       titleEdit: titleEdit,
@@ -416,7 +406,7 @@ class PostTypeComponent extends React.Component {
   };
 
   renderViewNew = (post) => {
-    const { siteEdit, bgWhite, siteView, posts } = this.props;
+    const { siteEdit, bgWhite, posts } = this.props;
     const {
       isEdit,
       titleEdit,
@@ -689,7 +679,7 @@ class PostTypeComponent extends React.Component {
                         padding: "0.4rem",
                         borderRadius: "0.3rem",
                       }}
-                      color="default"
+                      // color="default"
                       shape="rounded"
                       variant="outlined"
                       count={pageCount}
@@ -707,7 +697,7 @@ class PostTypeComponent extends React.Component {
                         padding: "0.4rem",
                         borderRadius: "0.3rem",
                       }}
-                      color="default"
+                      // color="default"
                       shape="rounded"
                       variant="outlined"
                       count={pageCountView}

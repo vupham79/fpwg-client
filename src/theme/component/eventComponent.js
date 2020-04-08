@@ -110,7 +110,6 @@ class EventComponent extends React.Component {
                     xs={2}
                     style={{
                       fontWeight: "bold",
-                      whiteSpace: "nowrap",
                       textOverflow: "ellipsis",
                       overflow: "auto",
                       display: "block",
@@ -181,7 +180,6 @@ class EventComponent extends React.Component {
                         : "none",
                       textOverflow: "ellipsis",
                       overflow: "auto",
-                      display: "block",
                       fontFamily: isEdit
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,

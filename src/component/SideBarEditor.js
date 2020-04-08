@@ -298,7 +298,7 @@ class ClippedDrawer extends React.Component {
             </Grid>
           </Grid>
 
-          <Grid
+          {/* <Grid
             container
             item
             justify="center"
@@ -338,7 +338,7 @@ class ClippedDrawer extends React.Component {
                 <FontAwesomeIcon icon={faTabletAlt} color="#565d66" size="xs" />
               </IconButton>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Drawer>
       </AppBar>
     );
