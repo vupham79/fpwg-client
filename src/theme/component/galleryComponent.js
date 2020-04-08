@@ -218,34 +218,34 @@ class GalleryComponent extends React.Component {
           {isEdit
             ? !fromHome
               ? galleries
-                  .slice(
-                    page > pageCount ? 0 : offset,
-                    page > pageCount ? 5 : itemPerPage + offset
-                  )
-                  .map((item, index) => (
-                    <Grid
-                      item
-                      key={index}
-                      xs={12}
-                      sm={4}
-                      md={3}
-                      className={classes.gridItems}
-                    >
-                      <CardActionArea style={{ height: "100%" }}>
-                        <CardMedia
-                          className={classes.media}
-                          image={item && item.url}
-                          title="Gallery image"
-                          onClick={() =>
-                            this.handleOpenDialog(item && item.url)
-                          }
-                        />
-                      </CardActionArea>
-                    </Grid>
-                  ))
+                .slice(
+                  page > pageCount ? 0 : offset,
+                  page > pageCount ? 5 : parseInt(itemPerPage) + parseInt(offset)
+                )
+                .map((item, index) => (
+                  <Grid
+                    item
+                    key={index}
+                    xs={12}
+                    sm={4}
+                    md={3}
+                    className={classes.gridItems}
+                  >
+                    <CardActionArea style={{ height: "100%" }}>
+                      <CardMedia
+                        className={classes.media}
+                        image={item && item.url}
+                        title="Gallery image"
+                        onClick={() =>
+                          this.handleOpenDialog(item && item.url)
+                        }
+                      />
+                    </CardActionArea>
+                  </Grid>
+                ))
               : this.renderHomepageGalleryEdit()
             : !fromHome
-            ? galleries.map((item, index) => (
+              ? galleries.map((item, index) => (
                 <Grid
                   item
                   key={index}
@@ -265,45 +265,45 @@ class GalleryComponent extends React.Component {
                   </CardActionArea>
                 </Grid>
               ))
-            : this.renderHomepageGallery()}
+              : this.renderHomepageGallery()}
         </Grid>
         {isEdit
           ? pageCount > 1 &&
-            !fromHome && (
-              <Grid container justify="center" style={{ padding: "2rem" }}>
-                <Pagination
-                  style={{
-                    backgroundColor: "white",
-                    padding: "0.4rem",
-                    borderRadius: "0.3rem",
-                  }}
-                  color="default"
-                  shape="rounded"
-                  variant="outlined"
-                  count={pageCount}
-                  page={page > pageCount ? 1 : page}
-                  onChange={this.handlePageEditClick}
-                />
-              </Grid>
-            )
+          !fromHome && (
+            <Grid container justify="center" style={{ padding: "2rem" }}>
+              <Pagination
+                style={{
+                  backgroundColor: "white",
+                  padding: "0.4rem",
+                  borderRadius: "0.3rem",
+                }}
+                color="default"
+                shape="rounded"
+                variant="outlined"
+                count={pageCount}
+                page={page > pageCount ? 1 : page}
+                onChange={this.handlePageEditClick}
+              />
+            </Grid>
+          )
           : pageCountView > 1 &&
-            !fromHome && (
-              <Grid container justify="center" style={{ padding: "2rem" }}>
-                <Pagination
-                  style={{
-                    backgroundColor: "white",
-                    padding: "0.4rem",
-                    borderRadius: "0.3rem",
-                  }}
-                  color="default"
-                  shape="rounded"
-                  variant="outlined"
-                  count={pageCountView}
-                  page={this.state.pageView}
-                  onChange={this.handlePageViewClick}
-                />
-              </Grid>
-            )}
+          !fromHome && (
+            <Grid container justify="center" style={{ padding: "2rem" }}>
+              <Pagination
+                style={{
+                  backgroundColor: "white",
+                  padding: "0.4rem",
+                  borderRadius: "0.3rem",
+                }}
+                color="default"
+                shape="rounded"
+                variant="outlined"
+                count={pageCountView}
+                page={this.state.pageView}
+                onChange={this.handlePageViewClick}
+              />
+            </Grid>
+          )}
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
