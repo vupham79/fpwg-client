@@ -92,6 +92,39 @@ const gridMessage = {
   WebkitBoxOrient: "vertical",
 };
 
+function renderFB() {
+  let cropImgFile = new Promise(async (resolve, reject) => {
+    (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, "script", "facebook-jssdk");
+
+    setTimeout(() => {
+      if (window.FB) {
+        window.FB.XFBML.parse();
+        resolve(true);
+      }
+    }, 1000);
+  });
+
+  // window.fbAsyncInit = function () {
+  //   window.FB.init({
+  //     appId: '742131839643879',
+  //     cookie: true,
+  //     xfbml: true,  // parse social plugins on this page
+  //     version: 'v2.3'
+  //   });
+  //   window.FB.XFBML.parse();
+  // };
+}
+
 class PostTypeComponent extends React.Component {
   state = {
     open: false,
@@ -104,13 +137,26 @@ class PostTypeComponent extends React.Component {
     page: 1,
   };
 
+  componentDidMount() {
+    renderFB();
+    // const script = document.createElement("script");
+    // script.defer = true;
+    // script.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=742131839643879&autoLogAppEvents=1";
+    // script.async = true;
+    // script.crossOrigin = "anonymous";
+    // document.getElementById("fb-root").appendChild(script);
+    // window.FB.XFBML.parse();
+  }
+
   handleOpen = (post) => {
+    renderFB();
     this.setState({
       postOpen: post,
     });
   };
 
-  hanldeHomeClick = (post) => {
+  handleHomeClick = (post) => {
+    renderFB();
     const { siteEdit, updateNavItemValue, setPostView, fromHome } = this.props;
     if (fromHome) {
       const news = siteEdit.navItems.filter((item) => {
@@ -147,7 +193,7 @@ class PostTypeComponent extends React.Component {
     };
     return (
       <Grid
-        key={index}
+        key={post._id}
         container
         item
         xs={10}
@@ -256,7 +302,7 @@ class PostTypeComponent extends React.Component {
               <ButtonComponent
                 label="READ MORE"
                 style={btnStyle}
-                onClick={(e) => this.hanldeHomeClick(post)}
+                onClick={(e) => this.handleHomeClick(post)}
               />
             ) : fromHome ? (
               <Link
@@ -301,14 +347,14 @@ class PostTypeComponent extends React.Component {
     };
     return (
       <Grid
-        key={index}
+        key={post._id}
         container
         item
         xs={12}
         sm={6}
         md={6}
         lg={4}
-        style={dark ? { backgroundColor: "#1a1919" } : null}
+        // style={dark ? { backgroundColor: "#1a1919" } : null}
       >
         <Grid
           container
@@ -340,7 +386,7 @@ class PostTypeComponent extends React.Component {
               <ButtonComponent
                 label="READ MORE"
                 style={btnStyle}
-                onClick={(e) => this.hanldeHomeClick(post)}
+                onClick={(e) => this.handleHomeClick(post)}
               />
             ) : fromHome ? (
               <Link
@@ -400,6 +446,7 @@ class PostTypeComponent extends React.Component {
       bodyView,
       dark,
     } = this.props;
+
     const style = {
       isEdit: isEdit,
       titleEdit: titleEdit,
@@ -475,7 +522,7 @@ class PostTypeComponent extends React.Component {
       titleShow += "...";
     }
     return (
-      <Grid container item xs={11} justify="center">
+      <Grid container item xs={11} justify="center" key={post._id}>
         <Grid
           container
           item
@@ -506,7 +553,7 @@ class PostTypeComponent extends React.Component {
           justify="center"
           style={{ paddingTop: "2rem", borderBottom: "1px solid black" }}
         >
-          <Grid
+          {/* <Grid
             item
             xs={9}
             style={{
@@ -517,10 +564,9 @@ class PostTypeComponent extends React.Component {
               textAlign: "center",
             }}
           >
-            {/* <div style={gridTitle}>{post.message}</div> */}
             {titleShow}
-          </Grid>
-          {post.attachments && (
+          </Grid> */}
+          {/* {post.attachments && (
             <Grid item xs={10}>
               {type === "photo" && (
                 // <CardMedia
@@ -553,8 +599,8 @@ class PostTypeComponent extends React.Component {
                 </Slider>
               )}
             </Grid>
-          )}
-          <Grid container item xs={10} style={{ padding: "1rem 0" }}>
+          )} */}
+          {/* <Grid container item xs={10} style={{ padding: "1rem 0" }}>
             <Grid item xs={12}>
               <Typography
                 variant={"body1"}
@@ -605,10 +651,21 @@ class PostTypeComponent extends React.Component {
                 <ButtonComponent label="VIEW ON FACEBOOK" style={btnStyle} />
               </a>
             </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Divider style={{ backgroundColor: dark && "#fff" }} />
-          </Grid>
+          </Grid> */}
+
+          {/* <div class="fb-comments" data-href={post.target && post.target} data-width="" data-numposts="5"></div> */}
+          <div
+            class="fb-post"
+            data-href={post.target && post.target}
+            data-show-text="true"
+            style={{
+              maxWidth: "100%",
+              // marginBottom: "30vh",
+              backgroundColor: "white",
+            }}
+          >
+            Loading...
+          </div>
         </Grid>
         <Grid
           container
@@ -626,7 +683,7 @@ class PostTypeComponent extends React.Component {
                 fontWeight: "bold",
               }}
             >
-              Lastest
+              Latest
             </Typography>
           </Grid>
           <Grid
@@ -642,6 +699,9 @@ class PostTypeComponent extends React.Component {
                 ? siteEdit &&
                     siteEdit.posts &&
                     siteEdit.posts
+                      .filter(function (pos) {
+                        return pos.isActive === true;
+                      })
                       .sort((a, b) => b.createdTime - a.createdTime)
                       .slice(0, 3)
                 : posts && posts.slice(0, 3)
@@ -665,7 +725,13 @@ class PostTypeComponent extends React.Component {
     } = this.props;
     const { page, postOpen } = this.state;
     return (
-      <Grid container justify="center">
+      <Grid container justify="center" id="fb-root">
+        <script
+          async
+          defer
+          crossorigin="anonymous"
+          src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=742131839643879&autoLogAppEvents=1"
+        ></script>
         {!fromHome && (isEdit ? editPostView : postOpen) ? (
           <Grid container item xs={11} justify="center">
             {this.renderViewNew(isEdit ? editPostView : postOpen)}
@@ -675,7 +741,7 @@ class PostTypeComponent extends React.Component {
             container
             item
             // xs={10}
-            // spacing={2}
+            spacing={2}
             justify="center"
             xs={12}
             sm={10}
@@ -689,9 +755,9 @@ class PostTypeComponent extends React.Component {
               container
               item
               xs={12}
-              // spacing={3}
+              spacing={3}
               justify="center"
-              // style={{ padding: "1rem" }}
+              style={{ padding: "1rem 0rem" }}
             >
               {isEdit
                 ? !fromHome
