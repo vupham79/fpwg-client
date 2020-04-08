@@ -49,33 +49,30 @@ class GalleryPage extends React.Component {
             siteEdit && siteEdit.galleries ? (
               <Grid container>
                 <GalleryComponent
-                  galleries={
-                    fromHome && homeList ? homeList : siteEdit.galleries
-                  }
+                  key={siteEdit.limitGallery}
+                  galleries={fromHome && homeList ? homeList : siteEdit.galleries}
                   siteInfo={siteEdit.id}
                   fromHome={fromHome}
-                  color={color}
                   pageCount={Math.ceil(
-                    (fromHome && homeList ? homeList : siteEdit.galleries)
-                      .length / this.state.itemPerPage
+                    (fromHome && homeList ? homeList : siteEdit.galleries).length /
+                    siteEdit.limitGallery
                   )}
-                  itemPerPage={this.state.itemPerPage}
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography
-                  variant="body1"
-                  style={{
-                    fontFamily: bodyEdit.fontFamily,
-                    color: "white",
-                    padding: "5rem 0",
-                  }}
-                >
-                  Currently no photo available.
+                <Grid container justify="center">
+                  <Typography
+                    variant="body1"
+                    style={{
+                      fontFamily: bodyEdit.fontFamily,
+                      color: "white",
+                      padding: "5rem 0",
+                    }}
+                  >
+                    Currently no photo available.
                 </Typography>
-              </Grid>
-            )
+                </Grid>
+              )
           ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
             <Grid container>
               <GalleryComponent
@@ -86,19 +83,19 @@ class GalleryPage extends React.Component {
               />
             </Grid>
           ) : (
-            <Grid container justify="center">
-              <Typography
-                variant="body1"
-                style={{
-                  fontFamily: bodyView.fontFamily,
-                  color: "white",
-                  padding: "5rem 0",
-                }}
-              >
-                Currently no photo available.
+                <Grid container justify="center">
+                  <Typography
+                    variant="body1"
+                    style={{
+                      fontFamily: bodyView.fontFamily,
+                      color: "white",
+                      padding: "5rem 0",
+                    }}
+                  >
+                    Currently no photo available.
               </Typography>
-            </Grid>
-          )}
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );

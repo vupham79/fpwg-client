@@ -145,23 +145,30 @@ class EventPage extends React.Component {
         {isEdit ? (
           siteEdit && siteEdit.events ? (
             <EventComponent
-              homeList={fromHome && homeList ? homeList : siteEdit.events}
+              key={this.props.isEdit ? this.props.siteEdit.limitEvent : this.props.siteView.limitEvent}
+              homeList={
+                fromHome && homeList
+                  ? homeList
+                  : isEdit
+                    ? siteEdit.events
+                    : siteView.events
+              }
+              siteInfo={siteView && siteView.sitePath}
               fromHome={fromHome}
               pageCount={Math.ceil(
                 (fromHome && homeList ? homeList : siteEdit.events).length /
-                  this.state.itemPerPage
+                (this.props.isEdit ? this.props.siteEdit.limitEvent : this.props.siteView.limitEvent)
               )}
-              itemPerPage={this.state.itemPerPage}
             />
           ) : (
-            <EmptyEvent
-              siteEdit={siteEdit}
-              titleEdit={titleEdit}
-              siteView={siteView}
-              titleView={titleView}
-              isEdit={isEdit}
-            />
-          )
+              <EmptyEvent
+                siteEdit={siteEdit}
+                titleEdit={titleEdit}
+                siteView={siteView}
+                titleView={titleView}
+                isEdit={isEdit}
+              />
+            )
         ) : (siteView && siteView.events) || (fromHome && homeList) ? (
           <EventComponent
             homeList={fromHome && homeList ? homeList : siteView.events}
@@ -169,14 +176,14 @@ class EventPage extends React.Component {
             fromHome={fromHome}
           />
         ) : (
-          <EmptyEvent
-            siteEdit={siteEdit}
-            titleEdit={titleEdit}
-            siteView={siteView}
-            titleView={titleView}
-            isEdit={isEdit}
-          />
-        )}
+              <EmptyEvent
+                siteEdit={siteEdit}
+                titleEdit={titleEdit}
+                siteView={siteView}
+                titleView={titleView}
+                isEdit={isEdit}
+              />
+            )}
       </Grid>
     );
   }

@@ -75,26 +75,26 @@ class GalleryPage extends React.Component {
         {isEdit ? (
           siteEdit && siteEdit.galleries ? (
             <GalleryComponent
+              key={siteEdit.limitGallery}
               galleries={fromHome && homeList ? homeList : siteEdit.galleries}
               siteInfo={siteEdit.id}
               fromHome={fromHome}
               pageCount={Math.ceil(
                 (fromHome && homeList ? homeList : siteEdit.galleries).length /
-                  this.state.itemPerPage
+                siteEdit.limitGallery
               )}
-              itemPerPage={this.state.itemPerPage}
             />
           ) : (
-            <Grid
-              container
-              justify="center"
-              style={{ minHeight: "30vh", marginTop: "10vh" }}
-            >
-              <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-                Currently no photo available.
+              <Grid
+                container
+                justify="center"
+                style={{ minHeight: "30vh", marginTop: "10vh" }}
+              >
+                <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+                  Currently no photo available.
               </p>
-            </Grid>
-          )
+              </Grid>
+            )
         ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
           <GalleryComponent
             galleries={fromHome && homeList ? homeList : siteView.galleries}
@@ -102,16 +102,16 @@ class GalleryPage extends React.Component {
             fromHome={fromHome}
           />
         ) : (
-          <Grid
-            container
-            justify="center"
-            style={{ minHeight: "30vh", marginTop: "10vh" }}
-          >
-            <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-              Currently no photo available.
+              <Grid
+                container
+                justify="center"
+                style={{ minHeight: "30vh", marginTop: "10vh" }}
+              >
+                <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+                  Currently no photo available.
             </p>
-          </Grid>
-        )}
+              </Grid>
+            )}
       </Grid>
     );
   }

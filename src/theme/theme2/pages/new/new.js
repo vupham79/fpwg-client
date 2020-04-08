@@ -94,15 +94,22 @@ class NewPage extends Component {
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
+                  key={siteEdit.limitNews}
                   fromHome={fromHome}
-                  posts={fromHome && homeList ? homeList : siteEdit.posts}
+                  posts={(fromHome && homeList
+                    ? homeList
+                    : siteEdit.posts
+                  ).filter(function (pos) {
+                    return pos.isActive === true;
+                  })}
                   pageCount={Math.ceil(
-                    (fromHome && homeList ? homeList : siteEdit.posts).length /
-                      this.state.itemPerPage
+                    (fromHome && homeList ? homeList : siteEdit.posts).filter(
+                      function (pos) {
+                        return pos.isActive === true;
+                      }
+                    ).length / siteEdit.limitNews
                   )}
-                  itemPerPage={this.state.itemPerPage}
                   bgWhite={true}
-                  postView={postView}
                 />
               </Grid>
             ) : (
