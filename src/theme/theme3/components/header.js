@@ -23,8 +23,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateNavItemValue, updateSelectNavItemValue } from "../../../actions";
 import Link from "../../../component/link";
-import BannerComponent from "../../component/bannerComponent";
 import { faExclamation } from "@fortawesome/free-solid-svg-icons";
+import { Parallax } from "react-parallax";
 
 const useStyles = (theme) => ({
   root: {
@@ -115,49 +115,6 @@ class Header extends Component {
       } else return `url('${siteEdit.logo}')`;
     }
     return `url('${siteView.logo}')`;
-  };
-
-  renderNewCoversCarousel = () => {
-    const { isEdit, newCover, siteView } = this.props;
-    if (isEdit) {
-      if (newCover && newCover.length > 0) {
-        return newCover.map((cover, index) => {
-          if (cover && typeof cover === "object" && cover.size > 0) {
-            return (
-              <CardMedia
-                key={index}
-                component="img"
-                alt="Contemplative Reptile"
-                height="400"
-                image={URL.createObjectURL(cover)}
-              />
-            );
-          } else
-            return (
-              <CardMedia
-                key={index}
-                component="img"
-                alt="Contemplative Reptile"
-                height="400"
-                image={cover}
-              />
-            );
-        });
-      }
-    } else {
-      if (siteView.cover && siteView.cover.length > 0) {
-        return siteView.cover.map((cover, i) => (
-          <CardMedia
-            key={i}
-            component="img"
-            alt="Contemplative Reptile"
-            height="400"
-            image={cover}
-          />
-        ));
-      }
-    }
-    //mỗi img phải bọc div để component carousel phân biệt chia slide
   };
 
   renderTabItems = () => {
@@ -406,6 +363,30 @@ class Header extends Component {
     );
   };
 
+  getCover = (index) => {
+    const { isEdit, newCover, siteView } = this.props;
+    if (isEdit) {
+      if (newCover && newCover[index]) {
+        if (
+          newCover[index] &&
+          typeof newCover[index] === "object" &&
+          newCover[index].size > 0
+        ) {
+          return URL.createObjectURL(newCover[index]);
+        } else return newCover[index];
+      } else {
+        return "/images/theme1-banner1.jpg";
+      }
+    } else {
+      if (siteView.cover && siteView.cover[index]) {
+        console.log(siteView.cover);
+        return siteView.cover[index];
+      } else {
+        return "/images/theme1-banner1.jpg";
+      }
+    }
+  };
+
   render() {
     const {
       isEdit,
@@ -442,7 +423,14 @@ class Header extends Component {
             }
           }
         >
-          <BannerComponent bannerType={0} theme="theme3" />
+          <Parallax
+            bgImage={this.getCover(0)}
+            bgImageAlt="the cat"
+            strength={200}
+            style={{ width: "100%" }}
+          >
+            <div style={{ height: "500px", width: "100%" }} />
+          </Parallax>
         </Grid>
         <Grid
           container
@@ -620,12 +608,12 @@ const mapStateToProps = (state) => ({
   bodyView: state.site.bodyView,
   navItemIsActive: state.site.navItemIsActive,
   newLogo: state.site.newLogo,
-  newCover: state.site.newCover,
   youtube: state.site.youtube,
   instagram: state.site.instagram,
   whatsapp: state.site.whatsapp,
   phone: state.site.phone,
   selectValue: state.tab.selectNavItemValue,
+  newCover: state.site.newCover,
 });
 
 const mapDispatchToProps = (dispatch) => ({
