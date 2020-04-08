@@ -60,20 +60,20 @@ class Theme1Gallery extends React.Component {
         {isEdit ? (
           siteEdit && siteEdit.galleries ? (
             <GalleryComponent
+              key={siteEdit.limitGallery}
               galleries={fromHome && homeList ? homeList : siteEdit.galleries}
               siteInfo={siteEdit.id}
               fromHome={fromHome}
               pageCount={Math.ceil(
                 (fromHome && homeList ? homeList : siteEdit.galleries).length /
-                  this.state.itemPerPage
+                siteEdit.limitGallery
               )}
-              itemPerPage={this.state.itemPerPage}
             />
           ) : (
-            <p className={classes.changableBody}>
-              Currently no photo available.
-            </p>
-          )
+              <p className={classes.changableBody}>
+                Currently no photo available.
+              </p>
+            )
         ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
           <GalleryComponent
             galleries={fromHome && homeList ? homeList : siteView.galleries}
@@ -81,8 +81,8 @@ class Theme1Gallery extends React.Component {
             fromHome={fromHome}
           />
         ) : (
-          <p className={classes.changableBody}>Currently no photo available.</p>
-        )}
+              <p className={classes.changableBody}>Currently no photo available.</p>
+            )}
       </Grid>
     );
   }

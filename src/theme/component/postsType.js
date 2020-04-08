@@ -104,7 +104,7 @@ class PostTypeComponent extends React.Component {
     postOpen: this.props.postView && this.props.postView,
     pageView: 1,
     offset: 0,
-    itemPerPage: this.props.itemPerPage,
+    itemPerPage: this.props.isEdit ? this.props.siteEdit.limitNews : this.props.siteView.limitNews,
     page: 1,
   };
 
@@ -141,7 +141,7 @@ class PostTypeComponent extends React.Component {
       fontSize: "11px",
       border: `2px solid ${
         style && style.isEdit ? style.titleEdit.color : style.titleView.color
-      }`,
+        }`,
     };
 
     return (
@@ -231,12 +231,12 @@ class PostTypeComponent extends React.Component {
                 <ButtonComponent label="READ MORE" style={btnStyle} />
               </Link>
             ) : (
-              <ButtonComponent
-                onClick={() => this.handleOpen(post)}
-                label="READ MORE"
-                style={btnStyle}
-              />
-            )}
+                  <ButtonComponent
+                    onClick={() => this.handleOpen(post)}
+                    label="READ MORE"
+                    style={btnStyle}
+                  />
+                )}
           </Grid>
         </Grid>
       </Grid>
@@ -256,7 +256,7 @@ class PostTypeComponent extends React.Component {
       fontSize: "11px",
       border: `2px solid ${
         style && style.isEdit ? style.titleEdit.color : style.titleView.color
-      }`,
+        }`,
     };
     return (
       <Grid
@@ -311,12 +311,12 @@ class PostTypeComponent extends React.Component {
                 <ButtonComponent label="READ MORE" style={btnStyle} />
               </Link>
             ) : (
-              <ButtonComponent
-                onClick={() => this.handleOpen(post)}
-                label="READ MORE"
-                style={btnStyle}
-              />
-            )}
+                  <ButtonComponent
+                    onClick={() => this.handleOpen(post)}
+                    label="READ MORE"
+                    style={btnStyle}
+                  />
+                )}
           </Grid>
         </Grid>
       </Grid>
@@ -417,7 +417,7 @@ class PostTypeComponent extends React.Component {
       fontSize: "11px",
       border: `2px solid ${
         style && style.isEdit ? style.titleEdit.color : style.titleView.color
-      }`,
+        }`,
     };
     const txtStyle = {
       fontFamily: style.isEdit
@@ -572,10 +572,10 @@ class PostTypeComponent extends React.Component {
           >
             {this.renderNews(
               siteEdit &&
-                siteEdit.posts &&
-                siteEdit.posts
-                  .sort((a, b) => b.createdTime - a.createdTime)
-                  .slice(0, 3)
+              siteEdit.posts &&
+              siteEdit.posts
+                .sort((a, b) => b.createdTime - a.createdTime)
+                .slice(0, 3)
             )}
           </Grid>
         </Grid>
@@ -600,18 +600,18 @@ class PostTypeComponent extends React.Component {
             {this.renderViewNew(isEdit ? editPostView : postOpen)}
           </Grid>
         ) : (
-          <Grid container item xs={10}>
-            <Grid
-              container
-              item
-              xs={12}
-              spacing={3}
-              justify="center"
-              style={{ padding: "5rem 0.5rem" }}
-            >
-              {isEdit
-                ? !fromHome
-                  ? this.renderNews(
+            <Grid container item xs={10}>
+              <Grid
+                container
+                item
+                xs={12}
+                spacing={3}
+                justify="center"
+                style={{ padding: "5rem 0.5rem" }}
+              >
+                {isEdit
+                  ? !fromHome
+                    ? this.renderNews(
                       posts
                         .filter(function (pos) {
                           return pos.isActive === true;
@@ -620,21 +620,21 @@ class PostTypeComponent extends React.Component {
                           this.state.page > pageCount ? 0 : this.state.offset,
                           this.state.page > pageCount
                             ? 3
-                            : this.state.itemPerPage + this.state.offset
+                            : parseInt(this.state.itemPerPage) + parseInt(this.state.offset)
                         )
                     )
-                  : this.renderNews(
+                    : this.renderNews(
                       posts
                         .filter(function (pos) {
                           return pos.isActive === true;
                         })
                         .slice(0, 3)
                     )
-                : this.renderNews(posts)}
-            </Grid>
+                  : this.renderNews(posts)}
+              </Grid>
 
-            {isEdit
-              ? pageCount > 1 &&
+              {isEdit
+                ? pageCount > 1 &&
                 !fromHome && (
                   <Grid container justify="center">
                     <Pagination
@@ -652,7 +652,7 @@ class PostTypeComponent extends React.Component {
                     />
                   </Grid>
                 )
-              : pageCountView > 1 &&
+                : pageCountView > 1 &&
                 !fromHome && (
                   <Grid container justify="center">
                     <Pagination
@@ -670,8 +670,8 @@ class PostTypeComponent extends React.Component {
                     />
                   </Grid>
                 )}
-          </Grid>
-        )}
+            </Grid>
+          )}
       </Grid>
     );
   }

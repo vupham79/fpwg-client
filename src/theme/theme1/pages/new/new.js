@@ -86,23 +86,29 @@ class Theme1News extends React.Component {
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
+                  key={siteEdit.limitNews}
                   fromHome={fromHome}
-                  posts={fromHome && homeList ? homeList : siteEdit.posts}
+                  posts={
+                    (fromHome && homeList ? homeList : siteEdit.posts).filter(function (pos) {
+                      return pos.isActive === true;
+                    })
+                  }
                   pageCount={Math.ceil(
-                    (fromHome && homeList ? homeList : siteEdit.posts).length /
-                      this.state.itemPerPage
+                    (fromHome && homeList ? homeList : siteEdit.posts).filter(function (pos) {
+                      return pos.isActive === true;
+                    }).length /
+                    siteEdit.limitNews
                   )}
-                  itemPerPage={this.state.itemPerPage}
                   bgWhite={true}
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography className={classes.changableBody}>
-                  Currently there are no news.
+                <Grid container justify="center">
+                  <Typography className={classes.changableBody}>
+                    Currently there are no news.
                 </Typography>
-              </Grid>
-            )
+                </Grid>
+              )
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
@@ -118,12 +124,12 @@ class Theme1News extends React.Component {
               />
             </Grid>
           ) : (
-            <Grid container justify="center">
-              <Typography className={classes.changableBody}>
-                Currently there are no news.
+                <Grid container justify="center">
+                  <Typography className={classes.changableBody}>
+                    Currently there are no news.
               </Typography>
-            </Grid>
-          )}
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );

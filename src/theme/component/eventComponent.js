@@ -9,7 +9,7 @@ class EventComponent extends React.Component {
   state = {
     pageView: 1,
     offset: 0,
-    itemPerPage: this.props.itemPerPage,
+    itemPerPage: this.props.isEdit ? this.props.siteEdit.limitEvent : this.props.siteView.limitEvent,
     page: 1,
   };
 
@@ -33,6 +33,7 @@ class EventComponent extends React.Component {
   handlePageEditClick = (event, newValue) => {
     let selected = newValue - 1;
     let offset = Math.ceil(selected * this.state.itemPerPage);
+    // console.log(offset + "-" + (newValue - 1) + "-" + this.state.itemPerPage);
     this.setState({ offset: offset, page: newValue });
   };
 
@@ -49,7 +50,7 @@ class EventComponent extends React.Component {
     return (
       <>
         {homeList &&
-          homeList.map((row, index) => {
+          homeList.map((row) => {
             return (
               row &&
               !row.isCancelled &&
@@ -59,7 +60,7 @@ class EventComponent extends React.Component {
                   container
                   sm={12}
                   className={styles.contain_event}
-                  key={index}
+                  key={row._id}
                   style={{ padding: 10, backgroundColor: "white" }}
                 >
                   <Grid
@@ -71,8 +72,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showCoverEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       backgroundColor: "#444950",
                     }}
                   >
@@ -151,8 +152,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showDesEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       height: "6em",
                       lineHeight: "1.5em",
                       fontFamily: isEdit
@@ -174,8 +175,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showPlaceEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                     }}
                   >
                     <Grid
@@ -228,10 +229,11 @@ class EventComponent extends React.Component {
       siteEdit,
       siteView,
     } = this.props;
+    console.log(homeList)
     return (
       <>
         {homeList &&
-          homeList.map((row, index) => {
+          homeList.map((row) => {
             return (
               row &&
               (row.isCancelled ||
@@ -242,7 +244,7 @@ class EventComponent extends React.Component {
                   container
                   sm={12}
                   className={styles.contain_event}
-                  key={index}
+                  key={row._id}
                   style={{ padding: 10, backgroundColor: "white" }}
                 >
                   <Grid
@@ -254,8 +256,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showCoverEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       backgroundColor: "#444950",
                     }}
                   >
@@ -334,8 +336,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showDesEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       height: "6em",
                       lineHeight: "1.5em",
                       fontFamily: isEdit
@@ -357,8 +359,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showPlaceEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                     }}
                   >
                     <Grid
@@ -478,7 +480,7 @@ class EventComponent extends React.Component {
             container
             alignItems="center"
             direction="column"
-            // className={classes.eventPage}
+          // className={classes.eventPage}
           >
             <Grid
               item
@@ -494,7 +496,7 @@ class EventComponent extends React.Component {
                 </Grid>
               )}
 
-              {(fromHome || !isEdit) &&
+              {fromHome &&
                 homeList &&
                 homeList.filter(
                   (row) =>
@@ -513,13 +515,18 @@ class EventComponent extends React.Component {
                 )}
 
               {!fromHome &&
-                this.state.filteredData &&
-                this.state.filteredData.filter(
-                  (row) =>
-                    row &&
-                    !row.isCancelled &&
-                    moment(row.endTime).isAfter(moment())
-                ).length > 0 && (
+                homeList &&
+                homeList
+                  .slice(
+                    page > pageCount ? 0 : offset,
+                    page > pageCount ? 3 : parseInt(itemPerPage) + parseInt(offset)
+                  )
+                  .filter(
+                    (row) =>
+                      row &&
+                      !row.isCancelled &&
+                      moment(row.endTime).isAfter(moment())
+                  ).length > 0 && (
                   <Grid container item>
                     <Grid item xs={12}>
                       <p style={classes.changableBody2}>Upcoming Events</p>
@@ -534,21 +541,19 @@ class EventComponent extends React.Component {
                 ? fromHome
                   ? this.renderUpComingEvent(homeList.slice(0, 3), classes)
                   : this.renderUpComingEvent(
-                      homeList.slice(
-                        this.state.page > pageCount ? 0 : this.state.offset,
-                        this.state.page > pageCount
-                          ? 3
-                          : this.state.itemPerPage + this.state.offset
-                      ),
-                      classes
-                    )
+                    homeList.slice(
+                      page > pageCount ? 0 : offset,
+                      page > pageCount ? 3 : parseInt(itemPerPage) + parseInt(offset)
+                    ),
+                    classes
+                  )
                 : this.renderUpComingEvent(homeList, classes)}
 
               <Grid item xs={12}>
                 <Divider color="#212121" />
               </Grid>
 
-              {(fromHome || !isEdit) &&
+              {fromHome &&
                 homeList &&
                 homeList.filter(
                   (row) =>
@@ -568,14 +573,19 @@ class EventComponent extends React.Component {
                 )}
 
               {!fromHome &&
-                this.state.filteredData &&
-                this.state.filteredData.filter(
-                  (row) =>
-                    row &&
-                    (row.isCancelled ||
-                      moment(row.endTime).isSameOrBefore(moment()) ||
-                      !row.endTime)
-                ).length > 0 && (
+                homeList &&
+                homeList
+                  .slice(
+                    page > pageCount ? 0 : offset,
+                    page > pageCount ? 3 : parseInt(itemPerPage) + parseInt(offset)
+                  )
+                  .filter(
+                    (row) =>
+                      row &&
+                      (row.isCancelled ||
+                        moment(row.endTime).isSameOrBefore(moment()) ||
+                        !row.endTime)
+                  ).length > 0 && (
                   <Grid container item>
                     <Grid item xs={12}>
                       <p style={classes.changableBody2}>Past Events</p>
@@ -585,56 +595,55 @@ class EventComponent extends React.Component {
                     </Grid>
                   </Grid>
                 )}
-
               {isEdit
                 ? fromHome
                   ? this.renderPassEvent(homeList.slice(0, 3), classes)
                   : this.renderPassEvent(
-                      homeList.slice(
-                        page > pageCount ? 0 : offset,
-                        page > pageCount ? 3 : itemPerPage + offset
-                      ),
-                      classes
-                    )
+                    homeList.slice(
+                      page > pageCount ? 0 : offset,
+                      page > pageCount ? 3 : parseInt(itemPerPage) + parseInt(offset)
+                    ),
+                    classes
+                  )
                 : this.renderPassEvent(homeList, classes)}
             </Grid>
             {isEdit
               ? !fromHome &&
-                pageCount > 1 && (
-                  <Grid container justify="center" style={{ padding: "5rem" }}>
-                    <Pagination
-                      style={{
-                        backgroundColor: "white",
-                        padding: "0.4rem",
-                        borderRadius: "0.3rem",
-                      }}
-                      color="default"
-                      shape="rounded"
-                      variant="outlined"
-                      count={pageCount}
-                      page={page > pageCount ? 1 : page}
-                      onChange={this.handlePageEditClick}
-                    />
-                  </Grid>
-                )
+              pageCount > 1 && (
+                <Grid container justify="center" style={{ padding: "5rem" }}>
+                  <Pagination
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0.4rem",
+                      borderRadius: "0.3rem",
+                    }}
+                    color="default"
+                    shape="rounded"
+                    variant="outlined"
+                    count={pageCount}
+                    page={page > pageCount ? 1 : page}
+                    onChange={this.handlePageEditClick}
+                  />
+                </Grid>
+              )
               : !fromHome &&
-                pageCountView > 1 && (
-                  <Grid container justify="center" style={{ padding: "5rem" }}>
-                    <Pagination
-                      style={{
-                        backgroundColor: "white",
-                        padding: "0.4rem",
-                        borderRadius: "0.3rem",
-                      }}
-                      color="default"
-                      variant="outlined"
-                      shape="rounded"
-                      count={pageCountView}
-                      page={this.state.pageView}
-                      onChange={this.handlePageViewClick}
-                    />
-                  </Grid>
-                )}
+              pageCountView > 1 && (
+                <Grid container justify="center" style={{ padding: "5rem" }}>
+                  <Pagination
+                    style={{
+                      backgroundColor: "white",
+                      padding: "0.4rem",
+                      borderRadius: "0.3rem",
+                    }}
+                    color="default"
+                    variant="outlined"
+                    shape="rounded"
+                    count={pageCountView}
+                    page={this.state.pageView}
+                    onChange={this.handlePageViewClick}
+                  />
+                </Grid>
+              )}
           </Grid>
         </Grid>
       </Grid>

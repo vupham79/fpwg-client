@@ -99,6 +99,7 @@ class Theme1About extends React.Component {
           </p>
         </Grid>
         <Grid container item xs={12} justify={"center"}>
+          {/* <RoundedImage image={this.renderImage()} roundedSize="0" imageWidth="300" imageHeight="300" style={{ objectFit: "contain" }} /> */}
           <img src={this.renderImage()} alt="" style={{ width: "20rem" }} />
         </Grid>
         <Grid item xs={12} style={{ padding: 15, marginTop: 40 }}>
