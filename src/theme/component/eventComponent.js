@@ -465,7 +465,7 @@ class EventComponent extends React.Component {
               justify="center"
               className={styles.event_body}
             >
-              {!homeList && (
+              {!homeList || (homeList && homeList.length === 0) && (
                 <Grid className={styles.event}>
                   <p style={classes.changableBody}>No event.</p>
                 </Grid>
