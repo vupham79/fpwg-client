@@ -19,7 +19,8 @@ import {
 } from "../../actions";
 import ButtonComponent from "../../component/Button";
 import Link from "../../component/link";
-
+import Slider from "react-slick";
+import CommentCoponnent from "../component/commentComponent";
 const useStyles = (theme) => ({
   root: {
     marginTop: theme.spacing(2),
@@ -129,21 +130,25 @@ class PostTypeComponent extends React.Component {
     }
   };
 
-  renderPostComponent(index, post, style, dark, type) {
-    const { fromHome, isEdit, siteView } = this.props;
+  renderPostComponent(index, post, dark, type) {
+    const {
+      fromHome,
+      isEdit,
+      siteView,
+      titleEdit,
+      titleView,
+      bodyEdit,
+      bodyView,
+    } = this.props;
     const { classes } = this.props;
     const txtStyle = {
-      fontFamily: style.isEdit
-        ? style.bodyEdit.fontFamily
-        : style.bodyView.fontFamily,
+      fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
       fontSize: "14px",
     };
     const btnStyle = {
       padding: "0.5rem 1.5rem",
       fontSize: "11px",
-      border: `2px solid ${
-        style && style.isEdit ? style.titleEdit.color : style.titleView.color
-      }`,
+      border: `2px solid ${isEdit ? titleEdit.color : titleView.color}`,
     };
 
     return (
@@ -253,20 +258,24 @@ class PostTypeComponent extends React.Component {
     );
   }
 
-  renderPostMessage(index, post, style, dark) {
-    const { fromHome, isEdit, siteView } = this.props;
+  renderPostMessage(index, post, dark) {
+    const {
+      fromHome,
+      isEdit,
+      siteView,
+      bodyEdit,
+      bodyView,
+      titleEdit,
+      titleView,
+    } = this.props;
     const txtStyle = {
-      fontFamily: style.isEdit
-        ? style.bodyEdit.fontFamily
-        : style.bodyView.fontFamily,
+      fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
       fontSize: "14px",
     };
     const btnStyle = {
       padding: "0.5rem 1.5rem",
       fontSize: "11px",
-      border: `2px solid ${
-        style && style.isEdit ? style.titleEdit.color : style.titleView.color
-      }`,
+      border: `2px solid ${isEdit ? titleEdit.color : titleView.color}`,
     };
     return (
       <Grid
@@ -407,7 +416,7 @@ class PostTypeComponent extends React.Component {
   };
 
   renderViewNew = (post) => {
-    const { siteEdit, bgWhite, siteView } = this.props;
+    const { siteEdit, bgWhite, siteView, posts } = this.props;
     const {
       isEdit,
       titleEdit,
@@ -416,29 +425,31 @@ class PostTypeComponent extends React.Component {
       bodyView,
       classes,
     } = this.props;
-    const style = {
-      isEdit: isEdit,
-      titleEdit: titleEdit,
-      titleView: titleView,
-      bodyEdit: bodyEdit,
-      bodyView: bodyView,
+    const sliderSettings = {
+      dots: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      autoplay: true,
+      speed: 700,
+      autoplaySpeed: 3000,
     };
     const btnStyle = {
       padding: "0.5rem 1.5rem",
       fontSize: "11px",
-      border: `2px solid ${
-        style && style.isEdit ? style.titleEdit.color : style.titleView.color
-      }`,
+      border: `2px solid ${isEdit ? titleEdit.color : titleView.color}`,
     };
     const txtStyle = {
-      fontFamily: style.isEdit
-        ? style.bodyEdit.fontFamily
-        : style.bodyView.fontFamily,
+      fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
       fontSize: "16px",
       color: bgWhite ? "black" : "white",
     };
     const type = post.attachments && post.attachments.media_type;
     const originalMessage = post.message ? post.message.split("\n") : null;
+    const title = post.message && post.message.split(".")[0];
+    let titleShow = title.slice(0, 70);
+    if (title.length > 70) {
+      titleShow += "...";
+    }
     return (
       <Grid container item xs={11} justify="center">
         <Grid
@@ -471,8 +482,19 @@ class PostTypeComponent extends React.Component {
           justify="center"
           style={{ paddingTop: "2rem", borderBottom: "1px solid black" }}
         >
-          <Grid item xs={8} style={{ ...txtStyle, paddingBottom: "2rem" }}>
-            <div style={gridTitle}>{post.message}</div>
+          <Grid
+            item
+            xs={9}
+            style={{
+              ...txtStyle,
+              paddingBottom: "2rem",
+              fontWeight: "bold",
+              fontSize: "24px",
+              textAlign: "center",
+            }}
+          >
+            {/* <div style={gridTitle}>{post.message}</div> */}
+            {titleShow}
           </Grid>
           {post.attachments && (
             <Grid item xs={10}>
@@ -490,14 +512,17 @@ class PostTypeComponent extends React.Component {
                   width="100%"
                 />
               )}
-              {type === "album" &&
-                post.attachments.images.map((img, index) => (
-                  <CardMedia
-                    key={index}
-                    className={classes.cardAlbum}
-                    image={img}
-                  />
-                ))}
+              {type === "album" && (
+                <Slider {...sliderSettings}>
+                  {post.attachments.images.map((img, index) => (
+                    <CardMedia
+                      key={index}
+                      className={classes.cardAlbum}
+                      image={img}
+                    />
+                  ))}
+                </Slider>
+              )}
             </Grid>
           )}
           <Grid container item xs={10} style={{ padding: "1rem 0" }}>
@@ -576,15 +601,13 @@ class PostTypeComponent extends React.Component {
             style={{ paddingTop: "2.5rem" }}
           >
             {this.renderNews(
-              siteEdit
-                ? siteEdit.posts &&
+              isEdit
+                ? siteEdit &&
+                    siteEdit.posts &&
                     siteEdit.posts
                       .sort((a, b) => b.createdTime - a.createdTime)
                       .slice(0, 3)
-                : siteView.posts &&
-                    siteView.posts
-                      .sort((a, b) => b.createdTime - a.createdTime)
-                      .slice(0, 3)
+                : posts && posts.slice(0, 3)
             )}
           </Grid>
         </Grid>
