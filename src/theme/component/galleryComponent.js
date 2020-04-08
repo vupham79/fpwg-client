@@ -6,7 +6,8 @@ import {
   Typography,
   withStyles,
 } from "@material-ui/core";
-import Pagination from "@material-ui/lab/Pagination";
+import { KeyboardArrowRight as NextIcon } from "@material-ui/icons";
+import { Pagination, PaginationItem } from "@material-ui/lab";
 import React from "react";
 import { connect } from "react-redux";
 import {
@@ -28,6 +29,9 @@ const useStyles = (theme) => ({
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
+  },
+  paginationItemRoot: {
+    color: "#fff",
   },
 });
 
@@ -76,7 +80,16 @@ class GalleryComponent extends React.Component {
   };
 
   renderHomepageGallery = () => {
-    const { classes, galleries, siteView, titleView, color } = this.props;
+    const {
+      classes,
+      galleries,
+      siteView,
+      titleView,
+      isEdit,
+      titleEdit,
+      color,
+      siteEdit,
+    } = this.props;
     return (
       <>
         {galleries.map((item, index) => (
@@ -114,13 +127,15 @@ class GalleryComponent extends React.Component {
                   left: 0,
                   right: 0,
                   textAlign: "center",
-                  textDecoration: "underline",
                   fontFamily: titleView.fontFamily,
                   fontWeight: 700,
                   color: color ? color : titleView.color,
+                  display: "flex",
+                  justifyContent: "center",
                 }}
               >
                 View Gallery
+                <NextIcon />
               </Typography>
             </Link>
           </CardActionArea>
@@ -181,13 +196,15 @@ class GalleryComponent extends React.Component {
                 left: 0,
                 right: 0,
                 textAlign: "center",
-                textDecoration: "underline",
                 fontFamily: titleEdit.fontFamily,
                 fontWeight: 700,
                 color: color ? color : siteEdit.color,
+                display: "flex",
+                justifyContent: "center",
               }}
             >
               View Gallery
+              <NextIcon />
             </Typography>
           </CardActionArea>
         </Grid>
@@ -203,6 +220,7 @@ class GalleryComponent extends React.Component {
       isEdit,
       fromHome,
       pageCount,
+      dark,
     } = this.props;
     const { offset, itemPerPage, page } = this.state;
     return (
@@ -220,7 +238,9 @@ class GalleryComponent extends React.Component {
               ? galleries
                   .slice(
                     page > pageCount ? 0 : offset,
-                    page > pageCount ? 5 : itemPerPage + offset
+                    page > pageCount
+                      ? 5
+                      : parseInt(itemPerPage) + parseInt(offset)
                   )
                   .map((item, index) => (
                     <Grid
@@ -270,13 +290,31 @@ class GalleryComponent extends React.Component {
         {isEdit
           ? pageCount > 1 &&
             !fromHome && (
-              <Grid container justify="center" style={{ padding: "2rem" }}>
+              <Grid
+                container
+                justify="center"
+                // style={{ padding: "2rem" }}
+              >
                 <Pagination
                   style={{
-                    backgroundColor: "white",
+                    backgroundColor: dark ? "#000" : "#fff",
                     padding: "0.4rem",
                     borderRadius: "0.3rem",
                   }}
+                  renderItem={(item) =>
+                    dark ? (
+                      <PaginationItem
+                        {...item}
+                        selected
+                        style={{ color: "white", borderColor: "white" }}
+                        classes={{
+                          root: classes.paginationItemRoot,
+                        }}
+                      />
+                    ) : (
+                      <PaginationItem {...item} />
+                    )
+                  }
                   color="default"
                   shape="rounded"
                   variant="outlined"
@@ -288,13 +326,31 @@ class GalleryComponent extends React.Component {
             )
           : pageCountView > 1 &&
             !fromHome && (
-              <Grid container justify="center" style={{ padding: "2rem" }}>
+              <Grid
+                container
+                justify="center"
+                //  style={{ padding: "2rem" }}
+              >
                 <Pagination
                   style={{
-                    backgroundColor: "white",
+                    backgroundColor: dark ? "#000" : "#fff",
                     padding: "0.4rem",
                     borderRadius: "0.3rem",
                   }}
+                  renderItem={(item) =>
+                    dark ? (
+                      <PaginationItem
+                        {...item}
+                        selected
+                        style={{ color: "white", borderColor: "white" }}
+                        classes={{
+                          root: classes.paginationItemRoot,
+                        }}
+                      />
+                    ) : (
+                      <PaginationItem {...item} />
+                    )
+                  }
                   color="default"
                   shape="rounded"
                   variant="outlined"

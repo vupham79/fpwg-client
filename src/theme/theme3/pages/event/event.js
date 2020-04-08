@@ -112,17 +112,31 @@ class EventPage extends React.Component {
             className={styles.title}
             variant="h4"
             align="center"
-            gutterBottom
             style={
               isEdit
                 ? {
                     ...titleEdit,
                     color: "#fff",
+                    letterSpacing: "0.2rem",
                   }
-                : { ...titleView, color: "#fff" }
+                : { ...titleView, color: "#fff", letterSpacing: "0.2rem" }
             }
           >
-            {fromHome ? homeTitle : "Events"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "event") {
+                    return item.name;
+                  } else return "";
+                })
+              : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "event") {
+                    return item.name;
+                  } else return "";
+                })}
           </Typography>
         </Grid>
         {isEdit ? (
@@ -148,6 +162,7 @@ class EventPage extends React.Component {
                     ? this.props.siteEdit.limitEvent
                     : this.props.siteView.limitEvent)
               )}
+              dark={true}
             />
           ) : (
             <EmptyEvent
@@ -163,6 +178,7 @@ class EventPage extends React.Component {
             homeList={fromHome && homeList ? homeList : siteView.events}
             siteInfo={siteView.sitePath}
             fromHome={fromHome}
+            dark={true}
           />
         ) : (
           <EmptyEvent

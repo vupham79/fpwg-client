@@ -231,7 +231,7 @@ class HomepageEditorTab extends React.Component {
   };
 
   handleUploadCover = async (e) => {
-    if (this.props.newCover.length < 5) {
+    if (this.props.newCover.length < 6) {
       e.preventDefault();
       let file = e.target.files[0];
       //validating the file

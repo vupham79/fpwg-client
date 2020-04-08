@@ -70,14 +70,28 @@ class ContactPage extends React.Component {
             variant="h4"
             color="textSecondary"
             align="center"
-            gutterBottom
             className={styles.title}
             style={{
               color: "white",
               fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+              letterSpacing: "0.2rem",
             }}
           >
-            {fromHome ? homeTitle : "Contacts"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "contact") {
+                    return item.name;
+                  } else return "";
+                })
+              : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "contact") {
+                    return item.name;
+                  } else return "";
+                })}
           </Typography>
         </Grid>
         <Grid container spacing={2} item xs={12} justify="center">

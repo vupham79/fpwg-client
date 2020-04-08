@@ -4,27 +4,26 @@ import {
   faWhatsapp,
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
+import { faExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  CardMedia,
+  Button,
   FormControl,
   Grid,
-  IconButton,
   MenuItem,
   Select,
   Tab,
   Tabs,
-  withStyles,
   Tooltip,
+  withStyles,
   Zoom,
-  Button,
 } from "@material-ui/core";
 import React, { Component } from "react";
+import { Parallax } from "react-parallax";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { updateNavItemValue, updateSelectNavItemValue } from "../../../actions";
 import Link from "../../../component/link";
-import { faExclamation } from "@fortawesome/free-solid-svg-icons";
-import { Parallax } from "react-parallax";
 
 const useStyles = (theme) => ({
   root: {
@@ -51,38 +50,26 @@ const useStyles = (theme) => ({
   navItem: {
     [theme.breakpoints.up("md")]: {
       position: "absolute",
-      top: "70%",
+      top: "5%",
       minHeight: "14vh",
     },
     position: "absolute",
-    top: "40%",
+    top: "5%",
     minHeight: "auto",
   },
-  tab: {
-    display: "none",
-    [theme.breakpoints.up("md")]: {
-      display: "block",
-    },
-  },
+  // tab: {
+  //   display: "none",
+  //   [theme.breakpoints.up("sm")]: {
+  //     display: "block",
+  //   },
+  // },
   dropdownSelect: {
-    display: "block",
-    paddingTop: "2rem",
-    [theme.breakpoints.up("md")]: {
-      display: "none",
-    },
-  },
-  title: {
-    color: "white",
-    fontSize: "2rem",
-    overflow: "hidden",
-    textAlign: "center",
-    [theme.breakpoints.up("md")]: {
-      fontSize: "3rem",
-      display: "block",
-      position: "absolute",
-      top: "-2rem",
-      // minWidth: "20vh",
-    },
+    // display: "block",
+    // paddingTop: "2rem",
+    display: "none",
+    // [theme.breakpoints.up("sm")]: {
+    //   display: "none",
+    // },
   },
   tooltip: {
     border: "2px solid orange",
@@ -118,11 +105,18 @@ class Header extends Component {
   };
 
   renderTabItems = () => {
-    const { tabValue, updateNavItemValue, siteEdit, titleEdit } = this.props;
+    const {
+      tabValue,
+      updateNavItemValue,
+      siteEdit,
+      titleEdit,
+      siteView,
+      isEdit,
+    } = this.props;
     const tabStyles = {
       fontFamily: titleEdit.fontFamily,
       color: "white",
-      fontSize: "14px",
+      fontSize: "1.2rem",
       minWidth: "5vh",
       "&:hover": {
         color: "red",
@@ -150,7 +144,20 @@ class Header extends Component {
       >
         {siteEdit.navItems.map((item, index) =>
           item.isActive ? (
-            <Tab style={tabStyles} label={item.name} key={index} />
+            index === tabValue ? (
+              <Tab
+                style={{
+                  ...tabStyles,
+                  backgroundColor: isEdit ? siteEdit.color : siteView.color,
+                  fontWeight: "bold",
+                  padding: "0.5rem",
+                }}
+                label={item.name}
+                key={index}
+              />
+            ) : (
+              <Tab style={tabStyles} label={item.name} key={index} />
+            )
           ) : null
         )}
       </Tabs>
@@ -194,12 +201,12 @@ class Header extends Component {
   };
 
   renderNavItems = () => {
-    const { siteView, isEdit, titleView } = this.props;
+    const { siteView, isEdit, titleView, siteEdit } = this.props;
     const navLinkStyle = {
       fontFamily: titleView.fontFamily,
       color: "white",
-      fontSize: "14px",
-      // minWidth: "5vh",
+      fontSize: "1.2rem",
+      letterSpacing: "0.2rem",
       textDecoration: "none",
       height: "auto",
       textTransform: "uppercase",
@@ -218,14 +225,18 @@ class Header extends Component {
             siteView.navItems.map((item, index) =>
               item.isActive ? (
                 <Grid item style={{ marginLeft: "2rem" }}>
-                  <Link
+                  <NavLink
                     key={index}
                     style={navLinkStyle}
-                    activeStyle={{ backgroundColor: siteView.color }}
+                    activeStyle={{
+                      backgroundColor: isEdit ? siteEdit.color : siteView.color,
+                      fontWeight: "bold",
+                      padding: "0.5rem",
+                    }}
                     to={`/${siteView.sitePath}/${item.original}`}
                   >
                     {item.name}
-                  </Link>
+                  </NavLink>
                 </Grid>
               ) : null
             )}
@@ -266,7 +277,7 @@ class Header extends Component {
   renderSelect = () => {
     const { siteEdit, siteView, isEdit, titleEdit, titleView } = this.props;
     const selectStyle = {
-      color: "white",
+      color: "#000",
       backgroundColor: isEdit
         ? siteEdit && siteEdit.color
         : siteView && siteView.color,
@@ -275,7 +286,7 @@ class Header extends Component {
       fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
     };
     const selectNavStyle = {
-      backgroundColor: "white",
+      backgroundColor: "#000",
       textAlign: "center",
       fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
     };
@@ -315,7 +326,7 @@ class Header extends Component {
                       to={`/${siteView.sitePath}/${item.original}`}
                       style={{
                         width: "-webkit-fill-available",
-                        color: "black",
+                        color: "#fff",
                         padding: "0.5rem",
                       }}
                     >
@@ -347,14 +358,27 @@ class Header extends Component {
         justify="center"
         style={{
           padding: "1rem",
-          backgroundColor: isEdit
-            ? hexToRGB(siteEdit.color, 0.6)
-            : hexToRGB(siteView.color, 0.6),
+          // backgroundColor: isEdit
+          //   ? hexToRGB(siteEdit.color, 0.9)
+          //   : hexToRGB(siteView.color, 0.9),
         }}
       >
-        <Grid item xs={12} className={classes.title} style={infoStyle}>
-          {/* {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title} */}
-        </Grid>
+        <Grid
+          item
+          xs={12}
+          style={
+            (infoStyle,
+            {
+              height: "8rem",
+              backgroundSize: "contain",
+              backgroundRepeat: "no-repeat",
+              backgroundPosition: "center",
+              backgroundImage: this.renderImage(),
+              marginTop: 10,
+              marginBottom: 10,
+            })
+          }
+        ></Grid>
         <Grid className={classes.tab}>{this.renderNavItems()}</Grid>
         <Grid item xs={6} className={classes.dropdownSelect}>
           {this.renderSelect()}
@@ -379,7 +403,6 @@ class Header extends Component {
       }
     } else {
       if (siteView.cover && siteView.cover[index]) {
-        console.log(siteView.cover);
         return siteView.cover[index];
       } else {
         return "/images/theme1-banner1.jpg";
@@ -429,7 +452,7 @@ class Header extends Component {
             strength={200}
             style={{ width: "100%" }}
           >
-            <div style={{ height: "500px", width: "100%" }} />
+            <div style={{ height: "100vh", width: "100%" }} />
           </Parallax>
         </Grid>
         <Grid
@@ -441,7 +464,7 @@ class Header extends Component {
           className={classes.contact}
           style={{ padding: "1rem" }}
         >
-          {isEdit
+          {/* {isEdit
             ? siteEdit &&
               siteEdit.address && (
                 <Grid
@@ -578,7 +601,7 @@ class Header extends Component {
                 </IconButton>
               </Grid>
             ) : null}
-          </Grid>
+          </Grid> */}
           <Grid item sm={6} style={{ backgroundColor: "black" }}>
             {this.renderTooltip()}
           </Grid>

@@ -1,14 +1,14 @@
 /*New*/
 .title {
   font-weight: 700 !important;
-  padding-bottom: 5vh;
+  padding-bottom: 2.5rem;
   text-transform: uppercase;
 }
 
 .news {
   position: relative;
-  margin-top: 15vh;
-  margin-bottom: 20vh;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .card {

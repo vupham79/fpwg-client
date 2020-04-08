@@ -4,9 +4,10 @@ import {
   Grid,
   Typography,
   withStyles,
+  Divider,
 } from "@material-ui/core";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
-import Pagination from "@material-ui/lab/Pagination";
+import { Pagination, PaginationItem } from "@material-ui/lab";
 import moment from "moment";
 import React from "react";
 import ReactPlayer from "react-player";
@@ -25,7 +26,6 @@ const useStyles = (theme) => ({
     marginTop: theme.spacing(2),
     padding: theme.spacing(3),
   },
-
   images: {
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -70,6 +70,9 @@ const useStyles = (theme) => ({
   },
   gridItems: {
     maxHeight: 350,
+  },
+  paginationItemRoot: {
+    color: "#fff",
   },
 });
 
@@ -138,18 +141,35 @@ class PostTypeComponent extends React.Component {
     const btnStyle = {
       padding: "0.5rem 1.5rem",
       fontSize: "11px",
-      border: `2px solid ${isEdit ? titleEdit.color : titleView.color}`,
+      border: `2px solid ${dark ? "#fff" : "#000"}`,
+      backgroundColor: dark ? "#1A1919" : "#fff",
+      color: dark ? "#fff" : "#000",
     };
     return (
       <Grid
         key={index}
         container
         item
-        xs={12}
+        xs={10}
         sm={6}
-        md={6}
-        lg={4}
-        style={dark ? { backgroundColor: "#1a1919" } : null}
+        md={3}
+        style={
+          dark
+            ? {
+                backgroundColor: "#1a1919",
+                border: "1px solid #fff",
+                marginLeft: "1rem",
+                marginBottom: "1rem",
+                padding: "1rem",
+              }
+            : {
+                backgroundColor: "#fff",
+                border: "1px solid #000",
+                marginLeft: "1rem",
+                marginBottom: "1rem",
+                padding: "1rem",
+              }
+        }
       >
         <Grid
           container
@@ -157,7 +177,7 @@ class PostTypeComponent extends React.Component {
           xs={12}
           style={{
             // padding: "0.5rem",
-            backgroundColor: "white",
+            backgroundColor: dark ? "#1a1919" : "#fff",
             // borderRadius: "0.4rem",
           }}
         >
@@ -172,7 +192,12 @@ class PostTypeComponent extends React.Component {
           >
             <Typography
               variant={"body1"}
-              style={{ ...txtStyle, fontWeight: "700", fontSize: "16px" }}
+              style={{
+                ...txtStyle,
+                fontWeight: "700",
+                fontSize: "16px",
+                color: dark ? "#fff" : "#000",
+              }}
             >
               {moment(post.createdTime).format("MMMM DD, YYYY")}
             </Typography>
@@ -204,7 +229,10 @@ class PostTypeComponent extends React.Component {
                   justify="center"
                   className={classes.album}
                 >
-                  <Typography variant="h3" style={{ color: "white" }}>
+                  <Typography
+                    variant="h3"
+                    style={{ color: dark ? "#fff" : "#000" }}
+                  >
                     {post.attachments.images.length} +
                   </Typography>
                 </Grid>
@@ -214,7 +242,12 @@ class PostTypeComponent extends React.Component {
           <Grid
             item
             xs={12}
-            style={{ ...txtStyle, padding: "1rem 0", height: "5rem" }}
+            style={{
+              ...txtStyle,
+              padding: "1rem 0",
+              height: "5rem",
+              color: dark ? "#fff" : "#000",
+            }}
           >
             <div style={gridContent}>{post.message}</div>
           </Grid>
@@ -367,7 +400,6 @@ class PostTypeComponent extends React.Component {
       bodyView,
       dark,
     } = this.props;
-    console.log(dark);
     const style = {
       isEdit: isEdit,
       titleEdit: titleEdit,
@@ -414,14 +446,16 @@ class PostTypeComponent extends React.Component {
       bodyEdit,
       bodyView,
       classes,
+      dark,
     } = this.props;
     const sliderSettings = {
-      dots: true,
+      dots: false,
       slidesToShow: 1,
       slidesToScroll: 1,
       autoplay: true,
       speed: 700,
       autoplaySpeed: 3000,
+      arrows: true,
     };
     const btnStyle = {
       padding: "0.5rem 1.5rem",
@@ -489,9 +523,14 @@ class PostTypeComponent extends React.Component {
           {post.attachments && (
             <Grid item xs={10}>
               {type === "photo" && (
-                <CardMedia
-                  className={classes.cardView}
-                  image={post.attachments.images[0]}
+                // <CardMedia
+                //   className={classes.cardView}
+                //   image={post.attachments.images[0]}
+                // />
+                <img
+                  src={post.attachments.images[0]}
+                  style={{ width: "100%" }}
+                  alt=""
                 />
               )}
               {type === "video" && (
@@ -531,7 +570,12 @@ class PostTypeComponent extends React.Component {
             <Grid
               item
               xs={12}
-              style={{ ...txtStyle, padding: "1rem 0", lineHeight: "1.5rem" }}
+              style={{
+                ...txtStyle,
+                padding: "1rem 0",
+                lineHeight: "1.5rem",
+                overflowWrap: "break-word",
+              }}
             >
               {originalMessage &&
                 originalMessage.map((val) => {
@@ -562,6 +606,9 @@ class PostTypeComponent extends React.Component {
               </a>
             </Grid>
           </Grid>
+          <Grid item xs={12}>
+            <Divider style={{ backgroundColor: dark && "#fff" }} />
+          </Grid>
         </Grid>
         <Grid
           container
@@ -586,7 +633,7 @@ class PostTypeComponent extends React.Component {
             container
             item
             xs={12}
-            spacing={3}
+            spacing={2}
             justify="center"
             style={{ paddingTop: "2.5rem" }}
           >
@@ -613,6 +660,8 @@ class PostTypeComponent extends React.Component {
       fromHome,
       pageCount,
       editPostView,
+      dark,
+      classes,
     } = this.props;
     const { page, postOpen } = this.state;
     return (
@@ -626,7 +675,7 @@ class PostTypeComponent extends React.Component {
             container
             item
             // xs={10}
-            spacing={2}
+            // spacing={2}
             justify="center"
             xs={12}
             sm={10}
@@ -640,9 +689,9 @@ class PostTypeComponent extends React.Component {
               container
               item
               xs={12}
-              spacing={3}
+              // spacing={3}
               justify="center"
-              style={{ padding: "1rem 0rem" }}
+              // style={{ padding: "1rem" }}
             >
               {isEdit
                 ? !fromHome
@@ -672,14 +721,31 @@ class PostTypeComponent extends React.Component {
             {isEdit
               ? pageCount > 1 &&
                 !fromHome && (
-                  <Grid container justify="center">
+                  <Grid
+                    container
+                    justify="center"
+                    style={{ marginTop: "2.5rem" }}
+                  >
                     <Pagination
                       style={{
-                        backgroundColor: "white",
-                        padding: "0.4rem",
-                        borderRadius: "0.3rem",
+                        backgroundColor: dark ? "#000" : "#fff",
+                        // padding: "0.4rem",
+                        // borderRadius: "0.3rem",
                       }}
-                      // color="default"
+                      renderItem={(item) =>
+                        dark ? (
+                          <PaginationItem
+                            {...item}
+                            selected
+                            style={{ color: "white", borderColor: "white" }}
+                            classes={{
+                              root: classes.paginationItemRoot,
+                            }}
+                          />
+                        ) : (
+                          <PaginationItem {...item} />
+                        )
+                      }
                       shape="rounded"
                       variant="outlined"
                       count={pageCount}
@@ -690,14 +756,31 @@ class PostTypeComponent extends React.Component {
                 )
               : pageCountView > 1 &&
                 !fromHome && (
-                  <Grid container justify="center">
+                  <Grid
+                    container
+                    justify="center"
+                    style={{ marginTop: "2.5rem" }}
+                  >
                     <Pagination
                       style={{
-                        backgroundColor: "white",
-                        padding: "0.4rem",
-                        borderRadius: "0.3rem",
+                        backgroundColor: dark ? "#000" : "#fff",
+                        // padding: "0.4rem",
+                        // borderRadius: "0.3rem",
                       }}
-                      // color="default"
+                      renderItem={(item) =>
+                        dark ? (
+                          <PaginationItem
+                            {...item}
+                            selected
+                            style={{ color: "white", borderColor: "white" }}
+                            classes={{
+                              root: classes.paginationItemRoot,
+                            }}
+                          />
+                        ) : (
+                          <PaginationItem {...item} />
+                        )
+                      }
                       shape="rounded"
                       variant="outlined"
                       count={pageCountView}

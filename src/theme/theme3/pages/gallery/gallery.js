@@ -20,7 +20,6 @@ class GalleryPage extends React.Component {
       fromHome,
       homeTitle,
       homeList,
-      color,
     } = this.props;
     return (
       <Grid
@@ -34,13 +33,27 @@ class GalleryPage extends React.Component {
             className={styles.title}
             variant="h4"
             align="center"
-            gutterBottom
             style={{
               fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
               color: "white",
+              letterSpacing: "0.2rem",
             }}
           >
-            {fromHome ? homeTitle : "Gallery"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "gallery") {
+                    return item.name;
+                  } else return "";
+                })
+              : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "gallery") {
+                    return item.name;
+                  } else return "";
+                })}
           </Typography>
         </Grid>
 
@@ -59,6 +72,8 @@ class GalleryPage extends React.Component {
                     (fromHome && homeList ? homeList : siteEdit.galleries)
                       .length / siteEdit.limitGallery
                   )}
+                  dark={true}
+                  color={"#fff"}
                 />
               </Grid>
             ) : (
@@ -81,7 +96,8 @@ class GalleryPage extends React.Component {
                 galleries={fromHome && homeList ? homeList : siteView.galleries}
                 siteInfo={siteView.sitePath}
                 fromHome={fromHome}
-                color={color}
+                color={"#fff"}
+                dark={true}
               />
             </Grid>
           ) : (

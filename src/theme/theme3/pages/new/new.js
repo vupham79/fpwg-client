@@ -29,17 +29,31 @@ class NewPage extends Component {
             variant="h4"
             color="textSecondary"
             align="center"
-            gutterBottom
             className={styles.title}
             style={{
               color: "white",
               fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+              letterSpacing: "0.2rem",
             }}
           >
-            {fromHome ? homeTitle : "News"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "news") {
+                    return item.name;
+                  } else return "";
+                })
+              : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "news") {
+                    return item.name;
+                  } else return "";
+                })}
           </Typography>
         </Grid>
-        <Grid item container sm={12} xs={12} container justify="center">
+        <Grid item container sm={12} xs={12} justify="center">
           {isEdit ? (
             siteEdit && siteEdit.posts ? (
               <Grid container justify="center">
@@ -64,7 +78,7 @@ class NewPage extends Component {
                 />
               </Grid>
             ) : (
-              <Grid item container sm={12} xs={12} container justify="center">
+              <Grid item container sm={12} xs={12} justify="center">
                 <Typography
                   variant="body1"
                   style={{
@@ -78,7 +92,7 @@ class NewPage extends Component {
               </Grid>
             )
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
-            <Grid item container sm={12} xs={12} container justify="center">
+            <Grid item container sm={12} xs={12} justify="center">
               <PostTypeComponent
                 fromHome={fromHome}
                 posts={fromHome && homeList ? homeList : siteView.posts}
@@ -92,7 +106,7 @@ class NewPage extends Component {
               />
             </Grid>
           ) : (
-            <Grid item container sm={12} xs={12} container justify="center">
+            <Grid item container sm={12} xs={12} justify="center">
               <Typography
                 variant="body1"
                 style={{
