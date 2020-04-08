@@ -578,15 +578,6 @@ class PagesEditorTab extends React.Component {
           />
         </Grid>
 
-        <Grid container justify={"center"} style={{ marginBottom: 30 }}>
-          <Grid item xs={12}>
-            <p style={{ fontSize: 13, color: "#555d66" }}>Set events per page</p>
-          </Grid>
-          <Grid item xs={12}>
-            <Input type="number" value={this.props.site.limitEvent} onChange={this.handleSetLimit(1)} />
-          </Grid>
-        </Grid>
-
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
@@ -621,36 +612,6 @@ class PagesEditorTab extends React.Component {
               Select
             </button>
           </Grid>
-
-          <Grid container justify={"center"} style={{ marginBottom: 30 }}>
-            <Grid item xs={12}>
-              <p style={{ fontSize: 13, color: "#555d66" }}>Set posts per page</p>
-            </Grid>
-            <Grid item xs={12}>
-              <Input type="number" value={this.props.site.limitNews} onChange={this.handleSetLimit(0)} />
-            </Grid>
-          </Grid>
-
-          <Divider
-            style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
-          />
-          <Typography className={classes.title}>Gallery</Typography>
-          <Divider
-            style={{
-              height: "1.2rem",
-              width: "100%",
-              backgroundColor: "#ffffff00",
-            }}
-          />
-          <Grid container justify={"center"} style={{ marginBottom: 30 }}>
-            <Grid item xs={12}>
-              <p style={{ fontSize: 13, color: "#555d66" }}>Set photos per page</p>
-            </Grid>
-            <Grid item xs={12}>
-              <Input type="number" value={this.props.site.limitGallery} onChange={this.handleSetLimit(2)} />
-            </Grid>
-          </Grid>
-
 
           <Dialog
             disableBackdropClick
@@ -789,6 +750,43 @@ class PagesEditorTab extends React.Component {
           updateNavItemValue={updateNavItemValue}
           changeNavItemName={changeNavItemName}
         />
+
+        <Divider
+          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00", marginTop: 30 }}
+        />
+        <Typography className={classes.title}>Paging</Typography>
+        <Divider
+          style={{
+            height: "1.2rem",
+            width: "100%",
+            backgroundColor: "#ffffff00",
+          }}
+        />
+        <Grid container style={{ marginBottom: 30 }}>
+          <Grid item xs={6}>
+            <p style={{ fontSize: 13, color: "#555d66" }}>Set posts per page</p>
+          </Grid>
+          <Grid item xs={1}>
+            <Input type="number" value={this.props.site.limitNews} onChange={this.handleSetLimit(0)} />
+          </Grid>
+        </Grid>
+        <Grid container style={{ marginBottom: 30 }}>
+          <Grid item xs={6}>
+            <p style={{ fontSize: 13, color: "#555d66" }}>Set events per page</p>
+          </Grid>
+          <Grid item xs={1}>
+            <Input type="number" variant value={this.props.site.limitEvent} onChange={this.handleSetLimit(1)} />
+          </Grid>
+        </Grid>
+        <Grid container style={{ marginBottom: 30 }}>
+          <Grid item xs={6}>
+            <p style={{ fontSize: 13, color: "#555d66" }}>Set photos per page</p>
+          </Grid>
+          <Grid item xs={1}>
+            <Input type="number" value={this.props.site.limitGallery} onChange={this.handleSetLimit(2)} />
+          </Grid>
+        </Grid>
+
       </div>
     );
   }
