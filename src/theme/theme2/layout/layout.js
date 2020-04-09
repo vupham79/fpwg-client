@@ -42,7 +42,7 @@ class Layout extends Component {
     const { isEdit, titleEdit, titleView } = this.props;
 
     return (
-      <>
+      <Grid id="topPos">
         <HeaderComponent
           navPos={"right"}
           displayImg={true}
@@ -50,7 +50,7 @@ class Layout extends Component {
         />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
-      </>
+      </Grid>
     );
   }
 }
