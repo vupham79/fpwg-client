@@ -34,8 +34,7 @@ class Theme1Event extends React.Component {
         fontWeight: "bold",
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 25,
-        paddingBottom: 20,
+        fontSize: "48px",
         textDecoration: "underline",
       },
       changableTitle2: {
@@ -113,31 +112,46 @@ class Theme1Event extends React.Component {
       <Grid
         container
         style={{
-          backgroundColor: "#1a1919",
-          paddingBottom: 50,
+          // backgroundColor: "#1a1919",
+          padding: "10vh 0",
           minHeight: "50vh",
         }}
       >
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            {fromHome ? homeTitle : "EVENTS"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems &&
+                siteEdit.navItems.find((item) => item.original === "event").name
+              : siteView &&
+                siteView.navItems &&
+                siteView.navItems.find((item) => item.original === "event")
+                  .name}
           </p>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ padding: "2.5rem 0" }}>
           <EventComponent
-            key={this.props.isEdit ? this.props.siteEdit.limitEvent : this.props.siteView.limitEvent}
+            key={
+              this.props.isEdit
+                ? this.props.siteEdit.limitEvent
+                : this.props.siteView.limitEvent
+            }
             homeList={
               fromHome && homeList
                 ? homeList
                 : isEdit
-                  ? siteEdit.events
-                  : siteView.events
+                ? siteEdit.events
+                : siteView.events
             }
             siteInfo={siteView && siteView.sitePath}
             fromHome={fromHome}
             pageCount={Math.ceil(
               (fromHome && homeList ? homeList : siteEdit.events).length /
-              (this.props.isEdit ? this.props.siteEdit.limitEvent : this.props.siteView.limitEvent)
+                (this.props.isEdit
+                  ? this.props.siteEdit.limitEvent
+                  : this.props.siteView.limitEvent)
             )}
           />
         </Grid>

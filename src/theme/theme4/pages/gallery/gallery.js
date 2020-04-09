@@ -27,8 +27,7 @@ class Theme4Gallery extends React.Component {
         fontWeight: "bold",
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 25,
-        paddingBottom: 20,
+        fontSize: "48px",
         textDecoration: "underline",
       },
       changableBody: {
@@ -112,41 +111,55 @@ class Theme4Gallery extends React.Component {
       <Grid
         container
         style={{
-          backgroundColor: "#1a1919",
-          paddingBottom: 50,
+          // backgroundColor: "#1a1919",
+          padding: "10vh 0",
           minHeight: "50vh",
         }}
         justify="center"
       >
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            {fromHome ? homeTitle : "GALLERY"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems &&
+                siteEdit.navItems.find((item) => item.original === "gallery")
+                  .name
+              : siteView &&
+                siteView.navItems &&
+                siteView.navItems.find((item) => item.original === "gallery")
+                  .name}
           </p>
         </Grid>
-        {isEdit ? (
-          siteEdit && siteEdit.galleries ? (
+        <Grid item xs={12} style={{ padding: "2.5rem 0" }}>
+          {isEdit ? (
+            siteEdit && siteEdit.galleries ? (
+              <GalleryComponent
+                key={siteEdit.limitGallery}
+                galleries={fromHome && homeList ? homeList : siteEdit.galleries}
+                siteInfo={siteEdit.id}
+                fromHome={fromHome}
+                pageCount={Math.ceil(
+                  (fromHome && homeList ? homeList : siteEdit.galleries)
+                    .length / siteEdit.limitGallery
+                )}
+              />
+            ) : (
+              <p style={classes.changableBody2}>
+                Currently no photo available.
+              </p>
+            )
+          ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
             <GalleryComponent
-              key={siteEdit.limitGallery}
-              galleries={fromHome && homeList ? homeList : siteEdit.galleries}
-              siteInfo={siteEdit.id}
+              galleries={fromHome && homeList ? homeList : siteView.galleries}
+              siteInfo={siteView.sitePath}
               fromHome={fromHome}
-              pageCount={Math.ceil(
-                (fromHome && homeList ? homeList : siteEdit.galleries).length /
-                siteEdit.limitGallery
-              )}
             />
           ) : (
-              <p style={classes.changableBody2}>Currently no photo available.</p>
-            )
-        ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
-          <GalleryComponent
-            galleries={fromHome && homeList ? homeList : siteView.galleries}
-            siteInfo={siteView.sitePath}
-            fromHome={fromHome}
-          />
-        ) : (
-              <p style={classes.changableBody2}>Currently no photo available.</p>
-            )}
+            <p style={classes.changableBody2}>Currently no photo available.</p>
+          )}
+        </Grid>
       </Grid>
     );
   }

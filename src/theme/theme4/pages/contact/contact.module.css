@@ -1,14 +1,12 @@
-.contact_page {
-  position: relative;
-  margin-top: 5vh;
-  margin-bottom: 5vh;
+.contact_title {
+  background-color: white;
+  height: 8rem;
 }
 
 .title {
-  color: #646464 !important;
   font-weight: 700 !important;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
-  padding-bottom: 5vh;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .divider {
@@ -18,12 +16,11 @@
 .child_title {
   color: black !important;
   font-weight: 700 !important;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
+  font-size: 1.5rem;
 }
 
 .child_content {
-  margin-top: -5vh !important;
-  color: #646464 !important;
+  text-align: start;
 }
 
 .child {
@@ -37,17 +34,18 @@
 
 .btn_send {
   margin-top: 5vh !important;
-  width: 40% !important;
+  width: 60% !important;
   background: black !important;
   text-align: center;
+  padding: 0 !important;
 }
 
 .btn_content {
   color: white !important;
-  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif !important;
+  font-size: 3vh !important;
+  padding: 0.7rem;
 }
 
 .btn_send :hover {
-  width: 100%;
   background: #646464 !important;
 }

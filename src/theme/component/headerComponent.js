@@ -60,6 +60,12 @@ const useStyles = (theme) => ({
       display: "none",
     },
   },
+  navLink: {
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
+    },
+  },
   drawerPaper: {
     width: drawerWidth,
   },
@@ -179,6 +185,7 @@ class HeaderComponent extends Component {
                   key={index}
                   style={{
                     textAlign: "end",
+                    minWidth: "15vh",
                   }}
                 >
                   <NavLink
@@ -319,6 +326,7 @@ class HeaderComponent extends Component {
   };
 
   renderHeader = ({ navPos, displayImg, imgStyles, isEdit }) => {
+    const { classes } = this.props;
     if (navPos === "left") {
       return (
         <Grid
@@ -427,6 +435,7 @@ class HeaderComponent extends Component {
           >
             <Grid
               style={isEdit ? null : { width: "inherit", padding: "1rem 0" }}
+              className={classes.navLink}
             >
               {this.renderNavItems()}
             </Grid>

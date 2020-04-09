@@ -120,8 +120,7 @@ class Theme1News extends React.Component {
         fontWeight: "bold",
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 25,
-        paddingBottom: 20,
+        fontSize: "48px",
         textDecoration: "underline",
       },
     });
@@ -131,42 +130,54 @@ class Theme1News extends React.Component {
       <Grid
         container
         style={{
-          backgroundColor: "#1a1919",
-          paddingBottom: 50,
+          // backgroundColor: "#1a1919",
+          padding: "10vh 0",
           minHeight: "50vh",
         }}
       >
         <Grid item xs={12}>
-          <p style={classes.changableTitle5}>{fromHome ? homeTitle : "NEWS"}</p>
+          <p style={classes.changableTitle5}>
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems &&
+                siteEdit.navItems.find((item) => item.original === "news").name
+              : siteView &&
+                siteView.navItems &&
+                siteView.navItems.find((item) => item.original === "news").name}
+          </p>
         </Grid>
-        <Grid item sm={12} xs={12} container spacing={3}>
+        <Grid item sm={12} xs={12} container style={{ padding: "2.5rem 0" }}>
           {isEdit ? (
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
                   key={siteEdit.limitNews}
                   fromHome={fromHome}
-                  posts={
-                    (fromHome && homeList ? homeList : siteEdit.posts).filter(function (pos) {
-                      return pos.isActive === true;
-                    })
-                  }
+                  posts={(fromHome && homeList
+                    ? homeList
+                    : siteEdit.posts
+                  ).filter(function (pos) {
+                    return pos.isActive === true;
+                  })}
                   pageCount={Math.ceil(
-                    (fromHome && homeList ? homeList : siteEdit.posts).filter(function (pos) {
-                      return pos.isActive === true;
-                    }).length /
-                    siteEdit.limitNews
+                    (fromHome && homeList ? homeList : siteEdit.posts).filter(
+                      function (pos) {
+                        return pos.isActive === true;
+                      }
+                    ).length / siteEdit.limitNews
                   )}
                   bgWhite={true}
                 />
               </Grid>
             ) : (
-                <Grid container justify="center">
-                  <Typography style={classes.changableBody2}>
-                    Currently there are no news.
+              <Grid container justify="center">
+                <Typography style={classes.changableBody2}>
+                  Currently there are no news.
                 </Typography>
-                </Grid>
-              )
+              </Grid>
+            )
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
@@ -181,12 +192,12 @@ class Theme1News extends React.Component {
               />
             </Grid>
           ) : (
-                <Grid container justify="center">
-                  <Typography style={classes.changableBody2}>
-                    Currently there are no news.
+            <Grid container justify="center">
+              <Typography style={classes.changableBody2}>
+                Currently there are no news.
               </Typography>
-                </Grid>
-              )}
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );

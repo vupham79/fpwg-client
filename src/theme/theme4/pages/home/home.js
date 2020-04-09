@@ -1,13 +1,37 @@
 import { Divider, Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import BannerComponent from "../../../component/bannerComponent";
 import ContactPage from "../contact/contact";
 import EventPage from "../event/event";
 import GalleryPage from "../gallery/gallery";
 import NewsPage from "../new/new";
+import AboutPage from "../about/about";
+import { Parallax } from "react-parallax";
 
 class Theme1Home extends React.Component {
+  getCover = (index) => {
+    const { isEdit, covers, siteView } = this.props;
+    if (isEdit) {
+      if (covers && covers[index]) {
+        if (
+          covers[index] &&
+          typeof covers[index] === "object" &&
+          covers[index].size > 0
+        ) {
+          return URL.createObjectURL(covers[index]);
+        } else return covers[index];
+      } else {
+        return "/images/theme1-banner3.jpg";
+      }
+    } else {
+      console.log("hello: ", siteView);
+      if (siteView.cover && siteView.cover[index]) {
+        return siteView.cover[index];
+      } else {
+        return "/images/theme1-banner3.jpg";
+      }
+    }
+  };
   render() {
     const {
       siteEdit,
@@ -18,6 +42,7 @@ class Theme1Home extends React.Component {
       bodyEdit,
       bodyView,
     } = this.props;
+    let coverIndex = 1;
 
     const useStyles = () => ({
       changableLink: {
@@ -30,10 +55,10 @@ class Theme1Home extends React.Component {
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: "#b3b2b2",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 45,
-        paddingBottom: 20,
+        fontSize: "48px",
+        textDecoration: "underline",
       },
       changableTitle2: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -64,9 +89,11 @@ class Theme1Home extends React.Component {
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#b3b2b2",
+        // color: "#b3b2b2",
+        color: "#111",
         textAlign: "center",
-        fontSize: 19,
+        fontSize: "20px",
+        padding: "3rem 0",
         fontWeight: 300,
       },
       changableBody4: {
@@ -91,20 +118,20 @@ class Theme1Home extends React.Component {
         textDecorationColor: isEdit ? titleEdit.color : titleView.color,
       },
     });
+
+    const parallaxStyle = {
+      width: "100%",
+      height: "500px",
+    };
     const classes = useStyles();
     return (
       <Grid
         container
         style={{
-          backgroundColor: "#1a1919",
-          paddingBottom: 100,
+          // backgroundColor: "#1a1919",
           minHeight: "50vh",
         }}
       >
-        <Grid item xs={12}>
-          <BannerComponent bannerType={1} />
-        </Grid>
-
         {isEdit &&
           siteEdit &&
           siteEdit.homepage.map(
@@ -119,17 +146,27 @@ class Theme1Home extends React.Component {
                     style={{
                       display: row.isActive ? "block" : "none",
                       minHeight: 200,
-                      paddingTop: 50,
                     }}
                   >
-                    <Grid item xs={12} style={{ padding: 20 }}>
-                      <p style={classes.changableBody3}>
-                        {siteEdit && siteEdit.about}
-                        {!siteEdit.about && "Welcome to our website!"}
-                      </p>
-                    </Grid>
                     <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: "#b3b2b2", marginTop: 50 }} />
+                      <Parallax
+                        bgImage={
+                          row.original === "about" &&
+                          row.isActive &&
+                          this.getCover(coverIndex++)
+                        }
+                        bgImageAlt="the cat"
+                        strength={200}
+                        style={{
+                          width: "100%",
+                          display: row.isActive ? "block" : "none",
+                        }}
+                      >
+                        <div style={parallaxStyle} />
+                      </Parallax>
+                    </Grid>
+                    <Grid container justify="center" item xs={12}>
+                      <AboutPage fromHome homeTitle={row.name} />
                     </Grid>
                   </Grid>
                 ),
@@ -140,6 +177,21 @@ class Theme1Home extends React.Component {
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
+                    <Parallax
+                      bgImage={
+                        row.original === "event" &&
+                        row.isActive &&
+                        this.getCover(coverIndex++)
+                      }
+                      bgImageAlt="the cat"
+                      strength={200}
+                      style={{
+                        width: "100%",
+                        display: row.isActive ? "block" : "none",
+                      }}
+                    >
+                      <div style={parallaxStyle} />
+                    </Parallax>
                     <EventPage
                       fromHome
                       homeTitle={row.name}
@@ -154,6 +206,21 @@ class Theme1Home extends React.Component {
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
+                    <Parallax
+                      bgImage={
+                        row.original === "gallery" &&
+                        row.isActive &&
+                        this.getCover(coverIndex++)
+                      }
+                      bgImageAlt="the cat"
+                      strength={200}
+                      style={{
+                        width: "100%",
+                        display: row.isActive ? "block" : "none",
+                      }}
+                    >
+                      <div style={parallaxStyle} />
+                    </Parallax>
                     <GalleryPage
                       fromHome
                       homeTitle={row.name}
@@ -168,6 +235,21 @@ class Theme1Home extends React.Component {
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
+                    <Parallax
+                      bgImage={
+                        row.original === "contact" &&
+                        row.isActive &&
+                        this.getCover(coverIndex++)
+                      }
+                      bgImageAlt="the cat"
+                      strength={200}
+                      style={{
+                        width: "100%",
+                        display: row.isActive ? "block" : "none",
+                      }}
+                    >
+                      <div style={parallaxStyle} />
+                    </Parallax>
                     <ContactPage fromHome homeTitle={row.name} />
                   </Grid>
                 ),
@@ -178,6 +260,21 @@ class Theme1Home extends React.Component {
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
+                    <Parallax
+                      bgImage={
+                        row.original === "news" &&
+                        row.isActive &&
+                        this.getCover(coverIndex++)
+                      }
+                      bgImageAlt="the cat"
+                      strength={200}
+                      style={{
+                        width: "100%",
+                        display: row.isActive ? "block" : "none",
+                      }}
+                    >
+                      <div style={parallaxStyle} />
+                    </Parallax>
                     <NewsPage
                       fromHome
                       homeTitle={row.name}
@@ -202,17 +299,40 @@ class Theme1Home extends React.Component {
                     style={{
                       display: row.isActive ? "block" : "none",
                       minHeight: 200,
-                      paddingTop: 50,
                     }}
+                    justify="center"
                   >
                     <Grid item xs={12}>
-                      <p style={classes.changableBody3}>
-                        {siteView && siteView.about}
-                        {!siteView.about && "Welcome to our website!"}
-                      </p>
+                      <Parallax
+                        bgImage={
+                          row.original === "about" &&
+                          row.isActive &&
+                          this.getCover(coverIndex++)
+                        }
+                        bgImageAlt="the cat"
+                        strength={500}
+                        style={{
+                          width: "100%",
+                          display: row.isActive ? "block" : "none",
+                        }}
+                      >
+                        <div style={{ height: "500px", width: "100%" }} />
+                      </Parallax>
                     </Grid>
-                    <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: "#b3b2b2", marginTop: 50 }} />
+                    <Grid
+                      container
+                      justify="center"
+                      item
+                      xs={12}
+                      style={{ padding: "10vh 0" }}
+                    >
+                      <Grid item xs={12}>
+                        <p style={classes.changableTitle}>ABOUT</p>
+                      </Grid>
+                      <Grid item xs={8} style={classes.changableBody3}>
+                        {siteEdit && siteEdit.about}
+                        {!siteEdit.about && "Welcome to our website!"}
+                      </Grid>
                     </Grid>
                   </Grid>
                 ),
@@ -223,6 +343,21 @@ class Theme1Home extends React.Component {
                     key={index}
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
+                    <Parallax
+                      bgImage={
+                        row.original === "event" &&
+                        row.isActive &&
+                        this.getCover(coverIndex++)
+                      }
+                      bgImageAlt="the cat"
+                      strength={200}
+                      style={{
+                        width: "100%",
+                        display: row.isActive ? "block" : "none",
+                      }}
+                    >
+                      <div style={parallaxStyle} />
+                    </Parallax>
                     <EventPage
                       fromHome
                       homeTitle={row.name}
@@ -237,6 +372,21 @@ class Theme1Home extends React.Component {
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
+                    <Parallax
+                      bgImage={
+                        row.original === "gallery" &&
+                        row.isActive &&
+                        this.getCover(coverIndex++)
+                      }
+                      bgImageAlt="the cat"
+                      strength={200}
+                      style={{
+                        width: "100%",
+                        display: row.isActive ? "block" : "none",
+                      }}
+                    >
+                      <div style={parallaxStyle} />
+                    </Parallax>
                     <GalleryPage
                       fromHome
                       homeTitle={row.name}
@@ -251,6 +401,21 @@ class Theme1Home extends React.Component {
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
+                    <Parallax
+                      bgImage={
+                        row.original === "contact" &&
+                        row.isActive &&
+                        this.getCover(coverIndex++)
+                      }
+                      bgImageAlt="the cat"
+                      strength={200}
+                      style={{
+                        width: "100%",
+                        display: row.isActive ? "block" : "none",
+                      }}
+                    >
+                      <div style={parallaxStyle} />
+                    </Parallax>
                     <ContactPage fromHome homeTitle={row.name} />
                   </Grid>
                 ),
@@ -261,6 +426,21 @@ class Theme1Home extends React.Component {
                     item
                     style={{ display: row.isActive ? "block" : "none" }}
                   >
+                    <Parallax
+                      bgImage={
+                        row.original === "news" &&
+                        row.isActive &&
+                        this.getCover(coverIndex++)
+                      }
+                      bgImageAlt="the cat"
+                      strength={200}
+                      style={{
+                        width: "100%",
+                        display: row.isActive ? "block" : "none",
+                      }}
+                    >
+                      <div style={parallaxStyle} />
+                    </Parallax>
                     <NewsPage
                       fromHome
                       homeTitle={row.name}
