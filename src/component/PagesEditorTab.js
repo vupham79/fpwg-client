@@ -296,14 +296,18 @@ class PagesEditorTab extends React.Component {
   };
 
   handleSetLimit = (type) => (event) => {
+    let val = event.target.value;
+    if (val < 1) val = 1;
+    if (val > 10) val = 10;
+
     if (type === 0) {
-      this.props.setLimit(event.target.value, this.props.site.limitEvent, this.props.site.limitGallery)
+      this.props.setLimit(val, this.props.site.limitEvent, this.props.site.limitGallery)
     }
     if (type === 1) {
-      this.props.setLimit(this.props.site.limitNews, event.target.value, this.props.site.limitGallery)
+      this.props.setLimit(this.props.site.limitNews, val, this.props.site.limitGallery)
     }
     if (type === 2) {
-      this.props.setLimit(this.props.site.limitNews, this.props.site.limitEvent, event.target.value)
+      this.props.setLimit(this.props.site.limitNews, this.props.site.limitEvent, val)
     }
   }
 
@@ -856,7 +860,14 @@ class PagesEditorTab extends React.Component {
             <p style={{ fontSize: 13, color: "#555d66" }}>Set posts per page</p>
           </Grid>
           <Grid item xs={2}>
-            <Input type="number" value={this.props.site.limitNews} onChange={this.handleSetLimit(0)} />
+            <InputBase
+              type="number"
+              inputProps={{
+                maxLength: 2,
+              }}
+              style={{ minWidth: 30 }}
+              value={this.props.site.limitNews}
+              onChange={this.handleSetLimit(0)} />
           </Grid>
         </Grid>
         <Grid container style={{ marginBottom: 30 }}>
@@ -864,7 +875,14 @@ class PagesEditorTab extends React.Component {
             <p style={{ fontSize: 13, color: "#555d66" }}>Set events per page</p>
           </Grid>
           <Grid item xs={2}>
-            <Input type="number" variant value={this.props.site.limitEvent} onChange={this.handleSetLimit(1)} />
+            <InputBase
+              type="number"
+              inputProps={{
+                maxLength: 2,
+              }}
+              style={{ minWidth: 30 }}
+              value={this.props.site.limitEvent}
+              onChange={this.handleSetLimit(1)} />
           </Grid>
         </Grid>
         <Grid container style={{ marginBottom: 30 }}>
@@ -872,7 +890,14 @@ class PagesEditorTab extends React.Component {
             <p style={{ fontSize: 13, color: "#555d66" }}>Set photos per page</p>
           </Grid>
           <Grid item xs={2}>
-            <Input type="number" value={this.props.site.limitGallery} onChange={this.handleSetLimit(2)} />
+            <InputBase
+              type="number"
+              inputProps={{
+                maxLength: 2,
+              }}
+              style={{ minWidth: 30 }}
+              value={this.props.site.limitGallery}
+              onChange={this.handleSetLimit(2)} />
           </Grid>
         </Grid>
 
