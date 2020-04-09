@@ -277,7 +277,7 @@ class HomepageEditorTab extends React.Component {
     return (
       <>
         <TableContainer
-          style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}
+          style={{ maxHeight: "70vh", width: "100%", overflowY: "scroll" }}
         >
           <Table stickyHeader>
             <TableHead>
@@ -329,9 +329,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -351,7 +351,7 @@ class HomepageEditorTab extends React.Component {
     return (
       <>
         <TableContainer
-        // style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}
+          style={{ maxHeight: "70vh", width: "100%", overflowY: "scroll" }}
         >
           <Table stickyHeader>
             <TableHead>
@@ -389,9 +389,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -411,7 +411,7 @@ class HomepageEditorTab extends React.Component {
     return (
       <>
         <TableContainer
-          style={{ maxHeight: "70vh", width: "100%", overflow: "hidden" }}
+          style={{ maxHeight: "70vh", width: "100%", overflowY: "scroll" }}
         >
           <Table stickyHeader>
             <TableHead>
@@ -442,9 +442,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -871,7 +871,7 @@ class HomepageEditorTab extends React.Component {
             </Paper>
           )}
         </DialogTitle>
-        <DialogContent style={{ height: "50vh" }}>
+        <DialogContent style={{ overflow: "hidden" }}>
           <Grid container alignItems="center">
             {
               {
@@ -1004,7 +1004,7 @@ class HomepageEditorTab extends React.Component {
         <ExpansionPanel
           expanded={
             this.state.currentExpandItemId === item._id &&
-            this.state.isExpanding
+              this.state.isExpanding
               ? true
               : false
           }

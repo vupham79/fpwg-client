@@ -81,10 +81,10 @@ class EventComponent extends React.Component {
                     xs={2}
                     style={{
                       display: isEdit
-                        ? siteEdit.showCoverEvent
+                        ? siteEdit.showDetailSetting.showCoverEvent
                           ? "block"
                           : "none"
-                        : siteView.showCoverEvent
+                        : siteView.showDetailSetting.showCoverEvent
                           ? "block"
                           : "none",
                       backgroundImage: `url('${row.cover}')`,
@@ -175,10 +175,10 @@ class EventComponent extends React.Component {
                       textOverflow: "ellipsis",
                       overflow: "auto",
                       display: isEdit
-                        ? siteEdit.showDesEvent
+                        ? siteEdit.showDetailSetting.showDesEvent
                           ? "block"
                           : "none"
-                        : siteView.showDesEvent
+                        : siteView.showDetailSetting.showDesEvent
                           ? "block"
                           : "none",
                       height: "6rem",
@@ -199,10 +199,10 @@ class EventComponent extends React.Component {
                     xs={3}
                     style={{
                       display: isEdit
-                        ? siteEdit.showPlaceEvent
+                        ? siteEdit.showDetailSetting.showPlaceEvent
                           ? "block"
                           : "none"
-                        : siteView.showPlaceEvent
+                        : siteView.showDetailSetting.showPlaceEvent
                           ? "block"
                           : "none",
                       textOverflow: "ellipsis",
@@ -269,10 +269,10 @@ class EventComponent extends React.Component {
                     xs={2}
                     style={{
                       display: isEdit
-                        ? siteEdit.showCoverEvent
+                        ? siteEdit.showDetailSetting.showCoverEvent
                           ? "block"
                           : "none"
-                        : siteView.showCoverEvent
+                        : siteView.showDetailSetting.showCoverEvent
                           ? "block"
                           : "none",
                       backgroundImage: `url('${row.cover}')`,
@@ -363,10 +363,10 @@ class EventComponent extends React.Component {
                       textOverflow: "ellipsis",
                       overflow: "auto",
                       display: isEdit
-                        ? siteEdit.showDesEvent
+                        ? siteEdit.showDetailSetting.showDesEvent
                           ? "block"
                           : "none"
-                        : siteView.showDesEvent
+                        : siteView.showDetailSetting.showDesEvent
                           ? "block"
                           : "none",
                       height: "6rem",
@@ -387,10 +387,10 @@ class EventComponent extends React.Component {
                     xs={3}
                     style={{
                       display: isEdit
-                        ? siteEdit.showPlaceEvent
+                        ? siteEdit.showDetailSetting.showPlaceEvent
                           ? "block"
                           : "none"
-                        : siteView.showPlaceEvent
+                        : siteView.showDetailSetting.showPlaceEvent
                           ? "block"
                           : "none",
                       textOverflow: "ellipsis",
