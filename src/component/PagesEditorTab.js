@@ -522,12 +522,12 @@ class PagesEditorTab extends React.Component {
             control={
               <Checkbox
                 style={{ color: "#0074aa" }}
-                checked={!site.showCoverEvent}
+                checked={!site.showDetailSetting.showCoverEvent}
                 onChange={() =>
                   setEventCustomize(
-                    !site.showCoverEvent,
-                    site.showDesEvent,
-                    site.showPlaceEvent
+                    !site.showDetailSetting.showCoverEvent,
+                    site.showDetailSetting.showDesEvent,
+                    site.showDetailSetting.showPlaceEvent
                   )
                 }
               />
@@ -541,12 +541,12 @@ class PagesEditorTab extends React.Component {
             control={
               <Checkbox
                 style={{ color: "#0074aa" }}
-                checked={!site.showDesEvent}
+                checked={!site.showDetailSetting.showDesEvent}
                 onChange={() =>
                   setEventCustomize(
-                    site.showCoverEvent,
-                    !site.showDesEvent,
-                    site.showPlaceEvent
+                    site.showDetailSetting.showCoverEvent,
+                    !site.showDetailSetting.showDesEvent,
+                    site.showDetailSetting.showPlaceEvent
                   )
                 }
               />
@@ -562,12 +562,12 @@ class PagesEditorTab extends React.Component {
             control={
               <Checkbox
                 style={{ color: "#0074aa" }}
-                checked={!site.showPlaceEvent}
+                checked={!site.showDetailSetting.showPlaceEvent}
                 onChange={() =>
                   setEventCustomize(
-                    site.showCoverEvent,
-                    site.showDesEvent,
-                    !site.showPlaceEvent
+                    site.showDetailSetting.showCoverEvent,
+                    site.showDetailSetting.showDesEvent,
+                    !site.showDetailSetting.showPlaceEvent
                   )
                 }
               />
