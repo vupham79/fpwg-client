@@ -80,16 +80,19 @@ const gridContent = {
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box",
-  WebkitLineClamp: "2",
+  WebkitLineClamp: "4",
   WebkitBoxOrient: "vertical",
+  whiteSpace: "pre-wrap",
 };
 
 const gridMessage = {
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box",
-  WebkitLineClamp: "11",
+  WebkitLineClamp: "20",
   WebkitBoxOrient: "vertical",
+  // height: "100%",
+  whiteSpace: "pre-wrap",
 };
 
 function renderFB() {
@@ -184,12 +187,17 @@ class PostTypeComponent extends React.Component {
       fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
       fontSize: "14px",
     };
+    const titleStyle = {
+      fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+      fontSize: "14px",
+    };
     const btnStyle = {
       padding: "0.5rem 1.5rem",
       fontSize: "11px",
       border: `1px solid ${dark ? "#fff" : "#000"}`,
       backgroundColor: dark ? "#1A1919" : "#fff",
       color: dark ? "#fff" : "#000",
+      height: "fit-content",
     };
     return (
       <Grid
@@ -197,8 +205,9 @@ class PostTypeComponent extends React.Component {
         container
         item
         xs={10}
-        sm={6}
-        md={3}
+        sm={5}
+        md={5}
+        lg={3}
         style={
           dark
             ? {
@@ -206,7 +215,7 @@ class PostTypeComponent extends React.Component {
                 border: "1px solid #fff",
                 marginLeft: "1rem",
                 marginBottom: "1rem",
-                padding: "1rem",
+                // padding: "1rem",
                 borderRadius: "4px",
               }
             : {
@@ -240,7 +249,7 @@ class PostTypeComponent extends React.Component {
             <Typography
               variant={"body1"}
               style={{
-                ...txtStyle,
+                ...titleStyle,
                 fontWeight: "700",
                 fontSize: "16px",
                 color: dark ? "#fff" : "#000",
@@ -292,13 +301,19 @@ class PostTypeComponent extends React.Component {
             style={{
               ...txtStyle,
               padding: "1rem 0",
-              height: "5rem",
+              // height: "5rem",
               color: dark ? "#fff" : "#000",
             }}
           >
             <div style={gridContent}>{post.message}</div>
           </Grid>
-          <Grid container item xs={12} justify="flex-start">
+          <Grid
+            container
+            item
+            xs={12}
+            justify="flex-start"
+            alignItems="flex-end"
+          >
             {isEdit ? (
               <ButtonComponent
                 label="READ MORE"
@@ -327,7 +342,7 @@ class PostTypeComponent extends React.Component {
     );
   }
 
-  renderPostMessage(index, post, dark) {
+  renderPostMessage(index, post, style, dark, type) {
     const {
       fromHome,
       isEdit,
@@ -341,21 +356,45 @@ class PostTypeComponent extends React.Component {
       fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
       fontSize: "14px",
     };
+    const titleStyle = {
+      fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+      fontSize: "14px",
+    };
     const btnStyle = {
       padding: "0.5rem 1.5rem",
       fontSize: "11px",
-      border: `2px solid ${isEdit ? titleEdit.color : titleView.color}`,
+      border: `1px solid ${dark ? "#fff" : "#000"}`,
+      backgroundColor: dark ? "#1A1919" : "#fff",
+      color: dark ? "#fff" : "#000",
+      height: "fit-content",
     };
     return (
       <Grid
         key={post._id}
         container
         item
-        xs={12}
-        sm={6}
-        md={6}
-        lg={4}
-        // style={dark ? { backgroundColor: "#1a1919" } : null}
+        xs={10}
+        sm={5}
+        md={5}
+        lg={3}
+        style={
+          dark
+            ? {
+                backgroundColor: "#1a1919",
+                border: "1px solid #fff",
+                marginLeft: "1rem",
+                marginBottom: "1rem",
+                padding: "1rem",
+                borderRadius: "4px",
+              }
+            : {
+                backgroundColor: "#fff",
+                border: "1px solid #000",
+                marginLeft: "1rem",
+                marginBottom: "1rem",
+                borderRadius: "4px",
+              }
+        }
       >
         <Grid
           container
@@ -367,10 +406,22 @@ class PostTypeComponent extends React.Component {
             borderRadius: "0.4rem",
           }}
         >
-          <Grid item xs={12} style={{ padding: "1rem 0" }}>
+          <Grid
+            item
+            xs={12}
+            style={
+              {
+                // padding: "1rem 0"
+              }
+            }
+          >
             <Typography
               variant={"body1"}
-              style={{ ...txtStyle, fontWeight: "700", fontSize: "16px" }}
+              style={{
+                ...titleStyle,
+                fontWeight: "700",
+                fontSize: "16px",
+              }}
             >
               {moment(post.createdTime).format("MMMM DD,YYYY")}
             </Typography>
@@ -378,11 +429,21 @@ class PostTypeComponent extends React.Component {
           <Grid
             item
             xs={12}
-            style={{ ...txtStyle, padding: "1rem 0", height: "43vh" }}
+            style={{
+              ...txtStyle,
+              // padding: "0 !important",
+              // height: "43vh",
+            }}
           >
             <div style={gridMessage}>{post.message}</div>
           </Grid>
-          <Grid container item xs={12} justify="flex-start">
+          <Grid
+            container
+            item
+            xs={12}
+            justify="flex-start"
+            alignItems="flex-end"
+          >
             {isEdit ? (
               <ButtonComponent
                 label="READ MORE"

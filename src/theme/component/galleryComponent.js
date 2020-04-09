@@ -80,16 +80,7 @@ class GalleryComponent extends React.Component {
   };
 
   renderHomepageGallery = () => {
-    const {
-      classes,
-      galleries,
-      siteView,
-      titleView,
-      isEdit,
-      titleEdit,
-      color,
-      siteEdit,
-    } = this.props;
+    const { classes, galleries } = this.props;
     return (
       <>
         {galleries.map((item, index) => (
@@ -112,7 +103,7 @@ class GalleryComponent extends React.Component {
             </CardActionArea>
           </Grid>
         ))}
-        <Grid item xs={12} sm={4} md={3} className={classes.gridItems}>
+        {/* <Grid item xs={12} sm={4} md={3} className={classes.gridItems}>
           <CardActionArea style={{ position: "relative" }}>
             <CardMedia
               className={classes.media}
@@ -139,7 +130,7 @@ class GalleryComponent extends React.Component {
               </Typography>
             </Link>
           </CardActionArea>
-        </Grid>
+        </Grid> */}
       </>
     );
   };
