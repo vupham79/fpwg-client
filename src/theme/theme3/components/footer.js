@@ -3,18 +3,18 @@ import {
   faInstagram,
   faMailchimp,
   faWhatsapp,
-  faYoutube
+  faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Grid, Typography, withStyles } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-const useStyle = theme => ({
+const useStyle = (theme) => ({
   footer: {
     padding: "1rem 0",
-    margin: 0
-  }
+    margin: 0,
+  },
 });
 
 class FooterPage extends Component {
@@ -85,14 +85,14 @@ class FooterPage extends Component {
       siteView,
       titleEdit,
       titleView,
-      classes
+      classes,
     } = this.props;
 
     return (
       <Grid
         container
         alignItems="center"
-        justify="center"
+        justify="space-around"
         className={classes.footer}
       >
         <Grid item xs={3}>
@@ -101,7 +101,7 @@ class FooterPage extends Component {
             style={{
               color: "white",
               textAlign: "center",
-              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
+              fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
             }}
           >
             © {isEdit ? siteEdit.title : siteView.title}
@@ -114,7 +114,9 @@ class FooterPage extends Component {
                 padding: "1rem",
                 fontWeight: "800",
                 textAlign: "center",
-                fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily
+                fontFamily: isEdit
+                  ? titleEdit.fontFamily
+                  : titleView.fontFamily,
               }}
               variant="body1"
             >
@@ -126,14 +128,14 @@ class FooterPage extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   siteView: state.site.siteView,
   isEdit: state.site.isEdit,
   titleEdit: state.site.titleEdit,
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
-  bodyView: state.site.bodyView
+  bodyView: state.site.bodyView,
 });
 
 export default connect(mapStateToProps, null)(withStyles(useStyle)(FooterPage));

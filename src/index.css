@@ -72,6 +72,10 @@ video {
   object-fit: unset;
 }
 
+iframe {
+  background-color: white;
+}
+
 @keyframes blink {
   0% {
     opacity: 0;
