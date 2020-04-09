@@ -31,6 +31,12 @@ code {
 
 .slick-slide {
   height: unset !important;
+  margin: 0 10px;
+}
+
+/* the parent */
+.slick-list {
+  margin: 0 -10px;
 }
 
 .slick-slide > div {
