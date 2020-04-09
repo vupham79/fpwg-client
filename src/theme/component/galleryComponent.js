@@ -3,20 +3,17 @@ import {
   CardMedia,
   Dialog,
   Grid,
-  Typography,
   withStyles,
 } from "@material-ui/core";
-import { KeyboardArrowRight as NextIcon } from "@material-ui/icons";
 import { Pagination, PaginationItem } from "@material-ui/lab";
 import React from "react";
 import { connect } from "react-redux";
+import Slider from "react-slick";
 import {
   getDataByPageNumber,
   setGalleriesToSiteView,
   updateNavItemValue,
 } from "../../actions";
-import Link from "../../component/link";
-
 const useStyles = (theme) => ({
   gridItems: {
     // maxHeight: 250
@@ -35,6 +32,37 @@ const useStyles = (theme) => ({
   },
 });
 
+function SampleNextArrow(props) {
+  const { className, style, onClick, dark } = props;
+  return (
+    <div
+      className={className}
+      style={{
+        ...style,
+        display: "block",
+        background: !dark && "grey",
+        borderRadius: "100%",
+      }}
+      onClick={onClick}
+    />
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick, dark } = props;
+  return (
+    <div
+      className={className}
+      style={{
+        ...style,
+        display: "block",
+        background: !dark && "grey",
+        borderRadius: "100%",
+      }}
+      onClick={onClick}
+    />
+  );
+}
 class GalleryComponent extends React.Component {
   state = {
     img: "",
@@ -80,10 +108,68 @@ class GalleryComponent extends React.Component {
   };
 
   renderHomepageGallery = () => {
-    const { classes, galleries } = this.props;
+    const { classes, galleries, dark } = this.props;
     return (
       <>
-        {galleries.map((item, index) => (
+        {galleries && galleries.length > 3 && (
+          <Grid item xs={12}>
+            <Slider
+              speed={1000}
+              autoplaySpeed={2500}
+              arrows={true}
+              infinite
+              slidesToScroll={4}
+              slidesToShow={4}
+              nextArrow={<SampleNextArrow dark={dark} />}
+              prevArrow={<SamplePrevArrow dark={dark} />}
+              responsive={[
+                {
+                  breakpoint: 1024,
+                  settings: {
+                    slidesToScroll: 4,
+                    slidesToShow: 4,
+                  },
+                },
+                {
+                  breakpoint: 600,
+                  settings: {
+                    slidesToScroll: 2,
+                    slidesToShow: 2,
+                  },
+                },
+                {
+                  breakpoint: 480,
+                  settings: {
+                    slidesToScroll: 1,
+                    slidesToShow: 1,
+                  },
+                },
+              ]}
+            >
+              {galleries.map((item, index) => (
+                // <Grid
+                //   item
+                //   key={index}
+                //   xs={12}
+                //   sm={4}
+                //   md={4}
+                //   className={classes.gridItems}
+                // >
+                // <CardActionArea style={{ height: "100%" }}>
+                <CardMedia
+                  className={classes.media}
+                  image={item && item.url && item.url}
+                  onClick={() =>
+                    this.handleOpenDialog(item && item.url && item.url)
+                  }
+                />
+                // </CardActionArea>
+                // </Grid>
+              ))}
+            </Slider>
+          </Grid>
+        )}
+        {/* {galleries.map((item, index) => (
           <Grid
             item
             key={index}
@@ -102,51 +188,62 @@ class GalleryComponent extends React.Component {
               />
             </CardActionArea>
           </Grid>
-        ))}
-        {/* <Grid item xs={12} sm={4} md={3} className={classes.gridItems}>
-          <CardActionArea style={{ position: "relative" }}>
-            <CardMedia
-              className={classes.media}
-              style={{ opacity: "0.1" }}
-              image={siteView.logo}
-            />
-            <Link to={`/${siteView.sitePath}/gallery`}>
-              <Typography
-                style={{
-                  position: "absolute",
-                  top: "50%",
-                  left: 0,
-                  right: 0,
-                  textAlign: "center",
-                  fontFamily: titleView.fontFamily,
-                  fontWeight: 700,
-                  color: color ? color : titleView.color,
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-              >
-                View Gallery
-                <NextIcon />
-              </Typography>
-            </Link>
-          </CardActionArea>
-        </Grid> */}
+        ))} */}
       </>
     );
   };
 
   renderHomepageGalleryEdit = () => {
-    const {
-      classes,
-      galleries,
-      siteEdit,
-      titleEdit,
-      updateNavItemValue,
-      color,
-    } = this.props;
+    const { classes, galleries, dark } = this.props;
     return (
       <>
-        {galleries.slice(0, 3).map((item, index) => (
+        {galleries && galleries.length > 3 && (
+          <Grid item xs={12}>
+            <Slider
+              speed={1000}
+              autoplaySpeed={2500}
+              arrows={true}
+              infinite
+              slidesToScroll={4}
+              slidesToShow={4}
+              nextArrow={<SampleNextArrow dark={dark} />}
+              prevArrow={<SamplePrevArrow dark={dark} />}
+              responsive={[
+                {
+                  breakpoint: 1024,
+                  settings: {
+                    slidesToScroll: 4,
+                    slidesToShow: 4,
+                  },
+                },
+                {
+                  breakpoint: 600,
+                  settings: {
+                    slidesToScroll: 2,
+                    slidesToShow: 2,
+                  },
+                },
+                {
+                  breakpoint: 480,
+                  settings: {
+                    slidesToScroll: 1,
+                    slidesToShow: 1,
+                  },
+                },
+              ]}
+            >
+              {galleries.slice(0, 6).map((item, index) => (
+                <CardMedia
+                  className={classes.media}
+                  image={item && item.url}
+                  title="Gallery image"
+                  onClick={() => this.handleOpenDialog(item && item.url)}
+                />
+              ))}
+            </Slider>
+          </Grid>
+        )}
+        {/* {galleries.slice(0, 6).map((item, index) => (
           <Grid
             item
             key={index}
@@ -164,41 +261,7 @@ class GalleryComponent extends React.Component {
               />
             </CardActionArea>
           </Grid>
-        ))}
-        <Grid item xs={12} sm={4} md={3} className={classes.gridItems}>
-          <CardActionArea
-            style={{ position: "relative" }}
-            onClick={(e, value) => {
-              const gallery = siteEdit.navItems.filter((item) => {
-                return item.original === "gallery";
-              });
-              updateNavItemValue(gallery[0].order - 1);
-            }}
-          >
-            <CardMedia
-              className={classes.media}
-              style={{ opacity: "0.1" }}
-              image={siteEdit.logo}
-            />
-            <Typography
-              style={{
-                position: "absolute",
-                top: "50%",
-                left: 0,
-                right: 0,
-                textAlign: "center",
-                fontFamily: titleEdit.fontFamily,
-                fontWeight: 700,
-                color: color ? color : siteEdit.color,
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              View Gallery
-              <NextIcon />
-            </Typography>
-          </CardActionArea>
-        </Grid>
+        ))} */}
       </>
     );
   };

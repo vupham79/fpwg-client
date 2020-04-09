@@ -4,7 +4,6 @@ import {
   Grid,
   Typography,
   withStyles,
-  Divider,
 } from "@material-ui/core";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import { Pagination, PaginationItem } from "@material-ui/lab";
@@ -12,7 +11,6 @@ import moment from "moment";
 import React from "react";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
-import Slider from "react-slick";
 import {
   getDataByPageNumber,
   setPostsToSiteView,
