@@ -588,6 +588,10 @@ class PagesEditorTab extends React.Component {
           </Grid>
         </Grid>
 
+        <Divider
+          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
+        />
+
         <Typography className={classes.title}>Events</Typography>
         <Divider
           style={{
@@ -665,6 +669,7 @@ class PagesEditorTab extends React.Component {
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
+
         <Typography className={classes.title}>Posts</Typography>
         <Divider
           style={{

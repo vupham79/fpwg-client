@@ -263,7 +263,7 @@ class ClippedDrawer extends React.Component {
             <Grid item xs={12}>
               <AccordionButton
                 comp={<PagesEditorTab />}
-                label="Page Setting"
+                label="Content settings"
                 currentNav={this.state.currentNavName}
                 isNav={this.state.navigating}
                 setNav={this.setNavigating}
@@ -272,7 +272,7 @@ class ClippedDrawer extends React.Component {
             <Grid item xs={12}>
               <AccordionButton
                 comp={<HomepageEditorTab />}
-                label="Homepage Settings"
+                label="Homepage settings"
                 currentNav={this.state.currentNavName}
                 isNav={this.state.navigating}
                 setNav={this.setNavigating}
