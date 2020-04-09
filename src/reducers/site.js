@@ -479,6 +479,20 @@ const SiteReducer = (state = defaultState, action) => {
         },
         isChanged: true
       };
+    case "SET_ABOUT_CUSTOMIZE":
+      return {
+        ...state,
+        siteEdit: {
+          ...state.siteEdit,
+          showDetailSetting: {
+            ...state.siteEdit.showDetailSetting,
+            showAboutLogo: action.payload.logo,
+            showAboutDescription: action.payload.description,
+            showStory: action.payload.story
+          }
+        },
+        isChanged: true
+      };
     case "SET_LIMIT":
       return {
         ...state,

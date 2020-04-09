@@ -70,7 +70,8 @@ import {
   changeSiteAddress,
   setFramePreview,
   setEventCustomize,
-  setLimit
+  setLimit,
+  setAboutCustomize
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import {
@@ -200,5 +201,6 @@ export {
   insertTheme,
   updateTheme,
   setPostView,
-  setLimit
+  setLimit,
+  setAboutCustomize
 };

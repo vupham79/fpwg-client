@@ -127,11 +127,11 @@ class Theme1About extends React.Component {
             <CardMedia
               component="img"
               height="300"
-              style={{ objectFit: "contain" }}
+              style={{ objectFit: "contain", display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? "block" : "none") : (this.props.siteView.showDetailSetting.showAboutLogo ? "block" : "none") }}
               image={this.renderImage()}
             />
           </Grid>
-          <Grid item xs={12} sm={4} style={{ paddingLeft: 10 }}>
+          <Grid item xs={12} sm={4} style={{ paddingLeft: 10, display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutDescription ? "block" : "none") : (this.props.siteView.showDetailSetting.showAboutDescription ? "block" : "none") }}>
             <p style={classes.changableBody3}>
               {isEdit && siteEdit && siteEdit.about}
               {!isEdit && siteView && siteView.about}
