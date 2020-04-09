@@ -299,10 +299,10 @@ class PagesEditorTab extends React.Component {
       this.props.setLimit(event.target.value, this.props.site.limitEvent, this.props.site.limitGallery)
     }
     if (type === 1) {
-      this.props.setLimit(this.props.limitNews, event.target.value, this.props.site.limitGallery)
+      this.props.setLimit(this.props.site.limitNews, event.target.value, this.props.site.limitGallery)
     }
     if (type === 2) {
-      this.props.setLimit(this.props.limitNews, this.props.site.limitEvent, event.target.value)
+      this.props.setLimit(this.props.site.limitNews, this.props.site.limitEvent, event.target.value)
     }
   }
 
