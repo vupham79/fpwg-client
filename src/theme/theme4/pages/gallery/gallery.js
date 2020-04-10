@@ -116,6 +116,7 @@ class Theme4Gallery extends React.Component {
           minHeight: "50vh",
         }}
         justify="center"
+        id="gallery"
       >
         <Grid item xs={12}>
           <p style={classes.changableTitle}>

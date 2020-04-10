@@ -76,11 +76,11 @@ export const themes = [
     component: <Theme4 />,
     pages: [
       { name: "home", component: <PreHomePageT4 /> },
-      { name: "about", component: <PreAboutPageT4 /> },
-      { name: "contact", component: <PreContactPageT4 /> },
-      { name: "event", component: <PreEventPageT4 /> },
-      { name: "gallery", component: <PreGalleryPageT4 /> },
-      { name: "news", component: <PreNewPageT4 /> },
+      // { name: "about", component: <PreAboutPageT4 /> },
+      // { name: "contact", component: <PreContactPageT4 /> },
+      // { name: "event", component: <PreEventPageT4 /> },
+      // { name: "gallery", component: <PreGalleryPageT4 /> },
+      // { name: "news", component: <PreNewPageT4 /> },
     ],
   },
 ];
