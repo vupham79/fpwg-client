@@ -434,7 +434,10 @@ export function saveDesignSite({
           about: site.about,
           limitNews: site.limitNews,
           limitEvent: site.limitEvent,
-          limitGallery: site.limitGallery
+          limitGallery: site.limitGallery,
+          showAboutDescription: site.showDetailSetting.showAboutDescription,
+          showAboutLogo: site.showDetailSetting.showAboutLogo,
+          showStory: site.showDetailSetting.showStory,
         }
       });
       dispatch({
@@ -1071,6 +1074,19 @@ export function setEventCustomize(cover, description, place) {
         cover: cover,
         description: description,
         place: place
+      }
+    });
+  };
+}
+
+export function setAboutCustomize(logo, description, story) {
+  return dispatch => {
+    dispatch({
+      type: "SET_ABOUT_CUSTOMIZE",
+      payload: {
+        logo: logo,
+        description: description,
+        story: story
       }
     });
   };

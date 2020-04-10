@@ -154,6 +154,7 @@ class PostTypeComponent extends React.Component {
     this.setState({
       postOpen: post,
     });
+    document.getElementById("topPos").scrollIntoView();
   };
 
   handleHomeClick = (post) => {
@@ -168,6 +169,7 @@ class PostTypeComponent extends React.Component {
     } else {
       setPostView(post);
     }
+    document.getElementById("topPos").scrollIntoView();
   };
 
   renderPostComponent(index, post, style, dark, type) {

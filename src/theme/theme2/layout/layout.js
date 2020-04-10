@@ -45,7 +45,7 @@ class Layout extends Component {
       <Grid id="topPos">
         <HeaderComponent
           navPos={"right"}
-          displayImg={true}
+          displayImg={isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? true : false) : (this.props.siteView.showDetailSetting.showAboutLogo ? true : false)}
           navColor={isEdit ? titleEdit.color : titleView.color}
         />
         {isEdit ? this.renderTabItem() : this.props.children}

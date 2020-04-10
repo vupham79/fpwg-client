@@ -99,10 +99,12 @@ class Theme1About extends React.Component {
           </p>
         </Grid>
         <Grid container item xs={12} justify={"center"}>
-          {/* <RoundedImage image={this.renderImage()} roundedSize="0" imageWidth="300" imageHeight="300" style={{ objectFit: "contain" }} /> */}
-          <img src={this.renderImage()} alt="" style={{ width: "20rem" }} />
+          <Grid style={{ display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? "block" : "none") : (this.props.siteView.showDetailSetting.showAboutLogo ? "block" : "none") }}>
+            {/* <RoundedImage image={this.renderImage()} roundedSize="0" imageWidth="300" imageHeight="300" style={{ objectFit: "contain" }} /> */}
+            <img src={this.renderImage()} alt="" style={{ width: "20rem" }} />
+          </Grid>
         </Grid>
-        <Grid item xs={12} style={{ padding: 15, marginTop: 40 }}>
+        <Grid item xs={12} style={{ padding: 15, marginTop: 40, display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutDescription ? "block" : "none") : (this.props.siteView.showDetailSetting.showAboutDescription ? "block" : "none") }}>
           <p style={classes.changableBody3}>
             {isEdit && siteEdit && siteEdit.about}
             {!isEdit && siteView && siteView.about}

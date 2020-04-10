@@ -44,6 +44,7 @@ import {
   updateNavItemValue,
   setEventCustomize,
   setLimit,
+  setAboutCustomize
 } from "../actions";
 import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
@@ -295,14 +296,18 @@ class PagesEditorTab extends React.Component {
   };
 
   handleSetLimit = (type) => (event) => {
+    let val = event.target.value;
+    if (val < 1) val = 1;
+    if (val > 10) val = 10;
+
     if (type === 0) {
-      this.props.setLimit(event.target.value, this.props.site.limitEvent, this.props.site.limitGallery)
+      this.props.setLimit(val, this.props.site.limitEvent, this.props.site.limitGallery)
     }
     if (type === 1) {
-      this.props.setLimit(this.props.site.limitNews, event.target.value, this.props.site.limitGallery)
+      this.props.setLimit(this.props.site.limitNews, val, this.props.site.limitGallery)
     }
     if (type === 2) {
-      this.props.setLimit(this.props.site.limitNews, this.props.site.limitEvent, event.target.value)
+      this.props.setLimit(this.props.site.limitNews, this.props.site.limitEvent, val)
     }
   }
 
@@ -390,6 +395,7 @@ class PagesEditorTab extends React.Component {
       classes,
       changeNavItemName,
       setEventCustomize,
+      setAboutCustomize
     } = this.props;
 
     const SortableItem = sortableElement(
@@ -509,6 +515,87 @@ class PagesEditorTab extends React.Component {
 
     return (
       <div style={{ padding: 10 }}>
+
+
+        <Typography className={classes.title}>About</Typography>
+        <Divider
+          style={{
+            height: "1.2rem",
+            width: "100%",
+            backgroundColor: "#ffffff00",
+          }}
+        />
+        <Grid container>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  style={{ color: "#0074aa" }}
+                  checked={!site.showDetailSetting.showAboutLogo}
+                  onChange={() =>
+                    setAboutCustomize(
+                      !site.showDetailSetting.showAboutLogo,
+                      site.showDetailSetting.showAboutDescription,
+                      site.showDetailSetting.showStory
+                    )
+                  }
+                />
+              }
+              label={
+                <p style={{ fontSize: 13, color: "#555d66" }}>Hide site logo</p>
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  style={{ color: "#0074aa" }}
+                  checked={!site.showDetailSetting.showAboutDescription}
+                  onChange={() =>
+                    setAboutCustomize(
+                      site.showDetailSetting.showAboutLogo,
+                      !site.showDetailSetting.showAboutDescription,
+                      site.showDetailSetting.showStory
+                    )
+                  }
+                />
+              }
+              label={
+                <p style={{ fontSize: 13, color: "#555d66" }}>
+                  Hide introduction
+              </p>
+              }
+            />
+          </Grid>
+
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  style={{ color: "#0074aa" }}
+                  checked={!site.showDetailSetting.showStory}
+                  onChange={() =>
+                    setAboutCustomize(
+                      site.showDetailSetting.showAboutLogo,
+                      site.showDetailSetting.showAboutDescription,
+                      !site.showDetailSetting.showStory
+                    )
+                  }
+                />
+              }
+              label={
+                <p style={{ fontSize: 13, color: "#555d66" }}>Hide story</p>
+              }
+            />
+          </Grid>
+        </Grid>
+
+        <Divider
+          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
+        />
+
         <Typography className={classes.title}>Events</Typography>
         <Divider
           style={{
@@ -518,69 +605,75 @@ class PagesEditorTab extends React.Component {
           }}
         />
         <Grid container>
-          <FormControlLabel
-            control={
-              <Checkbox
-                style={{ color: "#0074aa" }}
-                checked={!site.showDetailSetting.showCoverEvent}
-                onChange={() =>
-                  setEventCustomize(
-                    !site.showDetailSetting.showCoverEvent,
-                    site.showDetailSetting.showDesEvent,
-                    site.showDetailSetting.showPlaceEvent
-                  )
-                }
-              />
-            }
-            label={
-              <p style={{ fontSize: 13, color: "#555d66" }}>Hide event cover</p>
-            }
-          />
-
-          <FormControlLabel
-            control={
-              <Checkbox
-                style={{ color: "#0074aa" }}
-                checked={!site.showDetailSetting.showDesEvent}
-                onChange={() =>
-                  setEventCustomize(
-                    site.showDetailSetting.showCoverEvent,
-                    !site.showDetailSetting.showDesEvent,
-                    site.showDetailSetting.showPlaceEvent
-                  )
-                }
-              />
-            }
-            label={
-              <p style={{ fontSize: 13, color: "#555d66" }}>
-                Hide event description
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  style={{ color: "#0074aa" }}
+                  checked={!site.showDetailSetting.showCoverEvent}
+                  onChange={() =>
+                    setEventCustomize(
+                      !site.showDetailSetting.showCoverEvent,
+                      site.showDetailSetting.showDesEvent,
+                      site.showDetailSetting.showPlaceEvent
+                    )
+                  }
+                />
+              }
+              label={
+                <p style={{ fontSize: 13, color: "#555d66" }}>Hide event cover</p>
+              }
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  style={{ color: "#0074aa" }}
+                  checked={!site.showDetailSetting.showDesEvent}
+                  onChange={() =>
+                    setEventCustomize(
+                      site.showDetailSetting.showCoverEvent,
+                      !site.showDetailSetting.showDesEvent,
+                      site.showDetailSetting.showPlaceEvent
+                    )
+                  }
+                />
+              }
+              label={
+                <p style={{ fontSize: 13, color: "#555d66" }}>
+                  Hide event description
               </p>
-            }
-          />
+              }
+            />
+          </Grid>
 
-          <FormControlLabel
-            control={
-              <Checkbox
-                style={{ color: "#0074aa" }}
-                checked={!site.showDetailSetting.showPlaceEvent}
-                onChange={() =>
-                  setEventCustomize(
-                    site.showDetailSetting.showCoverEvent,
-                    site.showDetailSetting.showDesEvent,
-                    !site.showDetailSetting.showPlaceEvent
-                  )
-                }
-              />
-            }
-            label={
-              <p style={{ fontSize: 13, color: "#555d66" }}>Hide event place</p>
-            }
-          />
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  style={{ color: "#0074aa" }}
+                  checked={!site.showDetailSetting.showPlaceEvent}
+                  onChange={() =>
+                    setEventCustomize(
+                      site.showDetailSetting.showCoverEvent,
+                      site.showDetailSetting.showDesEvent,
+                      !site.showDetailSetting.showPlaceEvent
+                    )
+                  }
+                />
+              }
+              label={
+                <p style={{ fontSize: 13, color: "#555d66" }}>Hide event place</p>
+              }
+            />
+          </Grid>
         </Grid>
 
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
+
         <Typography className={classes.title}>Posts</Typography>
         <Divider
           style={{
@@ -766,24 +859,45 @@ class PagesEditorTab extends React.Component {
           <Grid item xs={6}>
             <p style={{ fontSize: 13, color: "#555d66" }}>Set posts per page</p>
           </Grid>
-          <Grid item xs={1}>
-            <Input type="number" value={this.props.site.limitNews} onChange={this.handleSetLimit(0)} />
+          <Grid item xs={2}>
+            <InputBase
+              type="number"
+              inputProps={{
+                maxLength: 2,
+              }}
+              style={{ minWidth: 30 }}
+              value={this.props.site.limitNews}
+              onChange={this.handleSetLimit(0)} />
           </Grid>
         </Grid>
         <Grid container style={{ marginBottom: 30 }}>
           <Grid item xs={6}>
             <p style={{ fontSize: 13, color: "#555d66" }}>Set events per page</p>
           </Grid>
-          <Grid item xs={1}>
-            <Input type="number" variant value={this.props.site.limitEvent} onChange={this.handleSetLimit(1)} />
+          <Grid item xs={2}>
+            <InputBase
+              type="number"
+              inputProps={{
+                maxLength: 2,
+              }}
+              style={{ minWidth: 30 }}
+              value={this.props.site.limitEvent}
+              onChange={this.handleSetLimit(1)} />
           </Grid>
         </Grid>
         <Grid container style={{ marginBottom: 30 }}>
           <Grid item xs={6}>
             <p style={{ fontSize: 13, color: "#555d66" }}>Set photos per page</p>
           </Grid>
-          <Grid item xs={1}>
-            <Input type="number" value={this.props.site.limitGallery} onChange={this.handleSetLimit(2)} />
+          <Grid item xs={2}>
+            <InputBase
+              type="number"
+              inputProps={{
+                maxLength: 2,
+              }}
+              style={{ minWidth: 30 }}
+              value={this.props.site.limitGallery}
+              onChange={this.handleSetLimit(2)} />
           </Grid>
         </Grid>
 
@@ -804,8 +918,8 @@ const mapDispatchToProps = (dispatch) => ({
   updateNavItemValue: (value) => dispatch(updateNavItemValue(value)),
   savePosts: (posts) => dispatch(savePosts(posts)),
   changeNavItemName: (item) => dispatch(changeNavItemName(item)),
-  setEventCustomize: (cover, description, place) =>
-    dispatch(setEventCustomize(cover, description, place)),
+  setEventCustomize: (cover, description, place) => dispatch(setEventCustomize(cover, description, place)),
+  setAboutCustomize: (logo, description, story) => dispatch(setAboutCustomize(logo, description, story)),
   setLimit: (news, event, gallery) =>
     dispatch(setLimit(news, event, gallery)),
 });
