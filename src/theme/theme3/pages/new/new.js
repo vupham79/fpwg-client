@@ -73,7 +73,6 @@ class NewPage extends Component {
                       }
                     ).length / siteEdit.limitNews
                   )}
-                  bgWhite={true}
                   dark
                 />
               </Grid>

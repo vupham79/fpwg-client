@@ -25,6 +25,40 @@ class AboutPage extends React.Component {
       siteView,
       fromHome,
     } = this.props;
+    const isShowStory = () => {
+      if (isEdit) {
+        if (siteEdit && siteEdit.showDetailSetting.showStory) {
+          if (siteEdit.story && siteEdit.story.title) {
+            return true;
+          }
+        }
+      } else if (siteView && siteView.showDetailSetting.showStory) {
+        if (siteView.story && siteView.story.title) {
+          return true;
+        }
+      }
+      return false;
+    };
+    const isShowAboutDes = () => {
+      if (isEdit) {
+        if (siteEdit && siteEdit.showDetailSetting.showAboutDescription) {
+          return true;
+        }
+      } else if (siteView && siteView.showDetailSetting.showAboutDescription) {
+        return true;
+      }
+      return false;
+    };
+    const isShowAboutLogo = () => {
+      if (isEdit) {
+        if (siteEdit && siteEdit.showDetailSetting.showAboutLogo) {
+          return true;
+        }
+      } else if (siteView && siteView.showDetailSetting.showAboutLogo) {
+        return true;
+      }
+      return false;
+    };
     return (
       <Grid container justify="center" className={styles.about_page}>
         {!fromHome && (
@@ -54,17 +88,17 @@ class AboutPage extends React.Component {
               >
                 {isEdit
                   ? siteEdit &&
-                  siteEdit.navItems.map((item) => {
-                    if (item.original === "about") {
-                      return item.name;
-                    } else return "";
-                  })
+                    siteEdit.navItems.map((item) => {
+                      if (item.original === "about") {
+                        return item.name;
+                      } else return "";
+                    })
                   : siteView &&
-                  siteView.navItems.map((item) => {
-                    if (item.original === "about") {
-                      return item.name;
-                    } else return "";
-                  })}
+                    siteView.navItems.map((item) => {
+                      if (item.original === "about") {
+                        return item.name;
+                      } else return "";
+                    })}
               </Typography>
             </>
           </Grid>
@@ -78,6 +112,7 @@ class AboutPage extends React.Component {
           style={{
             marginTop: "2.5rem",
             marginBottom: fromHome ? "2.5rem" : 0,
+            minHeight: !fromHome && "55vh",
           }}
         >
           <Typography
@@ -98,27 +133,28 @@ class AboutPage extends React.Component {
                 width: "30%",
                 float: "left",
                 marginRight: "1rem",
-                display: fromHome ? "none" : (isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutLogo ? "inline-block" : "none")),
+                display: fromHome
+                  ? "none"
+                  : isShowAboutLogo()
+                  ? "inline-block"
+                  : "none",
               }}
             />
-            <p style={{ display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutDescription ? "block" : "none") : (this.props.siteView.showDetailSetting.showAboutDescription ? "block" : "none") }}>
+            <p
+              style={{
+                display: isShowAboutDes() ? "block" : "none",
+                margin: "0",
+                whiteSpace: "break-spaces",
+                textAlign: "justify",
+              }}
+            >
               {isEdit
                 ? siteEdit && siteEdit.about
-                  ? siteEdit.about.split("\n").map((val, index) => (
-                    <React.Fragment key={index}>
-                      {val}
-                      <br />
-                    </React.Fragment>
-                  ))
+                  ? siteEdit.about
                   : "Welcome to our website! Take a look around and feel free to contact us for more information."
                 : siteView && siteView.about
-                  ? siteView.about.split("\n").map((val, index) => (
-                    <React.Fragment key={index}>
-                      {val}
-                      <br />
-                    </React.Fragment>
-                  ))
-                  : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+                ? siteView.about
+                : "Welcome to our website! Take a look around and feel free to contact us for more information."}
             </p>
           </Typography>
         </Grid>
@@ -140,7 +176,10 @@ class AboutPage extends React.Component {
               sm={10}
               xs={10}
               justify="center"
-              style={{ marginTop: !fromHome ? "2.5rem" : 0, display: isEdit ? (this.props.siteEdit.showDetailSetting.showStory ? "block" : "none") : (this.props.siteView.showDetailSetting.showStory ? "block" : "none") }}
+              style={{
+                marginTop: !fromHome ? "2.5rem" : 0,
+                display: isShowStory() ? "block" : "none",
+              }}
             >
               <Typography
                 style={{
@@ -149,8 +188,9 @@ class AboutPage extends React.Component {
                     : bodyView.fontFamily,
                   fontWeight: 900,
                   color: "#151515",
-                  textAlign: "left",
+                  textAlign: "center",
                   fontSize: 20,
+                  whiteSpace: "break-spaces",
                 }}
               >
                 {isEdit
@@ -167,6 +207,7 @@ class AboutPage extends React.Component {
               style={{
                 marginTop: !fromHome ? "2.5rem" : 0,
                 marginBottom: !fromHome ? "2.5rem" : 0,
+                display: isShowStory() ? "block" : "none",
               }}
             >
               <Typography
@@ -179,33 +220,13 @@ class AboutPage extends React.Component {
                   fontWeight: 400,
                   color: "#151515",
                   fontSize: 16,
+                  whiteSpace: "break-spaces",
+                  textAlign: "justify",
                 }}
               >
                 {isEdit
-                  ? siteEdit &&
-                  siteEdit.story &&
-                  siteEdit.story.composedText &&
-                  siteEdit.story.composedText.map((text) => {
-                    const originalText = text.split("\n");
-                    return originalText.map((val, index) => (
-                      <React.Fragment key={index}>
-                        {val}
-                        <br />
-                      </React.Fragment>
-                    ));
-                  })
-                  : siteView &&
-                  siteView.story &&
-                  siteView.story.composedText &&
-                  siteView.story.composedText.map((text) => {
-                    const originalText = text.split("\n");
-                    return originalText.map((val, index) => (
-                      <React.Fragment key={index}>
-                        {val}
-                        <br />
-                      </React.Fragment>
-                    ));
-                  })}
+                  ? siteEdit && siteEdit.story && siteEdit.story.composedText
+                  : siteView && siteView.story && siteView.story.composedText}
               </Typography>
             </Grid>
           </>

@@ -31,6 +31,10 @@ code {
 
 .slick-slide {
   height: unset !important;
+  /* margin: 0 10px; */
+}
+
+.slide-list {
   margin: 0 10px;
 }
 
@@ -53,14 +57,14 @@ code {
   display: flex !important;
 }
 
+.slick-prev,
 .slick-next {
-  /* right: 0 !important; */
-  /* display: none !important; */
+  font-size: 15px !important;
 }
 
-.slick-prev {
-  /* left: 0 !important; */
-  /* display: none !important; */
+.slick-prev:before,
+.slick-next:before {
+  content: "" !important;
 }
 
 .slick-track .slick-slide {

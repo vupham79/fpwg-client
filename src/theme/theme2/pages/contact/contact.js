@@ -21,12 +21,7 @@ import {
   GoogleMap,
   Marker,
 } from "react-google-maps";
-const useStyle = (theme) => ({
-  root: {
-    marginTop: "2.5rem",
-    marginBottom: "2.5rem",
-  },
-});
+const useStyle = (theme) => ({});
 
 class ContactPage extends React.Component {
   renderUrl = () => {
@@ -84,6 +79,19 @@ class ContactPage extends React.Component {
       instagram,
       whatsapp,
     } = this.props;
+    const mapExist = () => {
+      if (isEdit) {
+        if (siteEdit && siteEdit.latitude && siteEdit.longitude) {
+          return true;
+        }
+        return false;
+      } else {
+        if (siteView && siteView.latitude && siteView.longitude) {
+          return true;
+        }
+        return false;
+      }
+    };
     const MapWithAMarker = withScriptjs(
       withGoogleMap((props) => (
         <GoogleMap
@@ -117,7 +125,6 @@ class ContactPage extends React.Component {
         className={styles.contact_page}
         style={{
           marginBottom: fromHome && "0",
-          minHeight: !fromHome && "80vh",
         }}
       >
         <Grid
@@ -129,7 +136,7 @@ class ContactPage extends React.Component {
           xs={12}
           className={styles.contact_title}
           style={{
-            height: fromHome && "6rem",
+            height: fromHome ? "6rem" : "8rem",
           }}
         >
           <Grid item>
@@ -173,9 +180,22 @@ class ContactPage extends React.Component {
           container
           justify="center"
           spacing={2}
-          className={classes.root}
+          style={{
+            marginTop: "2.5rem",
+            marginBottom: "2.5rem",
+            minHeight: !fromHome && "55vh",
+          }}
         >
-          <Grid item container xs={10} sm={6}>
+          <Grid
+            item
+            container
+            xs={10}
+            sm={
+              (siteEdit && siteEdit.latitude) || (siteView && siteView.latitude)
+                ? 6
+                : 10
+            }
+          >
             {isEdit ? (
               address ? (
                 <Grid
@@ -196,9 +216,8 @@ class ContactPage extends React.Component {
                           : bodyView.fontFamily,
                         fontWeight: "bold",
                         color: "#151515",
-                        textAlign: "left",
+                        textAlign: mapExist() ? "left" : "center",
                         fontSize: 18,
-                        // paddingBottom: 20,
                       }}
                     >
                       Address:
@@ -212,7 +231,7 @@ class ContactPage extends React.Component {
                           : bodyView.fontFamily,
                         fontWeight: "100",
                         color: "#151515",
-                        textAlign: "left",
+                        textAlign: mapExist() ? "left" : "center",
                         fontSize: 16,
                         // paddingBottom: 20,
                       }}
@@ -249,7 +268,7 @@ class ContactPage extends React.Component {
                         : bodyView.fontFamily,
                       fontWeight: "bold",
                       color: "#151515",
-                      textAlign: "left",
+                      textAlign: mapExist() ? "left" : "center",
                       fontSize: 18,
                       // paddingBottom: 20,
                     }}
@@ -265,7 +284,7 @@ class ContactPage extends React.Component {
                         : bodyView.fontFamily,
                       fontWeight: "100",
                       color: "#151515",
-                      textAlign: "left",
+                      textAlign: mapExist() ? "left" : "center",
                       fontSize: 16,
                       // paddingBottom: 20,
                     }}
@@ -303,7 +322,7 @@ class ContactPage extends React.Component {
                           : bodyView.fontFamily,
                         fontWeight: "bold",
                         color: "#151515",
-                        textAlign: "left",
+                        textAlign: mapExist() ? "left" : "center",
                         fontSize: 18,
                       }}
                     >
@@ -318,7 +337,7 @@ class ContactPage extends React.Component {
                           : bodyView.fontFamily,
                         fontWeight: "100",
                         color: "#151515",
-                        textAlign: "left",
+                        textAlign: mapExist() ? "left" : "center",
                         fontSize: 16,
                       }}
                     >
@@ -354,7 +373,7 @@ class ContactPage extends React.Component {
                         : bodyView.fontFamily,
                       fontWeight: "bold",
                       color: "#151515",
-                      textAlign: "left",
+                      textAlign: mapExist() ? "left" : "center",
                       fontSize: 18,
                     }}
                   >
@@ -369,7 +388,7 @@ class ContactPage extends React.Component {
                         : bodyView.fontFamily,
                       fontWeight: "100",
                       color: "#151515",
-                      textAlign: "left",
+                      textAlign: mapExist() ? "left" : "center",
                       fontSize: 16,
                     }}
                   >
@@ -406,7 +425,7 @@ class ContactPage extends React.Component {
                           : bodyView.fontFamily,
                         fontWeight: "bold",
                         color: "#151515",
-                        textAlign: "left",
+                        textAlign: mapExist() ? "left" : "center",
                         fontSize: 18,
                       }}
                     >
@@ -421,7 +440,7 @@ class ContactPage extends React.Component {
                           : bodyView.fontFamily,
                         fontWeight: "100",
                         color: "#151515",
-                        textAlign: "left",
+                        textAlign: mapExist() ? "left" : "center",
                         fontSize: 16,
                         paddingBottom: 20,
                       }}
@@ -458,7 +477,7 @@ class ContactPage extends React.Component {
                         : bodyView.fontFamily,
                       fontWeight: "bold",
                       color: "#151515",
-                      textAlign: "left",
+                      textAlign: mapExist() ? "left" : "center",
                       fontSize: 18,
                     }}
                   >
@@ -473,7 +492,7 @@ class ContactPage extends React.Component {
                         : bodyView.fontFamily,
                       fontWeight: "100",
                       color: "#151515",
-                      textAlign: "left",
+                      textAlign: mapExist() ? "left" : "center",
                       fontSize: 16,
                       paddingBottom: 20,
                     }}
@@ -492,7 +511,12 @@ class ContactPage extends React.Component {
               <></>
             )}
             <Divider variant="fullWidth" style={{ width: "100%" }} />
-            <Grid container item justify="flex-start" xs={12}>
+            <Grid
+              container
+              item
+              justify={mapExist() ? "flex-start" : "center"}
+              xs={12}
+            >
               {(siteEdit && siteEdit.url) || (siteView && siteView.url) ? (
                 <Grid item>
                   <IconButton
@@ -598,9 +622,9 @@ class ContactPage extends React.Component {
                   <Grid item md={12} sm={12} xs={12} className={classes.map}>
                     <MapWithAMarker
                       googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-                      loadingElement={<div style={{ height: `100%` }} />}
-                      containerElement={<div style={{ height: `100%` }} />}
-                      mapElement={<div style={{ height: `100%` }} />}
+                      loadingElement={<div style={{ height: `300px` }} />}
+                      containerElement={<div style={{ height: `300px` }} />}
+                      mapElement={<div style={{ height: `300px` }} />}
                     />
                   </Grid>
                 )
@@ -610,15 +634,15 @@ class ContactPage extends React.Component {
                   <Grid item md={12} sm={12} xs={12} className={classes.map}>
                     <MapWithAMarker
                       googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
-                      loadingElement={<div style={{ height: `100%` }} />}
+                      loadingElement={<div style={{ height: `300px` }} />}
                       containerElement={
                         <div
                           style={{
-                            height: `100%`,
+                            height: `300px`,
                           }}
                         />
                       }
-                      mapElement={<div style={{ height: `100%` }} />}
+                      mapElement={<div style={{ height: `300px` }} />}
                     />
                   </Grid>
                 )}

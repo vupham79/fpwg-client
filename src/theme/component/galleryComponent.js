@@ -10,10 +10,16 @@ import React from "react";
 import { connect } from "react-redux";
 import Slider from "react-slick";
 import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
   getDataByPageNumber,
   setGalleriesToSiteView,
   updateNavItemValue,
 } from "../../actions";
+
 const useStyles = (theme) => ({
   gridItems: {
     // maxHeight: 250
@@ -27,8 +33,12 @@ const useStyles = (theme) => ({
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   },
-  paginationItemRoot: {
-    color: "#fff",
+  // paginationItemRoot: {
+  //   color: "#fff",
+  // },
+  paginationItemSelected: {
+    backgroundColor: "#fff !important",
+    color: "#000 !important",
   },
 });
 
@@ -36,15 +46,21 @@ function SampleNextArrow(props) {
   const { className, style, onClick, dark } = props;
   return (
     <div
-      className={className}
+      className={`button button--text button--icon ${className}`}
       style={{
         ...style,
         display: "block",
-        background: !dark && "grey",
+        // background: !dark && "grey",
         borderRadius: "100%",
       }}
       onClick={onClick}
-    />
+    >
+      <FontAwesomeIcon
+        icon={faChevronRight}
+        color={dark ? "#fff" : "#000"}
+        size="2x"
+      />
+    </div>
   );
 }
 
@@ -52,15 +68,21 @@ function SamplePrevArrow(props) {
   const { className, style, onClick, dark } = props;
   return (
     <div
-      className={className}
+      className={`button button--text button--icon ${className}`}
       style={{
         ...style,
         display: "block",
-        background: !dark && "grey",
+        // background: !dark && "grey",
         borderRadius: "100%",
       }}
       onClick={onClick}
-    />
+    >
+      <FontAwesomeIcon
+        icon={faChevronLeft}
+        color={dark ? "#fff" : "#000"}
+        size="2x"
+      />
+    </div>
   );
 }
 class GalleryComponent extends React.Component {
@@ -108,7 +130,7 @@ class GalleryComponent extends React.Component {
   };
 
   renderHomepageGallery = () => {
-    const { classes, galleries, dark } = this.props;
+    const { classes, galleries, dark, fromHome } = this.props;
     return (
       <>
         {galleries && galleries.length > 3 && (
@@ -131,17 +153,17 @@ class GalleryComponent extends React.Component {
                   },
                 },
                 {
+                  breakpoint: 960,
+                  settings: {
+                    slidesToScroll: 3,
+                    slidesToShow: 3,
+                  },
+                },
+                {
                   breakpoint: 600,
                   settings: {
                     slidesToScroll: 2,
                     slidesToShow: 2,
-                  },
-                },
-                {
-                  breakpoint: 480,
-                  settings: {
-                    slidesToScroll: 1,
-                    slidesToShow: 1,
                   },
                 },
               ]}
@@ -169,32 +191,33 @@ class GalleryComponent extends React.Component {
             </Slider>
           </Grid>
         )}
-        {/* {galleries.map((item, index) => (
-          <Grid
-            item
-            key={index}
-            xs={12}
-            sm={4}
-            md={3}
-            className={classes.gridItems}
-          >
-            <CardActionArea style={{ height: "100%" }}>
-              <CardMedia
-                className={classes.media}
-                image={item && item.url && item.url}
-                onClick={() =>
-                  this.handleOpenDialog(item && item.url && item.url)
-                }
-              />
-            </CardActionArea>
-          </Grid>
-        ))} */}
+        {!fromHome &&
+          galleries.map((item, index) => (
+            <Grid
+              item
+              key={index}
+              xs={12}
+              sm={4}
+              md={3}
+              className={classes.gridItems}
+            >
+              <CardActionArea style={{ height: "100%" }}>
+                <CardMedia
+                  className={classes.media}
+                  image={item && item.url && item.url}
+                  onClick={() =>
+                    this.handleOpenDialog(item && item.url && item.url)
+                  }
+                />
+              </CardActionArea>
+            </Grid>
+          ))}
       </>
     );
   };
 
   renderHomepageGalleryEdit = () => {
-    const { classes, galleries, dark } = this.props;
+    const { classes, galleries, dark, fromHome } = this.props;
     return (
       <>
         {galleries && galleries.length > 3 && (
@@ -217,17 +240,17 @@ class GalleryComponent extends React.Component {
                   },
                 },
                 {
+                  breakpoint: 960,
+                  settings: {
+                    slidesToScroll: 3,
+                    slidesToShow: 3,
+                  },
+                },
+                {
                   breakpoint: 600,
                   settings: {
                     slidesToScroll: 2,
                     slidesToShow: 2,
-                  },
-                },
-                {
-                  breakpoint: 480,
-                  settings: {
-                    slidesToScroll: 1,
-                    slidesToShow: 1,
                   },
                 },
               ]}
@@ -243,25 +266,26 @@ class GalleryComponent extends React.Component {
             </Slider>
           </Grid>
         )}
-        {/* {galleries.slice(0, 6).map((item, index) => (
-          <Grid
-            item
-            key={index}
-            xs={12}
-            sm={4}
-            md={3}
-            className={classes.gridItems}
-          >
-            <CardActionArea style={{ height: "100%" }}>
-              <CardMedia
-                className={classes.media}
-                image={item && item.url}
-                title="Gallery image"
-                onClick={() => this.handleOpenDialog(item && item.url)}
-              />
-            </CardActionArea>
-          </Grid>
-        ))} */}
+        {!fromHome &&
+          galleries.slice(0, 6).map((item, index) => (
+            <Grid
+              item
+              key={index}
+              xs={12}
+              sm={4}
+              md={3}
+              className={classes.gridItems}
+            >
+              <CardActionArea style={{ height: "100%" }}>
+                <CardMedia
+                  className={classes.media}
+                  image={item && item.url}
+                  title="Gallery image"
+                  onClick={() => this.handleOpenDialog(item && item.url)}
+                />
+              </CardActionArea>
+            </Grid>
+          ))}
       </>
     );
   };
@@ -283,9 +307,9 @@ class GalleryComponent extends React.Component {
           container
           spacing={2}
           justify="center"
-          xs={12}
+          xs={10}
           sm={10}
-          style={{ marginTop: "2.5rem", marginBottom: "2.5rem" }}
+          // style={{ marginTop: "2.5rem", marginBottom: "2.5rem" }}
         >
           {isEdit
             ? !fromHome
@@ -344,11 +368,7 @@ class GalleryComponent extends React.Component {
         {isEdit
           ? pageCount > 1 &&
             !fromHome && (
-              <Grid
-                container
-                justify="center"
-                // style={{ padding: "2rem" }}
-              >
+              <Grid container justify="center" style={{ marginTop: "2.5rem" }}>
                 <Pagination
                   style={{
                     backgroundColor: dark ? "#000" : "#fff",
@@ -359,10 +379,10 @@ class GalleryComponent extends React.Component {
                     dark ? (
                       <PaginationItem
                         {...item}
-                        selected
                         style={{ color: "white", borderColor: "white" }}
                         classes={{
                           root: classes.paginationItemRoot,
+                          selected: classes.paginationItemSelected,
                         }}
                       />
                     ) : (
@@ -380,25 +400,21 @@ class GalleryComponent extends React.Component {
             )
           : pageCountView > 1 &&
             !fromHome && (
-              <Grid
-                container
-                justify="center"
-                //  style={{ padding: "2rem" }}
-              >
+              <Grid container justify="center" style={{ marginTop: "2.5rem" }}>
                 <Pagination
                   style={{
                     backgroundColor: dark ? "#000" : "#fff",
-                    padding: "0.4rem",
-                    borderRadius: "0.3rem",
+                    // padding: "0.4rem",
+                    // borderRadius: "0.3rem",
                   }}
                   renderItem={(item) =>
                     dark ? (
                       <PaginationItem
                         {...item}
-                        selected
                         style={{ color: "white", borderColor: "white" }}
                         classes={{
                           root: classes.paginationItemRoot,
+                          selected: classes.paginationItemSelected,
                         }}
                       />
                     ) : (

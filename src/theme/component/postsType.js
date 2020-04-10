@@ -12,6 +12,11 @@ import React from "react";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import {
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
   getDataByPageNumber,
   setPostsToSiteView,
   setPostView,
@@ -19,6 +24,8 @@ import {
 } from "../../actions";
 import ButtonComponent from "../../component/Button";
 import Link from "../../component/link";
+import Slider from "react-slick";
+
 const useStyles = (theme) => ({
   root: {
     marginTop: theme.spacing(2),
@@ -60,17 +67,9 @@ const useStyles = (theme) => ({
     height: "30vh",
     background: "rgba(24, 20, 20, 0.5)",
   },
-  cardContent: {
-    flexGrow: 1,
-    padding: theme.spacing(1),
-    paddingBottom: 0,
-    overflow: "hidden",
-  },
-  gridItems: {
-    maxHeight: 350,
-  },
-  paginationItemRoot: {
-    color: "#fff",
+  paginationItemSelected: {
+    backgroundColor: "#fff !important",
+    color: "#000 !important",
   },
 });
 
@@ -93,6 +92,50 @@ const gridMessage = {
   whiteSpace: "pre-wrap",
 };
 
+function SampleNextArrow(props) {
+  const { className, style, onClick, dark } = props;
+  return (
+    <div
+      className={`button button--text button--icon ${className}`}
+      style={{
+        ...style,
+        display: "block",
+        // background: !dark && "grey",
+        borderRadius: "100%",
+      }}
+      onClick={onClick}
+    >
+      <FontAwesomeIcon
+        icon={faChevronRight}
+        color={dark ? "#fff" : "#000"}
+        size="2x"
+      />
+    </div>
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick, dark } = props;
+  return (
+    <div
+      className={`button button--text button--icon ${className}`}
+      style={{
+        ...style,
+        display: "block",
+        // background: !dark && "grey",
+        borderRadius: "100%",
+      }}
+      onClick={onClick}
+    >
+      <FontAwesomeIcon
+        icon={faChevronLeft}
+        color={dark ? "#fff" : "#000"}
+        size="2x"
+      />
+    </div>
+  );
+}
+
 function renderFB() {
   let cropImgFile = new Promise(async (resolve, reject) => {
     (function (d, s, id) {
@@ -114,16 +157,6 @@ function renderFB() {
       }
     }, 1000);
   });
-
-  // window.fbAsyncInit = function () {
-  //   window.FB.init({
-  //     appId: '742131839643879',
-  //     cookie: true,
-  //     xfbml: true,  // parse social plugins on this page
-  //     version: 'v2.3'
-  //   });
-  //   window.FB.XFBML.parse();
-  // };
 }
 
 class PostTypeComponent extends React.Component {
@@ -172,7 +205,7 @@ class PostTypeComponent extends React.Component {
     document.getElementById("topPos").scrollIntoView();
   };
 
-  renderPostComponent(index, post, style, dark, type) {
+  renderPostComponent(index, post, style, dark, type, slide) {
     const {
       fromHome,
       isEdit,
@@ -202,12 +235,12 @@ class PostTypeComponent extends React.Component {
     return (
       <Grid
         key={post._id}
-        container
-        item
-        xs={10}
-        sm={5}
-        md={5}
-        lg={3}
+        container={!fromHome}
+        item={!fromHome}
+        xs={!fromHome && 10}
+        sm={!fromHome && 5}
+        md={!fromHome && 5}
+        lg={!fromHome && 3}
         style={
           dark
             ? {
@@ -215,7 +248,7 @@ class PostTypeComponent extends React.Component {
                 border: "1px solid #fff",
                 marginLeft: "1rem",
                 marginBottom: "1rem",
-                // padding: "1rem",
+                padding: "1rem",
                 borderRadius: "4px",
               }
             : {
@@ -224,6 +257,7 @@ class PostTypeComponent extends React.Component {
                 marginLeft: "1rem",
                 marginBottom: "1rem",
                 borderRadius: "4px",
+                padding: "1rem",
               }
         }
       >
@@ -234,7 +268,6 @@ class PostTypeComponent extends React.Component {
           style={{
             // padding: "0.5rem",
             backgroundColor: dark ? "#1a1919" : "#fff",
-            // borderRadius: "0.4rem",
           }}
         >
           <Grid
@@ -507,6 +540,7 @@ class PostTypeComponent extends React.Component {
       bodyEdit,
       bodyView,
       dark,
+      fromHome,
     } = this.props;
 
     const style = {
@@ -516,9 +550,69 @@ class PostTypeComponent extends React.Component {
       bodyEdit: bodyEdit,
       bodyView: bodyView,
     };
+    const slide = true;
     return (
       <>
-        {posts &&
+        {fromHome && (
+          <Grid item xs={12}>
+            <Slider
+              speed={1000}
+              autoplaySpeed={2500}
+              arrows={true}
+              infinite
+              slidesToScroll={4}
+              slidesToShow={4}
+              nextArrow={<SampleNextArrow dark={dark} />}
+              prevArrow={<SamplePrevArrow dark={dark} />}
+              responsive={[
+                {
+                  breakpoint: 1024,
+                  settings: {
+                    slidesToScroll: 4,
+                    slidesToShow: 4,
+                  },
+                },
+                {
+                  breakpoint: 960,
+                  settings: {
+                    slidesToScroll: 3,
+                    slidesToShow: 3,
+                  },
+                },
+                {
+                  breakpoint: 600,
+                  settings: {
+                    slidesToScroll: 1,
+                    slidesToShow: 1,
+                  },
+                },
+              ]}
+            >
+              {posts &&
+                posts.map(
+                  (post, index) =>
+                    (post.attachments &&
+                      post.attachments.media_type &&
+                      post.isActive &&
+                      this.renderPostComponent(
+                        index,
+                        post,
+                        style,
+                        dark,
+                        post.attachments.media_type,
+                        slide
+                      )) ||
+                    (post.attachments &&
+                      !post.attachments.media_type &&
+                      post.isActive &&
+                      this.renderPostMessage(index, post, style, dark, slide))
+                )}
+            </Slider>
+          </Grid>
+        )}
+
+        {!fromHome &&
+          posts &&
           posts.map(
             (post, index) =>
               (post.attachments &&
@@ -548,41 +642,7 @@ class PostTypeComponent extends React.Component {
 
   renderViewNew = (post) => {
     const { siteEdit, bgWhite, posts } = this.props;
-    const {
-      isEdit,
-      titleEdit,
-      titleView,
-      bodyEdit,
-      bodyView,
-      classes,
-      dark,
-    } = this.props;
-    const sliderSettings = {
-      dots: false,
-      slidesToShow: 1,
-      slidesToScroll: 1,
-      autoplay: true,
-      speed: 700,
-      autoplaySpeed: 3000,
-      arrows: true,
-    };
-    const btnStyle = {
-      padding: "0.5rem 1.5rem",
-      fontSize: "11px",
-      border: `2px solid ${isEdit ? titleEdit.color : titleView.color}`,
-    };
-    const txtStyle = {
-      fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-      fontSize: "16px",
-      color: bgWhite ? "black" : "white",
-    };
-    const type = post.attachments && post.attachments.media_type;
-    const originalMessage = post.message ? post.message.split("\n") : null;
-    const title = post.message && post.message.split(".")[0];
-    let titleShow = title && title.slice(0, 70);
-    if (title.length > 70) {
-      titleShow += "...";
-    }
+    const { isEdit, dark } = this.props;
     return (
       <Grid container item xs={11} justify="center" key={post._id}>
         <Grid
@@ -591,7 +651,7 @@ class PostTypeComponent extends React.Component {
           xs={12}
           style={{
             padding: "1rem 0",
-            borderBottom: `1px solid ${bgWhite ? "black" : "white"}`,
+            borderBottom: `1px solid ${!dark || bgWhite ? "black" : "white"}`,
           }}
           alignItems="center"
         >
@@ -600,7 +660,7 @@ class PostTypeComponent extends React.Component {
             startIcon={<KeyboardArrowLeftIcon />}
             style={{
               fontWeight: "bold",
-              color: bgWhite ? "black" : "white",
+              color: dark || !bgWhite ? "#fff" : "#000",
               fontSize: "15px",
             }}
           >
@@ -744,7 +804,7 @@ class PostTypeComponent extends React.Component {
           xs={12}
           justify="center"
           style={{
-            borderTop: `1px solid ${bgWhite ? "black" : "white"}`,
+            borderTop: `1px solid ${!dark || bgWhite ? "black" : "white"}`,
           }}
         >
           <Grid
@@ -758,7 +818,7 @@ class PostTypeComponent extends React.Component {
               variant="h6"
               style={{
                 textAlign: "center",
-                color: bgWhite ? "black" : "white",
+                color: dark || !bgWhite ? "#fff" : "#000",
                 fontWeight: "bold",
               }}
             >
@@ -769,7 +829,7 @@ class PostTypeComponent extends React.Component {
             container
             item
             xs={12}
-            spacing={3}
+            // spacing={3}
             justify="center"
             style={{ marginTop: "2.5rem" }}
           >
@@ -820,23 +880,22 @@ class PostTypeComponent extends React.Component {
             container
             item
             // xs={10}
-            spacing={2}
+            // spacing={2}
             justify="center"
-            xs={12}
+            xs={10}
             sm={10}
-            style={
-              {
-                //  marginTop: "2.5rem", marginBottom: "2.5rem"
-              }
-            }
+            style={{
+              //  marginTop: "2.5rem", marginBottom: "2.5rem"
+              overflow: "visible",
+            }}
           >
             <Grid
               container
               item
               xs={12}
-              spacing={3}
+              // spacing={3}
               justify="center"
-              style={{ padding: "1rem 0rem" }}
+              // style={{ padding: "1rem 0rem" }}
             >
               {isEdit
                 ? !fromHome
@@ -858,7 +917,7 @@ class PostTypeComponent extends React.Component {
                         .filter(function (pos) {
                           return pos.isActive === true;
                         })
-                        .slice(0, 3)
+                        .slice(0, 6)
                     )
                 : this.renderNews(posts)}
             </Grid>
@@ -881,10 +940,10 @@ class PostTypeComponent extends React.Component {
                         dark ? (
                           <PaginationItem
                             {...item}
-                            selected
                             style={{ color: "white", borderColor: "white" }}
                             classes={{
                               root: classes.paginationItemRoot,
+                              selected: classes.paginationItemSelected,
                             }}
                           />
                         ) : (
@@ -916,10 +975,13 @@ class PostTypeComponent extends React.Component {
                         dark ? (
                           <PaginationItem
                             {...item}
-                            selected
-                            style={{ color: "white", borderColor: "white" }}
+                            style={{
+                              color: "white",
+                              borderColor: "white",
+                            }}
                             classes={{
                               root: classes.paginationItemRoot,
+                              selected: classes.paginationItemSelected,
                             }}
                           />
                         ) : (

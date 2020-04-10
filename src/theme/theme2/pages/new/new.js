@@ -41,7 +41,7 @@ class NewPage extends Component {
           xs={12}
           className={styles.news_title}
           style={{
-            height: fromHome && "6rem",
+            height: fromHome ? "6rem" : "8rem",
           }}
         >
           <Grid item>
@@ -81,13 +81,14 @@ class NewPage extends Component {
         <Grid
           item
           xs={12}
-          sm={10}
+          sm={12}
           container
           justify="center"
-          spacing={2}
+          // spacing={2}
           style={{
             marginTop: "2.5rem",
             marginBottom: "2.5rem",
+            minHeight: !fromHome && "55vh",
           }}
         >
           {isEdit ? (

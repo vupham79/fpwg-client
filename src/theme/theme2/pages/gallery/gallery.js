@@ -28,7 +28,6 @@ class GalleryPage extends React.Component {
         className={styles.gallery_page}
         style={{
           marginBottom: fromHome && "0",
-          minHeight: !fromHome && "80vh",
         }}
       >
         <Grid
@@ -40,7 +39,7 @@ class GalleryPage extends React.Component {
           xs={12}
           className={styles.gallery_title}
           style={{
-            height: fromHome && "6rem",
+            height: fromHome ? "6rem" : "8rem",
           }}
         >
           <Typography
@@ -72,19 +71,32 @@ class GalleryPage extends React.Component {
                 })}
           </Typography>
         </Grid>
-        {isEdit ? (
-          siteEdit && siteEdit.galleries ? (
-            <GalleryComponent
-              key={siteEdit.limitGallery}
-              galleries={fromHome && homeList ? homeList : siteEdit.galleries}
-              siteInfo={siteEdit.id}
-              fromHome={fromHome}
-              pageCount={Math.ceil(
-                (fromHome && homeList ? homeList : siteEdit.galleries).length /
-                siteEdit.limitGallery
-              )}
-            />
-          ) : (
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          container
+          justify="center"
+          // spacing={2}
+          style={{
+            marginTop: "2.5rem",
+            marginBottom: "2.5rem",
+            minHeight: !fromHome && "55vh",
+          }}
+        >
+          {isEdit ? (
+            siteEdit && siteEdit.galleries ? (
+              <GalleryComponent
+                key={siteEdit.limitGallery}
+                galleries={fromHome && homeList ? homeList : siteEdit.galleries}
+                siteInfo={siteEdit.id}
+                fromHome={fromHome}
+                pageCount={Math.ceil(
+                  (fromHome && homeList ? homeList : siteEdit.galleries)
+                    .length / siteEdit.limitGallery
+                )}
+              />
+            ) : (
               <Grid
                 container
                 justify="center"
@@ -92,26 +104,27 @@ class GalleryPage extends React.Component {
               >
                 <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
                   Currently no photo available.
-              </p>
+                </p>
               </Grid>
             )
-        ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
-          <GalleryComponent
-            galleries={fromHome && homeList ? homeList : siteView.galleries}
-            siteInfo={siteView.sitePath}
-            fromHome={fromHome}
-          />
-        ) : (
-              <Grid
-                container
-                justify="center"
-                style={{ minHeight: "30vh", marginTop: "10vh" }}
-              >
-                <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-                  Currently no photo available.
-            </p>
-              </Grid>
-            )}
+          ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
+            <GalleryComponent
+              galleries={fromHome && homeList ? homeList : siteView.galleries}
+              siteInfo={siteView.sitePath}
+              fromHome={fromHome}
+            />
+          ) : (
+            <Grid
+              container
+              justify="center"
+              style={{ minHeight: "30vh", marginTop: "10vh" }}
+            >
+              <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
+                Currently no photo available.
+              </p>
+            </Grid>
+          )}
+        </Grid>
       </Grid>
     );
   }

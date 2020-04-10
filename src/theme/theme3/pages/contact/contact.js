@@ -144,7 +144,14 @@ class ContactPage extends React.Component {
                 })}
           </Typography>
         </Grid>
-        <Grid container spacing={2} item xs={12} justify="center">
+        <Grid
+          container
+          spacing={2}
+          item
+          xs={12}
+          justify="center"
+          style={{ marginBottom: "2.5rem" }}
+        >
           <Grid
             container
             item

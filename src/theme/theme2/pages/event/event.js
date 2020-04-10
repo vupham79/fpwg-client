@@ -98,7 +98,6 @@ class EventPage extends React.Component {
         className={styles.event_page}
         style={{
           marginBottom: fromHome && "0",
-          minHeight: !fromHome && "80vh",
         }}
       >
         <Grid
@@ -110,7 +109,7 @@ class EventPage extends React.Component {
           xs={12}
           className={styles.event_title}
           style={{
-            height: fromHome && "6rem",
+            height: fromHome ? "6rem" : "8rem",
           }}
         >
           <Typography
@@ -142,29 +141,56 @@ class EventPage extends React.Component {
                 })}
           </Typography>
         </Grid>
-        {isEdit ? (
-          siteEdit && siteEdit.events ? (
-            <EventComponent
-              key={
-                this.props.isEdit
-                  ? this.props.siteEdit.limitEvent
-                  : this.props.siteView.limitEvent
-              }
-              homeList={
-                fromHome && homeList
-                  ? homeList
-                  : isEdit
-                  ? siteEdit.events
-                  : siteView.events
-              }
-              siteInfo={siteView && siteView.sitePath}
-              fromHome={fromHome}
-              pageCount={Math.ceil(
-                (fromHome && homeList ? homeList : siteEdit.events).length /
-                  (this.props.isEdit
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          container
+          justify="center"
+          style={{
+            marginTop: "2.5rem",
+            marginBottom: "2.5rem",
+            minHeight: !fromHome && "55vh",
+          }}
+        >
+          {isEdit ? (
+            siteEdit && siteEdit.events ? (
+              <EventComponent
+                key={
+                  this.props.isEdit
                     ? this.props.siteEdit.limitEvent
-                    : this.props.siteView.limitEvent)
-              )}
+                    : this.props.siteView.limitEvent
+                }
+                homeList={
+                  fromHome && homeList
+                    ? homeList
+                    : isEdit
+                    ? siteEdit.events
+                    : siteView.events
+                }
+                siteInfo={siteView && siteView.sitePath}
+                fromHome={fromHome}
+                pageCount={Math.ceil(
+                  (fromHome && homeList ? homeList : siteEdit.events).length /
+                    (this.props.isEdit
+                      ? this.props.siteEdit.limitEvent
+                      : this.props.siteView.limitEvent)
+                )}
+              />
+            ) : (
+              <EmptyEvent
+                siteEdit={siteEdit}
+                titleEdit={titleEdit}
+                siteView={siteView}
+                titleView={titleView}
+                isEdit={isEdit}
+              />
+            )
+          ) : (siteView && siteView.events) || (fromHome && homeList) ? (
+            <EventComponent
+              homeList={fromHome && homeList ? homeList : siteView.events}
+              siteInfo={siteView.sitePath}
+              fromHome={fromHome}
             />
           ) : (
             <EmptyEvent
@@ -174,22 +200,8 @@ class EventPage extends React.Component {
               titleView={titleView}
               isEdit={isEdit}
             />
-          )
-        ) : (siteView && siteView.events) || (fromHome && homeList) ? (
-          <EventComponent
-            homeList={fromHome && homeList ? homeList : siteView.events}
-            siteInfo={siteView.sitePath}
-            fromHome={fromHome}
-          />
-        ) : (
-          <EmptyEvent
-            siteEdit={siteEdit}
-            titleEdit={titleEdit}
-            siteView={siteView}
-            titleView={titleView}
-            isEdit={isEdit}
-          />
-        )}
+          )}
+        </Grid>
       </Grid>
     );
   }
