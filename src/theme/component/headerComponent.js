@@ -84,8 +84,7 @@ class HeaderComponent extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.tabValue !== this.props.tabValue) {
-      window.location.href = "#topPos";
-      window.history.pushState("", "", "/edit");
+      document.getElementById("topPos").scrollIntoView();
     }
   }
 
@@ -130,7 +129,6 @@ class HeaderComponent extends Component {
     };
     return (
       <Tabs
-        id="topPos"
         variant="fullWidth"
         orientation={type}
         value={tabValue}
@@ -185,7 +183,6 @@ class HeaderComponent extends Component {
                   key={index}
                   style={{
                     textAlign: "end",
-                    minWidth: "15vh",
                   }}
                 >
                   <NavLink
@@ -197,6 +194,8 @@ class HeaderComponent extends Component {
                       textTransform: "uppercase",
                       fontSize: 14,
                       padding: "0.25rem",
+                      textAlign: "end",
+                      minWidth: "15vh",
                     }}
                     activeStyle={{
                       borderBottom: "1px solid",

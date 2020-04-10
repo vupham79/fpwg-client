@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 
 const images = [
   "https://scontent.xx.fbcdn.net/v/t1.0-9/84357702_100161708215284_6628528314745094144_n.jpg?_nc_cat=111&_nc_ohc=j0bhRaMn6QIAX-D2JrZ&_nc_ht=scontent.xx&oh=00c77acfe89ec5953a9b1689b85308cb&oe=5EDA3199",
-  "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E"
+  "https://scontent.xx.fbcdn.net/v/t1.0-9/83821452_100161464881975_9179838828163104768_n.jpg?_nc_cat=109&_nc_ohc=kZko6mqBMCIAX_ZyGAD&_nc_ht=scontent.xx&oh=556f1405040ff8e685037787552b4af6&oe=5E95740E",
 ];
 
 const imageStyle = {
@@ -13,7 +13,7 @@ const imageStyle = {
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   width: "100%",
-  height: "25vh"
+  height: "25vh",
 };
 
 class Gallery extends Component {
@@ -59,11 +59,11 @@ class Gallery extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   titleEdit: state.site.titleEdit,
   titleView: state.site.titleView,
-  isEdit: state.site.isEdit
+  isEdit: state.site.isEdit,
 });
 
 export default connect(mapStateToProps, null)(Gallery);

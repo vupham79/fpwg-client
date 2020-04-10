@@ -470,9 +470,26 @@ const SiteReducer = (state = defaultState, action) => {
         ...state,
         siteEdit: {
           ...state.siteEdit,
-          showDesEvent: action.payload.description,
-          showCoverEvent: action.payload.cover,
-          showPlaceEvent: action.payload.place
+          showDetailSetting: {
+            ...state.siteEdit.showDetailSetting,
+            showDesEvent: action.payload.description,
+            showCoverEvent: action.payload.cover,
+            showPlaceEvent: action.payload.place
+          }
+        },
+        isChanged: true
+      };
+    case "SET_ABOUT_CUSTOMIZE":
+      return {
+        ...state,
+        siteEdit: {
+          ...state.siteEdit,
+          showDetailSetting: {
+            ...state.siteEdit.showDetailSetting,
+            showAboutLogo: action.payload.logo,
+            showAboutDescription: action.payload.description,
+            showStory: action.payload.story
+          }
         },
         isChanged: true
       };

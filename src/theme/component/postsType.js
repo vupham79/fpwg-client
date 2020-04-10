@@ -6,12 +6,11 @@ import {
   withStyles,
 } from "@material-ui/core";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
-import Pagination from "@material-ui/lab/Pagination";
+import { Pagination, PaginationItem } from "@material-ui/lab";
 import moment from "moment";
 import React from "react";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
-import Slider from "react-slick";
 import {
   getDataByPageNumber,
   setPostsToSiteView,
@@ -25,7 +24,6 @@ const useStyles = (theme) => ({
     marginTop: theme.spacing(2),
     padding: theme.spacing(3),
   },
-
   images: {
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -71,23 +69,62 @@ const useStyles = (theme) => ({
   gridItems: {
     maxHeight: 350,
   },
+  paginationItemRoot: {
+    color: "#fff",
+  },
 });
 
 const gridContent = {
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box",
-  WebkitLineClamp: "2",
+  WebkitLineClamp: "4",
   WebkitBoxOrient: "vertical",
+  whiteSpace: "pre-wrap",
 };
 
 const gridMessage = {
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box",
-  WebkitLineClamp: "11",
+  WebkitLineClamp: "20",
   WebkitBoxOrient: "vertical",
+  // height: "100%",
+  whiteSpace: "pre-wrap",
 };
+
+function renderFB() {
+  let cropImgFile = new Promise(async (resolve, reject) => {
+    (function (d, s, id) {
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {
+        return;
+      }
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    })(document, "script", "facebook-jssdk");
+
+    setTimeout(() => {
+      if (window.FB) {
+        window.FB.XFBML.parse();
+        resolve(true);
+      }
+    }, 1000);
+  });
+
+  // window.fbAsyncInit = function () {
+  //   window.FB.init({
+  //     appId: '742131839643879',
+  //     cookie: true,
+  //     xfbml: true,  // parse social plugins on this page
+  //     version: 'v2.3'
+  //   });
+  //   window.FB.XFBML.parse();
+  // };
+}
 
 class PostTypeComponent extends React.Component {
   state = {
@@ -101,13 +138,27 @@ class PostTypeComponent extends React.Component {
     page: 1,
   };
 
+  componentDidMount() {
+    renderFB();
+    // const script = document.createElement("script");
+    // script.defer = true;
+    // script.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=742131839643879&autoLogAppEvents=1";
+    // script.async = true;
+    // script.crossOrigin = "anonymous";
+    // document.getElementById("fb-root").appendChild(script);
+    // window.FB.XFBML.parse();
+  }
+
   handleOpen = (post) => {
+    renderFB();
     this.setState({
       postOpen: post,
     });
+    document.getElementById("topPos").scrollIntoView();
   };
 
-  hanldeHomeClick = (post) => {
+  handleHomeClick = (post) => {
+    renderFB();
     const { siteEdit, updateNavItemValue, setPostView, fromHome } = this.props;
     if (fromHome) {
       const news = siteEdit.navItems.filter((item) => {
@@ -118,6 +169,7 @@ class PostTypeComponent extends React.Component {
     } else {
       setPostView(post);
     }
+    document.getElementById("topPos").scrollIntoView();
   };
 
   renderPostComponent(index, post, style, dark, type) {
@@ -135,21 +187,45 @@ class PostTypeComponent extends React.Component {
       fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
       fontSize: "14px",
     };
+    const titleStyle = {
+      fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+      fontSize: "14px",
+    };
     const btnStyle = {
       padding: "0.5rem 1.5rem",
       fontSize: "11px",
-      border: `2px solid ${isEdit ? titleEdit.color : titleView.color}`,
+      border: `1px solid ${dark ? "#fff" : "#000"}`,
+      backgroundColor: dark ? "#1A1919" : "#fff",
+      color: dark ? "#fff" : "#000",
+      height: "fit-content",
     };
     return (
       <Grid
-        key={index}
+        key={post._id}
         container
         item
-        xs={12}
-        sm={6}
-        md={6}
-        lg={4}
-        style={dark ? { backgroundColor: "#1a1919" } : null}
+        xs={10}
+        sm={5}
+        md={5}
+        lg={3}
+        style={
+          dark
+            ? {
+                backgroundColor: "#1a1919",
+                border: "1px solid #fff",
+                marginLeft: "1rem",
+                marginBottom: "1rem",
+                // padding: "1rem",
+                borderRadius: "4px",
+              }
+            : {
+                backgroundColor: "#fff",
+                border: "1px solid #000",
+                marginLeft: "1rem",
+                marginBottom: "1rem",
+                borderRadius: "4px",
+              }
+        }
       >
         <Grid
           container
@@ -157,7 +233,7 @@ class PostTypeComponent extends React.Component {
           xs={12}
           style={{
             // padding: "0.5rem",
-            backgroundColor: "white",
+            backgroundColor: dark ? "#1a1919" : "#fff",
             // borderRadius: "0.4rem",
           }}
         >
@@ -172,7 +248,12 @@ class PostTypeComponent extends React.Component {
           >
             <Typography
               variant={"body1"}
-              style={{ ...txtStyle, fontWeight: "700", fontSize: "16px" }}
+              style={{
+                ...titleStyle,
+                fontWeight: "700",
+                fontSize: "16px",
+                color: dark ? "#fff" : "#000",
+              }}
             >
               {moment(post.createdTime).format("MMMM DD, YYYY")}
             </Typography>
@@ -204,7 +285,10 @@ class PostTypeComponent extends React.Component {
                   justify="center"
                   className={classes.album}
                 >
-                  <Typography variant="h3" style={{ color: "white" }}>
+                  <Typography
+                    variant="h3"
+                    style={{ color: dark ? "#fff" : "#fff" }}
+                  >
                     {post.attachments.images.length} +
                   </Typography>
                 </Grid>
@@ -214,16 +298,27 @@ class PostTypeComponent extends React.Component {
           <Grid
             item
             xs={12}
-            style={{ ...txtStyle, padding: "1rem 0", height: "5rem" }}
+            style={{
+              ...txtStyle,
+              padding: "1rem 0",
+              // height: "5rem",
+              color: dark ? "#fff" : "#000",
+            }}
           >
             <div style={gridContent}>{post.message}</div>
           </Grid>
-          <Grid container item xs={12} justify="flex-start">
+          <Grid
+            container
+            item
+            xs={12}
+            justify="flex-start"
+            alignItems="flex-end"
+          >
             {isEdit ? (
               <ButtonComponent
                 label="READ MORE"
                 style={btnStyle}
-                onClick={(e) => this.hanldeHomeClick(post)}
+                onClick={(e) => this.handleHomeClick(post)}
               />
             ) : fromHome ? (
               <Link
@@ -247,7 +342,7 @@ class PostTypeComponent extends React.Component {
     );
   }
 
-  renderPostMessage(index, post, dark) {
+  renderPostMessage(index, post, style, dark, type) {
     const {
       fromHome,
       isEdit,
@@ -261,21 +356,45 @@ class PostTypeComponent extends React.Component {
       fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
       fontSize: "14px",
     };
+    const titleStyle = {
+      fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+      fontSize: "14px",
+    };
     const btnStyle = {
       padding: "0.5rem 1.5rem",
       fontSize: "11px",
-      border: `2px solid ${isEdit ? titleEdit.color : titleView.color}`,
+      border: `1px solid ${dark ? "#fff" : "#000"}`,
+      backgroundColor: dark ? "#1A1919" : "#fff",
+      color: dark ? "#fff" : "#000",
+      height: "fit-content",
     };
     return (
       <Grid
-        key={index}
+        key={post._id}
         container
         item
-        xs={12}
-        sm={6}
-        md={6}
-        lg={4}
-        style={dark ? { backgroundColor: "#1a1919" } : null}
+        xs={10}
+        sm={5}
+        md={5}
+        lg={3}
+        style={
+          dark
+            ? {
+                backgroundColor: "#1a1919",
+                border: "1px solid #fff",
+                marginLeft: "1rem",
+                marginBottom: "1rem",
+                padding: "1rem",
+                borderRadius: "4px",
+              }
+            : {
+                backgroundColor: "#fff",
+                border: "1px solid #000",
+                marginLeft: "1rem",
+                marginBottom: "1rem",
+                borderRadius: "4px",
+              }
+        }
       >
         <Grid
           container
@@ -287,10 +406,22 @@ class PostTypeComponent extends React.Component {
             borderRadius: "0.4rem",
           }}
         >
-          <Grid item xs={12} style={{ padding: "1rem 0" }}>
+          <Grid
+            item
+            xs={12}
+            style={
+              {
+                // padding: "1rem 0"
+              }
+            }
+          >
             <Typography
               variant={"body1"}
-              style={{ ...txtStyle, fontWeight: "700", fontSize: "16px" }}
+              style={{
+                ...titleStyle,
+                fontWeight: "700",
+                fontSize: "16px",
+              }}
             >
               {moment(post.createdTime).format("MMMM DD,YYYY")}
             </Typography>
@@ -298,16 +429,26 @@ class PostTypeComponent extends React.Component {
           <Grid
             item
             xs={12}
-            style={{ ...txtStyle, padding: "1rem 0", height: "43vh" }}
+            style={{
+              ...txtStyle,
+              // padding: "0 !important",
+              // height: "43vh",
+            }}
           >
             <div style={gridMessage}>{post.message}</div>
           </Grid>
-          <Grid container item xs={12} justify="flex-start">
+          <Grid
+            container
+            item
+            xs={12}
+            justify="flex-start"
+            alignItems="flex-end"
+          >
             {isEdit ? (
               <ButtonComponent
                 label="READ MORE"
                 style={btnStyle}
-                onClick={(e) => this.hanldeHomeClick(post)}
+                onClick={(e) => this.handleHomeClick(post)}
               />
             ) : fromHome ? (
               <Link
@@ -367,7 +508,7 @@ class PostTypeComponent extends React.Component {
       bodyView,
       dark,
     } = this.props;
-    console.log(dark);
+
     const style = {
       isEdit: isEdit,
       titleEdit: titleEdit,
@@ -414,14 +555,16 @@ class PostTypeComponent extends React.Component {
       bodyEdit,
       bodyView,
       classes,
+      dark,
     } = this.props;
     const sliderSettings = {
-      dots: true,
+      dots: false,
       slidesToShow: 1,
       slidesToScroll: 1,
       autoplay: true,
       speed: 700,
       autoplaySpeed: 3000,
+      arrows: true,
     };
     const btnStyle = {
       padding: "0.5rem 1.5rem",
@@ -436,12 +579,12 @@ class PostTypeComponent extends React.Component {
     const type = post.attachments && post.attachments.media_type;
     const originalMessage = post.message ? post.message.split("\n") : null;
     const title = post.message && post.message.split(".")[0];
-    let titleShow = title.slice(0, 70);
+    let titleShow = title && title.slice(0, 70);
     if (title.length > 70) {
       titleShow += "...";
     }
     return (
-      <Grid container item xs={11} justify="center">
+      <Grid container item xs={11} justify="center" key={post._id}>
         <Grid
           container
           item
@@ -470,9 +613,12 @@ class PostTypeComponent extends React.Component {
           xs={12}
           md={10}
           justify="center"
-          style={{ paddingTop: "2rem", borderBottom: "1px solid black" }}
+          style={{
+            marginTop: "2.5rem",
+            marginBottom: "2.5rem",
+          }}
         >
-          <Grid
+          {/* <Grid
             item
             xs={9}
             style={{
@@ -483,15 +629,19 @@ class PostTypeComponent extends React.Component {
               textAlign: "center",
             }}
           >
-            {/* <div style={gridTitle}>{post.message}</div> */}
             {titleShow}
-          </Grid>
-          {post.attachments && (
+          </Grid> */}
+          {/* {post.attachments && (
             <Grid item xs={10}>
               {type === "photo" && (
-                <CardMedia
-                  className={classes.cardView}
-                  image={post.attachments.images[0]}
+                // <CardMedia
+                //   className={classes.cardView}
+                //   image={post.attachments.images[0]}
+                // />
+                <img
+                  src={post.attachments.images[0]}
+                  style={{ width: "100%" }}
+                  alt=""
                 />
               )}
               {type === "video" && (
@@ -514,8 +664,8 @@ class PostTypeComponent extends React.Component {
                 </Slider>
               )}
             </Grid>
-          )}
-          <Grid container item xs={10} style={{ padding: "1rem 0" }}>
+          )} */}
+          {/* <Grid container item xs={10} style={{ padding: "1rem 0" }}>
             <Grid item xs={12}>
               <Typography
                 variant={"body1"}
@@ -531,7 +681,12 @@ class PostTypeComponent extends React.Component {
             <Grid
               item
               xs={12}
-              style={{ ...txtStyle, padding: "1rem 0", lineHeight: "1.5rem" }}
+              style={{
+                ...txtStyle,
+                padding: "1rem 0",
+                lineHeight: "1.5rem",
+                overflowWrap: "break-word",
+              }}
             >
               {originalMessage &&
                 originalMessage.map((val) => {
@@ -561,16 +716,44 @@ class PostTypeComponent extends React.Component {
                 <ButtonComponent label="VIEW ON FACEBOOK" style={btnStyle} />
               </a>
             </Grid>
-          </Grid>
+          </Grid> */}
+
+          {/* <div class="fb-comments" data-href={post.target && post.target} data-width="" data-numposts="5"></div> */}
+          <div
+            class="fb-post"
+            data-href={post.target && post.target}
+            data-show-text="true"
+            style={{
+              // maxWidth: "100%",
+              width: "100%",
+              // marginBottom: "30vh",
+              // backgroundColor: "white",
+              color: dark ? "#fff" : "#000",
+              fontSize: "1.5rem",
+              display: "flex",
+              justifyContent: "center",
+              overflow: "auto",
+            }}
+          >
+            Loading...
+          </div>
         </Grid>
         <Grid
           container
           item
           xs={12}
           justify="center"
-          style={{ paddingTop: "2.5rem" }}
+          style={{
+            borderTop: `1px solid ${bgWhite ? "black" : "white"}`,
+          }}
         >
-          <Grid container item xs={12} justify="center">
+          <Grid
+            container
+            item
+            xs={12}
+            justify="center"
+            style={{ marginTop: "2.5rem" }}
+          >
             <Typography
               variant="h6"
               style={{
@@ -579,7 +762,7 @@ class PostTypeComponent extends React.Component {
                 fontWeight: "bold",
               }}
             >
-              Lastest
+              LASTEST NEWS
             </Typography>
           </Grid>
           <Grid
@@ -588,13 +771,16 @@ class PostTypeComponent extends React.Component {
             xs={12}
             spacing={3}
             justify="center"
-            style={{ paddingTop: "2.5rem" }}
+            style={{ marginTop: "2.5rem" }}
           >
             {this.renderNews(
               isEdit
                 ? siteEdit &&
                     siteEdit.posts &&
                     siteEdit.posts
+                      .filter(function (pos) {
+                        return pos.isActive === true;
+                      })
                       .sort((a, b) => b.createdTime - a.createdTime)
                       .slice(0, 3)
                 : posts && posts.slice(0, 3)
@@ -613,10 +799,18 @@ class PostTypeComponent extends React.Component {
       fromHome,
       pageCount,
       editPostView,
+      dark,
+      classes,
     } = this.props;
     const { page, postOpen } = this.state;
     return (
-      <Grid container justify="center">
+      <Grid container justify="center" id="fb-root">
+        <script
+          async
+          defer
+          crossorigin="anonymous"
+          src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=742131839643879&autoLogAppEvents=1"
+        ></script>
         {!fromHome && (isEdit ? editPostView : postOpen) ? (
           <Grid container item xs={11} justify="center">
             {this.renderViewNew(isEdit ? editPostView : postOpen)}
@@ -672,14 +866,31 @@ class PostTypeComponent extends React.Component {
             {isEdit
               ? pageCount > 1 &&
                 !fromHome && (
-                  <Grid container justify="center">
+                  <Grid
+                    container
+                    justify="center"
+                    style={{ marginTop: "2.5rem" }}
+                  >
                     <Pagination
                       style={{
-                        backgroundColor: "white",
-                        padding: "0.4rem",
-                        borderRadius: "0.3rem",
+                        backgroundColor: dark ? "#000" : "#fff",
+                        // padding: "0.4rem",
+                        // borderRadius: "0.3rem",
                       }}
-                      // color="default"
+                      renderItem={(item) =>
+                        dark ? (
+                          <PaginationItem
+                            {...item}
+                            selected
+                            style={{ color: "white", borderColor: "white" }}
+                            classes={{
+                              root: classes.paginationItemRoot,
+                            }}
+                          />
+                        ) : (
+                          <PaginationItem {...item} />
+                        )
+                      }
                       shape="rounded"
                       variant="outlined"
                       count={pageCount}
@@ -690,14 +901,31 @@ class PostTypeComponent extends React.Component {
                 )
               : pageCountView > 1 &&
                 !fromHome && (
-                  <Grid container justify="center">
+                  <Grid
+                    container
+                    justify="center"
+                    style={{ marginTop: "2.5rem" }}
+                  >
                     <Pagination
                       style={{
-                        backgroundColor: "white",
-                        padding: "0.4rem",
-                        borderRadius: "0.3rem",
+                        backgroundColor: dark ? "#000" : "#fff",
+                        // padding: "0.4rem",
+                        // borderRadius: "0.3rem",
                       }}
-                      // color="default"
+                      renderItem={(item) =>
+                        dark ? (
+                          <PaginationItem
+                            {...item}
+                            selected
+                            style={{ color: "white", borderColor: "white" }}
+                            classes={{
+                              root: classes.paginationItemRoot,
+                            }}
+                          />
+                        ) : (
+                          <PaginationItem {...item} />
+                        )
+                      }
                       shape="rounded"
                       variant="outlined"
                       count={pageCountView}

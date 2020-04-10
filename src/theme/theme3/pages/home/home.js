@@ -1,29 +1,14 @@
 import { Divider, Grid } from "@material-ui/core";
 import React from "react";
+import { Parallax } from "react-parallax";
 import { connect } from "react-redux";
-import CarouselImages from "../../components/carousel";
 import AboutPage from "../about/about";
 import ContactPage from "../contact/contact";
 import EventPage from "../event/event";
 import GalleryPage from "../gallery/gallery";
 import NewsPage from "../new/new";
-import { Parallax } from "react-parallax";
 
 class HomePage extends React.Component {
-  renderCarousel = () => {
-    const { isEdit, covers, siteView } = this.props;
-    if (isEdit) {
-      if (covers && covers.length > 0) {
-        return <CarouselImages />;
-      }
-    } else {
-      if (siteView.cover && siteView.cover.length > 0) {
-        return <CarouselImages />;
-      }
-    }
-    return <></>;
-  };
-
   getCover = (index) => {
     const { isEdit, covers, siteView } = this.props;
     if (isEdit) {
@@ -49,7 +34,8 @@ class HomePage extends React.Component {
 
   render() {
     const { siteEdit, siteView, isEdit } = this.props;
-    let coverIndex = 1;
+    let coverEditIndex = 1;
+    let coverViewIndex = 1;
     return (
       <Grid container>
         {isEdit &&
@@ -76,8 +62,11 @@ class HomePage extends React.Component {
                       />
                     </Grid>
                     <Parallax
-                      bgImage={row.isActive && this.getCover(coverIndex++)}
-                      bgImageAlt="the cat"
+                      bgImage={
+                        row.original === "about" &&
+                        row.isActive &&
+                        this.getCover(coverEditIndex++)
+                      }
                       strength={200}
                       style={{
                         width: "100%",
@@ -103,8 +92,11 @@ class HomePage extends React.Component {
                       />
                     </Grid>
                     <Parallax
-                      bgImage={row.isActive && this.getCover(coverIndex++)}
-                      bgImageAlt="the cat"
+                      bgImage={
+                        row.original === "event" &&
+                        row.isActive &&
+                        this.getCover(coverEditIndex++)
+                      }
                       strength={200}
                       style={{
                         width: "100%",
@@ -131,8 +123,11 @@ class HomePage extends React.Component {
                       />
                     </Grid>
                     <Parallax
-                      bgImage={row.isActive && this.getCover(coverIndex++)}
-                      bgImageAlt="the cat"
+                      bgImage={
+                        row.original === "gallery" &&
+                        row.isActive &&
+                        this.getCover(coverEditIndex++)
+                      }
                       strength={200}
                       style={{
                         width: "100%",
@@ -154,8 +149,11 @@ class HomePage extends React.Component {
                       <ContactPage fromHome homeTitle={row.name} />
                     </Grid>
                     <Parallax
-                      bgImage={row.isActive && this.getCover(coverIndex++)}
-                      bgImageAlt="the cat"
+                      bgImage={
+                        row.original === "contact" &&
+                        row.isActive &&
+                        this.getCover(coverEditIndex++)
+                      }
                       strength={200}
                       style={{
                         width: "100%",
@@ -181,8 +179,11 @@ class HomePage extends React.Component {
                       />
                     </Grid>
                     <Parallax
-                      bgImage={row.isActive && this.getCover(coverIndex++)}
-                      bgImageAlt="the cat"
+                      bgImage={
+                        row.original === "news" &&
+                        row.isActive &&
+                        this.getCover(coverEditIndex++)
+                      }
                       strength={200}
                       style={{
                         width: "100%",
@@ -220,8 +221,11 @@ class HomePage extends React.Component {
                       />
                     </Grid>
                     <Parallax
-                      bgImage={row.isActive && this.getCover(coverIndex++)}
-                      bgImageAlt="the cat"
+                      bgImage={
+                        row.original === "about" &&
+                        row.isActive &&
+                        this.getCover(coverViewIndex++)
+                      }
                       strength={200}
                       style={{
                         width: "100%",
@@ -247,8 +251,11 @@ class HomePage extends React.Component {
                       />
                     </Grid>
                     <Parallax
-                      bgImage={row.isActive && this.getCover(coverIndex++)}
-                      bgImageAlt="the cat"
+                      bgImage={
+                        row.original === "event" &&
+                        row.isActive &&
+                        this.getCover(coverViewIndex++)
+                      }
                       strength={200}
                       style={{
                         width: "100%",
@@ -275,8 +282,11 @@ class HomePage extends React.Component {
                       />
                     </Grid>
                     <Parallax
-                      bgImage={row.isActive && this.getCover(coverIndex++)}
-                      bgImageAlt="the cat"
+                      bgImage={
+                        row.original === "gallery" &&
+                        row.isActive &&
+                        this.getCover(coverViewIndex++)
+                      }
                       strength={200}
                       style={{
                         width: "100%",
@@ -298,8 +308,11 @@ class HomePage extends React.Component {
                       <ContactPage fromHome homeTitle={row.name} />
                     </Grid>
                     <Parallax
-                      bgImage={row.isActive && this.getCover(coverIndex++)}
-                      bgImageAlt="the cat"
+                      bgImage={
+                        row.original === "contact" &&
+                        row.isActive &&
+                        this.getCover(coverViewIndex++)
+                      }
                       strength={200}
                       style={{
                         width: "100%",
@@ -325,8 +338,11 @@ class HomePage extends React.Component {
                       />
                     </Grid>
                     <Parallax
-                      bgImage={row.isActive && this.getCover(coverIndex++)}
-                      bgImageAlt="the cat"
+                      bgImage={
+                        row.original === "news" &&
+                        row.isActive &&
+                        this.getCover(coverViewIndex++)
+                      }
                       strength={200}
                       style={{
                         width: "100%",

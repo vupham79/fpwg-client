@@ -1,4 +1,10 @@
-import { Grid, Typography, withStyles } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  withStyles,
+  Divider,
+  IconButton,
+} from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./contact.module.css";
@@ -8,7 +14,13 @@ import {
   GoogleMap,
   Marker,
 } from "react-google-maps";
-
+import {
+  faFacebookF,
+  faInstagram,
+  faWhatsapp,
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const usestyle = (theme) => ({
   title: {
     textDecoration: "solid",
@@ -20,6 +32,41 @@ const usestyle = (theme) => ({
 });
 
 class ContactPage extends React.Component {
+  renderUrl = () => {
+    const { isEdit, dark } = this.props;
+    if (isEdit) {
+      return <FontAwesomeIcon icon={faFacebookF} color={"#fff"} size="sm" />;
+    } else {
+      return <FontAwesomeIcon icon={faFacebookF} color={"#fff"} size="sm" />;
+    }
+  };
+
+  renderInstagram = () => {
+    const { isEdit } = this.props;
+    if (isEdit) {
+      return <FontAwesomeIcon icon={faInstagram} color={"#fff"} size="sm" />;
+    } else {
+      return <FontAwesomeIcon icon={faInstagram} color={"#fff"} size="sm" />;
+    }
+  };
+
+  renderYoutube = () => {
+    const { isEdit } = this.props;
+    if (isEdit) {
+      return <FontAwesomeIcon icon={faYoutube} color={"#fff"} size="sm" />;
+    } else {
+      return <FontAwesomeIcon icon={faYoutube} color={"#fff"} size="sm" />;
+    }
+  };
+
+  renderWhatsapp = () => {
+    const { isEdit } = this.props;
+    if (isEdit) {
+      return <FontAwesomeIcon icon={faWhatsapp} color={"#fff"} size="sm" />;
+    } else {
+      return <FontAwesomeIcon icon={faWhatsapp} color={"#fff"} size="sm" />;
+    }
+  };
   render() {
     const {
       isEdit,
@@ -35,6 +82,9 @@ class ContactPage extends React.Component {
       email,
       phone,
       address,
+      youtube,
+      instagram,
+      whatsapp,
     } = this.props;
 
     const MapWithAMarker = withScriptjs(
@@ -70,14 +120,28 @@ class ContactPage extends React.Component {
             variant="h4"
             color="textSecondary"
             align="center"
-            gutterBottom
             className={styles.title}
             style={{
               color: "white",
               fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+              letterSpacing: "0.2rem",
             }}
           >
-            {fromHome ? homeTitle : "Contacts"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "contact") {
+                    return item.name;
+                  } else return "";
+                })
+              : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "contact") {
+                    return item.name;
+                  } else return "";
+                })}
           </Typography>
         </Grid>
         <Grid container spacing={2} item xs={12} justify="center">
@@ -397,6 +461,105 @@ class ContactPage extends React.Component {
             ) : (
               <></>
             )}
+            <Divider
+              variant="fullWidth"
+              style={{
+                width: "100%",
+                backgroundColor: "#fff",
+                marginTop: "2.5rem",
+              }}
+            />
+            <Grid container item justify="flex-start" xs={12}>
+              {(siteEdit && siteEdit.url) || (siteView && siteView.url) ? (
+                <Grid item>
+                  <IconButton
+                    aria-label=""
+                    color="primary"
+                    href={
+                      isEdit
+                        ? siteEdit && siteEdit.url
+                        : siteView && siteView.url
+                    }
+                    target={"_blank"}
+                  >
+                    {this.renderUrl()}
+                  </IconButton>
+                </Grid>
+              ) : null}
+              {(instagram && instagram) || (siteView && siteView.instagram) ? (
+                <Grid
+                  item
+                  style={
+                    isEdit
+                      ? instagram
+                        ? null
+                        : { display: "none" }
+                      : siteView.instagram
+                      ? null
+                      : { display: "none" }
+                  }
+                >
+                  <IconButton
+                    aria-label=""
+                    color="primary"
+                    href={`https://instagram.com/${
+                      isEdit ? instagram : siteView.instagram
+                    }`}
+                    target={"_blank"}
+                  >
+                    {this.renderInstagram()}
+                  </IconButton>
+                </Grid>
+              ) : null}
+              {(siteView && siteView.youtube) || (youtube && youtube) ? (
+                <Grid
+                  item
+                  style={
+                    isEdit
+                      ? youtube
+                        ? null
+                        : { display: "none" }
+                      : siteView.youtube
+                      ? null
+                      : { display: "none" }
+                  }
+                >
+                  <IconButton
+                    aria-label=""
+                    color="primary"
+                    href={isEdit ? youtube : siteView.youtube}
+                    target={"_blank"}
+                  >
+                    {this.renderYoutube()}
+                  </IconButton>
+                </Grid>
+              ) : null}
+              {(siteView && siteView.whatsapp) || (whatsapp && whatsapp) ? (
+                <Grid
+                  item
+                  style={
+                    isEdit
+                      ? whatsapp
+                        ? null
+                        : { display: "none" }
+                      : siteView.whatsapp
+                      ? null
+                      : { display: "none" }
+                  }
+                >
+                  <IconButton
+                    aria-label=""
+                    color="primary"
+                    href={`https://wa.me/${
+                      isEdit ? whatsapp : siteView.whatsapp
+                    }`}
+                    target={"_blank"}
+                  >
+                    {this.renderWhatsapp()}
+                  </IconButton>
+                </Grid>
+              ) : null}
+            </Grid>
           </Grid>
           {isEdit
             ? siteEdit &&
@@ -441,6 +604,10 @@ const mapStateToProps = (state) => ({
   email: state.site.email,
   address: state.site.address,
   phone: state.site.phone,
+  youtube: state.site.youtube,
+  instagram: state.site.instagram,
+  whatsapp: state.site.whatsapp,
+  email: state.site.email,
 });
 
 export default connect(

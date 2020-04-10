@@ -54,17 +54,17 @@ class AboutPage extends React.Component {
               >
                 {isEdit
                   ? siteEdit &&
-                    siteEdit.navItems.map((item) => {
-                      if (item.original === "about") {
-                        return item.name;
-                      } else return "";
-                    })
+                  siteEdit.navItems.map((item) => {
+                    if (item.original === "about") {
+                      return item.name;
+                    } else return "";
+                  })
                   : siteView &&
-                    siteView.navItems.map((item) => {
-                      if (item.original === "about") {
-                        return item.name;
-                      } else return "";
-                    })}
+                  siteView.navItems.map((item) => {
+                    if (item.original === "about") {
+                      return item.name;
+                    } else return "";
+                  })}
               </Typography>
             </>
           </Grid>
@@ -98,26 +98,28 @@ class AboutPage extends React.Component {
                 width: "30%",
                 float: "left",
                 marginRight: "1rem",
-                display: fromHome ? "none" : "inline-block",
+                display: fromHome ? "none" : (isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutLogo ? "inline-block" : "none")),
               }}
             />
-            {isEdit
-              ? siteEdit && siteEdit.about
-                ? siteEdit.about.split("\n").map((val, index) => (
+            <p style={{ display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutDescription ? "block" : "none") : (this.props.siteView.showDetailSetting.showAboutDescription ? "block" : "none") }}>
+              {isEdit
+                ? siteEdit && siteEdit.about
+                  ? siteEdit.about.split("\n").map((val, index) => (
                     <React.Fragment key={index}>
                       {val}
                       <br />
                     </React.Fragment>
                   ))
-                : "Welcome to our website! Take a look around and feel free to contact us for more information."
-              : siteView && siteView.about
-              ? siteView.about.split("\n").map((val, index) => (
-                  <React.Fragment key={index}>
-                    {val}
-                    <br />
-                  </React.Fragment>
-                ))
-              : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+                  : "Welcome to our website! Take a look around and feel free to contact us for more information."
+                : siteView && siteView.about
+                  ? siteView.about.split("\n").map((val, index) => (
+                    <React.Fragment key={index}>
+                      {val}
+                      <br />
+                    </React.Fragment>
+                  ))
+                  : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+            </p>
           </Typography>
         </Grid>
 
@@ -138,7 +140,7 @@ class AboutPage extends React.Component {
               sm={10}
               xs={10}
               justify="center"
-              style={{ marginTop: !fromHome ? "2.5rem" : 0 }}
+              style={{ marginTop: !fromHome ? "2.5rem" : 0, display: isEdit ? (this.props.siteEdit.showDetailSetting.showStory ? "block" : "none") : (this.props.siteView.showDetailSetting.showStory ? "block" : "none") }}
             >
               <Typography
                 style={{
@@ -181,29 +183,29 @@ class AboutPage extends React.Component {
               >
                 {isEdit
                   ? siteEdit &&
-                    siteEdit.story &&
-                    siteEdit.story.composedText &&
-                    siteEdit.story.composedText.map((text) => {
-                      const originalText = text.split("\n");
-                      return originalText.map((val, index) => (
-                        <React.Fragment key={index}>
-                          {val}
-                          <br />
-                        </React.Fragment>
-                      ));
-                    })
+                  siteEdit.story &&
+                  siteEdit.story.composedText &&
+                  siteEdit.story.composedText.map((text) => {
+                    const originalText = text.split("\n");
+                    return originalText.map((val, index) => (
+                      <React.Fragment key={index}>
+                        {val}
+                        <br />
+                      </React.Fragment>
+                    ));
+                  })
                   : siteView &&
-                    siteView.story &&
-                    siteView.story.composedText &&
-                    siteView.story.composedText.map((text) => {
-                      const originalText = text.split("\n");
-                      return originalText.map((val, index) => (
-                        <React.Fragment key={index}>
-                          {val}
-                          <br />
-                        </React.Fragment>
-                      ));
-                    })}
+                  siteView.story &&
+                  siteView.story.composedText &&
+                  siteView.story.composedText.map((text) => {
+                    const originalText = text.split("\n");
+                    return originalText.map((val, index) => (
+                      <React.Fragment key={index}>
+                        {val}
+                        <br />
+                      </React.Fragment>
+                    ));
+                  })}
               </Typography>
             </Grid>
           </>
