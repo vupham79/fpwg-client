@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Grid, IconButton, Divider } from "@material-ui/core";
+import { Grid, IconButton, Divider, Typography } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInstagram,
   faYoutube,
   faWhatsapp,
-  faFacebook
+  faFacebookF,
 } from "@fortawesome/free-brands-svg-icons";
 
 class Footer extends React.Component {
@@ -15,146 +15,227 @@ class Footer extends React.Component {
       isEdit,
       siteEdit,
       siteView,
-      bodyEdit,
-      bodyView,
       titleEdit,
       titleView,
       youtube,
       whatsapp,
-      instagram
+      instagram,
     } = this.props;
+
+    const nameStyle = {
+      color: "white",
+      textAlign: "center",
+      fontSize: 20,
+      padding: "1.5rem",
+      fonWeight: "bold",
+      fontStyle: "oblique",
+      fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+    };
 
     return (
       <Grid
         container
         style={{
-          backgroundColor: "black",
-          height: 300,
+          backgroundColor: "#404040",
           postion: "absolute",
-          bottom: 0
+          bottom: 0,
+          padding: "2.8rem",
         }}
+        justify="center"
       >
-        <Grid item xs={12}>
-          <Divider />
-        </Grid>
-
-        <Grid container item direction="row" justify="center" xs={12}>
-          <Grid item>
+        <Grid
+          container
+          item
+          justify="center"
+          xs={12}
+          style={{ padding: "2rem 0" }}
+          spacing={3}
+        >
+          <Grid
+            item
+            style={{
+              backgroundColor: "#3873ae",
+              padding: "0 0.2rem",
+              margin: "0 0.5rem",
+            }}
+          >
             <IconButton
-              aria-label=""
+              style={{ height: "1rem", width: "1rem" }}
               color="primary"
               href={isEdit ? siteEdit.url : siteView.url}
             >
-              <FontAwesomeIcon
-                icon={faFacebook}
-                color={isEdit ? titleEdit.color : titleView.color}
-                size="1x"
-              />
+              <FontAwesomeIcon icon={faFacebookF} color="white" size="1x" />
             </IconButton>
           </Grid>
 
-          <Grid
-            item
-            style={
-              isEdit
-                ? whatsapp
-                  ? null
-                  : { display: "none" }
-                : siteView.whatsapp
-                  ? null
-                  : { display: "none" }
-            }
-          >
-            <IconButton
-              aria-label=""
-              color="primary"
-              href={`https://wa.me/${
-                isEdit ? whatsapp : siteView.whatsapp
-                }`}
-            >
-              <FontAwesomeIcon
-                icon={faWhatsapp}
-                color={isEdit ? titleEdit.color : titleView.color}
-                size="1x"
-              />
-            </IconButton>
-          </Grid>
+          {isEdit
+            ? whatsapp && (
+                <Grid
+                  item
+                  style={{
+                    backgroundColor: "#00b300",
+                    padding: "0 0.2rem",
+                    margin: "0 0.5rem",
+                  }}
+                >
+                  <IconButton
+                    style={{ height: "1rem", width: "1rem" }}
+                    color="primary"
+                    href={`https://wa.me/${
+                      isEdit ? whatsapp : siteView.whatsapp
+                    }`}
+                  >
+                    <FontAwesomeIcon
+                      icon={faWhatsapp}
+                      color="white"
+                      size="1x"
+                    />
+                  </IconButton>
+                </Grid>
+              )
+            : siteView &&
+              siteView.whatsapp && (
+                <Grid
+                  item
+                  style={{
+                    backgroundColor: "#00b300",
+                    margin: "0 0.5rem",
+                    padding: "0 0.2rem",
+                  }}
+                >
+                  <IconButton
+                    style={{ height: "1rem", width: "1rem" }}
+                    color="primary"
+                    href={`https://wa.me/${
+                      isEdit ? whatsapp : siteView.whatsapp
+                    }`}
+                  >
+                    <FontAwesomeIcon
+                      icon={faWhatsapp}
+                      color="white"
+                      size="1x"
+                    />
+                  </IconButton>
+                </Grid>
+              )}
 
-          <Grid
-            item
-            style={
-              isEdit
-                ? instagram
-                  ? null
-                  : { display: "none" }
-                : siteView.instagram
-                  ? null
-                  : { display: "none" }
-            }
-          >
-            <IconButton
-              aria-label=""
-              color="primary"
-              href={`https://instagram.com/${
-                isEdit ? instagram : siteView.instagram
-                }`}
-            >
-              <FontAwesomeIcon
-                icon={faInstagram}
-                color={isEdit ? titleEdit.color : titleView.color}
-                size="1x"
-              />
-            </IconButton>
-          </Grid>
+          {isEdit
+            ? youtube && (
+                <Grid
+                  item
+                  style={{
+                    backgroundColor: "#ff1a1a",
+                    margin: "0 0.5rem",
+                    padding: "0 0.2rem",
+                  }}
+                >
+                  <IconButton
+                    style={{ height: "1rem", width: "1rem" }}
+                    color="primary"
+                    href={isEdit ? youtube : siteView.youtube}
+                  >
+                    <FontAwesomeIcon icon={faYoutube} color="white" size="1x" />
+                  </IconButton>
+                </Grid>
+              )
+            : siteView &&
+              siteView.youtube && (
+                <Grid
+                  item
+                  style={{
+                    backgroundColor: "#ff1a1a",
+                    margin: "0 0.5rem",
+                    padding: "0 0.2rem",
+                  }}
+                >
+                  <IconButton
+                    color="primary"
+                    style={{ height: "1rem", width: "1rem" }}
+                    href={isEdit ? youtube : siteView.youtube}
+                  >
+                    <FontAwesomeIcon icon={faYoutube} color="white" size="1x" />
+                  </IconButton>
+                </Grid>
+              )}
 
-          <Grid
-            item
-            style={
-              isEdit
-                ? youtube
-                  ? null
-                  : { display: "none" }
-                : siteView.youtube
-                  ? null
-                  : { display: "none" }
-            }
-          >
-            <IconButton
-              aria-label=""
-              color="primary"
-              href={isEdit ? youtube : siteView.youtube}
-            >
-              <FontAwesomeIcon
-                icon={faYoutube}
-                color={isEdit ? titleEdit.color : titleView.color}
-                size="1x"
-              />
-            </IconButton>
-          </Grid>
+          {isEdit
+            ? instagram && (
+                <Grid
+                  item
+                  style={{
+                    backgroundColor: "#E1306C",
+                    margin: "0 0.5rem",
+                    padding: "0 0.2rem",
+                  }}
+                >
+                  <IconButton
+                    style={{ height: "1rem", width: "1rem" }}
+                    color="primary"
+                    href={`https://instagram.com/${
+                      isEdit ? instagram : siteView.instagram
+                    }`}
+                  >
+                    <FontAwesomeIcon
+                      icon={faInstagram}
+                      color="white"
+                      size="1x"
+                    />
+                  </IconButton>
+                </Grid>
+              )
+            : siteView &&
+              siteView.instagram && (
+                <Grid
+                  item
+                  style={{
+                    backgroundColor: "#E1306C",
+                    margin: "0 0.5rem",
+                    padding: "0 0.2rem",
+                  }}
+                >
+                  <IconButton
+                    style={{ height: "1rem", width: "1rem" }}
+                    color="primary"
+                    href={`https://instagram.com/${
+                      isEdit ? instagram : siteView.instagram
+                    }`}
+                  >
+                    <FontAwesomeIcon
+                      icon={faInstagram}
+                      color="white"
+                      size="1x"
+                    />
+                  </IconButton>
+                </Grid>
+              )}
         </Grid>
-
-        <Grid item xs={12}>
-          <Divider style={{ backgroundColor: "#1a1919" }} />
-        </Grid>
-
-        <Grid container item xs={12}>
-          <p
-            style={{
-              color: "#5e5e5e",
-              fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-              fontSize: 14,
-              marginLeft: 50
-            }}
-          >
-            @{isEdit ? siteEdit.title : siteView.title}
-          </p>
+        <Grid
+          container
+          item
+          xs={6}
+          style={{ textAlign: "center" }}
+          justify="center"
+        >
+          <Grid item xs={12}>
+            <Typography variant="body1" style={nameStyle}>
+              © {isEdit ? siteEdit.title : siteView.title}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography
+              variant="body1"
+              style={{ ...nameStyle, border: "1.2px solid", padding: "0.5rem" }}
+            >
+              POWERED BY FPWG
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   siteEdit: state.site.siteEdit,

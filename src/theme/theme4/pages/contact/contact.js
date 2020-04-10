@@ -1,277 +1,631 @@
-import { Grid } from "@material-ui/core";
+import {
+  Divider,
+  Grid,
+  Typography,
+  withStyles,
+  IconButton,
+} from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styles from "./contact.module.css";
 import {
-  faPhoneAlt,
-  faSearchLocation,
-  faNewspaper
-} from "@fortawesome/free-solid-svg-icons";
+  withScriptjs,
+  withGoogleMap,
+  GoogleMap,
+  Marker,
+} from "react-google-maps";
+import {
+  faFacebookF,
+  faInstagram,
+  faWhatsapp,
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
 
+const useStyle = (theme) => ({
+  root: {
+    padding: "2.5rem 0",
+  },
+});
 class Theme1Contact extends React.Component {
+  renderUrl = () => {
+    const { isEdit } = this.props;
+    if (isEdit) {
+      return <FontAwesomeIcon icon={faFacebookF} color="black" size="xs" />;
+    } else {
+      return <FontAwesomeIcon icon={faFacebookF} color="black" size="xs" />;
+    }
+  };
+
+  renderInstagram = () => {
+    const { isEdit } = this.props;
+    if (isEdit) {
+      return <FontAwesomeIcon icon={faInstagram} color="black" size="xs" />;
+    } else {
+      return <FontAwesomeIcon icon={faInstagram} color="black" size="xs" />;
+    }
+  };
+
+  renderYoutube = () => {
+    const { isEdit } = this.props;
+    if (isEdit) {
+      return <FontAwesomeIcon icon={faYoutube} color="black" size="xs" />;
+    } else {
+      return <FontAwesomeIcon icon={faYoutube} color="black" size="xs" />;
+    }
+  };
+
+  renderWhatsapp = () => {
+    const { isEdit } = this.props;
+    if (isEdit) {
+      return <FontAwesomeIcon icon={faWhatsapp} color="white" size="xs" />;
+    } else {
+      return <FontAwesomeIcon icon={faWhatsapp} color="white" size="xs" />;
+    }
+  };
+
   render() {
     const {
       isEdit,
-      siteEdit,
-      siteView,
       titleEdit,
-      titleView,
       bodyEdit,
+      titleView,
       bodyView,
-      phone,
-      email,
+      siteView,
+      siteEdit,
       fromHome,
       homeTitle,
-      address
+      classes,
+      phone,
+      email,
+      address,
+      youtube,
+      instagram,
+      whatsapp,
     } = this.props;
 
-    const useStyles = theme => ({
-      changableTitle: {
+    const MapWithAMarker = withScriptjs(
+      withGoogleMap((props) => (
+        <GoogleMap
+          defaultZoom={15}
+          defaultCenter={{
+            lat: isEdit
+              ? parseFloat(siteEdit.latitude)
+              : parseFloat(siteView.latitude),
+            lng: isEdit
+              ? parseFloat(siteEdit.longitude)
+              : parseFloat(siteView.longitude),
+          }}
+        >
+          <Marker
+            position={{
+              lat: isEdit
+                ? parseFloat(siteEdit.latitude)
+                : parseFloat(siteView.latitude),
+              lng: isEdit
+                ? parseFloat(siteEdit.longitude)
+                : parseFloat(siteView.longitude),
+            }}
+          />
+        </GoogleMap>
+      ))
+    );
+
+    const useStyles = () => ({
+      changableTitle5: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 25,
-        paddingBottom: 20,
-        textDecoration: "underline"
-      },
-      changableBody: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
-        color: "#212121",
-        textAlign: "center",
-        fontSize: 16
-      },
-      changableBody2: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
-        color: "#b3b2b2",
-        textAlign: "center",
-        fontSize: 16,
-        fontWeight: 400
-      },
-      changableBody3: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: isEdit ? titleEdit.color : titleView.color,
-        textAlign: "center",
-        fontSize: 18,
-        fontWeight: 400
-      },
-      changableBody4: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#b3b2b2",
-        textAlign: "center",
-        fontSize: 18,
-        fontWeight: 300
-      },
-      pageName: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        fontSize: 20
-      },
-      changableFirst: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        textAlign: "center",
-        fontSize: 45,
+        fontSize: "48px",
         textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color
       },
-      changableLegend: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "white",
-        zIndex: 5,
-        position: "absolute",
-        top: "50%",
-        left: "40%",
-        fontSize: 80,
-        textAlign: "center"
-      },
-      greyDiv: {
-        backgroundColor: "#e1ede4",
-        padding: 30,
-        textAlign: "center",
-        color: "#535353",
-        fontSize: 20
-      },
-      centerItem: {
-        display: "block",
-        width: 150,
-        marginLeft: "auto",
-        marginRight: "auto",
-        paddingTop: 50
-      },
-      centerItem2: {
-        display: "block",
-        height: 100,
-        justifyContent: "center",
-        alignItems: "center",
-        width: 400,
-        marginLeft: "auto",
-        marginRight: "auto"
-      },
-      changableAppBar: {
-        backgroundColor: "white",
-        opacity: 0.6,
-        position: "sticky",
-        color: "#535353",
-        textAlign: "right"
-      }
     });
-    const classes = useStyles();
+    const titleStyle = useStyles();
 
     return (
       <Grid
         container
+        justify="center"
         style={{
-          backgroundColor: "#1a1919",
-          paddingBottom: 50,
-          minHeight: "60vh"
+          padding: "10vh 0",
         }}
       >
         <Grid item xs={12}>
-          <p style={classes.changableTitle}>
-            {fromHome ? homeTitle : "CONTACT"}
+          <p style={titleStyle.changableTitle5}>
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems &&
+                siteEdit.navItems.find((item) => item.original === "contact")
+                  .name
+              : siteView &&
+                siteView.navItems &&
+                siteView.navItems.find((item) => item.original === "contact")
+                  .name}
           </p>
         </Grid>
-
-        {isEdit && phone && (
-          <Grid container item xs={12} justify="center" alignItems="center">
-            <Grid item xs={12}>
-              <p style={classes.changableBody3}>
-                <FontAwesomeIcon
-                  icon={faPhoneAlt}
-                  color={isEdit ? titleEdit.color : titleView.color}
-                  size="1x"
-                />{" "}
-                Phone
-              </p>
-            </Grid>
-            <Grid item xs={12}>
-              <p style={classes.changableBody2}>{phone}</p>
-            </Grid>
-          </Grid>
-        )}
-        {!isEdit && siteView.phone && (
-          <Grid container item xs={12} justify="center" alignItems="center">
-            <Grid item xs={12}>
-              <p style={classes.changableBody3}>
-                <FontAwesomeIcon
-                  icon={faPhoneAlt}
-                  color={isEdit ? titleEdit.color : titleView.color}
-                  size="1x"
-                />{" "}
-                Phone
-              </p>
-            </Grid>
-            <Grid item xs={12}>
-              <p style={classes.changableBody2}>{siteView.phone}</p>
-            </Grid>
-          </Grid>
-        )}
-
-        {isEdit && email && email !== "" && (
-          <Grid container item xs={12} justify="center" alignItems="center">
-            <Grid item xs={12}>
-              <p style={classes.changableBody3}>
-                <FontAwesomeIcon
-                  icon={faNewspaper}
-                  color={isEdit ? titleEdit.color : titleView.color}
-                  size="1x"
-                />{" "}
-                Email
-              </p>
-            </Grid>
-            <Grid item xs={12}>
-              <p style={classes.changableBody2}>{email}</p>
-            </Grid>
-          </Grid>
-        )}
-        {!isEdit && siteView.email && siteView.email !== "" && (
-          <Grid container item xs={12} justify="center" alignItems="center">
-            <Grid item xs={12}>
-              <p style={classes.changableBody3}>
-                <FontAwesomeIcon
-                  icon={faNewspaper}
-                  color={isEdit ? titleEdit.color : titleView.color}
-                  size="1x"
-                />{" "}
-                Email
-              </p>
-            </Grid>
-            <Grid item xs={12}>
-              <p style={classes.changableBody2}>{siteView.email}</p>
-            </Grid>
-          </Grid>
-        )}
-
-        {isEdit && address && address !== "" && (
-          <Grid container item xs={12} justify="center" alignItems="center">
-            <Grid item xs={12}>
-              <p style={classes.changableBody3}>
-                <FontAwesomeIcon
-                  icon={faSearchLocation}
-                  color={isEdit ? titleEdit.color : titleView.color}
-                  size="1x"
-                />{" "}
-                Location
-              </p>
-            </Grid>
-            <Grid item xs={12}>
-              <p style={classes.changableBody2}>{address}</p>
-            </Grid>
-          </Grid>
-        )}
-        {!isEdit && siteView.address && siteView.adress !== "" && (
-          <Grid container item xs={12} justify="center" alignItems="center">
-            <Grid item xs={12}>
-              <p style={classes.changableBody3}>
-                <FontAwesomeIcon
-                  icon={faSearchLocation}
-                  color={isEdit ? titleEdit.color : titleView.color}
-                  size="1x"
-                />{" "}
-                Location
-              </p>
-            </Grid>
-            <Grid item xs={12}>
-              <p style={classes.changableBody2}>{siteView.address}</p>
-            </Grid>
-          </Grid>
-        )}
-
-        <Grid item xs={12}>
-          {isEdit && !phone && !siteEdit.address && !email && (
-            <p style={classes.changableBody4}>
-              Currently setting up our location.
-            </p>
-          )}
-          {!isEdit &&
-            !siteView.phone &&
-            !siteView.address &&
-            !siteView.email && (
-              <p style={classes.changableBody4}>
-                Currently setting up our location.
-              </p>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          container
+          justify="center"
+          style={{ padding: "2.5rem 0" }}
+        >
+          <Grid item container xs={10} sm={6}>
+            {isEdit ? (
+              address ? (
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  sm={12}
+                  justify="center"
+                  alignItems="center"
+                >
+                  <Grid item xs={12}>
+                    <Typography
+                      variant="body1"
+                      className={styles.child_content}
+                      style={{
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily,
+                        fontWeight: "bold",
+                        color: "#151515",
+                        textAlign: "left",
+                        fontSize: 22,
+                        // paddingBottom: 20,
+                      }}
+                    >
+                      Address:
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      className={styles.child_content}
+                      style={{
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily,
+                        fontWeight: "100",
+                        color: "#151515",
+                        textAlign: "left",
+                        fontSize: 20,
+                        // paddingBottom: 20,
+                      }}
+                    >
+                      {isEdit
+                        ? address
+                          ? address
+                          : "Currently no data"
+                        : siteView && siteView.address
+                        ? siteView.address
+                        : "Currently no data"}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              ) : (
+                <></>
+              )
+            ) : siteView && siteView.address ? (
+              <Grid
+                container
+                item
+                xs={12}
+                sm={12}
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item xs={12}>
+                  <Typography
+                    variant="body1"
+                    className={styles.child_content}
+                    style={{
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontWeight: "bold",
+                      color: "#151515",
+                      textAlign: "left",
+                      fontSize: 22,
+                      // paddingBottom: 20,
+                    }}
+                  >
+                    Address:
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    className={styles.child_content}
+                    style={{
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontWeight: "100",
+                      color: "#151515",
+                      textAlign: "left",
+                      fontSize: 20,
+                      // paddingBottom: 20,
+                    }}
+                  >
+                    {isEdit
+                      ? address
+                        ? address
+                        : "Currently no data"
+                      : siteView && siteView.address
+                      ? siteView.address
+                      : "Currently no data"}
+                  </Typography>
+                </Grid>
+              </Grid>
+            ) : (
+              <></>
             )}
+            {isEdit ? (
+              phone ? (
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  sm={12}
+                  justify="center"
+                  alignItems="center"
+                >
+                  <Grid item xs={12}>
+                    <Typography
+                      variant="body1"
+                      className={styles.child_content}
+                      style={{
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily,
+                        fontWeight: "bold",
+                        color: "#151515",
+                        textAlign: "left",
+                        fontSize: 22,
+                      }}
+                    >
+                      Phone:
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      className={styles.child_content}
+                      style={{
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily,
+                        fontWeight: "100",
+                        color: "#151515",
+                        textAlign: "left",
+                        fontSize: 20,
+                      }}
+                    >
+                      {isEdit
+                        ? phone
+                          ? phone
+                          : "Currently no data"
+                        : siteView && siteView.phone
+                        ? siteView.phone
+                        : "Currently no data"}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              ) : (
+                <></>
+              )
+            ) : siteView && siteView.phone ? (
+              <Grid
+                container
+                item
+                xs={12}
+                sm={12}
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item xs={12}>
+                  <Typography
+                    variant="body1"
+                    className={styles.child_content}
+                    style={{
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontWeight: "bold",
+                      color: "#151515",
+                      textAlign: "left",
+                      fontSize: 22,
+                    }}
+                  >
+                    Phone:
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    className={styles.child_content}
+                    style={{
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontWeight: "100",
+                      color: "#151515",
+                      textAlign: "left",
+                      fontSize: 20,
+                    }}
+                  >
+                    {isEdit
+                      ? phone
+                        ? phone
+                        : "Currently no data"
+                      : siteView && siteView.phone
+                      ? siteView.phone
+                      : "Currently no data"}
+                  </Typography>
+                </Grid>
+              </Grid>
+            ) : (
+              <></>
+            )}
+            {isEdit ? (
+              email ? (
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  sm={12}
+                  justify="center"
+                  alignItems="center"
+                >
+                  <Grid item xs={12}>
+                    <Typography
+                      variant="body1"
+                      className={styles.child_content}
+                      style={{
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily,
+                        fontWeight: "bold",
+                        color: "#151515",
+                        textAlign: "left",
+                        fontSize: 22,
+                      }}
+                    >
+                      Email:
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      className={styles.child_content}
+                      style={{
+                        fontFamily: isEdit
+                          ? bodyEdit.fontFamily
+                          : bodyView.fontFamily,
+                        fontWeight: "100",
+                        color: "#151515",
+                        textAlign: "left",
+                        fontSize: 20,
+                        // paddingBottom: 20,
+                      }}
+                    >
+                      {isEdit
+                        ? email
+                          ? email
+                          : "Currently no data"
+                        : siteView && siteView.email
+                        ? siteView.email
+                        : "Currently no data"}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              ) : (
+                <></>
+              )
+            ) : siteView && siteView.email ? (
+              <Grid
+                container
+                item
+                xs={12}
+                sm={12}
+                justify="center"
+                alignItems="center"
+              >
+                <Grid item xs={12}>
+                  <Typography
+                    variant="body1"
+                    className={styles.child_content}
+                    style={{
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontWeight: "bold",
+                      color: "#151515",
+                      textAlign: "left",
+                      fontSize: 22,
+                    }}
+                  >
+                    Email:
+                  </Typography>
+                  <Typography
+                    variant="body1"
+                    className={styles.child_content}
+                    style={{
+                      fontFamily: isEdit
+                        ? bodyEdit.fontFamily
+                        : bodyView.fontFamily,
+                      fontWeight: "100",
+                      color: "#151515",
+                      textAlign: "left",
+                      fontSize: 20,
+                      // paddingBottom: 20,
+                    }}
+                  >
+                    {isEdit
+                      ? email
+                        ? email
+                        : "Currently no data"
+                      : siteView && siteView.email
+                      ? siteView.email
+                      : "Currently no data"}
+                  </Typography>
+                </Grid>
+              </Grid>
+            ) : (
+              <></>
+            )}
+            <Divider variant="fullWidth" style={{ width: "100%" }} />
+            <Grid container item justify="flex-start" xs={12}>
+              {(siteEdit && siteEdit.url) || (siteView && siteView.url) ? (
+                <Grid item>
+                  <IconButton
+                    aria-label=""
+                    color="primary"
+                    href={
+                      isEdit
+                        ? siteEdit && siteEdit.url
+                        : siteView && siteView.url
+                    }
+                    target={"_blank"}
+                  >
+                    {this.renderUrl()}
+                  </IconButton>
+                </Grid>
+              ) : null}
+              {(instagram && instagram) || (siteView && siteView.instagram) ? (
+                <Grid
+                  item
+                  style={
+                    isEdit
+                      ? instagram
+                        ? null
+                        : { display: "none" }
+                      : siteView.instagram
+                      ? null
+                      : { display: "none" }
+                  }
+                >
+                  <IconButton
+                    aria-label=""
+                    color="primary"
+                    href={`https://instagram.com/${
+                      isEdit ? instagram : siteView.instagram
+                    }`}
+                    target={"_blank"}
+                  >
+                    {this.renderInstagram()}
+                  </IconButton>
+                </Grid>
+              ) : null}
+              {(siteView && siteView.youtube) || (youtube && youtube) ? (
+                <Grid
+                  item
+                  style={
+                    isEdit
+                      ? youtube
+                        ? null
+                        : { display: "none" }
+                      : siteView.youtube
+                      ? null
+                      : { display: "none" }
+                  }
+                >
+                  <IconButton
+                    aria-label=""
+                    color="primary"
+                    href={isEdit ? youtube : siteView.youtube}
+                    target={"_blank"}
+                  >
+                    {this.renderYoutube()}
+                  </IconButton>
+                </Grid>
+              ) : null}
+              {(siteView && siteView.whatsapp) || (whatsapp && whatsapp) ? (
+                <Grid
+                  item
+                  style={
+                    isEdit
+                      ? whatsapp
+                        ? null
+                        : { display: "none" }
+                      : siteView.whatsapp
+                      ? null
+                      : { display: "none" }
+                  }
+                >
+                  <IconButton
+                    aria-label=""
+                    color="primary"
+                    href={`https://wa.me/${
+                      isEdit ? whatsapp : siteView.whatsapp
+                    }`}
+                    target={"_blank"}
+                  >
+                    {this.renderWhatsapp()}
+                  </IconButton>
+                </Grid>
+              ) : null}
+            </Grid>
+          </Grid>
+          <Grid
+            item
+            container
+            sm={6}
+            xs={10}
+            // justify={"center"}
+          >
+            {isEdit
+              ? siteEdit &&
+                siteEdit.latitude &&
+                siteEdit.longitude && (
+                  <Grid item md={12} sm={12} xs={12} className={classes.map}>
+                    <MapWithAMarker
+                      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+                      loadingElement={<div style={{ height: `100%` }} />}
+                      containerElement={<div style={{ height: `100%` }} />}
+                      mapElement={<div style={{ height: `100%` }} />}
+                    />
+                  </Grid>
+                )
+              : siteView &&
+                siteView.latitude &&
+                siteView.longitude && (
+                  <Grid item md={12} sm={12} xs={12} className={classes.map}>
+                    <MapWithAMarker
+                      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+                      loadingElement={<div style={{ height: `100%` }} />}
+                      containerElement={
+                        <div
+                          style={{
+                            height: `100%`,
+                          }}
+                        />
+                      }
+                      mapElement={<div style={{ height: `100%` }} />}
+                    />
+                  </Grid>
+                )}
+          </Grid>
         </Grid>
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
-  isEdit: state.site.isEdit,
-  titleView: state.site.titleView,
-  titleEdit: state.site.titleEdit,
   siteView: state.site.siteView,
+  isEdit: state.site.isEdit,
+  titleEdit: state.site.titleEdit,
   bodyEdit: state.site.bodyEdit,
+  titleView: state.site.titleView,
   bodyView: state.site.bodyView,
+  profile: state.user.profile,
   phone: state.site.phone,
   email: state.site.email,
-  address: state.site.address
+  address: state.site.address,
+  youtube: state.site.youtube,
+  instagram: state.site.instagram,
+  whatsapp: state.site.whatsapp,
 });
 
-export default connect(mapStateToProps, null)(Theme1Contact);
+export default connect(
+  mapStateToProps,
+  null
+)(withStyles(useStyle)(Theme1Contact));

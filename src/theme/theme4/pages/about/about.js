@@ -20,7 +20,9 @@ class Theme1About extends React.Component {
       titleEdit,
       titleView,
       bodyEdit,
-      bodyView
+      bodyView,
+      fromHome,
+      homeTitle,
     } = this.props;
     const useStyles = () => ({
       changableTitle: {
@@ -28,33 +30,32 @@ class Theme1About extends React.Component {
         fontWeight: "bold",
         color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
-        fontSize: 25,
-        paddingBottom: 20,
-        textDecoration: "underline"
+        fontSize: "48px",
+        textDecoration: "underline",
       },
       changableBody: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#212121",
         textAlign: "justify",
-        fontSize: 16
+        fontSize: 16,
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#b3b2b2",
+        color: "#111",
         textAlign: "left",
-        fontSize: 16
+        fontSize: "20px",
       },
       changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "black",
+        color: "#111",
         textAlign: "center",
-        fontSize: 16
+        fontSize: "20px",
       },
       pageName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#212121",
-        fontSize: 20
+        fontSize: 20,
       },
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -63,7 +64,7 @@ class Theme1About extends React.Component {
         textAlign: "center",
         fontSize: 45,
         textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color,
       },
       changableLegend: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -74,21 +75,21 @@ class Theme1About extends React.Component {
         top: "50%",
         left: "40%",
         fontSize: 80,
-        textAlign: "center"
+        textAlign: "center",
       },
       greyDiv: {
         backgroundColor: "#e1ede4",
         padding: 30,
         textAlign: "center",
         color: "#535353",
-        fontSize: 20
+        fontSize: 20,
       },
       centerItem: {
         display: "block",
         width: 150,
         marginLeft: "auto",
         marginRight: "auto",
-        paddingTop: 50
+        paddingTop: 50,
       },
       centerItem2: {
         display: "block",
@@ -97,55 +98,102 @@ class Theme1About extends React.Component {
         alignItems: "center",
         width: 400,
         marginLeft: "auto",
-        marginRight: "auto"
+        marginRight: "auto",
       },
       changableAppBar: {
         backgroundColor: "white",
         opacity: 0.6,
         position: "sticky",
         color: "#535353",
-        textAlign: "right"
-      }
+        textAlign: "right",
+      },
     });
     const classes = useStyles();
-
     return (
       <Grid
         container
         style={{
-          backgroundColor: "#1a1919",
+          // backgroundColor: "#1a1919",
           paddingBottom: 50,
-          minHeight: "50vh"
+          minHeight: "50vh",
+          padding: "10vh 0",
         }}
+        justify="center"
       >
         <Grid item xs={12}>
-          <p style={classes.changableTitle}>ABOUT</p>
+          <p style={classes.changableTitle}>
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems &&
+                siteEdit.navItems.find((item) => item.original === "about").name
+              : siteView &&
+                siteView.navItems &&
+                siteView.navItems.find((item) => item.original === "about")
+                  .name}
+          </p>
         </Grid>
-
-        <Grid container item xs={12} direction="column" justify="center" alignContent="center">
-          <Grid container item xs={12} sm={4} justify="center">
-            <CardMedia
-              component="img"
-              height="300"
-              style={{ objectFit: "contain", display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? "block" : "none") : (this.props.siteView.showDetailSetting.showAboutLogo ? "block" : "none") }}
-              image={this.renderImage()}
-            />
+        {fromHome ? (
+          <Grid
+            container
+            item
+            xs={12}
+            justify="center"
+            alignContent="center"
+            style={{ padding: "2.5rem 0" }}
+          >
+            <Grid item xs={8}>
+              <p style={classes.changableBody4}>
+                {isEdit && siteEdit && siteEdit.about}
+                {!isEdit && siteView && siteView.about}
+                {isEdit && !siteEdit.about && "Welcome to our website!"}
+                {!isEdit && !siteView.about && "Welcome to our website!"}
+              </p>
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={4} style={{ paddingLeft: 10, display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutDescription ? "block" : "none") : (this.props.siteView.showDetailSetting.showAboutDescription ? "block" : "none") }}>
-            <p style={classes.changableBody3}>
-              {isEdit && siteEdit && siteEdit.about}
-              {!isEdit && siteView && siteView.about}
-              {isEdit && !siteEdit.about && "Welcome to our website!"}
-              {!isEdit && !siteView.about && "Welcome to our website!"}
-            </p>
+        ) : (
+          <Grid
+            container
+            item
+            xs={12}
+            justify="center"
+            alignContent="center"
+            style={{ padding: "2.5rem 0" }}
+          >
+            <Grid container item xs={12} sm={4}>
+              <CardMedia
+                component="img"
+                height="300"
+                style={{ objectFit: "contain" }}
+                image={this.renderImage()}
+              />
+            </Grid>
+            <Grid
+              container
+              item
+              xs={12}
+              sm={4}
+              alignItems="center"
+              justify="center"
+            >
+              <Grid item xs={11}>
+                <p style={classes.changableBody3}>
+                  {isEdit && siteEdit && siteEdit.about}
+                  {!isEdit && siteView && siteView.about}
+                  {isEdit && !siteEdit.about && "Welcome to our website!"}
+                  {!isEdit && !siteView.about && "Welcome to our website!"}
+                </p>
+              </Grid>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
@@ -153,7 +201,7 @@ const mapStateToProps = state => ({
   titleView: state.site.titleView,
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
-  newLogo: state.site.newLogo
+  newLogo: state.site.newLogo,
 });
 
 export default connect(mapStateToProps, null)(Theme1About);
