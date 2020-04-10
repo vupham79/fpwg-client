@@ -92,18 +92,18 @@ class Layout extends Component {
       autoplaySpeed: 3000,
     };
     return (
-      <>
+      <Grid id="topPos">
         <Slider {...sliderSettings}>{this.renderNewCoversCarousel()}</Slider>
         <HeaderComponent
           navPos={"right"}
           displayImg={false}
           navColor={isEdit ? titleEdit.color : titleView.color}
           navTextColor="#1a1919"
-          // headerColor="#1a1919"
+        // headerColor="#1a1919"
         />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
-      </>
+      </Grid>
     );
   }
 }
