@@ -61,7 +61,7 @@ class Layout extends Component {
       autoplaySpeed: 3000,
     };
     return (
-      <>
+      <Grid id="topPos">
         <Slider {...sliderSettings}>{this.renderNewCoversCarousel()}</Slider>
         <Header
           navPos={"right"}
@@ -71,7 +71,7 @@ class Layout extends Component {
         />
         <HomePage />
         <Footer />
-      </>
+      </Grid>
     );
   }
 }
