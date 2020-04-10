@@ -134,6 +134,7 @@ class Theme1News extends React.Component {
           padding: "10vh 0",
           minHeight: "50vh",
         }}
+        id="news"
       >
         <Grid item xs={12}>
           <p style={classes.changableTitle5}>

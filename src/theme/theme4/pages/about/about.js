@@ -119,6 +119,7 @@ class Theme1About extends React.Component {
           padding: "10vh 0",
         }}
         justify="center"
+        id="about"
       >
         <Grid item xs={12}>
           <p style={classes.changableTitle}>

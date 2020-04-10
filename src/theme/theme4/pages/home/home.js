@@ -131,6 +131,7 @@ class Theme1Home extends React.Component {
           // backgroundColor: "#1a1919",
           minHeight: "50vh",
         }}
+        id="home"
       >
         {isEdit &&
           siteEdit &&
@@ -319,20 +320,8 @@ class Theme1Home extends React.Component {
                         <div style={{ height: "500px", width: "100%" }} />
                       </Parallax>
                     </Grid>
-                    <Grid
-                      container
-                      justify="center"
-                      item
-                      xs={12}
-                      style={{ padding: "10vh 0" }}
-                    >
-                      <Grid item xs={12}>
-                        <p style={classes.changableTitle}>ABOUT</p>
-                      </Grid>
-                      <Grid item xs={8} style={classes.changableBody3}>
-                        {siteEdit && siteEdit.about}
-                        {!siteEdit.about && "Welcome to our website!"}
-                      </Grid>
+                    <Grid container justify="center" item xs={12}>
+                      <AboutPage fromHome homeTitle={row.name} />
                     </Grid>
                   </Grid>
                 ),

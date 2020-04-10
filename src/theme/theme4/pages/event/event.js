@@ -116,6 +116,7 @@ class Theme1Event extends React.Component {
           padding: "10vh 0",
           minHeight: "50vh",
         }}
+        id="event"
       >
         <Grid item xs={12}>
           <p style={classes.changableTitle}>

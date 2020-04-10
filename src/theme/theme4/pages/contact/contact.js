@@ -130,6 +130,7 @@ class Theme1Contact extends React.Component {
         style={{
           padding: "10vh 0",
         }}
+        id="contact"
       >
         <Grid item xs={12}>
           <p style={titleStyle.changableTitle5}>

@@ -9,30 +9,30 @@ export const Routes = [
   {
     component: HomePage,
     exact: true,
-    path: "/:id"
+    path: "/:id",
   },
   {
     component: HomePage,
-    path: "/:id/Home"
+    path: "/:id/Home",
   },
-  {
-    component: NewPage,
-    path: "/:id/News"
-  },
-  {
-    component: AboutPage,
-    path: "/:id/About"
-  },
-  {
-    component: EventPage,
-    path: "/:id/Event"
-  },
-  {
-    component: ContactPage,
-    path: "/:id/Contact"
-  },
-  {
-    component: GalleryPage,
-    path: "/:id/Gallery"
-  }
+  // {
+  //   component: NewPage,
+  //   path: "/:id/News"
+  // },
+  // {
+  //   component: AboutPage,
+  //   path: "/:id/About"
+  // },
+  // {
+  //   component: EventPage,
+  //   path: "/:id/Event"
+  // },
+  // {
+  //   component: ContactPage,
+  //   path: "/:id/Contact"
+  // },
+  // {
+  //   component: GalleryPage,
+  //   path: "/:id/Gallery"
+  // }
 ];

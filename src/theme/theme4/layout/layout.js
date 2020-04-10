@@ -1,26 +1,11 @@
 import React, { Component } from "react";
 import Footer from "../components/Footer";
-import HeaderComponent from "../../component/headerComponent";
+import Header from "../components/header";
 import { connect } from "react-redux";
 import { Grid, CardMedia, withStyles } from "@material-ui/core";
 import { themes as themesConstant } from "../../../constant/constant";
 import Slider from "react-slick";
-
-function TabItem({ pages, navItems, tabValue }) {
-  return (
-    <>
-      {navItems &&
-        navItems.map(
-          (item, index) =>
-            tabValue === index && (
-              <Grid key={index}>
-                {pages.find((e) => e.name === item.original).component}
-              </Grid>
-            )
-        )}
-    </>
-  );
-}
+import HomePage from "../pages/home/index";
 
 const useStyle = () => ({
   cardMedia: {
@@ -32,22 +17,6 @@ const useStyle = () => ({
 });
 
 class Layout extends Component {
-  renderTabItem = () => {
-    const { navItemValue, siteEdit } = this.props;
-    const pages =
-      siteEdit &&
-      themesConstant.find((element) => element.id === siteEdit.theme._id).pages;
-    return (
-      <TabItem
-        tabValue={navItemValue && navItemValue}
-        pages={pages}
-        navItems={
-          siteEdit.navItems && siteEdit.navItems.filter((item) => item.isActive)
-        }
-      />
-    );
-  };
-
   renderNewCoversCarousel = () => {
     const { isEdit, newCover, siteView, theme, classes } = this.props;
     if (isEdit) {
@@ -94,14 +63,13 @@ class Layout extends Component {
     return (
       <>
         <Slider {...sliderSettings}>{this.renderNewCoversCarousel()}</Slider>
-        <HeaderComponent
+        <Header
           navPos={"right"}
           displayImg={false}
           navColor={isEdit ? titleEdit.color : titleView.color}
           navTextColor="#1a1919"
-          // headerColor="#1a1919"
         />
-        {isEdit ? this.renderTabItem() : this.props.children}
+        <HomePage />
         <Footer />
       </>
     );
