@@ -11,6 +11,22 @@ function revertSaveData(modDat) {
   if (!modDat.events) {
     modDat.events = [];
   }
+
+  modDat.posts.sort((a, b) => {
+    return new Date(a.createdTime).getTime() -
+      new Date(b.createdTime).getTime()
+  }).reverse();
+
+  modDat.galleries.sort((a, b) => {
+    return new Date(a.createdTime).getTime() -
+      new Date(b.createdTime).getTime()
+  }).reverse();
+
+  modDat.events.sort((a, b) => {
+    return new Date(a.startTime).getTime() -
+      new Date(b.startTime).getTime()
+  }).reverse();
+
   for (let i = 0; i < modDat.homepage.length; i++) {
     if (!modDat.homepage[i].filter.items) modDat.homepage[i].filter.items = [];
     let type = modDat.homepage[i].original;
@@ -82,6 +98,10 @@ export function syncDataFromFB(pageId, dateFrom, dateTo) {
             bodyEdit: bodyStyle
           }
         });
+        // dispatch({
+        //   type: "SET_POSTS_EDIT",
+        //   payload: data.posts,
+        // });
         toastr.success("Fetched data from FB successfully", "Success");
       } else {
         toastr.error(
@@ -141,6 +161,10 @@ export function syncPostFromFB(pageId, dateFrom, dateTo) {
             bodyEdit: bodyStyle
           }
         });
+        // dispatch({
+        //   type: "SET_POSTS_EDIT",
+        //   payload: data.posts,
+        // });
         toastr.success("Fetched posts from FB successfully", "Success");
       } else {
         toastr.error(

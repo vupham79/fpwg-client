@@ -13,6 +13,21 @@ function revertSaveData(modDat) {
     modDat.events = [];
   }
 
+  modDat.posts.sort((a, b) => {
+    return new Date(a.createdTime).getTime() -
+      new Date(b.createdTime).getTime()
+  }).reverse();
+
+  modDat.galleries.sort((a, b) => {
+    return new Date(a.createdTime).getTime() -
+      new Date(b.createdTime).getTime()
+  }).reverse();
+
+  modDat.events.sort((a, b) => {
+    return new Date(a.startTime).getTime() -
+      new Date(b.startTime).getTime()
+  }).reverse();
+
   for (let i = 0; i < modDat.homepage.length; i++) {
     if (!modDat.homepage[i].filter.items) modDat.homepage[i].filter.items = [];
     let type = modDat.homepage[i].original;
