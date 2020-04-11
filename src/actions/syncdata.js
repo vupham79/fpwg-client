@@ -20,14 +20,14 @@ function revertSaveData(modDat) {
       index++
     ) {
       if (type === "news") {
-        modDat.homepage[i].filter.items[index] = modDat.posts.filter(function(
+        modDat.homepage[i].filter.items[index] = modDat.posts.filter(function (
           pos
         ) {
           return pos._id === modDat.homepage[i].filter.items[index];
         })[0];
       }
       if (type === "event") {
-        modDat.homepage[i].filter.items[index] = modDat.events.filter(function(
+        modDat.homepage[i].filter.items[index] = modDat.events.filter(function (
           pos
         ) {
           return pos._id === modDat.homepage[i].filter.items[index];
@@ -35,7 +35,7 @@ function revertSaveData(modDat) {
       }
       if (type === "gallery") {
         modDat.homepage[i].filter.items[index] = modDat.galleries.filter(
-          function(pos) {
+          function (pos) {
             return pos._id === modDat.homepage[i].filter.items[index];
           }
         )[0];
@@ -75,14 +75,14 @@ export function syncDataFromFB(pageId, dateFrom, dateTo) {
           fontFamily: site.fontBody
         };
         dispatch({
-          type: "SET_SITE_EDIT",
+          type: "SET_SYNC_DATA_ALL",
           payload: {
             data: revertSaveData(site),
             titleEdit: titleStyle,
             bodyEdit: bodyStyle
           }
         });
-        toastr.success("You fetch data from FB success.", "Success");
+        toastr.success("Fetched data from FB successfully", "Success");
       } else {
         toastr.error(
           "There are something wrong when fetch data from your FB",
@@ -134,14 +134,14 @@ export function syncPostFromFB(pageId, dateFrom, dateTo) {
           fontFamily: site.fontBody
         };
         dispatch({
-          type: "SET_SITE_EDIT",
+          type: "SET_SYNC_DATA_ALL",
           payload: {
             data: revertSaveData(site),
             titleEdit: titleStyle,
             bodyEdit: bodyStyle
           }
         });
-        toastr.success("You fetch data from FB success.", "Success");
+        toastr.success("Fetched posts from FB successfully", "Success");
       } else {
         toastr.error(
           "There are something wrong when fetch data from your FB",
@@ -195,7 +195,7 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
               fontFamily: site.fontBody
             };
             dispatch({
-              type: "SET_SITE_EDIT",
+              type: "SET_SYNC_DATA_ALL",
               payload: {
                 data: revertSaveData(site),
                 titleEdit: titleStyle,
@@ -204,7 +204,7 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
             });
           }
         }
-        toastr.success("You fetch data from FB success.", "Success");
+        toastr.success("Fetched events from FB successfully", "Success");
       } else {
         toastr.error(
           "There are something wrong when fetch data from your FB",
@@ -260,14 +260,14 @@ export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
           fontFamily: site.fontBody
         };
         dispatch({
-          type: "SET_SITE_EDIT",
+          type: "SET_SYNC_DATA_ALL",
           payload: {
             data: revertSaveData(site),
             titleEdit: titleStyle,
             bodyEdit: bodyStyle
           }
         });
-        toastr.success("You fetch data from FB success.", "Success");
+        toastr.success("Fetched gallery from FB successfully", "Success");
       } else {
         toastr.error(
           "There are something wrong when fetch data from your FB",
@@ -300,8 +300,8 @@ export function setAutoSync(autoSync) {
         minute: autoSync.minute
           ? autoSync.minute
           : !autoSync.minute && !autoSync.hour && !autoSync.day
-          ? 2
-          : null,
+            ? 2
+            : null,
         hour: autoSync.hour ? autoSync.hour : null,
         day: autoSync.day ? autoSync.day : null
       }
