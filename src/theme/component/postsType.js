@@ -205,7 +205,7 @@ class PostTypeComponent extends React.Component {
     document.getElementById("topPos").scrollIntoView();
   };
 
-  renderPostComponent(index, post, style, dark, type, slide) {
+  renderPostComponent(index, post, style, dark, type) {
     const {
       fromHome,
       isEdit,
@@ -248,16 +248,14 @@ class PostTypeComponent extends React.Component {
                 border: "1px solid #fff",
                 marginLeft: "1rem",
                 marginBottom: "1rem",
-                padding: "1rem",
-                borderRadius: "4px",
+                // borderRadius: "4px",
               }
             : {
                 backgroundColor: "#fff",
                 border: "1px solid #000",
                 marginLeft: "1rem",
                 marginBottom: "1rem",
-                borderRadius: "4px",
-                padding: "1rem",
+                // borderRadius: "4px",
               }
         }
       >
@@ -266,7 +264,7 @@ class PostTypeComponent extends React.Component {
           item
           xs={12}
           style={{
-            // padding: "0.5rem",
+            padding: "1rem",
             backgroundColor: dark ? "#1a1919" : "#fff",
           }}
         >
@@ -550,33 +548,25 @@ class PostTypeComponent extends React.Component {
       bodyEdit: bodyEdit,
       bodyView: bodyView,
     };
-    const slide = true;
     return (
       <>
         {fromHome && (
-          <Grid item xs={12}>
+          <Grid item sm={posts.length > 1 ? 12 : 6} xs={12}>
             <Slider
               speed={1000}
               autoplaySpeed={2500}
               arrows={true}
               infinite
-              slidesToScroll={4}
-              slidesToShow={4}
+              slidesToScroll={posts.length > 2 ? 3 : posts.length}
+              slidesToShow={posts.length > 2 ? 3 : posts.length}
               nextArrow={<SampleNextArrow dark={dark} />}
               prevArrow={<SamplePrevArrow dark={dark} />}
               responsive={[
                 {
-                  breakpoint: 1024,
-                  settings: {
-                    slidesToScroll: 4,
-                    slidesToShow: 4,
-                  },
-                },
-                {
                   breakpoint: 960,
                   settings: {
-                    slidesToScroll: 3,
-                    slidesToShow: 3,
+                    slidesToScroll: posts.length > 1 ? 2 : posts.length,
+                    slidesToShow: posts.length > 1 ? 2 : posts.length,
                   },
                 },
                 {
@@ -599,13 +589,12 @@ class PostTypeComponent extends React.Component {
                         post,
                         style,
                         dark,
-                        post.attachments.media_type,
-                        slide
+                        post.attachments.media_type
                       )) ||
                     (post.attachments &&
                       !post.attachments.media_type &&
                       post.isActive &&
-                      this.renderPostMessage(index, post, style, dark, slide))
+                      this.renderPostMessage(index, post, style, dark))
                 )}
             </Slider>
           </Grid>
@@ -868,7 +857,7 @@ class PostTypeComponent extends React.Component {
         <script
           async
           defer
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
           src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=742131839643879&autoLogAppEvents=1"
         ></script>
         {!fromHome && (isEdit ? editPostView : postOpen) ? (

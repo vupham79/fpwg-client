@@ -133,51 +133,35 @@ class GalleryComponent extends React.Component {
     const { classes, galleries, dark, fromHome } = this.props;
     return (
       <>
-        {galleries && galleries.length > 3 && (
-          <Grid item xs={12}>
+        {galleries && (
+          <Grid item sm={galleries.length > 1 ? 12 : 6} xs={12}>
             <Slider
               speed={1000}
               autoplaySpeed={2500}
               arrows={true}
               infinite
-              slidesToScroll={4}
-              slidesToShow={4}
+              slidesToScroll={galleries.length > 2 ? 3 : galleries.length}
+              slidesToShow={galleries.length > 2 ? 3 : galleries.length}
               nextArrow={<SampleNextArrow dark={dark} />}
               prevArrow={<SamplePrevArrow dark={dark} />}
               responsive={[
                 {
-                  breakpoint: 1024,
-                  settings: {
-                    slidesToScroll: 4,
-                    slidesToShow: 4,
-                  },
-                },
-                {
                   breakpoint: 960,
                   settings: {
-                    slidesToScroll: 3,
-                    slidesToShow: 3,
+                    slidesToScroll: galleries.length > 1 ? 2 : galleries.length,
+                    slidesToShow: galleries.length > 1 ? 2 : galleries.length,
                   },
                 },
                 {
                   breakpoint: 600,
                   settings: {
-                    slidesToScroll: 2,
-                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    slidesToShow: 1,
                   },
                 },
               ]}
             >
               {galleries.map((item, index) => (
-                // <Grid
-                //   item
-                //   key={index}
-                //   xs={12}
-                //   sm={4}
-                //   md={4}
-                //   className={classes.gridItems}
-                // >
-                // <CardActionArea style={{ height: "100%" }}>
                 <CardMedia
                   className={classes.media}
                   image={item && item.url && item.url}
@@ -185,8 +169,6 @@ class GalleryComponent extends React.Component {
                     this.handleOpenDialog(item && item.url && item.url)
                   }
                 />
-                // </CardActionArea>
-                // </Grid>
               ))}
             </Slider>
           </Grid>
@@ -220,37 +202,30 @@ class GalleryComponent extends React.Component {
     const { classes, galleries, dark, fromHome } = this.props;
     return (
       <>
-        {galleries && galleries.length > 3 && (
-          <Grid item xs={12}>
+        {fromHome && galleries && (
+          <Grid item sm={galleries.length > 1 ? 12 : 6} xs={12}>
             <Slider
               speed={1000}
               autoplaySpeed={2500}
               arrows={true}
               infinite
-              slidesToScroll={4}
-              slidesToShow={4}
+              slidesToScroll={galleries.length > 2 ? 3 : galleries.length}
+              slidesToShow={galleries.length > 2 ? 3 : galleries.length}
               nextArrow={<SampleNextArrow dark={dark} />}
               prevArrow={<SamplePrevArrow dark={dark} />}
               responsive={[
                 {
-                  breakpoint: 1024,
-                  settings: {
-                    slidesToScroll: 4,
-                    slidesToShow: 4,
-                  },
-                },
-                {
                   breakpoint: 960,
                   settings: {
-                    slidesToScroll: 3,
-                    slidesToShow: 3,
+                    slidesToScroll: galleries.length > 1 ? 2 : galleries.length,
+                    slidesToShow: galleries.length > 1 ? 2 : galleries.length,
                   },
                 },
                 {
                   breakpoint: 600,
                   settings: {
-                    slidesToScroll: 2,
-                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    slidesToShow: 1,
                   },
                 },
               ]}

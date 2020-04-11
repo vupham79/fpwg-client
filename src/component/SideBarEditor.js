@@ -1,9 +1,6 @@
 import {
   faArrowLeft,
   faTimes as faWindowClose,
-  faTablet,
-  faDesktop,
-  faTabletAlt,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,7 +14,6 @@ import {
   DialogTitle,
   Drawer,
   Grid,
-  IconButton,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import React from "react";
@@ -25,9 +21,9 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
   saveDesignSite,
+  setFramePreview,
   setIsChanged,
   updateTabValue,
-  setFramePreview,
 } from "../actions";
 import AccordionButton from "../theme/component/mainComponent";
 import DesignTab from "./DesignEditorTab";
@@ -37,7 +33,6 @@ import PagesEditorTab from "./PagesEditorTab";
 import SettingEditorTab from "./SettingEditorTab";
 import SyncEditorTab from "./SyncEditorTab";
 import ThemeEditorTab from "./ThemeEditorTab";
-import styles from "./index.module.css";
 
 const useStyles = (theme) => ({
   root: {
