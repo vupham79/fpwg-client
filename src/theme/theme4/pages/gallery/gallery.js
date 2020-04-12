@@ -1,7 +1,7 @@
-import { Grid } from "@material-ui/core";
+import { Grid, Divider } from "@material-ui/core";
 import React from "react";
+import Gallery from "../../components/gallery";
 import { connect } from "react-redux";
-import GalleryComponent from "../../../component/galleryComponent";
 
 class Theme4Gallery extends React.Component {
   state = {
@@ -24,119 +24,69 @@ class Theme4Gallery extends React.Component {
     const useStyles = (theme) => ({
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: isEdit ? titleEdit.color : titleView.color,
+        color: "#E8634E",
         textAlign: "center",
-        fontSize: "48px",
-        textDecoration: "underline",
-      },
-      changableBody: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
-        color: "#212121",
-        textAlign: "center",
-        fontSize: 16,
+        fontSize: 36,
+        lineHeight: "1.4em",
+        fontWeight: "600",
       },
       changableBody2: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
-        color: "#b3b2b2",
-        textAlign: "center",
-        fontSize: 16,
-        fontWeight: 400,
-      },
-      changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "black",
+        color: "#E8634E",
         textAlign: "center",
-        fontSize: 16,
-      },
-      pageName: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
         fontSize: 20,
-      },
-      changableFirst: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        textAlign: "center",
-        fontSize: 45,
-        textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color,
-      },
-      changableLegend: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "white",
-        zIndex: 5,
-        position: "absolute",
-        top: "50%",
-        left: "40%",
-        fontSize: 80,
-        textAlign: "center",
-      },
-      greyDiv: {
-        backgroundColor: "#e1ede4",
-        padding: 30,
-        textAlign: "center",
-        color: "#535353",
-        fontSize: 20,
-      },
-      centerItem: {
-        display: "block",
-        width: 150,
-        marginLeft: "auto",
-        marginRight: "auto",
-        paddingTop: 50,
-      },
-      centerItem2: {
-        display: "block",
-        height: 100,
-        justifyContent: "center",
-        alignItems: "center",
-        width: 400,
-        marginLeft: "auto",
-        marginRight: "auto",
-      },
-      changableAppBar: {
-        backgroundColor: "white",
-        opacity: 0.6,
-        position: "sticky",
-        color: "#535353",
-        textAlign: "right",
       },
     });
     const classes = useStyles();
     return (
-      <Grid
-        container
-        style={{
-          // backgroundColor: "#1a1919",
-          padding: "10vh 0",
-          minHeight: "50vh",
-        }}
-        justify="center"
-        id="gallery"
-      >
-        <Grid item xs={12}>
-          <p style={classes.changableTitle}>
-            {fromHome
-              ? homeTitle
-              : isEdit
-              ? siteEdit &&
-                siteEdit.navItems &&
-                siteEdit.navItems.find((item) => item.original === "gallery")
-                  .name
-              : siteView &&
-                siteView.navItems &&
-                siteView.navItems.find((item) => item.original === "gallery")
-                  .name}
-          </p>
-        </Grid>
-        <Grid item xs={12} style={{ padding: "2.5rem 0" }}>
+      <Grid container justify="center">
+        {homeTitle && (
+          <Grid
+            container
+            alignItems="center"
+            item
+            sm={10}
+            xs={12}
+            style={{ padding: "2rem 0" }}
+          >
+            <Grid item xs={3} sm={4}>
+              <Divider
+                style={{
+                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  height: "3px",
+                }}
+                variant="fullWidth"
+              />
+            </Grid>
+            <Grid item xs={6} sm={4} style={classes.changableTitle}>
+              {fromHome
+                ? homeTitle
+                : isEdit
+                ? siteEdit &&
+                  siteEdit.navItems &&
+                  siteEdit.navItems.find((item) => item.original === "gallery")
+                    .name
+                : siteView &&
+                  siteView.navItems &&
+                  siteView.navItems.find((item) => item.original === "gallery")
+                    .name}
+            </Grid>
+            <Grid item xs={3} sm={4}>
+              <Divider
+                style={{
+                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  height: "3px",
+                }}
+                variant="fullWidth"
+              />
+            </Grid>
+          </Grid>
+        )}
+
+        <Grid container item xs={10} style={{ padding: "2.5rem 0" }}>
           {isEdit ? (
             siteEdit && siteEdit.galleries ? (
-              <GalleryComponent
+              <Gallery
                 key={siteEdit.limitGallery}
                 galleries={fromHome && homeList ? homeList : siteEdit.galleries}
                 siteInfo={siteEdit.id}
@@ -152,7 +102,7 @@ class Theme4Gallery extends React.Component {
               </p>
             )
           ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
-            <GalleryComponent
+            <Gallery
               galleries={fromHome && homeList ? homeList : siteView.galleries}
               siteInfo={siteView.sitePath}
               fromHome={fromHome}

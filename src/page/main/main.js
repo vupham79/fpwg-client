@@ -8,7 +8,12 @@ import {
 } from "@material-ui/core";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { publishSite, setCurrentEditId, unPublishSite } from "../../actions";
+import {
+  publishSite,
+  setCurrentEditId,
+  unPublishSite,
+  setPostView,
+} from "../../actions";
 import ButtonStyled from "../../component/Button";
 import Header from "../../component/Header";
 import Link from "../../component/link";
@@ -218,9 +223,10 @@ class MainPage extends Component {
                               color: "rgb(0, 96, 136)",
                               fontWeight: "bold",
                             }}
-                            onClick={() =>
-                              this.props.setCurrentEditId(siteEdit.id)
-                            }
+                            onClick={() => {
+                              this.props.setPostView(null);
+                              this.props.setCurrentEditId(siteEdit.id);
+                            }}
                             label="Edit"
                           />
                         </Link>
@@ -321,6 +327,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(publishSite({ siteId, siteName })),
   unPublishSite: ({ siteId, siteName }) =>
     dispatch(unPublishSite({ siteId, siteName })),
+  setPostView: (post) => dispatch(setPostView(post)),
 });
 
 export default connect(

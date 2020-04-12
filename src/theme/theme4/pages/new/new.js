@@ -1,7 +1,7 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Grid, Typography, Divider } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import PostTypeComponent from "../../../component/postsType";
+import NewsType from "../../components/newsType";
 class Theme1News extends React.Component {
   state = {
     itemPerPage: 3,
@@ -22,138 +22,87 @@ class Theme1News extends React.Component {
     } = this.props;
 
     const useStyles = () => ({
-      changableLink: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        textAlign: "center",
-        fontStyle: "italic",
-        fontSize: 20,
-      },
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
+        color: "#E8634E",
         textAlign: "center",
-        fontSize: 45,
-        paddingBottom: 20,
+        fontSize: 36,
+        lineHeight: "1.4em",
+        fontWeight: "600",
       },
       changableTitle2: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
-        color: "#212121",
+        color: "#E8634E",
         textAlign: "center",
         fontSize: 20,
         paddingBottom: 20,
       },
-      changableName: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: isEdit ? titleEdit.color : titleView.color,
-        textAlign: "left",
-        fontSize: 20,
-      },
-      changableBody: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#212121",
-        fontSize: 16,
-        textAlign: "justify",
-      },
       changableBody2: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
-        color: "#b3b2b2",
-        textAlign: "center",
-        fontSize: 16,
-        fontWeight: 400,
-      },
-      changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "black",
-        textAlign: "center",
-        fontSize: 16,
-      },
-      changableBody4: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "black",
-        textAlign: "center",
-        fontSize: 16,
-      },
-      pageName: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        fontSize: 20,
-      },
-      changableFirst: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        textAlign: "center",
-        fontSize: 45,
-        textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color,
-      },
-      changableFirst2: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: isEdit ? titleEdit.color : titleView.color,
+        color: "#E8634E",
         textAlign: "center",
         fontSize: 20,
-      },
-      changableFirst5: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        textAlign: "center",
-        fontSize: 45,
-        textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color,
-      },
-      centerItem3: {
-        display: "block",
-        marginLeft: "auto",
-        marginRight: "auto",
-        height: "100%",
-        backgroundColor: "white",
-      },
-      changableTitle5: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: isEdit ? titleEdit.color : titleView.color,
-        textAlign: "center",
-        fontSize: "48px",
-        textDecoration: "underline",
       },
     });
     const classes = useStyles();
 
     return (
-      <Grid
-        container
-        style={{
-          // backgroundColor: "#1a1919",
-          padding: "10vh 0",
-          minHeight: "50vh",
-        }}
-        id="news"
-      >
-        <Grid item xs={12}>
-          <p style={classes.changableTitle5}>
-            {fromHome
-              ? homeTitle
-              : isEdit
-              ? siteEdit &&
-                siteEdit.navItems &&
-                siteEdit.navItems.find((item) => item.original === "news").name
-              : siteView &&
-                siteView.navItems &&
-                siteView.navItems.find((item) => item.original === "news").name}
-          </p>
-        </Grid>
-        <Grid item sm={12} xs={12} container style={{ padding: "2.5rem 0" }}>
+      <Grid container justify="center">
+        {homeTitle && (
+          <Grid
+            container
+            alignItems="center"
+            item
+            sm={10}
+            xs={12}
+            style={{ padding: "2rem 0" }}
+          >
+            <Grid item xs={3} sm={4}>
+              <Divider
+                style={{
+                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  height: "3px",
+                }}
+                variant="fullWidth"
+              />
+            </Grid>
+            <Grid item xs={6} sm={4} style={classes.changableTitle}>
+              {fromHome
+                ? homeTitle
+                : isEdit
+                ? siteEdit &&
+                  siteEdit.navItems &&
+                  siteEdit.navItems.find((item) => item.original === "news")
+                    .name
+                : siteView &&
+                  siteView.navItems &&
+                  siteView.navItems.find((item) => item.original === "news")
+                    .name}
+            </Grid>
+            <Grid item xs={3} sm={4}>
+              <Divider
+                style={{
+                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  height: "3px",
+                }}
+                variant="fullWidth"
+              />
+            </Grid>
+          </Grid>
+        )}
+        <Grid
+          item
+          sm={12}
+          xs={12}
+          container
+          style={{ padding: "2.5rem 0" }}
+          id="topView"
+        >
           {isEdit ? (
             siteEdit && siteEdit.posts ? (
               <Grid container>
-                <PostTypeComponent
+                <NewsType
                   key={siteEdit.limitNews}
                   fromHome={fromHome}
                   posts={(fromHome && homeList
@@ -181,7 +130,7 @@ class Theme1News extends React.Component {
             )
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
-              <PostTypeComponent
+              <NewsType
                 fromHome={fromHome}
                 posts={fromHome && homeList ? homeList : siteView.posts}
                 siteInfo={{

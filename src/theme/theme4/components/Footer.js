@@ -25,9 +25,9 @@ class Footer extends React.Component {
     const nameStyle = {
       color: "white",
       textAlign: "center",
-      fontSize: 20,
+      fontSize: 16,
       padding: "1.5rem",
-      fonWeight: "bold",
+      fonWeight: "600",
       fontStyle: "oblique",
       fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
     };
@@ -36,7 +36,7 @@ class Footer extends React.Component {
       <Grid
         container
         style={{
-          backgroundColor: "#404040",
+          backgroundColor: "#E8634E",
           postion: "absolute",
           bottom: 0,
           padding: "2.8rem",
@@ -54,7 +54,7 @@ class Footer extends React.Component {
           <Grid
             item
             style={{
-              backgroundColor: "#3873ae",
+              // backgroundColor: "#3873ae",
               padding: "0 0.2rem",
               margin: "0 0.5rem",
             }}
@@ -73,7 +73,7 @@ class Footer extends React.Component {
                 <Grid
                   item
                   style={{
-                    backgroundColor: "#00b300",
+                    // backgroundColor: "#00b300",
                     padding: "0 0.2rem",
                     margin: "0 0.5rem",
                   }}
@@ -98,7 +98,7 @@ class Footer extends React.Component {
                 <Grid
                   item
                   style={{
-                    backgroundColor: "#00b300",
+                    // backgroundColor: "#00b300",
                     margin: "0 0.5rem",
                     padding: "0 0.2rem",
                   }}
@@ -124,7 +124,7 @@ class Footer extends React.Component {
                 <Grid
                   item
                   style={{
-                    backgroundColor: "#ff1a1a",
+                    // backgroundColor: "#ff1a1a",
                     margin: "0 0.5rem",
                     padding: "0 0.2rem",
                   }}
@@ -143,7 +143,7 @@ class Footer extends React.Component {
                 <Grid
                   item
                   style={{
-                    backgroundColor: "#ff1a1a",
+                    // backgroundColor: "#ff1a1a",
                     margin: "0 0.5rem",
                     padding: "0 0.2rem",
                   }}
@@ -163,7 +163,7 @@ class Footer extends React.Component {
                 <Grid
                   item
                   style={{
-                    backgroundColor: "#E1306C",
+                    // backgroundColor: "#E1306C",
                     margin: "0 0.5rem",
                     padding: "0 0.2rem",
                   }}
@@ -188,7 +188,7 @@ class Footer extends React.Component {
                 <Grid
                   item
                   style={{
-                    backgroundColor: "#E1306C",
+                    // backgroundColor: "#E1306C",
                     margin: "0 0.5rem",
                     padding: "0 0.2rem",
                   }}

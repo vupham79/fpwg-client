@@ -20,13 +20,18 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setPostView, updateNavItemValue } from "../../../actions";
+import { setPostView } from "../../../actions";
+import { withRouter } from "react-router-dom";
 
 const drawerWidth = 240;
 
 const useStyles = (theme) => ({
-  app_bar: {
-    backgroundColor: "white",
+  header: {
+    top: 0,
+    position: "absolute",
+    [theme.breakpoints.up("sm")]: {
+      backgroundColor: "unset",
+    },
   },
   shopName: {
     fontSize: 34,
@@ -76,7 +81,7 @@ const useStyles = (theme) => ({
   navItemLinks: {
     "&:hover": {
       cursor: "pointer",
-      color: "rgb(41, 186, 74) !important",
+      color: "#A5B9BC !important",
     },
   },
 });
@@ -90,18 +95,11 @@ class Header extends Component {
     };
   }
 
-  componentDidUpdate(prevProps) {
-    const { isEdit, siteView } = this.props;
-    if (prevProps.name !== this.state.name) {
-      console.log(this.state.name.toLowerCase());
-      window.location.href = `#${this.state.name.toLowerCase()}`;
-
-      window.history.pushState(
-        "",
-        "",
-        isEdit ? "/edit" : `${siteView.sitePath}`
-      );
-    }
+  componentDidUpdate(prevState) {
+    document.getElementById(`${this.state.name.toLowerCase()}`) &&
+      document
+        .getElementById(`${this.state.name.toLowerCase()}`)
+        .scrollIntoView({ block: "start", behavior: "smooth" });
   }
 
   handleDrawerToggle = () => {
@@ -118,11 +116,23 @@ class Header extends Component {
   };
 
   handleChange = (name) => {
-    this.setState({ name: name });
+    const { isEdit, siteView, setPostView, postView } = this.props;
+    if (isEdit) {
+      if (postView) {
+        setPostView(null);
+      }
+      this.setState({ name: name });
+    } else {
+      if (postView) {
+        this.props.history.push(`/${siteView.sitePath}`);
+        setPostView(null);
+      }
+      this.setState({ name: name });
+    }
   };
 
   renderNavLinks = (navItems) => {
-    const { classes, titleView, navTextColor } = this.props;
+    const { classes, titleView, titleEdit, isEdit } = this.props;
     return (
       <>
         {navItems &&
@@ -135,17 +145,21 @@ class Header extends Component {
                   md
                   key={index}
                   style={{
-                    textAlign: "end",
+                    textAlign: "center",
                     minWidth: "12vh",
                   }}
                 >
                   <Typography
                     style={{
-                      ...titleView,
-                      color: navTextColor ? navTextColor : this.props.navColor,
+                      fontFamily: isEdit
+                        ? titleEdit.fontFamily
+                        : titleView.fontFamily,
+                      color: "#E8634E",
                       textTransform: "uppercase",
-                      fontSize: 12,
-                      padding: "0.25rem",
+                      fontSize: 16,
+                      fontWeight: "bold",
+                      padding: "0 0.5rem",
+                      overflow: "hidden",
                     }}
                     className={classes.navItemLinks}
                     onClick={() => this.handleChange(item.name)}
@@ -178,6 +192,7 @@ class Header extends Component {
       titleView,
       navTextColor,
       classes,
+      titleEdit,
     } = this.props;
     return (
       <div style={{ marginTop: "3rem" }}>
@@ -191,8 +206,10 @@ class Header extends Component {
               <ListItem button key={index} style={{ padding: "0" }}>
                 <Typography
                   style={{
-                    ...titleView,
-                    color: navTextColor ? navTextColor : this.props.navColor,
+                    fontFamily: isEdit
+                      ? titleEdit.fontFamily
+                      : titleView.fontFamily,
+                    color: "#E8634E",
                     textTransform: "uppercase",
                     fontSize: 12,
                     padding: "1rem 0",
@@ -237,13 +254,12 @@ class Header extends Component {
   };
 
   renderMenuButton = () => {
-    const { isEdit, titleEdit, titleView } = this.props;
     return (
       <IconButton
-        style={isEdit ? titleEdit : titleView}
         aria-label="open drawer"
         edge="start"
         onClick={this.handleDrawerToggle}
+        style={{ color: "#E8634E" }}
       >
         <MenuIcon />
       </IconButton>
@@ -285,59 +301,37 @@ class Header extends Component {
     );
   };
 
-  renderHeader = ({ navPos, displayImg, imgStyles, isEdit }) => {
+  renderHeader = ({ displayImg, imgStyles, isEdit }) => {
     const { classes } = this.props;
-    if (navPos === "right") {
-      return (
+
+    return (
+      <Grid
+        container
+        alignItems="center"
+        style={displayImg ? null : { padding: "1rem 2rem" }}
+      >
         <Grid
           container
           alignItems="center"
-          style={displayImg ? null : { padding: "1.7rem 0" }}
+          item
+          sm={12}
+          md={8}
+          xs={4}
+          justify="flex-start"
         >
-          {displayImg ? (
-            <Grid container item md={6} sm={6} xs={8}>
-              <Grid
-                item
-                md={4}
-                sm={4}
-                xs={4}
-                style={{
-                  ...imgStyles,
-                  backgroundImage: this.renderImage(),
-                  marginTop: 10,
-                  marginBottom: 10,
-                }}
-              />
-              <Grid container alignItems="center" item md={6} sm={6} xs={8}>
-                {this.renderTitle()}
-              </Grid>
-            </Grid>
-          ) : (
-            <Grid container item md={6} sm={6} xs={8}>
-              <Grid
-                container
-                justify="flex-start"
-                style={{ paddingLeft: "5rem" }}
-              >
-                {this.renderTitle()}
-              </Grid>
-            </Grid>
-          )}
-          <Grid container alignItems="center" item md={6} sm={12} xs={4}>
-            <Grid
-              style={isEdit ? null : { width: "inherit", padding: "1rem 0" }}
-              className={classes.navLink}
-            >
-              {this.renderNavItems()}
-            </Grid>
-            <Grid container justify="flex-end" className={classes.menuButton}>
-              {this.renderMenuButton()}
-              {this.showHideDrawer({ anchor: "right", pos: "left" })}
-            </Grid>
+          <Grid
+            style={isEdit ? null : { width: "inherit", padding: "1rem 0" }}
+            className={classes.navLink}
+          >
+            {this.renderNavItems()}
+          </Grid>
+          <Grid container justify="flex-start" className={classes.menuButton}>
+            {this.renderMenuButton()}
+            {this.showHideDrawer({ anchor: "left", pos: "left" })}
           </Grid>
         </Grid>
-      );
-    }
+      </Grid>
+    );
   };
 
   render() {
@@ -350,15 +344,8 @@ class Header extends Component {
     };
 
     return (
-      <AppBar
-        className={classes.app_bar}
-        position={navPos === "center" ? "static" : "sticky"}
-      >
-        <Grid
-          container
-          alignItems="center"
-          style={{ backgroundColor: this.props.headerColor }}
-        >
+      <AppBar position="sticky" style={{ backgroundColor: "unset" }}>
+        <Grid container alignItems="center" className={classes.header}>
           <Grid item xs={11}>
             {this.renderHeader({
               imgStyles: imgStyles,
@@ -385,14 +372,14 @@ const mapStateToProps = (state) => ({
   titleView: state.site.titleView,
   navItemIsActive: state.site.navItemIsActive,
   newLogo: state.site.newLogo,
+  postView: state.post.postView,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateNavItemValue: (value) => dispatch(updateNavItemValue(value)),
   setPostView: (post) => dispatch(setPostView(post)),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(useStyles)(Header));
+)(withStyles(useStyles)(withRouter(Header)));

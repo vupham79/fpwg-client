@@ -80,7 +80,7 @@ export const themes = [
       // { name: "contact", component: <PreContactPageT4 /> },
       // { name: "event", component: <PreEventPageT4 /> },
       // { name: "gallery", component: <PreGalleryPageT4 /> },
-      // { name: "news", component: <PreNewPageT4 /> },
+      { name: "news", component: <PreNewPageT4 /> },
     ],
   },
 ];
@@ -139,4 +139,6 @@ export const fontFamily = [
   "Roboto",
   "League Spartan",
   "Candara",
+  "glyphs",
+  "Josefin Slab",
 ];

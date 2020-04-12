@@ -31,36 +31,36 @@ class Theme1Contact extends React.Component {
   renderUrl = () => {
     const { isEdit } = this.props;
     if (isEdit) {
-      return <FontAwesomeIcon icon={faFacebookF} color="black" size="xs" />;
+      return <FontAwesomeIcon icon={faFacebookF} color="#E8634E" size="xs" />;
     } else {
-      return <FontAwesomeIcon icon={faFacebookF} color="black" size="xs" />;
+      return <FontAwesomeIcon icon={faFacebookF} color="#E8634E" size="xs" />;
     }
   };
 
   renderInstagram = () => {
     const { isEdit } = this.props;
     if (isEdit) {
-      return <FontAwesomeIcon icon={faInstagram} color="black" size="xs" />;
+      return <FontAwesomeIcon icon={faInstagram} color="#E8634E" size="xs" />;
     } else {
-      return <FontAwesomeIcon icon={faInstagram} color="black" size="xs" />;
+      return <FontAwesomeIcon icon={faInstagram} color="#E8634E" size="xs" />;
     }
   };
 
   renderYoutube = () => {
     const { isEdit } = this.props;
     if (isEdit) {
-      return <FontAwesomeIcon icon={faYoutube} color="black" size="xs" />;
+      return <FontAwesomeIcon icon={faYoutube} color="#E8634E" size="xs" />;
     } else {
-      return <FontAwesomeIcon icon={faYoutube} color="black" size="xs" />;
+      return <FontAwesomeIcon icon={faYoutube} color="#E8634E" size="xs" />;
     }
   };
 
   renderWhatsapp = () => {
     const { isEdit } = this.props;
     if (isEdit) {
-      return <FontAwesomeIcon icon={faWhatsapp} color="white" size="xs" />;
+      return <FontAwesomeIcon icon={faWhatsapp} color="#E8634E" size="xs" />;
     } else {
-      return <FontAwesomeIcon icon={faWhatsapp} color="white" size="xs" />;
+      return <FontAwesomeIcon icon={faWhatsapp} color="#E8634E" size="xs" />;
     }
   };
 
@@ -120,33 +120,61 @@ class Theme1Contact extends React.Component {
         fontSize: "48px",
         textDecoration: "underline",
       },
+      changableTitle: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        color: "#E8634E",
+        textAlign: "center",
+        fontSize: 36,
+        lineHeight: "1.4em",
+        fontWeight: "600",
+      },
     });
     const titleStyle = useStyles();
 
     return (
-      <Grid
-        container
-        justify="center"
-        style={{
-          padding: "10vh 0",
-        }}
-        id="contact"
-      >
-        <Grid item xs={12}>
-          <p style={titleStyle.changableTitle5}>
-            {fromHome
-              ? homeTitle
-              : isEdit
-              ? siteEdit &&
-                siteEdit.navItems &&
-                siteEdit.navItems.find((item) => item.original === "contact")
-                  .name
-              : siteView &&
-                siteView.navItems &&
-                siteView.navItems.find((item) => item.original === "contact")
-                  .name}
-          </p>
-        </Grid>
+      <Grid container justify="center">
+        {homeTitle && (
+          <Grid
+            container
+            alignItems="center"
+            item
+            sm={10}
+            xs={12}
+            style={{ padding: "2rem 0" }}
+          >
+            <Grid item xs={3} sm={4}>
+              <Divider
+                style={{
+                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  height: "3px",
+                }}
+                variant="fullWidth"
+              />
+            </Grid>
+            <Grid item xs={6} sm={4} style={titleStyle.changableTitle}>
+              {fromHome
+                ? homeTitle
+                : isEdit
+                ? siteEdit &&
+                  siteEdit.navItems &&
+                  siteEdit.navItems.find((item) => item.original === "contact")
+                    .name
+                : siteView &&
+                  siteView.navItems &&
+                  siteView.navItems.find((item) => item.original === "contact")
+                    .name}
+            </Grid>
+            <Grid item xs={3} sm={4}>
+              <Divider
+                style={{
+                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  height: "3px",
+                }}
+                variant="fullWidth"
+              />
+            </Grid>
+          </Grid>
+        )}
         <Grid
           item
           xs={12}
@@ -175,10 +203,10 @@ class Theme1Contact extends React.Component {
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
                         fontWeight: "bold",
-                        color: "#151515",
+                        color: "#E8634E",
                         textAlign: "left",
-                        fontSize: 22,
-                        // paddingBottom: 20,
+                        fontSize: 20,
+                        // paddingBottom: 16,
                       }}
                     >
                       Address:
@@ -191,10 +219,10 @@ class Theme1Contact extends React.Component {
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
                         fontWeight: "100",
-                        color: "#151515",
+                        color: "#E8634E",
                         textAlign: "left",
-                        fontSize: 20,
-                        // paddingBottom: 20,
+                        fontSize: 16,
+                        // paddingBottom: 16,
                       }}
                     >
                       {isEdit
@@ -228,10 +256,10 @@ class Theme1Contact extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       fontWeight: "bold",
-                      color: "#151515",
+                      color: "#E8634E",
                       textAlign: "left",
-                      fontSize: 22,
-                      // paddingBottom: 20,
+                      fontSize: 20,
+                      // paddingBottom: 16,
                     }}
                   >
                     Address:
@@ -244,10 +272,10 @@ class Theme1Contact extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       fontWeight: "100",
-                      color: "#151515",
+                      color: "#E8634E",
                       textAlign: "left",
-                      fontSize: 20,
-                      // paddingBottom: 20,
+                      fontSize: 16,
+                      // paddingBottom: 16,
                     }}
                   >
                     {isEdit
@@ -282,9 +310,9 @@ class Theme1Contact extends React.Component {
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
                         fontWeight: "bold",
-                        color: "#151515",
+                        color: "#E8634E",
                         textAlign: "left",
-                        fontSize: 22,
+                        fontSize: 20,
                       }}
                     >
                       Phone:
@@ -297,9 +325,9 @@ class Theme1Contact extends React.Component {
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
                         fontWeight: "100",
-                        color: "#151515",
+                        color: "#E8634E",
                         textAlign: "left",
-                        fontSize: 20,
+                        fontSize: 16,
                       }}
                     >
                       {isEdit
@@ -333,9 +361,9 @@ class Theme1Contact extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       fontWeight: "bold",
-                      color: "#151515",
+                      color: "#E8634E",
                       textAlign: "left",
-                      fontSize: 22,
+                      fontSize: 20,
                     }}
                   >
                     Phone:
@@ -348,9 +376,9 @@ class Theme1Contact extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       fontWeight: "100",
-                      color: "#151515",
+                      color: "#E8634E",
                       textAlign: "left",
-                      fontSize: 20,
+                      fontSize: 16,
                     }}
                   >
                     {isEdit
@@ -385,9 +413,9 @@ class Theme1Contact extends React.Component {
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
                         fontWeight: "bold",
-                        color: "#151515",
+                        color: "#E8634E",
                         textAlign: "left",
-                        fontSize: 22,
+                        fontSize: 20,
                       }}
                     >
                       Email:
@@ -400,10 +428,10 @@ class Theme1Contact extends React.Component {
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
                         fontWeight: "100",
-                        color: "#151515",
+                        color: "#E8634E",
                         textAlign: "left",
-                        fontSize: 20,
-                        // paddingBottom: 20,
+                        fontSize: 16,
+                        // paddingBottom: 16,
                       }}
                     >
                       {isEdit
@@ -437,9 +465,9 @@ class Theme1Contact extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       fontWeight: "bold",
-                      color: "#151515",
+                      color: "#E8634E",
                       textAlign: "left",
-                      fontSize: 22,
+                      fontSize: 20,
                     }}
                   >
                     Email:
@@ -452,10 +480,10 @@ class Theme1Contact extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       fontWeight: "100",
-                      color: "#151515",
+                      color: "#E8634E",
                       textAlign: "left",
-                      fontSize: 20,
-                      // paddingBottom: 20,
+                      fontSize: 16,
+                      // paddingBottom: 16,
                     }}
                   >
                     {isEdit
@@ -504,7 +532,6 @@ class Theme1Contact extends React.Component {
                 >
                   <IconButton
                     aria-label=""
-                    color="primary"
                     href={`https://instagram.com/${
                       isEdit ? instagram : siteView.instagram
                     }`}
