@@ -20,7 +20,7 @@ import {
   InputBase,
   Paper,
   FormControlLabel,
-  Input
+  Input,
 } from "@material-ui/core";
 import moment from "moment";
 import { green } from "@material-ui/core/colors";
@@ -44,7 +44,7 @@ import {
   updateNavItemValue,
   setEventCustomize,
   setLimit,
-  setAboutCustomize
+  setAboutCustomize,
 } from "../actions";
 import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
@@ -298,18 +298,30 @@ class PagesEditorTab extends React.Component {
   handleSetLimit = (type) => (event) => {
     let val = event.target.value;
     if (val < 1) val = 1;
-    if (val > 10) val = 10;
+    // if (val > 10) val = 10;
 
     if (type === 0) {
-      this.props.setLimit(val, this.props.site.limitEvent, this.props.site.limitGallery)
+      this.props.setLimit(
+        val,
+        this.props.site.limitEvent,
+        this.props.site.limitGallery
+      );
     }
     if (type === 1) {
-      this.props.setLimit(this.props.site.limitNews, val, this.props.site.limitGallery)
+      this.props.setLimit(
+        this.props.site.limitNews,
+        val,
+        this.props.site.limitGallery
+      );
     }
     if (type === 2) {
-      this.props.setLimit(this.props.site.limitNews, this.props.site.limitEvent, val)
+      this.props.setLimit(
+        this.props.site.limitNews,
+        this.props.site.limitEvent,
+        val
+      );
     }
-  }
+  };
 
   handlePageClick = (data) => {
     const { posts } = this.props;
@@ -395,7 +407,7 @@ class PagesEditorTab extends React.Component {
       classes,
       changeNavItemName,
       setEventCustomize,
-      setAboutCustomize
+      setAboutCustomize,
     } = this.props;
 
     const SortableItem = sortableElement(
@@ -407,80 +419,80 @@ class PagesEditorTab extends React.Component {
         updateNavItemValue,
         changeNavItemName,
       }) => (
-          <Grid container style={gridItem}>
-            <Grid
-              container
-              item
-              alignItems="center"
-              xs={10}
-              sm={12}
-              md={10}
-              style={{ padding: "0.2rem 0" }}
-            >
-              <Grid container justify="center" item xs={2} md={2} sm={12}>
-                <DragHandle />
-              </Grid>
-              <Grid item xs={10} md={10} sm={12}>
-                <TextField
-                  autoFocus={
-                    this.state.currentFocusInput === item._id ? true : false
-                  }
-                  onClick={(e) => this.setState({ currentFocusInput: item._id })}
-                  InputLabelProps={{
-                    classes: {
-                      focused: classes.focused,
-                    },
-                  }}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle,
-                    },
-                  }}
-                  size="small"
-                  style={{ backgroundColor: "white" }}
-                  fullWidth
-                  variant={"outlined"}
-                  value={value}
-                  inputProps={{
-                    maxLength: 15,
-                  }}
-                  onChange={(e) => {
-                    handleChangeNavName(
-                      item._id,
-                      site,
-                      e.target.value,
-                      changeNavItemName
-                    );
-                  }}
-                />
-              </Grid>
+        <Grid container style={gridItem}>
+          <Grid
+            container
+            item
+            alignItems="center"
+            xs={10}
+            sm={12}
+            md={10}
+            style={{ padding: "0.2rem 0" }}
+          >
+            <Grid container justify="center" item xs={2} md={2} sm={12}>
+              <DragHandle />
             </Grid>
-            <Grid container item justify="center" xs={2} sm={12} md={2}>
-              {item.original === "home" ? (
-                <></>
-              ) : (
-                  <IconButton
-                    style={viewButton}
-                    onClick={() =>
-                      handleChangeActive(
-                        item._id,
-                        site,
-                        setActiveNavItems,
-                        updateNavItemValue
-                      )
-                    }
-                  >
-                    {item.isActive && item.name !== "Home" ? (
-                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                    ) : (
-                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
-                      )}
-                  </IconButton>
-                )}
+            <Grid item xs={10} md={10} sm={12}>
+              <TextField
+                autoFocus={
+                  this.state.currentFocusInput === item._id ? true : false
+                }
+                onClick={(e) => this.setState({ currentFocusInput: item._id })}
+                InputLabelProps={{
+                  classes: {
+                    focused: classes.focused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                    input: classes.inputTitle,
+                  },
+                }}
+                size="small"
+                style={{ backgroundColor: "white" }}
+                fullWidth
+                variant={"outlined"}
+                value={value}
+                inputProps={{
+                  maxLength: 15,
+                }}
+                onChange={(e) => {
+                  handleChangeNavName(
+                    item._id,
+                    site,
+                    e.target.value,
+                    changeNavItemName
+                  );
+                }}
+              />
             </Grid>
           </Grid>
-        )
+          <Grid container item justify="center" xs={2} sm={12} md={2}>
+            {item.original === "home" ? (
+              <></>
+            ) : (
+              <IconButton
+                style={viewButton}
+                onClick={() =>
+                  handleChangeActive(
+                    item._id,
+                    site,
+                    setActiveNavItems,
+                    updateNavItemValue
+                  )
+                }
+              >
+                {item.isActive && item.name !== "Home" ? (
+                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                ) : (
+                  <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                )}
+              </IconButton>
+            )}
+          </Grid>
+        </Grid>
+      )
     );
 
     const SortableList = sortableContainer(
@@ -515,8 +527,6 @@ class PagesEditorTab extends React.Component {
 
     return (
       <div style={{ padding: 10 }}>
-
-
         <Typography className={classes.title}>About</Typography>
         <Divider
           style={{
@@ -565,7 +575,7 @@ class PagesEditorTab extends React.Component {
               label={
                 <p style={{ fontSize: 13, color: "#555d66" }}>
                   Hide introduction
-              </p>
+                </p>
               }
             />
           </Grid>
@@ -621,7 +631,9 @@ class PagesEditorTab extends React.Component {
                 />
               }
               label={
-                <p style={{ fontSize: 13, color: "#555d66" }}>Hide event cover</p>
+                <p style={{ fontSize: 13, color: "#555d66" }}>
+                  Hide event cover
+                </p>
               }
             />
           </Grid>
@@ -643,7 +655,7 @@ class PagesEditorTab extends React.Component {
               label={
                 <p style={{ fontSize: 13, color: "#555d66" }}>
                   Hide event description
-              </p>
+                </p>
               }
             />
           </Grid>
@@ -664,7 +676,9 @@ class PagesEditorTab extends React.Component {
                 />
               }
               label={
-                <p style={{ fontSize: 13, color: "#555d66" }}>Hide event place</p>
+                <p style={{ fontSize: 13, color: "#555d66" }}>
+                  Hide event place
+                </p>
               }
             />
           </Grid>
@@ -845,7 +859,12 @@ class PagesEditorTab extends React.Component {
         />
 
         <Divider
-          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00", marginTop: 30 }}
+          style={{
+            height: 10,
+            width: "100%",
+            backgroundColor: "#ffffff00",
+            marginTop: 30,
+          }}
         />
         <Typography className={classes.title}>Paging</Typography>
         <Divider
@@ -859,48 +878,90 @@ class PagesEditorTab extends React.Component {
           <Grid item xs={6}>
             <p style={{ fontSize: 13, color: "#555d66" }}>Set posts per page</p>
           </Grid>
-          <Grid item xs={2}>
+          <Grid
+            item
+            lg={2}
+            md={4}
+            xs={4}
+            style={{ display: "flex", alignItems: "center" }}
+          >
             <InputBase
               type="number"
               inputProps={{
                 maxLength: 2,
+                style: {
+                  border: "1px solid rgb(0, 116, 170)",
+                  borderRadius: "4px",
+                  backgroundColor: "white",
+                  padding: "6px",
+                },
               }}
               style={{ minWidth: 30 }}
               value={this.props.site.limitNews}
-              onChange={this.handleSetLimit(0)} />
+              onChange={this.handleSetLimit(0)}
+            />
           </Grid>
         </Grid>
         <Grid container style={{ marginBottom: 30 }}>
           <Grid item xs={6}>
-            <p style={{ fontSize: 13, color: "#555d66" }}>Set events per page</p>
+            <p style={{ fontSize: 13, color: "#555d66" }}>
+              Set events per page
+            </p>
           </Grid>
-          <Grid item xs={2}>
+          <Grid
+            item
+            lg={2}
+            md={4}
+            xs={4}
+            style={{ display: "flex", alignItems: "center" }}
+          >
             <InputBase
               type="number"
               inputProps={{
                 maxLength: 2,
+                style: {
+                  border: "1px solid rgb(0, 116, 170)",
+                  borderRadius: "4px",
+                  backgroundColor: "white",
+                  padding: "6px",
+                },
               }}
               style={{ minWidth: 30 }}
               value={this.props.site.limitEvent}
-              onChange={this.handleSetLimit(1)} />
+              onChange={this.handleSetLimit(1)}
+            />
           </Grid>
         </Grid>
         <Grid container style={{ marginBottom: 30 }}>
           <Grid item xs={6}>
-            <p style={{ fontSize: 13, color: "#555d66" }}>Set photos per page</p>
+            <p style={{ fontSize: 13, color: "#555d66" }}>
+              Set photos per page
+            </p>
           </Grid>
-          <Grid item xs={2}>
+          <Grid
+            item
+            lg={2}
+            md={4}
+            xs={4}
+            style={{ display: "flex", alignItems: "center" }}
+          >
             <InputBase
               type="number"
               inputProps={{
                 maxLength: 2,
+                style: {
+                  border: "1px solid rgb(0, 116, 170)",
+                  borderRadius: "4px",
+                  backgroundColor: "white",
+                  padding: "6px",
+                },
               }}
               style={{ minWidth: 30 }}
               value={this.props.site.limitGallery}
-              onChange={this.handleSetLimit(2)} />
+              onChange={this.handleSetLimit(2)}
+            />
           </Grid>
         </Grid>
-
       </div>
     );
   }
@@ -918,10 +979,11 @@ const mapDispatchToProps = (dispatch) => ({
   updateNavItemValue: (value) => dispatch(updateNavItemValue(value)),
   savePosts: (posts) => dispatch(savePosts(posts)),
   changeNavItemName: (item) => dispatch(changeNavItemName(item)),
-  setEventCustomize: (cover, description, place) => dispatch(setEventCustomize(cover, description, place)),
-  setAboutCustomize: (logo, description, story) => dispatch(setAboutCustomize(logo, description, story)),
-  setLimit: (news, event, gallery) =>
-    dispatch(setLimit(news, event, gallery)),
+  setEventCustomize: (cover, description, place) =>
+    dispatch(setEventCustomize(cover, description, place)),
+  setAboutCustomize: (logo, description, story) =>
+    dispatch(setAboutCustomize(logo, description, story)),
+  setLimit: (news, event, gallery) => dispatch(setLimit(news, event, gallery)),
 });
 
 export default connect(

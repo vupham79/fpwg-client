@@ -404,14 +404,15 @@ class PostTypeComponent extends React.Component {
                 marginLeft: "1rem",
                 marginBottom: "1rem",
                 padding: "1rem",
-                borderRadius: "4px",
+                // borderRadius: "4px",
               }
             : {
                 backgroundColor: "#fff",
                 border: "1px solid #000",
                 marginLeft: "1rem",
                 marginBottom: "1rem",
-                borderRadius: "4px",
+                // borderRadius: "4px",
+                padding: "1rem",
               }
         }
       >
