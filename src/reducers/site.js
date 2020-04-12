@@ -234,9 +234,9 @@ const SiteReducer = (state = defaultState, action) => {
         isEdit: true,
         siteEdit: {
           ...state.siteEdit,
-          posts: [action.payload.data.posts],
-          events: [action.payload.data.events],
-          galleries: [action.payload.data.galleries],
+          posts: [...action.payload.data.posts],
+          events: [...action.payload.data.events],
+          galleries: [...action.payload.data.galleries],
           autoSync: {
             ...action.payload.data.autoSync,
             convertAutoSyncValue,
