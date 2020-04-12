@@ -217,6 +217,29 @@ const SiteReducer = (state = defaultState, action) => {
         email: action.payload.data.email,
         address: action.payload.data.address
       };
+    case "SET_SYNC_DATA_ALL":
+      if (action.payload) {
+        if (action.payload.minute) {
+          convertAutoSyncValue = `${action.payload.minute}min`;
+        }
+        if (action.payload.hour) {
+          convertAutoSyncValue = `${action.payload.hour}hr`;
+        }
+        if (action.payload.day) {
+          convertAutoSyncValue = "daily";
+        }
+      }
+      return {
+        ...state,
+        isEdit: true,
+        siteEdit: {
+          ...action.payload.data,
+          autoSync: {
+            ...action.payload.data.autoSync,
+            convertAutoSyncValue
+          }
+        },
+      };
     case "SET_SITE_VIEW":
       return {
         ...state,
