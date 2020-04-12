@@ -98,10 +98,10 @@ export function syncDataFromFB(pageId, dateFrom, dateTo) {
             bodyEdit: bodyStyle
           }
         });
-        // dispatch({
-        //   type: "SET_POSTS_EDIT",
-        //   payload: data.posts,
-        // });
+        dispatch({
+          type: "SET_POSTS_EDIT",
+          payload: site.posts,
+        });
         toastr.success("Fetched data from FB successfully", "Success");
       } else {
         toastr.error(
@@ -161,10 +161,10 @@ export function syncPostFromFB(pageId, dateFrom, dateTo) {
             bodyEdit: bodyStyle
           }
         });
-        // dispatch({
-        //   type: "SET_POSTS_EDIT",
-        //   payload: data.posts,
-        // });
+        dispatch({
+          type: "SET_POSTS_EDIT",
+          payload: site.posts,
+        });
         toastr.success("Fetched posts from FB successfully", "Success");
       } else {
         toastr.error(
