@@ -54,9 +54,9 @@ class ContactPage extends React.Component {
   renderWhatsapp = () => {
     const { isEdit } = this.props;
     if (isEdit) {
-      return <FontAwesomeIcon icon={faWhatsapp} color="white" size="xs" />;
+      return <FontAwesomeIcon icon={faWhatsapp} color="black" size="xs" />;
     } else {
-      return <FontAwesomeIcon icon={faWhatsapp} color="white" size="xs" />;
+      return <FontAwesomeIcon icon={faWhatsapp} color="black" size="xs" />;
     }
   };
 

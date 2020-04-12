@@ -489,18 +489,21 @@ class EventComponent extends React.Component {
             >
               {!homeList ||
                 (homeList && homeList.length === 0 && (
-                  <Grid className={styles.event}>
+                  <Grid
+                    className={styles.event}
+                    style={{ backgroundColor: dark ? "#000" : "#fff" }}
+                  >
                     <p
                       style={{
                         fontFamily: isEdit
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
-                        color: "#212121",
+                        color: dark ? "#fff" : "#212121",
                         textAlign: "center",
                         fontSize: 16,
                       }}
                     >
-                      No event.
+                      No Event
                     </p>
                   </Grid>
                 ))}
