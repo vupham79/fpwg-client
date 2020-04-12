@@ -24,6 +24,11 @@ import {
   changeSiteAddress,
 } from "../actions";
 import toastr from "./Toastr";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng,
+} from 'react-places-autocomplete';
+
 const useStyles = (theme) => ({
   content: {
     flexGrow: 1,
@@ -108,6 +113,29 @@ const useStyles = (theme) => ({
 });
 
 class SettingEditorTab extends React.Component {
+  state = {
+    gmapsLoaded: false,
+  }
+
+
+
+  componentDidMount() {
+
+  }
+
+  handleSelect = address => {
+    this.props.changeSiteAddress(address);
+    try {
+      geocodeByAddress(address)
+        .then(results => getLatLng(results[0]))
+        .then(latLng => console.log('Success', latLng))
+        .catch(error => console.error('Error', error));
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
   handleChangeWhatsapp = (e) => {
     const { changeSiteWhatsapp } = this.props;
     changeSiteWhatsapp(e.target.value);
@@ -138,9 +166,9 @@ class SettingEditorTab extends React.Component {
     changeSiteSitepath(e.target.value);
   };
 
-  handleChangeAddress = (e) => {
+  handleChangeAddress = address => {
     const { changeSiteAddress } = this.props;
-    changeSiteAddress(e.target.value);
+    changeSiteAddress(address);
   };
 
   handleBrowseFavicon = async (e) => {
@@ -387,7 +415,7 @@ class SettingEditorTab extends React.Component {
               />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
-              <TextField
+              {/* <TextField
                 variant="outlined"
                 label="Address"
                 size="small"
@@ -410,7 +438,48 @@ class SettingEditorTab extends React.Component {
                 inputProps={{
                   maxLength: 250,
                 }}
-              />
+              /> */}
+
+              <PlacesAutocomplete
+                value={address ? address : ""}
+                onChange={this.handleChangeAddress}
+                onSelect={this.handleSelect}
+              >
+                {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
+                  <div>
+                    <input
+                      {...getInputProps({
+                        placeholder: 'Search Places ...',
+                        className: 'location-search-input',
+                      })}
+                    />
+                    <div className="autocomplete-dropdown-container">
+                      {loading && <div>Loading...</div>}
+                      {suggestions.map(suggestion => {
+                        const className = suggestion.active
+                          ? 'suggestion-item--active'
+                          : 'suggestion-item';
+                        // inline style for demonstration purpose
+                        const style = suggestion.active
+                          ? { backgroundColor: '#fafafa', cursor: 'pointer' }
+                          : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                        return (
+                          <div
+                            {...getSuggestionItemProps(suggestion, {
+                              className,
+                              style,
+                            })}
+                          >
+                            <span>{suggestion.description}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </PlacesAutocomplete>
+
+
             </Grid>
           </Grid>
           <Grid

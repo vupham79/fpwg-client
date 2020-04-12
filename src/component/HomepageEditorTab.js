@@ -329,9 +329,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -389,9 +389,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -442,9 +442,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -620,16 +620,16 @@ class HomepageEditorTab extends React.Component {
     //set max item allowed for selected tab
     let maxAllowable;
     if (this.state.currentExpandType === "news" && this.props.posts) {
-      maxAllowable = 3;
+      maxAllowable = 9;
     }
     if (
       this.state.currentExpandType === "gallery" &&
       this.props.site.galleries
     ) {
-      maxAllowable = 3;
+      maxAllowable = 9;
     }
     if (this.state.currentExpandType === "event" && this.props.site.events) {
-      maxAllowable = 3;
+      maxAllowable = 9;
     }
 
     if (!index.filter.items.includes(row)) {
@@ -1004,7 +1004,7 @@ class HomepageEditorTab extends React.Component {
         <ExpansionPanel
           expanded={
             this.state.currentExpandItemId === item._id &&
-              this.state.isExpanding
+            this.state.isExpanding
               ? true
               : false
           }

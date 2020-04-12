@@ -1,6 +1,6 @@
 import {
   faArrowCircleLeft,
-  faArrowCircleRight
+  faArrowCircleRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Grid } from "@material-ui/core";
@@ -32,7 +32,12 @@ class EditLayout extends Component {
               <Grid
                 item
                 style={{
-                  width: this.props.framePreviewMode === 0 ? "100%" : (this.props.framePreviewMode === 1 ? 700 : 300),
+                  width:
+                    this.props.framePreviewMode === 0
+                      ? "100%"
+                      : this.props.framePreviewMode === 1
+                      ? 700
+                      : 300,
                   height: this.props.framePreviewMode === 2 ? 450 : "100vh",
                   marginTop: "auto",
                   marginBottom: "auto",
@@ -45,30 +50,35 @@ class EditLayout extends Component {
               </Grid>
             </Grid>
           ) : (
+            <Grid
+              container
+              item
+              sm={9}
+              xs={12}
+              justify="center"
+              style={{ background: "#191e23", height: "100vh" }}
+            >
               <Grid
-                container
                 item
-                sm={9}
-                xs={12}
-                justify="center"
-                style={{ background: "#191e23", height: "100vh" }}
+                style={{
+                  width:
+                    this.props.framePreviewMode === 0
+                      ? "100%"
+                      : this.props.framePreviewMode === 1
+                      ? 700
+                      : 300,
+                  height: this.props.framePreviewMode === 2 ? 450 : "100vh",
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                  background: "white",
+                  overflowY: "scroll",
+                  overflowX: "hidden",
+                }}
               >
-                <Grid
-                  item
-                  style={{
-                    width: this.props.framePreviewMode === 0 ? "100%" : (this.props.framePreviewMode === 1 ? 700 : 300),
-                    height: this.props.framePreviewMode === 2 ? 450 : "100vh",
-                    marginTop: "auto",
-                    marginBottom: "auto",
-                    background: "white",
-                    overflowY: "scroll",
-                    overflowX: "hidden",
-                  }}
-                >
-                  {this.props.children}
-                </Grid>
+                {this.props.children}
               </Grid>
-            )}
+            </Grid>
+          )}
 
           <button
             onClick={() => this.props.setPreviewMode(!this.props.isPreview)}
@@ -88,13 +98,13 @@ class EditLayout extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isPreview: state.site.isPreview,
-  framePreviewMode: state.site.framePreviewMode
+  framePreviewMode: state.site.framePreviewMode,
 });
 
-const mapDispatchToProps = dispatch => ({
-  setPreviewMode: bool => dispatch(setPreviewMode(bool)),
+const mapDispatchToProps = (dispatch) => ({
+  setPreviewMode: (bool) => dispatch(setPreviewMode(bool)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditLayout);
