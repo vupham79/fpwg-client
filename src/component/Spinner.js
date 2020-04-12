@@ -13,20 +13,22 @@ class Spinner extends Component {
           top: 0,
           bottom: 0,
           position: "fixed",
-          backgroundColor: "rgba(268, 268, 268, 0.3)"
+          backgroundColor: "rgba(268, 268, 268, 0.3)",
         }}
         unmountOnExit
       >
         <Grid container alignItems="center" justify="center">
-          <CircularProgress />
+          <CircularProgress
+            style={{ color: "#337ab7", width: "80px", height: "80px" }}
+          />
         </Grid>
       </Fade>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  loading: state.spinner.loading
+const mapStateToProps = (state) => ({
+  loading: state.spinner.loading,
 });
 
 export default connect(mapStateToProps, null)(Spinner);

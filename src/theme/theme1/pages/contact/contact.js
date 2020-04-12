@@ -5,12 +5,12 @@ import {
   withGoogleMap,
   GoogleMap,
   Marker,
-  withScriptjs
+  withScriptjs,
 } from "react-google-maps";
 import {
   faPhone,
   faAddressBook,
-  faMailBulk
+  faMailBulk,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -28,10 +28,10 @@ class Theme1Contact extends React.Component {
       email,
       fromHome,
       homeTitle,
-      address
+      address,
     } = this.props;
 
-    const useStyles = theme => ({
+    const useStyles = (theme) => ({
       changableTitle: {
         fontFamily: isEdit ? siteEdit.fontTitle : siteView.fontTitle,
         fontWeight: 300,
@@ -39,32 +39,32 @@ class Theme1Contact extends React.Component {
         textAlign: "center",
         fontSize: 30,
         paddingBottom: 20,
-        textTransform: "uppercase"
+        textTransform: "uppercase",
       },
       changableBody: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#535353",
         textAlign: "center",
-        fontSize: 16
+        fontSize: 16,
       },
       changableBody2: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#535353",
         textAlign: "center",
         fontSize: 16,
-        marginLeft: "30%"
+        marginLeft: "30%",
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#535353",
         textAlign: "center",
-        fontSize: 16
+        fontSize: 16,
       },
       pageName: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: "bold",
         color: "#535353",
-        fontSize: 20
+        fontSize: 20,
       },
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -73,14 +73,13 @@ class Theme1Contact extends React.Component {
         textAlign: "center",
         fontSize: 30,
         textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color
+        textDecorationColor: isEdit ? titleEdit.color : titleView.color,
       },
-
     });
     const classes = useStyles();
 
     const MapWithAMarker = withScriptjs(
-      withGoogleMap(props => (
+      withGoogleMap((props) => (
         <GoogleMap
           defaultZoom={15}
           defaultCenter={{
@@ -89,7 +88,7 @@ class Theme1Contact extends React.Component {
               : parseFloat(siteView.latitude),
             lng: isEdit
               ? parseFloat(siteEdit.longitude)
-              : parseFloat(siteView.longitude)
+              : parseFloat(siteView.longitude),
           }}
         >
           <Marker
@@ -99,7 +98,7 @@ class Theme1Contact extends React.Component {
                 : parseFloat(siteView.latitude),
               lng: isEdit
                 ? parseFloat(siteEdit.longitude)
-                : parseFloat(siteView.longitude)
+                : parseFloat(siteView.longitude),
             }}
           />
         </GoogleMap>
@@ -170,7 +169,7 @@ class Theme1Contact extends React.Component {
         <Grid item xs={12}>
           {isEdit && siteEdit.latitude && siteEdit.longitude && (
             <MapWithAMarker
-              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
               loadingElement={<div style={{ height: `100%` }} />}
               containerElement={<div style={{ height: `400px` }} />}
               mapElement={<div style={{ height: `100%` }} />}
@@ -178,7 +177,7 @@ class Theme1Contact extends React.Component {
           )}
           {!isEdit && siteView.latitude && siteView.longitude && (
             <MapWithAMarker
-              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
               loadingElement={<div style={{ height: `100%` }} />}
               containerElement={<div style={{ height: `400px` }} />}
               mapElement={<div style={{ height: `100%` }} />}
@@ -203,7 +202,7 @@ class Theme1Contact extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
   titleView: state.site.titleView,
@@ -213,7 +212,7 @@ const mapStateToProps = state => ({
   bodyView: state.site.bodyView,
   phone: state.site.phone,
   email: state.site.email,
-  address: state.site.address
+  address: state.site.address,
 });
 
 export default connect(mapStateToProps, null)(Theme1Contact);

@@ -574,7 +574,7 @@ class ContactPage extends React.Component {
               siteEdit.longitude && (
                 <Grid item md={7} sm={10} xs={10} className={classes.map}>
                   <MapWithAMarker
-                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
                     loadingElement={<div style={{ height: `100%` }} />}
                     containerElement={<div style={{ height: `15rem` }} />}
                     mapElement={<div style={{ height: `100%` }} />}
@@ -586,7 +586,7 @@ class ContactPage extends React.Component {
               siteView.longitude && (
                 <Grid item md={7} sm={10} xs={10} className={classes.map}>
                   <MapWithAMarker
-                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCHtgUPfrWDjiK-p3Uz1YrA9Smo-qJ_cL4&v=3.exp&libraries=geometry,drawing,places"
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
                     loadingElement={<div style={{ height: `100%` }} />}
                     containerElement={<div style={{ height: `15rem` }} />}
                     mapElement={<div style={{ height: `100%` }} />}

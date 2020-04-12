@@ -390,12 +390,12 @@ class PostTypeComponent extends React.Component {
     return (
       <Grid
         key={post._id}
-        container
-        item
-        xs={10}
-        sm={5}
-        md={5}
-        lg={3}
+        container={!fromHome}
+        item={!fromHome}
+        xs={!fromHome && 10}
+        sm={!fromHome && 5}
+        md={!fromHome && 5}
+        lg={!fromHome && 3}
         style={
           dark
             ? {
@@ -583,6 +583,9 @@ class PostTypeComponent extends React.Component {
                     (post.attachments &&
                       !post.attachments.media_type &&
                       post.isActive &&
+                      this.renderPostMessage(index, post, style, dark)) ||
+                    (!post.attachments &&
+                      post.isActive &&
                       this.renderPostMessage(index, post, style, dark))
                 )}
             </Slider>
@@ -605,6 +608,9 @@ class PostTypeComponent extends React.Component {
                 )) ||
               (post.attachments &&
                 !post.attachments.media_type &&
+                post.isActive &&
+                this.renderPostMessage(index, post, style, dark)) ||
+              (!post.attachments &&
                 post.isActive &&
                 this.renderPostMessage(index, post, style, dark))
           )}

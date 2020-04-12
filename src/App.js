@@ -10,8 +10,9 @@ function App() {
   return (
     <>
       <BrowserRouter>
+        <Spinner />
         <Switch>
-          {Routes.map(route => (
+          {Routes.map((route) => (
             <Route
               key={route.path}
               exact={route.exact}
@@ -21,7 +22,6 @@ function App() {
           ))}
           <Route path="*" exact={true} component={NotFoundPage} />
         </Switch>
-        <Spinner />
         <Snackbar />
       </BrowserRouter>
     </>

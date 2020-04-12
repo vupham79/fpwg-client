@@ -63,6 +63,7 @@ class EventComponent extends React.Component {
           homeList.map((row, index) => {
             return (
               row &&
+              row.isActive &&
               !row.isCancelled &&
               moment(row.endTime).isAfter(moment()) && (
                 <Grid
@@ -260,6 +261,7 @@ class EventComponent extends React.Component {
           homeList.map((row, index) => {
             return (
               row &&
+              row.isActive &&
               (row.isCancelled ||
                 moment(row.endTime).isSameOrBefore(moment()) ||
                 !row.endTime) && (
@@ -509,6 +511,7 @@ class EventComponent extends React.Component {
                   (row) =>
                     row &&
                     !row.isCancelled &&
+                    row.isActive &&
                     moment(row.endTime).isAfter(moment())
                 ).length > 0 && (
                   <Grid container item>
@@ -547,6 +550,7 @@ class EventComponent extends React.Component {
                     (row) =>
                       row &&
                       !row.isCancelled &&
+                      row.isActive &&
                       moment(row.endTime).isAfter(moment())
                   ).length > 0 && (
                   <Grid container item>
@@ -595,6 +599,7 @@ class EventComponent extends React.Component {
                 homeList.filter(
                   (row) =>
                     row &&
+                    row.isActive &&
                     (row.isCancelled ||
                       moment(row.endTime).isSameOrBefore(moment()) ||
                       !row.endTime)
@@ -639,6 +644,7 @@ class EventComponent extends React.Component {
                   .filter(
                     (row) =>
                       row &&
+                      row.isActive &&
                       (row.isCancelled ||
                         moment(row.endTime).isSameOrBefore(moment()) ||
                         !row.endTime)
