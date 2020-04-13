@@ -148,7 +148,7 @@ class ContactPage extends React.Component {
           container
           spacing={2}
           item
-          xs={12}
+          xs={10}
           justify="center"
           style={{ marginBottom: "2.5rem" }}
         >
@@ -575,9 +575,9 @@ class ContactPage extends React.Component {
                 <Grid item md={7} sm={10} xs={10} className={classes.map}>
                   <MapWithAMarker
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `15rem` }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
+                    loadingElement={<div style={{ height: `300px` }} />}
+                    containerElement={<div style={{ height: `300px` }} />}
+                    mapElement={<div style={{ height: `300px` }} />}
                   />
                 </Grid>
               )
@@ -587,9 +587,9 @@ class ContactPage extends React.Component {
                 <Grid item md={7} sm={10} xs={10} className={classes.map}>
                   <MapWithAMarker
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
-                    loadingElement={<div style={{ height: `100%` }} />}
-                    containerElement={<div style={{ height: `15rem` }} />}
-                    mapElement={<div style={{ height: `100%` }} />}
+                    loadingElement={<div style={{ height: `300px` }} />}
+                    containerElement={<div style={{ height: `300px` }} />}
+                    mapElement={<div style={{ height: `300px` }} />}
                   />
                 </Grid>
               )}

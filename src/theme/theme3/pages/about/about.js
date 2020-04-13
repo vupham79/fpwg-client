@@ -14,6 +14,46 @@ class AboutPage extends React.Component {
     return siteView.logo;
   };
 
+  isShowStory = () => {
+    const { isEdit, siteEdit, siteView } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.showDetailSetting.showStory) {
+        if (siteEdit.story && siteEdit.story.title) {
+          return true;
+        }
+      }
+    } else if (siteView && siteView.showDetailSetting.showStory) {
+      if (siteView.story && siteView.story.title) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  isShowAboutDes = () => {
+    const { isEdit, siteEdit, siteView } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.showDetailSetting.showAboutDescription) {
+        return true;
+      }
+    } else if (siteView && siteView.showDetailSetting.showAboutDescription) {
+      return true;
+    }
+    return false;
+  };
+
+  isShowAboutLogo = () => {
+    const { isEdit, siteEdit, siteView } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.showDetailSetting.showAboutLogo) {
+        return true;
+      }
+    } else if (siteView && siteView.showDetailSetting.showAboutLogo) {
+      return true;
+    }
+    return false;
+  };
+
   render() {
     const {
       isEdit,
@@ -84,44 +124,57 @@ class AboutPage extends React.Component {
             </Typography>
           </Grid>
         ) : (
-          <Grid container justify="center" className={styles.about_page}>
-            <Grid container item sm={3} xs={5} justify="center">
-              <CardMedia component="img" alt="" image={this.renderImage()} />
-            </Grid>
-
-            <Grid
-              container
-              item
-              sm={10}
-              xs={10}
-              justify="center"
-              style={{ marginTop: 50 }}
-            >
-              <Typography
-                variant="body1"
-                color="textPrimary"
+          (this.isShowAboutDes() || this.isShowAboutLogo()) && (
+            <Grid container justify="center" className={styles.about_page}>
+              <Grid
+                container
+                item
+                sm={6}
+                xs={10}
+                justify="center"
                 style={{
-                  fontFamily: isEdit
-                    ? titleEdit.fontFamily
-                    : titleView.fontFamily,
-                  fontWeight: 400,
-                  color: "white",
-                  textAlign: "left",
-                  fontSize: 16,
+                  // marginTop: "2.5rem",
+                  display: this.isShowAboutDes() ? "inline-block" : "flex",
                 }}
               >
-                {isEdit
-                  ? siteEdit && siteEdit.about
-                    ? siteEdit.about
-                    : "Welcome to our website! Take a look around and feel free to contact us for more information."
-                  : siteView && siteView.about
-                  ? siteView.about
-                  : "Welcome to our website! Take a look around and feel free to contact us for more information."}
-              </Typography>
+                <CardMedia
+                  style={{
+                    width: this.isShowAboutDes() ? "30%" : "40%",
+                    float: "left",
+                    display: this.isShowAboutLogo() ? "block" : "none",
+                  }}
+                  component="img"
+                  alt=""
+                  image={this.renderImage()}
+                />
+                {this.isShowAboutDes() && (
+                  <Typography
+                    variant="body1"
+                    color="textPrimary"
+                    style={{
+                      fontFamily: isEdit
+                        ? titleEdit.fontFamily
+                        : titleView.fontFamily,
+                      fontWeight: 400,
+                      color: "white",
+                      textAlign: "justify",
+                      fontSize: 16,
+                    }}
+                  >
+                    {isEdit
+                      ? siteEdit && siteEdit.about
+                        ? siteEdit.about
+                        : "Welcome to our website! Take a look around and feel free to contact us for more information."
+                      : siteView && siteView.about
+                      ? siteView.about
+                      : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+                  </Typography>
+                )}
+              </Grid>
             </Grid>
-          </Grid>
+          )
         )}
-        {!fromHome && (
+        {!fromHome && this.isShowStory() && (
           <>
             <Grid
               container

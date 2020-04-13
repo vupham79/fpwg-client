@@ -13,7 +13,7 @@ function TabItem({ pages, navItems, tabValue }) {
           (item, index) =>
             tabValue === index && (
               <Grid key={index}>
-                {pages.find(e => e.name === item.original).component}
+                {pages.find((e) => e.name === item.original).component}
               </Grid>
             )
         )}
@@ -26,13 +26,13 @@ class Layout extends Component {
     const { navItemValue, siteEdit } = this.props;
     const pages =
       siteEdit &&
-      themesConstant.find(element => element.id === siteEdit.theme._id).pages;
+      themesConstant.find((element) => element.id === siteEdit.theme._id).pages;
     return (
       <TabItem
         tabValue={navItemValue && navItemValue}
         pages={pages}
         navItems={
-          siteEdit.navItems && siteEdit.navItems.filter(item => item.isActive)
+          siteEdit.navItems && siteEdit.navItems.filter((item) => item.isActive)
         }
       />
     );
@@ -44,9 +44,7 @@ class Layout extends Component {
     return (
       <Grid
         style={{
-          backgroundColor: isEdit
-            ? siteEdit && siteEdit.color
-            : siteView && siteView.color
+          backgroundColor: "#000",
         }}
       >
         <Header />
@@ -58,14 +56,14 @@ class Layout extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isEdit: state.site.isEdit,
   siteEdit: state.site.siteEdit,
   siteView: state.site.siteView,
   navItemValue: state.tab.navItemValue,
   themes: state.theme.data,
   titleView: state.site.titleView,
-  titleEdit: state.site.titleEdit
+  titleEdit: state.site.titleEdit,
 });
 
 export default connect(mapStateToProps, null)(Layout);
