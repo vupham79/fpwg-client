@@ -519,6 +519,7 @@ class NewsType extends React.Component {
         justify="center"
         // key={post._id}
         style={{ padding: "3rem 0" }}
+        id="topView"
       >
         <Grid
           container
@@ -701,7 +702,7 @@ class NewsType extends React.Component {
     const showMore = useStyles();
 
     return (
-      <Grid container justify="center" id="topView">
+      <Grid container justify="center">
         <script
           async
           defer

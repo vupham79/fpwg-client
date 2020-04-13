@@ -68,17 +68,7 @@ class Theme1News extends React.Component {
               />
             </Grid>
             <Grid item xs={6} sm={4} style={classes.changableTitle}>
-              {fromHome
-                ? homeTitle
-                : isEdit
-                ? siteEdit &&
-                  siteEdit.navItems &&
-                  siteEdit.navItems.find((item) => item.original === "news")
-                    .name
-                : siteView &&
-                  siteView.navItems &&
-                  siteView.navItems.find((item) => item.original === "news")
-                    .name}
+              {homeTitle}
             </Grid>
             <Grid item xs={3} sm={4}>
               <Divider

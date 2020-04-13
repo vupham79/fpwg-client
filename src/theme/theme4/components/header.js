@@ -117,23 +117,25 @@ class Header extends Component {
   };
 
   handleChange = (name) => {
-    console.log(name);
-    const { isEdit, siteView, setPostView, postView } = this.props;
+    const { siteEdit, isEdit, siteView, setPostView, postView } = this.props;
+    const section = (isEdit ? siteEdit.navItems : siteView.navItems).find(
+      (item) => item.name === name
+    ).original;
     if (isEdit) {
       if (postView) {
         setPostView(null);
-        this.setState({ name: name });
+        this.setState({ name: section });
       }
     } else {
       if (postView) {
         this.props.history.push(`/${siteView.sitePath}`);
         setPostView(null);
-        this.setState({ name: name });
+        this.setState({ name: section });
       }
     }
-    document.getElementById(`${name.toLowerCase()}`) &&
+    document.getElementById(`${section.toLowerCase()}`) &&
       document
-        .getElementById(`${name.toLowerCase()}`)
+        .getElementById(`${section.toLowerCase()}`)
         .scrollIntoView({ block: "start", behavior: "smooth" });
   };
 
