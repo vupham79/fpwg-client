@@ -9,7 +9,7 @@ import React from "react";
 import { connect } from "react-redux";
 import {
   getDataByPageNumber,
-  setGalleriesToSiteView,
+  setGalleriesToSiteViewOnePage,
   updateNavItemValue,
 } from "../../../actions";
 
@@ -72,7 +72,7 @@ class Gallery extends React.Component {
       siteInfo,
       getDataByPageNumber,
       isEdit,
-      setGalleriesToSiteView,
+      setGalleriesToSiteViewOnePage,
     } = this.props;
     if (!isEdit) {
       this.setState({ pageView: newValue });
@@ -81,7 +81,7 @@ class Gallery extends React.Component {
         page: "gallery",
         pageNumber: newValue,
       });
-      data && setGalleriesToSiteView(data);
+      data && setGalleriesToSiteViewOnePage(data);
     }
   };
 
@@ -93,8 +93,27 @@ class Gallery extends React.Component {
     this.setState({ img: image, open: true });
   };
 
-  handleShowMore = () => {
+  handleShowMore = async () => {
     this.setState({ itemPerPage: this.state.itemPerPage + this.state.count });
+    const {
+      isEdit,
+      getDataByPageNumber,
+      setGalleriesToSiteViewOnePage,
+      siteInfo,
+      siteView,
+    } = this.props;
+    if (isEdit) {
+      this.setState({ itemPerPage: this.state.itemPerPage + this.state.count });
+    } else {
+      this.setState({ pageView: this.state.pageView + 1 });
+      const data = await getDataByPageNumber({
+        sitePath: siteInfo,
+        page: "gallery",
+        pageNumber: this.state.pageView + 1,
+      });
+      let newGalleries = [...siteView.galleries, ...data.data];
+      newGalleries && setGalleriesToSiteViewOnePage(newGalleries);
+    }
   };
 
   render() {
@@ -125,7 +144,8 @@ class Gallery extends React.Component {
         <Grid container justify="center" xs={12}>
           <Grid container item xs={12} justify="center">
             {isEdit
-              ? galleries
+              ? galleries &&
+                galleries
                   .slice(
                     page > pageCount ? 0 : offset,
                     page > pageCount
@@ -152,27 +172,35 @@ class Gallery extends React.Component {
                       </CardActionArea>
                     </Grid>
                   ))
-              : galleries.map((item, index) => (
-                  <Grid
-                    item
-                    key={index}
-                    xs={12}
-                    sm={4}
-                    className={classes.gridItems}
-                  >
-                    <CardActionArea style={{ height: "100%" }}>
-                      <CardMedia
-                        className={classes.media}
-                        image={item && item._id && item._id.url}
-                        onClick={() =>
-                          this.handleOpenDialog(
-                            item && item._id && item._id.url
-                          )
-                        }
-                      />
-                    </CardActionArea>
-                  </Grid>
-                ))}
+              : galleries
+                  .slice(
+                    page > pageCount ? 0 : offset,
+                    page > pageCount
+                      ? 5
+                      : parseInt(itemPerPage) + parseInt(offset)
+                  )
+                  .map((item, index) => (
+                    <Grid
+                      item
+                      key={index}
+                      xs={10}
+                      sm={4}
+                      className={classes.gridItems}
+                    >
+                      <CardActionArea style={{ height: "100%" }}>
+                        <CardMedia
+                          className={classes.media}
+                          image={item && item._id && item._id.url}
+                          title="Gallery image"
+                          onClick={() =>
+                            this.handleOpenDialog(
+                              item && item._id && item._id.url
+                            )
+                          }
+                        />
+                      </CardActionArea>
+                    </Grid>
+                  ))}
           </Grid>
           {isEdit
             ? pageCount > 1 &&
@@ -188,15 +216,17 @@ class Gallery extends React.Component {
                   <p onClick={() => this.handleShowMore()}>Show More</p>
                 </Grid>
               )
-            : galleries.length > itemPerPage && (
+            : pageCountView &&
+              this.state.pageView < pageCountView && (
                 <Grid
                   container
                   item
                   xs={6}
                   justify="center"
+                  className={classes.showMore}
                   style={showMore.showMore}
                 >
-                  Show More
+                  <p onClick={() => this.handleShowMore()}>Show More</p>
                 </Grid>
               )}
         </Grid>
@@ -238,8 +268,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getDataByPageNumber: ({ sitePath, page, siteId, pageNumber }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
-  setGalleriesToSiteView: (galleries) =>
-    dispatch(setGalleriesToSiteView(galleries)),
+  setGalleriesToSiteViewOnePage: (galleries) =>
+    dispatch(setGalleriesToSiteViewOnePage(galleries)),
   updateNavItemValue: (value) => dispatch(updateNavItemValue(value)),
 });
 

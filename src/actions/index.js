@@ -19,6 +19,9 @@ import {
   setGalleriesToSiteView,
   setHomepageToSiteView,
   setPostView,
+  setEventsToSiteViewOnePage,
+  setPostsToSiteViewOnePage,
+  setGalleriesToSiteViewOnePage,
 } from "./post";
 import {
   changeColor,
@@ -71,7 +74,7 @@ import {
   setFramePreview,
   setEventCustomize,
   setLimit,
-  setAboutCustomize
+  setAboutCustomize,
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import {
@@ -202,5 +205,8 @@ export {
   updateTheme,
   setPostView,
   setLimit,
-  setAboutCustomize
+  setAboutCustomize,
+  setEventsToSiteViewOnePage,
+  setPostsToSiteViewOnePage,
+  setGalleriesToSiteViewOnePage,
 };

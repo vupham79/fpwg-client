@@ -1,7 +1,7 @@
 import { Grid, Divider } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-import EventComponent from "../../../component/eventComponent";
+import EventComponent from "../../components/eventComponent";
 
 class Theme1Event extends React.Component {
   state = {
@@ -18,15 +18,14 @@ class Theme1Event extends React.Component {
       siteEdit,
       siteView,
     } = this.props;
-
     const useStyles = () => ({
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        color: "#E8634E",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
         fontSize: 36,
         lineHeight: "1.4em",
-        fontWeight: "600",
+        fontWeight: "bold",
       },
     });
     const classes = useStyles();
@@ -83,19 +82,26 @@ class Theme1Event extends React.Component {
                 : this.props.siteView.limitEvent
             }
             homeList={
-              fromHome && homeList
-                ? homeList
-                : isEdit
-                ? siteEdit.events
-                : siteView.events
+              isEdit
+                ? siteEdit && siteEdit.events && siteEdit.events
+                : siteView && siteView.events && siteView.events
             }
             siteInfo={siteView && siteView.sitePath}
             fromHome={fromHome}
             pageCount={Math.ceil(
-              (fromHome && homeList ? homeList : siteEdit.events).length /
-                (this.props.isEdit
-                  ? this.props.siteEdit.limitEvent
-                  : this.props.siteView.limitEvent)
+              isEdit
+                ? siteEdit &&
+                    siteEdit.events &&
+                    siteEdit.events.length /
+                      (this.props.isEdit
+                        ? this.props.siteEdit.limitEvent
+                        : this.props.siteView.limitEvent)
+                : siteView &&
+                    siteView.events &&
+                    siteView.events.length /
+                      (this.props.isEdit
+                        ? this.props.siteEdit.limitEvent
+                        : this.props.siteView.limitEvent)
             )}
           />
         </Grid>

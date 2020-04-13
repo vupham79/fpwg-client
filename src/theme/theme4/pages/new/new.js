@@ -24,11 +24,11 @@ class Theme1News extends React.Component {
     const useStyles = () => ({
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        color: "#E8634E",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
         fontSize: 36,
         lineHeight: "1.4em",
-        fontWeight: "600",
+        fontWeight: "bold",
       },
       changableTitle2: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -91,14 +91,7 @@ class Theme1News extends React.Component {
             </Grid>
           </Grid>
         )}
-        <Grid
-          item
-          sm={12}
-          xs={12}
-          container
-          style={{ padding: "2.5rem 0" }}
-          id="topView"
-        >
+        <Grid item sm={12} xs={12} container style={{ padding: "2.5rem 0" }}>
           {isEdit ? (
             siteEdit && siteEdit.posts ? (
               <Grid container>
@@ -128,11 +121,20 @@ class Theme1News extends React.Component {
                 </Typography>
               </Grid>
             )
-          ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
+          ) : siteView && siteView.posts ? (
             <Grid container>
               <NewsType
+                key={siteEdit.limitNews}
                 fromHome={fromHome}
-                posts={fromHome && homeList ? homeList : siteView.posts}
+                posts={siteView.posts.filter(function (pos) {
+                  return pos.isActive === true;
+                })}
+                pageCount={Math.ceil(
+                  siteView.posts.filter(function (pos) {
+                    return pos.isActive === true;
+                  }).length / siteView.limitNews
+                )}
+                bgWhite={true}
                 siteInfo={{
                   logo: siteView.logo,
                   title: siteView.title,

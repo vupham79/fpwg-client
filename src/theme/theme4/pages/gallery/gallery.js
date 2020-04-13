@@ -24,11 +24,11 @@ class Theme4Gallery extends React.Component {
     const useStyles = (theme) => ({
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        color: "#E8634E",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
         fontSize: 36,
         lineHeight: "1.4em",
-        fontWeight: "600",
+        fontWeight: "bold",
       },
       changableBody2: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -101,9 +101,9 @@ class Theme4Gallery extends React.Component {
                 Currently no photo available.
               </p>
             )
-          ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
+          ) : siteView && siteView.galleries ? (
             <Gallery
-              galleries={fromHome && homeList ? homeList : siteView.galleries}
+              galleries={siteView.galleries}
               siteInfo={siteView.sitePath}
               fromHome={fromHome}
             />
