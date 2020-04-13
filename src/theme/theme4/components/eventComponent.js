@@ -438,7 +438,10 @@ class EventComponent extends React.Component {
       siteView,
     } = this.props;
     if (isEdit) {
-      this.setState({ itemPerPage: this.state.itemPerPage + this.state.count });
+      this.setState({
+        itemPerPage:
+          parseInt(this.state.itemPerPage) + parseInt(this.state.count),
+      });
     } else {
       this.setState({ pageView: this.state.pageView + 1 });
       const data = await getDataByPageNumber({
