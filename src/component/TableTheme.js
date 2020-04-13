@@ -16,6 +16,7 @@ import {
   Select,
   MenuItem,
   Input,
+  Checkbox,
 } from "@material-ui/core";
 import Title from "./Title";
 import { connect } from "react-redux";
@@ -24,6 +25,7 @@ import {
   getAllCategoriesAdmin,
   insertTheme,
   updateTheme,
+  deleteTheme,
 } from "../actions";
 import ReactPaginate from "react-paginate";
 import { SearchOutlined as SearchIcon, Add } from "@material-ui/icons";
@@ -75,6 +77,7 @@ class TableTheme extends Component {
       previewImage: "",
       preview: "",
       category: "",
+      isOnePage: false,
     },
     edit: {
       id: "",
@@ -85,6 +88,7 @@ class TableTheme extends Component {
       previewImage: "",
       preview: "",
       category: "",
+      isOnePage: false,
     },
   };
 
@@ -100,6 +104,7 @@ class TableTheme extends Component {
         category: item.category ? item.category._id : "",
         previewImage: item.previewImage,
         preview: item.previewImage,
+        isOnePage: item.isOnePage,
       },
     });
   };
@@ -203,8 +208,17 @@ class TableTheme extends Component {
       edit.fontTitle,
       edit.mainColor,
       edit.previewImage,
-      edit.category
+      edit.category,
+      edit.isOnePage
     );
+    this.setCloseEditDialogue();
+    this.getThemes();
+  };
+
+  handleDelete = async () => {
+    const { deleteTheme } = this.props;
+    await deleteTheme(this.state.edit.id);
+    this.setCloseEditDialogue();
     this.getThemes();
   };
 
@@ -216,8 +230,10 @@ class TableTheme extends Component {
       newItem.fontTitle,
       newItem.mainColor,
       newItem.previewImage,
-      newItem.category
+      newItem.category,
+      newItem.isOnePage
     );
+    this.setCloseDialogue();
     this.getThemes();
   };
 
@@ -286,6 +302,24 @@ class TableTheme extends Component {
       edit: {
         ...this.state.edit,
         category: e.target.value,
+      },
+    });
+  };
+
+  handleChangeOnepage = (e) => {
+    this.setState({
+      newItem: {
+        ...this.state.newItem,
+        isOnePage: !this.state.newItem.isOnePage,
+      },
+    });
+  };
+
+  handleChangeOnepageEdit = (e) => {
+    this.setState({
+      edit: {
+        ...this.state.edit,
+        isOnePage: !this.state.edit.isOnePage,
       },
     });
   };
@@ -538,6 +572,21 @@ class TableTheme extends Component {
                   </Grid>
                 </Grid>
                 <Grid container item xs={12}>
+                  <Grid item xs={3} sm={2}>
+                    <Typography className={classes.title2}>
+                      Is one-page type
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={5}>
+                    <Checkbox
+                      checked={this.state.newItem.isOnePage}
+                      color="primary"
+                      inputProps={{ "aria-label": "secondary checkbox" }}
+                      onChange={(e) => this.handleChangeOnepage(e)}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12}>
                   <Grid item>
                     <Typography>Picture</Typography>
                     <Input
@@ -670,6 +719,21 @@ class TableTheme extends Component {
                   </Grid>
                 </Grid>
                 <Grid container item xs={12}>
+                  <Grid item xs={3} sm={2}>
+                    <Typography className={classes.title2}>
+                      Is one-page type
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6} sm={5}>
+                    <Checkbox
+                      checked={this.state.edit.isOnePage}
+                      color="primary"
+                      inputProps={{ "aria-label": "secondary checkbox" }}
+                      onChange={(e) => this.handleChangeOnepageEdit(e)}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid container item xs={12}>
                   <Grid item>
                     <Typography>Picture</Typography>
                     <Input
@@ -711,6 +775,14 @@ class TableTheme extends Component {
             <Button
               autoFocus
               variant="contained"
+              color="secondary"
+              onClick={() => this.handleDelete()}
+            >
+              Delete
+            </Button>
+            <Button
+              autoFocus
+              variant="contained"
               color="primary"
               onClick={() => this.handleUpdate()}
             >
@@ -732,15 +804,50 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getAllThemesAdmin: (id, accessToken) =>
     dispatch(getAllThemesAdmin(id, accessToken)),
-  updateTheme: (id, name, fontTitle, fontBody, color, previewImage, category) =>
+  updateTheme: (
+    id,
+    name,
+    fontTitle,
+    fontBody,
+    color,
+    previewImage,
+    category,
+    isOnePage
+  ) =>
     dispatch(
-      updateTheme(id, name, fontTitle, fontBody, color, previewImage, category)
+      updateTheme(
+        id,
+        name,
+        fontTitle,
+        fontBody,
+        color,
+        previewImage,
+        category,
+        isOnePage
+      )
     ),
-  insertTheme: (name, fontTitle, fontBody, mainColor, previewImage, category) =>
+  insertTheme: (
+    name,
+    fontTitle,
+    fontBody,
+    mainColor,
+    previewImage,
+    category,
+    isOnePage
+  ) =>
     dispatch(
-      insertTheme(name, fontTitle, fontBody, mainColor, previewImage, category)
+      insertTheme(
+        name,
+        fontTitle,
+        fontBody,
+        mainColor,
+        previewImage,
+        category,
+        isOnePage
+      )
     ),
   getAllCategoriesAdmin: () => dispatch(getAllCategoriesAdmin()),
+  deleteTheme: (id) => dispatch(deleteTheme(id)),
 });
 
 export default connect(

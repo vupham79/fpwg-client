@@ -103,61 +103,63 @@ class AboutPage extends React.Component {
             </>
           </Grid>
         )}
-        <Grid
-          container
-          item
-          sm={fromHome ? 10 : 6}
-          xs={10}
-          justify="center"
-          style={{
-            marginTop: "2.5rem",
-            marginBottom: fromHome ? "2.5rem" : 0,
-            minHeight: !fromHome && "55vh",
-          }}
-        >
-          <Typography
-            variant="body1"
-            color="textPrimary"
+        {(isShowAboutDes() || isShowAboutLogo()) && (
+          <Grid
+            container
+            item
+            sm={fromHome ? 10 : 6}
+            xs={10}
+            justify="center"
             style={{
-              fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-              fontWeight: 400,
-              color: "#151515",
-              fontSize: fromHome ? 20 : 16,
+              marginTop: "2.5rem",
+              marginBottom: fromHome || !isShowStory() ? "2.5rem" : 0,
+              minHeight: !fromHome && "55vh",
             }}
           >
-            <CardMedia
-              component="img"
-              alt=""
-              image={this.renderImage()}
+            <Typography
+              variant="body1"
+              color="textPrimary"
               style={{
-                width: "30%",
-                float: "left",
-                marginRight: "1rem",
-                display: fromHome
-                  ? "none"
-                  : isShowAboutLogo()
-                  ? "inline-block"
-                  : "none",
-              }}
-            />
-            <p
-              style={{
-                display: isShowAboutDes() ? "block" : "none",
-                margin: "0",
-                whiteSpace: "break-spaces",
-                textAlign: "justify",
+                fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+                fontWeight: 400,
+                color: "#151515",
+                fontSize: fromHome ? 20 : 16,
               }}
             >
-              {isEdit
-                ? siteEdit && siteEdit.about
-                  ? siteEdit.about
-                  : "Welcome to our website! Take a look around and feel free to contact us for more information."
-                : siteView && siteView.about
-                ? siteView.about
-                : "Welcome to our website! Take a look around and feel free to contact us for more information."}
-            </p>
-          </Typography>
-        </Grid>
+              <CardMedia
+                component="img"
+                alt=""
+                image={this.renderImage()}
+                style={{
+                  width: !isShowAboutDes() ? "100%" : "30%",
+                  float: "left",
+                  marginRight: "1rem",
+                  display: fromHome
+                    ? "none"
+                    : isShowAboutLogo()
+                    ? "inline-block"
+                    : "none",
+                }}
+              />
+              <p
+                style={{
+                  display: isShowAboutDes() ? "block" : "none",
+                  margin: "0",
+                  whiteSpace: "break-spaces",
+                  textAlign: "justify",
+                }}
+              >
+                {isEdit
+                  ? siteEdit && siteEdit.about
+                    ? siteEdit.about
+                    : "Welcome to our website! Take a look around and feel free to contact us for more information."
+                  : siteView && siteView.about
+                  ? siteView.about
+                  : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+              </p>
+            </Typography>
+          </Grid>
+        )}
 
         {/* <Grid
           container

@@ -3,9 +3,9 @@ import axios from "../utils/axios";
 import { firebase } from "../utils/firebase";
 
 export function loginAdmin({ username, password }) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
@@ -13,19 +13,19 @@ export function loginAdmin({ username, password }) {
         url: "/admin/login",
         data: {
           username,
-          password
-        }
+          password,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         dispatch({
           type: "SET_LOGIN_ADMIN",
           payload: {
             username,
-            password
-          }
+            password,
+          },
         });
         return true;
       } else {
@@ -34,7 +34,7 @@ export function loginAdmin({ username, password }) {
       return false;
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(`Login failed!`, "Error");
     } finally {
@@ -44,51 +44,51 @@ export function loginAdmin({ username, password }) {
 }
 
 export function setLogoutAdmin() {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     dispatch({
-      type: "SET_LOGOUT_ADMIN"
+      type: "SET_LOGOUT_ADMIN",
     });
     try {
       await axios({
-        url: "/admin/logout"
+        url: "/admin/logout",
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
     }
   };
 }
 
 export function getAllCategoriesAdmin() {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
-        url: "/category/findAll"
+        url: "/category/findAll",
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         dispatch({
           type: "SET_ALL_CATEGORIES",
-          payload: data.data
+          payload: data.data,
         });
       } else {
         toastr.error(`Unable to get categories`, "Error");
       }
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(`Unable to get categories`, "Error");
     }
@@ -96,9 +96,9 @@ export function getAllCategoriesAdmin() {
 }
 
 export function updateCategory(id, name, picture) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       let upload = false;
@@ -112,11 +112,11 @@ export function updateCategory(id, name, picture) {
             url: `/category/update/${id}`,
             data: {
               name,
-              picture: upload
-            }
+              picture: upload,
+            },
           });
           dispatch({
-            type: "CLOSE_LOADING"
+            type: "CLOSE_LOADING",
           });
           toastr.success(`Update category success`, "Success");
         }
@@ -127,17 +127,17 @@ export function updateCategory(id, name, picture) {
           url: `/category/update/${id}`,
           data: {
             name,
-            picture
-          }
+            picture,
+          },
         });
         dispatch({
-          type: "CLOSE_LOADING"
+          type: "CLOSE_LOADING",
         });
         toastr.success(`Update category success`, "Success");
       }
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(`Update category failed`, "Error");
     }
@@ -145,9 +145,9 @@ export function updateCategory(id, name, picture) {
 }
 
 export function insertCategory(name, picture) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const upload = await uploadPicture(picture, name);
@@ -157,11 +157,11 @@ export function insertCategory(name, picture) {
           url: `/category/insert`,
           data: {
             name,
-            picture: upload
-          }
+            picture: upload,
+          },
         });
         dispatch({
-          type: "CLOSE_LOADING"
+          type: "CLOSE_LOADING",
         });
         if (data.status === 200) {
           toastr.success(`Insert category success`, "Success");
@@ -170,12 +170,12 @@ export function insertCategory(name, picture) {
         }
       } else {
         dispatch({
-          type: "CLOSE_LOADING"
+          type: "CLOSE_LOADING",
         });
       }
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(`Insert category failed`, "Error");
     }
@@ -191,7 +191,7 @@ export function uploadPicture(file, category) {
           .ref(`category/`)
           .child(`${category}`)
           .put(file, {
-            contentType: "image/jpeg"
+            contentType: "image/jpeg",
           })
           .then(async () => {
             firebase
@@ -199,11 +199,11 @@ export function uploadPicture(file, category) {
               .ref(`category/`)
               .child(`${category}`)
               .getDownloadURL()
-              .then(async url => {
+              .then(async (url) => {
                 resolve(url);
               });
           })
-          .catch(error => {
+          .catch((error) => {
             console.log("upload: ", error);
             toastr.error(`Upload picture failed`, "Error");
             resolve(false);
@@ -225,7 +225,7 @@ export function uploadPictureTheme(file, name) {
           .ref(`theme/`)
           .child(`${name}`)
           .put(file, {
-            contentType: "image/jpeg"
+            contentType: "image/jpeg",
           })
           .then(async () => {
             firebase
@@ -233,11 +233,11 @@ export function uploadPictureTheme(file, name) {
               .ref(`theme/`)
               .child(`${name}`)
               .getDownloadURL()
-              .then(async url => {
+              .then(async (url) => {
                 resolve(url);
               });
           })
-          .catch(error => {
+          .catch((error) => {
             console.log("upload: ", error);
             toastr.error(`Upload picture failed`, "Error");
             resolve(false);
@@ -257,11 +257,12 @@ export function updateTheme(
   fontBody,
   color,
   previewImage,
-  category
+  category,
+  isOnePage
 ) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       let upload = false;
@@ -278,11 +279,12 @@ export function updateTheme(
               fontBody,
               color,
               previewImage: upload,
-              category
-            }
+              category,
+              isOnePage,
+            },
           });
           dispatch({
-            type: "CLOSE_LOADING"
+            type: "CLOSE_LOADING",
           });
           toastr.success(`Update theme success`, "Success");
         }
@@ -296,17 +298,18 @@ export function updateTheme(
             fontBody,
             color,
             previewImage,
-            category
-          }
+            category,
+            isOnePage,
+          },
         });
         dispatch({
-          type: "CLOSE_LOADING"
+          type: "CLOSE_LOADING",
         });
         toastr.success(`Update theme success`, "Success");
       }
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(`Update theme failed`, "Error");
     }
@@ -319,23 +322,16 @@ export function insertTheme(
   fontBody,
   mainColor,
   previewImage,
-  category
+  category,
+  isOnePage
 ) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const upload = await uploadPictureTheme(previewImage, name);
       if (upload) {
-        console.log({
-          name,
-          fontTitle,
-          fontBody,
-          mainColor,
-          previewImage: upload,
-          category
-        });
         const data = await axios({
           method: "POST",
           url: `/theme/insert`,
@@ -345,11 +341,12 @@ export function insertTheme(
             fontBody,
             mainColor,
             previewImage: upload,
-            category
-          }
+            category,
+            isOnePage,
+          },
         });
         dispatch({
-          type: "CLOSE_LOADING"
+          type: "CLOSE_LOADING",
         });
         if (data.status === 200) {
           toastr.success(`Insert theme success`, "Success");
@@ -358,15 +355,69 @@ export function insertTheme(
         }
       } else {
         dispatch({
-          type: "CLOSE_LOADING"
+          type: "CLOSE_LOADING",
         });
         toastr.error(`Invalid preview image leads to insert failed`, "Error");
       }
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(`Insert theme failed`, "Error");
+    }
+  };
+}
+
+export function deleteCategory(id) {
+  return async (dispatch) => {
+    dispatch({
+      type: "SHOW_LOADING",
+    });
+    try {
+      const result = await axios({
+        method: "DELETE",
+        url: `/category/delete/${id}`,
+      });
+      dispatch({
+        type: "CLOSE_LOADING",
+      });
+      if (result.status === 200) {
+        toastr.success(`Delete category success`, "Success");
+      } else {
+        toastr.error(`Delete category failed`, "Error");
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING",
+      });
+      toastr.error(`Delete category failed`, "Error");
+    }
+  };
+}
+
+export function deleteTheme(id) {
+  return async (dispatch) => {
+    dispatch({
+      type: "SHOW_LOADING",
+    });
+    try {
+      const result = await axios({
+        method: "DELETE",
+        url: `/theme/delete/${id}`,
+      });
+      dispatch({
+        type: "CLOSE_LOADING",
+      });
+      if (result.status === 200) {
+        toastr.success(`Delete theme success`, "Success");
+      } else {
+        toastr.error(`Delete theme failed`, "Error");
+      }
+    } catch (error) {
+      dispatch({
+        type: "CLOSE_LOADING",
+      });
+      toastr.error(`Delete theme failed`, "Error");
     }
   };
 }

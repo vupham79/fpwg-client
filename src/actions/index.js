@@ -6,6 +6,8 @@ import {
   insertCategory,
   insertTheme,
   updateTheme,
+  deleteCategory,
+  deleteTheme,
 } from "./admin";
 import { updateAdminTabIndex } from "./adminTab";
 import { getAllPaths, updateSitepath } from "./path";
@@ -71,7 +73,7 @@ import {
   setFramePreview,
   setEventCustomize,
   setLimit,
-  setAboutCustomize
+  setAboutCustomize,
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import {
@@ -202,5 +204,7 @@ export {
   updateTheme,
   setPostView,
   setLimit,
-  setAboutCustomize
+  setAboutCustomize,
+  deleteCategory,
+  deleteTheme,
 };

@@ -13,35 +13,36 @@ import {
   DialogContent,
   DialogActions,
   Input,
-  Typography
+  Typography,
 } from "@material-ui/core";
 import Title from "./Title";
 import { connect } from "react-redux";
 import {
   getAllCategoriesAdmin,
   updateCategory,
-  insertCategory
+  insertCategory,
+  deleteCategory,
 } from "../actions";
 import ReactPaginate from "react-paginate";
 import { SearchOutlined as SearchIcon, Add } from "@material-ui/icons";
 import toastr from "./Toastr";
 import "./adminStyleSheet.css";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   seeMore: {
-    marginTop: theme.spacing(3)
+    marginTop: theme.spacing(3),
   },
   root: {
     padding: "2px 4px",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1
+    flex: 1,
   },
   iconButton: {
-    padding: 10
+    padding: 10,
   },
   title2: {
     fontSize: "13px",
@@ -49,8 +50,8 @@ const useStyles = theme => ({
     fontFamily: "Segoe UI, sans-serif",
     fontWeight: 600,
     marginBottom: "1rem",
-    color: "#555d66"
-  }
+    color: "#555d66",
+  },
 });
 
 class TableCategory extends Component {
@@ -67,46 +68,46 @@ class TableCategory extends Component {
     edit: {
       name: "",
       picture: "",
-      preview: ""
-    }
+      preview: "",
+    },
   };
 
-  setOpenDialogue = item => {
+  setOpenDialogue = (item) => {
     this.setState({
       showDialog: true,
       name: "",
       picture: "",
-      preview: ""
+      preview: "",
     });
   };
 
   setCloseDialogue = () => {
     this.setState({
-      showDialog: false
+      showDialog: false,
     });
   };
 
-  setOpenEditDialogue = item => {
+  setOpenEditDialogue = (item) => {
     this.setState({
       showEditDialog: true,
       edit: {
         id: item._id,
         name: item.name,
         picture: item.picture,
-        preview: item.picture
-      }
+        preview: item.picture,
+      },
     });
   };
 
   setCloseEditDialogue = () => {
     this.setState({
-      showEditDialog: false
+      showEditDialog: false,
     });
   };
 
-  handleChangeName = e => {
+  handleChangeName = (e) => {
     this.setState({
-      name: e.target.value
+      name: e.target.value,
     });
   };
 
@@ -114,24 +115,33 @@ class TableCategory extends Component {
     const { updateCategory } = this.props;
     const { edit } = this.state;
     await updateCategory(edit.id, edit.name, edit.picture);
-    await this.getCategories();
+    this.getCategories();
+    this.setCloseEditDialogue();
   };
 
   handleInsert = async () => {
     const { insertCategory } = this.props;
     await insertCategory(this.state.name, this.state.picture);
     await this.getCategories();
+    this.setCloseDialogue();
   };
 
-  setListData = listData => {
+  handleDelete = async () => {
+    const { deleteCategory } = this.props;
+    await deleteCategory(this.state.edit.id);
+    await this.getCategories();
+    this.setCloseEditDialogue();
+  };
+
+  setListData = (listData) => {
     this.setState({
-      filteredData: listData
+      filteredData: listData,
     });
   };
 
-  setPageCount = listData => {
+  setPageCount = (listData) => {
     this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage),
     });
   };
 
@@ -151,13 +161,13 @@ class TableCategory extends Component {
     this.getCategories();
   }
 
-  handlePageClick = data => {
+  handlePageClick = (data) => {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.itemPerPage);
 
     this.setState({ offset: offset }, () => {
       this.setListData(
-        this.props.themes.slice(
+        this.props.categories.slice(
           this.state.offset,
           this.state.itemPerPage + this.state.offset
         )
@@ -165,7 +175,7 @@ class TableCategory extends Component {
     });
   };
 
-  handleBrowsePictureEdit = async e => {
+  handleBrowsePictureEdit = async (e) => {
     e.preventDefault();
     let file = e.target.files[0];
     //validating the file
@@ -183,15 +193,15 @@ class TableCategory extends Component {
         edit: {
           ...this.state.edit,
           picture: file,
-          preview: URL.createObjectURL(file)
-        }
+          preview: URL.createObjectURL(file),
+        },
       });
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
     }
   };
 
-  handleBrowsePicture = async e => {
+  handleBrowsePicture = async (e) => {
     e.preventDefault();
     let file = e.target.files[0];
     //validating the file
@@ -207,14 +217,14 @@ class TableCategory extends Component {
     ) {
       this.setState({
         picture: file,
-        preview: URL.createObjectURL(file)
+        preview: URL.createObjectURL(file),
       });
     } else {
       toastr.error("Please provide a valid image. (JPG, JPEG or PNG)", "Error");
     }
   };
 
-  handleSearch = keyword => {
+  handleSearch = (keyword) => {
     let searchResult = this.props.categories.filter(function (category) {
       return category.name.toLowerCase().includes(keyword.toLowerCase());
     });
@@ -222,12 +232,12 @@ class TableCategory extends Component {
     this.setPageCount(searchResult);
   };
 
-  handleChangeNameEdit = e => {
+  handleChangeNameEdit = (e) => {
     this.setState({
       edit: {
         ...this.state.edit,
-        name: e.target.value
-      }
+        name: e.target.value,
+      },
     });
   };
 
@@ -275,35 +285,35 @@ class TableCategory extends Component {
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-            this.state.filteredData.map((row) => (
-              <div key={row._id}>
-                <Grid container direction="row">
-                  <Grid item xs={1}>
-                    {row.name}
-                    <div style={{ height: 20 }} />
-                  </Grid>
-                  <Grid item xs={2}>
-                    <img
-                      style={{
-                        height: "4rem"
-                      }}
-                      alt=""
-                      src={row.picture}
-                    />
-                  </Grid>
-                  <Grid item xs={1}>
-                    <Button
-                      color="primary"
-                      onClick={() => this.setOpenEditDialogue(row)}
-                    >
-                      Edit
-                  </Button>
-                  </Grid>
+          this.state.filteredData.map((row) => (
+            <div key={row._id}>
+              <Grid container direction="row">
+                <Grid item xs={1}>
+                  {row.name}
+                  <div style={{ height: 20 }} />
                 </Grid>
-                <Divider />
-              </div>
-            ))
-          )}
+                <Grid item xs={2}>
+                  <img
+                    style={{
+                      height: "4rem",
+                    }}
+                    alt=""
+                    src={row.picture}
+                  />
+                </Grid>
+                <Grid item xs={1}>
+                  <Button
+                    color="primary"
+                    onClick={() => this.setOpenEditDialogue(row)}
+                  >
+                    Edit
+                  </Button>
+                </Grid>
+              </Grid>
+              <Divider />
+            </div>
+          ))
+        )}
         {this.state.pageCount > 1 && (
           <div className="commentBox">
             <ReactPaginate
@@ -337,9 +347,9 @@ class TableCategory extends Component {
                       label="Name"
                       color="primary"
                       value={this.state.name}
-                      onChange={e => this.handleChangeName(e)}
+                      onChange={(e) => this.handleChangeName(e)}
                       inputProps={{
-                        maxLength: 50
+                        maxLength: 50,
                       }}
                     />
                   </Grid>
@@ -348,13 +358,13 @@ class TableCategory extends Component {
                     <Input
                       type="file"
                       id="selectedFile"
-                      onChange={e => this.handleBrowsePicture(e)}
+                      onChange={(e) => this.handleBrowsePicture(e)}
                       style={{ display: "none" }}
                     />
                     <img
                       style={{
                         height: "4rem",
-                        display: this.state.preview ? "block" : "none"
+                        display: this.state.preview ? "block" : "none",
                       }}
                       alt=""
                       src={this.state.preview}
@@ -403,9 +413,9 @@ class TableCategory extends Component {
                       label="Name"
                       color="primary"
                       value={this.state.edit.name}
-                      onChange={e => this.handleChangeNameEdit(e)}
+                      onChange={(e) => this.handleChangeNameEdit(e)}
                       inputProps={{
-                        maxLength: 50
+                        maxLength: 50,
                       }}
                     />
                   </Grid>
@@ -414,12 +424,12 @@ class TableCategory extends Component {
                     <Input
                       type="file"
                       id="selectedEditFile"
-                      onChange={e => this.handleBrowsePictureEdit(e)}
+                      onChange={(e) => this.handleBrowsePictureEdit(e)}
                       style={{ display: "none" }}
                     />
                     <img
                       style={{
-                        height: "4rem"
+                        height: "4rem",
                       }}
                       alt=""
                       src={this.state.edit.preview}
@@ -444,6 +454,14 @@ class TableCategory extends Component {
             <Button
               autoFocus
               variant="contained"
+              color="secondary"
+              onClick={() => this.handleDelete(this.state.edit.id)}
+            >
+              Delete
+            </Button>
+            <Button
+              autoFocus
+              variant="contained"
               color="primary"
               onClick={() => this.handleUpdate()}
             >
@@ -455,17 +473,18 @@ class TableCategory extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   accessToken: state.user.accessToken,
   userId: state.user.profile.id,
-  categories: state.admin.categories
+  categories: state.admin.categories,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getAllCategoriesAdmin: () => dispatch(getAllCategoriesAdmin()),
   updateCategory: (id, name, picture) =>
     dispatch(updateCategory(id, name, picture)),
-  insertCategory: (name, picture) => dispatch(insertCategory(name, picture))
+  insertCategory: (name, picture) => dispatch(insertCategory(name, picture)),
+  deleteCategory: (id) => dispatch(deleteCategory(id)),
 });
 
 export default connect(
