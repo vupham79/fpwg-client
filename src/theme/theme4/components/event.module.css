@@ -1,0 +1,62 @@
+
+.image_page {
+  margin: 1vh;
+}
+
+.event_body {
+  border: 1px solid #d4e1db;
+  background-color: white;
+}
+
+.shop_name {
+  padding-top: 1vh;
+  padding-left: 1vh;
+  color: #365899;
+  font-weight: 600 !important;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link :hover {
+  text-decoration: underline;
+}
+
+.btn_like {
+  background: #f5f6f7 !important;
+  margin-top: 1vh !important;
+}
+
+.icon {
+  color: #365899;
+}
+
+.like {
+  padding-left: 1vh;
+  font-size: 2vh !important;
+  /* font-weight: 700 !important; */
+}
+
+.contain_event {
+  background: #f5f6f7;
+}
+
+.event {
+  background: white;
+  margin: 2vh;
+  border: 1px #f5f6f7;
+}
+
+.event_content {
+  padding: 7vh 5vh;
+  font-size: 2vh !important;
+  text-align: center;
+}
+
+.btn_view {
+  position: relative;
+  background: #f5f6f7 !important;
+  text-align: center;
+  margin-top: 7vh !important;
+}

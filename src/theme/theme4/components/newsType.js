@@ -1,32 +1,24 @@
 import {
   Button,
   CardMedia,
+  Divider,
   Grid,
   Typography,
   withStyles,
-  Divider,
 } from "@material-ui/core";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
-import { Pagination, PaginationItem } from "@material-ui/lab";
 import moment from "moment";
 import React from "react";
 import ReactPlayer from "react-player";
 import { connect } from "react-redux";
-import {
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { withRouter } from "react-router-dom";
 import {
   getDataByPageNumber,
-  setPostsToSiteView,
   setPostView,
   updateNavItemValue,
+  setPostsToSiteViewOnePage,
 } from "../../../actions";
 import ButtonComponent from "../../../component/Button";
-import Link from "../../../component/link";
-import Slider from "react-slick";
-import { withRouter } from "react-router-dom";
 
 const useStyles = (theme) => ({
   root: {
@@ -73,6 +65,12 @@ const useStyles = (theme) => ({
     backgroundColor: "#fff !important",
     color: "#000 !important",
   },
+  showMore: {
+    marginTop: "2rem",
+    "&:hover": {
+      cursor: "pointer",
+    },
+  },
 });
 
 const gridContent = {
@@ -93,50 +91,6 @@ const gridMessage = {
   // height: "100%",
   whiteSpace: "pre-wrap",
 };
-
-function SampleNextArrow(props) {
-  const { className, style, onClick, dark } = props;
-  return (
-    <div
-      className={`button button--text button--icon ${className}`}
-      style={{
-        ...style,
-        display: "block",
-        // background: !dark && "grey",
-        borderRadius: "100%",
-      }}
-      onClick={onClick}
-    >
-      <FontAwesomeIcon
-        icon={faChevronRight}
-        color={dark ? "#fff" : "#000"}
-        size="2x"
-      />
-    </div>
-  );
-}
-
-function SamplePrevArrow(props) {
-  const { className, style, onClick, dark } = props;
-  return (
-    <div
-      className={`button button--text button--icon ${className}`}
-      style={{
-        ...style,
-        display: "block",
-        // background: !dark && "grey",
-        borderRadius: "100%",
-      }}
-      onClick={onClick}
-    >
-      <FontAwesomeIcon
-        icon={faChevronLeft}
-        color={dark ? "#fff" : "#000"}
-        size="2x"
-      />
-    </div>
-  );
-}
 
 function renderFB() {
   let cropImgFile = new Promise(async (resolve, reject) => {
@@ -171,7 +125,9 @@ class NewsType extends React.Component {
       ? this.props.siteEdit.limitNews
       : this.props.siteView.limitNews,
     page: 1,
-    section: "topView",
+    count: this.props.isEdit
+      ? this.props.siteEdit.limitNews
+      : this.props.siteView.limitNews,
   };
 
   componentDidMount() {
@@ -190,7 +146,9 @@ class NewsType extends React.Component {
     this.setState({
       postOpen: post,
     });
-    document.getElementById("topView").scrollIntoView();
+    document
+      .getElementById("topView")
+      .scrollIntoView({ block: "start", behavior: "smooth" });
   };
 
   handleHomeClick = (post) => {
@@ -203,7 +161,9 @@ class NewsType extends React.Component {
       this.props.history.push(`/${siteView.sitePath}/news`);
     }
     document.getElementById("topView") &&
-      document.getElementById("topView").scrollIntoView();
+      document
+        .getElementById("topView")
+        .scrollIntoView({ block: "start", behavior: "smooth" });
   };
 
   renderPostComponent(index, post, style, dark, type, slide) {
@@ -232,6 +192,7 @@ class NewsType extends React.Component {
       color: dark ? "#fff" : "#000",
       height: "fit-content",
     };
+
     return (
       <Grid
         key={post._id}
@@ -463,33 +424,6 @@ class NewsType extends React.Component {
     );
   }
 
-  handlePageViewClick = async (event, newValue) => {
-    const {
-      siteInfo,
-      getDataByPageNumber,
-      isEdit,
-      setPostToSiteView,
-    } = this.props;
-    if (!isEdit) {
-      this.setState({ pageView: newValue });
-      const data = await getDataByPageNumber({
-        sitePath: siteInfo.sitePath,
-        page: "news",
-        pageNumber: newValue,
-      });
-      data && setPostToSiteView(data);
-    }
-  };
-
-  handlePageEditClick = (event, newValue) => {
-    let selected = newValue - 1;
-    let newOffset = Math.ceil(selected * this.state.itemPerPage);
-    this.setState({
-      offset: newOffset,
-      page: newValue,
-    });
-  };
-
   renderNews = (posts) => {
     const {
       isEdit,
@@ -513,62 +447,27 @@ class NewsType extends React.Component {
       <>
         {fromHome && (
           <Grid item xs={12}>
-            <Slider
-              speed={1000}
-              autoplaySpeed={2500}
-              arrows={true}
-              infinite
-              slidesToScroll={4}
-              slidesToShow={4}
-              nextArrow={<SampleNextArrow dark={dark} />}
-              prevArrow={<SamplePrevArrow dark={dark} />}
-              responsive={[
-                {
-                  breakpoint: 1024,
-                  settings: {
-                    slidesToScroll: 4,
-                    slidesToShow: 4,
-                  },
-                },
-                {
-                  breakpoint: 960,
-                  settings: {
-                    slidesToScroll: 3,
-                    slidesToShow: 3,
-                  },
-                },
-                {
-                  breakpoint: 600,
-                  settings: {
-                    slidesToScroll: 1,
-                    slidesToShow: 1,
-                  },
-                },
-              ]}
-            >
-              {posts &&
-                posts.map(
-                  (post, index) =>
-                    (post.attachments &&
-                      post.attachments.media_type &&
-                      post.isActive &&
-                      this.renderPostComponent(
-                        index,
-                        post,
-                        style,
-                        dark,
-                        post.attachments.media_type,
-                        slide
-                      )) ||
-                    (post.attachments &&
-                      !post.attachments.media_type &&
-                      post.isActive &&
-                      this.renderPostMessage(index, post, style, dark, slide))
-                )}
-            </Slider>
+            {posts &&
+              posts.map(
+                (post, index) =>
+                  (post.attachments &&
+                    post.attachments.media_type &&
+                    post.isActive &&
+                    this.renderPostComponent(
+                      index,
+                      post,
+                      style,
+                      dark,
+                      post.attachments.media_type,
+                      slide
+                    )) ||
+                  (post.attachments &&
+                    !post.attachments.media_type &&
+                    post.isActive &&
+                    this.renderPostMessage(index, post, style, dark, slide))
+              )}
           </Grid>
         )}
-
         {!fromHome &&
           posts &&
           posts.map(
@@ -603,8 +502,15 @@ class NewsType extends React.Component {
   };
 
   renderViewNew = (post) => {
-    const { siteEdit, bgWhite, posts } = this.props;
-    const { isEdit, dark } = this.props;
+    const {
+      siteEdit,
+      bgWhite,
+      posts,
+      titleEdit,
+      titleView,
+      isEdit,
+      dark,
+    } = this.props;
     return (
       <Grid
         container
@@ -613,6 +519,7 @@ class NewsType extends React.Component {
         justify="center"
         // key={post._id}
         style={{ padding: "3rem 0" }}
+        id="topView"
       >
         <Grid
           container
@@ -695,7 +602,10 @@ class NewsType extends React.Component {
                 sm={4}
                 style={{
                   textAlign: "center",
-                  color: "rgb(232, 99, 78)",
+                  color: isEdit ? titleEdit.color : titleView.color,
+                  fontFamily: isEdit
+                    ? titleEdit.fontFamily
+                    : titleView.fontFamily,
                   fontWeight: "bold",
                   fontSize: 34,
                 }}
@@ -739,6 +649,31 @@ class NewsType extends React.Component {
     );
   };
 
+  handleShowMore = async () => {
+    const {
+      isEdit,
+      getDataByPageNumber,
+      setPostsToSiteViewOnePage,
+      siteInfo,
+      siteView,
+    } = this.props;
+    if (isEdit) {
+      this.setState({
+        itemPerPage:
+          parseInt(this.state.itemPerPage) + parseInt(this.state.count),
+      });
+    } else {
+      this.setState({ pageView: this.state.pageView + 1 });
+      const data = await getDataByPageNumber({
+        sitePath: siteInfo.sitePath,
+        page: "news",
+        pageNumber: this.state.pageView + 1,
+      });
+      let newPosts = [...siteView.posts, ...data.data.posts];
+      newPosts && setPostsToSiteViewOnePage(newPosts);
+    }
+  };
+
   render() {
     const {
       isEdit,
@@ -749,10 +684,25 @@ class NewsType extends React.Component {
       editPostView,
       dark,
       classes,
+      titleEdit,
+      titleView,
     } = this.props;
-    const { page } = this.state;
+    const { itemPerPage } = this.state;
+    const useStyles = () => ({
+      showMore: {
+        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+        color: "#E8634E",
+        textAlign: "center",
+        fontSize: 20,
+        lineHeight: "1.4em",
+        textAlign: "center",
+        textDecoration: "underline",
+      },
+    });
+    const showMore = useStyles();
+
     return (
-      <Grid container justify="center" id="fb-root">
+      <Grid container justify="center">
         <script
           async
           defer
@@ -771,7 +721,7 @@ class NewsType extends React.Component {
             // spacing={2}
             justify="center"
             xs={10}
-            sm={10}
+            sm={11}
             style={{
               //  marginTop: "2.5rem", marginBottom: "2.5rem"
               overflow: "visible",
@@ -786,102 +736,43 @@ class NewsType extends React.Component {
               // style={{ padding: "1rem 0rem" }}
             >
               {isEdit
-                ? !fromHome
-                  ? this.renderNews(
-                      posts
-                        .filter(function (pos) {
-                          return pos.isActive === true;
-                        })
-                        .slice(
-                          this.state.page > pageCount ? 0 : this.state.offset,
-                          this.state.page > pageCount
-                            ? 3
-                            : parseInt(this.state.itemPerPage) +
-                                parseInt(this.state.offset)
-                        )
+                ? this.renderNews(
+                    posts.slice(
+                      this.state.page > pageCount ? 0 : this.state.offset,
+                      this.state.page > pageCount
+                        ? 3
+                        : parseInt(this.state.itemPerPage) +
+                            parseInt(this.state.offset)
                     )
-                  : this.renderNews(
-                      posts
-                        .filter(function (pos) {
-                          return pos.isActive === true;
-                        })
-                        .slice(0, 6)
-                    )
+                  )
                 : this.renderNews(posts)}
             </Grid>
 
             {isEdit
               ? pageCount > 1 &&
-                !fromHome && (
+                itemPerPage < posts.length && (
                   <Grid
                     container
+                    item
+                    xs={6}
                     justify="center"
-                    style={{ marginTop: "2.5rem" }}
+                    className={classes.showMore}
+                    style={showMore.showMore}
                   >
-                    <Pagination
-                      style={{
-                        backgroundColor: dark ? "#000" : "#fff",
-                        // padding: "0.4rem",
-                        // borderRadius: "0.3rem",
-                      }}
-                      renderItem={(item) =>
-                        dark ? (
-                          <PaginationItem
-                            {...item}
-                            style={{ color: "white", borderColor: "white" }}
-                            classes={{
-                              root: classes.paginationItemRoot,
-                              selected: classes.paginationItemSelected,
-                            }}
-                          />
-                        ) : (
-                          <PaginationItem {...item} />
-                        )
-                      }
-                      shape="rounded"
-                      variant="outlined"
-                      count={pageCount}
-                      page={page > pageCount ? 1 : page}
-                      onChange={this.handlePageEditClick}
-                    />
+                    <p onClick={() => this.handleShowMore()}>Show More</p>
                   </Grid>
                 )
-              : pageCountView > 1 &&
-                !fromHome && (
+              : pageCountView &&
+                this.state.pageView < pageCountView && (
                   <Grid
                     container
+                    item
+                    xs={6}
                     justify="center"
-                    style={{ marginTop: "2.5rem" }}
+                    className={classes.showMore}
+                    style={showMore.showMore}
                   >
-                    <Pagination
-                      style={{
-                        backgroundColor: dark ? "#000" : "#fff",
-                        // padding: "0.4rem",
-                        // borderRadius: "0.3rem",
-                      }}
-                      renderItem={(item) =>
-                        dark ? (
-                          <PaginationItem
-                            {...item}
-                            style={{
-                              color: "white",
-                              borderColor: "white",
-                            }}
-                            classes={{
-                              root: classes.paginationItemRoot,
-                              selected: classes.paginationItemSelected,
-                            }}
-                          />
-                        ) : (
-                          <PaginationItem {...item} />
-                        )
-                      }
-                      shape="rounded"
-                      variant="outlined"
-                      count={pageCountView}
-                      page={this.state.pageView}
-                      onChange={this.handlePageViewClick}
-                    />
+                    <p onClick={() => this.handleShowMore()}>Show More</p>
                   </Grid>
                 )}
           </Grid>
@@ -905,7 +796,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   getDataByPageNumber: ({ sitePath, page, siteId, pageNumber }) =>
     dispatch(getDataByPageNumber({ sitePath, page, siteId, pageNumber })),
-  setPostToSiteView: (posts) => dispatch(setPostsToSiteView(posts)),
+  setPostsToSiteViewOnePage: (posts) =>
+    dispatch(setPostsToSiteViewOnePage(posts)),
   updateNavItemValue: (value) => dispatch(updateNavItemValue(value)),
   setPostView: (post) => dispatch(setPostView(post)),
 });

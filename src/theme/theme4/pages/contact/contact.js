@@ -122,11 +122,11 @@ class Theme1Contact extends React.Component {
       },
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        color: "#E8634E",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
         fontSize: 36,
         lineHeight: "1.4em",
-        fontWeight: "600",
+        fontWeight: "bold",
       },
     });
     const titleStyle = useStyles();
@@ -152,17 +152,7 @@ class Theme1Contact extends React.Component {
               />
             </Grid>
             <Grid item xs={6} sm={4} style={titleStyle.changableTitle}>
-              {fromHome
-                ? homeTitle
-                : isEdit
-                ? siteEdit &&
-                  siteEdit.navItems &&
-                  siteEdit.navItems.find((item) => item.original === "contact")
-                    .name
-                : siteView &&
-                  siteView.navItems &&
-                  siteView.navItems.find((item) => item.original === "contact")
-                    .name}
+              {homeTitle}
             </Grid>
             <Grid item xs={3} sm={4}>
               <Divider

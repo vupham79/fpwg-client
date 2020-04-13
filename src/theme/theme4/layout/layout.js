@@ -20,7 +20,7 @@ function TabItem({ pages, tabValue }) {
 
 class Layout extends Component {
   renderTabItem = () => {
-    const { navItemValue, siteEdit, postView } = this.props;
+    const { siteEdit, postView } = this.props;
     const pages =
       siteEdit &&
       themesConstant.find((element) => element.id === siteEdit.theme._id).pages;

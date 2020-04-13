@@ -10,18 +10,16 @@ import {
   IconButton,
   List,
   ListItem,
-  Tab,
-  Tabs,
   Tooltip,
+  Typography,
   withStyles,
   Zoom,
-  Typography,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { setPostView } from "../../../actions";
 import { withRouter } from "react-router-dom";
+import { setPostView } from "../../../actions";
 
 const drawerWidth = 240;
 
@@ -95,11 +93,14 @@ class Header extends Component {
     };
   }
 
-  componentDidUpdate(prevState) {
-    document.getElementById(`${this.state.name.toLowerCase()}`) &&
-      document
-        .getElementById(`${this.state.name.toLowerCase()}`)
-        .scrollIntoView({ block: "start", behavior: "smooth" });
+  componentDidUpdate() {
+    const { postView } = this.props;
+    if (postView) {
+      document.getElementById(`${this.state.name.toLowerCase()}`) &&
+        document
+          .getElementById(`${this.state.name.toLowerCase()}`)
+          .scrollIntoView({ block: "start", behavior: "smooth" });
+    }
   }
 
   handleDrawerToggle = () => {
@@ -116,19 +117,26 @@ class Header extends Component {
   };
 
   handleChange = (name) => {
-    const { isEdit, siteView, setPostView, postView } = this.props;
+    const { siteEdit, isEdit, siteView, setPostView, postView } = this.props;
+    const section = (isEdit ? siteEdit.navItems : siteView.navItems).find(
+      (item) => item.name === name
+    ).original;
     if (isEdit) {
       if (postView) {
         setPostView(null);
+        this.setState({ name: section });
       }
-      this.setState({ name: name });
     } else {
       if (postView) {
         this.props.history.push(`/${siteView.sitePath}`);
         setPostView(null);
+        this.setState({ name: section });
       }
-      this.setState({ name: name });
     }
+    document.getElementById(`${section.toLowerCase()}`) &&
+      document
+        .getElementById(`${section.toLowerCase()}`)
+        .scrollIntoView({ block: "start", behavior: "smooth" });
   };
 
   renderNavLinks = (navItems) => {

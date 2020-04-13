@@ -21,6 +21,9 @@ import {
   setGalleriesToSiteView,
   setHomepageToSiteView,
   setPostView,
+  setEventsToSiteViewOnePage,
+  setPostsToSiteViewOnePage,
+  setGalleriesToSiteViewOnePage,
 } from "./post";
 import {
   changeColor,
@@ -207,4 +210,7 @@ export {
   setAboutCustomize,
   deleteCategory,
   deleteTheme,
+  setEventsToSiteViewOnePage,
+  setPostsToSiteViewOnePage,
+  setGalleriesToSiteViewOnePage,
 };

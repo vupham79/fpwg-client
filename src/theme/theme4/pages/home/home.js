@@ -1,14 +1,33 @@
-import { Divider, Grid, CardMedia, Typography } from "@material-ui/core";
+import { CardMedia, Grid, withStyles } from "@material-ui/core";
 import React from "react";
+import { Parallax } from "react-parallax";
 import { connect } from "react-redux";
+import AboutPage from "../about/about";
 import ContactPage from "../contact/contact";
 import EventPage from "../event/event";
 import GalleryPage from "../gallery/gallery";
 import NewsPage from "../new/new";
-import AboutPage from "../about/about";
-import { Parallax } from "react-parallax";
+
+const useStyles = (theme) => ({
+  title: {
+    fontSize: 36,
+    [theme.breakpoints.up("md")]: {
+      fontSize: 58,
+    },
+  },
+});
 
 class Theme1Home extends React.Component {
+  renderImage = () => {
+    const { isEdit, siteEdit, siteView, newLogo } = this.props;
+    if (isEdit) {
+      if (newLogo && typeof newLogo === "object" && newLogo.size > 0) {
+        return URL.createObjectURL(newLogo);
+      } else return siteEdit.logo;
+    }
+    return siteView.logo;
+  };
+
   getCover = (index) => {
     const { isEdit, newCover, siteView } = this.props;
     if (isEdit) {
@@ -41,10 +60,11 @@ class Theme1Home extends React.Component {
       bodyEdit,
       bodyView,
       newCover,
+      classes,
     } = this.props;
     let coverIndex = 1;
 
-    const useStyles = () => ({
+    const titleStyle = () => ({
       changableLink: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -59,63 +79,10 @@ class Theme1Home extends React.Component {
         letterSpacing: "0.1em",
         whiteSpace: "no-wrap",
         overflow: "hidden",
-      },
-      changableTitle2: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#b3b2b2",
         textAlign: "center",
-        fontSize: 20,
-        paddingBottom: 20,
-      },
-      changableName: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: isEdit ? titleEdit.color : titleView.color,
-        textAlign: "left",
-        fontSize: 20,
-      },
-      changableBody: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#212121",
-        fontSize: 16,
-        textAlign: "justify",
-      },
-      changableBody2: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#212121",
-        textAlign: "left",
-        fontSize: 16,
-      },
-      changableBody3: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        // color: "#b3b2b2",
-        color: "#111",
-        textAlign: "center",
-        fontSize: "20px",
-        padding: "3rem 0",
-        fontWeight: 300,
-      },
-      changableBody4: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#b3b2b2",
-        textAlign: "center",
-        fontSize: 16,
-      },
-      pageName: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        fontSize: 20,
-      },
-      changableFirst: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        fontWeight: "bold",
-        color: "#212121",
-        textAlign: "center",
-        fontSize: 45,
-        textDecoration: "underline",
-        textDecorationColor: isEdit ? titleEdit.color : titleView.color,
+        position: "absolute",
+        top: "55%",
+        lineHeight: "1.5em",
       },
     });
 
@@ -123,12 +90,12 @@ class Theme1Home extends React.Component {
       width: "100%",
       height: "90vh",
     };
-    const classes = useStyles();
+    const style = titleStyle();
     return (
       <Grid
         container
         style={{
-          minHeight: "50vh",
+          minHeight: "60vh",
         }}
         id="home"
       >
@@ -149,24 +116,19 @@ class Theme1Home extends React.Component {
             xs={12}
             style={{ position: "relative" }}
           >
-            <Grid item xs={10} sm={6} md={5} style={{ padding: "2rem" }}>
+            <Grid item xs={10} sm={7} md={5} style={{ padding: "2rem" }}>
               <CardMedia
-                image={
-                  isEdit ? siteEdit && siteEdit.logo : siteView && siteView.logo
-                }
+                image={this.renderImage()}
                 style={{ paddingTop: "100%", borderRadius: "100%" }}
               />
             </Grid>
             <Grid
               item
               xs={10}
-              style={{ textAlign: "center", position: "absolute", top: "55%" }}
+              style={style.changableTitle}
+              className={classes.title}
             >
-              <Typography variant="h2" style={classes.changableTitle}>
-                {isEdit
-                  ? siteEdit && siteEdit.title
-                  : siteView && siteView.title}
-              </Typography>
+              {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
             </Grid>
           </Grid>
         </Grid>
@@ -238,7 +200,7 @@ class Theme1Home extends React.Component {
                       </Parallax>
                     </Grid> */}
                     <Grid container justify="center" item xs={12}>
-                      <AboutPage fromHome homeTitle={row.name} />
+                      <AboutPage homeTitle={row.name} />
                     </Grid>
                   </Grid>
                 ),
@@ -269,7 +231,6 @@ class Theme1Home extends React.Component {
                       <div style={parallaxStyle} />
                     </Parallax> */}
                     <EventPage
-                      fromHome
                       homeTitle={row.name}
                       homeList={row.filter.items}
                     />
@@ -302,7 +263,6 @@ class Theme1Home extends React.Component {
                       <div style={parallaxStyle} />
                     </Parallax> */}
                     <GalleryPage
-                      fromHome
                       homeList={row.filter.items}
                       homeTitle={row.name}
                     />
@@ -334,7 +294,7 @@ class Theme1Home extends React.Component {
                     >
                       <div style={parallaxStyle} />
                     </Parallax> */}
-                    <ContactPage fromHome homeTitle={row.name} />
+                    <ContactPage homeTitle={row.name} />
                   </Grid>
                 ),
                 news: (
@@ -364,7 +324,7 @@ class Theme1Home extends React.Component {
                       <div style={parallaxStyle} />
                     </Parallax> */}
                     <NewsPage
-                      fromHome
+                      // fromHome
                       homeTitle={row.name}
                       homeList={row.filter.items}
                     />
@@ -441,9 +401,8 @@ class Theme1Home extends React.Component {
                       <div style={parallaxStyle} />
                     </Parallax> */}
                     <EventPage
-                      fromHome
                       homeTitle={row.name}
-                      homeList={row.filter.items}
+                      // homeList={row.filter.items}
                     />
                   </Grid>
                 ),
@@ -474,9 +433,8 @@ class Theme1Home extends React.Component {
                       <div style={parallaxStyle} />
                     </Parallax> */}
                     <GalleryPage
-                      fromHome
                       homeTitle={row.name}
-                      homeList={row.filter.items}
+                      // homeList={row.filter.items}
                     />
                   </Grid>
                 ),
@@ -506,7 +464,7 @@ class Theme1Home extends React.Component {
                     >
                       <div style={parallaxStyle} />
                     </Parallax> */}
-                    <ContactPage fromHome homeTitle={row.name} />
+                    <ContactPage homeTitle={row.name} />
                   </Grid>
                 ),
                 news: (
@@ -536,9 +494,9 @@ class Theme1Home extends React.Component {
                       <div style={parallaxStyle} />
                     </Parallax> */}
                     <NewsPage
-                      fromHome
+                      // fromHome
                       homeTitle={row.name}
-                      homeList={row.filter.items}
+                      // homeList={row.filter.items}
                     />
                   </Grid>
                 ),
@@ -562,4 +520,7 @@ const mapStateToProps = (state) => ({
   newCover: state.site.newCover,
 });
 
-export default connect(mapStateToProps, null)(Theme1Home);
+export default connect(
+  mapStateToProps,
+  null
+)(withStyles(useStyles)(Theme1Home));

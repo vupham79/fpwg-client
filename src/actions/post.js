@@ -145,3 +145,30 @@ export const setPostView = (post) => {
     });
   };
 };
+
+export const setPostsToSiteViewOnePage = (posts) => {
+  return (dispatch) => {
+    dispatch({
+      type: "SET_SITEVIEW_NEWS",
+      payload: posts,
+    });
+  };
+};
+
+export const setGalleriesToSiteViewOnePage = (galleries) => {
+  return (dispatch) => {
+    dispatch({
+      type: "SET_SITEVIEW_GALLERIES",
+      payload: galleries,
+    });
+  };
+};
+
+export const setEventsToSiteViewOnePage = (event) => {
+  return (dispatch) => {
+    dispatch({
+      type: "SET_SITEVIEW_EVENTS",
+      payload: event,
+    });
+  };
+};
