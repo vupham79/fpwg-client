@@ -117,8 +117,6 @@ class SettingEditorTab extends React.Component {
     gmapsLoaded: false,
   };
 
-  componentDidMount() {}
-
   handleSelect = (address) => {
     this.props.changeSiteAddress(address);
     try {
@@ -206,6 +204,15 @@ class SettingEditorTab extends React.Component {
       sitepath,
       address,
     } = this.props;
+
+    const searchOptions = {
+      types: ["address"],
+      // types: ['establisment'],
+      // componentRestrictions: ['us'],
+      // location: new google.maps.LatLng(-34, 151),
+      // radius: 2000,
+    };
+
     return (
       <div style={{ padding: 10 }}>
         <Grid
@@ -410,35 +417,12 @@ class SettingEditorTab extends React.Component {
               />
             </Grid>
             <Grid item xs={10} sm={12} md={10}>
-              {/* <TextField
-                variant="outlined"
-                label="Address"
-                size="small"
-                inputMode={"Address"}
-                fullWidth
-                value={address ? address : ""}
-                onChange={(e) => this.handleChangeAddress(e)}
-                InputLabelProps={{
-                  classes: {
-                    focused: classes.focused,
-                    root: classes.inputLabel,
-                  },
-                }}
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle,
-                  },
-                }}
-                inputProps={{
-                  maxLength: 250,
-                }}
-              /> */}
-
               <PlacesAutocomplete
                 value={address ? address : ""}
                 onChange={this.handleChangeAddress}
                 onSelect={this.handleSelect}
+                searchOptions={searchOptions}
+                debounce={1000}
               >
                 {({
                   getInputProps,
@@ -447,26 +431,58 @@ class SettingEditorTab extends React.Component {
                   loading,
                 }) => (
                   <div>
-                    <input
+                    <TextField
                       {...getInputProps({
                         placeholder: "Search Places ...",
                         className: "location-search-input",
                       })}
+                      variant="outlined"
+                      label="Address"
+                      size="small"
+                      inputMode={"Address"}
+                      fullWidth
+                      InputLabelProps={{
+                        classes: {
+                          focused: classes.focused,
+                          root: classes.inputLabel,
+                        },
+                      }}
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline,
+                          input: classes.inputTitle,
+                        },
+                      }}
+                      inputProps={{
+                        maxLength: 250,
+                      }}
                     />
                     <div className="autocomplete-dropdown-container">
-                      {loading && <div>Loading...</div>}
+                      {loading && (
+                        <div style={{ color: "#565d66", fontSize: 13 }}>
+                          Loading...
+                        </div>
+                      )}
                       {suggestions.map((suggestion) => {
-                        const className = suggestion.active
-                          ? "suggestion-item--active"
-                          : "suggestion-item";
-                        // inline style for demonstration purpose
                         const style = suggestion.active
-                          ? { backgroundColor: "#fafafa", cursor: "pointer" }
-                          : { backgroundColor: "#ffffff", cursor: "pointer" };
+                          ? {
+                              backgroundColor: "#0074aa",
+                              cursor: "pointer",
+                              color: "white",
+                              borderBottom: "1px solid #0074aa",
+                              fontSize: 13,
+                            }
+                          : {
+                              backgroundColor: "#ffffff",
+                              borderLeft: "1px solid #0074aa",
+                              borderRight: "1px solid #0074aa",
+                              borderBottom: "1px solid #f0eded",
+                              color: "#565d66",
+                              fontSize: 13,
+                            };
                         return (
                           <div
                             {...getSuggestionItemProps(suggestion, {
-                              className,
                               style,
                             })}
                           >
