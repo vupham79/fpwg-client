@@ -38,13 +38,13 @@ class Theme1Event extends React.Component {
             alignItems="center"
             item
             sm={10}
-            xs={12}
+            xs={10}
             style={{ padding: "2rem 0" }}
           >
             <Grid item xs={3} sm={4}>
               <Divider
                 style={{
-                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  backgroundColor: isEdit ? titleEdit.color : titleView.color,
                   height: "3px",
                 }}
                 variant="fullWidth"
@@ -56,7 +56,7 @@ class Theme1Event extends React.Component {
             <Grid item xs={3} sm={4}>
               <Divider
                 style={{
-                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  backgroundColor: isEdit ? titleEdit.color : titleView.color,
                   height: "3px",
                 }}
                 variant="fullWidth"
@@ -64,7 +64,7 @@ class Theme1Event extends React.Component {
             </Grid>
           </Grid>
         )}
-        <Grid item xs={12} sm={10} style={{ padding: "2.5rem 0" }}>
+        <Grid item xs={10} sm={10} style={{ padding: "2.5rem 0" }}>
           <EventComponent
             key={
               this.props.isEdit

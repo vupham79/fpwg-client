@@ -8,6 +8,11 @@ import {
 import React from "react";
 import { connect } from "react-redux";
 import {
+  faChevronCircleDown,
+  // faChevronCircleUp,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
   getDataByPageNumber,
   setGalleriesToSiteViewOnePage,
   updateNavItemValue,
@@ -65,6 +70,7 @@ class Gallery extends React.Component {
     count: this.props.isEdit
       ? this.props.siteEdit.limitGallery
       : this.props.siteView.limitGallery,
+    // initialGallery: null,
   };
 
   handlePageViewClick = async (event, newValue) => {
@@ -133,7 +139,7 @@ class Gallery extends React.Component {
     const useStyles = () => ({
       showMore: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        color: "#E8634E",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
         fontSize: 20,
         lineHeight: "1.4em",
@@ -216,7 +222,17 @@ class Gallery extends React.Component {
                   className={classes.showMore}
                   style={showMore.showMore}
                 >
-                  <p onClick={() => this.handleShowMore()}>Show More</p>
+                  <FontAwesomeIcon
+                    icon={faChevronCircleDown}
+                    color={isEdit ? titleEdit.color : titleView.color}
+                    size="2x"
+                    onClick={() => this.handleShowMore()}
+                  />
+                  {/* <FontAwesomeIcon
+                    icon={faChevronCircleUp}
+                    color={isEdit ? titleEdit.color : titleView.color}
+                    size="1x"
+                  /> */}
                 </Grid>
               )
             : pageCountView &&
@@ -229,7 +245,17 @@ class Gallery extends React.Component {
                   className={classes.showMore}
                   style={showMore.showMore}
                 >
-                  <p onClick={() => this.handleShowMore()}>Show More</p>
+                  <FontAwesomeIcon
+                    icon={faChevronCircleDown}
+                    color={isEdit ? titleEdit.color : titleView.color}
+                    size="2x"
+                    onClick={() => this.handleShowMore()}
+                  />
+                  {/* <FontAwesomeIcon
+                    icon={faChevronCircleUp}
+                    color={isEdit ? titleEdit.color : titleView.color}
+                    size="1x"
+                  /> */}
                 </Grid>
               )}
         </Grid>

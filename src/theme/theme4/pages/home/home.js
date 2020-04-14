@@ -7,12 +7,19 @@ import ContactPage from "../contact/contact";
 import EventPage from "../event/event";
 import GalleryPage from "../gallery/gallery";
 import NewsPage from "../new/new";
+import Slider from "react-slick";
 
 const useStyles = (theme) => ({
   title: {
     fontSize: 36,
     [theme.breakpoints.up("md")]: {
       fontSize: 58,
+    },
+  },
+  home: {
+    height: "50vh",
+    [theme.breakpoints.up("sm")]: {
+      height: "100vh",
     },
   },
 });
@@ -63,7 +70,7 @@ class Theme1Home extends React.Component {
       classes,
     } = this.props;
     let coverIndex = 1;
-
+    console.log(newCover);
     const titleStyle = () => ({
       changableLink: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -74,22 +81,18 @@ class Theme1Home extends React.Component {
       },
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        color: "#E8634E",
+        color: isEdit ? titleEdit.color : titleView.color,
         fontWeight: "600",
         letterSpacing: "0.1em",
         whiteSpace: "no-wrap",
         overflow: "hidden",
         textAlign: "center",
         position: "absolute",
-        top: "55%",
-        lineHeight: "1.5em",
+        top: "50%",
+        // lineHeight: "1.5em",
       },
     });
 
-    const parallaxStyle = {
-      width: "100%",
-      height: "90vh",
-    };
     const style = titleStyle();
     return (
       <Grid
@@ -103,9 +106,11 @@ class Theme1Home extends React.Component {
           container
           item
           xs={12}
-          style={{
-            padding: "5rem 0",
-          }}
+          style={
+            {
+              // padding: "5rem 0",
+            }
+          }
           justify="center"
           alignItems="center"
         >
@@ -116,11 +121,21 @@ class Theme1Home extends React.Component {
             xs={12}
             style={{ position: "relative" }}
           >
-            <Grid item xs={10} sm={7} md={5} style={{ padding: "2rem" }}>
-              <CardMedia
-                image={this.renderImage()}
-                style={{ paddingTop: "100%", borderRadius: "100%" }}
-              />
+            <Grid item xs={12} sm={12} md={12}>
+              <Slider speed={1000} autoplaySpeed={2500} arrows={true} infinite>
+                {newCover.map((val, index) => (
+                  <Parallax
+                    bgImage={this.getCover(index)}
+                    bgImageAlt="the Banner"
+                    strength={200}
+                    style={{
+                      width: "100%",
+                    }}
+                  >
+                    <div className={classes.home} />
+                  </Parallax>
+                ))}
+              </Slider>
             </Grid>
             <Grid
               item
@@ -132,38 +147,6 @@ class Theme1Home extends React.Component {
             </Grid>
           </Grid>
         </Grid>
-        {isEdit
-          ? newCover &&
-            newCover.length > 0 && (
-              <Grid item xs={12}>
-                <Parallax
-                  bgImage={this.getCover(0)}
-                  bgImageAlt="the Banner"
-                  strength={200}
-                  style={{
-                    width: "100%",
-                  }}
-                >
-                  <div style={parallaxStyle} />
-                </Parallax>
-              </Grid>
-            )
-          : siteView &&
-            siteView.cover.length > 0 && (
-              <Grid item xs={12}>
-                <Parallax
-                  bgImage={this.getCover(0)}
-                  bgImageAlt="the Banner"
-                  strength={200}
-                  style={{
-                    width: "100%",
-                  }}
-                >
-                  <div style={parallaxStyle} />
-                </Parallax>
-              </Grid>
-            )}
-
         {isEdit &&
           siteEdit &&
           siteEdit.homepage.map(
@@ -182,23 +165,6 @@ class Theme1Home extends React.Component {
                     }}
                     id="about"
                   >
-                    {/* <Grid item xs={12}>
-                      <Parallax
-                        bgImage={
-                          row.original === "about" &&
-                          row.isActive &&
-                          this.getCover(coverIndex++)
-                        }
-                        bgImageAlt="the cat"
-                        strength={200}
-                        style={{
-                          width: "100%",
-                          display: row.isActive ? "block" : "none",
-                        }}
-                      >
-                        <div style={parallaxStyle} />
-                      </Parallax>
-                    </Grid> */}
                     <Grid container justify="center" item xs={12}>
                       <AboutPage homeTitle={row.name} />
                     </Grid>
@@ -215,21 +181,6 @@ class Theme1Home extends React.Component {
                     }}
                     id="event"
                   >
-                    {/* <Parallax
-                      bgImage={
-                        row.original === "event" &&
-                        row.isActive &&
-                        this.getCover(coverIndex++)
-                      }
-                      bgImageAlt="the cat"
-                      strength={200}
-                      style={{
-                        width: "100%",
-                        display: row.isActive ? "block" : "none",
-                      }}
-                    >
-                      <div style={parallaxStyle} />
-                    </Parallax> */}
                     <EventPage
                       homeTitle={row.name}
                       homeList={row.filter.items}
@@ -247,21 +198,6 @@ class Theme1Home extends React.Component {
                     }}
                     id="gallery"
                   >
-                    {/* <Parallax
-                      bgImage={
-                        row.original === "gallery" &&
-                        row.isActive &&
-                        this.getCover(coverIndex++)
-                      }
-                      bgImageAlt="the cat"
-                      strength={200}
-                      style={{
-                        width: "100%",
-                        display: row.isActive ? "block" : "none",
-                      }}
-                    >
-                      <div style={parallaxStyle} />
-                    </Parallax> */}
                     <GalleryPage
                       homeList={row.filter.items}
                       homeTitle={row.name}
@@ -279,21 +215,6 @@ class Theme1Home extends React.Component {
                     }}
                     id="contact"
                   >
-                    {/* <Parallax
-                      bgImage={
-                        row.original === "contact" &&
-                        row.isActive &&
-                        this.getCover(coverIndex++)
-                      }
-                      bgImageAlt="the cat"
-                      strength={200}
-                      style={{
-                        width: "100%",
-                        display: row.isActive ? "block" : "none",
-                      }}
-                    >
-                      <div style={parallaxStyle} />
-                    </Parallax> */}
                     <ContactPage homeTitle={row.name} />
                   </Grid>
                 ),
@@ -308,23 +229,7 @@ class Theme1Home extends React.Component {
                     }}
                     id="news"
                   >
-                    {/* <Parallax
-                      bgImage={
-                        row.original === "news" &&
-                        row.isActive &&
-                        this.getCover(coverIndex++)
-                      }
-                      bgImageAlt="the cat"
-                      strength={200}
-                      style={{
-                        width: "100%",
-                        display: row.isActive ? "block" : "none",
-                      }}
-                    >
-                      <div style={parallaxStyle} />
-                    </Parallax> */}
                     <NewsPage
-                      // fromHome
                       homeTitle={row.name}
                       homeList={row.filter.items}
                     />
@@ -352,23 +257,7 @@ class Theme1Home extends React.Component {
                     justify="center"
                     id="about"
                   >
-                    <Grid item xs={12}>
-                      {/* <Parallax
-                        bgImage={
-                          row.original === "about" &&
-                          row.isActive &&
-                          this.getCover(coverIndex++)
-                        }
-                        bgImageAlt="the cat"
-                        strength={500}
-                        style={{
-                          width: "100%",
-                          display: row.isActive ? "block" : "none",
-                        }}
-                      >
-                        <div style={{ height: "500px", width: "100%" }} />
-                      </Parallax> */}
-                    </Grid>
+                    <Grid item xs={12}></Grid>
                     <Grid container justify="center" item xs={12}>
                       <AboutPage fromHome homeTitle={row.name} />
                     </Grid>
@@ -385,25 +274,7 @@ class Theme1Home extends React.Component {
                     }}
                     id="event"
                   >
-                    {/* <Parallax
-                      bgImage={
-                        row.original === "event" &&
-                        row.isActive &&
-                        this.getCover(coverIndex++)
-                      }
-                      bgImageAlt="the cat"
-                      strength={200}
-                      style={{
-                        width: "100%",
-                        display: row.isActive ? "block" : "none",
-                      }}
-                    >
-                      <div style={parallaxStyle} />
-                    </Parallax> */}
-                    <EventPage
-                      homeTitle={row.name}
-                      // homeList={row.filter.items}
-                    />
+                    <EventPage homeTitle={row.name} />
                   </Grid>
                 ),
                 gallery: (
@@ -417,25 +288,7 @@ class Theme1Home extends React.Component {
                     }}
                     id="gallery"
                   >
-                    {/* <Parallax
-                      bgImage={
-                        row.original === "gallery" &&
-                        row.isActive &&
-                        this.getCover(coverIndex++)
-                      }
-                      bgImageAlt="the cat"
-                      strength={200}
-                      style={{
-                        width: "100%",
-                        display: row.isActive ? "block" : "none",
-                      }}
-                    >
-                      <div style={parallaxStyle} />
-                    </Parallax> */}
-                    <GalleryPage
-                      homeTitle={row.name}
-                      // homeList={row.filter.items}
-                    />
+                    <GalleryPage homeTitle={row.name} />
                   </Grid>
                 ),
                 contact: (
@@ -449,21 +302,6 @@ class Theme1Home extends React.Component {
                     }}
                     id="contact"
                   >
-                    {/* <Parallax
-                      bgImage={
-                        row.original === "contact" &&
-                        row.isActive &&
-                        this.getCover(coverIndex++)
-                      }
-                      bgImageAlt="the cat"
-                      strength={200}
-                      style={{
-                        width: "100%",
-                        display: row.isActive ? "block" : "none",
-                      }}
-                    >
-                      <div style={parallaxStyle} />
-                    </Parallax> */}
                     <ContactPage homeTitle={row.name} />
                   </Grid>
                 ),

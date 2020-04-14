@@ -36,7 +36,7 @@ class Theme1About extends React.Component {
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#E8634E",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "left",
         fontSize: 20,
         lineHeight: "normal",
@@ -44,7 +44,7 @@ class Theme1About extends React.Component {
       },
       changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#E8634E",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
         fontSize: 20,
         lineHeight: "normal",
@@ -52,7 +52,7 @@ class Theme1About extends React.Component {
       },
       changableBody5: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#E8634E",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
         fontSize: 24,
         lineHeight: "normal",
@@ -104,13 +104,13 @@ class Theme1About extends React.Component {
             alignItems="center"
             item
             sm={10}
-            xs={12}
+            xs={10}
             style={{ padding: "2rem 0" }}
           >
             <Grid item xs={3} sm={4}>
               <Divider
                 style={{
-                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  backgroundColor: isEdit ? titleEdit.color : titleView.color,
                   height: "3px",
                 }}
                 variant="fullWidth"
@@ -122,7 +122,7 @@ class Theme1About extends React.Component {
             <Grid item xs={3} sm={4}>
               <Divider
                 style={{
-                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  backgroundColor: isEdit ? titleEdit.color : titleView.color,
                   height: "3px",
                 }}
                 variant="fullWidth"

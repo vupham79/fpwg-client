@@ -13,6 +13,11 @@ import ReactPlayer from "react-player";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import {
+  faChevronCircleDown,
+  // faChevronCircleUp,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
   getDataByPageNumber,
   setPostView,
   updateNavItemValue,
@@ -527,7 +532,9 @@ class NewsType extends React.Component {
           xs={12}
           style={{
             padding: "1rem 0",
-            borderBottom: "3px solid rgba(198, 196, 173, 1)",
+            borderBottom: `3px solid ${
+              isEdit ? titleEdit.color : titleView.color
+            }`,
           }}
           alignItems="center"
         >
@@ -536,7 +543,7 @@ class NewsType extends React.Component {
             startIcon={<KeyboardArrowLeftIcon />}
             style={{
               fontWeight: "bold",
-              color: "rgb(232, 99, 78)",
+              color: isEdit ? titleEdit.color : titleView.color,
               fontSize: "15px",
             }}
           >
@@ -555,6 +562,7 @@ class NewsType extends React.Component {
           }}
         >
           <div
+            class="fb-post"
             data-href={post.target && post.target}
             data-show-text="true"
             style={{
@@ -562,7 +570,7 @@ class NewsType extends React.Component {
               width: "100%",
               // marginBottom: "30vh",
               // backgroundColor: "white",
-              color: "rgb(232, 99, 78)",
+              color: isEdit ? titleEdit.color : titleView.color,
               fontSize: "1.5rem",
               display: "flex",
               justifyContent: "center",
@@ -590,7 +598,7 @@ class NewsType extends React.Component {
               <Grid item xs={3} sm={4}>
                 <Divider
                   style={{
-                    backgroundColor: "rgba(198, 196, 173, 1)",
+                    backgroundColor: isEdit ? titleEdit.color : titleView.color,
                     height: "3px",
                   }}
                   variant="fullWidth"
@@ -615,7 +623,7 @@ class NewsType extends React.Component {
               <Grid item xs={3} sm={4}>
                 <Divider
                   style={{
-                    backgroundColor: "rgba(198, 196, 173, 1)",
+                    backgroundColor: isEdit ? titleEdit.color : titleView.color,
                     height: "3px",
                   }}
                   variant="fullWidth"
@@ -691,7 +699,7 @@ class NewsType extends React.Component {
     const useStyles = () => ({
       showMore: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        color: "#E8634E",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
         fontSize: 20,
         lineHeight: "1.4em",
@@ -703,12 +711,12 @@ class NewsType extends React.Component {
 
     return (
       <Grid container justify="center">
-        <script
+        {/* <script
           async
           defer
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
           src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v6.0&appId=742131839643879&autoLogAppEvents=1"
-        ></script>
+        ></script> */}
         {!fromHome && editPostView ? (
           <Grid container item xs={11} justify="center">
             {this.renderViewNew(editPostView)}
@@ -720,7 +728,7 @@ class NewsType extends React.Component {
             // xs={10}
             // spacing={2}
             justify="center"
-            xs={10}
+            xs={11}
             sm={11}
             style={{
               //  marginTop: "2.5rem", marginBottom: "2.5rem"
@@ -759,7 +767,12 @@ class NewsType extends React.Component {
                     className={classes.showMore}
                     style={showMore.showMore}
                   >
-                    <p onClick={() => this.handleShowMore()}>Show More</p>
+                    <FontAwesomeIcon
+                      icon={faChevronCircleDown}
+                      color={isEdit ? titleEdit.color : titleView.color}
+                      size="2x"
+                      onClick={() => this.handleShowMore()}
+                    />
                   </Grid>
                 )
               : pageCountView &&
@@ -772,7 +785,12 @@ class NewsType extends React.Component {
                     className={classes.showMore}
                     style={showMore.showMore}
                   >
-                    <p onClick={() => this.handleShowMore()}>Show More</p>
+                    <FontAwesomeIcon
+                      icon={faChevronCircleDown}
+                      color={isEdit ? titleEdit.color : titleView.color}
+                      size="2x"
+                      onClick={() => this.handleShowMore()}
+                    />
                   </Grid>
                 )}
           </Grid>

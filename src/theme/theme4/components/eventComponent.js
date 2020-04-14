@@ -139,6 +139,7 @@ class EventComponent extends React.Component {
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
                       height: "6rem",
+                      fontSize: 14,
                     }}
                   >
                     <Grid item xs={12}>
@@ -186,6 +187,7 @@ class EventComponent extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       color: dark ? "#fff" : "#000",
+                      fontSize: 14,
                     }}
                   >
                     {row.description}
@@ -213,6 +215,7 @@ class EventComponent extends React.Component {
                       wordWrap: "break-word",
                       height: "6rem",
                       color: dark ? "#fff" : "#000",
+                      fontSize: 14,
                     }}
                   >
                     <Grid item xs={12}>
@@ -337,6 +340,7 @@ class EventComponent extends React.Component {
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
                       height: "6rem",
+                      fontSize: 14,
                     }}
                   >
                     <Grid item xs={12}>
@@ -384,6 +388,7 @@ class EventComponent extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       color: dark ? "#fff" : "#000",
+                      fontSize: 14,
                     }}
                   >
                     {row.description}
@@ -411,6 +416,7 @@ class EventComponent extends React.Component {
                       wordWrap: "break-word",
                       height: "6rem",
                       color: dark ? "#fff" : "#000",
+                      fontSize: 14,
                     }}
                   >
                     <Grid item xs={12}>
@@ -473,7 +479,7 @@ class EventComponent extends React.Component {
     const useStyles = () => ({
       showMore: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        color: "#E8634E",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
         fontSize: 20,
         lineHeight: "1.4em",
@@ -485,7 +491,7 @@ class EventComponent extends React.Component {
     return (
       <Grid
         item
-        xs={10}
+        xs={12}
         sm={12}
         container
         justify="center"
@@ -556,7 +562,7 @@ class EventComponent extends React.Component {
                       </p>
                     </Grid>
                     <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: dark && "#fff" }} />
+                      <Divider style={{ backgroundColor: "#fff" }} />
                     </Grid>
                   </Grid>
                 )}
@@ -725,7 +731,7 @@ class EventComponent extends React.Component {
                     <p onClick={() => this.handleShowMore()}>Show More</p>
                   </Grid>
                 )
-              : pageCountView &&
+              : pageCountView !== null &&
                 this.state.pageView < pageCountView && (
                   <Grid
                     container

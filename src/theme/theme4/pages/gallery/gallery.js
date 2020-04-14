@@ -32,7 +32,7 @@ class Theme4Gallery extends React.Component {
       },
       changableBody2: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#E8634E",
+        color: isEdit ? titleEdit.color : titleView.color,
         textAlign: "center",
         fontSize: 20,
       },
@@ -46,13 +46,13 @@ class Theme4Gallery extends React.Component {
             alignItems="center"
             item
             sm={10}
-            xs={12}
+            xs={10}
             style={{ padding: "2rem 0" }}
           >
             <Grid item xs={3} sm={4}>
               <Divider
                 style={{
-                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  backgroundColor: isEdit ? titleEdit.color : titleView.color,
                   height: "3px",
                 }}
                 variant="fullWidth"
@@ -64,7 +64,7 @@ class Theme4Gallery extends React.Component {
             <Grid item xs={3} sm={4}>
               <Divider
                 style={{
-                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  backgroundColor: isEdit ? titleEdit.color : titleView.color,
                   height: "3px",
                 }}
                 variant="fullWidth"

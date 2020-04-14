@@ -32,10 +32,22 @@ class Layout extends Component {
     }
     return <TabItem tabValue={itemValue} pages={pages} />;
   };
+  renderImage = () => {
+    const { isEdit, siteEdit, siteView, newLogo } = this.props;
+    if (isEdit) {
+      if (newLogo && typeof newLogo === "object" && newLogo.size > 0) {
+        return URL.createObjectURL(newLogo);
+      } else return siteEdit.logo;
+    }
+    return siteView.logo;
+  };
   render() {
     const { isEdit, titleView, titleEdit } = this.props;
     return (
-      <Grid id="topPos" style={{ backgroundColor: "#e4e4d4" }}>
+      <Grid
+        id="topPos"
+        style={{ backgroundColor: "#000", position: "relative" }}
+      >
         <Header
           navPos={"right"}
           displayImg={false}
@@ -59,6 +71,7 @@ const mapStateToProps = (state) => ({
   newCover: state.site.newCover,
   siteView: state.site.siteView,
   postView: state.post.postView,
+  newLogo: state.site.newLogo,
 });
 
 export default connect(mapStateToProps, null)(Layout);

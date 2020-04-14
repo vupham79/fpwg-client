@@ -72,6 +72,7 @@ const useStyles = (theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
+    backgroundColor: "#000",
   },
   tooltip: {
     border: "2px solid orange",
@@ -162,12 +163,13 @@ class Header extends Component {
                       fontFamily: isEdit
                         ? titleEdit.fontFamily
                         : titleView.fontFamily,
-                      color: "#E8634E",
+                      color: isEdit ? titleEdit.color : titleView.color,
                       textTransform: "uppercase",
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: "bold",
                       padding: "0 0.5rem",
                       overflow: "hidden",
+                      mixBlendMode: "difference",
                     }}
                     className={classes.navItemLinks}
                     onClick={() => this.handleChange(item.name)}
@@ -217,9 +219,9 @@ class Header extends Component {
                     fontFamily: isEdit
                       ? titleEdit.fontFamily
                       : titleView.fontFamily,
-                    color: "#E8634E",
+                    color: isEdit ? titleEdit.color : titleView.color,
                     textTransform: "uppercase",
-                    fontSize: 12,
+                    fontSize: 18,
                     padding: "1rem 0",
                     textAlign: "center",
                     width: "-webkit-fill-available",
@@ -262,12 +264,13 @@ class Header extends Component {
   };
 
   renderMenuButton = () => {
+    const { isEdit, titleEdit, titleView } = this.props;
     return (
       <IconButton
         aria-label="open drawer"
         edge="start"
         onClick={this.handleDrawerToggle}
-        style={{ color: "#E8634E" }}
+        style={{ color: isEdit ? titleEdit.color : titleView.color }}
       >
         <MenuIcon />
       </IconButton>

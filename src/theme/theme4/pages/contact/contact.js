@@ -29,39 +29,99 @@ const useStyle = (theme) => ({
 });
 class Theme1Contact extends React.Component {
   renderUrl = () => {
-    const { isEdit } = this.props;
+    const { isEdit, titleEdit, titleView } = this.props;
     if (isEdit) {
-      return <FontAwesomeIcon icon={faFacebookF} color="#E8634E" size="xs" />;
+      return (
+        <FontAwesomeIcon
+          icon={faFacebookF}
+          color={isEdit ? titleEdit.color : titleView.color}
+          size="xs"
+        />
+      );
     } else {
-      return <FontAwesomeIcon icon={faFacebookF} color="#E8634E" size="xs" />;
+      return (
+        <FontAwesomeIcon
+          icon={faFacebookF}
+          color={isEdit ? titleEdit.color : titleView.color}
+          size="xs"
+        />
+      );
     }
   };
 
   renderInstagram = () => {
-    const { isEdit } = this.props;
+    const { isEdit, titleEdit, titleView } = this.props;
     if (isEdit) {
-      return <FontAwesomeIcon icon={faInstagram} color="#E8634E" size="xs" />;
+      return (
+        <FontAwesomeIcon
+          icon={faInstagram}
+          color={isEdit ? titleEdit.color : titleView.color}
+          size="xs"
+        />
+      );
     } else {
-      return <FontAwesomeIcon icon={faInstagram} color="#E8634E" size="xs" />;
+      return (
+        <FontAwesomeIcon
+          icon={faInstagram}
+          color={isEdit ? titleEdit.color : titleView.color}
+          size="xs"
+        />
+      );
     }
   };
 
   renderYoutube = () => {
-    const { isEdit } = this.props;
+    const { isEdit, titleEdit, titleView } = this.props;
     if (isEdit) {
-      return <FontAwesomeIcon icon={faYoutube} color="#E8634E" size="xs" />;
+      return (
+        <FontAwesomeIcon
+          icon={faYoutube}
+          color={isEdit ? titleEdit.color : titleView.color}
+          size="xs"
+        />
+      );
     } else {
-      return <FontAwesomeIcon icon={faYoutube} color="#E8634E" size="xs" />;
+      return (
+        <FontAwesomeIcon
+          icon={faYoutube}
+          color={isEdit ? titleEdit.color : titleView.color}
+          size="xs"
+        />
+      );
     }
   };
 
   renderWhatsapp = () => {
-    const { isEdit } = this.props;
+    const { isEdit, titleEdit, titleView } = this.props;
     if (isEdit) {
-      return <FontAwesomeIcon icon={faWhatsapp} color="#E8634E" size="xs" />;
+      return (
+        <FontAwesomeIcon
+          icon={faWhatsapp}
+          color={isEdit ? titleEdit.color : titleView.color}
+          size="xs"
+        />
+      );
     } else {
-      return <FontAwesomeIcon icon={faWhatsapp} color="#E8634E" size="xs" />;
+      return (
+        <FontAwesomeIcon
+          icon={faWhatsapp}
+          color={isEdit ? titleEdit.color : titleView.color}
+          size="xs"
+        />
+      );
     }
+  };
+
+  isShowMap = () => {
+    const { isEdit, siteEdit, siteView } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.latitude) {
+        return true;
+      }
+    } else if (siteView && siteView.latitude) {
+      return true;
+    }
+    return false;
   };
 
   render() {
@@ -139,13 +199,13 @@ class Theme1Contact extends React.Component {
             alignItems="center"
             item
             sm={10}
-            xs={12}
+            xs={10}
             style={{ padding: "2rem 0" }}
           >
             <Grid item xs={3} sm={4}>
               <Divider
                 style={{
-                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  backgroundColor: isEdit ? titleEdit.color : titleView.color,
                   height: "3px",
                 }}
                 variant="fullWidth"
@@ -157,7 +217,7 @@ class Theme1Contact extends React.Component {
             <Grid item xs={3} sm={4}>
               <Divider
                 style={{
-                  backgroundColor: "rgba(198, 196, 173, 1)",
+                  backgroundColor: isEdit ? titleEdit.color : titleView.color,
                   height: "3px",
                 }}
                 variant="fullWidth"
@@ -167,13 +227,20 @@ class Theme1Contact extends React.Component {
         )}
         <Grid
           item
-          xs={12}
-          sm={8}
+          xs={10}
+          sm={10}
           container
           justify="center"
+          spacing={2}
           style={{ padding: "2.5rem 0" }}
         >
-          <Grid item container xs={10} sm={6}>
+          <Grid
+            item
+            container
+            xs={12}
+            sm={this.isShowMap() ? 6 : 8}
+            md={this.isShowMap() ? 4 : 8}
+          >
             {isEdit ? (
               address ? (
                 <Grid
@@ -193,8 +260,8 @@ class Theme1Contact extends React.Component {
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
                         fontWeight: "bold",
-                        color: "#E8634E",
-                        textAlign: "left",
+                        color: isEdit ? titleEdit.color : titleView.color,
+                        textAlign: this.isShowMap() ? "left" : "center",
                         fontSize: 20,
                         // paddingBottom: 16,
                       }}
@@ -209,8 +276,8 @@ class Theme1Contact extends React.Component {
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
                         fontWeight: "100",
-                        color: "#E8634E",
-                        textAlign: "left",
+                        color: isEdit ? titleEdit.color : titleView.color,
+                        textAlign: this.isShowMap() ? "left" : "center",
                         fontSize: 16,
                         // paddingBottom: 16,
                       }}
@@ -246,8 +313,8 @@ class Theme1Contact extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       fontWeight: "bold",
-                      color: "#E8634E",
-                      textAlign: "left",
+                      color: isEdit ? titleEdit.color : titleView.color,
+                      textAlign: this.isShowMap() ? "left" : "center",
                       fontSize: 20,
                       // paddingBottom: 16,
                     }}
@@ -262,8 +329,8 @@ class Theme1Contact extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       fontWeight: "100",
-                      color: "#E8634E",
-                      textAlign: "left",
+                      color: isEdit ? titleEdit.color : titleView.color,
+                      textAlign: this.isShowMap() ? "left" : "center",
                       fontSize: 16,
                       // paddingBottom: 16,
                     }}
@@ -300,8 +367,8 @@ class Theme1Contact extends React.Component {
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
                         fontWeight: "bold",
-                        color: "#E8634E",
-                        textAlign: "left",
+                        color: isEdit ? titleEdit.color : titleView.color,
+                        textAlign: this.isShowMap() ? "left" : "center",
                         fontSize: 20,
                       }}
                     >
@@ -315,8 +382,8 @@ class Theme1Contact extends React.Component {
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
                         fontWeight: "100",
-                        color: "#E8634E",
-                        textAlign: "left",
+                        color: isEdit ? titleEdit.color : titleView.color,
+                        textAlign: this.isShowMap() ? "left" : "center",
                         fontSize: 16,
                       }}
                     >
@@ -351,8 +418,8 @@ class Theme1Contact extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       fontWeight: "bold",
-                      color: "#E8634E",
-                      textAlign: "left",
+                      color: isEdit ? titleEdit.color : titleView.color,
+                      textAlign: this.isShowMap() ? "left" : "center",
                       fontSize: 20,
                     }}
                   >
@@ -366,8 +433,8 @@ class Theme1Contact extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       fontWeight: "100",
-                      color: "#E8634E",
-                      textAlign: "left",
+                      color: isEdit ? titleEdit.color : titleView.color,
+                      textAlign: this.isShowMap() ? "left" : "center",
                       fontSize: 16,
                     }}
                   >
@@ -403,8 +470,8 @@ class Theme1Contact extends React.Component {
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
                         fontWeight: "bold",
-                        color: "#E8634E",
-                        textAlign: "left",
+                        color: isEdit ? titleEdit.color : titleView.color,
+                        textAlign: this.isShowMap() ? "left" : "center",
                         fontSize: 20,
                       }}
                     >
@@ -418,8 +485,8 @@ class Theme1Contact extends React.Component {
                           ? bodyEdit.fontFamily
                           : bodyView.fontFamily,
                         fontWeight: "100",
-                        color: "#E8634E",
-                        textAlign: "left",
+                        color: isEdit ? titleEdit.color : titleView.color,
+                        textAlign: this.isShowMap() ? "left" : "center",
                         fontSize: 16,
                         // paddingBottom: 16,
                       }}
@@ -455,8 +522,8 @@ class Theme1Contact extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       fontWeight: "bold",
-                      color: "#E8634E",
-                      textAlign: "left",
+                      color: isEdit ? titleEdit.color : titleView.color,
+                      textAlign: this.isShowMap() ? "left" : "center",
                       fontSize: 20,
                     }}
                   >
@@ -470,8 +537,8 @@ class Theme1Contact extends React.Component {
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
                       fontWeight: "100",
-                      color: "#E8634E",
-                      textAlign: "left",
+                      color: isEdit ? titleEdit.color : titleView.color,
+                      textAlign: this.isShowMap() ? "left" : "center",
                       fontSize: 16,
                       // paddingBottom: 16,
                     }}
@@ -489,8 +556,19 @@ class Theme1Contact extends React.Component {
             ) : (
               <></>
             )}
-            <Divider variant="fullWidth" style={{ width: "100%" }} />
-            <Grid container item justify="flex-start" xs={12}>
+            <Divider
+              // variant="fullWidth"
+              style={{
+                backgroundColor: "white",
+                // height: "3px",
+              }}
+            />
+            <Grid
+              container
+              item
+              justify={this.isShowMap() ? "flex-start" : "center"}
+              xs={12}
+            >
               {(siteEdit && siteEdit.url) || (siteView && siteView.url) ? (
                 <Grid item>
                   <IconButton
@@ -584,6 +662,7 @@ class Theme1Contact extends React.Component {
           <Grid
             item
             container
+            md={4}
             sm={6}
             xs={10}
             // justify={"center"}
@@ -595,9 +674,9 @@ class Theme1Contact extends React.Component {
                   <Grid item md={12} sm={12} xs={12} className={classes.map}>
                     <MapWithAMarker
                       googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
-                      loadingElement={<div style={{ height: `100%` }} />}
-                      containerElement={<div style={{ height: `100%` }} />}
-                      mapElement={<div style={{ height: `100%` }} />}
+                      loadingElement={<div style={{ height: `300px` }} />}
+                      containerElement={<div style={{ height: `300px` }} />}
+                      mapElement={<div style={{ height: `300px` }} />}
                     />
                   </Grid>
                 )
@@ -607,18 +686,48 @@ class Theme1Contact extends React.Component {
                   <Grid item md={12} sm={12} xs={12} className={classes.map}>
                     <MapWithAMarker
                       googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
-                      loadingElement={<div style={{ height: `100%` }} />}
+                      loadingElement={<div style={{ height: `300px` }} />}
                       containerElement={
                         <div
                           style={{
-                            height: `100%`,
+                            height: `300px`,
                           }}
                         />
                       }
-                      mapElement={<div style={{ height: `100%` }} />}
+                      mapElement={<div style={{ height: `300px` }} />}
                     />
                   </Grid>
                 )}
+          </Grid>
+          <Grid item container md={4} sm={10} xs={10}>
+            <div
+              className="fb-page"
+              data-href={isEdit ? siteEdit.url : siteView.url}
+              data-show-text="true"
+              style={{
+                // maxWidth: "100%",
+                width: "100%",
+                // marginBottom: "30vh",
+                // backgroundColor: "white",
+                color: "#000",
+                fontSize: "1.5rem",
+                display: "flex",
+                justifyContent: "center",
+                overflow: "auto",
+              }}
+              data-tabs="timeline"
+              data-width=""
+              data-height="300"
+              data-small-header="false"
+              data-adapt-container-width="true"
+              data-hide-cover="false"
+              data-show-facepile="true"
+            >
+              <blockquote
+                cite={isEdit ? siteEdit.url : siteView.url}
+                class="fb-xfbml-parse-ignore"
+              ></blockquote>
+            </div>
           </Grid>
         </Grid>
       </Grid>

@@ -23,7 +23,7 @@ class Footer extends React.Component {
     } = this.props;
 
     const nameStyle = {
-      color: "white",
+      color: isEdit ? titleEdit.color : titleView.color,
       textAlign: "center",
       fontSize: 16,
       padding: "1.5rem",
@@ -36,7 +36,7 @@ class Footer extends React.Component {
       <Grid
         container
         style={{
-          backgroundColor: "#E8634E",
+          // backgroundColor: "#E8634E",
           postion: "absolute",
           bottom: 0,
           padding: "2.8rem",
@@ -44,12 +44,17 @@ class Footer extends React.Component {
         justify="center"
       >
         <Grid
-          container
+          // container
           item
-          justify="center"
-          xs={12}
-          style={{ padding: "2rem 0" }}
-          spacing={3}
+          // justify="center"
+          // xs={12}
+          style={{
+            position: "fixed",
+            right: "0px",
+            top: "10vh",
+            height: "100%",
+          }}
+          // spacing={3}
         >
           <Grid
             item
@@ -64,7 +69,11 @@ class Footer extends React.Component {
               color="primary"
               href={isEdit ? siteEdit.url : siteView.url}
             >
-              <FontAwesomeIcon icon={faFacebookF} color="white" size="1x" />
+              <FontAwesomeIcon
+                icon={faFacebookF}
+                color={isEdit ? titleEdit.color : titleView.color}
+                size="1x"
+              />
             </IconButton>
           </Grid>
 
@@ -87,7 +96,7 @@ class Footer extends React.Component {
                   >
                     <FontAwesomeIcon
                       icon={faWhatsapp}
-                      color="white"
+                      color={isEdit ? titleEdit.color : titleView.color}
                       size="1x"
                     />
                   </IconButton>
@@ -112,7 +121,7 @@ class Footer extends React.Component {
                   >
                     <FontAwesomeIcon
                       icon={faWhatsapp}
-                      color="white"
+                      color={isEdit ? titleEdit.color : titleView.color}
                       size="1x"
                     />
                   </IconButton>
@@ -134,7 +143,11 @@ class Footer extends React.Component {
                     color="primary"
                     href={isEdit ? youtube : siteView.youtube}
                   >
-                    <FontAwesomeIcon icon={faYoutube} color="white" size="1x" />
+                    <FontAwesomeIcon
+                      icon={faYoutube}
+                      color={isEdit ? titleEdit.color : titleView.color}
+                      size="1x"
+                    />
                   </IconButton>
                 </Grid>
               )
@@ -153,7 +166,11 @@ class Footer extends React.Component {
                     style={{ height: "1rem", width: "1rem" }}
                     href={isEdit ? youtube : siteView.youtube}
                   >
-                    <FontAwesomeIcon icon={faYoutube} color="white" size="1x" />
+                    <FontAwesomeIcon
+                      icon={faYoutube}
+                      color={isEdit ? titleEdit.color : titleView.color}
+                      size="1x"
+                    />
                   </IconButton>
                 </Grid>
               )}
@@ -177,7 +194,7 @@ class Footer extends React.Component {
                   >
                     <FontAwesomeIcon
                       icon={faInstagram}
-                      color="white"
+                      color={isEdit ? titleEdit.color : titleView.color}
                       size="1x"
                     />
                   </IconButton>
@@ -202,17 +219,28 @@ class Footer extends React.Component {
                   >
                     <FontAwesomeIcon
                       icon={faInstagram}
-                      color="white"
+                      color={isEdit ? titleEdit.color : titleView.color}
                       size="1x"
                     />
                   </IconButton>
                 </Grid>
               )}
+          <div
+            style={{
+              borderLeft: `1px solid ${
+                isEdit ? titleEdit.color : titleView.color
+              }`,
+              height: "80%",
+              position: "absolute",
+              left: "50%",
+            }}
+          />
         </Grid>
         <Grid
           container
           item
-          xs={6}
+          xs={12}
+          sm={6}
           style={{ textAlign: "center" }}
           justify="center"
         >
@@ -221,7 +249,7 @@ class Footer extends React.Component {
               © {isEdit ? siteEdit.title : siteView.title}
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={12}>
             <Typography
               variant="body1"
               style={{ ...nameStyle, border: "1.2px solid", padding: "0.5rem" }}
