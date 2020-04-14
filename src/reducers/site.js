@@ -532,6 +532,16 @@ const SiteReducer = (state = defaultState, action) => {
         },
         isChanged: true,
       };
+    case "SET_LATLNG":
+      return {
+        ...state,
+        siteEdit: {
+          ...state.siteEdit,
+          latitude: action.payload.lat,
+          longitude: action.payload.lng,
+        },
+        isChanged: true,
+      };
     default:
       return state;
   }

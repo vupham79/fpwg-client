@@ -22,6 +22,7 @@ import {
   changeSiteWhatsapp,
   changeSiteYoutube,
   changeSiteAddress,
+  setLatLng
 } from "../actions";
 import toastr from "./Toastr";
 import PlacesAutocomplete, {
@@ -123,7 +124,7 @@ class SettingEditorTab extends React.Component {
     try {
       geocodeByAddress(address)
         .then((results) => getLatLng(results[0]))
-        .then((latLng) => console.log("Success", latLng))
+        .then((latLng) => this.props.setLatLng(latLng.lat, latLng.lng))
         .catch((error) => console.error("Error", error));
     } catch (error) {
       console.log(error);
@@ -240,7 +241,7 @@ class SettingEditorTab extends React.Component {
               process.env.REACT_APP_API_HOST
                 ? process.env.REACT_APP_API_HOST
                 : "fpwg.herokuapp.com/abc"
-            }`}
+              }`}
             "
           </Grid>
           <Grid item xs={12}>
@@ -437,49 +438,49 @@ class SettingEditorTab extends React.Component {
                   getSuggestionItemProps,
                   loading,
                 }) => (
-                  <div>
-                    <TextField
-                      {...getInputProps({
-                        placeholder: "Search Places ...",
-                        className: "location-search-input",
-                      })}
-                      variant="outlined"
-                      label="Address"
-                      size="small"
-                      inputMode={"Address"}
-                      fullWidth
-                      InputLabelProps={{
-                        classes: {
-                          focused: classes.focused,
-                          root: classes.inputLabel,
-                        },
-                      }}
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline,
-                          input: classes.inputTitle,
-                        },
-                      }}
-                      inputProps={{
-                        maxLength: 250,
-                      }}
-                    />
-                    <div className="autocomplete-dropdown-container">
-                      {loading && (
-                        <div style={{ color: "#565d66", fontSize: 13 }}>
-                          Loading...
-                        </div>
-                      )}
-                      {suggestions.map((suggestion) => {
-                        const style = suggestion.active
-                          ? {
+                    <div>
+                      <TextField
+                        {...getInputProps({
+                          placeholder: "Search Places ...",
+                          className: "location-search-input",
+                        })}
+                        variant="outlined"
+                        label="Address"
+                        size="small"
+                        inputMode={"Address"}
+                        fullWidth
+                        InputLabelProps={{
+                          classes: {
+                            focused: classes.focused,
+                            root: classes.inputLabel,
+                          },
+                        }}
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline,
+                            input: classes.inputTitle,
+                          },
+                        }}
+                        inputProps={{
+                          maxLength: 250,
+                        }}
+                      />
+                      <div className="autocomplete-dropdown-container">
+                        {loading && (
+                          <div style={{ color: "#565d66", fontSize: 13 }}>
+                            Loading...
+                          </div>
+                        )}
+                        {suggestions.map((suggestion) => {
+                          const style = suggestion.active
+                            ? {
                               backgroundColor: "#0074aa",
                               cursor: "pointer",
                               color: "white",
                               borderBottom: "1px solid #0074aa",
                               fontSize: 13,
                             }
-                          : {
+                            : {
                               backgroundColor: "#ffffff",
                               borderLeft: "1px solid #0074aa",
                               borderRight: "1px solid #0074aa",
@@ -487,19 +488,19 @@ class SettingEditorTab extends React.Component {
                               color: "#565d66",
                               fontSize: 13,
                             };
-                        return (
-                          <div
-                            {...getSuggestionItemProps(suggestion, {
-                              style,
-                            })}
-                          >
-                            <span>{suggestion.description}</span>
-                          </div>
-                        );
-                      })}
+                          return (
+                            <div
+                              {...getSuggestionItemProps(suggestion, {
+                                style,
+                              })}
+                            >
+                              <span>{suggestion.description}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </PlacesAutocomplete>
             </Grid>
           </Grid>
@@ -605,6 +606,7 @@ const mapDispatchToProps = (dispatch) => ({
   changeSiteWhatsapp: (whatsapp) => dispatch(changeSiteWhatsapp(whatsapp)),
   changeSiteYoutube: (youtube) => dispatch(changeSiteYoutube(youtube)),
   changeSiteAddress: (address) => dispatch(changeSiteAddress(address)),
+  setLatLng: (lat, lng) => dispatch(setLatLng(lat, lng)),
 });
 
 export default connect(

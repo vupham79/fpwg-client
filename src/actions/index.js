@@ -77,6 +77,7 @@ import {
   setEventCustomize,
   setLimit,
   setAboutCustomize,
+  setLatLng
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import {
@@ -213,4 +214,5 @@ export {
   setEventsToSiteViewOnePage,
   setPostsToSiteViewOnePage,
   setGalleriesToSiteViewOnePage,
+  setLatLng
 };

@@ -453,6 +453,8 @@ export function saveDesignSite({
           showAboutDescription: site.showDetailSetting.showAboutDescription,
           showAboutLogo: site.showDetailSetting.showAboutLogo,
           showStory: site.showDetailSetting.showStory,
+          latitude: site.latitude,
+          longitude: site.longitude
         }
       });
       dispatch({
@@ -1115,6 +1117,18 @@ export function setLimit(news, event, gallery) {
         news: news,
         event: event,
         gallery: gallery
+      }
+    });
+  };
+}
+
+export function setLatLng(lat, lng) {
+  return dispatch => {
+    dispatch({
+      type: "SET_LATLNG",
+      payload: {
+        lat: lat,
+        lng: lng
       }
     });
   };
