@@ -13,7 +13,7 @@ function TabItem({ pages, navItems, tabValue }) {
           (item, index) =>
             tabValue === index && (
               <Grid key={index}>
-                {pages.find(e => e.name === item.original).component}
+                {pages.find((e) => e.name === item.original).component}
               </Grid>
             )
         )}
@@ -24,12 +24,14 @@ function TabItem({ pages, navItems, tabValue }) {
 function renderFB() {
   let cropImgFile = new Promise(async (resolve, reject) => {
     (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
+      var js,
+        fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
+      js = d.createElement(s);
+      js.id = id;
       js.src = "https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js";
       fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
+    })(document, "script", "facebook-jssdk");
 
     setTimeout(() => {
       if (window.FB) {
@@ -41,7 +43,6 @@ function renderFB() {
 }
 
 class Layout extends Component {
-
   componentDidMount() {
     renderFB();
   }
@@ -50,14 +51,14 @@ class Layout extends Component {
     const { navItemValue, siteEdit } = this.props;
     const pages =
       siteEdit &&
-      themesConstant.find(element => element.id === siteEdit.theme._id).pages;
+      themesConstant.find((element) => element.id === siteEdit.theme._id).pages;
 
     return (
       <TabItem
         tabValue={navItemValue && navItemValue}
         pages={pages}
         navItems={
-          siteEdit.navItems && siteEdit.navItems.filter(item => item.isActive)
+          siteEdit.navItems && siteEdit.navItems.filter((item) => item.isActive)
         }
       />
     );
@@ -77,21 +78,19 @@ class Layout extends Component {
         />
         {isEdit ? this.renderTabItem() : this.props.children}
         <Footer />
-        <div class="fb-customerchat"
-          page_id="333667506731947">
-        </div>
+        <div className="fb-customerchat" page_id="333667506731947"></div>
       </Grid>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isEdit: state.site.isEdit,
   siteEdit: state.site.siteEdit,
   navItemValue: state.tab.navItemValue,
   themes: state.theme.data,
   titleView: state.site.titleView,
-  titleEdit: state.site.titleEdit
+  titleEdit: state.site.titleEdit,
 });
 
 export default connect(mapStateToProps, null)(Layout);

@@ -1,0 +1,18 @@
+.slick-slide {
+  height: unset !important;
+  margin: 0 !important;
+}
+/* the parent */
+.slick-list {
+  margin: 0 !important;
+}
+
+.slick-prev,
+.slick-next {
+  font-size: 0 !important;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  content: "" !important;
+}

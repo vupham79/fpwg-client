@@ -8,12 +8,16 @@ import EventPage from "../event/event";
 import GalleryPage from "../gallery/gallery";
 import NewsPage from "../new/new";
 import Slider from "react-slick";
+import "./home.css";
 
 const useStyles = (theme) => ({
   title: {
-    fontSize: 36,
+    // fontSize: 36,
+    writingMode: "vertical-rl",
+    textOrientation: "upright",
+    right: 0,
     [theme.breakpoints.up("md")]: {
-      fontSize: 58,
+      // fontSize: 58,
     },
   },
   home: {
@@ -37,6 +41,7 @@ class Theme1Home extends React.Component {
 
   getCover = (index) => {
     const { isEdit, newCover, siteView } = this.props;
+    console.log("hello", isEdit);
     if (isEdit) {
       if (newCover && newCover[index]) {
         if (
@@ -70,7 +75,6 @@ class Theme1Home extends React.Component {
       classes,
     } = this.props;
     let coverIndex = 1;
-    console.log(newCover);
     const titleStyle = () => ({
       changableLink: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -122,7 +126,14 @@ class Theme1Home extends React.Component {
             style={{ position: "relative" }}
           >
             <Grid item xs={12} sm={12} md={12}>
-              <Slider speed={1000} autoplaySpeed={2500} arrows={true} infinite>
+              <Slider
+                speed={1000}
+                autoplaySpeed={1500}
+                fade
+                arrows={false}
+                autoplay
+                infinite
+              >
                 {newCover.map((val, index) => (
                   <Parallax
                     bgImage={this.getCover(index)}

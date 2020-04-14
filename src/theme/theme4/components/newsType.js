@@ -562,7 +562,7 @@ class NewsType extends React.Component {
           }}
         >
           <div
-            class="fb-post"
+            className="fb-post"
             data-href={post.target && post.target}
             data-show-text="true"
             style={{

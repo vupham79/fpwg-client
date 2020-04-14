@@ -725,7 +725,7 @@ class Theme1Contact extends React.Component {
             >
               <blockquote
                 cite={isEdit ? siteEdit.url : siteView.url}
-                class="fb-xfbml-parse-ignore"
+                className="fb-xfbml-parse-ignore"
               ></blockquote>
             </div>
           </Grid>

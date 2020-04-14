@@ -762,9 +762,9 @@ class PostTypeComponent extends React.Component {
             </Grid>
           </Grid> */}
 
-          {/* <div class="fb-comments" data-href={post.target && post.target} data-width="" data-numposts="5"></div> */}
+          {/* <div className="fb-comments" data-href={post.target && post.target} data-width="" data-numposts="5"></div> */}
           <div
-            class="fb-post"
+            className="fb-post"
             data-href={post.target && post.target}
             data-show-text="true"
             style={{
