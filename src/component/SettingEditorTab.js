@@ -28,6 +28,7 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng,
 } from "react-places-autocomplete";
+require("dotenv").config();
 
 const useStyles = (theme) => ({
   content: {
@@ -234,7 +235,13 @@ class SettingEditorTab extends React.Component {
             }}
           >
             Set a unique path name to your website. Example: Site path "abc"
-            means your website url will be "https://fpwg.herokuapp.com/abc"
+            means your website url will be "
+            {`https://${
+              process.env.REACT_APP_API_HOST
+                ? process.env.REACT_APP_API_HOST
+                : "fpwg.herokuapp.com/abc"
+            }`}
+            "
           </Grid>
           <Grid item xs={12}>
             <TextField
