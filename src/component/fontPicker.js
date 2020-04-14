@@ -4,7 +4,7 @@ import WebFont from "webfontloader";
 import { fontFamily } from "../constant/constant";
 const useStyle = (theme) => ({
   root: {
-    padding: "0.5rem",
+    padding: "0.7rem",
     fontSize: "13px",
   },
 });

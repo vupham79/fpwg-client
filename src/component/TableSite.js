@@ -1,4 +1,4 @@
-import { Grid, IconButton, InputBase, Paper } from "@material-ui/core";
+import { Grid, InputAdornment, TextField } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { Component } from "react";
@@ -6,7 +6,6 @@ import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import { getAllSites } from "../actions";
 import "./adminStyleSheet.css";
-import Title from "./Title";
 
 const useStyles = (theme) => ({
   root: {
@@ -90,9 +89,11 @@ class TableSite extends Component {
     });
   };
 
-  handleSearch = (keyword) => {
+  handleSearch = (event) => {
     let searchResult = this.props.sites.filter(function (site) {
-      return site.title.toLowerCase().includes(keyword.toLowerCase());
+      return site.title
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
     this.setPageCount(searchResult);
@@ -102,28 +103,48 @@ class TableSite extends Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Title>Sites</Title>
-        <Paper component="form" className={classes.root}>
-          <InputBase
-            id="searchBox"
-            className={classes.input}
-            placeholder="Search by title..."
-            onChange={() =>
-              this.handleSearch(document.getElementById("searchBox").value)
-            }
-          />
-          <IconButton
-            className={classes.iconButton}
-            color="primary"
-            aria-label="search"
-            onClick={() =>
-              this.handleSearch(document.getElementById("searchBox").value)
-            }
-          >
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-        <Grid container direction="row">
+        <Grid container alignItems="center" style={{ padding: "0.5rem 0" }}>
+          <Grid container item xs={12} alignItems="center">
+            <Grid
+              item
+              xs={4}
+              style={{
+                padding: "0 0.3rem ",
+                color: "rgb(0, 96, 136)",
+                fontSize: "24px",
+              }}
+            >
+              Sites
+            </Grid>
+            <Grid item xs={8} container justify="flex-end">
+              <TextField
+                label="Search"
+                variant="outlined"
+                margin="dense"
+                onChange={this.handleSearch}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment
+                      position="end"
+                      style={{ color: "rgb(0, 96, 136)" }}
+                    >
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          style={{
+            padding: "0.5rem",
+            color: "white",
+            backgroundColor: "rgb(0, 96, 136)",
+          }}
+        >
           <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Owner</p>
           </Grid>
@@ -148,7 +169,12 @@ class TableSite extends Component {
         ) : (
           this.state.filteredData.map((row, index) => (
             <React.Fragment key={index}>
-              <Grid container direction="row">
+              <Grid
+                container
+                direction="row"
+                alignItems="center"
+                style={{ padding: "0 0.5rem" }}
+              >
                 <Grid item xs={2}>
                   {row.displayName}
                 </Grid>
@@ -165,6 +191,7 @@ class TableSite extends Component {
                   {row.sitePath}
                 </Grid>
                 <Grid
+                  container
                   item
                   xs={2}
                   className={"mainFont"}
@@ -173,6 +200,7 @@ class TableSite extends Component {
                     overflow: "hidden",
                     height: "4rem",
                   }}
+                  alignItems="center"
                 >
                   <Grid
                     item

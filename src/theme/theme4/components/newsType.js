@@ -703,7 +703,6 @@ class NewsType extends React.Component {
         textAlign: "center",
         fontSize: 20,
         lineHeight: "1.4em",
-        textAlign: "center",
         textDecoration: "underline",
       },
     });

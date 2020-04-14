@@ -1,4 +1,4 @@
-import { Divider, Grid, IconButton, InputBase, Paper } from "@material-ui/core";
+import { Divider, Grid, InputAdornment, TextField } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { Component } from "react";
@@ -6,23 +6,22 @@ import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import { getAllUsers } from "../actions";
 import ActivateButton from "./ActivateButton";
-import Title from "./Title";
 import "./adminStyleSheet.css";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   root: {
     padding: "2px 4px",
     display: "flex",
-    alignItems: "center"
+    alignItems: "center",
     // width: 400
   },
   input: {
     marginLeft: theme.spacing(1),
-    flex: 1
+    flex: 1,
   },
   iconButton: {
-    padding: 10
-  }
+    padding: 10,
+  },
 });
 
 class TableUser extends Component {
@@ -30,18 +29,18 @@ class TableUser extends Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5 // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
+    itemPerPage: 5, // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
   };
 
-  setListData = listData => {
+  setListData = (listData) => {
     this.setState({
-      filteredData: listData
+      filteredData: listData,
     });
   };
 
-  setPageCount = listData => {
+  setPageCount = (listData) => {
     this.setState({
-      pageCount: Math.ceil(listData.length / this.state.itemPerPage)
+      pageCount: Math.ceil(listData.length / this.state.itemPerPage),
     });
   };
 
@@ -53,7 +52,7 @@ class TableUser extends Component {
         this.state.offset,
         this.state.itemPerPage + this.state.offset
       ),
-      pageCount: Math.ceil(users.length / this.state.itemPerPage)
+      pageCount: Math.ceil(users.length / this.state.itemPerPage),
     });
   };
 
@@ -61,7 +60,7 @@ class TableUser extends Component {
     this.getUsers();
   }
 
-  handlePageClick = data => {
+  handlePageClick = (data) => {
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.itemPerPage);
 
@@ -75,9 +74,11 @@ class TableUser extends Component {
     });
   };
 
-  handleSearch = keyword => {
-    let searchResult = this.props.users.filter(function(user) {
-      return user.displayName.toLowerCase().includes(keyword.toLowerCase());
+  handleSearch = (event) => {
+    let searchResult = this.props.users.filter(function (user) {
+      return user.displayName
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
     this.setPageCount(searchResult);
@@ -88,28 +89,48 @@ class TableUser extends Component {
 
     return (
       <React.Fragment>
-        <Title>Users</Title>
-        <Paper component="form" className={classes.root}>
-          <InputBase
-            id="searchBox"
-            className={classes.input}
-            placeholder="Search by name..."
-            onChange={() =>
-              this.handleSearch(document.getElementById("searchBox").value)
-            }
-          />
-          <IconButton
-            className={classes.iconButton}
-            color="primary"
-            aria-label="search"
-            onClick={() =>
-              this.handleSearch(document.getElementById("searchBox").value)
-            }
-          >
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-        <Grid container direction="row">
+        <Grid container alignItems="center" style={{ padding: "0.5rem 0" }}>
+          <Grid container item xs={12} alignItems="center">
+            <Grid
+              item
+              xs={4}
+              style={{
+                padding: "0 0.3rem ",
+                color: "rgb(0, 96, 136)",
+                fontSize: "24px",
+              }}
+            >
+              Users
+            </Grid>
+            <Grid item xs={8} container justify="flex-end">
+              <TextField
+                label="Search"
+                variant="outlined"
+                margin="dense"
+                onChange={this.handleSearch}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment
+                      position="end"
+                      style={{ color: "rgb(0, 96, 136)" }}
+                    >
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          style={{
+            padding: "0.5rem",
+            color: "white",
+            backgroundColor: "rgb(0, 96, 136)",
+          }}
+        >
           <Grid item xs={1}>
             <p style={{ fontWeight: "bold" }}>Picture</p>
           </Grid>
@@ -131,7 +152,7 @@ class TableUser extends Component {
         ) : (
           this.state.filteredData.map((row, index) => (
             <div key={row.id}>
-              <Grid container direction="row">
+              <Grid container direction="row" alignItems="center">
                 <Grid item xs={1}>
                   <img style={{ width: "3rem" }} src={row.picture} alt="" />
                 </Grid>
@@ -176,14 +197,14 @@ class TableUser extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   users: state.user.users,
   accessToken: state.user.accessToken,
-  userId: state.user.profile.id
+  userId: state.user.profile.id,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getAllUsers: (id, accessToken) => dispatch(getAllUsers(id, accessToken))
+const mapDispatchToProps = (dispatch) => ({
+  getAllUsers: (id, accessToken) => dispatch(getAllUsers(id, accessToken)),
 });
 
 export default connect(
