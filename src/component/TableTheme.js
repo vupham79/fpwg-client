@@ -1,36 +1,34 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
 import {
-  Grid,
-  Divider,
-  IconButton,
-  InputBase,
-  Paper,
   Button,
-  Dialog,
-  TextField,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Typography,
-  Select,
-  MenuItem,
-  Input,
   Checkbox,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  Input,
+  InputAdornment,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
 } from "@material-ui/core";
-import Title from "./Title";
+import { withStyles } from "@material-ui/core/styles";
+import { SearchOutlined as SearchIcon } from "@material-ui/icons";
+import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+import React, { Component } from "react";
+import { ChromePicker } from "react-color";
+import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import {
-  getAllThemesAdmin,
+  deleteTheme,
   getAllCategoriesAdmin,
+  getAllThemesAdmin,
   insertTheme,
   updateTheme,
-  deleteTheme,
 } from "../actions";
-import ReactPaginate from "react-paginate";
-import { SearchOutlined as SearchIcon, Add } from "@material-ui/icons";
 import "./adminStyleSheet.css";
-import { ChromePicker } from "react-color";
 import FontPickerComponent from "./fontPicker";
 import toastr from "./Toastr";
 
@@ -39,9 +37,10 @@ const useStyles = (theme) => ({
     marginTop: theme.spacing(3),
   },
   root: {
-    padding: "2px 4px",
-    display: "flex",
-    alignItems: "center",
+    padding: "0.7rem",
+    fontSize: "13px",
+    // display: "flex",
+    // alignItems: "center",
     // width: 400
   },
   input: {
@@ -53,11 +52,12 @@ const useStyles = (theme) => ({
   },
   title2: {
     fontSize: "13px",
-    marginTop: "0.25rem",
     fontFamily: "Segoe UI, sans-serif",
     fontWeight: 600,
-    marginBottom: "1rem",
     color: "#555d66",
+  },
+  gridItems: {
+    padding: "0.7rem 0",
   },
 });
 
@@ -280,9 +280,11 @@ class TableTheme extends Component {
     });
   };
 
-  handleSearch = (keyword) => {
+  handleSearch = (event) => {
     let searchResult = this.props.themes.filter(function (theme) {
-      return theme.name.toLowerCase().includes(keyword.toLowerCase());
+      return theme.name
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
     this.setPageCount(searchResult);
@@ -380,50 +382,75 @@ class TableTheme extends Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Title>
-          Themes
-          <IconButton onClick={this.setOpenDialogue}>
-            <Add />
-          </IconButton>
-        </Title>
-        <Paper component="form" className={classes.root}>
-          <InputBase
-            id="searchBox"
-            className={classes.input}
-            placeholder="Search by name..."
-            onChange={() =>
-              this.handleSearch(document.getElementById("searchBox").value)
-            }
-          />
-          <IconButton
-            className={classes.iconButton}
-            color="primary"
-            aria-label="search"
-            onClick={() =>
-              this.handleSearch(document.getElementById("searchBox").value)
-            }
-          >
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-        <Grid container direction="row">
+        <Grid container alignItems="center" style={{ padding: "0.5rem 0" }}>
+          <Grid container item xs={10} md={11} alignItems="center">
+            <Grid
+              item
+              xs={4}
+              style={{
+                padding: "0 0.3rem",
+                color: "rgb(0, 96, 136)",
+                fontSize: "24px",
+              }}
+            >
+              Themes
+            </Grid>
+            <Grid item xs={8} container justify="flex-end">
+              <TextField
+                label="Search"
+                variant="outlined"
+                margin="dense"
+                onChange={this.handleSearch}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment
+                      position="end"
+                      style={{ color: "rgb(0, 96, 136)" }}
+                    >
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container justify="flex-end" item xs={2} md={1}>
+            <Button
+              variant="outlined"
+              style={{ color: "rgb(0, 96, 136)" }}
+              startIcon={<AddCircleOutlineOutlinedIcon />}
+              onClick={() => this.setOpenDialogue()}
+            >
+              Add
+            </Button>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          style={{
+            padding: "0.5rem 0",
+            color: "white",
+            backgroundColor: "rgb(0, 96, 136)",
+          }}
+        >
           <Grid item xs={2}></Grid>
           <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Name</p>
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Font Body</p>
           </Grid>
-          <Grid item xs={1}>
+          <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Font Title</p>
           </Grid>
           <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Main Color</p>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={1}>
             <p style={{ fontWeight: "bold" }}>Category</p>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={1}>
             <p style={{ fontWeight: "bold" }}></p>
           </Grid>
         </Grid>
@@ -432,7 +459,7 @@ class TableTheme extends Component {
         ) : (
           this.state.filteredData.map((row, index) => (
             <div key={index}>
-              <Grid container direction="row">
+              <Grid container direction="row" alignItems="center">
                 <Grid item xs={2}>
                   <img
                     style={{
@@ -444,12 +471,12 @@ class TableTheme extends Component {
                 </Grid>
                 <Grid item xs={2}>
                   {row.name}
-                  <div style={{ height: 20 }} />
+                  {/* <div style={{ height: 20 }} /> */}
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2}>
                   {row.fontBody}
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={2}>
                   {row.fontTitle}
                 </Grid>
                 <Grid container item xs={2}>
@@ -463,12 +490,12 @@ class TableTheme extends Component {
                     {row.mainColor}
                   </Grid>
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={1}>
                   {row.category && row.category.name}
                 </Grid>
-                <Grid item xs={2}>
+                <Grid container justify="flex-end" item xs={1}>
                   <Button
-                    color="primary"
+                    style={{ color: "rgb(0, 96, 136)" }}
                     onClick={() => this.setOpenEditDialogue(row)}
                   >
                     Edit
@@ -502,53 +529,81 @@ class TableTheme extends Component {
           maxWidth="sm"
           fullWidth
         >
-          <DialogTitle>Insert theme</DialogTitle>
+          <DialogTitle style={{ color: "rgb(0, 96, 136)" }}>
+            Insert theme
+          </DialogTitle>
           <DialogContent>
-            <Grid container direction="row">
-              <Grid container item xs={7}>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Name"
-                    color="primary"
-                    value={this.state.newItem.name}
-                    onChange={(e) => this.handleChangeName(e)}
-                    inputProps={{
-                      maxLength: 50,
-                    }}
-                  />
+            <Grid container spacing={2}>
+              <Grid container item xs={7} alignItems="center">
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Name
+                  </Grid>
+                  <Grid item xs={8}>
+                    <TextField
+                      label="Name"
+                      margin="dense"
+                      variant="outlined"
+                      value={this.state.newItem.name}
+                      onChange={(e) => this.handleChangeName(e)}
+                      inputProps={{
+                        maxLength: 50,
+                      }}
+                    />
+                  </Grid>
                 </Grid>
 
-                <Grid container item xs={12}>
-                  <Grid item xs={3} sm={2}>
-                    <Typography className={classes.title2}>
-                      Font Title
-                    </Typography>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Font Title
                   </Grid>
-                  <Grid item xs={6} sm={5}>
+                  <Grid item xs={8}>
                     <FontPickerComponent
                       selectedValue={this.state.newItem.fontTitle}
                       onChange={this.handleChangeFontTitle}
                     />
                   </Grid>
                 </Grid>
-                <Grid container item xs={12}>
-                  <Grid item xs={3} sm={2}>
-                    <Typography className={classes.title2}>
-                      Font Body
-                    </Typography>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Font Body
                   </Grid>
-                  <Grid item xs={6} sm={5}>
+                  <Grid item xs={8}>
                     <FontPickerComponent
                       selectedValue={this.state.newItem.fontBody}
                       onChange={this.handleChangeFontBody}
                     />
                   </Grid>
                 </Grid>
-                <Grid container item xs={12}>
-                  <Grid item xs={3} sm={2}>
-                    <Typography className={classes.title2}>Category</Typography>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Category
                   </Grid>
-                  <Grid item xs={6} sm={5}>
+                  <Grid item xs={8}>
                     <Select
                       classes={{
                         root: classes.root,
@@ -571,13 +626,17 @@ class TableTheme extends Component {
                     </Select>
                   </Grid>
                 </Grid>
-                <Grid container item xs={12}>
-                  <Grid item xs={3} sm={2}>
-                    <Typography className={classes.title2}>
-                      Is one-page type
-                    </Typography>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Is one-page
                   </Grid>
-                  <Grid item xs={6} sm={5}>
+                  <Grid item xs={8}>
                     <Checkbox
                       checked={this.state.newItem.isOnePage}
                       color="primary"
@@ -586,45 +645,76 @@ class TableTheme extends Component {
                     />
                   </Grid>
                 </Grid>
-                <Grid container item xs={12}>
-                  <Grid item>
-                    <Typography>Picture</Typography>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Picture
+                  </Grid>
+                  <Grid container item xs={8} alignItems="center">
                     <Input
                       type="file"
                       id="selectedFile"
                       onChange={(e) => this.handleBrowsePicture(e)}
                       style={{ display: "none" }}
                     />
-                    <img
-                      style={{
-                        height: "4rem",
-                      }}
-                      alt=""
-                      src={this.state.newItem.preview}
-                    />
-                  </Grid>
-                  <Grid container justify={"center"}>
-                    <button
-                      className={classes.logoButton}
-                      color={"default"}
-                      onClick={() =>
-                        document.getElementById("selectedFile").click()
+                    {this.state.newItem.preview && (
+                      <Grid
+                        item
+                        xs={8}
+                        style={{
+                          backgroundImage: `URL("${this.state.newItem.preview}")`,
+                          height: "4rem",
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          backgroundRepeat: "no-repeat",
+                        }}
+                      >
+                        {/* <img
+                          style={{
+                            height: "4rem",
+                          }}
+                          alt=""
+                          src={this.state.newItem.preview}
+                        /> */}
+                      </Grid>
+                    )}
+
+                    <Grid
+                      container
+                      item
+                      xs={4}
+                      justify={
+                        this.state.newItem.preview ? "flex-end" : "flex-start"
                       }
                     >
-                      Browse
-                    </button>
+                      <button
+                        className={classes.logoButton}
+                        color={"default"}
+                        onClick={() =>
+                          document.getElementById("selectedFile").click()
+                        }
+                      >
+                        Browse
+                      </button>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={5}>
                 <ChromePicker
+                  style={{ marginTop: "2rem" }}
                   color={this.state.newItem.mainColor}
                   onChangeComplete={this.handleChangeColor}
                 />
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions>
+          <DialogActions style={{ padding: "1rem" }}>
             <Button
               autoFocus
               variant="contained"
@@ -642,60 +732,100 @@ class TableTheme extends Component {
           maxWidth="sm"
           fullWidth
         >
-          <DialogTitle>Edit theme</DialogTitle>
+          <DialogTitle style={{ color: "rgb(0, 96, 136)" }}>
+            Edit theme
+          </DialogTitle>
           <DialogContent>
-            <Grid container direction="row">
+            <Grid container direction="row" spacing={2}>
               <Grid container item xs={7}>
-                <Grid item xs={12}>
-                  <TextField
-                    label="ID"
-                    color="primary"
-                    value={this.state.edit.id}
-                    disabled
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    label="Name"
-                    color="primary"
-                    value={this.state.edit.name}
-                    onChange={(e) => this.handleChangeNameEdit(e)}
-                    inputProps={{
-                      maxLength: 50,
-                    }}
-                  />
-                </Grid>
-                <Grid container item xs={12}>
-                  <Grid item xs={3} sm={2}>
-                    <Typography className={classes.title2}>
-                      Font Title
-                    </Typography>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4} className={classes.title3}>
+                    Id
                   </Grid>
-                  <Grid item xs={6} sm={5}>
+                  <Grid item xs={8}>
+                    <TextField
+                      label="ID"
+                      color="primary"
+                      value={this.state.edit.id}
+                      disabled
+                    />
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4} className={classes.title3}>
+                    Name
+                  </Grid>
+                  <Grid item xs={8}>
+                    <TextField
+                      label="Name"
+                      color="primary"
+                      margin="dense"
+                      variant="outlined"
+                      value={this.state.edit.name}
+                      onChange={(e) => this.handleChangeNameEdit(e)}
+                      inputProps={{
+                        maxLength: 50,
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Font Title
+                  </Grid>
+                  <Grid item xs={8}>
                     <FontPickerComponent
                       selectedValue={this.state.edit.fontTitle}
                       onChange={this.handleChangeFontTitleEdit}
                     />
                   </Grid>
                 </Grid>
-                <Grid container item xs={12}>
-                  <Grid item xs={3} sm={2}>
-                    <Typography className={classes.title2}>
-                      Font Body
-                    </Typography>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Font Body
                   </Grid>
-                  <Grid item xs={6} sm={5}>
+                  <Grid item xs={8}>
                     <FontPickerComponent
                       selectedValue={this.state.edit.fontBody}
                       onChange={this.handleChangeFontBodyEdit}
                     />
                   </Grid>
                 </Grid>
-                <Grid container item xs={12}>
-                  <Grid item xs={3} sm={2}>
-                    <Typography className={classes.title2}>Category</Typography>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Category
                   </Grid>
-                  <Grid item xs={6} sm={5}>
+                  <Grid item xs={8}>
                     <Select
                       classes={{
                         root: classes.root,
@@ -718,13 +848,19 @@ class TableTheme extends Component {
                     </Select>
                   </Grid>
                 </Grid>
-                <Grid container item xs={12}>
-                  <Grid item xs={3} sm={2}>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4}>
                     <Typography className={classes.title2}>
-                      Is one-page type
+                      Is one-page
                     </Typography>
                   </Grid>
-                  <Grid item xs={6} sm={5}>
+                  <Grid item xs={8}>
                     <Checkbox
                       checked={this.state.edit.isOnePage}
                       color="primary"
@@ -733,37 +869,66 @@ class TableTheme extends Component {
                     />
                   </Grid>
                 </Grid>
-                <Grid container item xs={12}>
-                  <Grid item>
-                    <Typography>Picture</Typography>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  className={classes.gridItems}
+                  alignItems="center"
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Picture
+                  </Grid>
+                  <Grid container item xs={8} alignItems="center">
                     <Input
                       type="file"
                       id="selectedEditFile"
                       onChange={(e) => this.handleBrowsePictureEdit(e)}
                       style={{ display: "none" }}
                     />
-                    <img
+                    {this.state.edit.preview && (
+                      <Grid
+                        item
+                        xs={8}
+                        style={{
+                          backgroundImage: `URL("${this.state.edit.preview}")`,
+                          height: "4rem",
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          backgroundRepeat: "no-repeat",
+                        }}
+                      >
+                        {/* <img
                       style={{
                         height: "4rem",
                       }}
                       alt=""
                       src={this.state.edit.preview}
-                    />
-                  </Grid>
-                  <Grid container justify={"center"}>
-                    <button
-                      className={classes.logoButton}
-                      color={"default"}
-                      onClick={() =>
-                        document.getElementById("selectedEditFile").click()
+                    /> */}
+                      </Grid>
+                    )}
+                    <Grid
+                      container
+                      item
+                      xs={4}
+                      justify={
+                        this.state.edit.preview ? "flex-end" : "flex-start"
                       }
                     >
-                      Browse
-                    </button>
+                      <button
+                        className={classes.logoButton}
+                        color={"default"}
+                        onClick={() =>
+                          document.getElementById("selectedEditFile").click()
+                        }
+                      >
+                        Browse
+                      </button>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={5}>
                 <ChromePicker
                   color={this.state.edit.mainColor}
                   onChangeComplete={this.handleChangeColorEdit}
@@ -771,7 +936,7 @@ class TableTheme extends Component {
               </Grid>
             </Grid>
           </DialogContent>
-          <DialogActions>
+          <DialogActions style={{ padding: "1rem 2rem" }}>
             <Button
               autoFocus
               variant="contained"

@@ -1,11 +1,10 @@
-import React, { Component } from "react";
+import { Divider, Grid, InputAdornment, TextField } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { Grid, Divider, IconButton, InputBase, Paper } from "@material-ui/core";
-import Title from "./Title";
+import SearchIcon from "@material-ui/icons/Search";
+import React, { Component } from "react";
+import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import { getAllPaths } from "../actions";
-import ReactPaginate from "react-paginate";
-import SearchIcon from "@material-ui/icons/Search";
 import "./adminStyleSheet.css";
 
 const useStyles = (theme) => ({
@@ -73,9 +72,11 @@ class TablePath extends Component {
     });
   };
 
-  handleSearch = (keyword) => {
+  handleSearch = (event) => {
     let searchResult = this.props.paths.filter(function (path) {
-      return path.sitePath.toLowerCase().includes(keyword.toLowerCase());
+      return path.sitePath
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
     this.setPageCount(searchResult);
@@ -85,28 +86,48 @@ class TablePath extends Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Title>Paths</Title>
-        <Paper className={classes.root}>
-          <InputBase
-            id="searchBox"
-            className={classes.input}
-            placeholder="Search by name..."
-            onChange={() =>
-              this.handleSearch(document.getElementById("searchBox").value)
-            }
-          />
-          <IconButton
-            className={classes.iconButton}
-            color="primary"
-            aria-label="search"
-            onClick={() =>
-              this.handleSearch(document.getElementById("searchBox").value)
-            }
-          >
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-        <Grid container direction="row">
+        <Grid container alignItems="center" style={{ padding: "0.5rem 0" }}>
+          <Grid container item xs={12} alignItems="center">
+            <Grid
+              item
+              xs={4}
+              style={{
+                padding: "0 0.3rem ",
+                color: "rgb(0, 96, 136)",
+                fontSize: "24px",
+              }}
+            >
+              Paths
+            </Grid>
+            <Grid item xs={8} container justify="flex-end">
+              <TextField
+                label="Search"
+                variant="outlined"
+                margin="dense"
+                onChange={this.handleSearch}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment
+                      position="end"
+                      style={{ color: "rgb(0, 96, 136)" }}
+                    >
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          style={{
+            padding: "0.5rem",
+            color: "white",
+            backgroundColor: "rgb(0, 96, 136)",
+          }}
+        >
           <Grid item xs={5}>
             <p style={{ fontWeight: "bold" }}>Site</p>
           </Grid>
@@ -119,8 +140,13 @@ class TablePath extends Component {
         ) : (
           this.state.filteredData.map((row, index) => {
             return (
-              <div key={index} style={{ marginBottom: "1rem " }}>
-                <Grid container direction="row">
+              <div key={index}>
+                <Grid
+                  container
+                  style={{ padding: "0.7rem 0.3rem " }}
+                  direction="row"
+                  alignItems="center"
+                >
                   <Grid
                     item
                     xs={5}

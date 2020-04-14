@@ -1,32 +1,30 @@
-import React, { Component } from "react";
-import { withStyles } from "@material-ui/core/styles";
 import {
-  Grid,
-  Divider,
-  IconButton,
-  InputBase,
-  Paper,
   Button,
   Dialog,
-  TextField,
-  DialogTitle,
-  DialogContent,
   DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
   Input,
+  InputAdornment,
+  TextField,
   Typography,
 } from "@material-ui/core";
-import Title from "./Title";
+import { withStyles } from "@material-ui/core/styles";
+import { SearchOutlined as SearchIcon } from "@material-ui/icons";
+import AddCircleOutlineOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
+import React, { Component } from "react";
+import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import {
-  getAllCategoriesAdmin,
-  updateCategory,
-  insertCategory,
   deleteCategory,
+  getAllCategoriesAdmin,
+  insertCategory,
+  updateCategory,
 } from "../actions";
-import ReactPaginate from "react-paginate";
-import { SearchOutlined as SearchIcon, Add } from "@material-ui/icons";
-import toastr from "./Toastr";
 import "./adminStyleSheet.css";
+import toastr from "./Toastr";
 
 const useStyles = (theme) => ({
   seeMore: {
@@ -46,11 +44,12 @@ const useStyles = (theme) => ({
   },
   title2: {
     fontSize: "13px",
-    marginTop: "0.25rem",
     fontFamily: "Segoe UI, sans-serif",
     fontWeight: 600,
-    marginBottom: "1rem",
     color: "#555d66",
+  },
+  gridItems: {
+    padding: "0.7rem 0",
   },
 });
 
@@ -224,9 +223,11 @@ class TableCategory extends Component {
     }
   };
 
-  handleSearch = (keyword) => {
+  handleSearch = (event) => {
     let searchResult = this.props.categories.filter(function (category) {
-      return category.name.toLowerCase().includes(keyword.toLowerCase());
+      return category.name
+        .toLowerCase()
+        .includes(event.target.value.toLowerCase());
     });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
     this.setPageCount(searchResult);
@@ -245,40 +246,65 @@ class TableCategory extends Component {
     const { classes } = this.props;
     return (
       <React.Fragment>
-        <Title>
-          Theme Category
-          <IconButton onClick={this.setOpenDialogue}>
-            <Add />
-          </IconButton>
-        </Title>
-        <Paper component="form" className={classes.root}>
-          <InputBase
-            id="searchBox"
-            className={classes.input}
-            placeholder="Search by name..."
-            onChange={() =>
-              this.handleSearch(document.getElementById("searchBox").value)
-            }
-          />
-          <IconButton
-            className={classes.iconButton}
-            color="primary"
-            aria-label="search"
-            onClick={() =>
-              this.handleSearch(document.getElementById("searchBox").value)
-            }
-          >
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-        <Grid container direction="row">
-          <Grid item xs={1}>
+        <Grid container alignItems="center" style={{ padding: "0.5rem 0" }}>
+          <Grid container item xs={10} md={11} alignItems="center">
+            <Grid
+              item
+              xs={4}
+              style={{
+                color: "rgb(0, 96, 136)",
+                fontSize: "24px",
+                padding: "0 0.3rem",
+              }}
+            >
+              Theme Category
+            </Grid>
+            <Grid item xs={8} container justify="flex-end">
+              <TextField
+                label="Search"
+                variant="outlined"
+                margin="dense"
+                onChange={this.handleSearch}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment
+                      position="end"
+                      style={{ color: "rgb(0, 96, 136)" }}
+                    >
+                      <SearchIcon />
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container justify="flex-end" item xs={2} md={1}>
+            <Button
+              variant="outlined"
+              style={{ color: "rgb(0, 96, 136)" }}
+              startIcon={<AddCircleOutlineOutlinedIcon />}
+              onClick={() => this.setOpenDialogue()}
+            >
+              Add
+            </Button>
+          </Grid>
+        </Grid>
+        <Grid
+          container
+          direction="row"
+          style={{
+            padding: "0.5rem ",
+            color: "white",
+            backgroundColor: "rgb(0, 96, 136)",
+          }}
+        >
+          <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Name</p>
           </Grid>
           <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Picture</p>
           </Grid>
-          <Grid item xs={1}>
+          <Grid container justify="flex-end" item xs={7}>
             <p style={{ fontWeight: "bold" }}></p>
           </Grid>
         </Grid>
@@ -287,12 +313,17 @@ class TableCategory extends Component {
         ) : (
           this.state.filteredData.map((row) => (
             <div key={row._id}>
-              <Grid container direction="row">
-                <Grid item xs={1}>
-                  {row.name}
-                  <div style={{ height: 20 }} />
-                </Grid>
+              <Grid
+                container
+                direction="row"
+                alignItems="center"
+                style={{ padding: "0.2rem 0.5rem" }}
+              >
                 <Grid item xs={2}>
+                  {row.name}
+                  {/* <div style={{ height: 20 }} /> */}
+                </Grid>
+                <Grid item xs={3}>
                   <img
                     style={{
                       height: "4rem",
@@ -301,9 +332,9 @@ class TableCategory extends Component {
                     src={row.picture}
                   />
                 </Grid>
-                <Grid item xs={1}>
+                <Grid container justify="flex-end" item xs={7}>
                   <Button
-                    color="primary"
+                    style={{ color: "rgb(0, 96, 136)" }}
                     onClick={() => this.setOpenEditDialogue(row)}
                   >
                     Edit
@@ -337,13 +368,24 @@ class TableCategory extends Component {
           maxWidth="sm"
           fullWidth
         >
-          <DialogTitle>Insert</DialogTitle>
+          <DialogTitle style={{ color: "rgb(0, 96, 136)" }}>Insert</DialogTitle>
           <DialogContent>
             <Grid container direction="row">
               <Grid container item xs={7}>
-                <Grid container item xs={12}>
-                  <Grid item xs={12}>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  alignItems="center"
+                  className={classes.gridItems}
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Name
+                  </Grid>
+                  <Grid item xs={8}>
                     <TextField
+                      variant="outlined"
+                      margin="dense"
                       label="Name"
                       color="primary"
                       value={this.state.name}
@@ -353,40 +395,68 @@ class TableCategory extends Component {
                       }}
                     />
                   </Grid>
-                  <Grid item>
-                    <Typography>Picture</Typography>
+                </Grid>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  alignItems="center"
+                  className={classes.gridItems}
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Picture
+                  </Grid>
+                  <Grid container item xs={8} alignItems="center">
                     <Input
                       type="file"
                       id="selectedFile"
                       onChange={(e) => this.handleBrowsePicture(e)}
                       style={{ display: "none" }}
                     />
-                    <img
+                    {this.state.preview && (
+                      <Grid
+                        item
+                        xs={8}
+                        style={{
+                          backgroundImage: `URL("${this.state.preview}")`,
+                          height: "4rem",
+                          backgroundSize: "cover",
+                          backgroundPosition: "center",
+                          backgroundRepeat: "no-repeat",
+                        }}
+                      ></Grid>
+                    )}
+                    {/* <img
                       style={{
                         height: "4rem",
                         display: this.state.preview ? "block" : "none",
                       }}
                       alt=""
                       src={this.state.preview}
-                    />
-                  </Grid>
-                  <Grid container justify={"center"}>
-                    <button
-                      className={classes.logoButton}
-                      color={"default"}
-                      onClick={() =>
-                        document.getElementById("selectedFile").click()
-                      }
+                    /> */}
+                    <Grid
+                      container
+                      item
+                      xs={4}
+                      justify={this.state.preview ? "flex-end" : "flex-start"}
                     >
-                      Browse
-                    </button>
+                      <button
+                        className={classes.logoButton}
+                        color={"default"}
+                        onClick={() =>
+                          document.getElementById("selectedFile").click()
+                        }
+                      >
+                        Browse
+                      </button>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
             </Grid>
           </DialogContent>
 
-          <DialogActions>
+          <DialogActions style={{ padding: "0.5rem" }}>
             <Button
               autoFocus
               variant="contained"
@@ -403,15 +473,26 @@ class TableCategory extends Component {
           maxWidth="sm"
           fullWidth
         >
-          <DialogTitle>Edit</DialogTitle>
+          <DialogTitle style={{ color: "rgb(0, 96, 136)" }}>Edit</DialogTitle>
           <DialogContent>
             <Grid container direction="row">
               <Grid container item xs={7}>
-                <Grid container item xs={12}>
-                  <Grid item xs={12}>
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  alignItems="center"
+                  className={classes.gridItems}
+                >
+                  <Grid item xs={4} className={classes.title2}>
+                    Name
+                  </Grid>
+                  <Grid item xs={8}>
                     <TextField
                       label="Name"
                       color="primary"
+                      variant="outlined"
+                      margin="dense"
                       value={this.state.edit.name}
                       onChange={(e) => this.handleChangeNameEdit(e)}
                       inputProps={{
@@ -419,32 +500,63 @@ class TableCategory extends Component {
                       }}
                     />
                   </Grid>
-                  <Grid item>
-                    <Typography>Picture</Typography>
-                    <Input
-                      type="file"
-                      id="selectedEditFile"
-                      onChange={(e) => this.handleBrowsePictureEdit(e)}
-                      style={{ display: "none" }}
-                    />
-                    <img
+                  <Grid
+                    container
+                    item
+                    xs={12}
+                    alignItems="center"
+                    className={classes.gridItems}
+                  >
+                    <Grid item xs={4} className={classes.title2}>
+                      Picture
+                    </Grid>
+                    <Grid container item xs={8} alignItems="center">
+                      <Input
+                        type="file"
+                        id="selectedEditFile"
+                        onChange={(e) => this.handleBrowsePictureEdit(e)}
+                        style={{ display: "none" }}
+                      />
+                      {this.state.edit.preview && (
+                        <Grid
+                          item
+                          xs={8}
+                          style={{
+                            backgroundImage: `URL("${this.state.edit.preview}")`,
+                            height: "4rem",
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                            backgroundRepeat: "no-repeat",
+                          }}
+                        ></Grid>
+                      )}
+                      {/* <img
                       style={{
                         height: "4rem",
+                        display: this.state.edit.preview ? "block" : "none",
                       }}
                       alt=""
                       src={this.state.edit.preview}
-                    />
-                  </Grid>
-                  <Grid container justify={"center"}>
-                    <button
-                      className={classes.logoButton}
-                      color={"default"}
-                      onClick={() =>
-                        document.getElementById("selectedEditFile").click()
-                      }
-                    >
-                      Browse
-                    </button>
+                    /> */}
+                      <Grid
+                        container
+                        item
+                        xs={4}
+                        justify={
+                          this.state.edit.preview ? "flex-end" : "flex-start"
+                        }
+                      >
+                        <button
+                          className={classes.logoButton}
+                          color={"default"}
+                          onClick={() =>
+                            document.getElementById("selectedEditFile").click()
+                          }
+                        >
+                          Browse
+                        </button>
+                      </Grid>
+                    </Grid>
                   </Grid>
                 </Grid>
               </Grid>
