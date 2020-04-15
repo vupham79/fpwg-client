@@ -89,7 +89,7 @@ class Theme1Home extends React.Component {
                     container
                     item
                     key={index}
-                    style={{ display: row.isActive ? "block" : "none" }}
+                    style={{ display: row.isActive ? "block" : "none", marginTop: 70 }}
                   >
                     <AboutPage fromHome homeTitle={row.name} />
                   </Grid>
@@ -99,7 +99,7 @@ class Theme1Home extends React.Component {
                     container
                     item
                     key={index}
-                    style={{ display: row.isActive ? "block" : "none" }}
+                    style={{ display: row.isActive ? "block" : "none", marginTop: 70 }}
                   >
                     <EventPage
                       fromHome
@@ -113,7 +113,7 @@ class Theme1Home extends React.Component {
                     container
                     item
                     key={index}
-                    style={{ display: row.isActive ? "block" : "none" }}
+                    style={{ display: row.isActive ? "block" : "none", marginTop: 70 }}
                   >
                     <GalleryPage
                       fromHome
@@ -129,7 +129,7 @@ class Theme1Home extends React.Component {
                     key={index}
                     style={{ display: row.isActive ? "block" : "none", marginTop: 70 }}
                   >
-                    <Grid item xs={12}>
+                    <Grid item xs={12} style={{ marginTop: 70 }}>
                       <Parallax
                         blur={0}
                         bgImage={this.getCover(0)}
@@ -150,7 +150,7 @@ class Theme1Home extends React.Component {
                     container
                     item
                     key={index}
-                    style={{ display: row.isActive ? "block" : "none" }}
+                    style={{ display: row.isActive ? "block" : "none", marginTop: 70 }}
                   >
                     <NewsPage
                       fromHome
@@ -174,7 +174,7 @@ class Theme1Home extends React.Component {
                     container
                     item
                     key={index}
-                    style={{ display: row.isActive ? "block" : "none" }}
+                    style={{ display: row.isActive ? "block" : "none", marginTop: 70 }}
                   >
                     <AboutPage fromHome homeTitle={row.name} />
                   </Grid>
@@ -184,7 +184,7 @@ class Theme1Home extends React.Component {
                     container
                     item
                     key={index}
-                    style={{ display: row.isActive ? "block" : "none" }}
+                    style={{ display: row.isActive ? "block" : "none", marginTop: 70 }}
                   >
                     <EventPage
                       fromHome
@@ -198,7 +198,7 @@ class Theme1Home extends React.Component {
                     container
                     item
                     key={index}
-                    style={{ display: row.isActive ? "block" : "none" }}
+                    style={{ display: row.isActive ? "block" : "none", marginTop: 70 }}
                   >
                     <GalleryPage
                       fromHome
@@ -212,8 +212,21 @@ class Theme1Home extends React.Component {
                     container
                     item
                     key={index}
-                    style={{ display: row.isActive ? "block" : "none" }}
+                    style={{ display: row.isActive ? "block" : "none", marginTop: 70 }}
                   >
+                    <Grid item xs={12} style={{ marginTop: 70 }}>
+                      <Parallax
+                        blur={0}
+                        bgImage={this.getCover(0)}
+                        bgImageAlt=""
+                        strength={300}
+                        bgImageStyle={{ width: "100%" }}
+                      >
+                        <div style={{ height: '450px', width: '100%', backgroundColor: isEdit ? titleEdit.color : titleView.color, opacity: 0.6 }}>
+
+                        </div>
+                      </Parallax>
+                    </Grid>
                     <ContactPage fromHome homeTitle={row.name} />
                   </Grid>
                 ),
@@ -222,7 +235,7 @@ class Theme1Home extends React.Component {
                     container
                     item
                     key={index}
-                    style={{ display: row.isActive ? "block" : "none" }}
+                    style={{ display: row.isActive ? "block" : "none", marginTop: 70 }}
                   >
                     <NewsPage
                       fromHome
