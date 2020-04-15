@@ -8,8 +8,6 @@ import EventPage from "../event/event";
 import GalleryPage from "../gallery/gallery";
 import NewsPage from "../new/new";
 import Slider from "react-slick";
-import "./home.css";
-
 const useStyles = (theme) => ({
   title: {
     // fontSize: 36,
@@ -41,7 +39,6 @@ class Theme1Home extends React.Component {
 
   getCover = (index) => {
     const { isEdit, newCover, siteView } = this.props;
-    console.log("hello", isEdit);
     if (isEdit) {
       if (newCover && newCover[index]) {
         if (
@@ -105,6 +102,7 @@ class Theme1Home extends React.Component {
           minHeight: "60vh",
         }}
         id="home"
+        className="slickNoArrow"
       >
         <Grid
           container
@@ -148,14 +146,14 @@ class Theme1Home extends React.Component {
                 ))}
               </Slider>
             </Grid>
-            <Grid
+            {/* <Grid
               item
               xs={10}
               style={style.changableTitle}
               className={classes.title}
             >
               {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
-            </Grid>
+            </Grid> */}
           </Grid>
         </Grid>
         {isEdit &&

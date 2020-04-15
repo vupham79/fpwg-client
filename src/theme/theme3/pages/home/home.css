@@ -1,15 +1,15 @@
 .slick-slide {
   height: unset !important;
-  margin: 0;
+  margin: 0 10px;
 }
 /* the parent */
 .slick-list {
-  margin: 0;
+  margin: 0 -10px;
 }
 
 .slick-prev,
 .slick-next {
-  font-size: 0;
+  font-size: 15px;
 }
 
 .slick-prev:before,

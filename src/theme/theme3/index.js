@@ -9,7 +9,7 @@ class Theme3 extends Component {
     return (
       <Layout>
         <Switch>
-          {Routes.map(route => (
+          {Routes.map((route) => (
             <Route
               key={route.path}
               exact={route.exact}

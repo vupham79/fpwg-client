@@ -510,9 +510,9 @@ class EventComponent extends React.Component {
           >
             <Grid
               item
-              md={10}
+              md={12}
               xs={12}
-              sm={11}
+              sm={12}
               container
               justify="center"
               className={styles.event_body}

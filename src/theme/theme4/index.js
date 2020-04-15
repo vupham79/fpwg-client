@@ -8,7 +8,7 @@ class Theme4 extends React.Component {
     return (
       <Layout>
         <Switch>
-          {Routes.map(route => (
+          {Routes.map((route) => (
             <Route
               key={route.path}
               exact={route.exact}

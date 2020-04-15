@@ -57,12 +57,12 @@ const useStyles = (theme) => ({
     top: "5%",
     minHeight: "auto",
   },
-  // tab: {
-  //   display: "none",
-  //   [theme.breakpoints.up("sm")]: {
-  //     display: "block",
-  //   },
-  // },
+  parralax: {
+    height: "50vh",
+    [theme.breakpoints.up("sm")]: {
+      height: "100vh",
+    },
+  },
   dropdownSelect: {
     // display: "block",
     // paddingTop: "2rem",
@@ -452,7 +452,10 @@ class Header extends Component {
             strength={200}
             style={{ width: "100%" }}
           >
-            <div style={{ height: "100vh", width: "100%" }} />
+            <div
+              className={classes.parralax}
+              // style={{ height: "100vh", width: "100%" }}
+            />
           </Parallax>
         </Grid>
         <Grid

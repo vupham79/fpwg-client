@@ -7,7 +7,7 @@ import ContactPage from "../contact/contact";
 import EventPage from "../event/event";
 import GalleryPage from "../gallery/gallery";
 import NewsPage from "../new/new";
-
+import "./home.css";
 class HomePage extends React.Component {
   getCover = (index) => {
     const { isEdit, covers, siteView } = this.props;

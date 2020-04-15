@@ -62,6 +62,25 @@ code {
   content: "" !important;
 }
 
+.slickNoArrow .slick-prev,
+.slickNoArrow .slick-next {
+  font-size: 0px !important;
+}
+
+.slickNoArrow .slick-prev:before,
+.slickNoArrow .slick-next:before {
+  content: "" !important;
+}
+
+.slickNoArrow .slick-slide {
+  height: unset !important;
+  margin: 0;
+}
+/* the parent */
+.slickNoArrow .slick-list {
+  margin: 0;
+}
+
 .slick-track .slick-slide {
   display: flex !important;
   /* max-height: 40rem !important; */

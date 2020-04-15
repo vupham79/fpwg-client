@@ -160,7 +160,7 @@ class ContactPage extends React.Component {
             md={
               (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
               (siteView && siteView.latitude && siteView.longitude)
-                ? 3
+                ? 6
                 : 6
             }
             style={{ padding: "0 2rem" }}
