@@ -147,6 +147,7 @@ class AboutPage extends React.Component {
                   margin: "0",
                   whiteSpace: "break-spaces",
                   textAlign: "justify",
+                  whiteSpace: "pre-wrap",
                 }}
               >
                 {isEdit

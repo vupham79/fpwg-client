@@ -171,7 +171,7 @@ class NewsType extends React.Component {
         .scrollIntoView({ block: "start", behavior: "smooth" });
   };
 
-  renderPostComponent(index, post, style, dark, type, slide) {
+  renderPostComponent(index, post, style, dark, type, showPostMode) {
     const {
       fromHome,
       isEdit,
@@ -197,131 +197,140 @@ class NewsType extends React.Component {
       color: dark ? "#fff" : "#000",
       height: "fit-content",
     };
-
-    return (
-      <Grid
-        key={post._id}
-        container={!fromHome}
-        item={!fromHome}
-        xs={!fromHome && 10}
-        sm={!fromHome && 5}
-        md={!fromHome && 5}
-        lg={!fromHome && 3}
-        style={
-          dark
-            ? {
-                backgroundColor: "#1a1919",
-                border: "1px solid #fff",
-                marginLeft: "1rem",
-                marginBottom: "1rem",
-                padding: "1rem",
-                borderRadius: "4px",
-              }
-            : {
-                backgroundColor: "#fff",
-                border: "1px solid #000",
-                marginLeft: "1rem",
-                marginBottom: "1rem",
-                borderRadius: "4px",
-                padding: "1rem",
-              }
-        }
-      >
+    let show = true;
+    if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
+      show = false;
+    } else if (type === "video" && (showPostMode === 1 || showPostMode === 3)) {
+      show = false;
+    } else if (type === "album" && (showPostMode === 2 || showPostMode === 3)) {
+      show = false;
+    }
+    if (show) {
+      return (
         <Grid
-          container
-          item
-          xs={12}
-          style={{
-            // padding: "0.5rem",
-            backgroundColor: dark ? "#1a1919" : "#fff",
-          }}
+          key={post._id}
+          container={!fromHome}
+          item={!fromHome}
+          xs={!fromHome && 10}
+          sm={!fromHome && 5}
+          md={!fromHome && 5}
+          lg={!fromHome && 3}
+          style={
+            dark
+              ? {
+                  backgroundColor: "#1a1919",
+                  border: "1px solid #fff",
+                  marginLeft: "1rem",
+                  marginBottom: "1rem",
+                  padding: "1rem",
+                  borderRadius: "4px",
+                }
+              : {
+                  backgroundColor: "#fff",
+                  border: "1px solid #000",
+                  marginLeft: "1rem",
+                  marginBottom: "1rem",
+                  borderRadius: "4px",
+                  padding: "1rem",
+                }
+          }
         >
-          <Grid
-            item
-            xs={12}
-            style={
-              {
-                // padding: "1rem 0"
-              }
-            }
-          >
-            <Typography
-              variant={"body1"}
-              style={{
-                ...titleStyle,
-                fontWeight: "700",
-                fontSize: "16px",
-                color: dark ? "#fff" : "#000",
-              }}
-            >
-              {moment(post.createdTime).format("MMMM DD, YYYY")}
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            {type === "photo" && (
-              <CardMedia
-                className={classes.cardView}
-                image={post.attachments.images[0]}
-              />
-            )}
-            {type === "video" && (
-              <ReactPlayer
-                url={post && post.attachments && post.attachments.video}
-                controls={true}
-                style={{ objectFit: "unset" }}
-                width="100%"
-                height="30vh"
-              />
-            )}
-            {type === "album" && (
-              <CardMedia
-                className={classes.cardMediaAlbum}
-                image={post.attachments.images[0]}
-              >
-                <Grid
-                  container
-                  alignItems="center"
-                  justify="center"
-                  className={classes.album}
-                >
-                  <Typography
-                    variant="h3"
-                    style={{ color: dark ? "#fff" : "#fff" }}
-                  >
-                    {post.attachments.images.length} +
-                  </Typography>
-                </Grid>
-              </CardMedia>
-            )}
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            style={{
-              ...txtStyle,
-              padding: "1rem 0",
-              // height: "5rem",
-              color: dark ? "#fff" : "#000",
-            }}
-          >
-            <div style={gridContent}>{post.message}</div>
-          </Grid>
           <Grid
             container
             item
             xs={12}
-            justify="flex-start"
-            alignItems="flex-end"
+            style={{
+              // padding: "0.5rem",
+              backgroundColor: dark ? "#1a1919" : "#fff",
+            }}
           >
-            <ButtonComponent
-              label="READ MORE"
-              style={btnStyle}
-              onClick={(e) => this.handleHomeClick(post)}
-            />
+            <Grid
+              item
+              xs={12}
+              style={
+                {
+                  // padding: "1rem 0"
+                }
+              }
+            >
+              <Typography
+                variant={"body1"}
+                style={{
+                  ...titleStyle,
+                  fontWeight: "700",
+                  fontSize: "16px",
+                  color: dark ? "#fff" : "#000",
+                }}
+              >
+                {moment(post.createdTime).format("MMMM DD, YYYY")}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              {type === "photo" && (
+                <CardMedia
+                  className={classes.cardView}
+                  image={post.attachments.images[0]}
+                />
+              )}
+              {type === "video" && (
+                <ReactPlayer
+                  url={post && post.attachments && post.attachments.video}
+                  controls={true}
+                  style={{ objectFit: "unset" }}
+                  width="100%"
+                  height="30vh"
+                />
+              )}
+              {type === "album" && (
+                <CardMedia
+                  className={classes.cardMediaAlbum}
+                  image={post.attachments.images[0]}
+                >
+                  <Grid
+                    container
+                    alignItems="center"
+                    justify="center"
+                    className={classes.album}
+                  >
+                    <Typography
+                      variant="h3"
+                      style={{ color: dark ? "#fff" : "#fff" }}
+                    >
+                      {post.attachments.images.length} +
+                    </Typography>
+                  </Grid>
+                </CardMedia>
+              )}
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              style={{
+                ...txtStyle,
+                padding: "1rem 0",
+                // height: "5rem",
+                color: dark ? "#fff" : "#000",
+              }}
+            >
+              <div style={gridContent}>{post.message}</div>
+            </Grid>
+            <Grid
+              container
+              item
+              xs={12}
+              justify="flex-start"
+              alignItems="flex-end"
+            >
+              <ButtonComponent
+                label="READ MORE"
+                style={btnStyle}
+                onClick={(e) => this.handleHomeClick(post)}
+              />
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    );
+      );
+    } else return <></>;
   }
 
   renderPostMessage(index, post, style, dark, type) {
@@ -438,8 +447,9 @@ class NewsType extends React.Component {
       bodyView,
       dark,
       fromHome,
+      siteEdit,
+      siteView,
     } = this.props;
-
     const style = {
       isEdit: isEdit,
       titleEdit: titleEdit,
@@ -447,7 +457,14 @@ class NewsType extends React.Component {
       bodyEdit: bodyEdit,
       bodyView: bodyView,
     };
-    const slide = true;
+    let showPostMode = 0;
+    if (isEdit) {
+      if (siteEdit && siteEdit.showDetailSetting) {
+        showPostMode = siteEdit.showDetailSetting.showPostMode;
+      }
+    } else if (siteView && siteView.showDetailSetting) {
+      showPostMode = siteView.showDetailSetting.showPostMode;
+    }
     return (
       <>
         {fromHome && (
@@ -458,18 +475,21 @@ class NewsType extends React.Component {
                   (post.attachments &&
                     post.attachments.media_type &&
                     post.isActive &&
+                    showPostMode !== 3 &&
                     this.renderPostComponent(
                       index,
                       post,
                       style,
                       dark,
                       post.attachments.media_type,
-                      slide
+                      showPostMode
                     )) ||
                   (post.attachments &&
                     !post.attachments.media_type &&
                     post.isActive &&
-                    this.renderPostMessage(index, post, style, dark, slide))
+                    showPostMode !== 1 &&
+                    showPostMode !== 2 &&
+                    this.renderPostMessage(index, post, style, dark))
               )}
           </Grid>
         )}
@@ -480,16 +500,20 @@ class NewsType extends React.Component {
               (post.attachments &&
                 post.attachments.media_type &&
                 post.isActive &&
+                showPostMode !== 3 &&
                 this.renderPostComponent(
                   index,
                   post,
                   style,
                   dark,
-                  post.attachments.media_type
+                  post.attachments.media_type,
+                  showPostMode
                 )) ||
               (post.attachments &&
                 !post.attachments.media_type &&
                 post.isActive &&
+                showPostMode !== 1 &&
+                showPostMode !== 2 &&
                 this.renderPostMessage(index, post, style, dark))
           )}
       </>

@@ -93,6 +93,7 @@ class Footer extends React.Component {
                     href={`https://wa.me/${
                       isEdit ? whatsapp : siteView.whatsapp
                     }`}
+                    target="_blank"
                   >
                     <FontAwesomeIcon
                       icon={faWhatsapp}

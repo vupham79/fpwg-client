@@ -45,10 +45,11 @@ class Theme1About extends React.Component {
       changableBody4: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: isEdit ? titleEdit.color : titleView.color,
-        textAlign: "center",
+        textAlign: "left",
         fontSize: 20,
         lineHeight: "normal",
         letterSpacing: "normal",
+        margin: 0,
       },
       changableBody5: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -139,11 +140,29 @@ class Theme1About extends React.Component {
           alignContent="center"
           style={{
             padding: "2.5rem 0",
-            display: isShowAboutDes() ? "contents" : "none",
+            display:
+              isShowAboutDes() || isShowAboutLogo() ? "contents" : "none",
           }}
         >
-          <Grid item xs={11} sm={9}>
-            <p style={classes.changableBody4}>
+          <Grid item xs={11} sm={6}>
+            <CardMedia
+              style={{
+                width: isShowAboutDes() ? "30%" : "40%",
+                float: isShowAboutDes() ? "left" : "none",
+                display: isShowAboutLogo() ? "block" : "none",
+                marginRight: "1rem",
+              }}
+              component="img"
+              alt=""
+              image={this.renderImage()}
+            />
+            <p
+              style={{
+                ...classes.changableBody4,
+                display: isShowAboutDes() ? "block" : "none",
+                whiteSpace: "pre-wrap",
+              }}
+            >
               {isEdit && siteEdit && siteEdit.about}
               {!isEdit && siteView && siteView.about}
               {isEdit && !siteEdit.about && "Welcome to our website!"}

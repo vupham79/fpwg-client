@@ -111,7 +111,6 @@ class EventComponent extends React.Component {
                         fontFamily: isEdit
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
-                        color: isEdit ? titleEdit.color : titleView.color,
                         textAlign: "center",
                         fontSize: 15,
                         color: dark ? "#fff" : "#000",
@@ -127,9 +126,9 @@ class EventComponent extends React.Component {
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
                         fontWeight: "bold",
-                        color: "#212121",
+                        // color: "#212121",
                         textAlign: "center",
-                        color: dark ? "#fff" : "#000",
+                        color: dark ? "#fff" : "#212121",
                       }}
                     >
                       {moment(row.startTime).format("D") + " "}

@@ -112,6 +112,7 @@ class AboutPage extends React.Component {
                 fontSize: 30,
                 fontStyle: "italic",
                 textAlign: "center",
+                whiteSpace: "pre-wrap",
               }}
             >
               {isEdit
@@ -159,6 +160,7 @@ class AboutPage extends React.Component {
                       color: "white",
                       textAlign: "justify",
                       fontSize: 16,
+                      whiteSpace: "pre-wrap",
                     }}
                   >
                     {isEdit

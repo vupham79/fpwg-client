@@ -1196,14 +1196,14 @@ class HomepageEditorTab extends React.Component {
         if (item && typeof item === "object" && item.size > 0) {
           return (
             <Grid container item xs={12} alignItems="center" style={gridItem}>
-              <Grid container justify="center" item xs={4}>
+              <Grid container justify="center" item xs={2}>
                 <DragHandle />
               </Grid>
               <Grid
                 container
                 key={index}
                 item
-                xs={8}
+                xs={10}
                 style={{
                   ...coverStyles,
                   backgroundImage: `url(${URL.createObjectURL(item)})`,
@@ -1219,7 +1219,7 @@ class HomepageEditorTab extends React.Component {
         } else
           return (
             <Grid container item xs={12} alignItems="center" style={gridItem}>
-              <Grid container justify="center" item xs={4}>
+              <Grid container justify="center" item xs={2}>
                 <DragHandle />
               </Grid>
               <Grid
@@ -1227,7 +1227,7 @@ class HomepageEditorTab extends React.Component {
                 container
                 key={index}
                 item
-                xs={8}
+                xs={10}
                 style={{ ...coverStyles, backgroundImage: `url(${item})` }}
               >
                 <IconButton
@@ -1383,9 +1383,9 @@ class HomepageEditorTab extends React.Component {
             container
             justify={"center"}
             alignItems="center"
-            md={4}
-            sm={6}
-            xs={6}
+            md={12}
+            sm={12}
+            xs={12}
             style={{
               ...coverStyles,
               backgroundColor: "#F3ECEC",
