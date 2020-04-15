@@ -63,13 +63,13 @@ class NewPage extends Component {
               {fromHome
                 ? homeTitle
                 : isEdit
-                ? siteEdit &&
+                  ? siteEdit &&
                   siteEdit.navItems.map((item) => {
                     if (item.original === "news") {
                       return item.name;
                     } else return "";
                   })
-                : siteView &&
+                  : siteView &&
                   siteView.navItems.map((item) => {
                     if (item.original === "news") {
                       return item.name;
@@ -101,12 +101,36 @@ class NewPage extends Component {
                     ? homeList
                     : siteEdit.posts
                   ).filter(function (pos) {
-                    return pos.isActive === true;
+                    let type = pos.attachments ? pos.attachments.media_type : "";
+                    let showPostMode = isEdit ? siteEdit.showDetailSetting.showPostMode : siteView.showDetailSetting.showPostMode;
+                    let show = true;
+                    if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
+                      show = false;
+                    } else if (type === "video" && (showPostMode === 1 || showPostMode === 3)) {
+                      show = false;
+                    } else if (type === "album" && (showPostMode === 2 || showPostMode === 3)) {
+                      show = false;
+                    } else if (type === "" && (showPostMode === 1 || showPostMode === 2)) {
+                      show = false;
+                    }
+                    return pos.isActive === true && show;
                   })}
                   pageCount={Math.ceil(
                     (fromHome && homeList ? homeList : siteEdit.posts).filter(
                       function (pos) {
-                        return pos.isActive === true;
+                        let type = pos.attachments ? pos.attachments.media_type : "";
+                        let showPostMode = isEdit ? siteEdit.showDetailSetting.showPostMode : siteView.showDetailSetting.showPostMode;
+                        let show = true;
+                        if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
+                          show = false;
+                        } else if (type === "video" && (showPostMode === 1 || showPostMode === 3)) {
+                          show = false;
+                        } else if (type === "album" && (showPostMode === 2 || showPostMode === 3)) {
+                          show = false;
+                        } else if (type === "" && (showPostMode === 1 || showPostMode === 2)) {
+                          show = false;
+                        }
+                        return pos.isActive === true && show;
                       }
                     ).length / siteEdit.limitNews
                   )}
@@ -114,19 +138,19 @@ class NewPage extends Component {
                 />
               </Grid>
             ) : (
-              <Grid
-                container
-                justify="center"
-                style={{
-                  minHeight: "30vh",
-                  //  marginTop: "10vh"
-                }}
-              >
-                <Typography variant="body1" style={bodyEdit}>
-                  Currently there are no news.
+                <Grid
+                  container
+                  justify="center"
+                  style={{
+                    minHeight: "30vh",
+                    //  marginTop: "10vh"
+                  }}
+                >
+                  <Typography variant="body1" style={bodyEdit}>
+                    Currently there are no news.
                 </Typography>
-              </Grid>
-            )
+                </Grid>
+              )
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
@@ -142,16 +166,16 @@ class NewPage extends Component {
               />
             </Grid>
           ) : (
-            <Grid
-              container
-              justify="center"
-              style={{ minHeight: "30vh", marginTop: "10vh" }}
-            >
-              <Typography variant="body1" style={bodyView}>
-                Currently there are no news.
+                <Grid
+                  container
+                  justify="center"
+                  style={{ minHeight: "30vh", marginTop: "10vh" }}
+                >
+                  <Typography variant="body1" style={bodyView}>
+                    Currently there are no news.
               </Typography>
-            </Grid>
-          )}
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );
