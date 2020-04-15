@@ -453,6 +453,7 @@ export function saveDesignSite({
           showAboutDescription: site.showDetailSetting.showAboutDescription,
           showAboutLogo: site.showDetailSetting.showAboutLogo,
           showStory: site.showDetailSetting.showStory,
+          showPostMode: site.showDetailSetting.showPostMode,
           latitude: site.latitude,
           longitude: site.longitude
         }
@@ -1133,3 +1134,12 @@ export function setLatLng(lat, lng) {
     });
   };
 }
+
+export function setPostMode(mode) {
+  return (dispatch) => {
+    dispatch({
+      type: "SET_POST_MODE",
+      payload: mode,
+    });
+  };
+};

@@ -542,6 +542,18 @@ const SiteReducer = (state = defaultState, action) => {
         },
         isChanged: true,
       };
+    case "SET_POST_MODE":
+      return {
+        ...state,
+        siteEdit: {
+          ...state.siteEdit,
+          showDetailSetting: {
+            ...state.siteEdit.showDetailSetting,
+            showPostMode: action.payload
+          },
+        },
+        isChanged: true,
+      };
     default:
       return state;
   }
