@@ -71,6 +71,9 @@ const useStyles = (theme) => ({
     backgroundColor: "#fff !important",
     color: "#000 !important",
   },
+  paginationItemEllipses: {
+    color: "#fff",
+  },
 });
 
 const gridContent = {
@@ -229,7 +232,6 @@ class PostTypeComponent extends React.Component {
       show = false;
     }
     if (show) {
-      console.log(type, show);
       return (
         <Grid
           key={post._id}
@@ -959,6 +961,7 @@ class PostTypeComponent extends React.Component {
                             classes={{
                               root: classes.paginationItemRoot,
                               selected: classes.paginationItemSelected,
+                              ellipsis: classes.paginationItemEllipses,
                             }}
                           />
                         ) : (
@@ -997,6 +1000,7 @@ class PostTypeComponent extends React.Component {
                             classes={{
                               root: classes.paginationItemRoot,
                               selected: classes.paginationItemSelected,
+                              ellipsis: classes.paginationItemEllipses,
                             }}
                           />
                         ) : (

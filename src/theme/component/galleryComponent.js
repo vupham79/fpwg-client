@@ -33,9 +33,9 @@ const useStyles = (theme) => ({
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   },
-  // paginationItemRoot: {
-  //   color: "#fff",
-  // },
+  paginationItemEllipses: {
+    color: "#fff",
+  },
   paginationItemSelected: {
     backgroundColor: "#fff !important",
     color: "#000 !important",
@@ -358,6 +358,7 @@ class GalleryComponent extends React.Component {
                         classes={{
                           root: classes.paginationItemRoot,
                           selected: classes.paginationItemSelected,
+                          ellipsis: classes.paginationItemEllipses,
                         }}
                       />
                     ) : (
@@ -390,6 +391,7 @@ class GalleryComponent extends React.Component {
                         classes={{
                           root: classes.paginationItemRoot,
                           selected: classes.paginationItemSelected,
+                          ellipsis: classes.paginationItemEllipses,
                         }}
                       />
                     ) : (
