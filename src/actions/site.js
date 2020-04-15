@@ -13,20 +13,27 @@ function revertSaveData(modDat) {
     modDat.events = [];
   }
 
-  modDat.posts.sort((a, b) => {
-    return new Date(a.createdTime).getTime() -
-      new Date(b.createdTime).getTime()
-  }).reverse();
+  modDat.posts
+    .sort((a, b) => {
+      return (
+        new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime()
+      );
+    })
+    .reverse();
 
-  modDat.galleries.sort((a, b) => {
-    return new Date(a.createdTime).getTime() -
-      new Date(b.createdTime).getTime()
-  }).reverse();
+  modDat.galleries
+    .sort((a, b) => {
+      return (
+        new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime()
+      );
+    })
+    .reverse();
 
-  modDat.events.sort((a, b) => {
-    return new Date(a.startTime).getTime() -
-      new Date(b.startTime).getTime()
-  }).reverse();
+  modDat.events
+    .sort((a, b) => {
+      return new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
+    })
+    .reverse();
 
   for (let i = 0; i < modDat.homepage.length; i++) {
     if (!modDat.homepage[i].filter.items) modDat.homepage[i].filter.items = [];
@@ -67,21 +74,21 @@ function revertSaveData(modDat) {
 }
 
 export function getAllSites() {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
-        url: "/site/findAll"
+        url: "/site/findAll",
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         dispatch({
           type: "SET_ALL_SITES",
-          payload: data.data
+          payload: data.data,
         });
       } else {
         toastr.error(`Unable to retrieve sites`, "Error");
@@ -89,11 +96,11 @@ export function getAllSites() {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
-          type: "SET_LOGOUT"
+          type: "SET_LOGOUT",
         });
       }
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(error, "Error");
     }
@@ -101,70 +108,70 @@ export function getAllSites() {
 }
 
 export function getUserSites() {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const req = await axios({
-        url: "/site/findAllByUser"
+        url: "/site/findAllByUser",
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       dispatch({
         type: "SET_USER_SITES",
-        payload: req.data.sites
+        payload: req.data.sites,
       });
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
-          type: "SET_LOGOUT"
+          type: "SET_LOGOUT",
         });
       }
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
     }
   };
 }
 
-export const updateSiteId = currentId => {
-  return dispatch => {
+export const updateSiteId = (currentId) => {
+  return (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     dispatch({
       type: "UPDATE_SITE_ID",
-      payload: currentId
+      payload: currentId,
     });
     dispatch({
-      type: "CLOSE_LOADING"
+      type: "CLOSE_LOADING",
     });
   };
 };
 
 export const unPublishSiteAdmin = ({ siteId, siteName }) => {
-  return async dispatch => {
+  return async (dispatch) => {
     try {
       dispatch({
-        type: "SHOW_LOADING"
+        type: "SHOW_LOADING",
       });
       const data = await axios({
         method: "patch",
         url: "/site/publish",
         data: {
           id: siteId,
-          isPublish: false
-        }
+          isPublish: false,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         dispatch({
           type: "UNPUBLISH_SITE_ADMIN",
-          payload: siteId
+          payload: siteId,
         });
         toastr.success(`Unpublish site ${siteName} success`, "Sucess");
       } else {
@@ -176,11 +183,11 @@ export const unPublishSiteAdmin = ({ siteId, siteName }) => {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
-          type: "SET_LOGOUT"
+          type: "SET_LOGOUT",
         });
       }
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(
         "There are something wrong when unpublish your site",
@@ -191,9 +198,9 @@ export const unPublishSiteAdmin = ({ siteId, siteName }) => {
 };
 
 export const publishSiteAdmin = ({ siteId, siteName }) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
@@ -201,16 +208,16 @@ export const publishSiteAdmin = ({ siteId, siteName }) => {
         url: "/site/publish",
         data: {
           id: siteId,
-          isPublish: true
-        }
+          isPublish: true,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         dispatch({
           type: "PUBLISH_SITE_ADMIN",
-          payload: siteId
+          payload: siteId,
         });
         toastr.success(`Publish site ${siteName} sucess`, "Success");
       } else {
@@ -222,11 +229,11 @@ export const publishSiteAdmin = ({ siteId, siteName }) => {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
-          type: "SET_LOGOUT"
+          type: "SET_LOGOUT",
         });
       }
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error("There are something wrong when publish your site", "Error");
     }
@@ -234,9 +241,9 @@ export const publishSiteAdmin = ({ siteId, siteName }) => {
 };
 
 export const unPublishSite = ({ siteId, siteName }) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
@@ -244,16 +251,16 @@ export const unPublishSite = ({ siteId, siteName }) => {
         url: "/site/publish",
         data: {
           id: siteId,
-          isPublish: false
-        }
+          isPublish: false,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         dispatch({
           type: "UNPUBLISH_SITE",
-          payload: siteId
+          payload: siteId,
         });
         toastr.success(`Unpublish site ${siteName} success`, "Sucess");
       } else {
@@ -265,11 +272,11 @@ export const unPublishSite = ({ siteId, siteName }) => {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
-          type: "SET_LOGOUT"
+          type: "SET_LOGOUT",
         });
       }
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(
         "There are something wrong when unpublish your site",
@@ -280,9 +287,9 @@ export const unPublishSite = ({ siteId, siteName }) => {
 };
 
 export const publishSite = ({ siteId, siteName }) => {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
@@ -290,16 +297,16 @@ export const publishSite = ({ siteId, siteName }) => {
         url: "/site/publish",
         data: {
           id: siteId,
-          isPublish: true
-        }
+          isPublish: true,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         dispatch({
           type: "PUBLISH_SITE",
-          payload: siteId
+          payload: siteId,
         });
         toastr.success(`Publish site ${siteName} sucess`, "Success");
       } else {
@@ -311,11 +318,11 @@ export const publishSite = ({ siteId, siteName }) => {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
-          type: "SET_LOGOUT"
+          type: "SET_LOGOUT",
         });
       }
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error("There are something wrong when publish your site", "Error");
     }
@@ -323,46 +330,46 @@ export const publishSite = ({ siteId, siteName }) => {
 };
 
 export function changeColor(color) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_COLOR",
-      payload: color
+      payload: color,
     });
   };
 }
 
 export function changeFontTitle(fontTitle) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_FONT_TITLE",
-      payload: fontTitle
+      payload: fontTitle,
     });
   };
 }
 
 export function changeFontBody(fontBody) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_FONT_BODY",
-      payload: fontBody
+      payload: fontBody,
     });
   };
 }
 
 export function changeNavItems(navItems) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_NAV_ITEMS",
-      payload: navItems
+      payload: navItems,
     });
   };
 }
 
 export function changeHomeItems(items) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_HOME_ITEMS",
-      payload: items
+      payload: items,
     });
   };
 }
@@ -378,11 +385,11 @@ export function saveDesignSite({
   email,
   phone,
   posts,
-  address
+  address,
 }) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       let logoURL = undefined;
@@ -393,7 +400,7 @@ export function saveDesignSite({
         site.logo = uploadLogoAction;
         dispatch({
           type: "UPLOAD_LOGO",
-          payload: site.logo
+          payload: site.logo,
         });
       }
       const uploadCoverAction = await uploadCover(cover, site);
@@ -418,8 +425,8 @@ export function saveDesignSite({
         method: "PATCH",
         url: "post/activePosts",
         data: {
-          posts: posts
-        }
+          posts: posts,
+        },
       });
       console.log(site.limitNews);
       const data = await axios({
@@ -454,16 +461,16 @@ export function saveDesignSite({
           showAboutLogo: site.showDetailSetting.showAboutLogo,
           showStory: site.showDetailSetting.showStory,
           latitude: site.latitude,
-          longitude: site.longitude
-        }
+          longitude: site.longitude,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         revertSaveData(site);
         dispatch({
-          type: "SET_ISCHANGED_FALSE"
+          type: "SET_ISCHANGED_FALSE",
         });
         toastr.success(`Save site ${site.title} sucess`, "Success");
       } else {
@@ -472,26 +479,26 @@ export function saveDesignSite({
     } catch (error) {
       console.log(error);
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       dispatch({
-        type: "SET_ISCHANGED_FALSE"
+        type: "SET_ISCHANGED_FALSE",
       });
       if (error.response && error.response.status === 401) {
         dispatch({
-          type: "SET_LOGOUT"
+          type: "SET_LOGOUT",
         });
       }
       if (error.response && error.response.data) {
         dispatch({
-          type: "SET_ISCHANGED_FALSE"
+          type: "SET_ISCHANGED_FALSE",
         });
         if (error.response.data.msg) {
           toastr.error(error.response.data.msg, "Error");
         } else toastr.error(error.response.data.error, "Error");
       } else {
         dispatch({
-          type: "SET_ISCHANGED_FALSE"
+          type: "SET_ISCHANGED_FALSE",
         });
         toastr.error("There are something wrong when save your site", "Error");
       }
@@ -500,36 +507,36 @@ export function saveDesignSite({
 }
 
 export function changeTheme(theme) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     dispatch({
       type: "CHANGE_THEME",
-      payload: theme
+      payload: theme,
     });
     dispatch({
-      type: "CLOSE_LOADING"
+      type: "CLOSE_LOADING",
     });
   };
 }
 
 export function getSiteById(id) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
         method: "get",
         url: "/site/find/",
         params: {
-          id: id
-        }
+          id: id,
+        },
       });
       console.log(data);
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         return revertSaveData(data.data);
@@ -537,11 +544,11 @@ export function getSiteById(id) {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
-          type: "SET_LOGOUT"
+          type: "SET_LOGOUT",
         });
       }
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error("Get site data failed!", "Error");
     }
@@ -549,90 +556,99 @@ export function getSiteById(id) {
 }
 
 export function setSiteEdit(data, titleStyle, bodyStyle) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: "SET_SITE_EDIT",
       payload: {
         data: data,
         titleEdit: titleStyle,
-        bodyEdit: bodyStyle
-      }
+        bodyEdit: bodyStyle,
+      },
     });
   };
 }
 
 export function setSiteView(data, titleStyle, bodyStyle) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
       type: "SET_SITE_VIEW",
       payload: {
         data: data,
         titleView: titleStyle,
-        bodyView: bodyStyle
-      }
+        bodyView: bodyStyle,
+      },
     });
   };
 }
 
 export function setCurrentEditId(id) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_CURRENT_EDIT_ID",
-      payload: id
+      payload: id,
     });
   };
 }
 
 export function setActiveNavItems(site) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_ACTIVE_NAV_ITEMS",
-      payload: site
+      payload: site,
     });
   };
 }
 
 export function setNewLogo(file) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_NEW_LOGO",
-      payload: file
+      payload: file,
     });
   };
 }
 
 export function setNewFavicon(file) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_NEW_FAVICON",
-      payload: file
+      payload: file,
     });
   };
 }
 
 export function setNewMetas(metas) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_NEW_METAS",
-      payload: metas
+      payload: metas,
     });
   };
 }
 
 export function setNewCover(file) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_NEW_COVER",
-      payload: file
+      payload: file,
+    });
+  };
+}
+
+export function changeOrderNewCovers(newCovers) {
+  return (dispatch) => {
+    dispatch({
+      type: "CHANGE_ORDER_NEW_COVERS",
+      payload: newCovers,
     });
   };
 }
 
 export function removeCover(cover) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "REMOVE_COVER",
-      payload: cover
+      payload: cover,
     });
   };
 }
@@ -646,7 +662,7 @@ export function uploadLogo(file, site) {
           .ref()
           .child(`${site.id}`)
           .put(file, {
-            contentType: "image/jpeg"
+            contentType: "image/jpeg",
           })
           .then(async () => {
             firebase
@@ -654,11 +670,11 @@ export function uploadLogo(file, site) {
               .ref()
               .child(`${site.id}`)
               .getDownloadURL()
-              .then(async url => {
+              .then(async (url) => {
                 resolve(url);
               });
           })
-          .catch(error => {
+          .catch((error) => {
             console.log("upload: ", error);
             toastr.error(`Upload new logo failed`, "Error");
             resolve(false);
@@ -677,7 +693,7 @@ export async function uploadCover(covers, site) {
       let coversUrl = [];
       if (covers && covers.length > 0) {
         // map array to promises
-        const promises = covers.map(async cover => {
+        const promises = covers.map(async (cover) => {
           if (typeof cover === "string") {
             coversUrl.push(cover);
           } else {
@@ -686,7 +702,7 @@ export async function uploadCover(covers, site) {
               .ref(`${site.id}/`)
               .child(cover.name)
               .put(cover, {
-                contentType: "image/jpeg"
+                contentType: "image/jpeg",
               })
               .then(async () => {
                 await firebase
@@ -694,11 +710,11 @@ export async function uploadCover(covers, site) {
                   .ref(`${site.id}/`)
                   .child(cover.name)
                   .getDownloadURL()
-                  .then(url => {
+                  .then((url) => {
                     coversUrl.push(url);
                   });
               })
-              .catch(error => {
+              .catch((error) => {
                 console.log("upload: ", error);
                 toastr.error(`Upload cover failed`, "Error");
                 resolve(false);
@@ -719,147 +735,147 @@ export async function uploadCover(covers, site) {
 }
 
 export function setPreviewMode(bool) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_PREVIEW_MODE",
-      payload: bool
+      payload: bool,
     });
   };
 }
 
 export function setFramePreview(mode) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_FRAME_PREVIEW_MODE",
-      payload: mode
+      payload: mode,
     });
   };
 }
 
 export function changeSiteAbout(about) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_SITE_ABOUT",
-      payload: about
+      payload: about,
     });
   };
 }
 
 export function changeSiteTitle(title) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_SITE_TITLE",
-      payload: title
+      payload: title,
     });
   };
 }
 
 export function changeSiteSitepath(sitepath) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_SITE_SITEPATH",
-      payload: sitepath
+      payload: sitepath,
     });
   };
 }
 
 export function changeSiteWhatsapp(whatsapp) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_SITE_WHATSAPP",
-      payload: whatsapp
+      payload: whatsapp,
     });
   };
 }
 
 export function changeSiteInstagram(instagram) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_SITE_INSTAGRAM",
-      payload: instagram
+      payload: instagram,
     });
   };
 }
 
 export function changeSiteYoutube(youtube) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_SITE_YOUTUBE",
-      payload: youtube
+      payload: youtube,
     });
   };
 }
 
 export function changeSiteEmail(email) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_SITE_EMAIL",
-      payload: email
+      payload: email,
     });
   };
 }
 
 export function changeSitePhone(phone) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_SITE_PHONE",
-      payload: phone
+      payload: phone,
     });
   };
 }
 
 export function changeSiteAddress(address) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_SITE_ADDRESS",
-      payload: address
+      payload: address,
     });
   };
 }
 
 export function setEditOn() {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: "SET_EDIT_ON"
+      type: "SET_EDIT_ON",
     });
   };
 }
 
 export function setEditOff() {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: "SET_EDIT_OFF"
+      type: "SET_EDIT_OFF",
     });
   };
 }
 
 export function clearSiteView() {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: "CLEAR_SITE_VIEW"
+      type: "CLEAR_SITE_VIEW",
     });
   };
 }
 
 export function getSiteBySitepath(sitepath) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
         method: "get",
-        url: "/site/find/" + sitepath
+        url: "/site/find/" + sitepath,
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         return data.data;
       }
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error("Get site data failed!", "Error");
     }
@@ -867,43 +883,43 @@ export function getSiteBySitepath(sitepath) {
 }
 
 export function setNavItemInActive() {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SET_NAV_ITEM_INACTIVE"
+      type: "SET_NAV_ITEM_INACTIVE",
     });
   };
 }
 
 export function setNavItemActive() {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SET_NAV_ITEM_ACTIVE"
+      type: "SET_NAV_ITEM_ACTIVE",
     });
   };
 }
 
 export function changeNavItemName(item) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_NAV_ITEM_NAME",
-      payload: item
+      payload: item,
     });
   };
 }
 
 export function changeHomeItemName(site) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "CHANGE_HOME_ITEM_NAME",
-      payload: site
+      payload: site,
     });
   };
 }
 
 export function uploadFavicon(file, site) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       firebase
@@ -911,7 +927,7 @@ export function uploadFavicon(file, site) {
         .ref()
         .child(`${site.id}_favicon`)
         .put(file, {
-          contentType: "image/jpeg"
+          contentType: "image/jpeg",
         })
         .then(async () => {
           await firebase
@@ -919,35 +935,35 @@ export function uploadFavicon(file, site) {
             .ref()
             .child(`${site.id}_favicon`)
             .getDownloadURL()
-            .then(async url => {
+            .then(async (url) => {
               await axios({
                 method: "PATCH",
                 url: "/site/favicon",
                 data: {
                   favicon: url,
-                  id: site.id
-                }
+                  id: site.id,
+                },
               });
               site.favicon = url;
               dispatch({
                 type: "UPLOAD_FAVICON",
-                payload: site
+                payload: site,
               });
             });
           dispatch({
-            type: "CLOSE_LOADING"
+            type: "CLOSE_LOADING",
           });
         })
-        .catch(error => {
+        .catch((error) => {
           console.log("upload: ", error);
           dispatch({
-            type: "CLOSE_LOADING"
+            type: "CLOSE_LOADING",
           });
           toastr.error(`Upload new favicon failed`, "Error");
         });
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(`Upload new favicon failed`, "Error");
     }
@@ -955,27 +971,27 @@ export function uploadFavicon(file, site) {
 }
 
 export function getAbout(sitepath) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
         method: "get",
-        url: `/site/find/${sitepath}/about`
+        url: `/site/find/${sitepath}/about`,
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         dispatch({
           type: "SET_SITEVIEW_ABOUT",
-          payload: data.data[0].about
+          payload: data.data[0].about,
         });
       }
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error("Get site data failed!", "Error");
     }
@@ -983,9 +999,9 @@ export function getAbout(sitepath) {
 }
 
 export function getPosts(sitepath) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
@@ -993,22 +1009,22 @@ export function getPosts(sitepath) {
         url: "/site/findByTab",
         params: {
           sitePath: sitepath,
-          page: "news"
-        }
+          page: "news",
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         dispatch({
           type: "SET_SITEVIEW_NEWS",
-          payload: data.data.posts
+          payload: data.data.posts,
         });
       }
     } catch (error) {
       console.log("error: ", error);
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error("Get site data failed!", "Error");
     }
@@ -1016,27 +1032,27 @@ export function getPosts(sitepath) {
 }
 
 export function getEvents(sitepath) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
         method: "get",
-        url: `/site/find/${sitepath}/event`
+        url: `/site/find/${sitepath}/event`,
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         dispatch({
           type: "SET_SITEVIEW_EVENT",
-          payload: data.data[0].events
+          payload: data.data[0].events,
         });
       }
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error("Get site data failed!", "Error");
     }
@@ -1044,9 +1060,9 @@ export function getEvents(sitepath) {
 }
 
 export function getGalleries(sitepath) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
@@ -1054,21 +1070,21 @@ export function getGalleries(sitepath) {
         url: "/site/findByTab",
         params: {
           sitePath: sitepath,
-          page: "gallery"
-        }
+          page: "gallery",
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         dispatch({
           type: "SET_SITEVIEW_GALLERIES",
-          payload: data.data[0].galleries
+          payload: data.data[0].galleries,
         });
       }
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error("Get site data failed!", "Error");
     }
@@ -1076,60 +1092,60 @@ export function getGalleries(sitepath) {
 }
 
 export function setIsChanged() {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
-      type: "SET_ISCHANGED_FALSE"
+      type: "SET_ISCHANGED_FALSE",
     });
   };
 }
 
 export function setEventCustomize(cover, description, place) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_EVENT_CUSTOMIZE",
       payload: {
         cover: cover,
         description: description,
-        place: place
-      }
+        place: place,
+      },
     });
   };
 }
 
 export function setAboutCustomize(logo, description, story) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_ABOUT_CUSTOMIZE",
       payload: {
         logo: logo,
         description: description,
-        story: story
-      }
+        story: story,
+      },
     });
   };
 }
 
 export function setLimit(news, event, gallery) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_LIMIT",
       payload: {
         news: news,
         event: event,
-        gallery: gallery
-      }
+        gallery: gallery,
+      },
     });
   };
 }
 
 export function setLatLng(lat, lng) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_LATLNG",
       payload: {
         lat: lat,
-        lng: lng
-      }
+        lng: lng,
+      },
     });
   };
 }

@@ -55,6 +55,7 @@ import {
   setActiveNavItems,
   setNewCover,
   setNewLogo,
+  changeOrderNewCovers,
 } from "../actions";
 import toastr from "./Toastr";
 import Truncate from "react-truncate";
@@ -169,6 +170,13 @@ const coverStyles = {
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
+};
+
+const gridItem = {
+  padding: "0.2rem 0.5rem",
+  zIndex: "999999",
+  backgroundColor: "white",
+  border: "1px solid #dddddd",
 };
 
 const GreenCheckbox = withStyles({
@@ -745,6 +753,14 @@ class HomepageEditorTab extends React.Component {
     changeHomeItems(site);
   };
 
+  onChangeBannerItem = ({ oldIndex, newIndex }) => {
+    const { changeOrderNewCovers, newCover } = this.props;
+    let temp = newCover[oldIndex];
+    newCover[oldIndex] = newCover[newIndex];
+    newCover[newIndex] = temp;
+    changeOrderNewCovers(newCover);
+  };
+
   onChangePanel = (item, expand) => {
     if (item._id !== this.state.previousExpandItemId) {
       this.setState({
@@ -811,6 +827,8 @@ class HomepageEditorTab extends React.Component {
       setActiveHomeItems,
       updateHomeItemValue,
       changeHomeItemName,
+      newCover,
+      removeCover,
     } = this.props;
 
     const postDialog = () => (
@@ -1173,6 +1191,77 @@ class HomepageEditorTab extends React.Component {
       }
     );
 
+    const SortableBannerImageItem = sortableElement(
+      ({ item, index, removeCover }) => {
+        if (item && typeof item === "object" && item.size > 0) {
+          return (
+            <Grid container item xs={12} alignItems="center" style={gridItem}>
+              <Grid container justify="center" item xs={4}>
+                <DragHandle />
+              </Grid>
+              <Grid
+                container
+                key={index}
+                item
+                xs={8}
+                style={{
+                  ...coverStyles,
+                  backgroundImage: `url(${URL.createObjectURL(item)})`,
+                }}
+                justify="center"
+              >
+                <IconButton onClick={() => removeCover(item)}>
+                  <Cancel color={"error"} />
+                </IconButton>
+              </Grid>
+            </Grid>
+          );
+        } else
+          return (
+            <Grid container item xs={12} alignItems="center" style={gridItem}>
+              <Grid container justify="center" item xs={4}>
+                <DragHandle />
+              </Grid>
+              <Grid
+                justify="center"
+                container
+                key={index}
+                item
+                xs={8}
+                style={{ ...coverStyles, backgroundImage: `url(${item})` }}
+              >
+                <IconButton
+                  style={{ borderRadius: "0" }}
+                  onClick={() => removeCover(item)}
+                >
+                  <Cancel color={"error"} />
+                </IconButton>
+              </Grid>
+            </Grid>
+          );
+      }
+    );
+
+    const SortableListBannerImage = sortableContainer(
+      ({ items, removeCover }) => {
+        if (items) {
+          return (
+            <Grid container alignItems="center">
+              {items.map((value, index) => (
+                <SortableBannerImageItem
+                  key={index}
+                  index={index}
+                  item={value}
+                  removeCover={removeCover}
+                />
+              ))}
+            </Grid>
+          );
+        }
+        return <></>;
+      }
+    );
+
     return (
       <div style={{ padding: 10 }}>
         <Grid
@@ -1280,7 +1369,15 @@ class HomepageEditorTab extends React.Component {
         />
         <Typography className={classes.title}>Banner images</Typography>
         <Grid container className={classes.sideBarBox}>
-          {this.renderNewCovers()}
+          {/* {this.renderNewCovers()} */}
+          {newCover && newCover.length > 0 && (
+            <SortableListBannerImage
+              useDragHandle
+              items={newCover}
+              removeCover={removeCover}
+              onSortEnd={this.onChangeBannerItem}
+            />
+          )}
           <Grid
             item
             container
@@ -1332,6 +1429,8 @@ const mapDispatchToProps = (dispatch) => ({
   changeHomeItemName: (site) => dispatch(changeHomeItemName(site)),
   setActiveHomeItems: (site) => dispatch(setActiveNavItems(site)),
   changeSiteAbout: (about) => dispatch(changeSiteAbout(about)),
+  changeOrderNewCovers: (newCovers) =>
+    dispatch(changeOrderNewCovers(newCovers)),
   // updateHomeItemValue:
 });
 
