@@ -87,8 +87,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showDetailSetting.showCoverEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       backgroundImage: `url('${row.cover}')`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "cover",
@@ -190,8 +190,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showDetailSetting.showDesEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       height: "6rem",
                       lineHeight: "1.5em",
                       fontFamily: isEdit
@@ -214,8 +214,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showDetailSetting.showPlaceEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       textOverflow: "ellipsis",
                       overflow: "auto",
                       fontFamily: isEdit
@@ -285,8 +285,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showDetailSetting.showCoverEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       backgroundImage: `url('${row.cover}')`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "cover",
@@ -389,8 +389,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showDetailSetting.showDesEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       height: "6rem",
                       lineHeight: "1.5em",
                       fontFamily: isEdit
@@ -413,8 +413,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showDetailSetting.showPlaceEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       textOverflow: "ellipsis",
                       overflow: "auto",
                       fontFamily: isEdit
@@ -464,18 +464,18 @@ class EventComponent extends React.Component {
         sm={12}
         container
         justify="center"
-        // style={{ marginTop: "2.5rem", marginBottom: "2.5rem" }}
+      // style={{ marginTop: "2.5rem", marginBottom: "2.5rem" }}
       >
         <Grid item xs={12}>
           <Grid
             container
             alignItems="center"
             direction="column"
-            // className={{
-            //   marginTop: "5vh",
-            //   marginBottom: "5vh",
-            //   backgroundColor: "#1a1919",
-            // }}
+          // className={{
+          //   marginTop: "5vh",
+          //   marginBottom: "5vh",
+          //   backgroundColor: "#1a1919",
+          // }}
           >
             <Grid
               item
@@ -527,7 +527,8 @@ class EventComponent extends React.Component {
                           fontFamily: isEdit
                             ? titleEdit.fontFamily
                             : titleView.fontFamily,
-                          color: dark ? "#fff" : "#000",
+                          // color: dark ? "#fff" : "#000",
+                          color: isEdit ? titleEdit.color : titleView.color
                         }}
                       >
                         Upcoming Events
@@ -566,7 +567,8 @@ class EventComponent extends React.Component {
                           fontFamily: isEdit
                             ? titleEdit.fontFamily
                             : titleView.fontFamily,
-                          color: dark ? "#fff" : "#000",
+                          // color: dark ? "#fff" : "#000",
+                          color: isEdit ? titleEdit.color : titleView.color
                         }}
                       >
                         Upcoming Events
@@ -582,14 +584,14 @@ class EventComponent extends React.Component {
                 ? fromHome
                   ? this.renderUpComingEvent(homeList.slice(0, 3), classes)
                   : this.renderUpComingEvent(
-                      homeList.slice(
-                        page > pageCount ? 0 : offset,
-                        page > pageCount
-                          ? 3
-                          : parseInt(itemPerPage) + parseInt(offset)
-                      ),
-                      classes
-                    )
+                    homeList.slice(
+                      page > pageCount ? 0 : offset,
+                      page > pageCount
+                        ? 3
+                        : parseInt(itemPerPage) + parseInt(offset)
+                    ),
+                    classes
+                  )
                 : this.renderUpComingEvent(homeList, classes)}
 
               <Grid item xs={12}>
@@ -622,7 +624,8 @@ class EventComponent extends React.Component {
                           fontFamily: isEdit
                             ? titleEdit.fontFamily
                             : titleView.fontFamily,
-                          color: dark ? "#fff" : "#000",
+                          // color: dark ? "#fff" : "#000",
+                          color: isEdit ? titleEdit.color : titleView.color
                         }}
                       >
                         Past Events
@@ -667,7 +670,8 @@ class EventComponent extends React.Component {
                           fontFamily: isEdit
                             ? titleEdit.fontFamily
                             : titleView.fontFamily,
-                          color: dark ? "#fff" : "#000",
+                          // color: dark ? "#fff" : "#000",
+                          color: isEdit ? titleEdit.color : titleView.color
                         }}
                       >
                         Past Events
@@ -682,99 +686,99 @@ class EventComponent extends React.Component {
                 ? fromHome
                   ? this.renderPassEvent(homeList.slice(0, 3), classes)
                   : this.renderPassEvent(
-                      homeList.slice(
-                        page > pageCount ? 0 : offset,
-                        page > pageCount
-                          ? 3
-                          : parseInt(itemPerPage) + parseInt(offset)
-                      ),
-                      classes
-                    )
+                    homeList.slice(
+                      page > pageCount ? 0 : offset,
+                      page > pageCount
+                        ? 3
+                        : parseInt(itemPerPage) + parseInt(offset)
+                    ),
+                    classes
+                  )
                 : this.renderPassEvent(homeList, classes)}
             </Grid>
             {isEdit
               ? !fromHome &&
-                pageCount > 1 && (
-                  <Grid
-                    container
-                    justify="center"
-                    style={{ marginTop: "2.5rem" }}
-                  >
-                    <Pagination
-                      style={{
-                        backgroundColor: dark ? "#000" : "#fff",
-                        // padding: "0.4rem",
-                        // borderRadius: "0.3rem",
-                      }}
-                      renderItem={(item) =>
-                        dark ? (
-                          <PaginationItem
-                            {...item}
-                            style={{
-                              color: "white",
-                              borderColor: "white",
-                              fontFamily: isEdit
-                                ? titleEdit.fontFamily
-                                : titleView.fontFamily,
-                            }}
-                            classes={{
-                              selected: classes.paginationItemSelected,
-                            }}
-                          />
-                        ) : (
+              pageCount > 1 && (
+                <Grid
+                  container
+                  justify="center"
+                  style={{ marginTop: "2.5rem" }}
+                >
+                  <Pagination
+                    style={{
+                      backgroundColor: dark ? "#000" : "#fff",
+                      // padding: "0.4rem",
+                      // borderRadius: "0.3rem",
+                    }}
+                    renderItem={(item) =>
+                      dark ? (
+                        <PaginationItem
+                          {...item}
+                          style={{
+                            color: "white",
+                            borderColor: "white",
+                            fontFamily: isEdit
+                              ? titleEdit.fontFamily
+                              : titleView.fontFamily,
+                          }}
+                          classes={{
+                            selected: classes.paginationItemSelected,
+                          }}
+                        />
+                      ) : (
                           <PaginationItem {...item} />
                         )
-                      }
-                      color="default"
-                      shape="rounded"
-                      variant="outlined"
-                      count={pageCount}
-                      page={page > pageCount ? 1 : page}
-                      onChange={this.handlePageEditClick}
-                    />
-                  </Grid>
-                )
+                    }
+                    color="default"
+                    shape="rounded"
+                    variant="outlined"
+                    count={pageCount}
+                    page={page > pageCount ? 1 : page}
+                    onChange={this.handlePageEditClick}
+                  />
+                </Grid>
+              )
               : !fromHome &&
-                pageCountView > 1 && (
-                  <Grid
-                    container
-                    justify="center"
-                    style={{ marginTop: "2.5rem" }}
-                  >
-                    <Pagination
-                      style={{
-                        backgroundColor: dark ? "#000" : "#fff",
-                        padding: "0.4rem",
-                        borderRadius: "0.3rem",
-                      }}
-                      renderItem={(item) =>
-                        dark ? (
-                          <PaginationItem
-                            {...item}
-                            style={{
-                              color: "white",
-                              borderColor: "white",
-                              fontFamily: isEdit
-                                ? titleEdit.fontFamily
-                                : titleView.fontFamily,
-                            }}
-                            classes={{
-                              selected: classes.paginationItemSelected,
-                            }}
-                          />
-                        ) : (
+              pageCountView > 1 && (
+                <Grid
+                  container
+                  justify="center"
+                  style={{ marginTop: "2.5rem" }}
+                >
+                  <Pagination
+                    style={{
+                      backgroundColor: dark ? "#000" : "#fff",
+                      padding: "0.4rem",
+                      borderRadius: "0.3rem",
+                    }}
+                    renderItem={(item) =>
+                      dark ? (
+                        <PaginationItem
+                          {...item}
+                          style={{
+                            color: "white",
+                            borderColor: "white",
+                            fontFamily: isEdit
+                              ? titleEdit.fontFamily
+                              : titleView.fontFamily,
+                          }}
+                          classes={{
+                            selected: classes.paginationItemSelected,
+                          }}
+                        />
+                      ) : (
                           <PaginationItem {...item} />
                         )
-                      }
-                      color="default"
-                      variant="outlined"
-                      shape="rounded"
-                      count={pageCountView}
-                      page={this.state.pageView}
-                      onChange={this.handlePageViewClick}
-                    />
-                  </Grid>
-                )}
+                    }
+                    color="default"
+                    variant="outlined"
+                    shape="rounded"
+                    count={pageCountView}
+                    page={this.state.pageView}
+                    onChange={this.handlePageViewClick}
+                  />
+                </Grid>
+              )}
           </Grid>
         </Grid>
       </Grid>
