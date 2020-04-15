@@ -70,8 +70,10 @@ class Theme1Home extends React.Component {
           <BannerComponent bannerType={0} />
           <div style={{ width: 348, position: "relative", opacity: 0.9, zIndex: 99, backgroundColor: isEdit ? titleEdit.color : titleView.color, height: 450, marginTop: -400, marginLeft: "20%", padding: 20, overflowY: "auto", display: isShowStory() ? "block" : "none" }}>
             <p style={{ color: "#ffffff", lineHeight: "1.5em", fontSize: 30, fontWeight: 700 }}>
-              Our Story
-              </p>
+              {isEdit
+                ? siteEdit && siteEdit.story && siteEdit.story.title
+                : siteView && siteView.story && siteView.story.title}
+            </p>
             <p style={{ color: "#ffffff", lineHeight: "1.5em", fontSize: 16 }}>
               {isEdit
                 ? siteEdit && siteEdit.story && siteEdit.story.composedText
