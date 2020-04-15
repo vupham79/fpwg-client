@@ -36,8 +36,8 @@ class EditLayout extends Component {
                     this.props.framePreviewMode === 0
                       ? "100%"
                       : this.props.framePreviewMode === 1
-                      ? 700
-                      : 300,
+                        ? 700
+                        : 300,
                   height: this.props.framePreviewMode === 2 ? 450 : "100vh",
                   marginTop: "auto",
                   marginBottom: "auto",
@@ -50,35 +50,35 @@ class EditLayout extends Component {
               </Grid>
             </Grid>
           ) : (
-            <Grid
-              container
-              item
-              sm={9}
-              xs={12}
-              justify="center"
-              style={{ background: "#191e23", height: "100vh" }}
-            >
               <Grid
+                container
                 item
-                style={{
-                  width:
-                    this.props.framePreviewMode === 0
-                      ? "100%"
-                      : this.props.framePreviewMode === 1
-                      ? 700
-                      : 300,
-                  height: this.props.framePreviewMode === 2 ? 450 : "100vh",
-                  marginTop: "auto",
-                  marginBottom: "auto",
-                  background: "white",
-                  overflowY: "scroll",
-                  overflowX: "hidden",
-                }}
+                sm={9}
+                xs={12}
+                justify="center"
+                style={{ background: "#191e23", height: "100vh" }}
               >
-                {this.props.children}
+                <Grid
+                  item
+                  style={{
+                    width:
+                      this.props.framePreviewMode === 0
+                        ? "100%"
+                        : this.props.framePreviewMode === 1
+                          ? 700
+                          : 300,
+                    height: this.props.framePreviewMode === 2 ? 450 : "100vh",
+                    marginTop: "auto",
+                    marginBottom: "auto",
+                    background: "white",
+                    overflowY: "scroll",
+                    overflowX: "hidden",
+                  }}
+                >
+                  {this.props.children}
+                </Grid>
               </Grid>
-            </Grid>
-          )}
+            )}
 
           <button
             onClick={() => this.props.setPreviewMode(!this.props.isPreview)}

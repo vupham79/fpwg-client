@@ -42,8 +42,8 @@ class Theme1About extends React.Component {
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#535353",
-        textAlign: "center",
+        color: "#ffffff",
+        textAlign: "left",
         fontSize: 16,
       },
       changableBody4: {
@@ -89,8 +89,9 @@ class Theme1About extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container style={{ minHeight: "50vh" }}>
-        <Grid item xs={12}>
+      <Grid container style={{ minHeight: "50vh", marginTop: 70 }}>
+
+        <Grid item xs={12} style={{ marginBottom: 50 }}>
           <p style={classes.changableTitle}>
             <span style={classes.changableFirst}>
               {fromHome ? homeTitle.charAt(0) : "A"}
@@ -98,20 +99,24 @@ class Theme1About extends React.Component {
             {fromHome ? homeTitle.substring(1) : "BOUT"}
           </p>
         </Grid>
-        <Grid container item xs={12} justify={"center"}>
-          <Grid style={{ display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? "block" : "none") : (this.props.siteView.showDetailSetting.showAboutLogo ? "block" : "none") }}>
-            {/* <RoundedImage image={this.renderImage()} roundedSize="0" imageWidth="300" imageHeight="300" style={{ objectFit: "contain" }} /> */}
-            <img src={this.renderImage()} alt="" style={{ width: "20rem" }} />
+
+        <Grid container item xs={12} justify={"center"} style={{ backgroundColor: isEdit ? titleEdit.color : titleView.color, minHeight: 420 }}>
+          <Grid item xs={12} sm={9} style={{ display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutLogo ? "block" : "none") }}>
+            <img src={this.renderImage()} alt="" style={{ width: 292, height: 348, marginTop: -50, objectFit: "cover" }} />
+
+            <span style={{ height: 298, overflowY: "auto", maxWidth: 400, padding: 15, display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutDescription ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutDescription ? "inline-block" : "none") }} >
+              <p style={classes.changableBody3}>
+                {isEdit && siteEdit && siteEdit.about}
+                {!isEdit && siteView && siteView.about}
+                {isEdit && !siteEdit.about && "Welcome to our website!"}
+                {!isEdit && !siteView.about && "Welcome to our website!"}
+              </p>
+            </span>
           </Grid>
         </Grid>
-        <Grid item xs={12} style={{ padding: 15, marginTop: 40, display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutDescription ? "block" : "none") : (this.props.siteView.showDetailSetting.showAboutDescription ? "block" : "none") }}>
-          <p style={classes.changableBody3}>
-            {isEdit && siteEdit && siteEdit.about}
-            {!isEdit && siteView && siteView.about}
-            {isEdit && !siteEdit.about && "Welcome to our website!"}
-            {!isEdit && !siteView.about && "Welcome to our website!"}
-          </p>
-        </Grid>
+
+        {/* <Grid item xs={12} style={{ backgroundColor: "#3E5688", height: 150 }} /> */}
+
       </Grid>
     );
   }

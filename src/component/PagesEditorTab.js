@@ -20,7 +20,8 @@ import {
   InputBase,
   Paper,
   FormControlLabel,
-  Input,
+  Radio,
+  RadioGroup,
 } from "@material-ui/core";
 import moment from "moment";
 import { green } from "@material-ui/core/colors";
@@ -45,6 +46,7 @@ import {
   setEventCustomize,
   setLimit,
   setAboutCustomize,
+  setPostMode
 } from "../actions";
 import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
@@ -344,6 +346,10 @@ class PagesEditorTab extends React.Component {
     });
   };
 
+  handleSetPostMode = event => {
+    this.props.setPostMode(parseInt(event.target.value));
+  };
+
   handleSearch = (keyword) => {
     if (this.props.posts) {
       let searchResult = this.props.posts.filter(function (pos) {
@@ -419,80 +425,80 @@ class PagesEditorTab extends React.Component {
         updateNavItemValue,
         changeNavItemName,
       }) => (
-        <Grid container style={gridItem}>
-          <Grid
-            container
-            item
-            alignItems="center"
-            xs={10}
-            sm={12}
-            md={10}
-            style={{ padding: "0.2rem 0" }}
-          >
-            <Grid container justify="center" item xs={2} md={2} sm={12}>
-              <DragHandle />
+          <Grid container style={gridItem}>
+            <Grid
+              container
+              item
+              alignItems="center"
+              xs={10}
+              sm={12}
+              md={10}
+              style={{ padding: "0.2rem 0" }}
+            >
+              <Grid container justify="center" item xs={2} md={2} sm={12}>
+                <DragHandle />
+              </Grid>
+              <Grid item xs={10} md={10} sm={12}>
+                <TextField
+                  autoFocus={
+                    this.state.currentFocusInput === item._id ? true : false
+                  }
+                  onClick={(e) => this.setState({ currentFocusInput: item._id })}
+                  InputLabelProps={{
+                    classes: {
+                      focused: classes.focused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      notchedOutline: classes.notchedOutline,
+                      input: classes.inputTitle,
+                    },
+                  }}
+                  size="small"
+                  style={{ backgroundColor: "white" }}
+                  fullWidth
+                  variant={"outlined"}
+                  value={value}
+                  inputProps={{
+                    maxLength: 15,
+                  }}
+                  onChange={(e) => {
+                    handleChangeNavName(
+                      item._id,
+                      site,
+                      e.target.value,
+                      changeNavItemName
+                    );
+                  }}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={10} md={10} sm={12}>
-              <TextField
-                autoFocus={
-                  this.state.currentFocusInput === item._id ? true : false
-                }
-                onClick={(e) => this.setState({ currentFocusInput: item._id })}
-                InputLabelProps={{
-                  classes: {
-                    focused: classes.focused,
-                  },
-                }}
-                InputProps={{
-                  classes: {
-                    notchedOutline: classes.notchedOutline,
-                    input: classes.inputTitle,
-                  },
-                }}
-                size="small"
-                style={{ backgroundColor: "white" }}
-                fullWidth
-                variant={"outlined"}
-                value={value}
-                inputProps={{
-                  maxLength: 15,
-                }}
-                onChange={(e) => {
-                  handleChangeNavName(
-                    item._id,
-                    site,
-                    e.target.value,
-                    changeNavItemName
-                  );
-                }}
-              />
-            </Grid>
-          </Grid>
-          <Grid container item justify="center" xs={2} sm={12} md={2}>
-            {item.original === "home" ? (
-              <></>
-            ) : (
-              <IconButton
-                style={viewButton}
-                onClick={() =>
-                  handleChangeActive(
-                    item._id,
-                    site,
-                    setActiveNavItems,
-                    updateNavItemValue
-                  )
-                }
-              >
-                {item.isActive && item.name !== "Home" ? (
-                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                ) : (
-                  <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+            <Grid container item justify="center" xs={2} sm={12} md={2}>
+              {item.original === "home" ? (
+                <></>
+              ) : (
+                  <IconButton
+                    style={viewButton}
+                    onClick={() =>
+                      handleChangeActive(
+                        item._id,
+                        site,
+                        setActiveNavItems,
+                        updateNavItemValue
+                      )
+                    }
+                  >
+                    {item.isActive && item.name !== "Home" ? (
+                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                    ) : (
+                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                      )}
+                  </IconButton>
                 )}
-              </IconButton>
-            )}
+            </Grid>
           </Grid>
-        </Grid>
-      )
+        )
     );
 
     const SortableList = sortableContainer(
@@ -824,6 +830,35 @@ class PagesEditorTab extends React.Component {
           </Dialog>
         </Grid>
 
+        <Grid item xs={12} style={{ marginTop: 40 }}>
+          <RadioGroup
+            value={site.showDetailSetting.showPostMode}
+            onChange={this.handleSetPostMode}
+            style={{ color: "#555d66", fontFamily: "Segoe UI, sans-serif" }}
+          >
+            <FormControlLabel
+              value={0}
+              control={<Radio style={{ color: "#0074aa" }} />}
+              label={<p style={{ fontSize: 13 }}>Show all</p>}
+            />
+            <FormControlLabel
+              value={1}
+              control={<Radio style={{ color: "#0074aa" }} />}
+              label={<p style={{ fontSize: 13 }}>Show only posts with photo(s)</p>}
+            />
+            <FormControlLabel
+              value={2}
+              control={<Radio style={{ color: "#0074aa" }} />}
+              label={<p style={{ fontSize: 13 }}>Show only posts with video</p>}
+            />
+            <FormControlLabel
+              value={3}
+              control={<Radio style={{ color: "#0074aa" }} />}
+              label={<p style={{ fontSize: 13 }}>Show only text posts</p>}
+            />
+          </RadioGroup>
+        </Grid>
+
         <Divider
           style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
         />
@@ -984,6 +1019,7 @@ const mapDispatchToProps = (dispatch) => ({
   setAboutCustomize: (logo, description, story) =>
     dispatch(setAboutCustomize(logo, description, story)),
   setLimit: (news, event, gallery) => dispatch(setLimit(news, event, gallery)),
+  setPostMode: (mode) => dispatch(setPostMode(mode)),
 });
 
 export default connect(
