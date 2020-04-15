@@ -327,6 +327,12 @@ const SiteReducer = (state = defaultState, action) => {
         newCover: [...array],
         isChanged: true,
       };
+    case "CHANGE_ORDER_NEW_COVERS":
+      return {
+        ...state,
+        newCover: [...action.payload],
+        isChanged: true,
+      };
     case "SET_PREVIEW_MODE":
       return {
         ...state,

@@ -78,7 +78,8 @@ import {
   setLimit,
   setAboutCustomize,
   setLatLng,
-  setPostMode
+  setPostMode,
+  changeOrderNewCovers,
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import {
@@ -216,5 +217,6 @@ export {
   setPostsToSiteViewOnePage,
   setGalleriesToSiteViewOnePage,
   setLatLng,
-  setPostMode
+  setPostMode,
+  changeOrderNewCovers,
 };
