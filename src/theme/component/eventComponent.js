@@ -118,11 +118,11 @@ class EventComponent extends React.Component {
                     xs={
                       isEdit
                         ? siteEdit.showDetailSetting.showCoverEvent
-                          ? 1
-                          : 3
+                          ? 2
+                          : 4
                         : siteView.showDetailSetting.showCoverEvent
-                        ? 1
-                        : 3
+                        ? 2
+                        : 4
                     }
                     style={{ height: "6rem" }}
                   >
