@@ -59,6 +59,7 @@ class EventComponent extends React.Component {
       siteEdit,
       siteView,
       dark,
+      altType,
     } = this.props;
     return (
       <>
@@ -72,13 +73,23 @@ class EventComponent extends React.Component {
                 <Grid
                   item
                   container
-                  sm={12}
+                  sm={
+                    isEdit
+                      ? siteEdit.showDetailSetting.showPlaceEvent
+                        ? 12
+                        : 9
+                      : siteView.showDetailSetting.showPlaceEvent
+                      ? 12
+                      : 9
+                  }
                   // spacing={2}
                   className={styles.contain_event}
                   key={index}
                   style={{
                     padding: "1rem",
                     backgroundColor: dark ? "#000" : "#fff",
+                    borderBottom: altType ? "1px solid" : "none",
+                    borderColor: dark ? "#000" : "#d4e1db",
                   }}
                 >
                   <Grid
@@ -104,7 +115,15 @@ class EventComponent extends React.Component {
                     container
                     direction="row"
                     item
-                    xs={1}
+                    xs={
+                      isEdit
+                        ? siteEdit.showDetailSetting.showCoverEvent
+                          ? 2
+                          : 4
+                        : siteView.showDetailSetting.showCoverEvent
+                        ? 2
+                        : 4
+                    }
                     style={{ height: "6rem" }}
                   >
                     <Grid
@@ -129,9 +148,9 @@ class EventComponent extends React.Component {
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
                         fontWeight: "bold",
-                        // color: "#212121",
                         textAlign: "center",
                         color: dark ? "#fff" : "#212121",
+                        fontSize: altType ? 30 : 15,
                       }}
                     >
                       {moment(row.startTime).format("D") + " "}
@@ -142,7 +161,17 @@ class EventComponent extends React.Component {
                     container
                     direction="row"
                     item
-                    xs={2}
+                    xs={
+                      isEdit
+                        ? !siteEdit.showDetailSetting.showDesEvent ||
+                          !siteEdit.showDetailSetting.showPlaceEvent
+                          ? 5
+                          : 2
+                        : !siteView.showDetailSetting.showDesEvent ||
+                          !siteView.showDetailSetting.showPlaceEvent
+                        ? 5
+                        : 2
+                    }
                     style={{
                       fontWeight: "bold",
                       textOverflow: "ellipsis",
@@ -161,7 +190,11 @@ class EventComponent extends React.Component {
                         href={"https://" + row.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ color: dark && "#fff" }}
+                        style={{
+                          color: dark && "#fff",
+                          fontSize: altType ? 16 : 14,
+                          textDecoration: "none",
+                        }}
                       >
                         {row.name}
                       </a>
@@ -169,7 +202,10 @@ class EventComponent extends React.Component {
                     <Grid
                       item
                       xs={12}
-                      style={{ color: dark ? "#fff" : "#3578e5" }}
+                      style={{
+                        color: dark ? "#fff" : "#3578e5",
+                        display: altType ? "none" : "inline-block",
+                      }}
                     >
                       {moment(row.startTime).format("MMMM DD")}
                       {row.endTime &&
@@ -182,7 +218,7 @@ class EventComponent extends React.Component {
 
                   <Grid
                     item
-                    xs={4}
+                    xs={3}
                     style={{
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
@@ -256,6 +292,7 @@ class EventComponent extends React.Component {
       siteEdit,
       siteView,
       dark,
+      altType,
     } = this.props;
     return (
       <>
@@ -270,13 +307,23 @@ class EventComponent extends React.Component {
                 <Grid
                   item
                   container
-                  sm={12}
+                  sm={
+                    isEdit
+                      ? siteEdit.showDetailSetting.showPlaceEvent
+                        ? 12
+                        : 9
+                      : siteView.showDetailSetting.showPlaceEvent
+                      ? 12
+                      : 9
+                  }
                   // spacing={2}
                   className={styles.contain_event}
                   key={index}
                   style={{
                     padding: "1rem",
                     backgroundColor: dark ? "#000" : "#fff",
+                    borderBottom: altType ? "1px solid" : "none",
+                    borderColor: dark ? "#000" : "#d4e1db",
                   }}
                 >
                   <Grid
@@ -302,7 +349,15 @@ class EventComponent extends React.Component {
                     container
                     direction="row"
                     item
-                    xs={1}
+                    xs={
+                      isEdit
+                        ? siteEdit.showDetailSetting.showCoverEvent
+                          ? 1
+                          : 3
+                        : siteView.showDetailSetting.showCoverEvent
+                        ? 1
+                        : 3
+                    }
                     style={{ height: "6rem" }}
                   >
                     <Grid
@@ -328,9 +383,9 @@ class EventComponent extends React.Component {
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
                         fontWeight: "bold",
-                        color: "#212121",
                         textAlign: "center",
                         color: dark ? "#fff" : "#000",
+                        fontSize: altType ? 30 : 15,
                       }}
                     >
                       {moment(row.startTime).format("D") + " "}
@@ -341,7 +396,17 @@ class EventComponent extends React.Component {
                     container
                     direction="row"
                     item
-                    xs={2}
+                    xs={
+                      isEdit
+                        ? !siteEdit.showDetailSetting.showDesEvent ||
+                          !siteEdit.showDetailSetting.showPlaceEvent
+                          ? 5
+                          : 2
+                        : !siteView.showDetailSetting.showDesEvent ||
+                          !siteView.showDetailSetting.showPlaceEvent
+                        ? 5
+                        : 2
+                    }
                     style={{
                       fontWeight: "bold",
                       textOverflow: "ellipsis",
@@ -360,7 +425,11 @@ class EventComponent extends React.Component {
                         href={"https://" + row.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ color: dark && "#fff" }}
+                        style={{
+                          color: dark && "#fff",
+                          fontSize: altType ? 16 : 14,
+                          textDecoration: "none",
+                        }}
                       >
                         {row.name}
                       </a>
@@ -368,7 +437,10 @@ class EventComponent extends React.Component {
                     <Grid
                       item
                       xs={12}
-                      style={{ color: dark ? "#fff" : "#3578e5" }}
+                      style={{
+                        color: dark ? "#fff" : "#3578e5",
+                        display: altType ? "none" : "inline-block",
+                      }}
                     >
                       {moment(row.startTime).format("MMMM DD")}
                       {row.endTime &&
@@ -381,7 +453,7 @@ class EventComponent extends React.Component {
 
                   <Grid
                     item
-                    xs={4}
+                    xs={3}
                     style={{
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
@@ -458,6 +530,7 @@ class EventComponent extends React.Component {
       pageCount,
       dark,
       classes,
+      altType,
     } = this.props;
     const { itemPerPage, offset, page } = this.state;
     return (
@@ -486,7 +559,7 @@ class EventComponent extends React.Component {
               xs={12}
               container
               justify="center"
-              className={styles.event_body}
+              className={altType ? null : styles.event_body}
               style={dark ? { backgroundColor: "#000" } : {}}
             >
               {!homeList ||
@@ -523,22 +596,32 @@ class EventComponent extends React.Component {
                     <Grid item xs={12}>
                       <p
                         style={{
-                          textAlign: "left",
-                          fontSize: 16,
+                          fontSize: altType ? 20 : 16,
                           fontWeight: "bold",
                           marginLeft: 10,
                           fontFamily: isEdit
                             ? titleEdit.fontFamily
                             : titleView.fontFamily,
-                          // color: dark ? "#fff" : "#000",
-                          color: isEdit ? titleEdit.color : titleView.color,
+                          color: altType
+                            ? isEdit
+                              ? titleEdit.color
+                              : titleView.color
+                            : dark
+                            ? "#fff"
+                            : "#000",
+                          textAlign: altType ? "center" : "left",
                         }}
                       >
                         Upcoming Events
                       </p>
                     </Grid>
                     <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: dark && "#fff" }} />
+                      <Divider
+                        style={{
+                          backgroundColor: dark && "#fff",
+                          display: altType ? "none" : "block",
+                        }}
+                      />
                     </Grid>
                   </Grid>
                 )}
@@ -563,22 +646,32 @@ class EventComponent extends React.Component {
                     <Grid item xs={12}>
                       <p
                         style={{
-                          textAlign: "left",
-                          fontSize: 16,
+                          fontSize: altType ? 20 : 16,
                           fontWeight: "bold",
                           marginLeft: 10,
                           fontFamily: isEdit
                             ? titleEdit.fontFamily
                             : titleView.fontFamily,
-                          // color: dark ? "#fff" : "#000",
-                          color: isEdit ? titleEdit.color : titleView.color,
+                          color: altType
+                            ? isEdit
+                              ? titleEdit.color
+                              : titleView.color
+                            : dark
+                            ? "#fff"
+                            : "#000",
+                          textAlign: altType ? "center" : "left",
                         }}
                       >
                         Upcoming Events
                       </p>
                     </Grid>
                     <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: dark && "#fff" }} />
+                      <Divider
+                        style={{
+                          backgroundColor: dark && "#fff",
+                          display: altType ? "none" : "block",
+                        }}
+                      />
                     </Grid>
                   </Grid>
                 )}
@@ -598,7 +691,10 @@ class EventComponent extends React.Component {
                 : this.renderUpComingEvent(homeList, classes)}
 
               <Grid item xs={12}>
-                <Divider color="#212121" />
+                <Divider
+                  color="#212121"
+                  style={{ display: altType ? "none" : "block" }}
+                />
               </Grid>
 
               {fromHome &&
@@ -620,22 +716,32 @@ class EventComponent extends React.Component {
                     <Grid item xs={12}>
                       <p
                         style={{
-                          textAlign: "left",
-                          fontSize: 16,
+                          fontSize: altType ? 20 : 16,
                           fontWeight: "bold",
                           marginLeft: 10,
                           fontFamily: isEdit
                             ? titleEdit.fontFamily
                             : titleView.fontFamily,
-                          // color: dark ? "#fff" : "#000",
-                          color: isEdit ? titleEdit.color : titleView.color,
+                          color: altType
+                            ? isEdit
+                              ? titleEdit.color
+                              : titleView.color
+                            : dark
+                            ? "#fff"
+                            : "#000",
+                          textAlign: altType ? "center" : "left",
                         }}
                       >
                         Past Events
                       </p>
                     </Grid>
                     <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: dark && "#fff" }} />
+                      <Divider
+                        style={{
+                          backgroundColor: dark && "#fff",
+                          display: altType ? "none" : "block",
+                        }}
+                      />
                     </Grid>
                   </Grid>
                 )}
@@ -666,22 +772,32 @@ class EventComponent extends React.Component {
                     <Grid item xs={12}>
                       <p
                         style={{
-                          textAlign: "left",
-                          fontSize: 16,
+                          fontSize: altType ? 20 : 16,
                           fontWeight: "bold",
                           marginLeft: 10,
                           fontFamily: isEdit
                             ? titleEdit.fontFamily
                             : titleView.fontFamily,
-                          // color: dark ? "#fff" : "#000",
-                          color: isEdit ? titleEdit.color : titleView.color,
+                          color: altType
+                            ? isEdit
+                              ? titleEdit.color
+                              : titleView.color
+                            : dark
+                            ? "#fff"
+                            : "#000",
+                          textAlign: altType ? "center" : "left",
                         }}
                       >
                         Past Events
                       </p>
                     </Grid>
                     <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: dark && "#fff" }} />
+                      <Divider
+                        style={{
+                          backgroundColor: dark && "#fff",
+                          display: altType ? "none" : "block",
+                        }}
+                      />
                     </Grid>
                   </Grid>
                 )}

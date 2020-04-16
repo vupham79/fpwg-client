@@ -731,7 +731,7 @@ class EventComponent extends React.Component {
                     <p onClick={() => this.handleShowMore()}>Show More</p>
                   </Grid>
                 )
-              : pageCountView !== null &&
+              : !!pageCountView &&
                 this.state.pageView < pageCountView && (
                   <Grid
                     container

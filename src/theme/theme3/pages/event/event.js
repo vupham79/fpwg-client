@@ -163,6 +163,7 @@ class EventPage extends React.Component {
                     : this.props.siteView.limitEvent)
               )}
               dark={true}
+              altType={true}
             />
           ) : (
             <EmptyEvent
@@ -171,6 +172,7 @@ class EventPage extends React.Component {
               siteView={siteView}
               titleView={titleView}
               isEdit={isEdit}
+              altType={true}
             />
           )
         ) : (homeList && homeList) || (siteView && siteView.events) ? (
@@ -179,6 +181,7 @@ class EventPage extends React.Component {
             siteInfo={siteView.sitePath}
             fromHome={fromHome}
             dark={true}
+            altType={true}
           />
         ) : (
           <EmptyEvent
@@ -187,6 +190,7 @@ class EventPage extends React.Component {
             siteView={siteView}
             titleView={titleView}
             isEdit={isEdit}
+            altType={true}
           />
         )}
       </Grid>

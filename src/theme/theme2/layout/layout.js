@@ -42,7 +42,7 @@ class Layout extends Component {
     const { isEdit, titleEdit, titleView } = this.props;
 
     return (
-      <Grid id="topPos">
+      <Grid id="topPos" style={{ backgroundColor: "#fff" }}>
         <HeaderComponent
           navPos={"right"}
           displayImg={true}

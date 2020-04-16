@@ -41,7 +41,7 @@ class Theme1Event extends React.Component {
 
     return (
       <Grid container style={{ minHeight: "50vh" }}>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ marginBottom: 70 }}>
           <p style={classes.changableTitle}>
             <span style={classes.changableFirst}>
               {fromHome ? homeTitle.charAt(0) : "E"}
@@ -51,6 +51,7 @@ class Theme1Event extends React.Component {
         </Grid>
         <Grid item xs={12}>
           <EventComponent
+            altType
             key={this.props.isEdit ? this.props.siteEdit.limitEvent : this.props.siteView.limitEvent}
             homeList={
               fromHome && homeList
@@ -67,7 +68,7 @@ class Theme1Event extends React.Component {
             )}
           />
         </Grid>
-      </Grid>
+      </Grid >
     );
   }
 }

@@ -228,14 +228,9 @@ class Gallery extends React.Component {
                     size="2x"
                     onClick={() => this.handleShowMore()}
                   />
-                  {/* <FontAwesomeIcon
-                    icon={faChevronCircleUp}
-                    color={isEdit ? titleEdit.color : titleView.color}
-                    size="1x"
-                  /> */}
                 </Grid>
               )
-            : pageCountView &&
+            : !!pageCountView &&
               this.state.pageView < pageCountView && (
                 <Grid
                   container
@@ -251,11 +246,6 @@ class Gallery extends React.Component {
                     size="2x"
                     onClick={() => this.handleShowMore()}
                   />
-                  {/* <FontAwesomeIcon
-                    icon={faChevronCircleUp}
-                    color={isEdit ? titleEdit.color : titleView.color}
-                    size="1x"
-                  /> */}
                 </Grid>
               )}
         </Grid>

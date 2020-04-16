@@ -41,6 +41,13 @@ class Theme1Contact extends React.Component {
         paddingBottom: 20,
         textTransform: "uppercase",
       },
+      changableTitle2: {
+        fontFamily: isEdit ? siteEdit.fontTitle : siteView.fontTitle,
+        fontWeight: "bold",
+        fontSize: 18,
+        color: isEdit ? titleEdit.color : titleView.color,
+        marginLeft: "25%",
+      },
       changableBody: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
         color: "#535353",
@@ -49,10 +56,10 @@ class Theme1Contact extends React.Component {
       },
       changableBody2: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
-        color: "#535353",
-        textAlign: "center",
+        color: "#a0a09f",
+        textAlign: "left",
         fontSize: 16,
-        marginLeft: "30%",
+        marginLeft: "25%",
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -117,52 +124,88 @@ class Theme1Contact extends React.Component {
 
         {isEdit && phone && (
           <Grid container item xs={12}>
-            <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faPhone} size="2x" />
-              {" " + phone}
+            <Grid item xs={12}>
+              <p style={classes.changableTitle2}>
+                PHONE
             </p>
+            </Grid>
+            <Grid item xs={12}>
+              <p style={classes.changableBody2}>
+                {phone}
+              </p>
+            </Grid>
           </Grid>
         )}
         {!isEdit && siteView.phone && (
           <Grid container item xs={12}>
-            <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faPhone} size="2x" />
-              {" " + siteView.phone}
+            <Grid item xs={12}>
+              <p style={classes.changableTitle2}>
+                PHONE
             </p>
+            </Grid>
+            <Grid item xs={12}>
+              <p style={classes.changableBody2}>
+                {siteView.phone}
+              </p>
+            </Grid>
           </Grid>
         )}
 
         {isEdit && email && email !== "" && (
           <Grid container item xs={12}>
-            <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faMailBulk} size="2x" />
-              {" " + email}
-            </p>
+            <Grid item xs={12}>
+              <p style={classes.changableTitle2}>
+                EMAIL
+              </p>
+            </Grid>
+            <Grid item xs={12}>
+              <p style={classes.changableBody2}>
+                {email}
+              </p>
+            </Grid>
           </Grid>
         )}
         {!isEdit && siteView.email && siteView.email !== "" && (
           <Grid container item xs={12}>
-            <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faMailBulk} size="2x" />
-              {" " + siteView.email}
-            </p>
+            <Grid item xs={12}>
+              <p style={classes.changableTitle2}>
+                EMAIL
+              </p>
+            </Grid>
+            <Grid item xs={12}>
+              <p style={classes.changableBody2}>
+                {siteView.email}
+              </p>
+            </Grid>
           </Grid>
         )}
 
         {isEdit && address && address !== "" && (
           <Grid container item xs={12}>
-            <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faAddressBook} size="2x" />
-              {" " + address}
-            </p>
+            <Grid item xs={12}>
+              <p style={classes.changableTitle2}>
+                ADDRESS
+              </p>
+            </Grid>
+            <Grid item xs={12}>
+              <p style={classes.changableBody2}>
+                {address}
+              </p>
+            </Grid>
           </Grid>
         )}
         {!isEdit && siteView.address && siteView.adress !== "" && (
           <Grid container item xs={12}>
-            <p style={classes.changableBody2}>
-              <FontAwesomeIcon icon={faAddressBook} size="2x" />
-              {" " + siteView.address}
-            </p>
+            <Grid item xs={12}>
+              <p style={classes.changableTitle2}>
+                ADDRESS
+              </p>
+            </Grid>
+            <Grid item xs={12}>
+              <p style={classes.changableBody2}>
+                {siteView.address}
+              </p>
+            </Grid>
           </Grid>
         )}
 

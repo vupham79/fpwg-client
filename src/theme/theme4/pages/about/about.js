@@ -152,6 +152,7 @@ class Theme1About extends React.Component {
                 float: isShowAboutDes() ? "left" : "none",
                 display: isShowAboutLogo() ? "block" : "none",
                 marginRight: "1rem",
+                borderRadius: "1rem",
               }}
               component="img"
               alt=""
@@ -173,100 +174,100 @@ class Theme1About extends React.Component {
 
           {isEdit
             ? siteEdit &&
-            siteEdit.story &&
-            siteEdit.story.composedText && (
-              <Grid
-                container
-                item
-                xs={12}
-                justify="center"
-                style={{
-                  padding: "2rem 0",
-                  display: isShowStory() ? "contents" : "none",
-                }}
-              >
-                <Grid item xs={12} style={classes.changableBody5}>
-                  {isEdit
-                    ? siteEdit && siteEdit.story && siteEdit.story.title
-                    : siteView && siteView.story && siteView.story.title}
-                </Grid>
-                {/* <Grid container item xs={8} sm={3}>
-                  <CardMedia
-                    component="img"
-                    style={{ height: "100%" }}
-                    image={this.renderImage()}
-                  />
-                </Grid> */}
+              siteEdit.story &&
+              siteEdit.story.composedText && (
                 <Grid
                   container
                   item
-                  xs={10}
-                  sm={7}
-                  alignItems="center"
+                  xs={12}
                   justify="center"
-                  style={{ padding: "1rem" }}
+                  style={{
+                    padding: "2rem 0",
+                    display: isShowStory() ? "contents" : "none",
+                  }}
                 >
-                  <Typography variant="body1" style={classes.changableBody3}>
-                    {siteEdit.story.composedText.map((text) => {
-                      const originalText = text.split("\n");
-                      return originalText.map((val, index) => (
-                        <React.Fragment key={index}>
-                          {val}
-                          <br />
-                        </React.Fragment>
-                      ));
-                    })}
-                  </Typography>
-                </Grid>
-              </Grid>
-            )
-            : siteView &&
-            siteView.story &&
-            siteView.story.composedText && (
-              <Grid
-                container
-                item
-                xs={11}
-                justify="center"
-                alignItems="center"
-                style={{
-                  padding: "2rem 0",
-                  display: isShowStory() ? "contents" : "none",
-                }}
-              >
-                <Grid item xs={12} style={classes.changableBody5}>
-                  {isEdit
-                    ? siteEdit && siteEdit.story && siteEdit.story.title
-                    : siteView && siteView.story && siteView.story.title}
-                </Grid>
-                {/* <Grid container item xs={10} sm={3}>
+                  <Grid item xs={12} style={classes.changableBody5}>
+                    {isEdit
+                      ? siteEdit && siteEdit.story && siteEdit.story.title
+                      : siteView && siteView.story && siteView.story.title}
+                  </Grid>
+                  {/* <Grid container item xs={8} sm={3}>
                   <CardMedia
                     component="img"
                     style={{ height: "100%" }}
                     image={this.renderImage()}
                   />
                 </Grid> */}
+                  <Grid
+                    container
+                    item
+                    xs={10}
+                    sm={7}
+                    alignItems="center"
+                    justify="center"
+                    style={{ padding: "1rem" }}
+                  >
+                    <Typography variant="body1" style={classes.changableBody3}>
+                      {siteEdit.story.composedText.map((text) => {
+                        const originalText = text.split("\n");
+                        return originalText.map((val, index) => (
+                          <React.Fragment key={index}>
+                            {val}
+                            <br />
+                          </React.Fragment>
+                        ));
+                      })}
+                    </Typography>
+                  </Grid>
+                </Grid>
+              )
+            : siteView &&
+              siteView.story &&
+              siteView.story.composedText && (
                 <Grid
                   container
                   item
-                  xs={10}
-                  sm={7}
-                  style={{ padding: "1rem" }}
+                  xs={11}
+                  justify="center"
+                  alignItems="center"
+                  style={{
+                    padding: "2rem 0",
+                    display: isShowStory() ? "contents" : "none",
+                  }}
                 >
-                  <Typography variant="body1" style={classes.changableBody3}>
-                    {siteView.story.composedText.map((text) => {
-                      const originalText = text.split("\n");
-                      return originalText.map((val, index) => (
-                        <React.Fragment key={index}>
-                          {val}
-                          <br />
-                        </React.Fragment>
-                      ));
-                    })}
-                  </Typography>
+                  <Grid item xs={12} style={classes.changableBody5}>
+                    {isEdit
+                      ? siteEdit && siteEdit.story && siteEdit.story.title
+                      : siteView && siteView.story && siteView.story.title}
+                  </Grid>
+                  {/* <Grid container item xs={10} sm={3}>
+                  <CardMedia
+                    component="img"
+                    style={{ height: "100%" }}
+                    image={this.renderImage()}
+                  />
+                </Grid> */}
+                  <Grid
+                    container
+                    item
+                    xs={10}
+                    sm={7}
+                    style={{ padding: "1rem" }}
+                  >
+                    <Typography variant="body1" style={classes.changableBody3}>
+                      {siteView.story.composedText.map((text) => {
+                        const originalText = text.split("\n");
+                        return originalText.map((val, index) => (
+                          <React.Fragment key={index}>
+                            {val}
+                            <br />
+                          </React.Fragment>
+                        ));
+                      })}
+                    </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
-            )}
+              )}
         </Grid>
       </Grid>
     );

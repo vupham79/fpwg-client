@@ -86,7 +86,19 @@ class ContactPage extends React.Component {
       instagram,
       whatsapp,
     } = this.props;
-
+    const mapExist = () => {
+      if (isEdit) {
+        if (siteEdit && siteEdit.latitude && siteEdit.longitude) {
+          return true;
+        }
+        return false;
+      } else {
+        if (siteView && siteView.latitude && siteView.longitude) {
+          return true;
+        }
+        return false;
+      }
+    };
     const MapWithAMarker = withScriptjs(
       withGoogleMap((props) => (
         <GoogleMap
@@ -157,12 +169,7 @@ class ContactPage extends React.Component {
             item
             xs={12}
             sm={6}
-            md={
-              (siteEdit && siteEdit.latitude && siteEdit.longitude) ||
-              (siteView && siteView.latitude && siteView.longitude)
-                ? 6
-                : 6
-            }
+            md={mapExist ? 4 : 6}
             style={{ padding: "0 2rem" }}
           >
             {isEdit ? (
@@ -572,7 +579,7 @@ class ContactPage extends React.Component {
             ? siteEdit &&
               siteEdit.latitude &&
               siteEdit.longitude && (
-                <Grid item md={7} sm={10} xs={10} className={classes.map}>
+                <Grid item md={4} sm={6} xs={10} className={classes.map}>
                   <MapWithAMarker
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
                     loadingElement={<div style={{ height: `300px` }} />}
@@ -584,7 +591,7 @@ class ContactPage extends React.Component {
             : siteView &&
               siteView.latitude &&
               siteView.longitude && (
-                <Grid item md={7} sm={10} xs={10} className={classes.map}>
+                <Grid item md={4} sm={6} xs={10} className={classes.map}>
                   <MapWithAMarker
                     googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
                     loadingElement={<div style={{ height: `300px` }} />}

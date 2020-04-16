@@ -68,6 +68,7 @@ class Footer extends React.Component {
               style={{ height: "1rem", width: "1rem" }}
               color="primary"
               href={isEdit ? siteEdit.url : siteView.url}
+              target={"_blank"}
             >
               <FontAwesomeIcon
                 icon={faFacebookF}
@@ -119,6 +120,7 @@ class Footer extends React.Component {
                     href={`https://wa.me/${
                       isEdit ? whatsapp : siteView.whatsapp
                     }`}
+                    target={"_blank"}
                   >
                     <FontAwesomeIcon
                       icon={faWhatsapp}
@@ -143,6 +145,7 @@ class Footer extends React.Component {
                     style={{ height: "1rem", width: "1rem" }}
                     color="primary"
                     href={isEdit ? youtube : siteView.youtube}
+                    target={"_blank"}
                   >
                     <FontAwesomeIcon
                       icon={faYoutube}
@@ -166,6 +169,7 @@ class Footer extends React.Component {
                     color="primary"
                     style={{ height: "1rem", width: "1rem" }}
                     href={isEdit ? youtube : siteView.youtube}
+                    target={"_blank"}
                   >
                     <FontAwesomeIcon
                       icon={faYoutube}
@@ -192,6 +196,7 @@ class Footer extends React.Component {
                     href={`https://instagram.com/${
                       isEdit ? instagram : siteView.instagram
                     }`}
+                    target={"_blank"}
                   >
                     <FontAwesomeIcon
                       icon={faInstagram}
@@ -217,6 +222,7 @@ class Footer extends React.Component {
                     href={`https://instagram.com/${
                       isEdit ? instagram : siteView.instagram
                     }`}
+                    target={"_blank"}
                   >
                     <FontAwesomeIcon
                       icon={faInstagram}

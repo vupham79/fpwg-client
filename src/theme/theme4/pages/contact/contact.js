@@ -238,8 +238,8 @@ class Theme1Contact extends React.Component {
             item
             container
             xs={12}
-            sm={this.isShowMap() ? 6 : 8}
-            md={this.isShowMap() ? 4 : 8}
+            sm={this.isShowMap() ? 6 : 6}
+            md={this.isShowMap() ? 4 : 6}
           >
             {isEdit ? (
               address ? (
@@ -659,47 +659,49 @@ class Theme1Contact extends React.Component {
               ) : null}
             </Grid>
           </Grid>
-          <Grid
-            item
-            container
-            md={4}
-            sm={6}
-            xs={10}
-            // justify={"center"}
-          >
-            {isEdit
-              ? siteEdit &&
-                siteEdit.latitude &&
-                siteEdit.longitude && (
-                  <Grid item md={12} sm={12} xs={12} className={classes.map}>
-                    <MapWithAMarker
-                      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
-                      loadingElement={<div style={{ height: `300px` }} />}
-                      containerElement={<div style={{ height: `300px` }} />}
-                      mapElement={<div style={{ height: `300px` }} />}
-                    />
-                  </Grid>
-                )
-              : siteView &&
-                siteView.latitude &&
-                siteView.longitude && (
-                  <Grid item md={12} sm={12} xs={12} className={classes.map}>
-                    <MapWithAMarker
-                      googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
-                      loadingElement={<div style={{ height: `300px` }} />}
-                      containerElement={
-                        <div
-                          style={{
-                            height: `300px`,
-                          }}
-                        />
-                      }
-                      mapElement={<div style={{ height: `300px` }} />}
-                    />
-                  </Grid>
-                )}
-          </Grid>
-          <Grid item container md={4} sm={10} xs={10}>
+          {this.isShowMap() && (
+            <Grid
+              item
+              container
+              md={4}
+              sm={6}
+              xs={10}
+              // justify={"center"}
+            >
+              {isEdit
+                ? siteEdit &&
+                  siteEdit.latitude &&
+                  siteEdit.longitude && (
+                    <Grid item md={12} sm={12} xs={12} className={classes.map}>
+                      <MapWithAMarker
+                        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
+                        loadingElement={<div style={{ height: `300px` }} />}
+                        containerElement={<div style={{ height: `300px` }} />}
+                        mapElement={<div style={{ height: `300px` }} />}
+                      />
+                    </Grid>
+                  )
+                : siteView &&
+                  siteView.latitude &&
+                  siteView.longitude && (
+                    <Grid item md={12} sm={12} xs={12} className={classes.map}>
+                      <MapWithAMarker
+                        googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
+                        loadingElement={<div style={{ height: `300px` }} />}
+                        containerElement={
+                          <div
+                            style={{
+                              height: `300px`,
+                            }}
+                          />
+                        }
+                        mapElement={<div style={{ height: `300px` }} />}
+                      />
+                    </Grid>
+                  )}
+            </Grid>
+          )}
+          <Grid item container md={this.isShowMap() ? 4 : 6} sm={10} xs={10}>
             <div
               className="fb-page"
               data-href={isEdit ? siteEdit.url : siteView.url}
