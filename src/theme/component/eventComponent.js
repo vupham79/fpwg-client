@@ -76,10 +76,10 @@ class EventComponent extends React.Component {
                     isEdit
                       ? siteEdit.showDetailSetting.showPlaceEvent
                         ? 12
-                        : 9
+                        : 10
                       : siteView.showDetailSetting.showPlaceEvent
                         ? 12
-                        : 9
+                        : 10
                   }
                   // spacing={2}
                   className={styles.contain_event}
@@ -300,10 +300,10 @@ class EventComponent extends React.Component {
                     isEdit
                       ? siteEdit.showDetailSetting.showPlaceEvent
                         ? 12
-                        : 9
+                        : 10
                       : siteView.showDetailSetting.showPlaceEvent
                         ? 12
-                        : 9
+                        : 10
                   }
                   // spacing={2}
                   className={styles.contain_event}
