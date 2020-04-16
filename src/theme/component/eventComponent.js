@@ -76,10 +76,10 @@ class EventComponent extends React.Component {
                     isEdit
                       ? siteEdit.showDetailSetting.showPlaceEvent
                         ? 12
-                        : 10
+                        : 9
                       : siteView.showDetailSetting.showPlaceEvent
                         ? 12
-                        : 10
+                        : 9
                   }
                   // spacing={2}
                   className={styles.contain_event}
@@ -117,11 +117,11 @@ class EventComponent extends React.Component {
                     xs={
                       isEdit
                         ? siteEdit.showDetailSetting.showCoverEvent
-                          ? 1
-                          : 3
+                          ? 2
+                          : 4
                         : siteView.showDetailSetting.showCoverEvent
-                          ? 1
-                          : 3
+                          ? 2
+                          : 4
                     }
                     style={{ height: "6rem" }}
                   >
@@ -300,10 +300,10 @@ class EventComponent extends React.Component {
                     isEdit
                       ? siteEdit.showDetailSetting.showPlaceEvent
                         ? 12
-                        : 10
+                        : 9
                       : siteView.showDetailSetting.showPlaceEvent
                         ? 12
-                        : 10
+                        : 9
                   }
                   // spacing={2}
                   className={styles.contain_event}
