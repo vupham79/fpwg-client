@@ -72,7 +72,15 @@ class EventComponent extends React.Component {
                 <Grid
                   item
                   container
-                  sm={12}
+                  sm={
+                    isEdit
+                      ? siteEdit.showDetailSetting.showPlaceEvent
+                        ? 12
+                        : 9
+                      : siteView.showDetailSetting.showPlaceEvent
+                        ? 12
+                        : 9
+                  }
                   // spacing={2}
                   className={styles.contain_event}
                   key={index}
@@ -154,12 +162,12 @@ class EventComponent extends React.Component {
                     item
                     xs={
                       isEdit
-                        ? siteEdit.showDetailSetting.showDesEvent
-                          ? 2
-                          : 6
-                        : siteView.showDetailSetting.showDesEvent
-                          ? 2
-                          : 6
+                        ? !siteEdit.showDetailSetting.showDesEvent || !siteEdit.showDetailSetting.showPlaceEvent
+                          ? 5
+                          : 2
+                        : !siteView.showDetailSetting.showDesEvent || !siteView.showDetailSetting.showPlaceEvent
+                          ? 5
+                          : 2
                     }
                     style={{
                       fontWeight: "bold",
@@ -200,7 +208,7 @@ class EventComponent extends React.Component {
 
                   <Grid
                     item
-                    xs={4}
+                    xs={3}
                     style={{
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
@@ -288,7 +296,15 @@ class EventComponent extends React.Component {
                 <Grid
                   item
                   container
-                  sm={12}
+                  sm={
+                    isEdit
+                      ? siteEdit.showDetailSetting.showPlaceEvent
+                        ? 12
+                        : 9
+                      : siteView.showDetailSetting.showPlaceEvent
+                        ? 12
+                        : 9
+                  }
                   // spacing={2}
                   className={styles.contain_event}
                   key={index}
@@ -371,12 +387,12 @@ class EventComponent extends React.Component {
                     item
                     xs={
                       isEdit
-                        ? siteEdit.showDetailSetting.showDesEvent
-                          ? 2
-                          : 6
-                        : siteView.showDetailSetting.showDesEvent
-                          ? 2
-                          : 6
+                        ? !siteEdit.showDetailSetting.showDesEvent || !siteEdit.showDetailSetting.showPlaceEvent
+                          ? 5
+                          : 2
+                        : !siteView.showDetailSetting.showDesEvent || !siteView.showDetailSetting.showPlaceEvent
+                          ? 5
+                          : 2
                     }
                     style={{
                       fontWeight: "bold",
@@ -417,7 +433,7 @@ class EventComponent extends React.Component {
 
                   <Grid
                     item
-                    xs={4}
+                    xs={3}
                     style={{
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
@@ -634,7 +650,7 @@ class EventComponent extends React.Component {
                 : this.renderUpComingEvent(homeList, classes)}
 
               <Grid item xs={12}>
-                <Divider color="#212121" />
+                <Divider color="#212121" style={{ display: this.props.altType ? "none" : "block" }} />
               </Grid>
 
               {fromHome &&
