@@ -137,7 +137,6 @@ class Theme1Home extends React.Component {
                         bgImage={this.getCover(0)}
                         bgImageAlt=""
                         strength={300}
-                        bgImageStyle={{ width: "100%" }}
                       >
                         <div style={{ height: '450px', width: '100%', backgroundColor: isEdit ? titleEdit.color : titleView.color, opacity: 0.6 }}>
 
