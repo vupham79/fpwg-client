@@ -113,7 +113,7 @@ class AboutPage extends React.Component {
             style={{
               marginTop: "2.5rem",
               marginBottom: fromHome || !isShowStory() ? "2.5rem" : 0,
-              minHeight: !fromHome && "55vh",
+              minHeight: !fromHome && !isShowStory() && "55vh",
             }}
           >
             <Typography
