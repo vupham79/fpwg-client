@@ -46,7 +46,7 @@ class Layout extends Component {
     return (
       <Grid
         id="topPos"
-        style={{ backgroundColor: "#424242", position: "relative" }}
+        style={{ backgroundColor: "#FAFAFA", position: "relative" }}
       >
         <Header
           navPos={"right"}
