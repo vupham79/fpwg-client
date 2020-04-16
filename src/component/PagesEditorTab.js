@@ -1060,62 +1060,62 @@ class PagesEditorTab extends React.Component {
           </ExpansionPanelDetails>
         </ExpansionPanel>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <Divider
-          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
-        />
-        <Typography className={classes.title}>Pages</Typography>
-        <Divider
-          style={{
-            height: "1.2rem",
-            width: "100%",
-            backgroundColor: "#ffffff00",
-          }}
-        />
-
-        <Grid
-          item
-          style={{
-            color: "#555d66",
-            textAlign: "left",
-            fontStyle: "italic",
-            fontFamily: "Segoe UI, sans-serif",
-            marginBottom: "0.8rem",
-          }}
+        <ExpansionPanel
+          expanded={
+            this.state.currentExpandItem === "t5" &&
+              this.state.isExpanding
+              ? true
+              : false
+          }
+          className={classes.gridItem}
         >
-          Reorder or hide pages of your menu.
-        </Grid>
-        <SortableList
-          items={site.navItems}
-          onSortEnd={this.onChangeItem}
-          useDragHandle
-          site={site}
-          setActiveNavItems={setActiveNavItems}
-          updateNavItemValue={updateNavItemValue}
-          changeNavItemName={changeNavItemName}
-        />
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            onClick={() => this.onChangePanel("t5", !this.state.isExpanding)}
+            aria-controls="panel1a-content"
+            style={{ backgroundColor: "white" }}
+          >
+
+            <Grid item xs={10} md={10} sm={12}>
+              <Typography className={classes.title}>
+                Navigation
+                </Typography>
+            </Grid>
+
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Grid container>
+
+              <Grid
+                item
+                xs={12}
+                style={{
+                  color: "#555d66",
+                  textAlign: "left",
+                  fontStyle: "italic",
+                  fontFamily: "Segoe UI, sans-serif",
+                  marginBottom: "0.8rem",
+                }}
+              >
+                Reorder or hide pages of your site.
+              </Grid>
+              <Grid
+                item
+                xs={12}>
+                <SortableList
+                  items={site.navItems}
+                  onSortEnd={this.onChangeItem}
+                  useDragHandle
+                  site={site}
+                  setActiveNavItems={setActiveNavItems}
+                  updateNavItemValue={updateNavItemValue}
+                  changeNavItemName={changeNavItemName}
+                />
+              </Grid>
+
+            </Grid>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
 
         <Divider
           style={{
@@ -1126,8 +1126,7 @@ class PagesEditorTab extends React.Component {
           }}
         />
 
-
-      </div>
+      </div >
     );
   }
 }
