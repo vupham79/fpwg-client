@@ -41,7 +41,7 @@ const useStyles = (theme) => ({
     paddingTop: 90,
   },
   title: {
-    fontFamily: "Segoe UI, sans-serif",
+    fontFamily: "Roboto, sans-serif",
     marginBottom: theme.spacing(1),
     fontWeight: "600",
     color: "#555d66",
@@ -50,7 +50,7 @@ const useStyles = (theme) => ({
   title2: {
     fontSize: "12px",
     marginTop: "0.25rem",
-    fontFamily: "Segoe UI, sans-serif",
+    fontFamily: "Roboto, sans-serif",
     fontWeight: 600,
     marginBottom: "1rem",
     color: "#555d66",
@@ -104,12 +104,13 @@ const useStyles = (theme) => ({
     "&:hover": {
       backgroundColor: "white",
     },
+    fontFamily: "Roboto, sans-serif",
   },
   fontPickerRoot: {
     width: "100% !important",
   },
   inputTitle: {
-    fontFamily: "Segoe UI, sans-serif !important",
+    fontFamily: "Roboto, sans-serif !important",
     fontSize: 13,
     color: "#555d66",
   },
@@ -426,7 +427,7 @@ class DesignEditorTab extends React.Component {
               color: "#555d66",
               textAlign: "left",
               fontStyle: "italic",
-              fontFamily: "Segoe UI, sans-serif",
+              fontFamily: "Roboto, sans-serif",
             }}
           >
             Add a logo to display on your site. Choose a file from your computer

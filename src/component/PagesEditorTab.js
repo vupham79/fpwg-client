@@ -54,6 +54,8 @@ import {
 import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowCircleDown } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = (theme) => ({
   content: {
@@ -62,7 +64,7 @@ const useStyles = (theme) => ({
     paddingTop: 90,
   },
   title: {
-    fontFamily: "Segoe UI, sans-serif",
+    fontFamily: "Roboto, sans-serif",
     fontWeight: "600",
     color: "#555d66",
     fontSize: 14,
@@ -70,7 +72,7 @@ const useStyles = (theme) => ({
   title2: {
     fontSize: "12px",
     marginTop: "0.25rem",
-    fontFamily: "Segoe UI, sans-serif",
+    fontFamily: "Roboto, sans-serif",
     fontWeight: 600,
     marginBottom: "1rem",
     color: "#555d66",
@@ -122,12 +124,13 @@ const useStyles = (theme) => ({
     "&:hover": {
       backgroundColor: "white",
     },
+    fontFamily: "Roboto, sans-serif",
   },
   fontPickerRoot: {
     width: "100% !important",
   },
   inputTitle: {
-    fontFamily: "Segoe UI, sans-serif !important",
+    fontFamily: "Roboto, sans-serif !important",
     fontSize: 13,
     color: "#555d66",
   },
@@ -145,10 +148,17 @@ const useStyles = (theme) => ({
     padding: 10,
   },
   gridItem: {
+    marginTop: "1rem",
     zIndex: "999999",
     border: "1px solid #dddddd",
     width: "100%",
     backgroundColor: "#f0eded",
+    "&:hover": {
+      transitionDuration: "0.5s",
+      border: "1px solid #0074aa",
+      color: "#0074aa",
+      borderLeft: "4px solid #0074aa",
+    },
   },
 });
 
@@ -397,6 +407,10 @@ class PagesEditorTab extends React.Component {
     previousExpandItem: "",
     isExpanding: false,
     currentExpandItem: "",
+    hover: {
+      expanTab: 1,
+      onHover: false,
+    },
   };
 
   setPageCount = (listData) => {
@@ -551,6 +565,12 @@ class PagesEditorTab extends React.Component {
     }
   };
 
+  setHover = (position, onHover) => {
+    this.setState({
+      hover: { expanTab: position, onHover: onHover },
+    });
+  };
+
   render() {
     const {
       site,
@@ -561,8 +581,9 @@ class PagesEditorTab extends React.Component {
       setEventCustomize,
       setAboutCustomize,
     } = this.props;
+    const { hover } = this.state;
     return (
-      <div style={{ padding: 10 }}>
+      <div>
         <ExpansionPanel
           expanded={
             this.state.currentExpandItem === "t1" && this.state.isExpanding
@@ -570,9 +591,20 @@ class PagesEditorTab extends React.Component {
               : false
           }
           className={classes.gridItem}
+          onMouseEnter={() => this.setHover(1, true)}
+          onMouseLeave={() => this.setHover(1, false)}
         >
           <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={
+              <FontAwesomeIcon
+                style={{ float: "right", fontSize: "1rem" }}
+                icon={faArrowCircleDown}
+                color={
+                  hover.expanTab === 1 && hover.onHover ? "#0074aa" : "#dddddd"
+                }
+                size="1x"
+              />
+            }
             onClick={() => this.onChangePanel("t1", !this.state.isExpanding)}
             aria-controls="panel1a-content"
             style={{ backgroundColor: "white" }}
@@ -660,9 +692,20 @@ class PagesEditorTab extends React.Component {
               : false
           }
           className={classes.gridItem}
+          onMouseEnter={() => this.setHover(2, true)}
+          onMouseLeave={() => this.setHover(2, false)}
         >
           <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={
+              <FontAwesomeIcon
+                style={{ float: "right", fontSize: "1rem" }}
+                icon={faArrowCircleDown}
+                color={
+                  hover.expanTab === 2 && hover.onHover ? "#0074aa" : "#dddddd"
+                }
+                size="1x"
+              />
+            }
             onClick={() => this.onChangePanel("t2", !this.state.isExpanding)}
             aria-controls="panel1a-content"
             style={{ backgroundColor: "white" }}
@@ -751,9 +794,20 @@ class PagesEditorTab extends React.Component {
               : false
           }
           className={classes.gridItem}
+          onMouseEnter={() => this.setHover(3, true)}
+          onMouseLeave={() => this.setHover(3, false)}
         >
           <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={
+              <FontAwesomeIcon
+                style={{ float: "right", fontSize: "1rem" }}
+                icon={faArrowCircleDown}
+                color={
+                  hover.expanTab === 3 && hover.onHover ? "#0074aa" : "#dddddd"
+                }
+                size="1x"
+              />
+            }
             onClick={() => this.onChangePanel("t3", !this.state.isExpanding)}
             aria-controls="panel1a-content"
             style={{ backgroundColor: "white" }}
@@ -772,7 +826,7 @@ class PagesEditorTab extends React.Component {
                     color: "#555d66",
                     textAlign: "left",
                     fontStyle: "italic",
-                    fontFamily: "Segoe UI, sans-serif",
+                    fontFamily: "Roboto, sans-serif",
                   }}
                 >
                   Select which post from Facebook you want to see on your site.
@@ -898,7 +952,7 @@ class PagesEditorTab extends React.Component {
                   onChange={this.handleSetPostMode}
                   style={{
                     color: "#555d66",
-                    fontFamily: "Segoe UI, sans-serif",
+                    fontFamily: "Roboto, sans-serif",
                   }}
                 >
                   <FormControlLabel
@@ -940,9 +994,20 @@ class PagesEditorTab extends React.Component {
               : false
           }
           className={classes.gridItem}
+          onMouseEnter={() => this.setHover(4, true)}
+          onMouseLeave={() => this.setHover(4, false)}
         >
           <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={
+              <FontAwesomeIcon
+                style={{ float: "right", fontSize: "1rem" }}
+                icon={faArrowCircleDown}
+                color={
+                  hover.expanTab === 4 && hover.onHover ? "#0074aa" : "#dddddd"
+                }
+                size="1x"
+              />
+            }
             onClick={() => this.onChangePanel("t4", !this.state.isExpanding)}
             aria-controls="panel1a-content"
             style={{ backgroundColor: "white" }}
@@ -1054,9 +1119,20 @@ class PagesEditorTab extends React.Component {
               : false
           }
           className={classes.gridItem}
+          onMouseEnter={() => this.setHover(5, true)}
+          onMouseLeave={() => this.setHover(5, false)}
         >
           <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
+            expandIcon={
+              <FontAwesomeIcon
+                style={{ float: "right", fontSize: "1rem" }}
+                icon={faArrowCircleDown}
+                color={
+                  hover.expanTab === 5 && hover.onHover ? "#0074aa" : "#dddddd"
+                }
+                size="1x"
+              />
+            }
             onClick={() => this.onChangePanel("t5", !this.state.isExpanding)}
             aria-controls="panel1a-content"
             style={{ backgroundColor: "white" }}
@@ -1074,7 +1150,7 @@ class PagesEditorTab extends React.Component {
                   color: "#555d66",
                   textAlign: "left",
                   fontStyle: "italic",
-                  fontFamily: "Segoe UI, sans-serif",
+                  fontFamily: "Roboto, sans-serif",
                   marginBottom: "0.8rem",
                 }}
               >

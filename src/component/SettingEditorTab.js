@@ -22,7 +22,7 @@ import {
   changeSiteWhatsapp,
   changeSiteYoutube,
   changeSiteAddress,
-  setLatLng
+  setLatLng,
 } from "../actions";
 import toastr from "./Toastr";
 import PlacesAutocomplete, {
@@ -38,7 +38,7 @@ const useStyles = (theme) => ({
     paddingTop: 90,
   },
   title: {
-    fontFamily: "Segoe UI, sans-serif",
+    fontFamily: "Roboto, sans-serif",
     marginBottom: theme.spacing(1),
     fontWeight: "600",
     color: "#555d66",
@@ -47,7 +47,7 @@ const useStyles = (theme) => ({
   title2: {
     fontSize: "12px",
     marginTop: "0.25rem",
-    fontFamily: "Segoe UI, sans-serif",
+    fontFamily: "Roboto, sans-serif",
     fontWeight: 600,
     marginBottom: "1rem",
     color: "#555d66",
@@ -104,12 +104,12 @@ const useStyles = (theme) => ({
     width: "100% !important",
   },
   inputTitle: {
-    fontFamily: "Segoe UI, sans-serif !important",
+    fontFamily: "Roboto, sans-serif !important",
     fontSize: 13,
     color: "#555d66",
   },
   inputLabel: {
-    fontFamily: "Segoe UI, sans-serif !important",
+    fontFamily: "Roboto, sans-serif !important",
     fontSize: 13,
   },
 });
@@ -232,7 +232,7 @@ class SettingEditorTab extends React.Component {
               color: "#555d66",
               textAlign: "left",
               fontStyle: "italic",
-              fontFamily: "Segoe UI, sans-serif",
+              fontFamily: "Roboto, sans-serif",
             }}
           >
             Set a unique path name to your website. Example: Site path "abc"
@@ -241,7 +241,7 @@ class SettingEditorTab extends React.Component {
               process.env.REACT_APP_API_HOST
                 ? process.env.REACT_APP_API_HOST
                 : "fpwg.herokuapp.com/abc"
-              }`}
+            }`}
             "
           </Grid>
           <Grid item xs={12}>
@@ -438,49 +438,49 @@ class SettingEditorTab extends React.Component {
                   getSuggestionItemProps,
                   loading,
                 }) => (
-                    <div>
-                      <TextField
-                        {...getInputProps({
-                          placeholder: "Search Places ...",
-                          className: "location-search-input",
-                        })}
-                        variant="outlined"
-                        label="Address"
-                        size="small"
-                        inputMode={"Address"}
-                        fullWidth
-                        InputLabelProps={{
-                          classes: {
-                            focused: classes.focused,
-                            root: classes.inputLabel,
-                          },
-                        }}
-                        InputProps={{
-                          classes: {
-                            notchedOutline: classes.notchedOutline,
-                            input: classes.inputTitle,
-                          },
-                        }}
-                        inputProps={{
-                          maxLength: 250,
-                        }}
-                      />
-                      <div className="autocomplete-dropdown-container">
-                        {loading && (
-                          <div style={{ color: "#565d66", fontSize: 13 }}>
-                            Loading...
-                          </div>
-                        )}
-                        {suggestions.map((suggestion) => {
-                          const style = suggestion.active
-                            ? {
+                  <div>
+                    <TextField
+                      {...getInputProps({
+                        placeholder: "Search Places ...",
+                        className: "location-search-input",
+                      })}
+                      variant="outlined"
+                      label="Address"
+                      size="small"
+                      inputMode={"Address"}
+                      fullWidth
+                      InputLabelProps={{
+                        classes: {
+                          focused: classes.focused,
+                          root: classes.inputLabel,
+                        },
+                      }}
+                      InputProps={{
+                        classes: {
+                          notchedOutline: classes.notchedOutline,
+                          input: classes.inputTitle,
+                        },
+                      }}
+                      inputProps={{
+                        maxLength: 250,
+                      }}
+                    />
+                    <div className="autocomplete-dropdown-container">
+                      {loading && (
+                        <div style={{ color: "#565d66", fontSize: 13 }}>
+                          Loading...
+                        </div>
+                      )}
+                      {suggestions.map((suggestion) => {
+                        const style = suggestion.active
+                          ? {
                               backgroundColor: "#0074aa",
                               cursor: "pointer",
                               color: "white",
                               borderBottom: "1px solid #0074aa",
                               fontSize: 13,
                             }
-                            : {
+                          : {
                               backgroundColor: "#ffffff",
                               borderLeft: "1px solid #0074aa",
                               borderRight: "1px solid #0074aa",
@@ -488,19 +488,19 @@ class SettingEditorTab extends React.Component {
                               color: "#565d66",
                               fontSize: 13,
                             };
-                          return (
-                            <div
-                              {...getSuggestionItemProps(suggestion, {
-                                style,
-                              })}
-                            >
-                              <span>{suggestion.description}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
+                        return (
+                          <div
+                            {...getSuggestionItemProps(suggestion, {
+                              style,
+                            })}
+                          >
+                            <span>{suggestion.description}</span>
+                          </div>
+                        );
+                      })}
                     </div>
-                  )}
+                  </div>
+                )}
               </PlacesAutocomplete>
             </Grid>
           </Grid>

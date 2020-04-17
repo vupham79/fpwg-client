@@ -47,6 +47,9 @@ const useStyles = (theme) => ({
     height: "100%",
     backgroundColor: "#f0eded",
   },
+  gridItems: {
+    marginTop: "1rem",
+  },
 });
 
 class ClippedDrawer extends React.Component {
@@ -163,6 +166,7 @@ class ClippedDrawer extends React.Component {
               <Button
                 variant="contained"
                 style={{
+                  fontFamily: "Roboto, sans-serif",
                   float: "right",
                   backgroundColor: "#0074aa",
                   borderRadius: 5,
@@ -217,7 +221,7 @@ class ClippedDrawer extends React.Component {
               <Grid item xs={12}>
                 <strong
                   style={{
-                    fontFamily: "Segoe UI Light",
+                    fontFamily: "Roboto, sans-serif",
                     fontSize: 20,
                     overflow: "hidden",
                     whiteSpace: "nowrap",
@@ -237,7 +241,7 @@ class ClippedDrawer extends React.Component {
           <Grid container style={{ height: 50 }} />
 
           <Grid container>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.gridItems}>
               <AccordionButton
                 comp={<ThemeEditorTab />}
                 label="Select theme"
@@ -246,7 +250,7 @@ class ClippedDrawer extends React.Component {
                 setNav={this.setNavigating}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.gridItems}>
               <AccordionButton
                 comp={<DesignTab />}
                 label="Customize theme"
@@ -255,7 +259,7 @@ class ClippedDrawer extends React.Component {
                 setNav={this.setNavigating}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.gridItems}>
               <AccordionButton
                 comp={<PagesEditorTab />}
                 label="Content settings"
@@ -264,7 +268,7 @@ class ClippedDrawer extends React.Component {
                 setNav={this.setNavigating}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.gridItems}>
               <AccordionButton
                 comp={<HomepageEditorTab />}
                 label="Homepage settings"
@@ -273,7 +277,7 @@ class ClippedDrawer extends React.Component {
                 setNav={this.setNavigating}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.gridItems}>
               <AccordionButton
                 comp={<SettingEditorTab />}
                 label="Links"
@@ -282,7 +286,7 @@ class ClippedDrawer extends React.Component {
                 setNav={this.setNavigating}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={12} className={classes.gridItems}>
               <AccordionButton
                 comp={<SyncEditorTab />}
                 label="Sync"

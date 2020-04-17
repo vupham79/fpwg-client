@@ -67,7 +67,7 @@ const useStyles = (theme) => ({
     paddingTop: 90,
   },
   title: {
-    fontFamily: "Segoe UI, sans-serif",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
     marginBottom: theme.spacing(1),
     fontWeight: "600",
     color: "#555d66",
@@ -76,13 +76,13 @@ const useStyles = (theme) => ({
   title2: {
     fontSize: "14px",
     marginTop: "0.25rem",
-    fontFamily: "Segoe UI, sans-serif",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
     marginBottom: "1rem",
     color: "#555d66",
     fontWeight: 600,
   },
   title3: {
-    fontFamily: "Segoe UI, sans-serif",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif",
     marginBottom: theme.spacing(1),
     fontWeight: "600",
     color: "#555d66",
@@ -141,7 +141,7 @@ const useStyles = (theme) => ({
     width: "100% !important",
   },
   inputTitle: {
-    fontFamily: "Segoe UI, sans-serif !important",
+    fontFamily: "Roboto, Helvetica, Arial, sans-serif !important",
     fontSize: 13,
     color: "#555d66",
   },
@@ -1169,7 +1169,10 @@ class HomepageEditorTab extends React.Component {
           <RadioGroup
             value={item.filter.type}
             onChange={this.handleSetLatest(item, setActiveHomeItems)}
-            style={{ color: "#555d66", fontFamily: "Segoe UI, sans-serif" }}
+            style={{
+              color: "#555d66",
+              fontFamily: "Roboto, Helvetica, Arial, sans-serif",
+            }}
           >
             <FormControlLabel
               value={"latest"}
@@ -1201,7 +1204,7 @@ class HomepageEditorTab extends React.Component {
               color: "#555d66",
               textAlign: "left",
               fontStyle: "italic",
-              fontFamily: "Segoe UI, sans-serif",
+              fontFamily: "Roboto, Helvetica, Arial, sans-serif",
             }}
           >
             Select which content from Facebook you want to see on your homepage.
@@ -1299,7 +1302,7 @@ class HomepageEditorTab extends React.Component {
             color: "#555d66",
             textAlign: "left",
             fontStyle: "italic",
-            fontFamily: "Segoe UI, sans-serif",
+            fontFamily: "Roboto, Helvetica, Arial, sans-serif",
           }}
         >
           Choose what’s displayed on the homepage of your site. Latest contents

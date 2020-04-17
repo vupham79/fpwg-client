@@ -1,3 +1,5 @@
+import { faArrowCircleDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Button,
   Dialog,
@@ -20,13 +22,10 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography
+  Typography,
 } from "@material-ui/core";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import {
-  Close as CloseIcon,
-  ExpandMore as ExpandMoreIcon
-} from "@material-ui/icons";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { Close as CloseIcon } from "@material-ui/icons";
 import moment from "moment";
 import React from "react";
 import DatePicker from "react-datepicker";
@@ -40,55 +39,61 @@ import {
   syncDataFromFB,
   syncEventFromFB,
   syncGalleryFromFB,
-  syncPostFromFB
+  syncPostFromFB,
 } from "../actions";
-import ButtonComponent from "./Button";
 
 const expanStyle = {
-  marginTop: "1rem"
+  marginTop: "1rem",
 };
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   sideBarBox: {
     borderStyle: "solid",
-    borderRadius: 10,
     borderWidth: 1,
     borderColor: "#2a2e2a",
-    padding: "0.5rem"
+    padding: "0.5rem",
   },
   gridBtnSync: {
-    margin: "0.2rem 0"
+    margin: "0.2rem 0",
   },
   datePicker: {
     padding: "0.2rem 0",
-    margin: "0.1rem 0"
+    margin: "0.1rem 0",
   },
   picker: {
     height: "1.8rem",
     width: "-webkit-fill-available",
-    padding: "0 0.5rem"
+    padding: "0 0.5rem",
   },
   gridItem: {
-    padding: "0.5rem 0"
+    padding: "0.5rem 0",
   },
   "&.MuiSelect-outlined": {
-    padding: "0"
-  }
+    padding: "0",
+  },
+  expanPanel: {
+    "&:hover": {
+      transitionDuration: "0.5s",
+      border: "1px solid #0074aa",
+      color: "#0074aa",
+      borderLeft: "4px solid #0074aa",
+    },
+  },
 });
 
-const styles = theme => ({
+const styles = (theme) => ({
   root: {
     margin: 0,
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
   closeButton: {
     position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
-    color: theme.palette.grey[500]
-  }
+    color: theme.palette.grey[500],
+  },
 });
 
-const DialogTitle = withStyles(styles)(props => {
+const DialogTitle = withStyles(styles)((props) => {
   const { children, classes, onClose, ...other } = props;
   return (
     <MuiDialogTitle disableTypography className={classes.root} {...other}>
@@ -113,7 +118,8 @@ const tableStyle = makeStyles({
     background: "#5ea95a",
     marginTop: "0.2rem",
     color: "#fff",
-    textAlign: "center"
+    textAlign: "center",
+    fontFamily: "Roboto, sans-serif",
   },
   failed: {
     borderRadius: "5px",
@@ -121,40 +127,59 @@ const tableStyle = makeStyles({
     background: "#cc2127",
     marginTop: "0.2rem",
     color: "#fff",
-    textAlign: "center"
-  }
+    textAlign: "center",
+    fontFamily: "Roboto, sans-serif",
+  },
 });
+
+const fontTable = {
+  fontFamily: "Roboto, sans-serif",
+};
 
 function CreateTable({ data }) {
   const classes = tableStyle();
   return (
     <TableContainer component={Paper}>
       <Table size="small" stickyHeader>
-        <TableHead style={{ backgroundColor: "#ccccb3" }}>
+        <TableHead
+          style={{
+            backgroundColor: "#ccccb3",
+          }}
+        >
           <TableRow>
-            <TableCell align="center">Sync At</TableCell>
-            <TableCell align="center">Data Type</TableCell>
-            <TableCell align="center">Sync Type</TableCell>
-            <TableCell align="center">Status</TableCell>
+            <TableCell style={fontTable} align="center">
+              Sync At
+            </TableCell>
+            <TableCell style={fontTable} align="center">
+              Data Type
+            </TableCell>
+            <TableCell style={fontTable} align="center">
+              Sync Type
+            </TableCell>
+            <TableCell style={fontTable} align="center">
+              Status
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data &&
             data.map((row, index) => (
               <TableRow key={index}>
-                <TableCell align="center">
+                <TableCell style={fontTable} align="center">
                   {moment(row.createdAt).format("LT-DD-MM-YYYY")}
                 </TableCell>
-                <TableCell align="center">{row.dataType}</TableCell>
-                <TableCell align="center">
+                <TableCell style={fontTable} align="center">
+                  {row.dataType}
+                </TableCell>
+                <TableCell style={fontTable} align="center">
                   {!row.dateFrom && !row.dateTo ? (
                     "All"
                   ) : (
                     <Grid container justify="center">
-                      <Grid item xs={12}>
+                      <Grid style={fontTable} item xs={12}>
                         From: {moment(row.dateFrom).format("DD-MM-YYYY")}
                       </Grid>
-                      <Grid item xs={12}>
+                      <Grid style={fontTable} item xs={12}>
                         To: {moment(row.dateTo).format("DD-MM-YYYY")}
                       </Grid>
                     </Grid>
@@ -164,7 +189,10 @@ function CreateTable({ data }) {
                   <Grid
                     container
                     className={"mainFont"}
-                    style={{ fontSize: "12px", overflow: "hidden" }}
+                    style={{
+                      fontSize: "12px",
+                      overflow: "hidden",
+                    }}
                     justify="center"
                   >
                     <Grid
@@ -197,81 +225,88 @@ class SyncEditorTab extends React.Component {
     endDate: new Date(),
     selectValue: "All",
     msg: null,
-    selectValueSchedule: "None"
+    selectValueSchedule: "None",
+    hover: {
+      expanTab: 1,
+      onHover: false,
+    },
+    previousExpandItem: "",
+    isExpanding: false,
+    currentExpandItem: "",
   };
 
   selectTab = (event, tab) => {
     this.setState({
-      tab: tab
+      tab: tab,
     });
   };
   toggleDialog = () => {
     this.setState({
-      open: !this.state.open
+      open: !this.state.open,
     });
   };
 
-  handleRadioChange = event => {
+  handleRadioChange = (event) => {
     this.setState({ radioValue: event.target.value });
   };
-  setStartDate = date => {
+  setStartDate = (date) => {
     this.setState({ startDate: date });
   };
-  setEndDate = date => {
+  setEndDate = (date) => {
     this.setState({ endDate: date });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     this.setState({
-      selectValue: event.target.value
+      selectValue: event.target.value,
     });
   };
 
-  handleChangeSchedule = e => {
+  handleChangeSchedule = (e) => {
     const { setAutoSync } = this.props;
     setAutoSync({
-      dataType: e.target.value
+      dataType: e.target.value,
     });
   };
 
-  handleChangeScheduleTime = e => {
+  handleChangeScheduleTime = (e) => {
     const { setAutoSync, site } = this.props;
     const time = e.target.value;
     switch (time) {
       case "2min":
         setAutoSync({
           dataType: site.autoSync.dataType,
-          minute: 2
+          minute: 2,
         });
         break;
       case "30min":
         setAutoSync({
           dataType: site.autoSync.dataType,
-          minute: 30
+          minute: 30,
         });
         break;
       case "1hr":
         setAutoSync({
           dataType: site.autoSync.dataType,
-          hour: 1
+          hour: 1,
         });
         break;
       case "2hr":
         setAutoSync({
           dataType: site.autoSync.dataType,
-          hour: 2
+          hour: 2,
         });
         break;
       case "12hr":
         setAutoSync({
           dataType: site.autoSync.dataType,
-          hour: 12
+          hour: 12,
         });
         break;
       case "daily":
         setAutoSync({
           dataType: site.autoSync.dataType,
-          day: 1
+          day: 1,
         });
         break;
       default:
@@ -285,7 +320,7 @@ class SyncEditorTab extends React.Component {
       site,
       syncEventFromFB,
       syncGalleryFromFB,
-      syncPostFromFB
+      syncPostFromFB,
     } = this.props;
     const { startDate, endDate, radioValue, selectValue } = this.state;
     const msg = "Please choose the data type you want to sync.";
@@ -328,19 +363,72 @@ class SyncEditorTab extends React.Component {
     applyAutoSync(site.id, site.autoSync);
   };
 
+  setHover = (position, onHover) => {
+    this.setState({
+      hover: { expanTab: position, onHover: onHover },
+    });
+  };
+
+  onChangePanel = (item, expand) => {
+    if (item !== this.state.previousExpandItem) {
+      this.setState({
+        previousExpandItem: item,
+        isExpanding: true,
+        currentExpandItem: item,
+      });
+    } else {
+      this.setState({
+        currentExpandItem: item,
+        isExpanding: expand,
+      });
+    }
+  };
+
   render() {
     const { site, classes } = this.props;
     const { open, startDate, endDate } = this.state;
     const btnSync = {
       width: "-webkit-fill-available",
       backgroundColor: "rgb(0, 116, 170)",
-      color: "white"
+      color: "white",
+      fontFamily: "Roboto, sans-serif",
     };
+
+    const radioButton = { fontSize: "14px", fontFamily: "Roboto, sans-serif" };
+    const titleExpan = {
+      fontFamily: "Roboto, sans-serif",
+    };
+    const { hover } = this.state;
+
     return (
       <>
-        <ExpansionPanel style={expanStyle}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="button">Sync Records</Typography>
+        <ExpansionPanel
+          expanded={
+            this.state.currentExpandItem === "t1" && this.state.isExpanding
+              ? true
+              : false
+          }
+          style={expanStyle}
+          className={classes.expanPanel}
+          onMouseEnter={() => this.setHover(1, true)}
+          onMouseLeave={() => this.setHover(1, false)}
+        >
+          <ExpansionPanelSummary
+            onClick={() => this.onChangePanel("t1", !this.state.isExpanding)}
+            expandIcon={
+              <FontAwesomeIcon
+                style={{ float: "right", fontSize: "1rem" }}
+                icon={faArrowCircleDown}
+                color={
+                  hover.expanTab === 1 && hover.onHover ? "#0074aa" : "#dddddd"
+                }
+                size="1x"
+              />
+            }
+          >
+            <Typography variant="button" style={titleExpan}>
+              Sync Records
+            </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Grid container>
@@ -378,9 +466,33 @@ class SyncEditorTab extends React.Component {
             </Grid>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-        <ExpansionPanel style={expanStyle}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="button">Manual</Typography>
+        <ExpansionPanel
+          expanded={
+            this.state.currentExpandItem === "t2" && this.state.isExpanding
+              ? true
+              : false
+          }
+          style={expanStyle}
+          className={classes.expanPanel}
+          onMouseEnter={() => this.setHover(2, true)}
+          onMouseLeave={() => this.setHover(2, false)}
+        >
+          <ExpansionPanelSummary
+            onClick={() => this.onChangePanel("t2", !this.state.isExpanding)}
+            expandIcon={
+              <FontAwesomeIcon
+                style={{ float: "right", fontSize: "1rem" }}
+                icon={faArrowCircleDown}
+                color={
+                  hover.expanTab === 2 && hover.onHover ? "#0074aa" : "#dddddd"
+                }
+                size="1x"
+              />
+            }
+          >
+            <Typography style={titleExpan} variant="button">
+              Manual
+            </Typography>
           </ExpansionPanelSummary>
           <Divider variant="fullWidth" />
           <ExpansionPanelDetails>
@@ -392,12 +504,24 @@ class SyncEditorTab extends React.Component {
                 alignItems="center"
                 className={classes.gridItem}
               >
-                <Grid item xs={4} style={{ textAlign: "start" }}>
+                <Grid
+                  item
+                  xs={4}
+                  style={{
+                    textAlign: "start",
+                    fontFamily: "Roboto, sans-serif",
+                  }}
+                >
                   Sync Type:
                 </Grid>
                 <Grid item xs={6}>
                   <Select
-                    inputProps={{ style: { padding: "0.5rem" } }}
+                    inputProps={{
+                      style: {
+                        padding: "0.5rem",
+                        fontFamily: "Roboto, sans-serif",
+                      },
+                    }}
                     fullWidth
                     native
                     variant={"outlined"}
@@ -419,14 +543,14 @@ class SyncEditorTab extends React.Component {
                   className={classes.gridItem}
                 >
                   <Grid container className={classes.datePicker}>
-                    <Grid item xs={4} sm={4} md={4}>
+                    <Grid item xs={4} sm={4} md={4} style={titleExpan}>
                       From:
                     </Grid>
                     <Grid item xs={6} sm={12} md={6}>
                       <DatePicker
                         className={classes.picker}
                         selected={startDate}
-                        onChange={date => this.setStartDate(date)}
+                        onChange={(date) => this.setStartDate(date)}
                         selectsStart
                         startDate={startDate}
                         endDate={endDate}
@@ -434,14 +558,14 @@ class SyncEditorTab extends React.Component {
                     </Grid>
                   </Grid>
                   <Grid container className={classes.datePicker}>
-                    <Grid item xs={4} sm={4} md={4}>
+                    <Grid item xs={4} sm={4} md={4} style={titleExpan}>
                       To:
                     </Grid>
                     <Grid item xs={6} sm={12} md={6}>
                       <DatePicker
                         className={classes.picker}
                         selected={this.state.endDate}
-                        onChange={date => this.setEndDate(date)}
+                        onChange={(date) => this.setEndDate(date)}
                         selectsEnd
                         startDate={startDate}
                         endDate={endDate}
@@ -459,7 +583,7 @@ class SyncEditorTab extends React.Component {
                 alignItems="center"
                 className={classes.gridItem}
               >
-                <Grid item xs={4} sm={4}>
+                <Grid item xs={4} sm={4} style={titleExpan}>
                   Data type:
                 </Grid>
                 <Grid item xs={6} sm={12} className={classes.gridItem}>
@@ -471,46 +595,24 @@ class SyncEditorTab extends React.Component {
                     <FormControlLabel
                       value="post"
                       control={<Radio color="primary" />}
-                      label={
-                        <Typography
-                          style={{ fontSize: "14px", fontFamily: "Segoe UI" }}
-                        >
-                          Post
-                        </Typography>
-                      }
+                      label={<Typography style={radioButton}>Post</Typography>}
                     />
                     <FormControlLabel
                       value="event"
                       control={<Radio color="primary" />}
-                      label={
-                        <Typography
-                          style={{ fontSize: "14px", fontFamily: "Segoe UI" }}
-                        >
-                          Event
-                        </Typography>
-                      }
+                      label={<Typography style={radioButton}>Event</Typography>}
                     />
                     <FormControlLabel
                       value="gallery"
                       control={<Radio color="primary" />}
                       label={
-                        <Typography
-                          style={{ fontSize: "14px", fontFamily: "Segoe UI" }}
-                        >
-                          Gallery
-                        </Typography>
+                        <Typography style={radioButton}>Gallery</Typography>
                       }
                     />
                     <FormControlLabel
                       value="all"
                       control={<Radio color="primary" />}
-                      label={
-                        <Typography
-                          style={{ fontSize: "14px", fontFamily: "Segoe UI" }}
-                        >
-                          All
-                        </Typography>
-                      }
+                      label={<Typography style={radioButton}>All</Typography>}
                     />
                   </RadioGroup>
                 </Grid>
@@ -519,26 +621,56 @@ class SyncEditorTab extends React.Component {
                 <Grid
                   container
                   justify="center"
-                  style={{ marginBottom: "1.5rem", textAlign: "center" }}
+                  style={{
+                    marginBottom: "1.5rem",
+                    textAlign: "center",
+                    fontFamily: "Roboto, sans-serif",
+                  }}
                 >
                   {this.state.msg}
                 </Grid>
               )}
               <Grid container justify="center" alignItems="center">
                 <Grid item xs={5}>
-                  <ButtonComponent
+                  <Button
+                    variant="contained"
                     onClick={this.handleSyncData}
-                    label="Sync"
                     style={btnSync}
-                  />
+                  >
+                    Sync
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>
           </ExpansionPanelDetails>
         </ExpansionPanel>
-        <ExpansionPanel style={expanStyle}>
-          <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography variant="button">Schedule</Typography>
+        <ExpansionPanel
+          expanded={
+            this.state.currentExpandItem === "t3" && this.state.isExpanding
+              ? true
+              : false
+          }
+          style={expanStyle}
+          className={classes.expanPanel}
+          onMouseEnter={() => this.setHover(3, true)}
+          onMouseLeave={() => this.setHover(3, false)}
+        >
+          <ExpansionPanelSummary
+            onClick={() => this.onChangePanel("t3", !this.state.isExpanding)}
+            expandIcon={
+              <FontAwesomeIcon
+                style={{ float: "right", fontSize: "1rem" }}
+                icon={faArrowCircleDown}
+                color={
+                  hover.expanTab === 3 && hover.onHover ? "#0074aa" : "#dddddd"
+                }
+                size="1x"
+              />
+            }
+          >
+            <Typography style={titleExpan} variant="button">
+              Schedule
+            </Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Grid container justify="center" alignItems="center">
@@ -549,12 +681,24 @@ class SyncEditorTab extends React.Component {
                 alignItems="center"
                 className={classes.gridItem}
               >
-                <Grid item xs={4} style={{ textAlign: "start" }}>
+                <Grid
+                  item
+                  xs={4}
+                  style={{
+                    textAlign: "start",
+                    fontFamily: "Roboto, sans-serif",
+                  }}
+                >
                   Data Type:
                 </Grid>
                 <Grid item xs={6}>
                   <Select
-                    inputProps={{ style: { padding: "0.5rem" } }}
+                    inputProps={{
+                      style: {
+                        padding: "0.5rem",
+                        fontFamily: "Roboto, sans-serif",
+                      },
+                    }}
                     fullWidth
                     native
                     variant={"outlined"}
@@ -578,13 +722,18 @@ class SyncEditorTab extends React.Component {
                   alignItems="center"
                   className={classes.gridItem}
                 >
-                  <Grid item xs={4} sm={4}>
+                  <Grid item xs={4} sm={4} style={titleExpan}>
                     Time:
                   </Grid>
                   <Grid item xs={6} sm={6} className={classes.gridItem}>
                     <Select
                       fullWidth
-                      inputProps={{ style: { padding: "0.5rem" } }}
+                      inputProps={{
+                        style: {
+                          padding: "0.5rem",
+                          fontFamily: "Roboto, sans-serif",
+                        },
+                      }}
                       native
                       variant={"outlined"}
                       value={
@@ -608,18 +757,24 @@ class SyncEditorTab extends React.Component {
                 <Grid
                   container
                   justify="center"
-                  style={{ marginBottom: "1.5rem", textAlign: "center" }}
+                  style={{
+                    marginBottom: "1.5rem",
+                    textAlign: "center",
+                    fontFamily: "Roboto, sans-serif",
+                  }}
                 >
                   {this.state.msg}
                 </Grid>
               )}
               <Grid container justify="center" alignItems="center">
                 <Grid item xs={5}>
-                  <ButtonComponent
+                  <Button
+                    variant="contained"
                     onClick={this.handleApply}
-                    label="Apply"
                     style={btnSync}
-                  />
+                  >
+                    Apply
+                  </Button>
                 </Grid>
               </Grid>
             </Grid>
@@ -629,12 +784,12 @@ class SyncEditorTab extends React.Component {
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   site: state.site.siteEdit,
-  open: state.dialog.open
+  open: state.dialog.open,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   openDialog: () => dispatch(openDialog()),
   closeDialog: () => dispatch(closeDialog()),
   syncDataFromFB: (pageId, dateFrom, dateTo) =>
@@ -645,8 +800,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(syncEventFromFB(pageId, dateFrom, dateTo)),
   syncGalleryFromFB: (pageId, dateFrom, dateTo) =>
     dispatch(syncGalleryFromFB(pageId, dateFrom, dateTo)),
-  setAutoSync: autoSync => dispatch(setAutoSync(autoSync)),
-  applyAutoSync: (id, autoSync) => dispatch(applyAutoSync(id, autoSync))
+  setAutoSync: (autoSync) => dispatch(setAutoSync(autoSync)),
+  applyAutoSync: (id, autoSync) => dispatch(applyAutoSync(id, autoSync)),
 });
 
 export default connect(
