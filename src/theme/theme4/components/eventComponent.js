@@ -325,15 +325,7 @@ class EventComponent extends React.Component {
                     container
                     direction="row"
                     item
-                    xs={
-                      isEdit
-                        ? siteEdit.showDetailSetting.showCoverEvent
-                          ? 2
-                          : 4
-                        : siteView.showDetailSetting.showCoverEvent
-                          ? 2
-                          : 4
-                    }
+                    xs={1}
                     style={{ height: "6rem" }}
                   >
                     <Grid
