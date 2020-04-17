@@ -66,6 +66,7 @@ class Theme1Event extends React.Component {
         )}
         <Grid item xs={10} sm={10} style={{ padding: "2.5rem 0" }}>
           <EventComponent
+            altType
             key={
               this.props.isEdit
                 ? this.props.siteEdit.limitEvent
@@ -81,17 +82,17 @@ class Theme1Event extends React.Component {
             pageCount={Math.ceil(
               isEdit
                 ? siteEdit &&
-                    siteEdit.events &&
-                    siteEdit.events.length /
-                      (this.props.isEdit
-                        ? this.props.siteEdit.limitEvent
-                        : this.props.siteView.limitEvent)
+                siteEdit.events &&
+                siteEdit.events.length /
+                (this.props.isEdit
+                  ? this.props.siteEdit.limitEvent
+                  : this.props.siteView.limitEvent)
                 : siteView &&
-                    siteView.events &&
-                    siteView.events.length /
-                      (this.props.isEdit
-                        ? this.props.siteEdit.limitEvent
-                        : this.props.siteView.limitEvent)
+                siteView.events &&
+                siteView.events.length /
+                (this.props.isEdit
+                  ? this.props.siteEdit.limitEvent
+                  : this.props.siteView.limitEvent)
             )}
           />
         </Grid>

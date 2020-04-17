@@ -44,6 +44,7 @@ class EventComponent extends React.Component {
       siteEdit,
       siteView,
       dark,
+      altType,
     } = this.props;
     return (
       <>
@@ -51,6 +52,7 @@ class EventComponent extends React.Component {
           homeList.map((row, index) => {
             return (
               row &&
+              row.isActive &&
               !row.isCancelled &&
               moment(row.endTime).isAfter(moment()) && (
                 <Grid
@@ -63,6 +65,8 @@ class EventComponent extends React.Component {
                   style={{
                     padding: "1rem",
                     backgroundColor: dark ? "#000" : "#fff",
+                    borderBottom: altType ? "1px solid" : "none",
+                    borderColor: dark ? "#000" : "#d4e1db",
                   }}
                 >
                   <Grid
@@ -74,8 +78,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showDetailSetting.showCoverEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       backgroundImage: `url('${row.cover}')`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "cover",
@@ -88,7 +92,15 @@ class EventComponent extends React.Component {
                     container
                     direction="row"
                     item
-                    xs={1}
+                    xs={
+                      isEdit
+                        ? siteEdit.showDetailSetting.showCoverEvent
+                          ? 2
+                          : 4
+                        : siteView.showDetailSetting.showCoverEvent
+                          ? 2
+                          : 4
+                    }
                     style={{ height: "6rem" }}
                   >
                     <Grid
@@ -98,10 +110,9 @@ class EventComponent extends React.Component {
                         fontFamily: isEdit
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
-                        color: isEdit ? titleEdit.color : titleView.color,
                         textAlign: "center",
                         fontSize: 15,
-                        color: dark ? "#fff" : "#000",
+                        color: dark ? "#fff" : "#535353",
                       }}
                     >
                       {moment(row.startTime).format("MMM").toUpperCase()}
@@ -114,9 +125,10 @@ class EventComponent extends React.Component {
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
                         fontWeight: "bold",
-                        color: "#212121",
                         textAlign: "center",
-                        color: dark ? "#fff" : "#000",
+                        color: altType ? (isEdit ? titleEdit.color : titleView.color) : (dark ? "#fff" : "#535353"),
+                        fontSize: altType ? 30 : 19,
+                        marginTop: altType ? -50 : -40
                       }}
                     >
                       {moment(row.startTime).format("D") + " "}
@@ -127,7 +139,17 @@ class EventComponent extends React.Component {
                     container
                     direction="row"
                     item
-                    xs={2}
+                    xs={
+                      isEdit
+                        ? !siteEdit.showDetailSetting.showDesEvent ||
+                          !siteEdit.showDetailSetting.showPlaceEvent
+                          ? 5
+                          : (altType ? 5 : 2)
+                        : !siteView.showDetailSetting.showDesEvent ||
+                          !siteView.showDetailSetting.showPlaceEvent
+                          ? 5
+                          : (altType ? 5 : 2)
+                    }
                     style={{
                       fontWeight: "bold",
                       textOverflow: "ellipsis",
@@ -139,7 +161,6 @@ class EventComponent extends React.Component {
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
                       height: "6rem",
-                      fontSize: 14,
                     }}
                   >
                     <Grid item xs={12}>
@@ -147,15 +168,33 @@ class EventComponent extends React.Component {
                         href={"https://" + row.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ color: dark && "#fff" }}
+                        style={{
+                          color: dark ? "#fff" : "#535353",
+                          fontSize: altType ? 19 : 16,
+                          textDecoration: "none",
+                          marginTop: altType ? 30 : 0
+                        }}
                       >
                         {row.name}
+                        <span style={{
+                          display: isEdit
+                            ? siteEdit.showDetailSetting.showPlaceEvent && altType
+                              ? "inline-block"
+                              : "none"
+                            : siteView.showDetailSetting.showPlaceEvent && altType
+                              ? "inline-block"
+                              : "none",
+
+                        }}> / <p style={{ color: dark ? "#fff" : "#a0a09f", fontSize: 10, display: "inline-block" }}>{row.place && row.place.city}</p></span>
                       </a>
                     </Grid>
                     <Grid
                       item
                       xs={12}
-                      style={{ color: dark ? "#fff" : "#3578e5" }}
+                      style={{
+                        color: dark ? "#fff" : "#3578e5",
+                        display: altType ? "none" : "inline-block",
+                      }}
                     >
                       {moment(row.startTime).format("MMMM DD")}
                       {row.endTime &&
@@ -168,7 +207,7 @@ class EventComponent extends React.Component {
 
                   <Grid
                     item
-                    xs={4}
+                    xs={3}
                     style={{
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
@@ -179,15 +218,14 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showDetailSetting.showDesEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       height: "6rem",
                       lineHeight: "1.5em",
                       fontFamily: isEdit
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
-                      color: dark ? "#fff" : "#000",
-                      fontSize: 14,
+                      color: dark ? "#fff" : "#535353",
                     }}
                   >
                     {row.description}
@@ -200,12 +238,12 @@ class EventComponent extends React.Component {
                     xs={3}
                     style={{
                       display: isEdit
-                        ? siteEdit.showDetailSetting.showPlaceEvent
+                        ? siteEdit.showDetailSetting.showPlaceEvent && !altType
                           ? "block"
                           : "none"
-                        : siteView.showDetailSetting.showPlaceEvent
-                        ? "block"
-                        : "none",
+                        : siteView.showDetailSetting.showPlaceEvent && !altType
+                          ? "block"
+                          : "none",
                       textOverflow: "ellipsis",
                       overflow: "auto",
                       fontFamily: isEdit
@@ -214,8 +252,7 @@ class EventComponent extends React.Component {
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
                       height: "6rem",
-                      color: dark ? "#fff" : "#000",
-                      fontSize: 14,
+                      color: dark ? "#fff" : "#535353",
                     }}
                   >
                     <Grid item xs={12}>
@@ -244,6 +281,7 @@ class EventComponent extends React.Component {
       siteEdit,
       siteView,
       dark,
+      altType,
     } = this.props;
     return (
       <>
@@ -251,6 +289,7 @@ class EventComponent extends React.Component {
           homeList.map((row, index) => {
             return (
               row &&
+              row.isActive &&
               (row.isCancelled ||
                 moment(row.endTime).isSameOrBefore(moment()) ||
                 !row.endTime) && (
@@ -264,6 +303,8 @@ class EventComponent extends React.Component {
                   style={{
                     padding: "1rem",
                     backgroundColor: dark ? "#000" : "#fff",
+                    borderBottom: altType ? "1px solid" : "none",
+                    borderColor: dark ? "#000" : "#d4e1db",
                   }}
                 >
                   <Grid
@@ -275,8 +316,8 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showDetailSetting.showCoverEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       backgroundImage: `url('${row.cover}')`,
                       backgroundRepeat: "no-repeat",
                       backgroundSize: "cover",
@@ -289,7 +330,15 @@ class EventComponent extends React.Component {
                     container
                     direction="row"
                     item
-                    xs={1}
+                    xs={
+                      isEdit
+                        ? siteEdit.showDetailSetting.showCoverEvent
+                          ? 2
+                          : 4
+                        : siteView.showDetailSetting.showCoverEvent
+                          ? 2
+                          : 4
+                    }
                     style={{ height: "6rem" }}
                   >
                     <Grid
@@ -302,7 +351,7 @@ class EventComponent extends React.Component {
                         color: isEdit ? titleEdit.color : titleView.color,
                         textAlign: "center",
                         fontSize: 15,
-                        color: dark ? "#fff" : "#000",
+                        color: dark ? "#fff" : "#535353",
                       }}
                     >
                       {moment(row.startTime).format("MMM").toUpperCase()}
@@ -315,9 +364,10 @@ class EventComponent extends React.Component {
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
                         fontWeight: "bold",
-                        color: "#212121",
                         textAlign: "center",
-                        color: dark ? "#fff" : "#000",
+                        color: altType ? (isEdit ? titleEdit.color : titleView.color) : (dark ? "#fff" : "#535353"),
+                        fontSize: altType ? 30 : 19,
+                        marginTop: altType ? -50 : -40
                       }}
                     >
                       {moment(row.startTime).format("D") + " "}
@@ -328,7 +378,17 @@ class EventComponent extends React.Component {
                     container
                     direction="row"
                     item
-                    xs={2}
+                    xs={
+                      isEdit
+                        ? !siteEdit.showDetailSetting.showDesEvent ||
+                          !siteEdit.showDetailSetting.showPlaceEvent
+                          ? 5
+                          : (altType ? 5 : 2)
+                        : !siteView.showDetailSetting.showDesEvent ||
+                          !siteView.showDetailSetting.showPlaceEvent
+                          ? 5
+                          : (altType ? 5 : 2)
+                    }
                     style={{
                       fontWeight: "bold",
                       textOverflow: "ellipsis",
@@ -340,7 +400,6 @@ class EventComponent extends React.Component {
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
                       height: "6rem",
-                      fontSize: 14,
                     }}
                   >
                     <Grid item xs={12}>
@@ -348,15 +407,33 @@ class EventComponent extends React.Component {
                         href={"https://" + row.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        style={{ color: dark && "#fff" }}
+                        style={{
+                          color: dark ? "#fff" : "#535353",
+                          fontSize: altType ? 19 : 16,
+                          textDecoration: "none",
+                          marginTop: altType ? 30 : 0
+                        }}
                       >
                         {row.name}
+                        <span style={{
+                          display: isEdit
+                            ? siteEdit.showDetailSetting.showPlaceEvent && altType
+                              ? "inline-block"
+                              : "none"
+                            : siteView.showDetailSetting.showPlaceEvent && altType
+                              ? "inline-block"
+                              : "none",
+
+                        }}> / <p style={{ color: dark ? "#fff" : "#a0a09f", fontSize: 10, display: "inline-block" }}>{row.place && row.place.city}</p></span>
                       </a>
                     </Grid>
                     <Grid
                       item
                       xs={12}
-                      style={{ color: dark ? "#fff" : "#3578e5" }}
+                      style={{
+                        color: dark ? "#fff" : "#3578e5",
+                        display: altType ? "none" : "inline-block",
+                      }}
                     >
                       {moment(row.startTime).format("MMMM DD")}
                       {row.endTime &&
@@ -369,7 +446,7 @@ class EventComponent extends React.Component {
 
                   <Grid
                     item
-                    xs={4}
+                    xs={3}
                     style={{
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
@@ -380,15 +457,14 @@ class EventComponent extends React.Component {
                           ? "block"
                           : "none"
                         : siteView.showDetailSetting.showDesEvent
-                        ? "block"
-                        : "none",
+                          ? "block"
+                          : "none",
                       height: "6rem",
                       lineHeight: "1.5em",
                       fontFamily: isEdit
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
-                      color: dark ? "#fff" : "#000",
-                      fontSize: 14,
+                      color: dark ? "#fff" : "#535353",
                     }}
                   >
                     {row.description}
@@ -401,12 +477,12 @@ class EventComponent extends React.Component {
                     xs={3}
                     style={{
                       display: isEdit
-                        ? siteEdit.showDetailSetting.showPlaceEvent
+                        ? siteEdit.showDetailSetting.showPlaceEvent && !altType
                           ? "block"
                           : "none"
-                        : siteView.showDetailSetting.showPlaceEvent
-                        ? "block"
-                        : "none",
+                        : siteView.showDetailSetting.showPlaceEvent && !altType
+                          ? "block"
+                          : "none",
                       textOverflow: "ellipsis",
                       overflow: "auto",
                       fontFamily: isEdit
@@ -415,8 +491,7 @@ class EventComponent extends React.Component {
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
                       height: "6rem",
-                      color: dark ? "#fff" : "#000",
-                      fontSize: 14,
+                      color: dark ? "#fff" : "#535353",
                     }}
                   >
                     <Grid item xs={12}>
@@ -495,18 +570,18 @@ class EventComponent extends React.Component {
         sm={12}
         container
         justify="center"
-        // style={{ marginTop: "2.5rem", marginBottom: "2.5rem" }}
+      // style={{ marginTop: "2.5rem", marginBottom: "2.5rem" }}
       >
         <Grid item xs={12}>
           <Grid
             container
             alignItems="center"
             direction="column"
-            // className={{
-            //   marginTop: "5vh",
-            //   marginBottom: "5vh",
-            //   backgroundColor: "#1a1919",
-            // }}
+          // className={{
+          //   marginTop: "5vh",
+          //   marginBottom: "5vh",
+          //   backgroundColor: "#1a1919",
+          // }}
           >
             <Grid
               item
@@ -609,14 +684,14 @@ class EventComponent extends React.Component {
                 ? fromHome
                   ? this.renderUpComingEvent(homeList.slice(0, 3), classes)
                   : this.renderUpComingEvent(
-                      homeList.slice(
-                        page > pageCount ? 0 : offset,
-                        page > pageCount
-                          ? 3
-                          : parseInt(itemPerPage) + parseInt(offset)
-                      ),
-                      classes
-                    )
+                    homeList.slice(
+                      page > pageCount ? 0 : offset,
+                      page > pageCount
+                        ? 3
+                        : parseInt(itemPerPage) + parseInt(offset)
+                    ),
+                    classes
+                  )
                 : this.renderUpComingEvent(homeList, classes)}
 
               <Grid item xs={12}>
@@ -707,43 +782,43 @@ class EventComponent extends React.Component {
                 ? fromHome
                   ? this.renderPassEvent(homeList.slice(0, 3), classes)
                   : this.renderPassEvent(
-                      homeList.slice(
-                        page > pageCount ? 0 : offset,
-                        page > pageCount
-                          ? 3
-                          : parseInt(itemPerPage) + parseInt(offset)
-                      ),
-                      classes
-                    )
+                    homeList.slice(
+                      page > pageCount ? 0 : offset,
+                      page > pageCount
+                        ? 3
+                        : parseInt(itemPerPage) + parseInt(offset)
+                    ),
+                    classes
+                  )
                 : this.renderPassEvent(homeList, classes)}
             </Grid>
             {isEdit
               ? pageCount > 1 &&
-                itemPerPage < homeList.length && (
-                  <Grid
-                    container
-                    item
-                    xs={6}
-                    justify="center"
-                    className={classes.showMore}
-                    style={showMore.showMore}
-                  >
-                    <p onClick={() => this.handleShowMore()}>Show More</p>
-                  </Grid>
-                )
+              itemPerPage < homeList.length && (
+                <Grid
+                  container
+                  item
+                  xs={6}
+                  justify="center"
+                  className={classes.showMore}
+                  style={showMore.showMore}
+                >
+                  <p onClick={() => this.handleShowMore()}>Show More</p>
+                </Grid>
+              )
               : !!pageCountView &&
-                this.state.pageView < pageCountView && (
-                  <Grid
-                    container
-                    item
-                    xs={6}
-                    justify="center"
-                    className={classes.showMore}
-                    style={showMore.showMore}
-                  >
-                    <p onClick={() => this.handleShowMore()}>Show More</p>
-                  </Grid>
-                )}
+              this.state.pageView < pageCountView && (
+                <Grid
+                  container
+                  item
+                  xs={6}
+                  justify="center"
+                  className={classes.showMore}
+                  style={showMore.showMore}
+                >
+                  <p onClick={() => this.handleShowMore()}>Show More</p>
+                </Grid>
+              )}
           </Grid>
         </Grid>
       </Grid>
