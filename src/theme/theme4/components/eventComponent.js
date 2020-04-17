@@ -560,15 +560,7 @@ class EventComponent extends React.Component {
       <Grid
         item
         xs={12}
-        sm={
-          isEdit
-            ? siteEdit.showDetailSetting.showPlaceEvent && siteEdit.showDetailSetting.showCoverEvent
-              ? 10
-              : 8
-            : siteView.showDetailSetting.showPlaceEvent && siteView.showDetailSetting.showCoverEvent
-              ? 10
-              : 8
-        }
+        sm={12}
         container
         justify="center"
       // style={{ marginTop: "2.5rem", marginBottom: "2.5rem" }}
@@ -586,9 +578,16 @@ class EventComponent extends React.Component {
           >
             <Grid
               item
-              md={12}
+              sm={
+                isEdit
+                  ? siteEdit.showDetailSetting.showPlaceEvent && siteEdit.showDetailSetting.showCoverEvent
+                    ? 10
+                    : 8
+                  : siteView.showDetailSetting.showPlaceEvent && siteView.showDetailSetting.showCoverEvent
+                    ? 10
+                    : 8
+              }
               xs={12}
-              sm={12}
               container
               justify="center"
               className={altType ? null : styles.event_body}

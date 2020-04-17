@@ -64,7 +64,7 @@ class Theme1Event extends React.Component {
             </Grid>
           </Grid>
         )}
-        <Grid item xs={10} sm={10} style={{ padding: "2.5rem 0" }}>
+        <Grid item xs={12} sm={12} justify="center">
           <EventComponent
             altType
             key={
