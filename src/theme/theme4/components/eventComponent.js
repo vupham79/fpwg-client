@@ -92,15 +92,7 @@ class EventComponent extends React.Component {
                     container
                     direction="row"
                     item
-                    xs={
-                      isEdit
-                        ? siteEdit.showDetailSetting.showCoverEvent
-                          ? 2
-                          : 4
-                        : siteView.showDetailSetting.showCoverEvent
-                          ? 2
-                          : 4
-                    }
+                    xs={1}
                     style={{ height: "6rem" }}
                   >
                     <Grid
@@ -110,9 +102,11 @@ class EventComponent extends React.Component {
                         fontFamily: isEdit
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
-                        textAlign: "center",
+                        textAlign: "right",
+                        paddingRight: 15,
                         fontSize: 15,
                         color: dark ? "#fff" : "#535353",
+                        marginTop: altType ? -10 : 0
                       }}
                     >
                       {moment(row.startTime).format("MMM").toUpperCase()}
@@ -125,7 +119,8 @@ class EventComponent extends React.Component {
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
                         fontWeight: "bold",
-                        textAlign: "center",
+                        textAlign: "right",
+                        paddingRight: 15,
                         color: altType ? (isEdit ? titleEdit.color : titleView.color) : (dark ? "#fff" : "#535353"),
                         fontSize: altType ? 30 : 19,
                         marginTop: altType ? -50 : -40
@@ -207,7 +202,7 @@ class EventComponent extends React.Component {
 
                   <Grid
                     item
-                    xs={3}
+                    xs={4}
                     style={{
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
@@ -349,9 +344,11 @@ class EventComponent extends React.Component {
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
                         color: isEdit ? titleEdit.color : titleView.color,
-                        textAlign: "center",
+                        textAlign: "right",
+                        paddingRight: 15,
                         fontSize: 15,
                         color: dark ? "#fff" : "#535353",
+                        marginTop: altType ? -10 : 0
                       }}
                     >
                       {moment(row.startTime).format("MMM").toUpperCase()}
@@ -364,7 +361,8 @@ class EventComponent extends React.Component {
                           ? titleEdit.fontFamily
                           : titleView.fontFamily,
                         fontWeight: "bold",
-                        textAlign: "center",
+                        textAlign: "right",
+                        paddingRight: 15,
                         color: altType ? (isEdit ? titleEdit.color : titleView.color) : (dark ? "#fff" : "#535353"),
                         fontSize: altType ? 30 : 19,
                         marginTop: altType ? -50 : -40
@@ -446,7 +444,7 @@ class EventComponent extends React.Component {
 
                   <Grid
                     item
-                    xs={3}
+                    xs={4}
                     style={{
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
@@ -572,12 +570,12 @@ class EventComponent extends React.Component {
         xs={12}
         sm={
           isEdit
-            ? siteEdit.showDetailSetting.showPlaceEvent
-              ? 12
-              : 9
-            : siteView.showDetailSetting.showPlaceEvent
-              ? 12
-              : 9
+            ? siteEdit.showDetailSetting.showPlaceEvent && siteEdit.showDetailSetting.showCoverEvent
+              ? 10
+              : 8
+            : siteView.showDetailSetting.showPlaceEvent && siteView.showDetailSetting.showCoverEvent
+              ? 10
+              : 8
         }
         container
         justify="center"
