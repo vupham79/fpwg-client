@@ -40,18 +40,20 @@ const useStyle = {
   published: {
     borderRadius: "5px",
     padding: "0.1rem 0.3rem",
-    background: "#5ea95a",
+    background: "rgb(142,142,147)",
     marginTop: "0.2rem",
     color: "#fff",
     textAlign: "center",
+    textSpacing: "0.2px",
   },
   unpublished: {
     borderRadius: "5px",
     padding: "0.1rem 0.3rem",
-    background: "#cc2127",
+    background: "rgb(209,209,214)",
     marginTop: "0.2rem",
-    color: "#fff",
+    color: "#121212",
     textAlign: "center",
+    textSpacing: "0.2px",
   },
 };
 class Design extends Component {
@@ -69,19 +71,28 @@ class Design extends Component {
     return (
       <List className={classes.listSites}>
         <ListItem>
-          <Grid container alignItems="center">
-            <Grid item xs={2} className={classes.numberSite}>
+          <Grid
+            container
+            alignItems="center"
+            style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}
+          >
+            <Grid
+              item
+              xs={2}
+              className={classes.numberSite}
+              style={{ color: "#fff", fontSize: "15px" }}
+            >
               {sites.length}
             </Grid>
             <Grid
               container
               item
               xs={10}
-              style={{ padding: "0 1rem" }}
+              style={{ padding: "0 1rem", color: "#fff", fontSize: "15px" }}
               className={"mainFont"}
             >
               <Grid item xs={12}>
-                My Pages Site
+                My Generated Sites
               </Grid>
             </Grid>
           </Grid>
@@ -136,6 +147,7 @@ class Design extends Component {
         className={classes.item}
         selected={this.state.selectedIndex === index}
         onClick={() => this.handleClickItem(index, item.id)}
+        style={{ marginTop: "0.5rem", marginBottom: "0.5rem" }}
       >
         <Grid container alignItems="center">
           <Grid container item xs={2} sm={3} justify="center">
@@ -147,14 +159,24 @@ class Design extends Component {
             />
           </Grid>
           <Grid container item xs={8}>
-            <Grid item xs={12} className={"mainFont"}>
+            <Grid
+              item
+              xs={12}
+              className={"mainFont"}
+              style={{ color: "#fff", fontSize: "15px" }}
+            >
               {item.title}
             </Grid>
             <Grid
               item
               xs={12}
               className={"mainFont"}
-              style={{ fontSize: "12px", overflow: "hidden" }}
+              style={{
+                fontSize: "12px",
+                overflow: "hidden",
+                color: "#fff",
+                textOverflow: "ellipsis",
+              }}
             >
               {process.env.REACT_APP_HOST
                 ? `${process.env.REACT_APP_HOST}${item.sitePath}`

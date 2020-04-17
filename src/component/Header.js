@@ -11,7 +11,7 @@ import {
   MenuItem,
   TextField,
   Typography,
-  withStyles
+  withStyles,
 } from "@material-ui/core";
 import AddOutlinedIcon from "@material-ui/icons/AddOutlined";
 import React from "react";
@@ -23,7 +23,7 @@ import {
   getUserSites,
   openDialog,
   setEditOff,
-  setLogout
+  setLogout,
 } from "../actions";
 import imgUrl from "../FBWGLogo.png";
 import { firebaseAppAuth } from "../utils/firebase";
@@ -34,83 +34,87 @@ import toastr from "./Toastr";
 
 const StyledMenu = withStyles({
   paper: {
-    border: "1px solid #d3d4d5"
+    border: "1px solid #d3d4d5",
+    borderRadius: "18px",
   },
   list: {
-    padding: 0
-  }
-})(props => (
+    padding: 0,
+  },
+})((props) => (
   <Menu
     elevation={1}
     getContentAnchorEl={null}
     anchorOrigin={{
       vertical: "bottom",
-      horizontal: "center"
+      horizontal: "center",
     }}
     transformOrigin={{
       vertical: "top",
-      horizontal: "center"
+      horizontal: "center",
     }}
     {...props}
   />
 ));
 
 const imgStyles = {
-  width: "50%",
-  paddingLeft: "1.5rem"
+  width: "4rem",
+  height: "4rem",
+  paddingLeft: "1rem",
 };
 
-const StyledMenuItem = withStyles(theme => ({
+const StyledMenuItem = withStyles((theme) => ({
   root: {
     "&:focus": {
-      backgroundColor: theme.palette.common.white,
-      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
-        color: theme.palette.common.black
-      }
+      backgroundColor: "black",
+      // "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+      //   color: "white",
+      // },
     },
+    padding: "8px 23px",
     fontSize: "14px",
-    fontFamily: "Segoe UI, sans-serif"
-  }
+    backgroundColor: "grey",
+    color: "#fff",
+  },
 }))(MenuItem);
 
-const ButtonCreate = withStyles(theme => ({
+const ButtonCreate = withStyles((theme) => ({
   root: {
     borderRadius: "2px",
     padding: "0.5rem 2rem",
     background: "white",
     "&:hover": {
-      background: "white"
+      background: "white",
     },
-    minHeight: "auto"
-  }
+    minHeight: "auto",
+  },
 }))(MenuItem);
 
-const useStyle = theme => ({
+const useStyle = (theme) => ({
   root: {
-    background: "#006088",
-    height: "9vh"
+    background: "#121212",
+    height: "11vh",
   },
   btnLink: {
-    background: "#002c40",
+    background: "#121212",
     [theme.breakpoints.up("sm")]: {
-      minWidth: "22vh"
+      minWidth: "22vh",
     },
-    minWidth: "fit-content"
+    minWidth: "fit-content",
   },
   title: {
     [theme.breakpoints.up("sm")]: {
       display: "block",
-      color: "white"
+      color: "white",
     },
     display: "none",
-    color: "white"
-  }
+    color: "white",
+  },
 });
 
 function ProfileMenu(props) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
-  const handleClick = event => {
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -128,7 +132,7 @@ function ProfileMenu(props) {
       </Button>
       <StyledMenu
         anchorEl={anchorEl}
-        keepMounted
+        // keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
@@ -146,9 +150,9 @@ class CustomNavBarEditor extends React.Component {
     sitepath: "",
     isPublish: false,
     sitepathError: false,
-    pageUrlError: false
+    pageUrlError: false,
   };
-  handlePreview = body => {
+  handlePreview = (body) => {
     this.props.setPreviewMode(!this.props.isPreview);
   };
 
@@ -156,11 +160,11 @@ class CustomNavBarEditor extends React.Component {
     const { setLogout } = this.props;
     firebaseAppAuth
       .signOut()
-      .then(function() {
+      .then(function () {
         setLogout();
         return <Redirect to="/" />;
       })
-      .catch(function(error) {
+      .catch(function (error) {
         toastr.error(`Logout failed: ${error}`, "Error");
       });
   };
@@ -169,7 +173,7 @@ class CustomNavBarEditor extends React.Component {
     this.setState({
       pageUrl: link,
       pageId: id,
-      pageName: name
+      pageName: name,
     });
   };
 
@@ -179,13 +183,13 @@ class CustomNavBarEditor extends React.Component {
       accessToken,
       profile,
       closeDialog,
-      getUserSites
+      getUserSites,
     } = this.props;
     const { pageId, pageUrl, pageName, sitepath, isPublish } = this.state;
     if (pageUrl && sitepath) {
       this.setState({
         pageUrlError: false,
-        sitepathError: false
+        sitepathError: false,
       });
       const confirm = await confirmPage({
         pageId,
@@ -194,7 +198,7 @@ class CustomNavBarEditor extends React.Component {
         profile,
         name: pageName,
         sitepath,
-        isPublish
+        isPublish,
       });
       confirm &&
         (await getUserSites(profile.userId, accessToken)) &&
@@ -202,43 +206,43 @@ class CustomNavBarEditor extends React.Component {
     } else {
       if (!pageUrl) {
         this.setState({
-          pageUrlError: true
+          pageUrlError: true,
         });
       } else {
         this.setState({
-          pageUrlError: false
+          pageUrlError: false,
         });
       }
       if (!sitepath) {
         this.setState({
-          sitepathError: true
+          sitepathError: true,
         });
       } else {
         this.setState({
-          sitepathError: false
+          sitepathError: false,
         });
       }
     }
   };
 
-  handleChangeURL = e => {
+  handleChangeURL = (e) => {
     this.setState({
-      pageUrl: e.target.value
+      pageUrl: e.target.value,
     });
   };
 
-  handleChangeSitepath = e => {
+  handleChangeSitepath = (e) => {
     this.setState({
-      sitepath: e.target.value
+      sitepath: e.target.value,
     });
   };
 
   renderPagesNotGenerated = () => {
     const { pages, sites } = this.props;
     const { pageUrl, sitepath, isPublish } = this.state;
-    let nonGenerated = pages && pages.map(page => page.id);
+    let nonGenerated = pages && pages.map((page) => page.id);
     let index = -1;
-    sites.forEach(site => {
+    sites.forEach((site) => {
       index = nonGenerated.indexOf(site.id);
       if (index >= 0) {
         nonGenerated.splice(index, 1);
@@ -248,7 +252,7 @@ class CustomNavBarEditor extends React.Component {
       return (
         <>
           {pages.map(
-            page =>
+            (page) =>
               nonGenerated.includes(page.id) && (
                 <React.Fragment key={page.id}>
                   <ListItem
@@ -257,7 +261,7 @@ class CustomNavBarEditor extends React.Component {
                       this.handleSelectPage({
                         id: page.id,
                         link: page.link,
-                        name: page.name
+                        name: page.name,
                       })
                     }
                   >
@@ -281,10 +285,10 @@ class CustomNavBarEditor extends React.Component {
               error={this.state.sitepathError}
               required
               label="Sitepath"
-              onChange={e => this.handleChangeSitepath(e)}
+              onChange={(e) => this.handleChangeSitepath(e)}
               value={sitepath ? sitepath : ""}
               inputProps={{
-                maxLength: 50
+                maxLength: 50,
               }}
             />
             <SwitchButton
@@ -302,9 +306,9 @@ class CustomNavBarEditor extends React.Component {
               label="Facebook Page Url"
               disabled
               inputProps={{
-                maxLength: 250
+                maxLength: 250,
               }}
-              onChange={e => this.handleChangeURL(e)}
+              onChange={(e) => this.handleChangeURL(e)}
               value={pageUrl ? pageUrl : ""}
             />
           </ListItem>
@@ -356,26 +360,24 @@ class CustomNavBarEditor extends React.Component {
           container
           item
           sm={2}
-          xs={1}
-          md={1}
+          xs={2}
+          md={2}
           alignItems="center"
-          justify="center"
+          justify="flex-start"
           className={classes.btnLink}
         >
           <Link to="/">
-            <Grid item container xs={12} alignItems="center">
-              <Grid item xs={6}>
-                <img src={imgUrl} alt="" style={imgStyles} />
-              </Grid>
-              <Grid item xs={6}>
+            {/* <Grid item container xs={12}> */}
+            <img src={"/images/FPWGlogo.png"} alt="" style={imgStyles} />
+            {/* <Grid item xs={6}>
                 <Typography
                   variant="body1"
                   className={`${classes.title} "mainFont"`}
                 >
                   FPWG
                 </Typography>
-              </Grid>
-            </Grid>
+              </Grid> */}
+            {/* </Grid> */}
           </Link>
         </Grid>
         <Grid
@@ -389,22 +391,29 @@ class CustomNavBarEditor extends React.Component {
           <Grid container item sm={5} xs={6} justify="flex-end">
             <Link to="/create">
               <ButtonCreate
-              // onClick={openDialog}
+                // onClick={openDialog}
+                style={{
+                  backgroundColor: "rgb(222,228,231, 0.2)",
+                  borderRadius: "18px",
+                  padding: "8px 23px",
+                }}
               >
+                <AddOutlinedIcon
+                  style={{
+                    color: "#fff",
+                    fontSize: "16px",
+                    marginRight: "1rem",
+                  }}
+                />
                 <Typography
                   className={"mainFont"}
                   style={{
-                    color: "#2271b1",
-                    fontSize: "12px",
-                    paddingRight: "0.3rem"
+                    color: "#fff",
+                    fontSize: "16px",
                   }}
                 >
-                  New Site
+                  Create New Site
                 </Typography>
-                <AddOutlinedIcon
-                  style={{ color: "#2271b1" }}
-                  fontSize="small"
-                />
               </ButtonCreate>
             </Link>
             <Dialog
@@ -433,21 +442,21 @@ class CustomNavBarEditor extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   open: state.dialog.open,
   pages: state.user.pages,
   sites: state.site.data,
   accessToken: state.user.accessToken,
-  profile: state.user.profile
+  profile: state.user.profile,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   closeDialog: () => dispatch(closeDialog()),
   openDialog: () => dispatch(openDialog()),
-  confirmPage: data => dispatch(confirmPage(data)),
+  confirmPage: (data) => dispatch(confirmPage(data)),
   getUserSites: (id, accessToken) => dispatch(getUserSites(id, accessToken)),
   setEditOff: () => dispatch(setEditOff()),
-  setLogout: () => dispatch(setLogout())
+  setLogout: () => dispatch(setLogout()),
 });
 
 export default connect(

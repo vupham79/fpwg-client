@@ -26,9 +26,9 @@ class Footer extends React.Component {
       <Grid
         container
         style={{
-          backgroundColor: "#212121",
-          marginTop: 50,
-          height: 300,
+          backgroundColor: "#535353",
+          marginTop: 100,
+          height: 200,
           postion: "absolute",
           bottom: 0
         }}
@@ -39,7 +39,7 @@ class Footer extends React.Component {
             color="primary"
             href={isEdit ? siteEdit.url : siteView.url}
           >
-            <FontAwesomeIcon icon={faFacebook} color="white" size="2x" />
+            <FontAwesomeIcon icon={faFacebook} color="white" size="1x" />
           </IconButton>
         </Grid>
         <Grid container item xs={12} justify="center">
@@ -66,7 +66,7 @@ class Footer extends React.Component {
               color="primary"
               href={`https://wa.me/${isEdit ? whatsapp : siteView.whatsapp}`}
             >
-              <FontAwesomeIcon icon={faWhatsapp} color="white" size="2x" />
+              <FontAwesomeIcon icon={faWhatsapp} color="white" size="1x" />
             </IconButton>
           </Grid>
 
@@ -89,7 +89,7 @@ class Footer extends React.Component {
                 isEdit ? instagram : siteView.instagram
                 }`}
             >
-              <FontAwesomeIcon icon={faInstagram} color="white" size="2x" />
+              <FontAwesomeIcon icon={faInstagram} color="white" size="1x" />
             </IconButton>
           </Grid>
 
@@ -110,7 +110,7 @@ class Footer extends React.Component {
               color="primary"
               href={isEdit ? youtube : siteView.youtube}
             >
-              <FontAwesomeIcon icon={faYoutube} color="white" size="2x" />
+              <FontAwesomeIcon icon={faYoutube} color="white" size="1x" />
             </IconButton>
           </Grid>
         </Grid>

@@ -587,7 +587,9 @@ class NewsType extends React.Component {
         >
           <div
             className="fb-post"
-            data-href={post.target && post.target}
+            data-href={`https://www.facebook.com/${
+              post.id.split("_")[0]
+            }/posts/${post.id.split("_")[1]}`}
             data-show-text="true"
             style={{
               // maxWidth: "100%",
@@ -798,7 +800,7 @@ class NewsType extends React.Component {
                     />
                   </Grid>
                 )
-              : pageCountView &&
+              : !!pageCountView &&
                 this.state.pageView < pageCountView && (
                   <Grid
                     container

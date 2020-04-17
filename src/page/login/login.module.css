@@ -1,5 +1,5 @@
 .body {
-  background-image: -webkit-linear-gradient(left, #2fc96c, #13a1ee) !important;
+  /* background-image: -webkit-linear-gradient(left, #2fc96c, #13a1ee) !important; */
   height: 100vh;
   width: 100%;
   overflow: auto;
@@ -8,19 +8,33 @@
 
 .title {
   font-size: 8vh !important;
-  padding: 10vh 0;
-  font-family: serif !important;
+  padding: 2rem;
+  font-weight: 100;
+  font-family: "Roboto", sans-serif !important;
   color: whitesmoke !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.content {
-  font-size: 3vh;
+.content1 {
   color: whitesmoke !important;
+  font-family: "Roboto", sans-serif !important;
+  margin-bottom: 1rem !important;
+  font-size: 1.2rem !important;
 }
+
+.content2 {
+  color: whitesmoke !important;
+  font-family: "Roboto", sans-serif !important;
+  margin-bottom: 1rem !important;
+  font-size: 0.9rem !important;
+}
+
 .login_button {
-  background: #4267b2 !important;
+  background: #121212 !important;
+  font-family: "Roboto", sans-serif !important;
   color: white !important;
-
 }
 
 .facebook_icon {

@@ -18,7 +18,6 @@ import ButtonStyled from "../../component/Button";
 import Header from "../../component/Header";
 import Link from "../../component/link";
 import { themes as themesConstant } from "../../constant/constant";
-import imgUrl from "../../FBWGLogo.png";
 import DesignTab from "./design";
 require("dotenv").config();
 
@@ -26,12 +25,13 @@ const useStyle = (theme) => ({
   root: {
     [theme.breakpoints.up("sm")]: {
       position: "absolute",
-      marginTop: "9vh",
+      top: "11vh",
       bottom: 0,
-      top: 0,
     },
   },
   sites: {
+    backgroundColor: "rgb(222,228,231, 0.1)",
+    minHeight: "40vh",
     [theme.breakpoints.up("sm")]: {
       position: "absolute",
       bottom: 0,
@@ -40,6 +40,7 @@ const useStyle = (theme) => ({
     },
   },
   view: {
+    minHeight: "50vh",
     [theme.breakpoints.up("sm")]: {
       position: "absolute",
       bottom: 0,
@@ -97,7 +98,7 @@ function EmptyListSite() {
   return (
     <Grid container justify="center" alignItems="center">
       <Grid item xs={3} sm={2} md={1}>
-        <img src={imgUrl} alt="" className={style.img} />
+        <img src={"/images/FPWGlogo.png"} alt="" className={style.img} />
       </Grid>
       <Grid container item xs={12}>
         <Grid item xs={12}>
@@ -128,7 +129,14 @@ class MainPage extends Component {
   };
 
   render() {
-    const { sites, classes, siteEdit, publishSite, unPublishSite } = this.props;
+    const {
+      sites,
+      classes,
+      siteEdit,
+      publishSite,
+      unPublishSite,
+      user,
+    } = this.props;
     return (
       <Grid container>
         <Grid item xs={12}>
@@ -151,8 +159,19 @@ class MainPage extends Component {
             xs={12}
             alignItems="center"
             className={classes.root}
+            style={{
+              backgroundImage: `url('/images/dark_background.jpg')`,
+              backgroundSize: "cover",
+            }}
           >
-            <Grid container item xs={12} sm={2} className={classes.sites}>
+            <Grid
+              container
+              item
+              xs={12}
+              sm={3}
+              md={2}
+              className={classes.sites}
+            >
               <DesignTab />
             </Grid>
             <Grid
@@ -297,12 +316,24 @@ class MainPage extends Component {
                 </>
               ) : (
                 <Grid container alignItems="center" justify="center">
-                  <Grid item xs={3} sm={2} md={1}>
-                    <img src={imgUrl} alt="" className={classes.img} />
+                  <Grid item xs={3} sm={2} md={2}>
+                    <img
+                      src={"/images/FPWGlogo.png"}
+                      alt=""
+                      className={classes.img}
+                    />
                   </Grid>
                   <Grid item xs={12}>
-                    <Typography variant="h5" className={classes.h4}>
-                      Select the site you want to view.
+                    <Typography
+                      // variant="h5"
+                      className={classes.h4}
+                      style={{
+                        color: "#fff",
+                        fontSize: "20px",
+                        fontWeight: "400",
+                      }}
+                    >
+                      Hello, {user.name}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -319,6 +350,7 @@ const mapStateToProps = (state) => ({
   sites: state.site.data,
   siteEdit: state.site.siteEdit,
   isEdit: state.site.isEdit,
+  user: state.user.profile,
 });
 
 const mapDispatchToProps = (dispatch) => ({
