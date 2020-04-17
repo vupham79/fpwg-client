@@ -73,15 +73,7 @@ class EventComponent extends React.Component {
                 <Grid
                   item
                   container
-                  sm={
-                    isEdit
-                      ? siteEdit.showDetailSetting.showPlaceEvent
-                        ? 12
-                        : 9
-                      : siteView.showDetailSetting.showPlaceEvent
-                        ? 12
-                        : 9
-                  }
+                  sm={12}
                   // spacing={2}
                   className={styles.contain_event}
                   key={index}
@@ -135,7 +127,7 @@ class EventComponent extends React.Component {
                           : titleView.fontFamily,
                         textAlign: "center",
                         fontSize: 15,
-                        color: dark ? "#fff" : "#000",
+                        color: dark ? "#fff" : "#535353",
                       }}
                     >
                       {moment(row.startTime).format("MMM").toUpperCase()}
@@ -149,8 +141,9 @@ class EventComponent extends React.Component {
                           : titleView.fontFamily,
                         fontWeight: "bold",
                         textAlign: "center",
-                        color: dark ? "#fff" : "#212121",
-                        fontSize: altType ? 30 : 15,
+                        color: altType ? (isEdit ? titleEdit.color : titleView.color) : (dark ? "#fff" : "#535353"),
+                        fontSize: altType ? 30 : 19,
+                        marginTop: altType ? -50 : -40
                       }}
                     >
                       {moment(row.startTime).format("D") + " "}
@@ -166,11 +159,11 @@ class EventComponent extends React.Component {
                         ? !siteEdit.showDetailSetting.showDesEvent ||
                           !siteEdit.showDetailSetting.showPlaceEvent
                           ? 5
-                          : 2
+                          : (altType ? 5 : 2)
                         : !siteView.showDetailSetting.showDesEvent ||
                           !siteView.showDetailSetting.showPlaceEvent
                           ? 5
-                          : 2
+                          : (altType ? 5 : 2)
                     }
                     style={{
                       fontWeight: "bold",
@@ -191,12 +184,23 @@ class EventComponent extends React.Component {
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
-                          color: dark && "#fff",
-                          fontSize: altType ? 16 : 14,
+                          color: dark ? "#fff" : "#535353",
+                          fontSize: altType ? 19 : 16,
                           textDecoration: "none",
+                          marginTop: altType ? 30 : 0
                         }}
                       >
                         {row.name}
+                        <span style={{
+                          display: isEdit
+                            ? siteEdit.showDetailSetting.showPlaceEvent && altType
+                              ? "inline-block"
+                              : "none"
+                            : siteView.showDetailSetting.showPlaceEvent && altType
+                              ? "inline-block"
+                              : "none",
+
+                        }}> / <p style={{ color: dark ? "#fff" : "#a0a09f", fontSize: 10, display: "inline-block" }}>{row.place && row.place.city}</p></span>
                       </a>
                     </Grid>
                     <Grid
@@ -236,7 +240,7 @@ class EventComponent extends React.Component {
                       fontFamily: isEdit
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
-                      color: dark ? "#fff" : "#000",
+                      color: dark ? "#fff" : "#535353",
                     }}
                   >
                     {row.description}
@@ -249,10 +253,10 @@ class EventComponent extends React.Component {
                     xs={3}
                     style={{
                       display: isEdit
-                        ? siteEdit.showDetailSetting.showPlaceEvent
+                        ? siteEdit.showDetailSetting.showPlaceEvent && !altType
                           ? "block"
                           : "none"
-                        : siteView.showDetailSetting.showPlaceEvent
+                        : siteView.showDetailSetting.showPlaceEvent && !altType
                           ? "block"
                           : "none",
                       textOverflow: "ellipsis",
@@ -263,7 +267,7 @@ class EventComponent extends React.Component {
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
                       height: "6rem",
-                      color: dark ? "#fff" : "#000",
+                      color: dark ? "#fff" : "#535353",
                     }}
                   >
                     <Grid item xs={12}>
@@ -307,15 +311,7 @@ class EventComponent extends React.Component {
                 <Grid
                   item
                   container
-                  sm={
-                    isEdit
-                      ? siteEdit.showDetailSetting.showPlaceEvent
-                        ? 12
-                        : 9
-                      : siteView.showDetailSetting.showPlaceEvent
-                        ? 12
-                        : 9
-                  }
+                  sm={12}
                   // spacing={2}
                   className={styles.contain_event}
                   key={index}
@@ -370,7 +366,7 @@ class EventComponent extends React.Component {
                         color: isEdit ? titleEdit.color : titleView.color,
                         textAlign: "center",
                         fontSize: 15,
-                        color: dark ? "#fff" : "#000",
+                        color: dark ? "#fff" : "#535353",
                       }}
                     >
                       {moment(row.startTime).format("MMM").toUpperCase()}
@@ -384,8 +380,9 @@ class EventComponent extends React.Component {
                           : titleView.fontFamily,
                         fontWeight: "bold",
                         textAlign: "center",
-                        color: dark ? "#fff" : "#000",
-                        fontSize: altType ? 30 : 15,
+                        color: altType ? (isEdit ? titleEdit.color : titleView.color) : (dark ? "#fff" : "#535353"),
+                        fontSize: altType ? 30 : 19,
+                        marginTop: altType ? -50 : -40
                       }}
                     >
                       {moment(row.startTime).format("D") + " "}
@@ -401,11 +398,11 @@ class EventComponent extends React.Component {
                         ? !siteEdit.showDetailSetting.showDesEvent ||
                           !siteEdit.showDetailSetting.showPlaceEvent
                           ? 5
-                          : 2
+                          : (altType ? 5 : 2)
                         : !siteView.showDetailSetting.showDesEvent ||
                           !siteView.showDetailSetting.showPlaceEvent
                           ? 5
-                          : 2
+                          : (altType ? 5 : 2)
                     }
                     style={{
                       fontWeight: "bold",
@@ -426,12 +423,23 @@ class EventComponent extends React.Component {
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
-                          color: dark && "#fff",
-                          fontSize: altType ? 16 : 14,
+                          color: dark ? "#fff" : "#535353",
+                          fontSize: altType ? 19 : 16,
                           textDecoration: "none",
+                          marginTop: altType ? 30 : 0
                         }}
                       >
                         {row.name}
+                        <span style={{
+                          display: isEdit
+                            ? siteEdit.showDetailSetting.showPlaceEvent && altType
+                              ? "inline-block"
+                              : "none"
+                            : siteView.showDetailSetting.showPlaceEvent && altType
+                              ? "inline-block"
+                              : "none",
+
+                        }}> / <p style={{ color: dark ? "#fff" : "#a0a09f", fontSize: 10, display: "inline-block" }}>{row.place && row.place.city}</p></span>
                       </a>
                     </Grid>
                     <Grid
@@ -471,7 +479,7 @@ class EventComponent extends React.Component {
                       fontFamily: isEdit
                         ? bodyEdit.fontFamily
                         : bodyView.fontFamily,
-                      color: dark ? "#fff" : "#000",
+                      color: dark ? "#fff" : "#535353",
                     }}
                   >
                     {row.description}
@@ -484,10 +492,10 @@ class EventComponent extends React.Component {
                     xs={3}
                     style={{
                       display: isEdit
-                        ? siteEdit.showDetailSetting.showPlaceEvent
+                        ? siteEdit.showDetailSetting.showPlaceEvent && !altType
                           ? "block"
                           : "none"
-                        : siteView.showDetailSetting.showPlaceEvent
+                        : siteView.showDetailSetting.showPlaceEvent && !altType
                           ? "block"
                           : "none",
                       textOverflow: "ellipsis",
@@ -498,7 +506,7 @@ class EventComponent extends React.Component {
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
                       height: "6rem",
-                      color: dark ? "#fff" : "#000",
+                      color: dark ? "#fff" : "#535353",
                     }}
                   >
                     <Grid item xs={12}>
@@ -531,6 +539,8 @@ class EventComponent extends React.Component {
       dark,
       classes,
       altType,
+      siteEdit,
+      siteView
     } = this.props;
     const { itemPerPage, offset, page } = this.state;
     return (
@@ -555,7 +565,15 @@ class EventComponent extends React.Component {
           >
             <Grid
               item
-              sm={10}
+              sm={
+                isEdit
+                  ? siteEdit.showDetailSetting.showPlaceEvent
+                    ? 12
+                    : 9
+                  : siteView.showDetailSetting.showPlaceEvent
+                    ? 12
+                    : 9
+              }
               xs={12}
               container
               justify="center"
