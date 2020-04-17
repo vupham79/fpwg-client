@@ -67,8 +67,8 @@ const useStyles = (theme) => ({
     background: "rgba(24, 20, 20, 0.5)",
   },
   paginationItemSelected: {
-    backgroundColor: "#fff !important",
-    color: "#000 !important",
+    backgroundColor: "#FFFFFF !important",
+    color: "#121212 !important",
   },
   showMore: {
     marginTop: "2rem",
@@ -192,9 +192,9 @@ class NewsType extends React.Component {
     const btnStyle = {
       padding: "0.5rem 1.5rem",
       fontSize: "11px",
-      border: `1px solid ${dark ? "#fff" : "#000"}`,
-      backgroundColor: dark ? "#1A1919" : "#fff",
-      color: dark ? "#fff" : "#000",
+      border: `1px solid ${dark ? "#FFFFFF" : "#121212"}`,
+      backgroundColor: dark ? "#1A1919" : "#FFFFFF",
+      color: dark ? "#FFFFFF" : "#121212",
       height: "fit-content",
     };
     let show = true;
@@ -219,15 +219,15 @@ class NewsType extends React.Component {
             dark
               ? {
                   backgroundColor: "#1a1919",
-                  border: "1px solid #fff",
+                  border: "1px solid #FFFFFF",
                   marginLeft: "1rem",
                   marginBottom: "1rem",
                   padding: "1rem",
                   borderRadius: "4px",
                 }
               : {
-                  backgroundColor: "#fff",
-                  border: "1px solid #000",
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid #121212",
                   marginLeft: "1rem",
                   marginBottom: "1rem",
                   borderRadius: "4px",
@@ -241,7 +241,7 @@ class NewsType extends React.Component {
             xs={12}
             style={{
               // padding: "0.5rem",
-              backgroundColor: dark ? "#1a1919" : "#fff",
+              backgroundColor: dark ? "#1a1919" : "#FFFFFF",
             }}
           >
             <Grid
@@ -259,7 +259,7 @@ class NewsType extends React.Component {
                   ...titleStyle,
                   fontWeight: "700",
                   fontSize: "16px",
-                  color: dark ? "#fff" : "#000",
+                  color: dark ? "#FFFFFF" : "#121212",
                 }}
               >
                 {moment(post.createdTime).format("MMMM DD, YYYY")}
@@ -294,7 +294,7 @@ class NewsType extends React.Component {
                   >
                     <Typography
                       variant="h3"
-                      style={{ color: dark ? "#fff" : "#fff" }}
+                      style={{ color: dark ? "#FFFFFF" : "#FFFFFF" }}
                     >
                       {post.attachments.images.length} +
                     </Typography>
@@ -309,7 +309,7 @@ class NewsType extends React.Component {
                 ...txtStyle,
                 padding: "1rem 0",
                 // height: "5rem",
-                color: dark ? "#fff" : "#000",
+                color: dark ? "#FFFFFF" : "#121212",
               }}
             >
               <div style={gridContent}>{post.message}</div>
@@ -346,9 +346,9 @@ class NewsType extends React.Component {
     const btnStyle = {
       padding: "0.5rem 1.5rem",
       fontSize: "11px",
-      border: `1px solid ${dark ? "#fff" : "#000"}`,
-      backgroundColor: dark ? "#1A1919" : "#fff",
-      color: dark ? "#fff" : "#000",
+      border: `1px solid ${dark ? "#FFFFFF" : "#121212"}`,
+      backgroundColor: dark ? "#1A1919" : "#FFFFFF",
+      color: dark ? "#FFFFFF" : "#121212",
       height: "fit-content",
     };
     return (
@@ -364,15 +364,15 @@ class NewsType extends React.Component {
           dark
             ? {
                 backgroundColor: "#1a1919",
-                border: "1px solid #fff",
+                border: "1px solid #FFFFFF",
                 marginLeft: "1rem",
                 marginBottom: "1rem",
                 padding: "1rem",
                 borderRadius: "4px",
               }
             : {
-                backgroundColor: "#fff",
-                border: "1px solid #000",
+                backgroundColor: "#FFFFFF",
+                border: "1px solid #121212",
                 marginLeft: "1rem",
                 marginBottom: "1rem",
                 borderRadius: "4px",

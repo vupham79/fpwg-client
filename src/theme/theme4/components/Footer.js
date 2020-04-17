@@ -25,7 +25,7 @@ class Footer extends React.Component {
     const nameStyle = {
       color: isEdit ? titleEdit.color : titleView.color,
       textAlign: "center",
-      fontSize: 16,
+      fontSize: 18,
       padding: "1.5rem",
       fonWeight: "600",
       fontStyle: "oblique",
@@ -50,7 +50,7 @@ class Footer extends React.Component {
           // xs={12}
           style={{
             position: "fixed",
-            right: "0px",
+            right: "10px",
             top: "10vh",
             height: "100%",
           }}

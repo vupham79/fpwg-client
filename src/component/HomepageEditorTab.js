@@ -211,6 +211,209 @@ function handleChangeNavName(id, site, newName, changeHomeItemName) {
   changeHomeItemName(site);
 }
 
+const SortableItem = sortableElement(
+  ({
+    value,
+    site,
+    item,
+    setActiveHomeItems,
+    changeHomeItemName,
+    classes,
+    postSection,
+    currentExpandItemId,
+    isExpanding,
+    onChangePanel,
+    handleChangeAbout,
+    about,
+    handleChangeActive,
+  }) => {
+    return (
+      <ExpansionPanel
+        expanded={
+          currentExpandItemId === item._id && isExpanding ? true : false
+        }
+        className={classes.gridItem}
+      >
+        <ExpansionPanelSummary
+          expandIcon={<ExpandMoreIcon />}
+          onClick={() => onChangePanel(item, !isExpanding)}
+          aria-controls="panel1a-content"
+          style={{ backgroundColor: "white" }}
+        >
+          <Grid container item alignItems="center" xs={10} sm={12} md={10}>
+            <Grid container justify="center" item xs={2} md={2} sm={12}>
+              <DragHandle />
+            </Grid>
+            <Grid item xs={10} md={10} sm={12}>
+              <Typography className={classes.title3}>
+                {item.original.charAt(0).toUpperCase()}
+                {item.original.substring(1)}
+              </Typography>
+            </Grid>
+          </Grid>
+        </ExpansionPanelSummary>
+        <ExpansionPanelDetails>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography className={classes.title2}>Display name</Typography>
+            </Grid>
+
+            <Grid item xs={12}>
+              <TextField
+                InputLabelProps={{
+                  classes: {
+                    focused: classes.focused,
+                  },
+                }}
+                inputProps={{
+                  maxLength: 15,
+                }}
+                InputProps={{
+                  classes: {
+                    notchedOutline: classes.notchedOutline,
+                    input: classes.inputTitle,
+                  },
+                }}
+                size="small"
+                style={{ backgroundColor: "white" }}
+                fullWidth
+                variant={"outlined"}
+                value={value}
+                // autoFocus
+                // disabled={this.state.openDiag ? true : false}
+                // onClick={() => this.setCurrentFocusInput("nameInput")}
+                onChange={(e) =>
+                  handleChangeNavName(
+                    item._id,
+                    site,
+                    e.target.value,
+                    changeHomeItemName
+                  )
+                }
+              />
+            </Grid>
+
+            {item.original === "about" && (
+              <>
+                <Grid item xs={12} style={{ height: 20 }} />
+                <Grid item xs={12}>
+                  <Typography className={classes.title2}>Content</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    InputLabelProps={{
+                      classes: {
+                        focused: classes.focused,
+                      },
+                    }}
+                    inputProps={{
+                      maxLength: 1000,
+                    }}
+                    InputProps={{
+                      classes: {
+                        notchedOutline: classes.notchedOutline,
+                        input: classes.inputTitle,
+                      },
+                    }}
+                    multiline
+                    // autoFocus={
+                    //   this.state.currentFocusInput === "aboutInput"
+                    //     ? true
+                    //     : false
+                    // }
+                    // onFocus={this.moveFocusAtEnd}
+                    // onClick={() => this.setCurrentFocusInput("aboutInput")}
+                    size="small"
+                    style={{ backgroundColor: "white" }}
+                    fullWidth
+                    rows={5}
+                    spellCheck={false}
+                    variant={"outlined"}
+                    value={about ? about : ""}
+                    id="aboutInput"
+                    onChange={(e) => handleChangeAbout(e)}
+                  />
+                </Grid>
+              </>
+            )}
+
+            {
+              {
+                news: postSection(item, "News"),
+                event: postSection(item, "Events"),
+                gallery: postSection(item, "Photos"),
+              }[item.original]
+            }
+
+            <FormControlLabel
+              control={
+                <Checkbox
+                  style={{ color: "#0074aa" }}
+                  checked={!item.isActive}
+                  onChange={() =>
+                    handleChangeActive(item._id, site, setActiveHomeItems)
+                  }
+                />
+              }
+              label={
+                <p style={{ fontSize: 13, color: "#555d66" }}>
+                  Hide this section
+                </p>
+              }
+            />
+          </Grid>
+        </ExpansionPanelDetails>
+      </ExpansionPanel>
+    );
+  }
+);
+
+const SortableList = sortableContainer(
+  ({
+    items,
+    site,
+    setActiveHomeItems,
+    updateHomeItemValue,
+    changeHomeItemName,
+    classes,
+    postSection,
+    currentExpandItemId,
+    isExpanding,
+    onChangePanel,
+    handleChangeAbout,
+    about,
+    handleChangeActive,
+  }) => {
+    if (items) {
+      return (
+        <Grid container alignItems="center">
+          {items.map((value, index) => (
+            <SortableItem
+              key={index}
+              index={index}
+              value={value.name}
+              item={value}
+              site={site}
+              setActiveHomeItems={setActiveHomeItems}
+              updateHomeItemValue={updateHomeItemValue}
+              changeHomeItemName={changeHomeItemName}
+              classes={classes}
+              postSection={postSection}
+              currentExpandItemId={currentExpandItemId}
+              isExpanding={isExpanding}
+              onChangePanel={onChangePanel}
+              handleChangeAbout={handleChangeAbout}
+              about={about}
+              handleChangeActive={handleChangeActive}
+            />
+          ))}
+        </Grid>
+      );
+    }
+    return <></>;
+  }
+);
+
 class HomepageEditorTab extends React.Component {
   state = {
     openDiag: false,
@@ -1017,180 +1220,6 @@ class HomepageEditorTab extends React.Component {
       </>
     );
 
-    const SortableItem = sortableElement(
-      ({ value, site, item, setActiveHomeItems, changeHomeItemName }) => (
-        <ExpansionPanel
-          expanded={
-            this.state.currentExpandItemId === item._id &&
-            this.state.isExpanding
-              ? true
-              : false
-          }
-          className={classes.gridItem}
-        >
-          <ExpansionPanelSummary
-            expandIcon={<ExpandMoreIcon />}
-            onClick={() => this.onChangePanel(item, !this.state.isExpanding)}
-            aria-controls="panel1a-content"
-            style={{ backgroundColor: "white" }}
-          >
-            <Grid container item alignItems="center" xs={10} sm={12} md={10}>
-              <Grid container justify="center" item xs={2} md={2} sm={12}>
-                <DragHandle />
-              </Grid>
-              <Grid item xs={10} md={10} sm={12}>
-                <Typography className={classes.title3}>
-                  {item.original.charAt(0).toUpperCase()}
-                  {item.original.substring(1)}
-                </Typography>
-              </Grid>
-            </Grid>
-          </ExpansionPanelSummary>
-          <ExpansionPanelDetails>
-            <Grid container>
-              <Grid item xs={12}>
-                <Typography className={classes.title2}>Display name</Typography>
-              </Grid>
-
-              <Grid item xs={12}>
-                <TextField
-                  InputLabelProps={{
-                    classes: {
-                      focused: classes.focused,
-                    },
-                  }}
-                  inputProps={{
-                    maxLength: 15,
-                  }}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle,
-                    },
-                  }}
-                  size="small"
-                  style={{ backgroundColor: "white" }}
-                  fullWidth
-                  variant={"outlined"}
-                  value={value}
-                  autoFocus
-                  disabled={this.state.openDiag ? true : false}
-                  onClick={() => this.setCurrentFocusInput("nameInput")}
-                  onChange={(e) =>
-                    handleChangeNavName(
-                      item._id,
-                      site,
-                      e.target.value,
-                      changeHomeItemName
-                    )
-                  }
-                />
-              </Grid>
-
-              {item.original === "about" && (
-                <>
-                  <Grid item xs={12} style={{ height: 20 }} />
-                  <Grid item xs={12}>
-                    <Typography className={classes.title2}>Content</Typography>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      InputLabelProps={{
-                        classes: {
-                          focused: classes.focused,
-                        },
-                      }}
-                      inputProps={{
-                        maxLength: 1000,
-                      }}
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline,
-                          input: classes.inputTitle,
-                        },
-                      }}
-                      multiline
-                      autoFocus={
-                        this.state.currentFocusInput === "aboutInput"
-                          ? true
-                          : false
-                      }
-                      onFocus={this.moveFocusAtEnd}
-                      onClick={() => this.setCurrentFocusInput("aboutInput")}
-                      size="small"
-                      style={{ backgroundColor: "white" }}
-                      fullWidth
-                      rows={5}
-                      spellCheck={false}
-                      variant={"outlined"}
-                      value={this.props.about ? this.props.about : ""}
-                      id="aboutInput"
-                      onChange={(e) => this.handleChangeAbout(e)}
-                    />
-                  </Grid>
-                </>
-              )}
-
-              {
-                {
-                  news: postSection(item, "News"),
-                  event: postSection(item, "Events"),
-                  gallery: postSection(item, "Photos"),
-                }[item.original]
-              }
-
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    style={{ color: "#0074aa" }}
-                    checked={!item.isActive}
-                    onChange={() =>
-                      handleChangeActive(item._id, site, setActiveHomeItems)
-                    }
-                  />
-                }
-                label={
-                  <p style={{ fontSize: 13, color: "#555d66" }}>
-                    Hide this section
-                  </p>
-                }
-              />
-            </Grid>
-          </ExpansionPanelDetails>
-        </ExpansionPanel>
-      )
-    );
-
-    const SortableList = sortableContainer(
-      ({
-        items,
-        site,
-        setActiveHomeItems,
-        updateHomeItemValue,
-        changeHomeItemName,
-      }) => {
-        if (items) {
-          return (
-            <Grid container alignItems="center">
-              {items.map((value, index) => (
-                <SortableItem
-                  key={index}
-                  index={index}
-                  value={value.name}
-                  item={value}
-                  site={site}
-                  setActiveHomeItems={setActiveHomeItems}
-                  updateHomeItemValue={updateHomeItemValue}
-                  changeHomeItemName={changeHomeItemName}
-                />
-              ))}
-            </Grid>
-          );
-        }
-        return <></>;
-      }
-    );
-
     const SortableBannerImageItem = sortableElement(
       ({ item, index, removeCover }) => {
         if (item && typeof item === "object" && item.size > 0) {
@@ -1362,6 +1391,14 @@ class HomepageEditorTab extends React.Component {
           setActiveHomeItems={setActiveHomeItems}
           updateHomeItemValue={updateHomeItemValue}
           changeHomeItemName={changeHomeItemName}
+          classes={classes}
+          postSection={postSection}
+          currentExpandItemId={this.state.currentExpandItemId}
+          isExpanding={this.state.isExpanding}
+          onChangePanel={this.onChangePanel}
+          handleChangeAbout={this.handleChangeAbout}
+          about={this.props.about}
+          handleChangeActive={handleChangeActive}
         />
 
         <Divider

@@ -46,7 +46,7 @@ import {
   setEventCustomize,
   setLimit,
   setAboutCustomize,
-  setPostMode
+  setPostMode,
 } from "../actions";
 import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
@@ -258,6 +258,124 @@ function PostsList({ filteredData, setActivePost }) {
   );
 }
 
+const SortableItem = sortableElement(
+  ({
+    value,
+    site,
+    item,
+    setActiveNavItems,
+    updateNavItemValue,
+    changeNavItemName,
+    classes,
+  }) => (
+    <Grid container style={gridItem}>
+      <Grid
+        container
+        item
+        alignItems="center"
+        xs={10}
+        sm={12}
+        md={10}
+        style={{ padding: "0.2rem 0" }}
+      >
+        <Grid container justify="center" item xs={2} md={2} sm={12}>
+          <DragHandle />
+        </Grid>
+        <Grid item xs={10} md={10} sm={12}>
+          <TextField
+            // autoFocus={
+            //   this.state.currentFocusInput === item._id ? true : false
+            // }
+            // onClick={(e) => this.setState({ currentFocusInput: item._id })}
+            InputLabelProps={{
+              classes: {
+                focused: classes.focused,
+              },
+            }}
+            InputProps={{
+              classes: {
+                notchedOutline: classes.notchedOutline,
+                input: classes.inputTitle,
+              },
+            }}
+            size="small"
+            style={{ backgroundColor: "white" }}
+            fullWidth
+            variant={"outlined"}
+            value={value}
+            inputProps={{
+              maxLength: 15,
+            }}
+            onChange={(e) => {
+              handleChangeNavName(
+                item._id,
+                site,
+                e.target.value,
+                changeNavItemName
+              );
+            }}
+          />
+        </Grid>
+      </Grid>
+      <Grid container item justify="center" xs={2} sm={12} md={2}>
+        {item.original === "home" ? (
+          <></>
+        ) : (
+          <IconButton
+            style={viewButton}
+            onClick={() =>
+              handleChangeActive(
+                item._id,
+                site,
+                setActiveNavItems,
+                updateNavItemValue
+              )
+            }
+          >
+            {item.isActive && item.name !== "Home" ? (
+              <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+            ) : (
+              <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+            )}
+          </IconButton>
+        )}
+      </Grid>
+    </Grid>
+  )
+);
+
+const SortableList = sortableContainer(
+  ({
+    items,
+    site,
+    setActiveNavItems,
+    updateNavItemValue,
+    changeNavItemName,
+    classes,
+  }) => {
+    if (items) {
+      return (
+        <Grid container style={gridContainer} alignItems="center">
+          {items.map((value, index) => (
+            <SortableItem
+              key={index}
+              index={index}
+              value={value.name}
+              item={value}
+              site={site}
+              setActiveNavItems={setActiveNavItems}
+              updateNavItemValue={updateNavItemValue}
+              changeNavItemName={changeNavItemName}
+              classes={classes}
+            />
+          ))}
+        </Grid>
+      );
+    }
+    return <></>;
+  }
+);
+
 class PagesEditorTab extends React.Component {
   state = {
     filteredData: [],
@@ -346,7 +464,7 @@ class PagesEditorTab extends React.Component {
     });
   };
 
-  handleSetPostMode = event => {
+  handleSetPostMode = (event) => {
     this.props.setPostMode(parseInt(event.target.value));
   };
 
@@ -415,121 +533,6 @@ class PagesEditorTab extends React.Component {
       setEventCustomize,
       setAboutCustomize,
     } = this.props;
-
-    const SortableItem = sortableElement(
-      ({
-        value,
-        site,
-        item,
-        setActiveNavItems,
-        updateNavItemValue,
-        changeNavItemName,
-      }) => (
-          <Grid container style={gridItem}>
-            <Grid
-              container
-              item
-              alignItems="center"
-              xs={10}
-              sm={12}
-              md={10}
-              style={{ padding: "0.2rem 0" }}
-            >
-              <Grid container justify="center" item xs={2} md={2} sm={12}>
-                <DragHandle />
-              </Grid>
-              <Grid item xs={10} md={10} sm={12}>
-                <TextField
-                  autoFocus={
-                    this.state.currentFocusInput === item._id ? true : false
-                  }
-                  onClick={(e) => this.setState({ currentFocusInput: item._id })}
-                  InputLabelProps={{
-                    classes: {
-                      focused: classes.focused,
-                    },
-                  }}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle,
-                    },
-                  }}
-                  size="small"
-                  style={{ backgroundColor: "white" }}
-                  fullWidth
-                  variant={"outlined"}
-                  value={value}
-                  inputProps={{
-                    maxLength: 15,
-                  }}
-                  onChange={(e) => {
-                    handleChangeNavName(
-                      item._id,
-                      site,
-                      e.target.value,
-                      changeNavItemName
-                    );
-                  }}
-                />
-              </Grid>
-            </Grid>
-            <Grid container item justify="center" xs={2} sm={12} md={2}>
-              {item.original === "home" ? (
-                <></>
-              ) : (
-                  <IconButton
-                    style={viewButton}
-                    onClick={() =>
-                      handleChangeActive(
-                        item._id,
-                        site,
-                        setActiveNavItems,
-                        updateNavItemValue
-                      )
-                    }
-                  >
-                    {item.isActive && item.name !== "Home" ? (
-                      <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                    ) : (
-                        <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
-                      )}
-                  </IconButton>
-                )}
-            </Grid>
-          </Grid>
-        )
-    );
-
-    const SortableList = sortableContainer(
-      ({
-        items,
-        site,
-        setActiveNavItems,
-        updateNavItemValue,
-        changeNavItemName,
-      }) => {
-        if (items) {
-          return (
-            <Grid container style={gridContainer} alignItems="center">
-              {items.map((value, index) => (
-                <SortableItem
-                  key={index}
-                  index={index}
-                  value={value.name}
-                  item={value}
-                  site={site}
-                  setActiveNavItems={setActiveNavItems}
-                  updateNavItemValue={updateNavItemValue}
-                  changeNavItemName={changeNavItemName}
-                />
-              ))}
-            </Grid>
-          );
-        }
-        return <></>;
-      }
-    );
 
     return (
       <div style={{ padding: 10 }}>
@@ -844,7 +847,9 @@ class PagesEditorTab extends React.Component {
             <FormControlLabel
               value={1}
               control={<Radio style={{ color: "#0074aa" }} />}
-              label={<p style={{ fontSize: 13 }}>Show only posts with photo(s)</p>}
+              label={
+                <p style={{ fontSize: 13 }}>Show only posts with photo(s)</p>
+              }
             />
             <FormControlLabel
               value={2}
@@ -891,6 +896,7 @@ class PagesEditorTab extends React.Component {
           setActiveNavItems={setActiveNavItems}
           updateNavItemValue={updateNavItemValue}
           changeNavItemName={changeNavItemName}
+          classes={classes}
         />
 
         <Divider
