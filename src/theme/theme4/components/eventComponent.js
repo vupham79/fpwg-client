@@ -548,6 +548,9 @@ class EventComponent extends React.Component {
       dark,
       classes,
       pageCountView,
+      altType,
+      siteEdit,
+      siteView
     } = this.props;
     const { itemPerPage, offset, page } = this.state;
 
@@ -567,7 +570,15 @@ class EventComponent extends React.Component {
       <Grid
         item
         xs={12}
-        sm={12}
+        sm={
+          isEdit
+            ? siteEdit.showDetailSetting.showPlaceEvent
+              ? 12
+              : 9
+            : siteView.showDetailSetting.showPlaceEvent
+              ? 12
+              : 9
+        }
         container
         justify="center"
       // style={{ marginTop: "2.5rem", marginBottom: "2.5rem" }}
@@ -590,7 +601,7 @@ class EventComponent extends React.Component {
               sm={12}
               container
               justify="center"
-              className={styles.event_body}
+              className={altType ? null : styles.event_body}
               style={dark ? { backgroundColor: "#000" } : {}}
             >
               {!homeList ||
@@ -623,21 +634,32 @@ class EventComponent extends React.Component {
                     <Grid item xs={12}>
                       <p
                         style={{
-                          textAlign: "left",
-                          fontSize: 16,
+                          fontSize: altType ? 20 : 16,
                           fontWeight: "bold",
                           marginLeft: 10,
                           fontFamily: isEdit
                             ? titleEdit.fontFamily
                             : titleView.fontFamily,
-                          color: dark ? "#fff" : "#000",
+                          color: altType
+                            ? isEdit
+                              ? titleEdit.color
+                              : titleView.color
+                            : dark
+                              ? "#fff"
+                              : "#000",
+                          textAlign: altType ? "center" : "left",
                         }}
                       >
                         Upcoming Events
-                      </p>
+                    </p>
                     </Grid>
                     <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: "#fff" }} />
+                      <Divider
+                        style={{
+                          backgroundColor: dark && "#fff",
+                          display: altType ? "none" : "block",
+                        }}
+                      />
                     </Grid>
                   </Grid>
                 )}
@@ -661,21 +683,32 @@ class EventComponent extends React.Component {
                     <Grid item xs={12}>
                       <p
                         style={{
-                          textAlign: "left",
-                          fontSize: 16,
+                          fontSize: altType ? 20 : 16,
                           fontWeight: "bold",
                           marginLeft: 10,
                           fontFamily: isEdit
                             ? titleEdit.fontFamily
                             : titleView.fontFamily,
-                          color: dark ? "#fff" : "#000",
+                          color: altType
+                            ? isEdit
+                              ? titleEdit.color
+                              : titleView.color
+                            : dark
+                              ? "#fff"
+                              : "#000",
+                          textAlign: altType ? "center" : "left",
                         }}
                       >
                         Upcoming Events
                       </p>
                     </Grid>
                     <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: dark && "#fff" }} />
+                      <Divider
+                        style={{
+                          backgroundColor: dark && "#fff",
+                          display: altType ? "none" : "block",
+                        }}
+                      />
                     </Grid>
                   </Grid>
                 )}
@@ -716,21 +749,32 @@ class EventComponent extends React.Component {
                     <Grid item xs={12}>
                       <p
                         style={{
-                          textAlign: "left",
-                          fontSize: 16,
+                          fontSize: altType ? 20 : 16,
                           fontWeight: "bold",
                           marginLeft: 10,
                           fontFamily: isEdit
                             ? titleEdit.fontFamily
                             : titleView.fontFamily,
-                          color: dark ? "#fff" : "#000",
+                          color: altType
+                            ? isEdit
+                              ? titleEdit.color
+                              : titleView.color
+                            : dark
+                              ? "#fff"
+                              : "#000",
+                          textAlign: altType ? "center" : "left",
                         }}
                       >
                         Past Events
                       </p>
                     </Grid>
                     <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: dark && "#fff" }} />
+                      <Divider
+                        style={{
+                          backgroundColor: dark && "#fff",
+                          display: altType ? "none" : "block",
+                        }}
+                      />
                     </Grid>
                   </Grid>
                 )}
@@ -760,21 +804,32 @@ class EventComponent extends React.Component {
                     <Grid item xs={12}>
                       <p
                         style={{
-                          textAlign: "left",
-                          fontSize: 16,
+                          fontSize: altType ? 20 : 16,
                           fontWeight: "bold",
                           marginLeft: 10,
                           fontFamily: isEdit
                             ? titleEdit.fontFamily
                             : titleView.fontFamily,
-                          color: dark ? "#fff" : "#000",
+                          color: altType
+                            ? isEdit
+                              ? titleEdit.color
+                              : titleView.color
+                            : dark
+                              ? "#fff"
+                              : "#000",
+                          textAlign: altType ? "center" : "left",
                         }}
                       >
                         Past Events
                       </p>
                     </Grid>
                     <Grid item xs={12}>
-                      <Divider style={{ backgroundColor: dark && "#fff" }} />
+                      <Divider
+                        style={{
+                          backgroundColor: dark && "#fff",
+                          display: altType ? "none" : "block",
+                        }}
+                      />
                     </Grid>
                   </Grid>
                 )}
