@@ -22,6 +22,9 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
 } from "@material-ui/core";
 import moment from "moment";
 import { green } from "@material-ui/core/colors";
@@ -50,6 +53,7 @@ import {
 } from "../actions";
 import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
 const useStyles = (theme) => ({
   content: {
@@ -139,6 +143,12 @@ const useStyles = (theme) => ({
   },
   iconButton: {
     padding: 10,
+  },
+  gridItem: {
+    zIndex: "999999",
+    border: "1px solid #dddddd",
+    width: "100%",
+    backgroundColor: "#f0eded",
   },
 });
 
@@ -384,6 +394,9 @@ class PagesEditorTab extends React.Component {
     itemPerPage: 3,
     openDiag: false,
     currentFocusInput: "",
+    previousExpandItem: "",
+    isExpanding: false,
+    currentExpandItem: "",
   };
 
   setPageCount = (listData) => {
@@ -523,6 +536,21 @@ class PagesEditorTab extends React.Component {
     }
   };
 
+  onChangePanel = (item, expand) => {
+    if (item !== this.state.previousExpandItem) {
+      this.setState({
+        previousExpandItem: item,
+        isExpanding: true,
+        currentExpandItem: item,
+      });
+    } else {
+      this.setState({
+        currentExpandItem: item,
+        isExpanding: expand,
+      });
+    }
+  };
+
   render() {
     const {
       site,
@@ -533,371 +561,540 @@ class PagesEditorTab extends React.Component {
       setEventCustomize,
       setAboutCustomize,
     } = this.props;
-
     return (
       <div style={{ padding: 10 }}>
-        <Typography className={classes.title}>About</Typography>
-        <Divider
-          style={{
-            height: "1.2rem",
-            width: "100%",
-            backgroundColor: "#ffffff00",
-          }}
-        />
-        <Grid container>
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  style={{ color: "#0074aa" }}
-                  checked={!site.showDetailSetting.showAboutLogo}
-                  onChange={() =>
-                    setAboutCustomize(
-                      !site.showDetailSetting.showAboutLogo,
-                      site.showDetailSetting.showAboutDescription,
-                      site.showDetailSetting.showStory
-                    )
-                  }
-                />
-              }
-              label={
-                <p style={{ fontSize: 13, color: "#555d66" }}>Hide site logo</p>
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  style={{ color: "#0074aa" }}
-                  checked={!site.showDetailSetting.showAboutDescription}
-                  onChange={() =>
-                    setAboutCustomize(
-                      site.showDetailSetting.showAboutLogo,
-                      !site.showDetailSetting.showAboutDescription,
-                      site.showDetailSetting.showStory
-                    )
-                  }
-                />
-              }
-              label={
-                <p style={{ fontSize: 13, color: "#555d66" }}>
-                  Hide introduction
-                </p>
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  style={{ color: "#0074aa" }}
-                  checked={!site.showDetailSetting.showStory}
-                  onChange={() =>
-                    setAboutCustomize(
-                      site.showDetailSetting.showAboutLogo,
-                      site.showDetailSetting.showAboutDescription,
-                      !site.showDetailSetting.showStory
-                    )
-                  }
-                />
-              }
-              label={
-                <p style={{ fontSize: 13, color: "#555d66" }}>Hide story</p>
-              }
-            />
-          </Grid>
-        </Grid>
-
-        <Divider
-          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
-        />
-
-        <Typography className={classes.title}>Events</Typography>
-        <Divider
-          style={{
-            height: "1.2rem",
-            width: "100%",
-            backgroundColor: "#ffffff00",
-          }}
-        />
-        <Grid container>
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  style={{ color: "#0074aa" }}
-                  checked={!site.showDetailSetting.showCoverEvent}
-                  onChange={() =>
-                    setEventCustomize(
-                      !site.showDetailSetting.showCoverEvent,
-                      site.showDetailSetting.showDesEvent,
-                      site.showDetailSetting.showPlaceEvent
-                    )
-                  }
-                />
-              }
-              label={
-                <p style={{ fontSize: 13, color: "#555d66" }}>
-                  Hide event cover
-                </p>
-              }
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  style={{ color: "#0074aa" }}
-                  checked={!site.showDetailSetting.showDesEvent}
-                  onChange={() =>
-                    setEventCustomize(
-                      site.showDetailSetting.showCoverEvent,
-                      !site.showDetailSetting.showDesEvent,
-                      site.showDetailSetting.showPlaceEvent
-                    )
-                  }
-                />
-              }
-              label={
-                <p style={{ fontSize: 13, color: "#555d66" }}>
-                  Hide event description
-                </p>
-              }
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  style={{ color: "#0074aa" }}
-                  checked={!site.showDetailSetting.showPlaceEvent}
-                  onChange={() =>
-                    setEventCustomize(
-                      site.showDetailSetting.showCoverEvent,
-                      site.showDetailSetting.showDesEvent,
-                      !site.showDetailSetting.showPlaceEvent
-                    )
-                  }
-                />
-              }
-              label={
-                <p style={{ fontSize: 13, color: "#555d66" }}>
-                  Hide event place
-                </p>
-              }
-            />
-          </Grid>
-        </Grid>
-
-        <Divider
-          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
-        />
-
-        <Typography className={classes.title}>Posts</Typography>
-        <Divider
-          style={{
-            height: "1.2rem",
-            width: "100%",
-            backgroundColor: "#ffffff00",
-          }}
-        />
-
-        <Grid container justify={"center"} direction={"column"}>
-          <Grid
-            item
-            style={{
-              color: "#555d66",
-              textAlign: "left",
-              fontStyle: "italic",
-              fontFamily: "Segoe UI, sans-serif",
-            }}
-          >
-            Select which post from Facebook you want to see on your site.
-          </Grid>
-
-          <Grid container justify={"center"}>
-            <button
-              className={classes.logoButton}
-              color={"default"}
-              onClick={() => this.handleOpenDialogue(true)}
-            >
-              Select
-            </button>
-          </Grid>
-
-          <Dialog
-            disableBackdropClick
-            disableEscapeKeyDown
-            open={this.state.openDiag}
-            maxWidth="md"
-            fullWidth
-          >
-            <DialogTitle>
-              <Paper component="form" className={classes.root}>
-                <InputBase
-                  InputLabelProps={{
-                    classes: {
-                      focused: classes.focused,
-                    },
-                  }}
-                  maxLength={50}
-                  InputProps={{
-                    classes: {
-                      notchedOutline: classes.notchedOutline,
-                      input: classes.inputTitle,
-                    },
-                  }}
-                  id="searchBox"
-                  placeholder="Search by message..."
-                  autoFocus={this.state.openDiag ? true : false}
-                  className={classes.input}
-                  onChange={() =>
-                    this.handleSearch(
-                      document.getElementById("searchBox").value
-                    )
-                  }
-                />
-                <IconButton
-                  className={classes.iconButton}
-                  color="primary"
-                  aria-label="search"
-                  onClick={() =>
-                    this.handleSearch(
-                      document.getElementById("searchBox").value
-                    )
-                  }
-                >
-                  <SearchIcon />
-                </IconButton>
-              </Paper>
-            </DialogTitle>
-            <DialogContent>
-              <Grid container alignItems="center">
-                <PostsList
-                  posts={this.props.posts}
-                  filteredData={this.state.filteredData}
-                  setActivePost={this.setActivePost}
-                />
-              </Grid>
-            </DialogContent>
-            <DialogActions>
-              <Grid container justify="center">
-                <ReactPaginate
-                  previousLabel={"previous"}
-                  nextLabel={"next"}
-                  breakLabel={"..."}
-                  breakClassName={"break-me"}
-                  pageCount={this.state.pageCount}
-                  marginPagesDisplayed={2}
-                  pageRangeDisplayed={5}
-                  onPageChange={this.handlePageClick}
-                  containerClassName={"pagination"}
-                  subContainerClassName={"pages pagination"}
-                  activeClassName={"active"}
-                />
-              </Grid>
-              <Button
-                autoFocus
-                variant="contained"
-                onClick={() => this.handleOpenDialogue(false)}
-                style={{
-                  float: "right",
-                  backgroundColor: "#f0eded",
-                  width: 70,
-                  borderRadius: 5,
-                  color: "#555d66",
-                  fontSize: 11,
-                }}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="contained"
-                onClick={() => this.handleSave(this.props.posts)}
-                style={{
-                  float: "right",
-                  backgroundColor: "#0074aa",
-                  width: 70,
-                  borderRadius: 5,
-                  color: "white",
-                  fontSize: 11,
-                }}
-              >
-                Save
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Grid>
-
-        <Grid item xs={12} style={{ marginTop: 40 }}>
-          <RadioGroup
-            value={site.showDetailSetting.showPostMode}
-            onChange={this.handleSetPostMode}
-            style={{ color: "#555d66", fontFamily: "Segoe UI, sans-serif" }}
-          >
-            <FormControlLabel
-              value={0}
-              control={<Radio style={{ color: "#0074aa" }} />}
-              label={<p style={{ fontSize: 13 }}>Show all</p>}
-            />
-            <FormControlLabel
-              value={1}
-              control={<Radio style={{ color: "#0074aa" }} />}
-              label={
-                <p style={{ fontSize: 13 }}>Show only posts with photo(s)</p>
-              }
-            />
-            <FormControlLabel
-              value={2}
-              control={<Radio style={{ color: "#0074aa" }} />}
-              label={<p style={{ fontSize: 13 }}>Show only posts with video</p>}
-            />
-            <FormControlLabel
-              value={3}
-              control={<Radio style={{ color: "#0074aa" }} />}
-              label={<p style={{ fontSize: 13 }}>Show only text posts</p>}
-            />
-          </RadioGroup>
-        </Grid>
-
-        <Divider
-          style={{ height: 10, width: "100%", backgroundColor: "#ffffff00" }}
-        />
-        <Typography className={classes.title}>Pages</Typography>
-        <Divider
-          style={{
-            height: "1.2rem",
-            width: "100%",
-            backgroundColor: "#ffffff00",
-          }}
-        />
-
-        <Grid
-          item
-          style={{
-            color: "#555d66",
-            textAlign: "left",
-            fontStyle: "italic",
-            fontFamily: "Segoe UI, sans-serif",
-            marginBottom: "0.8rem",
-          }}
+        <ExpansionPanel
+          expanded={
+            this.state.currentExpandItem === "t1" && this.state.isExpanding
+              ? true
+              : false
+          }
+          className={classes.gridItem}
         >
-          Reorder or hide pages of your menu.
-        </Grid>
-        <SortableList
-          items={site.navItems}
-          onSortEnd={this.onChangeItem}
-          useDragHandle
-          site={site}
-          setActiveNavItems={setActiveNavItems}
-          updateNavItemValue={updateNavItemValue}
-          changeNavItemName={changeNavItemName}
-          classes={classes}
-        />
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            onClick={() => this.onChangePanel("t1", !this.state.isExpanding)}
+            aria-controls="panel1a-content"
+            style={{ backgroundColor: "white" }}
+          >
+            <Grid item xs={10} md={10} sm={12}>
+              <Typography className={classes.title}>About Design</Typography>
+            </Grid>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Grid container>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      style={{ color: "#0074aa" }}
+                      checked={!site.showDetailSetting.showAboutLogo}
+                      onChange={() =>
+                        setAboutCustomize(
+                          !site.showDetailSetting.showAboutLogo,
+                          site.showDetailSetting.showAboutDescription,
+                          site.showDetailSetting.showStory
+                        )
+                      }
+                    />
+                  }
+                  label={
+                    <p style={{ fontSize: 13, color: "#555d66" }}>
+                      Hide site logo
+                    </p>
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      style={{ color: "#0074aa" }}
+                      checked={!site.showDetailSetting.showAboutDescription}
+                      onChange={() =>
+                        setAboutCustomize(
+                          site.showDetailSetting.showAboutLogo,
+                          !site.showDetailSetting.showAboutDescription,
+                          site.showDetailSetting.showStory
+                        )
+                      }
+                    />
+                  }
+                  label={
+                    <p style={{ fontSize: 13, color: "#555d66" }}>
+                      Hide introduction
+                    </p>
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      style={{ color: "#0074aa" }}
+                      checked={!site.showDetailSetting.showStory}
+                      onChange={() =>
+                        setAboutCustomize(
+                          site.showDetailSetting.showAboutLogo,
+                          site.showDetailSetting.showAboutDescription,
+                          !site.showDetailSetting.showStory
+                        )
+                      }
+                    />
+                  }
+                  label={
+                    <p style={{ fontSize: 13, color: "#555d66" }}>Hide story</p>
+                  }
+                />
+              </Grid>
+            </Grid>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+
+        <ExpansionPanel
+          expanded={
+            this.state.currentExpandItem === "t2" && this.state.isExpanding
+              ? true
+              : false
+          }
+          className={classes.gridItem}
+        >
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            onClick={() => this.onChangePanel("t2", !this.state.isExpanding)}
+            aria-controls="panel1a-content"
+            style={{ backgroundColor: "white" }}
+          >
+            <Grid item xs={10} md={10} sm={12}>
+              <Typography className={classes.title}>Event Design</Typography>
+            </Grid>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Grid container>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      style={{ color: "#0074aa" }}
+                      checked={!site.showDetailSetting.showCoverEvent}
+                      onChange={() =>
+                        setEventCustomize(
+                          !site.showDetailSetting.showCoverEvent,
+                          site.showDetailSetting.showDesEvent,
+                          site.showDetailSetting.showPlaceEvent
+                        )
+                      }
+                    />
+                  }
+                  label={
+                    <p style={{ fontSize: 13, color: "#555d66" }}>
+                      Hide event cover
+                    </p>
+                  }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      style={{ color: "#0074aa" }}
+                      checked={!site.showDetailSetting.showDesEvent}
+                      onChange={() =>
+                        setEventCustomize(
+                          site.showDetailSetting.showCoverEvent,
+                          !site.showDetailSetting.showDesEvent,
+                          site.showDetailSetting.showPlaceEvent
+                        )
+                      }
+                    />
+                  }
+                  label={
+                    <p style={{ fontSize: 13, color: "#555d66" }}>
+                      Hide event description
+                    </p>
+                  }
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      style={{ color: "#0074aa" }}
+                      checked={!site.showDetailSetting.showPlaceEvent}
+                      onChange={() =>
+                        setEventCustomize(
+                          site.showDetailSetting.showCoverEvent,
+                          site.showDetailSetting.showDesEvent,
+                          !site.showDetailSetting.showPlaceEvent
+                        )
+                      }
+                    />
+                  }
+                  label={
+                    <p style={{ fontSize: 13, color: "#555d66" }}>
+                      Hide event place
+                    </p>
+                  }
+                />
+              </Grid>
+            </Grid>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+
+        <ExpansionPanel
+          expanded={
+            this.state.currentExpandItem === "t3" && this.state.isExpanding
+              ? true
+              : false
+          }
+          className={classes.gridItem}
+        >
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            onClick={() => this.onChangePanel("t3", !this.state.isExpanding)}
+            aria-controls="panel1a-content"
+            style={{ backgroundColor: "white" }}
+          >
+            <Grid item xs={10} md={10} sm={12}>
+              <Typography className={classes.title}>Facebook Posts</Typography>
+            </Grid>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Grid container>
+              <Grid item container xs={12} justify={"center"}>
+                <Grid
+                  item
+                  xs={12}
+                  style={{
+                    color: "#555d66",
+                    textAlign: "left",
+                    fontStyle: "italic",
+                    fontFamily: "Segoe UI, sans-serif",
+                  }}
+                >
+                  Select which post from Facebook you want to see on your site.
+                </Grid>
+
+                <Grid item xs={12}>
+                  <button
+                    className={classes.logoButton}
+                    color={"default"}
+                    onClick={() => this.handleOpenDialogue(true)}
+                  >
+                    Select
+                  </button>
+                </Grid>
+
+                <Dialog
+                  disableBackdropClick
+                  disableEscapeKeyDown
+                  open={this.state.openDiag}
+                  maxWidth="md"
+                  fullWidth
+                >
+                  <DialogTitle>
+                    <Paper component="form" className={classes.root}>
+                      <InputBase
+                        InputLabelProps={{
+                          classes: {
+                            focused: classes.focused,
+                          },
+                        }}
+                        maxLength={50}
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline,
+                            input: classes.inputTitle,
+                          },
+                        }}
+                        id="searchBox"
+                        placeholder="Search by message..."
+                        autoFocus={this.state.openDiag ? true : false}
+                        className={classes.input}
+                        onChange={() =>
+                          this.handleSearch(
+                            document.getElementById("searchBox").value
+                          )
+                        }
+                      />
+                      <IconButton
+                        className={classes.iconButton}
+                        color="primary"
+                        aria-label="search"
+                        onClick={() =>
+                          this.handleSearch(
+                            document.getElementById("searchBox").value
+                          )
+                        }
+                      >
+                        <SearchIcon />
+                      </IconButton>
+                    </Paper>
+                  </DialogTitle>
+                  <DialogContent>
+                    <Grid container alignItems="center">
+                      <PostsList
+                        posts={this.props.posts}
+                        filteredData={this.state.filteredData}
+                        setActivePost={this.setActivePost}
+                      />
+                    </Grid>
+                  </DialogContent>
+                  <DialogActions>
+                    <Grid container justify="center">
+                      <ReactPaginate
+                        previousLabel={"previous"}
+                        nextLabel={"next"}
+                        breakLabel={"..."}
+                        breakClassName={"break-me"}
+                        pageCount={this.state.pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={5}
+                        onPageChange={this.handlePageClick}
+                        containerClassName={"pagination"}
+                        subContainerClassName={"pages pagination"}
+                        activeClassName={"active"}
+                      />
+                    </Grid>
+                    <Button
+                      autoFocus
+                      variant="contained"
+                      onClick={() => this.handleOpenDialogue(false)}
+                      style={{
+                        float: "right",
+                        backgroundColor: "#f0eded",
+                        width: 70,
+                        borderRadius: 5,
+                        color: "#555d66",
+                        fontSize: 11,
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      variant="contained"
+                      onClick={() => this.handleSave(this.props.posts)}
+                      style={{
+                        float: "right",
+                        backgroundColor: "#0074aa",
+                        width: 70,
+                        borderRadius: 5,
+                        color: "white",
+                        fontSize: 11,
+                      }}
+                    >
+                      Save
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </Grid>
+
+              <Grid item xs={12} style={{ marginTop: 40 }}>
+                <RadioGroup
+                  value={site.showDetailSetting.showPostMode}
+                  onChange={this.handleSetPostMode}
+                  style={{
+                    color: "#555d66",
+                    fontFamily: "Segoe UI, sans-serif",
+                  }}
+                >
+                  <FormControlLabel
+                    value={0}
+                    control={<Radio style={{ color: "#0074aa" }} />}
+                    label={<p style={{ fontSize: 13 }}>Show all</p>}
+                  />
+                  <FormControlLabel
+                    value={1}
+                    control={<Radio style={{ color: "#0074aa" }} />}
+                    label={
+                      <p style={{ fontSize: 13 }}>
+                        Show only posts with photo(s)
+                      </p>
+                    }
+                  />
+                  <FormControlLabel
+                    value={2}
+                    control={<Radio style={{ color: "#0074aa" }} />}
+                    label={
+                      <p style={{ fontSize: 13 }}>Show only posts with video</p>
+                    }
+                  />
+                  <FormControlLabel
+                    value={3}
+                    control={<Radio style={{ color: "#0074aa" }} />}
+                    label={<p style={{ fontSize: 13 }}>Show only text posts</p>}
+                  />
+                </RadioGroup>
+              </Grid>
+            </Grid>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+
+        <ExpansionPanel
+          expanded={
+            this.state.currentExpandItem === "t4" && this.state.isExpanding
+              ? true
+              : false
+          }
+          className={classes.gridItem}
+        >
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            onClick={() => this.onChangePanel("t4", !this.state.isExpanding)}
+            aria-controls="panel1a-content"
+            style={{ backgroundColor: "white" }}
+          >
+            <Grid item xs={10} md={10} sm={12}>
+              <Typography className={classes.title}>Paginate</Typography>
+            </Grid>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Grid container>
+              <Grid container item xs={12} style={{ marginBottom: 30 }}>
+                <Grid item xs={6}>
+                  <p style={{ fontSize: 13, color: "#555d66" }}>
+                    Set posts per page
+                  </p>
+                </Grid>
+                <Grid
+                  item
+                  lg={2}
+                  md={4}
+                  xs={4}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <InputBase
+                    type="number"
+                    inputProps={{
+                      maxLength: 2,
+                      style: {
+                        border: "1px solid rgb(0, 116, 170)",
+                        borderRadius: "4px",
+                        backgroundColor: "white",
+                        padding: "6px",
+                      },
+                    }}
+                    style={{ minWidth: 30 }}
+                    value={this.props.site.limitNews}
+                    onChange={this.handleSetLimit(0)}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container item xs={12} style={{ marginBottom: 30 }}>
+                <Grid item xs={6}>
+                  <p style={{ fontSize: 13, color: "#555d66" }}>
+                    Set events per page
+                  </p>
+                </Grid>
+                <Grid
+                  item
+                  lg={2}
+                  md={4}
+                  xs={4}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <InputBase
+                    type="number"
+                    inputProps={{
+                      maxLength: 2,
+                      style: {
+                        border: "1px solid rgb(0, 116, 170)",
+                        borderRadius: "4px",
+                        backgroundColor: "white",
+                        padding: "6px",
+                      },
+                    }}
+                    style={{ minWidth: 30 }}
+                    value={this.props.site.limitEvent}
+                    onChange={this.handleSetLimit(1)}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container item xs={12} style={{ marginBottom: 30 }}>
+                <Grid item xs={6}>
+                  <p style={{ fontSize: 13, color: "#555d66" }}>
+                    Set photos per page
+                  </p>
+                </Grid>
+                <Grid
+                  item
+                  lg={2}
+                  md={4}
+                  xs={4}
+                  style={{ display: "flex", alignItems: "center" }}
+                >
+                  <InputBase
+                    type="number"
+                    inputProps={{
+                      maxLength: 2,
+                      style: {
+                        border: "1px solid rgb(0, 116, 170)",
+                        borderRadius: "4px",
+                        backgroundColor: "white",
+                        padding: "6px",
+                      },
+                    }}
+                    style={{ minWidth: 30 }}
+                    value={this.props.site.limitGallery}
+                    onChange={this.handleSetLimit(2)}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
+
+        <ExpansionPanel
+          expanded={
+            this.state.currentExpandItem === "t5" && this.state.isExpanding
+              ? true
+              : false
+          }
+          className={classes.gridItem}
+        >
+          <ExpansionPanelSummary
+            expandIcon={<ExpandMoreIcon />}
+            onClick={() => this.onChangePanel("t5", !this.state.isExpanding)}
+            aria-controls="panel1a-content"
+            style={{ backgroundColor: "white" }}
+          >
+            <Grid item xs={10} md={10} sm={12}>
+              <Typography className={classes.title}>Navigation</Typography>
+            </Grid>
+          </ExpansionPanelSummary>
+          <ExpansionPanelDetails>
+            <Grid container>
+              <Grid
+                item
+                xs={12}
+                style={{
+                  color: "#555d66",
+                  textAlign: "left",
+                  fontStyle: "italic",
+                  fontFamily: "Segoe UI, sans-serif",
+                  marginBottom: "0.8rem",
+                }}
+              >
+                Reorder or hide pages of your site.
+              </Grid>
+              <Grid item xs={12}>
+                <SortableList
+                  items={site.navItems}
+                  onSortEnd={this.onChangeItem}
+                  useDragHandle
+                  site={site}
+                  setActiveNavItems={setActiveNavItems}
+                  updateNavItemValue={updateNavItemValue}
+                  changeNavItemName={changeNavItemName}
+                  classes={classes}
+                />
+              </Grid>
+            </Grid>
+          </ExpansionPanelDetails>
+        </ExpansionPanel>
 
         <Divider
           style={{
@@ -907,102 +1104,6 @@ class PagesEditorTab extends React.Component {
             marginTop: 30,
           }}
         />
-        <Typography className={classes.title}>Paging</Typography>
-        <Divider
-          style={{
-            height: "1.2rem",
-            width: "100%",
-            backgroundColor: "#ffffff00",
-          }}
-        />
-        <Grid container style={{ marginBottom: 30 }}>
-          <Grid item xs={6}>
-            <p style={{ fontSize: 13, color: "#555d66" }}>Set posts per page</p>
-          </Grid>
-          <Grid
-            item
-            lg={2}
-            md={4}
-            xs={4}
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <InputBase
-              type="number"
-              inputProps={{
-                maxLength: 2,
-                style: {
-                  border: "1px solid rgb(0, 116, 170)",
-                  borderRadius: "4px",
-                  backgroundColor: "white",
-                  padding: "6px",
-                },
-              }}
-              style={{ minWidth: 30 }}
-              value={this.props.site.limitNews}
-              onChange={this.handleSetLimit(0)}
-            />
-          </Grid>
-        </Grid>
-        <Grid container style={{ marginBottom: 30 }}>
-          <Grid item xs={6}>
-            <p style={{ fontSize: 13, color: "#555d66" }}>
-              Set events per page
-            </p>
-          </Grid>
-          <Grid
-            item
-            lg={2}
-            md={4}
-            xs={4}
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <InputBase
-              type="number"
-              inputProps={{
-                maxLength: 2,
-                style: {
-                  border: "1px solid rgb(0, 116, 170)",
-                  borderRadius: "4px",
-                  backgroundColor: "white",
-                  padding: "6px",
-                },
-              }}
-              style={{ minWidth: 30 }}
-              value={this.props.site.limitEvent}
-              onChange={this.handleSetLimit(1)}
-            />
-          </Grid>
-        </Grid>
-        <Grid container style={{ marginBottom: 30 }}>
-          <Grid item xs={6}>
-            <p style={{ fontSize: 13, color: "#555d66" }}>
-              Set photos per page
-            </p>
-          </Grid>
-          <Grid
-            item
-            lg={2}
-            md={4}
-            xs={4}
-            style={{ display: "flex", alignItems: "center" }}
-          >
-            <InputBase
-              type="number"
-              inputProps={{
-                maxLength: 2,
-                style: {
-                  border: "1px solid rgb(0, 116, 170)",
-                  borderRadius: "4px",
-                  backgroundColor: "white",
-                  padding: "6px",
-                },
-              }}
-              style={{ minWidth: 30 }}
-              value={this.props.site.limitGallery}
-              onChange={this.handleSetLimit(2)}
-            />
-          </Grid>
-        </Grid>
       </div>
     );
   }
