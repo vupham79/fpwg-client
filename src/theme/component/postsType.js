@@ -309,7 +309,7 @@ class PostTypeComponent extends React.Component {
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
-                    borderRadius: altType ? "0.4rem" : 0
+                    borderRadius: altType ? "0.4rem 0.4rem 0 0" : 0
                   }}
                   image={post.attachments.images[0]}
                 />
