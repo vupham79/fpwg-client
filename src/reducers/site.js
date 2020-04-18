@@ -175,6 +175,9 @@ const SiteReducer = (state = defaultState, action) => {
           fontFamily: action.payload.fontTitle,
           color: action.payload.mainColor,
         },
+        bodyEdit: {
+          fontFamily: action.payload.fontBody,
+        },
         isChanged: true,
       };
     case "SET_LOGOUT":
