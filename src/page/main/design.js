@@ -80,7 +80,7 @@ class Design extends Component {
               item
               xs={2}
               className={classes.numberSite}
-              style={{ color: "#fff", fontSize: "15px" }}
+              style={{ color: "#fff", fontSize: "14px", fontWeight: "bold" }}
             >
               {sites.length}
             </Grid>
@@ -88,12 +88,18 @@ class Design extends Component {
               container
               item
               xs={10}
-              style={{ padding: "0 1rem", color: "#fff", fontSize: "15px" }}
+              style={{
+                padding: "0 1rem",
+                color: "#fff",
+                fontSize: "14px",
+                // textTransform: "uppercase",
+                fontWeight: "bold",
+              }}
               className={"mainFont"}
             >
-              <Grid item xs={12}>
-                My Generated Sites
-              </Grid>
+              {/* <Grid item xs={12}> */}
+              My Generated Sites
+              {/* </Grid> */}
             </Grid>
           </Grid>
         </ListItem>
@@ -163,7 +169,7 @@ class Design extends Component {
               item
               xs={12}
               className={"mainFont"}
-              style={{ color: "#fff", fontSize: "15px" }}
+              style={{ color: "#fff", fontSize: "14px" }}
             >
               {item.title}
             </Grid>
@@ -172,7 +178,7 @@ class Design extends Component {
               xs={12}
               className={"mainFont"}
               style={{
-                fontSize: "12px",
+                fontSize: "11px",
                 overflow: "hidden",
                 color: "#fff",
                 textOverflow: "ellipsis",

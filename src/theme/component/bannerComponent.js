@@ -15,18 +15,16 @@ class BannerComponent extends React.Component {
             return <img src={URL.createObjectURL(cover)} alt="" key={index} />;
           } else return <img src={cover} alt="" key={index} />;
         });
-      }
-      else {
-        return <img src="/images/theme1-banner1.jpg" alt="" />
+      } else {
+        return <img src="/images/theme1-banner1.jpg" alt="" />;
       }
     } else {
       if (siteView.cover && siteView.cover.length > 0) {
         return siteView.cover.map((cover, i) => (
           <img src={cover} alt="" key={i} />
         ));
-      }
-      else {
-        return <img src="/images/theme1-banner1.jpg" alt="" />
+      } else {
+        return <img src="/images/theme1-banner1.jpg" alt="" />;
       }
     }
   };
@@ -201,21 +199,21 @@ class BannerComponent extends React.Component {
         {isEdit && newCover && newCover.length === 0 ? (
           <div></div>
         ) : (
-            <Grid item xs={12}>
-              <Carousel
-                autoPlay
-                infiniteLoop
-                centerMode={false}
-                showArrows={false}
-                showIndicators={false}
-                dynamicHeight={false}
-                showStatus={false}
-                showThumbs={false}
-              >
-                {this.renderNewCoversCarouselWithTitle()}
-              </Carousel>
-            </Grid>
-          )}
+          <Grid item xs={12}>
+            <Carousel
+              autoPlay
+              infiniteLoop
+              centerMode={false}
+              showArrows={false}
+              showIndicators={false}
+              dynamicHeight={false}
+              showStatus={false}
+              showThumbs={false}
+            >
+              {this.renderNewCoversCarouselWithTitle()}
+            </Carousel>
+          </Grid>
+        )}
       </React.Fragment>
     );
   };

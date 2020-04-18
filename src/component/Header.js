@@ -91,11 +91,11 @@ const ButtonCreate = withStyles((theme) => ({
 
 const useStyle = (theme) => ({
   root: {
-    background: "#121212",
+    background: "#212121",
     height: "11vh",
   },
   btnLink: {
-    background: "#121212",
+    background: "#212121",
     [theme.breakpoints.up("sm")]: {
       minWidth: "22vh",
     },
@@ -409,7 +409,7 @@ class CustomNavBarEditor extends React.Component {
                   className={"mainFont"}
                   style={{
                     color: "#fff",
-                    fontSize: "16px",
+                    fontSize: "14px",
                   }}
                 >
                   Create New Site
