@@ -48,7 +48,7 @@ const useStyles = (theme) => ({
     backgroundColor: "#f0eded",
   },
   gridItems: {
-    marginTop: "1rem",
+    // marginTop: "1rem",
   },
 });
 
