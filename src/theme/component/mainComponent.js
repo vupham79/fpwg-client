@@ -7,7 +7,7 @@ export default function AccordionButton({
   comp,
   label,
   currentNav,
-  setNav
+  setNav,
 }) {
   const [onHover, setHover] = useState(false);
 
@@ -18,6 +18,7 @@ export default function AccordionButton({
         onMouseLeave={() => setHover(false)}
         onClick={() => setNav(true, label)}
         style={{
+          fontFamily: "Roboto, sans-serif",
           width: "100%",
           border: "1px solid",
           borderLeft: onHover ? "4px solid" : "none",
@@ -25,7 +26,7 @@ export default function AccordionButton({
           backgroundColor: onHover ? "#f7f5f5" : "white",
           display: isNav ? "none" : "block",
           transition:
-            ".15s color ease-in-out,.15s background-color ease-in-out,.15s border-color ease-in-out"
+            ".15s color ease-in-out,.15s background-color ease-in-out,.15s border-color ease-in-out",
         }}
       >
         <h3
@@ -33,7 +34,7 @@ export default function AccordionButton({
             color: onHover ? "#0074aa" : "#565d66",
             fontSize: 14,
             textAlign: "left",
-            marginLeft: 2
+            marginLeft: 2,
           }}
         >
           {label}

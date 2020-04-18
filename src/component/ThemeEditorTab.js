@@ -2,64 +2,59 @@ import { withStyles } from "@material-ui/core/styles";
 import React from "react";
 import { connect } from "react-redux";
 import { changeTheme, updateNavItemValue } from "../actions";
-import {
-  Grid,
-  Card,
-  CardActionArea,
-  CardMedia,
-} from "@material-ui/core";
+import { Grid, Card, CardActionArea, CardMedia } from "@material-ui/core";
 import CategoryPicker from "./CategoryPicker";
 
-const useStyles = theme => ({
+const useStyles = (theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    paddingTop: 90
+    paddingTop: 90,
   },
   title: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(1),
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   title2: {
     marginBottom: theme.spacing(1),
     fontWeight: "bold",
-    fontSize: 12
+    fontSize: 12,
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 400
+    minWidth: 400,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
+    marginTop: theme.spacing(2),
   },
   sideBarBox: {
     borderStyle: "solid",
     borderRadius: 10,
     borderWidth: 1,
     borderColor: "#2a2e2a",
-    padding: "1rem"
+    padding: "1rem",
   },
   notchedOutline: {
     borderWidth: "1px",
     borderColor: "#434d58 !important",
-    color: "#434d58 !important"
+    color: "#434d58 !important",
   },
   focused: {
     borderWidth: "1px",
     borderColor: "#434d58 !important",
-    color: "#434d58 !important"
+    color: "#434d58 !important",
   },
   pickerButton: {
-    margin: 0
-  }
+    margin: 0,
+  },
 });
 
 class ThemeEditorTab extends React.Component {
   state = {
     id: this.props.site.theme._id,
     currentCategory: "All",
-    filteredData: []
+    filteredData: [],
   };
 
   componentDidMount() {
@@ -68,31 +63,31 @@ class ThemeEditorTab extends React.Component {
     });
   }
 
-  handleChangeCategory = category => {
+  handleChangeCategory = (category) => {
     this.setState({
-      currentCategory: category
+      currentCategory: category,
     });
     console.log(category);
     if (category === "All") {
       this.setState({
-        filteredData: this.props.themes
+        filteredData: this.props.themes,
       });
     } else {
       this.setState({
         filteredData: this.props.themes.filter(function (theme) {
           return theme.category.name === category;
-        })
+        }),
       });
     }
   };
 
-  handleChangeTheme = selectId => {
+  handleChangeTheme = (selectId) => {
     const { changeTheme, themes, site, updateNavItemValue } = this.props;
-    const theme = themes.find(e => e._id === selectId);
+    const theme = themes.find((e) => e._id === selectId);
     // site.theme = theme;
     // site.color = theme.mainColor;
     this.setState({
-      id: selectId
+      id: selectId,
     });
     changeTheme(theme);
 
@@ -115,8 +110,8 @@ class ThemeEditorTab extends React.Component {
             color: "#555d66",
             textAlign: "left",
             fontStyle: "italic",
-            fontFamily: "Segoe UI, sans-serif",
-            fontSize: 14
+            fontFamily: "Roboto, sans-serif",
+            fontSize: 14,
           }}
         >
           Describe your page.
@@ -135,9 +130,9 @@ class ThemeEditorTab extends React.Component {
             color: "#555d66",
             textAlign: "left",
             fontStyle: "italic",
-            fontFamily: "Segoe UI, sans-serif",
+            fontFamily: "Roboto, sans-serif",
             marginBottom: "2rem",
-            fontSize: 14
+            fontSize: 14,
           }}
         >
           Pick a theme for your website.
@@ -146,7 +141,12 @@ class ThemeEditorTab extends React.Component {
         <Grid container direction="column">
           {filteredData.map((theme) => {
             return (
-              <Grid key={theme._id} item sm={12} style={{ marginBottom: "1rem" }}>
+              <Grid
+                key={theme._id}
+                item
+                sm={12}
+                style={{ marginBottom: "1rem" }}
+              >
                 <Card
                   onClick={() => this.handleChangeTheme(theme._id)}
                   variant={"outlined"}
@@ -154,7 +154,7 @@ class ThemeEditorTab extends React.Component {
                     border:
                       theme._id === this.props.site.theme._id
                         ? "0.2rem solid #0074aa"
-                        : ""
+                        : "",
                   }}
                 >
                   <CardActionArea>
@@ -185,17 +185,17 @@ class ThemeEditorTab extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   themes: state.theme.data,
   isShow: state.theme.isShow,
   site: state.site.siteEdit,
   titleEdit: state.site.titleEdit,
-  categories: state.admin.categories
+  categories: state.admin.categories,
 });
 
-const mapDispatchToProps = dispatch => ({
-  changeTheme: site => dispatch(changeTheme(site)),
-  updateNavItemValue: value => dispatch(updateNavItemValue(value)),
+const mapDispatchToProps = (dispatch) => ({
+  changeTheme: (site) => dispatch(changeTheme(site)),
+  updateNavItemValue: (value) => dispatch(updateNavItemValue(value)),
 });
 
 export default connect(
