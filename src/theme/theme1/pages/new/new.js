@@ -86,6 +86,7 @@ class Theme1News extends React.Component {
             siteEdit && siteEdit.posts ? (
               <Grid container>
                 <PostTypeComponent
+                  altType
                   key={siteEdit.limitNews}
                   fromHome={fromHome}
                   posts={
@@ -136,6 +137,7 @@ class Theme1News extends React.Component {
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
+                altType
                 fromHome={fromHome}
                 posts={fromHome && homeList ? homeList : siteView.posts}
                 siteInfo={{

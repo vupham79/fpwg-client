@@ -93,6 +93,7 @@ const gridMessage = {
   WebkitBoxOrient: "vertical",
   // height: "100%",
   whiteSpace: "pre-wrap",
+  height: 242
 };
 
 function SampleNextArrow(props) {
@@ -110,7 +111,7 @@ function SampleNextArrow(props) {
     >
       <FontAwesomeIcon
         icon={faChevronRight}
-        color={dark ? "#fff" : "#000"}
+        color={dark ? "#fff" : "#535353"}
         size="2x"
       />
     </div>
@@ -132,7 +133,7 @@ function SamplePrevArrow(props) {
     >
       <FontAwesomeIcon
         icon={faChevronLeft}
-        color={dark ? "#fff" : "#000"}
+        color={dark ? "#fff" : "#535353"}
         size="2x"
       />
     </div>
@@ -205,6 +206,7 @@ class PostTypeComponent extends React.Component {
       titleView,
       bodyEdit,
       bodyView,
+      altType
     } = this.props;
     const { classes } = this.props;
     const txtStyle = {
@@ -218,10 +220,11 @@ class PostTypeComponent extends React.Component {
     const btnStyle = {
       padding: "0.5rem 1.5rem",
       fontSize: "11px",
-      border: `1px solid ${dark ? "#fff" : "#000"}`,
+      border: `1px solid ${dark ? "#fff" : "#a0a09f"}`,
       backgroundColor: dark ? "#1A1919" : "#fff",
-      color: dark ? "#fff" : "#000",
+      color: dark ? "#fff" : "#535353",
       height: "fit-content",
+      borderRadius: "0.4rem"
     };
     let show = true;
     if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
@@ -237,10 +240,11 @@ class PostTypeComponent extends React.Component {
           key={post._id}
           container={!fromHome}
           item={!fromHome}
-          xs={!fromHome && 10}
-          sm={!fromHome && 5}
-          md={!fromHome && 5}
-          lg={!fromHome && 3}
+          // xs={!fromHome && 10}
+          // sm={!fromHome && 5}
+          // md={!fromHome && 5}
+          // lg={!fromHome && 3}
+          onClick={(e) => altType && this.handleHomeClick(post)}
           style={
             dark
               ? {
@@ -248,14 +252,18 @@ class PostTypeComponent extends React.Component {
                 border: "1px solid #fff",
                 marginLeft: "1rem",
                 marginBottom: "1rem",
-                // borderRadius: "4px",
+                cursor: altType && "pointer",
+                borderRadius: "0.4rem",
+                width: 210
               }
               : {
                 backgroundColor: "#fff",
-                border: "1px solid #000",
+                border: "1px solid #a0a09f",
                 marginLeft: "1rem",
                 marginBottom: "1rem",
-                // borderRadius: "4px",
+                cursor: altType && "pointer",
+                borderRadius: "0.4rem",
+                width: 210
               }
           }
         >
@@ -264,8 +272,9 @@ class PostTypeComponent extends React.Component {
             item
             xs={12}
             style={{
-              padding: "1rem",
+              padding: 0,
               backgroundColor: dark ? "#1a1919" : "#fff",
+              borderRadius: "0.4rem",
             }}
           >
             <Grid
@@ -273,7 +282,9 @@ class PostTypeComponent extends React.Component {
               xs={12}
               style={
                 {
-                  // padding: "1rem 0"
+                  display: altType ? "none" : "block",
+                  borderRadius: "0.4rem",
+                  padding: "1rem"
                 }
               }
             >
@@ -283,7 +294,7 @@ class PostTypeComponent extends React.Component {
                   ...titleStyle,
                   fontWeight: "700",
                   fontSize: "16px",
-                  color: dark ? "#fff" : "#000",
+                  color: dark ? "#fff" : "#535353",
                 }}
               >
                 {moment(post.createdTime).format("MMMM DD, YYYY")}
@@ -292,18 +303,29 @@ class PostTypeComponent extends React.Component {
             <Grid item xs={12}>
               {type === "photo" && (
                 <CardMedia
-                  className={classes.cardView}
+                  style={{
+                    width: "100%",
+                    height: altType ? "115px" : "200px",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    borderRadius: altType ? "0.4rem" : 0
+                  }}
                   image={post.attachments.images[0]}
                 />
               )}
               {type === "video" && (
-                <ReactPlayer
-                  url={post && post.attachments && post.attachments.video}
-                  controls={true}
-                  style={{ objectFit: "unset" }}
-                  width="100%"
-                  height="30vh"
-                />
+                <div>
+                  <div style={{ height: 42, display: altType ? "none" : "block" }} />
+                  <ReactPlayer
+                    url={post && post.attachments && post.attachments.video}
+                    controls={true}
+                    style={{ objectFit: "cover" }}
+                    width="100%"
+                    height="116px"
+                  />
+                  <div style={{ height: 42, display: altType ? "none" : "block" }} />
+                </div>
               )}
               {type === "album" && (
                 <CardMedia
@@ -331,12 +353,21 @@ class PostTypeComponent extends React.Component {
               xs={12}
               style={{
                 ...txtStyle,
-                padding: "1rem 0",
+                padding: "1rem",
                 // height: "5rem",
-                color: dark ? "#fff" : "#000",
+                color: dark ? "#fff" : "#535353",
               }}
             >
-              <div style={gridContent}>{post.message}</div>
+              <div style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: "20",
+                WebkitBoxOrient: "vertical",
+                // height: "100%",
+                whiteSpace: "pre-wrap",
+                height: altType ? 242 : 100
+              }}>{post.message}</div>
             </Grid>
             <Grid
               container
@@ -345,6 +376,185 @@ class PostTypeComponent extends React.Component {
               justify="flex-start"
               alignItems="flex-end"
             >
+              <Grid item xs={12} style={{ display: altType ? "none" : "block", padding: "1rem" }}>
+                {isEdit ? (
+                  <ButtonComponent
+                    label="READ MORE"
+                    style={btnStyle}
+                    onClick={(e) => this.handleHomeClick(post)}
+                  />
+                ) : fromHome ? (
+                  <Link
+                    to={{
+                      pathname: `/${siteView.sitePath}/news`,
+                      postView: post,
+                    }}
+                  >
+                    <ButtonComponent label="READ MORE" style={btnStyle} />
+                  </Link>
+                ) : (
+                      <ButtonComponent
+                        onClick={() => this.handleOpen(post)}
+                        label="READ MORE"
+                        style={btnStyle}
+                      />
+                    )}
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                style={
+                  {
+                    display: altType ? "block" : "none",
+                    padding: "1rem",
+                    borderRadius: "0.4rem"
+                  }
+                }
+              >
+                <Typography
+                  variant={"body1"}
+                  style={{
+                    ...titleStyle,
+                    fontWeight: "400",
+                    fontSize: "12px",
+                    color: dark ? "#fff" : "#70757a",
+                  }}
+                >
+                  {moment(post.createdTime).format("MMMM DD, YYYY")}
+                </Typography>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      );
+    } else return <></>;
+  }
+
+  renderPostMessage(index, post, style, dark, type) {
+    const {
+      fromHome,
+      isEdit,
+      siteView,
+      bodyEdit,
+      bodyView,
+      titleEdit,
+      titleView,
+      altType
+    } = this.props;
+    const txtStyle = {
+      fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+      fontSize: "14px",
+    };
+    const titleStyle = {
+      fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
+      fontSize: "14px",
+    };
+    const btnStyle = {
+      padding: "0.5rem 1.5rem",
+      fontSize: "11px",
+      border: `1px solid ${dark ? "#fff" : "#a0a09f"}`,
+      backgroundColor: dark ? "#1A1919" : "#fff",
+      color: dark ? "#fff" : "#535353",
+      height: "fit-content",
+      borderRadius: "0.4rem"
+    };
+    return (
+      <Grid
+        key={post._id}
+        container={!fromHome}
+        item={!fromHome}
+        // xs={!fromHome && 10}
+        // sm={!fromHome && 5}
+        // md={!fromHome && 5}
+        // lg={!fromHome && 3}
+        onClick={(e) => altType && this.handleHomeClick(post)}
+        style={
+          dark
+            ? {
+              backgroundColor: "#1a1919",
+              border: "1px solid #fff",
+              marginLeft: "1rem",
+              marginBottom: "1rem",
+              cursor: altType && "pointer",
+              borderRadius: "0.4rem",
+              width: 210,
+              padding: 0
+            }
+            : {
+              backgroundColor: "#fff",
+              border: "1px solid #a0a09f",
+              marginLeft: "1rem",
+              marginBottom: "1rem",
+              cursor: altType && "pointer",
+              borderRadius: "0.4rem",
+              width: 210,
+              padding: 0
+            }
+        }
+      >
+        <Grid
+          container
+          item
+          xs={12}
+          style={{
+            padding: 0,
+            backgroundColor: dark ? "#1a1919" : "#fff",
+            borderRadius: "0.4rem",
+          }}
+        >
+          <Grid
+            item
+            xs={12}
+            style={
+              {
+                display: altType ? "none" : "block",
+                borderRadius: "0.4rem",
+                padding: "1rem"
+              }
+            }
+          >
+            <Typography
+              variant={"body1"}
+              style={{
+                ...titleStyle,
+                fontWeight: "700",
+                fontSize: "16px",
+                color: dark ? "#fff" : "#535353",
+              }}
+            >
+              {moment(post.createdTime).format("MMMM DD, YYYY")}
+            </Typography>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            style={{
+              ...txtStyle,
+              // padding: "0 !important",
+              // height: "43vh",
+              padding: "1rem",
+              color: dark ? "#fff" : "#535353",
+            }}
+          >
+            <div style={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: "20",
+              WebkitBoxOrient: "vertical",
+              // height: "100%",
+              whiteSpace: "pre-wrap",
+              height: altType ? 357 : 300
+            }}>{post.message}</div>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={12}
+            justify="flex-start"
+            alignItems="flex-end"
+          >
+            <Grid item xs={12} style={{ display: altType ? "none" : "block", padding: "1rem" }}>
               {isEdit ? (
                 <ButtonComponent
                   label="READ MORE"
@@ -368,137 +578,29 @@ class PostTypeComponent extends React.Component {
                     />
                   )}
             </Grid>
-          </Grid>
-        </Grid>
-      );
-    } else return <></>;
-  }
-
-  renderPostMessage(index, post, style, dark, type) {
-    const {
-      fromHome,
-      isEdit,
-      siteView,
-      bodyEdit,
-      bodyView,
-      titleEdit,
-      titleView,
-    } = this.props;
-    const txtStyle = {
-      fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-      fontSize: "14px",
-    };
-    const titleStyle = {
-      fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-      fontSize: "14px",
-    };
-    const btnStyle = {
-      padding: "0.5rem 1.5rem",
-      fontSize: "11px",
-      border: `1px solid ${dark ? "#fff" : "#000"}`,
-      backgroundColor: dark ? "#1A1919" : "#fff",
-      color: dark ? "#fff" : "#000",
-      height: "fit-content",
-    };
-    return (
-      <Grid
-        key={post._id}
-        container={!fromHome}
-        item={!fromHome}
-        xs={!fromHome && 10}
-        sm={!fromHome && 5}
-        md={!fromHome && 5}
-        lg={!fromHome && 3}
-        style={
-          dark
-            ? {
-              backgroundColor: "#1a1919",
-              border: "1px solid #fff",
-              marginLeft: "1rem",
-              marginBottom: "1rem",
-              padding: "1rem",
-              // borderRadius: "4px",
-            }
-            : {
-              backgroundColor: "#fff",
-              border: "1px solid #000",
-              marginLeft: "1rem",
-              marginBottom: "1rem",
-              // borderRadius: "4px",
-              padding: "1rem",
-            }
-        }
-      >
-        <Grid
-          container
-          item
-          xs={12}
-          style={{
-            // padding: "0.5rem",
-            backgroundColor: "white",
-            borderRadius: "0.4rem",
-          }}
-        >
-          <Grid
-            item
-            xs={12}
-            style={
-              {
-                // padding: "1rem 0"
+            <Grid
+              item
+              xs={12}
+              style={
+                {
+                  display: altType ? "block" : "none",
+                  padding: "1rem",
+                  borderRadius: "0.4rem"
+                }
               }
-            }
-          >
-            <Typography
-              variant={"body1"}
-              style={{
-                ...titleStyle,
-                fontWeight: "700",
-                fontSize: "16px",
-              }}
             >
-              {moment(post.createdTime).format("MMMM DD,YYYY")}
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            style={{
-              ...txtStyle,
-              // padding: "0 !important",
-              // height: "43vh",
-            }}
-          >
-            <div style={gridMessage}>{post.message}</div>
-          </Grid>
-          <Grid
-            container
-            item
-            xs={12}
-            justify="flex-start"
-            alignItems="flex-end"
-          >
-            {isEdit ? (
-              <ButtonComponent
-                label="READ MORE"
-                style={btnStyle}
-                onClick={(e) => this.handleHomeClick(post)}
-              />
-            ) : fromHome ? (
-              <Link
-                to={{
-                  pathname: `/${siteView.sitePath}/news`,
-                  postView: post,
+              <Typography
+                variant={"body1"}
+                style={{
+                  ...titleStyle,
+                  fontWeight: "400",
+                  fontSize: "12px",
+                  color: dark ? "#fff" : "#70757a",
                 }}
               >
-                <ButtonComponent label="READ MORE" style={btnStyle} />
-              </Link>
-            ) : (
-                  <ButtonComponent
-                    onClick={() => this.handleOpen(post)}
-                    label="READ MORE"
-                    style={btnStyle}
-                  />
-                )}
+                {moment(post.createdTime).format("MMMM DD, YYYY")}
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>
@@ -668,7 +770,7 @@ class PostTypeComponent extends React.Component {
           xs={12}
           style={{
             padding: "1rem 0",
-            borderBottom: `1px solid ${!dark || bgWhite ? "black" : "white"}`,
+            borderBottom: `1px solid ${!dark || bgWhite ? "#535353" : "white"}`,
           }}
           alignItems="center"
         >
@@ -677,7 +779,7 @@ class PostTypeComponent extends React.Component {
             startIcon={<KeyboardArrowLeftIcon />}
             style={{
               fontWeight: "bold",
-              color: dark || !bgWhite ? "#fff" : "#000",
+              color: dark || !bgWhite ? "#fff" : "#535353",
               fontSize: "15px",
             }}
           >
@@ -805,7 +907,7 @@ class PostTypeComponent extends React.Component {
               width: "100%",
               // marginBottom: "30vh",
               // backgroundColor: "white",
-              color: dark ? "#fff" : "#000",
+              color: dark ? "#fff" : "#535353",
               fontSize: "1.5rem",
               display: "flex",
               justifyContent: "center",
@@ -821,7 +923,7 @@ class PostTypeComponent extends React.Component {
           xs={12}
           justify="center"
           style={{
-            borderTop: `1px solid ${!dark || bgWhite ? "black" : "white"}`,
+            borderTop: `1px solid ${!dark || bgWhite ? "#535353" : "white"}`,
           }}
         >
           <Grid
@@ -835,7 +937,7 @@ class PostTypeComponent extends React.Component {
               variant="h6"
               style={{
                 textAlign: "center",
-                color: dark || !bgWhite ? "#fff" : "#000",
+                color: dark || !bgWhite ? "#fff" : "#535353",
                 fontWeight: "bold",
               }}
             >
