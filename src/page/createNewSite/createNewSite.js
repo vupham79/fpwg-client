@@ -23,6 +23,46 @@ const useStyle = (theme) => ({
   textField: {
     padding: "2px !important",
   },
+  secondary: {
+    color: "#fff",
+  },
+  primary: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  inputRoot: {
+    position: "relative",
+    "& $notchedOutline": {
+      borderColor: "rgba(0, 0, 0, 0.23)",
+    },
+    "&:hover:not($disabled):not($focused):not($error) $notchedOutline": {
+      borderColor: "#4A90E2",
+      // Reset on touch devices, it doesn't add specificity
+      "@media (hover: none)": {
+        borderColor: "rgba(0, 0, 0, 0.23)",
+      },
+    },
+    "&$focused $notchedOutline": {
+      borderColor: "#4A90E2",
+      borderWidth: 1,
+    },
+  },
+  containerLeft: {
+    borderTopLeftRadius: "16px",
+    borderBottomLeftRadius: "16px",
+    [theme.breakpoints.up("sm")]: {
+      borderTopLeftRadius: "16px",
+      borderBottomLeftRadius: "0px",
+    },
+  },
+  containerRight: {
+    borderTopRightRadius: "16px",
+    borderBottomRightRadius: "16px",
+    [theme.breakpoints.up("sm")]: {
+      borderTopRightRadius: "80px",
+      borderBottomRightRadius: "80px",
+    },
+  },
 });
 
 class createNewSite extends Component {
@@ -101,7 +141,7 @@ class createNewSite extends Component {
   };
 
   renderPagesNotGenerated = () => {
-    const { pages, sites } = this.props;
+    const { pages, sites, classes } = this.props;
     let nonGenerated = pages && pages.map((page) => page.id);
     let index = -1;
     sites.forEach((site) => {
@@ -136,6 +176,10 @@ class createNewSite extends Component {
                     <ListItemText
                       primary={page.name}
                       secondary={page.category}
+                      classes={{
+                        primary: classes.primary,
+                        secondary: classes.secondary,
+                      }}
                     />
                   </ListItem>
                 </React.Fragment>
@@ -150,7 +194,7 @@ class createNewSite extends Component {
             <p
               style={{
                 textAlign: "center",
-                fontFamily: "Segoe UI,sans-serif",
+                fontFamily: "Roboto,sans-serif",
                 fontSize: "16px",
               }}
             >
@@ -178,6 +222,7 @@ class createNewSite extends Component {
 
   renderSelectedPage = () => {
     const { picture, pageUrl, name, sitepath } = this.state;
+    const { classes } = this.props;
     return (
       <>
         <Grid
@@ -212,7 +257,7 @@ class createNewSite extends Component {
               style: {
                 padding: "7px 14px",
                 textAlign: "center",
-                fontFamily: "Segoe UI,sans-serif",
+                // fontFamily: "Roboto,sans-serif",
                 fontSize: "12px",
               },
               maxLength: 250,
@@ -230,6 +275,7 @@ class createNewSite extends Component {
                 </Tooltip>
               ),
             }}
+            classes={classes.inputRoot}
           />
         </Grid>
         <Grid item sm={12}>
@@ -240,7 +286,7 @@ class createNewSite extends Component {
               style: {
                 padding: "7px 14px",
                 textAlign: "center",
-                fontFamily: "Segoe UI,sans-serif",
+                fontFamily: "Roboto,sans-serif",
                 fontSize: "12px",
               },
               maxLength: 50,
@@ -258,6 +304,7 @@ class createNewSite extends Component {
                 </Tooltip>
               ),
             }}
+            classes={classes.inputRoot}
           />
         </Grid>
         <Grid
@@ -278,10 +325,9 @@ class createNewSite extends Component {
             }}
           >
             By submit creating new site you agree to our{" "}
-            <span style={{ color: "#2271b1" }}>Terms of Service</span> and to
-            sync{" "}
-            <span style={{ color: "#2271b1" }}>certain data and settings</span>{" "}
-            to FPWG
+            <span style={{ color: "#000" }}>Terms of Service</span> and to sync{" "}
+            <span style={{ color: "#000" }}>certain data and settings</span> to
+            FPWG
           </Typography>
           <ButtonStyled
             style={{
@@ -298,11 +344,19 @@ class createNewSite extends Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
-      <div style={{ backgroundColor: "#f6f7f7", height: "100vh" }}>
+      <div
+        style={{
+          // backgroundColor: "#f6f7f7",
+          height: "100vh",
+          backgroundImage: `url('/images/dark_background.jpg')`,
+          backgroundSize: "cover",
+        }}
+      >
         <Link to="/">
           <Button
-            style={{ color: "#646970", fontFamily: "Segoe UI, sans-serif" }}
+            style={{ color: "#fff", fontFamily: "Roboto, sans-serif" }}
             startIcon={<ArrowBackIos />}
           >
             Back
@@ -313,8 +367,9 @@ class createNewSite extends Component {
             style={{
               marginBottom: ".35em",
               fontSize: "34px",
-              fontWeight: 300,
-              color: "#3c434a",
+              fontWeight: 400,
+              color: "#fff",
+              // textTransform: "uppercase",
             }}
             align={"center"}
           >
@@ -325,10 +380,12 @@ class createNewSite extends Component {
               item
               container
               sm={6}
+              classes={classes.containerLeft}
               style={{
-                backgroundColor: "#fff",
+                // backgroundColor: "#fff",
+                backgroundColor: "rgb(222,228,231, 0.2)",
                 padding: "1.5rem",
-                boxShadow: "0 0 0 1px #dcdcde",
+                // boxShadow: "0 0 0 1px #dcdcde",
                 height: "40vh",
                 overflow: "auto",
               }}
@@ -339,10 +396,12 @@ class createNewSite extends Component {
               item
               container
               sm={6}
+              classes={classes.containerRight}
               style={{
-                backgroundColor: "#fff",
+                // backgroundColor: "#fff",
+                backgroundColor: "rgb(222,228,231, 0.7)",
                 padding: "1.5rem",
-                boxShadow: "0 0 0 1px #dcdcde",
+                // boxShadow: "0 0 0 1px #dcdcde",
                 height: "40vh",
                 overflow: "auto",
               }}

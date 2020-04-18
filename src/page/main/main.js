@@ -333,7 +333,7 @@ class MainPage extends Component {
                         fontWeight: "400",
                       }}
                     >
-                      Hello, {user.name}
+                      Hello, {user.name} !
                     </Typography>
                   </Grid>
                 </Grid>
