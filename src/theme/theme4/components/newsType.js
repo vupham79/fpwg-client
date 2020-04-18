@@ -5,6 +5,7 @@ import {
   Grid,
   Typography,
   withStyles,
+  CardActionArea,
 } from "@material-ui/core";
 import KeyboardArrowLeftIcon from "@material-ui/icons/KeyboardArrowLeft";
 import moment from "moment";
@@ -24,6 +25,7 @@ import {
   setPostsToSiteViewOnePage,
 } from "../../../actions";
 import ButtonComponent from "../../../component/Button";
+import Slider from "react-slick";
 
 const useStyles = (theme) => ({
   root: {
@@ -39,7 +41,7 @@ const useStyles = (theme) => ({
     maxWidth: "100%",
   },
   cardView: {
-    height: "30vh",
+    paddingTop: "100%",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
@@ -47,7 +49,8 @@ const useStyles = (theme) => ({
   cardMediaAlbum: {
     backgroundRepeat: "no-repeat",
     backgroundPosition: "center",
-    backgroundSize: "contain",
+    backgroundSize: "cover",
+    paddingTop: "100%",
   },
   cardMedia: {
     height: "30vh",
@@ -63,7 +66,7 @@ const useStyles = (theme) => ({
     backgroundSize: "cover",
   },
   album: {
-    height: "30vh",
+    height: "100%",
     background: "rgba(24, 20, 20, 0.5)",
   },
   paginationItemSelected: {
@@ -74,6 +77,12 @@ const useStyles = (theme) => ({
     marginTop: "2rem",
     "&:hover": {
       cursor: "pointer",
+    },
+  },
+  video: {
+    height: "45vh",
+    [theme.breakpoints.up("sm")]: {
+      height: "unset",
     },
   },
 });
@@ -91,7 +100,7 @@ const gridMessage = {
   overflow: "hidden",
   textOverflow: "ellipsis",
   display: "-webkit-box",
-  WebkitLineClamp: "20",
+  WebkitLineClamp: "10",
   WebkitBoxOrient: "vertical",
   // height: "100%",
   whiteSpace: "pre-wrap",
@@ -333,6 +342,153 @@ class NewsType extends React.Component {
     } else return <></>;
   }
 
+  renderPost(post, type, showPostMode) {
+    const { isEdit, bodyEdit, bodyView } = this.props;
+    const { classes } = this.props;
+    const txtStyle = {
+      fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+      fontSize: "14px",
+      color: "#FFFFFF",
+      background: "rgb(0,0,0, 0.5)",
+    };
+    let show = true;
+    if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
+      show = false;
+    } else if (type === "video" && (showPostMode === 1 || showPostMode === 3)) {
+      show = false;
+    } else if (type === "album" && (showPostMode === 2 || showPostMode === 3)) {
+      show = false;
+    }
+    let titleShow = null;
+    if (post && post.message) {
+      const title = post.message.split(".", 1).toString();
+      titleShow = title && title.slice(0, 70);
+      if (title.length > 70) {
+        titleShow += "...";
+      } else {
+        titleShow += ".";
+      }
+    }
+    const titleStyle = {
+      fontFamily: isEdit ? bodyEdit.fontFamily : bodyEdit.fontFamily,
+      fontSize: 18,
+      fontWeight: "600",
+    };
+    if (show) {
+      return (
+        <Grid
+          key={post._id}
+          container
+          item
+          xs={10}
+          sm={6}
+          md={6}
+          lg={4}
+          style={{ position: "relative" }}
+        >
+          {type === "video" ? (
+            <CardActionArea
+              className={classes.video}
+              onClick={() => this.handleHomeClick(post)}
+            >
+              {type === "video" && (
+                <Grid
+                  item
+                  xs={12}
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    height: "55%",
+                    background: "rgb(0,0,0)",
+                  }}
+                >
+                  <ReactPlayer
+                    url={post && post.attachments && post.attachments.video}
+                    controls={true}
+                    width="100%"
+                    height="100%"
+                  />
+                </Grid>
+              )}
+
+              <Grid
+                container
+                item
+                xs={12}
+                style={{
+                  ...txtStyle,
+                  background: "rgb(0,0,0,0.6)",
+                  padding: "1rem 0.5rem",
+                  position: "absolute",
+                  height: "45%",
+                  bottom: 0,
+                }}
+              >
+                <Grid item xs={12}>
+                  {moment(post.createdTime).format("MMMM DD, YYYY")}
+                </Grid>
+                <Grid item xs={12} style={titleStyle}>
+                  {titleShow}
+                </Grid>
+              </Grid>
+            </CardActionArea>
+          ) : (
+            <CardActionArea onClick={() => this.handleHomeClick(post)}>
+              {type === "photo" && (
+                <Grid item xs={12}>
+                  <CardMedia
+                    className={classes.cardView}
+                    image={post.attachments.images[0]}
+                  />
+                </Grid>
+              )}
+              {type === "album" && (
+                <Grid item xs={12}>
+                  <Slider
+                    autoplay
+                    speed={2000}
+                    autoplay
+                    autoplaySpeed={2500}
+                    arrows={false}
+                  >
+                    {post &&
+                      post.attachments &&
+                      post.attachments.images.map((item, index) => (
+                        <CardMedia
+                          key={index}
+                          className={classes.cardMediaAlbum}
+                          image={item}
+                        />
+                      ))}
+                  </Slider>
+                </Grid>
+              )}
+              <Grid
+                container
+                item
+                xs={12}
+                style={{
+                  ...txtStyle,
+                  padding: "1rem 0.5rem",
+                  position: "absolute",
+                  height: "45%",
+                  bottom: 0,
+                }}
+              >
+                <Grid item xs={12}>
+                  {moment(post.createdTime).format("MMMM DD, YYYY")}
+                </Grid>
+                <Grid item xs={12} style={titleStyle}>
+                  {titleShow}
+                </Grid>
+              </Grid>
+            </CardActionArea>
+          )}
+        </Grid>
+      );
+    } else return <></>;
+  }
+
   renderPostMessage(index, post, style, dark, type) {
     const { isEdit, bodyEdit, bodyView, titleEdit, titleView } = this.props;
     const txtStyle = {
@@ -438,6 +594,81 @@ class NewsType extends React.Component {
     );
   }
 
+  renderMessage(post) {
+    const { isEdit, bodyEdit, bodyView, classes } = this.props;
+    const txtStyle = {
+      fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+      fontSize: "14px",
+    };
+    let titleShow = null;
+    if (post && post.message) {
+      const title = post.message.split(".", 1).toString();
+      titleShow = title && title.slice(0, 70);
+      if (title.length > 70) {
+        titleShow += "...";
+      } else {
+        titleShow += ".";
+      }
+    }
+    let messageShow = null;
+    if (post && post.message) {
+      const message = post.message.split(".", 5).toString();
+      messageShow = message && message.slice(0, 200);
+      if (message.length > 200) {
+        messageShow += "...";
+      } else {
+        messageShow += ".";
+      }
+    }
+    const titleStyle = {
+      fontFamily: isEdit ? bodyEdit.fontFamily : bodyEdit.fontFamily,
+      fontSize: 18,
+      fontWeight: "600",
+    };
+    return (
+      <Grid
+        key={post._id}
+        container
+        item
+        xs={10}
+        sm={6}
+        md={6}
+        lg={4}
+        style={{ position: "relative" }}
+      >
+        <CardActionArea
+          className={classes.video}
+          onClick={() => this.handleHomeClick(post)}
+        >
+          <Grid
+            container
+            item
+            xs={12}
+            style={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              backgroundColor: "rgb(0,0,0,0.6)",
+              color: "white",
+              padding: "1rem 0.5rem",
+              ...txtStyle,
+            }}
+          >
+            <Grid item xs={12}>
+              {moment(post.createdTime).format("MMMM DD, YYYY")}
+            </Grid>
+            <Grid item xs={12} style={{ ...titleStyle, padding: "1rem 0" }}>
+              {titleShow}
+            </Grid>
+            <Grid item xs={12}>
+              {messageShow}
+            </Grid>
+          </Grid>
+        </CardActionArea>
+      </Grid>
+    );
+  }
+
   renderNews = (posts) => {
     const {
       isEdit,
@@ -471,16 +702,32 @@ class NewsType extends React.Component {
           <Grid item xs={12}>
             {posts &&
               posts.map(
+                (post) =>
+                  (post.attachments &&
+                    post.attachments.media_type &&
+                    post.isActive &&
+                    showPostMode !== 3 &&
+                    this.renderPost(post, style, showPostMode)) ||
+                  (post.attachments &&
+                    !post.attachments.media_type &&
+                    post.isActive &&
+                    showPostMode !== 1 &&
+                    showPostMode !== 2 &&
+                    this.renderMessage(post))
+              )}
+          </Grid>
+        )}
+        {!fromHome && (
+          <Grid container item xs={11} md={10} spacing={2} justify="center">
+            {posts &&
+              posts.map(
                 (post, index) =>
                   (post.attachments &&
                     post.attachments.media_type &&
                     post.isActive &&
                     showPostMode !== 3 &&
-                    this.renderPostComponent(
-                      index,
+                    this.renderPost(
                       post,
-                      style,
-                      dark,
                       post.attachments.media_type,
                       showPostMode
                     )) ||
@@ -489,33 +736,10 @@ class NewsType extends React.Component {
                     post.isActive &&
                     showPostMode !== 1 &&
                     showPostMode !== 2 &&
-                    this.renderPostMessage(index, post, style, dark))
+                    this.renderMessage(post))
               )}
           </Grid>
         )}
-        {!fromHome &&
-          posts &&
-          posts.map(
-            (post, index) =>
-              (post.attachments &&
-                post.attachments.media_type &&
-                post.isActive &&
-                showPostMode !== 3 &&
-                this.renderPostComponent(
-                  index,
-                  post,
-                  style,
-                  dark,
-                  post.attachments.media_type,
-                  showPostMode
-                )) ||
-              (post.attachments &&
-                !post.attachments.media_type &&
-                post.isActive &&
-                showPostMode !== 1 &&
-                showPostMode !== 2 &&
-                this.renderPostMessage(index, post, style, dark))
-          )}
       </>
     );
   };
