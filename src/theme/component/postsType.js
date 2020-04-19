@@ -184,7 +184,7 @@ class PostTypeComponent extends React.Component {
 
   handleHomeClick = (post) => {
     renderFB();
-    const { siteEdit, updateNavItemValue, setPostView, fromHome } = this.props;
+    const { siteEdit, updateNavItemValue, setPostView, fromHome, altType, isEdit, siteView } = this.props;
     if (fromHome) {
       const news = siteEdit.navItems.filter((item) => {
         return item.original === "news";
@@ -244,7 +244,7 @@ class PostTypeComponent extends React.Component {
           // sm={!fromHome && 5}
           // md={!fromHome && 5}
           // lg={!fromHome && 3}
-          onClick={(e) => altType && this.handleHomeClick(post)}
+          onClick={(e) => isEdit ? altType && this.handleHomeClick(post) : altType && this.handleOpen(post)}
           style={
             dark
               ? {
@@ -254,7 +254,7 @@ class PostTypeComponent extends React.Component {
                 marginBottom: "1rem",
                 cursor: altType && "pointer",
                 borderRadius: "0.4rem",
-                width: 260
+                width: 210
               }
               : {
                 backgroundColor: "#fff",
@@ -263,7 +263,7 @@ class PostTypeComponent extends React.Component {
                 marginBottom: "1rem",
                 cursor: altType && "pointer",
                 borderRadius: "0.4rem",
-                width: 260
+                width: 210
               }
           }
         >
@@ -305,7 +305,7 @@ class PostTypeComponent extends React.Component {
                 <CardMedia
                   style={{
                     width: "100%",
-                    height: altType ? "115px" : "200px", //attach height
+                    height: altType ? "115px" : "150px", //attach height
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
@@ -316,20 +316,27 @@ class PostTypeComponent extends React.Component {
               )}
               {type === "video" && (
                 <div>
-                  <div style={{ height: 25, display: altType ? "none" : "block" }} />
+                  <div style={{ height: 12, display: altType ? "none" : "block" }} />
                   <ReactPlayer
                     url={post && post.attachments && post.attachments.video}
                     controls={true}
                     style={{ objectFit: "cover" }}
                     width="100%"
-                    height="150px"
+                    height="116px"
                   />
-                  <div style={{ height: 25, display: altType ? "none" : "block" }} />
+                  <div style={{ height: 12, display: altType ? "none" : "block" }} />
                 </div>
               )}
               {type === "album" && (
                 <CardMedia
-                  className={classes.cardMediaAlbum}
+                  style={{
+                    width: "100%",
+                    height: altType ? "115px" : "150px", //attach height
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    borderRadius: altType ? "0.4rem 0.4rem 0 0" : 0
+                  }}
                   image={post.attachments.images[0]}
                 >
                   <Grid
@@ -362,11 +369,12 @@ class PostTypeComponent extends React.Component {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 display: "-webkit-box",
-                WebkitLineClamp: "20",
+                WebkitLineClamp: altType ? 12 : 3,
+                lineHeight: "20px",
                 WebkitBoxOrient: "vertical",
                 // height: "100%",
                 whiteSpace: "pre-wrap",
-                height: altType ? 242 : 100 //message height
+                height: altType ? 242 : 60 //message height
               }}>{post.message}</div>
             </Grid>
             <Grid
@@ -467,7 +475,7 @@ class PostTypeComponent extends React.Component {
         // sm={!fromHome && 5}
         // md={!fromHome && 5}
         // lg={!fromHome && 3}
-        onClick={(e) => altType && this.handleHomeClick(post)}
+        onClick={(e) => isEdit ? altType && this.handleHomeClick(post) : altType && this.handleOpen(post)}
         style={
           dark
             ? {
@@ -477,7 +485,7 @@ class PostTypeComponent extends React.Component {
               marginBottom: "1rem",
               cursor: altType && "pointer",
               borderRadius: "0.4rem",
-              width: 260,
+              width: 210,
               padding: 0
             }
             : {
@@ -487,7 +495,7 @@ class PostTypeComponent extends React.Component {
               marginBottom: "1rem",
               cursor: altType && "pointer",
               borderRadius: "0.4rem",
-              width: 260,
+              width: 210,
               padding: 0
             }
         }
@@ -540,11 +548,12 @@ class PostTypeComponent extends React.Component {
               overflow: "hidden",
               textOverflow: "ellipsis",
               display: "-webkit-box",
-              WebkitLineClamp: "20",
+              WebkitLineClamp: altType ? 17 : 10,
               WebkitBoxOrient: "vertical",
               // height: "100%",
+              lineHeight: "21px",
               whiteSpace: "pre-wrap",
-              height: altType ? 357 : 300 //attach height + message height
+              height: altType ? 357 : 210 //attach height + message height
             }}>{post.message}</div>
           </Grid>
           <Grid
