@@ -36,6 +36,7 @@ class Theme1About extends React.Component {
   };
 
   render() {
+
     const {
       isEdit,
       siteEdit,
@@ -48,6 +49,22 @@ class Theme1About extends React.Component {
       homeTitle,
       newCover
     } = this.props;
+
+    const isShowStory = () => {
+      if (isEdit) {
+        if (siteEdit && siteEdit.showDetailSetting.showStory) {
+          if (siteEdit.story && siteEdit.story.title) {
+            return true;
+          }
+        }
+      } else if (siteView && siteView.showDetailSetting.showStory) {
+        if (siteView.story && siteView.story.title) {
+          return true;
+        }
+      }
+      return false;
+    };
+
     const useStyles = () => ({
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -148,7 +165,7 @@ class Theme1About extends React.Component {
           </Grid>
         </Grid>
 
-        <Grid container item xs={12} justify={"center"} style={{ backgroundColor: isEdit ? lighten(titleEdit.color, 0.08) : lighten(titleView.color, 0.08), minHeight: 420, display: !fromHome ? "block" : "none", paddingTop: 50 }}>
+        <Grid container item xs={12} justify={"center"} style={{ backgroundColor: isEdit ? lighten(titleEdit.color, 0.08) : lighten(titleView.color, 0.08), minHeight: 420, display: isShowStory() ? "block" : "none", paddingTop: 50 }}>
           <Grid item xs={12} sm={12} style={{ marginLeft: "25%" }}>
             <span style={{ height: 298, overflowY: "auto", maxWidth: 400, paddingRight: 35, paddingTop: 30, display: "inline-block" }} >
               <p style={classes.changableTitle2}>
@@ -167,7 +184,7 @@ class Theme1About extends React.Component {
               </p>
             </span>
 
-            <img src={newCover && newCover[1] ? this.getCover(1) : this.getCover(0)} alt="" style={{ width: 292, height: 348, objectFit: "cover", display: "inline-block" }} />
+            <img src={this.getCover(1)} alt="" style={{ width: 292, height: 348, objectFit: "cover", display: "inline-block" }} />
           </Grid>
         </Grid>
 
