@@ -254,7 +254,7 @@ class PostTypeComponent extends React.Component {
                 marginBottom: "1rem",
                 cursor: altType && "pointer",
                 borderRadius: "0.4rem",
-                width: 210
+                width: 260
               }
               : {
                 backgroundColor: "#fff",
@@ -263,7 +263,7 @@ class PostTypeComponent extends React.Component {
                 marginBottom: "1rem",
                 cursor: altType && "pointer",
                 borderRadius: "0.4rem",
-                width: 210
+                width: 260
               }
           }
         >
@@ -305,7 +305,7 @@ class PostTypeComponent extends React.Component {
                 <CardMedia
                   style={{
                     width: "100%",
-                    height: altType ? "115px" : "200px",
+                    height: altType ? "115px" : "200px", //attach height
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
@@ -316,15 +316,15 @@ class PostTypeComponent extends React.Component {
               )}
               {type === "video" && (
                 <div>
-                  <div style={{ height: 42, display: altType ? "none" : "block" }} />
+                  <div style={{ height: 25, display: altType ? "none" : "block" }} />
                   <ReactPlayer
                     url={post && post.attachments && post.attachments.video}
                     controls={true}
                     style={{ objectFit: "cover" }}
                     width="100%"
-                    height="116px"
+                    height="150px"
                   />
-                  <div style={{ height: 42, display: altType ? "none" : "block" }} />
+                  <div style={{ height: 25, display: altType ? "none" : "block" }} />
                 </div>
               )}
               {type === "album" && (
@@ -366,7 +366,7 @@ class PostTypeComponent extends React.Component {
                 WebkitBoxOrient: "vertical",
                 // height: "100%",
                 whiteSpace: "pre-wrap",
-                height: altType ? 242 : 100
+                height: altType ? 242 : 100 //message height
               }}>{post.message}</div>
             </Grid>
             <Grid
@@ -477,7 +477,7 @@ class PostTypeComponent extends React.Component {
               marginBottom: "1rem",
               cursor: altType && "pointer",
               borderRadius: "0.4rem",
-              width: 210,
+              width: 260,
               padding: 0
             }
             : {
@@ -487,7 +487,7 @@ class PostTypeComponent extends React.Component {
               marginBottom: "1rem",
               cursor: altType && "pointer",
               borderRadius: "0.4rem",
-              width: 210,
+              width: 260,
               padding: 0
             }
         }
@@ -544,7 +544,7 @@ class PostTypeComponent extends React.Component {
               WebkitBoxOrient: "vertical",
               // height: "100%",
               whiteSpace: "pre-wrap",
-              height: altType ? 357 : 300
+              height: altType ? 357 : 300 //attach height + message height
             }}>{post.message}</div>
           </Grid>
           <Grid
