@@ -343,7 +343,10 @@ class PostTypeComponent extends React.Component {
                     container
                     alignItems="center"
                     justify="center"
-                    className={classes.album}
+                    style={{
+                      height: altType ? "115px" : "150px", //attach height
+                      background: "rgba(24, 20, 20, 0.5)",
+                    }}
                   >
                     <Typography
                       variant="h3"
