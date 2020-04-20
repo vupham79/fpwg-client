@@ -180,11 +180,11 @@ class BannerComponent extends React.Component {
     );
   };
 
-  TypeCarousel = () => {
+  TypeCarousel = (arrows = true) => {
     return (
       <React.Fragment>
         <Grid item xs={12}>
-          <Slider speed={1000} autoplay autoplaySpeed={2500} arrows={true}>
+          <Slider speed={1000} autoplay autoplaySpeed={2500} arrows={arrows}>
             {this.renderNewCoversSlider()}
           </Slider>
         </Grid>
@@ -219,13 +219,13 @@ class BannerComponent extends React.Component {
   };
 
   render() {
-    const { bannerType } = this.props;
+    const { bannerType, arrows } = this.props;
 
     return (
       <Grid container justify="center">
         {
           {
-            0: this.TypeCarousel(),
+            0: this.TypeCarousel(arrows),
             1: this.TypeSlider(),
             2: this.TypeCarouselWithTitle(),
             default: this.TypeCarousel(),

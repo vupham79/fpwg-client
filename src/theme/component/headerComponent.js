@@ -196,6 +196,7 @@ class HeaderComponent extends Component {
                       padding: "0.25rem",
                       textAlign: "end",
                       minWidth: "15vh",
+                      letterSpacing: "1px",
                     }}
                     activeStyle={{
                       borderBottom: "1px solid",
@@ -233,6 +234,7 @@ class HeaderComponent extends Component {
                         height: "inherit",
                         textDecoration: "none",
                         textTransform: "uppercase",
+                        letterSpacing: "1px",
                       }}
                       activeStyle={{
                         borderBottom: "1px solid",
@@ -318,7 +320,14 @@ class HeaderComponent extends Component {
       classes,
     } = this.props;
     return (
-      <Grid className={classes.shopName} style={isEdit ? titleEdit : titleView}>
+      <Grid
+        className={classes.shopName}
+        style={
+          isEdit
+            ? { ...titleEdit, letterSpacing: "1px" }
+            : { ...titleView, letterSpacing: "1px" }
+        }
+      >
         {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
       </Grid>
     );
