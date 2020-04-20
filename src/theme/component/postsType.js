@@ -238,34 +238,26 @@ class PostTypeComponent extends React.Component {
       return (
         <Grid
           key={post._id}
-          container={!fromHome}
-          item={!fromHome}
+          container
+          item
+          // container={!fromHome}
+          // item={!fromHome}
           // xs={!fromHome && 10}
           // sm={!fromHome && 5}
           // md={!fromHome && 5}
           // lg={!fromHome && 3}
           onClick={(e) => isEdit ? altType && this.handleHomeClick(post) : altType && this.handleOpen(post)}
-          style={
-            dark
-              ? {
-                backgroundColor: "#1a1919",
-                border: "1px solid #fff",
-                marginLeft: "1rem",
-                marginBottom: "1rem",
-                cursor: altType && "pointer",
-                borderRadius: "0.4rem",
-                width: 210
-              }
-              : {
-                backgroundColor: "#fff",
-                border: "1px solid #a0a09f",
-                marginLeft: "1rem",
-                marginBottom: "1rem",
-                cursor: altType && "pointer",
-                borderRadius: "0.4rem",
-                width: 210
-              }
-          }
+          style={{
+            backgroundColor: dark ? "#1a1919" : "#fff",
+            border: dark ? "1px solid #fff" : "1px solid #a0a09f",
+            marginLeft: "1rem",
+            marginBottom: "1rem",
+            cursor: altType && "pointer",
+            borderRadius: "0.4rem",
+            width: 260,
+            marginLeft: "auto",
+            marginRight: "auto"
+          }}
         >
           <Grid
             container
@@ -305,7 +297,7 @@ class PostTypeComponent extends React.Component {
                 <CardMedia
                   style={{
                     width: "100%",
-                    height: altType ? "115px" : "150px", //attach height
+                    height: altType ? "138px" : "150px", //attach height
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
@@ -316,22 +308,22 @@ class PostTypeComponent extends React.Component {
               )}
               {type === "video" && (
                 <div>
-                  <div style={{ height: 12, display: altType ? "none" : "block" }} />
+                  <div style={{ height: 6, display: altType ? "none" : "block" }} />
                   <ReactPlayer
                     url={post && post.attachments && post.attachments.video}
                     controls={true}
                     style={{ objectFit: "cover" }}
                     width="100%"
-                    height="116px"
+                    height="138px"
                   />
-                  <div style={{ height: 12, display: altType ? "none" : "block" }} />
+                  <div style={{ height: 6, display: altType ? "none" : "block" }} />
                 </div>
               )}
               {type === "album" && (
                 <CardMedia
                   style={{
                     width: "100%",
-                    height: altType ? "115px" : "150px", //attach height
+                    height: altType ? "138px" : "150px", //attach height
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
@@ -344,7 +336,7 @@ class PostTypeComponent extends React.Component {
                     alignItems="center"
                     justify="center"
                     style={{
-                      height: altType ? "115px" : "150px", //attach height
+                      height: altType ? "138px" : "150px", //attach height
                       background: "rgba(24, 20, 20, 0.5)",
                     }}
                   >
@@ -387,7 +379,7 @@ class PostTypeComponent extends React.Component {
               justify="flex-start"
               alignItems="flex-end"
             >
-              <Grid item xs={12} style={{ display: altType ? "none" : "block", padding: "1rem" }}>
+              <Grid item xs={12} style={{ display: altType ? "none" : "block", paddingLeft: "1rem", paddingBottom: "1rem" }}>
                 {isEdit ? (
                   <ButtonComponent
                     label="READ MORE"
@@ -472,36 +464,26 @@ class PostTypeComponent extends React.Component {
     return (
       <Grid
         key={post._id}
-        container={!fromHome}
-        item={!fromHome}
+        container
+        item
+        // container={!fromHome}
+        // item={!fromHome}
         // xs={!fromHome && 10}
         // sm={!fromHome && 5}
         // md={!fromHome && 5}
         // lg={!fromHome && 3}
         onClick={(e) => isEdit ? altType && this.handleHomeClick(post) : altType && this.handleOpen(post)}
-        style={
-          dark
-            ? {
-              backgroundColor: "#1a1919",
-              border: "1px solid #fff",
-              marginLeft: "1rem",
-              marginBottom: "1rem",
-              cursor: altType && "pointer",
-              borderRadius: "0.4rem",
-              width: 210,
-              padding: 0
-            }
-            : {
-              backgroundColor: "#fff",
-              border: "1px solid #a0a09f",
-              marginLeft: "1rem",
-              marginBottom: "1rem",
-              cursor: altType && "pointer",
-              borderRadius: "0.4rem",
-              width: 210,
-              padding: 0
-            }
-        }
+        style={{
+          backgroundColor: dark ? "#1a1919" : "#fff",
+          border: dark ? "1px solid #fff" : "1px solid #a0a09f",
+          marginLeft: "1rem",
+          marginBottom: "1rem",
+          cursor: altType && "pointer",
+          borderRadius: "0.4rem",
+          width: 260,
+          marginLeft: "auto",
+          marginRight: "auto"
+        }}
       >
         <Grid
           container
@@ -551,12 +533,12 @@ class PostTypeComponent extends React.Component {
               overflow: "hidden",
               textOverflow: "ellipsis",
               display: "-webkit-box",
-              WebkitLineClamp: altType ? 17 : 10,
+              WebkitLineClamp: altType ? 18 : 10,
               WebkitBoxOrient: "vertical",
               // height: "100%",
               lineHeight: "21px",
               whiteSpace: "pre-wrap",
-              height: altType ? 357 : 210 //attach height + message height
+              height: altType ? 380 : 210 //attach height + message height
             }}>{post.message}</div>
           </Grid>
           <Grid
@@ -566,7 +548,7 @@ class PostTypeComponent extends React.Component {
             justify="flex-start"
             alignItems="flex-end"
           >
-            <Grid item xs={12} style={{ display: altType ? "none" : "block", padding: "1rem" }}>
+            <Grid item xs={12} style={{ display: altType ? "none" : "block", paddingLeft: "1rem", paddingBottom: "1rem" }}>
               {isEdit ? (
                 <ButtonComponent
                   label="READ MORE"
@@ -710,30 +692,47 @@ class PostTypeComponent extends React.Component {
                       post.attachments.media_type &&
                       post.isActive &&
                       showPostMode !== 3 &&
-                      this.renderPostComponent(
-                        index,
-                        post,
-                        style,
-                        dark,
-                        post.attachments.media_type
-                      )) ||
+                      <Grid container>
+                        {
+                          this.renderPostComponent(
+                            index,
+                            post,
+                            style,
+                            dark,
+                            post.attachments.media_type
+                          )
+                        }
+                      </Grid>
+                    ) ||
                     (post.attachments &&
                       !post.attachments.media_type &&
                       post.isActive &&
                       showPostMode !== 1 &&
                       showPostMode !== 2 &&
-                      this.renderPostMessage(index, post, style, dark)) ||
+                      <Grid container>
+                        {
+                          this.renderPostMessage(index, post, style, dark)
+                        }
+                      </Grid>
+                    ) ||
                     (!post.attachments &&
                       showPostMode !== 1 &&
                       showPostMode !== 2 &&
                       post.isActive &&
-                      this.renderPostMessage(index, post, style, dark))
+                      <Grid container>
+                        {
+                          this.renderPostMessage(index, post, style, dark)
+                        }
+                      </Grid>
+                    )
                 )}
             </Slider>
           </Grid>
-        )}
+        )
+        }
 
-        {!fromHome &&
+        {
+          !fromHome &&
           posts &&
           posts.map(
             (post, index) =>
@@ -760,7 +759,8 @@ class PostTypeComponent extends React.Component {
                 showPostMode !== 1 &&
                 showPostMode !== 2 &&
                 this.renderPostMessage(index, post, style, dark))
-          )}
+          )
+        }
       </>
     );
   };
