@@ -64,7 +64,7 @@ class NewPage extends Component {
                     ? homeList
                     : siteEdit.posts
                   ).filter(function (pos) {
-                    let type = pos.attachments ? pos.attachments.media_type : "";
+                    let type = pos && pos.attachments ? pos.attachments.media_type : "";
                     let showPostMode = isEdit ? siteEdit.showDetailSetting.showPostMode : siteView.showDetailSetting.showPostMode;
                     let show = true;
                     if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
@@ -76,12 +76,12 @@ class NewPage extends Component {
                     } else if (type === "" && (showPostMode === 1 || showPostMode === 2)) {
                       show = false;
                     }
-                    return pos.isActive === true && show;
+                    return pos && pos.isActive === true && show;
                   })}
                   pageCount={Math.ceil(
                     (fromHome && homeList ? homeList : siteEdit.posts).filter(
                       function (pos) {
-                        let type = pos.attachments ? pos.attachments.media_type : "";
+                        let type = pos && pos.attachments ? pos.attachments.media_type : "";
                         let showPostMode = isEdit ? siteEdit.showDetailSetting.showPostMode : siteView.showDetailSetting.showPostMode;
                         let show = true;
                         if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
@@ -93,7 +93,7 @@ class NewPage extends Component {
                         } else if (type === "" && (showPostMode === 1 || showPostMode === 2)) {
                           show = false;
                         }
-                        return pos.isActive === true && show;
+                        return pos && pos.isActive === true && show;
                       }
                     ).length / siteEdit.limitNews
                   )}
