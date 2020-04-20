@@ -93,7 +93,7 @@ const gridMessage = {
   WebkitBoxOrient: "vertical",
   // height: "100%",
   whiteSpace: "pre-wrap",
-  height: 242
+  height: 242,
 };
 
 function SampleNextArrow(props) {
@@ -184,7 +184,15 @@ class PostTypeComponent extends React.Component {
 
   handleHomeClick = (post) => {
     renderFB();
-    const { siteEdit, updateNavItemValue, setPostView, fromHome, altType, isEdit, siteView } = this.props;
+    const {
+      siteEdit,
+      updateNavItemValue,
+      setPostView,
+      fromHome,
+      altType,
+      isEdit,
+      siteView,
+    } = this.props;
     if (fromHome) {
       const news = siteEdit.navItems.filter((item) => {
         return item.original === "news";
@@ -206,7 +214,7 @@ class PostTypeComponent extends React.Component {
       titleView,
       bodyEdit,
       bodyView,
-      altType
+      altType,
     } = this.props;
     const { classes } = this.props;
     const txtStyle = {
@@ -224,7 +232,7 @@ class PostTypeComponent extends React.Component {
       backgroundColor: dark ? "#1A1919" : "#fff",
       color: dark ? "#fff" : "#535353",
       height: "fit-content",
-      borderRadius: "0.4rem"
+      borderRadius: "0.4rem",
     };
     let show = true;
     if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
@@ -246,7 +254,11 @@ class PostTypeComponent extends React.Component {
           // sm={!fromHome && 5}
           // md={!fromHome && 5}
           // lg={!fromHome && 3}
-          onClick={(e) => isEdit ? altType && this.handleHomeClick(post) : altType && this.handleOpen(post)}
+          onClick={(e) =>
+            isEdit
+              ? altType && this.handleHomeClick(post)
+              : altType && this.handleOpen(post)
+          }
           style={{
             backgroundColor: dark ? "#1a1919" : "#fff",
             border: dark ? "1px solid #fff" : "1px solid #a0a09f",
@@ -256,7 +268,7 @@ class PostTypeComponent extends React.Component {
             borderRadius: "0.4rem",
             width: 260,
             marginLeft: fromHome ? "auto" : 10,
-            marginRight: fromHome ? "auto" : 10
+            marginRight: fromHome ? "auto" : 10,
           }}
         >
           <Grid
@@ -272,13 +284,11 @@ class PostTypeComponent extends React.Component {
             <Grid
               item
               xs={12}
-              style={
-                {
-                  display: altType ? "none" : "block",
-                  borderRadius: "0.4rem",
-                  padding: "1rem"
-                }
-              }
+              style={{
+                display: altType ? "none" : "block",
+                borderRadius: "0.4rem",
+                padding: "1rem",
+              }}
             >
               <Typography
                 variant={"body1"}
@@ -301,14 +311,16 @@ class PostTypeComponent extends React.Component {
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
-                    borderRadius: altType ? "0.4rem 0.4rem 0 0" : 0
+                    borderRadius: altType ? "0.4rem 0.4rem 0 0" : 0,
                   }}
                   image={post.attachments.images[0]}
                 />
               )}
               {type === "video" && (
                 <div>
-                  <div style={{ height: 6, display: altType ? "none" : "block" }} />
+                  <div
+                    style={{ height: 6, display: altType ? "none" : "block" }}
+                  />
                   <ReactPlayer
                     url={post && post.attachments && post.attachments.video}
                     controls={true}
@@ -316,7 +328,9 @@ class PostTypeComponent extends React.Component {
                     width="100%"
                     height="138px"
                   />
-                  <div style={{ height: 6, display: altType ? "none" : "block" }} />
+                  <div
+                    style={{ height: 6, display: altType ? "none" : "block" }}
+                  />
                 </div>
               )}
               {type === "album" && (
@@ -327,7 +341,7 @@ class PostTypeComponent extends React.Component {
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
-                    borderRadius: altType ? "0.4rem 0.4rem 0 0" : 0
+                    borderRadius: altType ? "0.4rem 0.4rem 0 0" : 0,
                   }}
                   image={post.attachments.images[0]}
                 >
@@ -360,17 +374,21 @@ class PostTypeComponent extends React.Component {
                 color: dark ? "#fff" : "#535353",
               }}
             >
-              <div style={{
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                display: "-webkit-box",
-                WebkitLineClamp: altType ? 12 : 3,
-                lineHeight: "20px",
-                WebkitBoxOrient: "vertical",
-                // height: "100%",
-                whiteSpace: "pre-wrap",
-                height: altType ? 242 : 60 //message height
-              }}>{post.message}</div>
+              <div
+                style={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  display: "-webkit-box",
+                  WebkitLineClamp: altType ? 12 : 3,
+                  lineHeight: "20px",
+                  WebkitBoxOrient: "vertical",
+                  // height: "100%",
+                  whiteSpace: "pre-wrap",
+                  height: altType ? 242 : 60, //message height
+                }}
+              >
+                {post.message}
+              </div>
             </Grid>
             <Grid
               container
@@ -379,7 +397,15 @@ class PostTypeComponent extends React.Component {
               justify="flex-start"
               alignItems="flex-end"
             >
-              <Grid item xs={12} style={{ display: altType ? "none" : "block", paddingLeft: "1rem", paddingBottom: "1rem" }}>
+              <Grid
+                item
+                xs={12}
+                style={{
+                  display: altType ? "none" : "block",
+                  paddingLeft: "1rem",
+                  paddingBottom: "1rem",
+                }}
+              >
                 {isEdit ? (
                   <ButtonComponent
                     label="READ MORE"
@@ -396,23 +422,21 @@ class PostTypeComponent extends React.Component {
                     <ButtonComponent label="READ MORE" style={btnStyle} />
                   </Link>
                 ) : (
-                      <ButtonComponent
-                        onClick={() => this.handleOpen(post)}
-                        label="READ MORE"
-                        style={btnStyle}
-                      />
-                    )}
+                  <ButtonComponent
+                    onClick={() => this.handleOpen(post)}
+                    label="READ MORE"
+                    style={btnStyle}
+                  />
+                )}
               </Grid>
               <Grid
                 item
                 xs={12}
-                style={
-                  {
-                    display: altType ? "block" : "none",
-                    padding: "1rem",
-                    borderRadius: "0.4rem"
-                  }
-                }
+                style={{
+                  display: altType ? "block" : "none",
+                  padding: "1rem",
+                  borderRadius: "0.4rem",
+                }}
               >
                 <Typography
                   variant={"body1"}
@@ -442,7 +466,7 @@ class PostTypeComponent extends React.Component {
       bodyView,
       titleEdit,
       titleView,
-      altType
+      altType,
     } = this.props;
     const txtStyle = {
       fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -459,7 +483,7 @@ class PostTypeComponent extends React.Component {
       backgroundColor: dark ? "#1A1919" : "#fff",
       color: dark ? "#fff" : "#535353",
       height: "fit-content",
-      borderRadius: "0.4rem"
+      borderRadius: "0.4rem",
     };
     return (
       <Grid
@@ -472,7 +496,11 @@ class PostTypeComponent extends React.Component {
         // sm={!fromHome && 5}
         // md={!fromHome && 5}
         // lg={!fromHome && 3}
-        onClick={(e) => isEdit ? altType && this.handleHomeClick(post) : altType && this.handleOpen(post)}
+        onClick={(e) =>
+          isEdit
+            ? altType && this.handleHomeClick(post)
+            : altType && this.handleOpen(post)
+        }
         style={{
           backgroundColor: dark ? "#1a1919" : "#fff",
           border: dark ? "1px solid #fff" : "1px solid #a0a09f",
@@ -482,7 +510,7 @@ class PostTypeComponent extends React.Component {
           borderRadius: "0.4rem",
           width: 260,
           marginLeft: fromHome ? "auto" : 10,
-          marginRight: fromHome ? "auto" : 10
+          marginRight: fromHome ? "auto" : 10,
         }}
       >
         <Grid
@@ -498,13 +526,11 @@ class PostTypeComponent extends React.Component {
           <Grid
             item
             xs={12}
-            style={
-              {
-                display: altType ? "none" : "block",
-                borderRadius: "0.4rem",
-                padding: "1rem"
-              }
-            }
+            style={{
+              display: altType ? "none" : "block",
+              borderRadius: "0.4rem",
+              padding: "1rem",
+            }}
           >
             <Typography
               variant={"body1"}
@@ -529,17 +555,21 @@ class PostTypeComponent extends React.Component {
               color: dark ? "#fff" : "#535353",
             }}
           >
-            <div style={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              display: "-webkit-box",
-              WebkitLineClamp: altType ? 18 : 10,
-              WebkitBoxOrient: "vertical",
-              // height: "100%",
-              lineHeight: "21px",
-              whiteSpace: "pre-wrap",
-              height: altType ? 380 : 210 //attach height + message height
-            }}>{post.message}</div>
+            <div
+              style={{
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: altType ? 18 : 10,
+                WebkitBoxOrient: "vertical",
+                // height: "100%",
+                lineHeight: "21px",
+                whiteSpace: "pre-wrap",
+                height: altType ? 380 : 210, //attach height + message height
+              }}
+            >
+              {post.message}
+            </div>
           </Grid>
           <Grid
             container
@@ -548,7 +578,15 @@ class PostTypeComponent extends React.Component {
             justify="flex-start"
             alignItems="flex-end"
           >
-            <Grid item xs={12} style={{ display: altType ? "none" : "block", paddingLeft: "1rem", paddingBottom: "1rem" }}>
+            <Grid
+              item
+              xs={12}
+              style={{
+                display: altType ? "none" : "block",
+                paddingLeft: "1rem",
+                paddingBottom: "1rem",
+              }}
+            >
               {isEdit ? (
                 <ButtonComponent
                   label="READ MORE"
@@ -565,23 +603,21 @@ class PostTypeComponent extends React.Component {
                   <ButtonComponent label="READ MORE" style={btnStyle} />
                 </Link>
               ) : (
-                    <ButtonComponent
-                      onClick={() => this.handleOpen(post)}
-                      label="READ MORE"
-                      style={btnStyle}
-                    />
-                  )}
+                <ButtonComponent
+                  onClick={() => this.handleOpen(post)}
+                  label="READ MORE"
+                  style={btnStyle}
+                />
+              )}
             </Grid>
             <Grid
               item
               xs={12}
-              style={
-                {
-                  display: altType ? "block" : "none",
-                  padding: "1rem",
-                  borderRadius: "0.4rem"
-                }
-              }
+              style={{
+                display: altType ? "block" : "none",
+                padding: "1rem",
+                borderRadius: "0.4rem",
+              }}
             >
               <Typography
                 variant={"body1"}
@@ -691,48 +727,40 @@ class PostTypeComponent extends React.Component {
                     (post.attachments &&
                       post.attachments.media_type &&
                       post.isActive &&
-                      showPostMode !== 3 &&
-                      <Grid container>
-                        {
-                          this.renderPostComponent(
+                      showPostMode !== 3 && (
+                        <Grid container>
+                          {this.renderPostComponent(
                             index,
                             post,
                             style,
                             dark,
                             post.attachments.media_type
-                          )
-                        }
-                      </Grid>
-                    ) ||
+                          )}
+                        </Grid>
+                      )) ||
                     (post.attachments &&
                       !post.attachments.media_type &&
                       post.isActive &&
                       showPostMode !== 1 &&
-                      showPostMode !== 2 &&
-                      <Grid container>
-                        {
-                          this.renderPostMessage(index, post, style, dark)
-                        }
-                      </Grid>
-                    ) ||
+                      showPostMode !== 2 && (
+                        <Grid container>
+                          {this.renderPostMessage(index, post, style, dark)}
+                        </Grid>
+                      )) ||
                     (!post.attachments &&
                       showPostMode !== 1 &&
                       showPostMode !== 2 &&
-                      post.isActive &&
-                      <Grid container>
-                        {
-                          this.renderPostMessage(index, post, style, dark)
-                        }
-                      </Grid>
-                    )
+                      post.isActive && (
+                        <Grid container>
+                          {this.renderPostMessage(index, post, style, dark)}
+                        </Grid>
+                      ))
                 )}
             </Slider>
           </Grid>
-        )
-        }
+        )}
 
-        {
-          !fromHome &&
+        {!fromHome &&
           posts &&
           posts.map(
             (post, index) =>
@@ -759,8 +787,7 @@ class PostTypeComponent extends React.Component {
                 showPostMode !== 1 &&
                 showPostMode !== 2 &&
                 this.renderPostMessage(index, post, style, dark))
-          )
-        }
+          )}
       </>
     );
   };
@@ -912,7 +939,9 @@ class PostTypeComponent extends React.Component {
           {/* <div className="fb-comments" data-href={post.target && post.target} data-width="" data-numposts="5"></div> */}
           <div
             className="fb-post"
-            data-href={`https://www.facebook.com/${post.id.split('_')[0]}/posts/${post.id.split('_')[1]}`}
+            data-href={`https://www.facebook.com/${
+              post.id.split("_")[0]
+            }/posts/${post.id.split("_")[1]}`}
             data-show-text="true"
             style={{
               // maxWidth: "100%",
@@ -967,13 +996,13 @@ class PostTypeComponent extends React.Component {
             {this.renderNews(
               isEdit
                 ? siteEdit &&
-                siteEdit.posts &&
-                siteEdit.posts
-                  .filter(function (pos) {
-                    return pos.isActive === true;
-                  })
-                  .sort((a, b) => b.createdTime - a.createdTime)
-                  .slice(0, 3)
+                    siteEdit.posts &&
+                    siteEdit.posts
+                      .filter(function (pos) {
+                        return pos.isActive === true;
+                      })
+                      .sort((a, b) => b.createdTime - a.createdTime)
+                      .slice(0, 3)
                 : posts && posts.slice(0, 3)
             )}
           </Grid>
@@ -1007,30 +1036,30 @@ class PostTypeComponent extends React.Component {
             {this.renderViewNew(isEdit ? editPostView : postOpen)}
           </Grid>
         ) : (
+          <Grid
+            container
+            item
+            // xs={10}
+            // spacing={2}
+            justify="center"
+            xs={10}
+            sm={10}
+            style={{
+              //  marginTop: "2.5rem", marginBottom: "2.5rem"
+              overflow: "visible",
+            }}
+          >
             <Grid
               container
               item
-              // xs={10}
-              // spacing={2}
+              xs={12}
+              // spacing={3}
               justify="center"
-              xs={10}
-              sm={10}
-              style={{
-                //  marginTop: "2.5rem", marginBottom: "2.5rem"
-                overflow: "visible",
-              }}
-            >
-              <Grid
-                container
-                item
-                xs={12}
-                // spacing={3}
-                justify="center"
               // style={{ padding: "1rem 0rem" }}
-              >
-                {isEdit
-                  ? !fromHome
-                    ? this.renderNews(
+            >
+              {isEdit
+                ? !fromHome
+                  ? this.renderNews(
                       posts
                         .filter(function (pos) {
                           return pos.isActive === true;
@@ -1040,21 +1069,21 @@ class PostTypeComponent extends React.Component {
                           this.state.page > pageCount
                             ? 3
                             : parseInt(this.state.itemPerPage) +
-                            parseInt(this.state.offset)
+                                parseInt(this.state.offset)
                         )
                     )
-                    : this.renderNews(
+                  : this.renderNews(
                       posts
                         .filter(function (pos) {
                           return pos.isActive === true;
                         })
                         .slice(0, 6)
                     )
-                  : this.renderNews(posts)}
-              </Grid>
+                : this.renderNews(posts)}
+            </Grid>
 
-              {isEdit
-                ? pageCount > 1 &&
+            {isEdit
+              ? pageCount > 1 &&
                 !fromHome && (
                   <Grid
                     container
@@ -1079,8 +1108,8 @@ class PostTypeComponent extends React.Component {
                             }}
                           />
                         ) : (
-                            <PaginationItem {...item} />
-                          )
+                          <PaginationItem {...item} />
+                        )
                       }
                       shape="rounded"
                       variant="outlined"
@@ -1090,7 +1119,7 @@ class PostTypeComponent extends React.Component {
                     />
                   </Grid>
                 )
-                : pageCountView > 1 &&
+              : pageCountView > 1 &&
                 !fromHome && (
                   <Grid
                     container
@@ -1118,8 +1147,8 @@ class PostTypeComponent extends React.Component {
                             }}
                           />
                         ) : (
-                            <PaginationItem {...item} />
-                          )
+                          <PaginationItem {...item} />
+                        )
                       }
                       shape="rounded"
                       variant="outlined"
@@ -1129,8 +1158,8 @@ class PostTypeComponent extends React.Component {
                     />
                   </Grid>
                 )}
-            </Grid>
-          )}
+          </Grid>
+        )}
       </Grid>
     );
   }
