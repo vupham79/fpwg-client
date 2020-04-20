@@ -255,8 +255,8 @@ class PostTypeComponent extends React.Component {
             cursor: altType && "pointer",
             borderRadius: "0.4rem",
             width: 260,
-            marginLeft: "auto",
-            marginRight: "auto"
+            marginLeft: fromHome ? "auto" : 10,
+            marginRight: fromHome ? "auto" : 10
           }}
         >
           <Grid
@@ -481,8 +481,8 @@ class PostTypeComponent extends React.Component {
           cursor: altType && "pointer",
           borderRadius: "0.4rem",
           width: 260,
-          marginLeft: "auto",
-          marginRight: "auto"
+          marginLeft: fromHome ? "auto" : 10,
+          marginRight: fromHome ? "auto" : 10
         }}
       >
         <Grid
