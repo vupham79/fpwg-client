@@ -293,7 +293,7 @@ const SortableItem = sortableElement(
               />
             </Grid>
 
-            {item.original === "about" && (
+            {/* {item.original === "about" && (
               <>
                 <Grid item xs={12} style={{ height: 20 }} />
                 <Grid item xs={12}>
@@ -316,13 +316,6 @@ const SortableItem = sortableElement(
                       },
                     }}
                     multiline
-                    // autoFocus={
-                    //   this.state.currentFocusInput === "aboutInput"
-                    //     ? true
-                    //     : false
-                    // }
-                    // onFocus={this.moveFocusAtEnd}
-                    // onClick={() => this.setCurrentFocusInput("aboutInput")}
                     size="small"
                     style={{ backgroundColor: "white" }}
                     fullWidth
@@ -330,12 +323,11 @@ const SortableItem = sortableElement(
                     spellCheck={false}
                     variant={"outlined"}
                     value={about ? about : ""}
-                    id="aboutInput"
                     onChange={(e) => handleChangeAbout(e)}
                   />
                 </Grid>
               </>
-            )}
+            )} */}
 
             {
               {
@@ -540,9 +532,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -600,9 +592,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -653,9 +645,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
