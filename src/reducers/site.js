@@ -386,6 +386,30 @@ const SiteReducer = (state = defaultState, action) => {
         },
         isChanged: true,
       };
+    case "CHANGE_SITE_STORY":
+      return {
+        ...state,
+        siteEdit: {
+          ...state.siteEdit,
+          story: {
+            ...state.siteEdit.story,
+            composedText: action.payload,
+          }
+        },
+        isChanged: true,
+      };
+    case "CHANGE_SITE_STORY_TITLE":
+      return {
+        ...state,
+        siteEdit: {
+          ...state.siteEdit,
+          story: {
+            ...state.siteEdit.story,
+            title: action.payload,
+          }
+        },
+        isChanged: true,
+      };
     case "CHANGE_HOME_ITEM_NAME":
       return {
         ...state,

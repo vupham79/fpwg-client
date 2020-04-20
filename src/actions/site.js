@@ -463,6 +463,7 @@ export function saveDesignSite({
           showPostMode: site.showDetailSetting.showPostMode,
           latitude: site.latitude,
           longitude: site.longitude,
+          story: site.story
         },
       });
       dispatch({
@@ -758,6 +759,24 @@ export function changeSiteAbout(about) {
     dispatch({
       type: "CHANGE_SITE_ABOUT",
       payload: about,
+    });
+  };
+}
+
+export function changeSiteStory(story) {
+  return (dispatch) => {
+    dispatch({
+      type: "CHANGE_SITE_STORY",
+      payload: story,
+    });
+  };
+}
+
+export function changeSiteStoryTitle(title) {
+  return (dispatch) => {
+    dispatch({
+      type: "CHANGE_SITE_STORY_TITLE",
+      payload: title,
     });
   };
 }

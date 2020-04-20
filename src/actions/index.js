@@ -80,6 +80,8 @@ import {
   setLatLng,
   setPostMode,
   changeOrderNewCovers,
+  changeSiteStory,
+  changeSiteStoryTitle
 } from "./site";
 import { closeLoading, showLoading } from "./spinner";
 import {
@@ -219,4 +221,6 @@ export {
   setLatLng,
   setPostMode,
   changeOrderNewCovers,
+  changeSiteStory,
+  changeSiteStoryTitle
 };
