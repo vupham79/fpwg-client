@@ -50,6 +50,9 @@ import {
   setLimit,
   setAboutCustomize,
   setPostMode,
+  changeSiteStoryTitle,
+  changeSiteStory,
+  changeSiteAbout,
 } from "../actions";
 import ReactPaginate from "react-paginate";
 import SearchIcon from "@material-ui/icons/Search";
@@ -288,80 +291,80 @@ const SortableItem = sortableElement(
     changeNavItemName,
     classes,
   }) => (
-    <Grid container style={gridItem}>
-      <Grid
-        container
-        item
-        alignItems="center"
-        xs={10}
-        sm={12}
-        md={10}
-        style={{ padding: "0.2rem 0" }}
-      >
-        <Grid container justify="center" item xs={2} md={2} sm={12}>
-          <DragHandle />
+      <Grid container style={gridItem}>
+        <Grid
+          container
+          item
+          alignItems="center"
+          xs={10}
+          sm={12}
+          md={10}
+          style={{ padding: "0.2rem 0" }}
+        >
+          <Grid container justify="center" item xs={2} md={2} sm={12}>
+            <DragHandle />
+          </Grid>
+          <Grid item xs={10} md={10} sm={12}>
+            <TextField
+              // autoFocus={
+              //   this.state.currentFocusInput === item._id ? true : false
+              // }
+              // onClick={(e) => this.setState({ currentFocusInput: item._id })}
+              InputLabelProps={{
+                classes: {
+                  focused: classes.focused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  notchedOutline: classes.notchedOutline,
+                  input: classes.inputTitle,
+                },
+              }}
+              size="small"
+              style={{ backgroundColor: "white" }}
+              fullWidth
+              variant={"outlined"}
+              value={value}
+              inputProps={{
+                maxLength: 15,
+              }}
+              onChange={(e) => {
+                handleChangeNavName(
+                  item._id,
+                  site,
+                  e.target.value,
+                  changeNavItemName
+                );
+              }}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={10} md={10} sm={12}>
-          <TextField
-            // autoFocus={
-            //   this.state.currentFocusInput === item._id ? true : false
-            // }
-            // onClick={(e) => this.setState({ currentFocusInput: item._id })}
-            InputLabelProps={{
-              classes: {
-                focused: classes.focused,
-              },
-            }}
-            InputProps={{
-              classes: {
-                notchedOutline: classes.notchedOutline,
-                input: classes.inputTitle,
-              },
-            }}
-            size="small"
-            style={{ backgroundColor: "white" }}
-            fullWidth
-            variant={"outlined"}
-            value={value}
-            inputProps={{
-              maxLength: 15,
-            }}
-            onChange={(e) => {
-              handleChangeNavName(
-                item._id,
-                site,
-                e.target.value,
-                changeNavItemName
-              );
-            }}
-          />
-        </Grid>
-      </Grid>
-      <Grid container item justify="center" xs={2} sm={12} md={2}>
-        {item.original === "home" ? (
-          <></>
-        ) : (
-          <IconButton
-            style={viewButton}
-            onClick={() =>
-              handleChangeActive(
-                item._id,
-                site,
-                setActiveNavItems,
-                updateNavItemValue
-              )
-            }
-          >
-            {item.isActive && item.name !== "Home" ? (
-              <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-            ) : (
-              <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+        <Grid container item justify="center" xs={2} sm={12} md={2}>
+          {item.original === "home" ? (
+            <></>
+          ) : (
+              <IconButton
+                style={viewButton}
+                onClick={() =>
+                  handleChangeActive(
+                    item._id,
+                    site,
+                    setActiveNavItems,
+                    updateNavItemValue
+                  )
+                }
+              >
+                {item.isActive && item.name !== "Home" ? (
+                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                ) : (
+                    <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                  )}
+              </IconButton>
             )}
-          </IconButton>
-        )}
+        </Grid>
       </Grid>
-    </Grid>
-  )
+    )
 );
 
 const SortableList = sortableContainer(
@@ -440,6 +443,18 @@ class PagesEditorTab extends React.Component {
 
   setStatePost = (posts) => {
     this.setState({ filteredData: [...posts] });
+  };
+
+  handleChangeStory = (e) => {
+    this.props.changeSiteStory(e.target.value);
+  };
+
+  handleChangeStoryTitle = (e) => {
+    this.props.changeSiteStoryTitle(e.target.value);
+  };
+
+  handleChangeAbout = (e) => {
+    this.props.changeSiteAbout(e.target.value);
   };
 
   handleSetLimit = (type) => (event) => {
@@ -580,6 +595,7 @@ class PagesEditorTab extends React.Component {
       changeNavItemName,
       setEventCustomize,
       setAboutCustomize,
+      about
     } = this.props;
     const { hover } = this.state;
     return (
@@ -615,6 +631,106 @@ class PagesEditorTab extends React.Component {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Grid container>
+
+              <Grid item container xs={12}>
+                <Grid item xs={12} style={{ height: 20 }} />
+                <Grid item xs={12}>
+                  <Typography className={classes.title2}>Story Title</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    InputLabelProps={{
+                      classes: {
+                        focused: classes.focused,
+                      },
+                    }}
+                    inputProps={{
+                      maxLength: 15,
+                    }}
+                    InputProps={{
+                      classes: {
+                        notchedOutline: classes.notchedOutline,
+                        input: classes.inputTitle,
+                      },
+                    }}
+                    size="small"
+                    style={{ backgroundColor: "white" }}
+                    fullWidth
+                    variant={"outlined"}
+                    value={site.story ? site.story.title : ""}
+                    onChange={(e) => this.handleChangeStoryTitle(e)}
+                  />
+                </Grid>
+              </Grid>
+
+              <Grid container item xs={12}>
+                <Grid item xs={12} style={{ height: 20 }} />
+                <Grid item xs={12}>
+                  <Typography className={classes.title2}>Story</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    InputLabelProps={{
+                      classes: {
+                        focused: classes.focused,
+                      },
+                    }}
+                    inputProps={{
+                      maxLength: 2000,
+                    }}
+                    InputProps={{
+                      classes: {
+                        notchedOutline: classes.notchedOutline,
+                        input: classes.inputTitle,
+                      },
+                    }}
+                    multiline
+                    size="small"
+                    style={{ backgroundColor: "white" }}
+                    fullWidth
+                    rows={5}
+                    spellCheck={false}
+                    variant={"outlined"}
+                    value={site.story ? site.story.composedText : ""}
+                    onChange={(e) => this.handleChangeStory(e)}
+                  />
+                </Grid>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Grid item xs={12} style={{ height: 20 }} />
+                <Grid item xs={12}>
+                  <Typography className={classes.title2}>Introduction</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    InputLabelProps={{
+                      classes: {
+                        focused: classes.focused,
+                      },
+                    }}
+                    inputProps={{
+                      maxLength: 1000,
+                    }}
+                    InputProps={{
+                      classes: {
+                        notchedOutline: classes.notchedOutline,
+                        input: classes.inputTitle,
+                      },
+                    }}
+                    multiline
+                    size="small"
+                    style={{ backgroundColor: "white" }}
+                    fullWidth
+                    rows={5}
+                    spellCheck={false}
+                    variant={"outlined"}
+                    value={about ? about : ""}
+                    onChange={(e) => this.handleChangeAbout(e)}
+                  />
+                </Grid>
+              </Grid>
+
               <Grid item xs={12}>
                 <FormControlLabel
                   control={
@@ -1180,7 +1296,7 @@ class PagesEditorTab extends React.Component {
             marginTop: 30,
           }}
         />
-      </div>
+      </div >
     );
   }
 }
@@ -1188,6 +1304,7 @@ const mapStateToProps = (state) => ({
   site: state.site.siteEdit,
   open: state.dialog.open,
   posts: state.post.posts,
+  about: state.site.siteEdit.about && state.site.siteEdit.about,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -1203,6 +1320,9 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(setAboutCustomize(logo, description, story)),
   setLimit: (news, event, gallery) => dispatch(setLimit(news, event, gallery)),
   setPostMode: (mode) => dispatch(setPostMode(mode)),
+  changeSiteStory: (about) => dispatch(changeSiteStory(about)),
+  changeSiteStoryTitle: (about) => dispatch(changeSiteStoryTitle(about)),
+  changeSiteAbout: (about) => dispatch(changeSiteAbout(about)),
 });
 
 export default connect(
