@@ -164,14 +164,7 @@ class MainPage extends Component {
               backgroundSize: "cover",
             }}
           >
-            <Grid
-              container
-              item
-              xs={12}
-              sm={3}
-              md={2}
-              className={classes.sites}
-            >
+            <Grid container item xs={12} sm={2} className={classes.sites}>
               <DesignTab />
             </Grid>
             <Grid
