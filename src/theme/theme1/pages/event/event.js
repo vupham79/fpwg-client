@@ -41,7 +41,7 @@ class Theme1Event extends React.Component {
 
     return (
       <Grid container style={{ minHeight: "50vh" }}>
-        <Grid item xs={12} style={{ marginBottom: 70 }}>
+        <Grid item xs={12}>
           <p style={classes.changableTitle}>
             <span style={classes.changableFirst}>
               {fromHome ? homeTitle.charAt(0) : "E"}

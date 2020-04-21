@@ -138,7 +138,7 @@ class Theme1About extends React.Component {
     const classes = useStyles();
 
     return (
-      <Grid container justify={"center"} style={{ minHeight: "50vh", marginTop: 70 }}>
+      <Grid container justify={"center"} style={{ minHeight: "50vh", marginTop: fromHome ? 70 : 0 }}>
 
         <Grid item xs={12} style={{ marginBottom: 50 }}>
           <p style={classes.changableTitle}>

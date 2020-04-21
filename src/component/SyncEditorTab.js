@@ -71,6 +71,11 @@ const useStyles = (theme) => ({
     padding: "0",
   },
   expanPanel: {
+    marginTop: "1rem",
+    zIndex: "999999",
+    border: "1px solid #dddddd",
+    width: "100%",
+    backgroundColor: "#f0eded",
     "&:hover": {
       transitionDuration: "0.5s",
       border: "1px solid #0074aa",
@@ -175,15 +180,15 @@ function CreateTable({ data }) {
                   {!row.dateFrom && !row.dateTo ? (
                     "All"
                   ) : (
-                    <Grid container justify="center">
-                      <Grid style={fontTable} item xs={12}>
-                        From: {moment(row.dateFrom).format("DD-MM-YYYY")}
+                      <Grid container justify="center">
+                        <Grid style={fontTable} item xs={12}>
+                          From: {moment(row.dateFrom).format("DD-MM-YYYY")}
+                        </Grid>
+                        <Grid style={fontTable} item xs={12}>
+                          To: {moment(row.dateTo).format("DD-MM-YYYY")}
+                        </Grid>
                       </Grid>
-                      <Grid style={fontTable} item xs={12}>
-                        To: {moment(row.dateTo).format("DD-MM-YYYY")}
-                      </Grid>
-                    </Grid>
-                  )}
+                    )}
                 </TableCell>
                 <TableCell align="center">
                   <Grid
@@ -397,6 +402,9 @@ class SyncEditorTab extends React.Component {
     const radioButton = { fontSize: "14px", fontFamily: "Roboto, sans-serif" };
     const titleExpan = {
       fontFamily: "Roboto, sans-serif",
+      fontWeight: "600",
+      color: "#555d66",
+      fontSize: 14,
     };
     const { hover } = this.state;
 
@@ -414,6 +422,7 @@ class SyncEditorTab extends React.Component {
           onMouseLeave={() => this.setHover(1, false)}
         >
           <ExpansionPanelSummary
+            style={{ backgroundColor: "white" }}
             onClick={() => this.onChangePanel("t1", !this.state.isExpanding)}
             expandIcon={
               <FontAwesomeIcon
@@ -426,7 +435,7 @@ class SyncEditorTab extends React.Component {
               />
             }
           >
-            <Typography variant="button" style={titleExpan}>
+            <Typography style={titleExpan}>
               Sync Records
             </Typography>
           </ExpansionPanelSummary>
@@ -478,6 +487,7 @@ class SyncEditorTab extends React.Component {
           onMouseLeave={() => this.setHover(2, false)}
         >
           <ExpansionPanelSummary
+            style={{ backgroundColor: "white" }}
             onClick={() => this.onChangePanel("t2", !this.state.isExpanding)}
             expandIcon={
               <FontAwesomeIcon
@@ -490,7 +500,7 @@ class SyncEditorTab extends React.Component {
               />
             }
           >
-            <Typography style={titleExpan} variant="button">
+            <Typography style={titleExpan}>
               Manual
             </Typography>
           </ExpansionPanelSummary>
@@ -656,6 +666,7 @@ class SyncEditorTab extends React.Component {
           onMouseLeave={() => this.setHover(3, false)}
         >
           <ExpansionPanelSummary
+            style={{ backgroundColor: "white" }}
             onClick={() => this.onChangePanel("t3", !this.state.isExpanding)}
             expandIcon={
               <FontAwesomeIcon
@@ -668,7 +679,7 @@ class SyncEditorTab extends React.Component {
               />
             }
           >
-            <Typography style={titleExpan} variant="button">
+            <Typography style={titleExpan}>
               Schedule
             </Typography>
           </ExpansionPanelSummary>

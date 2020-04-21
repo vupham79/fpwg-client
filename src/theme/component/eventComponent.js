@@ -82,7 +82,7 @@ class EventComponent extends React.Component {
                     backgroundColor: dark ? "#000" : "#fff",
                     borderBottom: altType ? "1px solid" : "none",
                     borderColor: dark ? "#000" : "#d4e1db",
-                    marginTop: altType ? 70 : 0
+                    marginTop: altType ? 50 : 0
                   }}
                 >
                   <Grid
@@ -316,7 +316,7 @@ class EventComponent extends React.Component {
                     backgroundColor: dark ? "#000" : "#fff",
                     borderBottom: altType ? "1px solid" : "none",
                     borderColor: dark ? "#000" : "#d4e1db",
-                    marginTop: altType ? 70 : 0
+                    marginTop: altType ? 50 : 0
                   }}
                 >
                   <Grid
