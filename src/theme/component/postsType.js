@@ -25,6 +25,7 @@ import {
 import ButtonComponent from "../../component/Button";
 import Link from "../../component/link";
 import Slider from "react-slick";
+import styles from "./event.module.css";
 
 const useStyles = (theme) => ({
   root: {
@@ -379,12 +380,12 @@ class PostTypeComponent extends React.Component {
                   overflow: "hidden",
                   textOverflow: "ellipsis",
                   display: "-webkit-box",
-                  WebkitLineClamp: altType ? 12 : 3,
+                  WebkitLineClamp: altType ? 4 : 3,
                   lineHeight: "20px",
                   WebkitBoxOrient: "vertical",
                   // height: "100%",
                   whiteSpace: "pre-wrap",
-                  height: altType ? 242 : 60, //message height
+                  height: altType ? 80 : 60, //message height
                 }}
               >
                 {post.message}
@@ -434,7 +435,8 @@ class PostTypeComponent extends React.Component {
                 xs={12}
                 style={{
                   display: altType ? "block" : "none",
-                  padding: "1rem",
+                  paddingLeft: "1rem",
+                  paddingBottom: "1rem",
                   borderRadius: "0.4rem",
                 }}
               >
@@ -560,12 +562,12 @@ class PostTypeComponent extends React.Component {
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 display: "-webkit-box",
-                WebkitLineClamp: altType ? 18 : 10,
+                WebkitLineClamp: altType ? 10 : 10,
                 WebkitBoxOrient: "vertical",
                 // height: "100%",
-                lineHeight: "21px",
+                lineHeight: altType ? "22px" : "21px",
                 whiteSpace: "pre-wrap",
-                height: altType ? 380 : 210, //attach height + message height
+                height: altType ? 218 : 210, //attach height + message height
               }}
             >
               {post.message}
@@ -615,7 +617,8 @@ class PostTypeComponent extends React.Component {
               xs={12}
               style={{
                 display: altType ? "block" : "none",
-                padding: "1rem",
+                paddingLeft: "1rem",
+                paddingBottom: "1rem",
                 borderRadius: "0.4rem",
               }}
             >
@@ -694,7 +697,7 @@ class PostTypeComponent extends React.Component {
     return (
       <>
         {fromHome && (
-          <Grid item sm={posts.length > 1 ? 12 : 6} xs={12}>
+          <Grid className={styles.newsSlider}>
             <Slider
               speed={1000}
               autoplaySpeed={2500}
@@ -706,14 +709,14 @@ class PostTypeComponent extends React.Component {
               prevArrow={<SamplePrevArrow dark={dark} />}
               responsive={[
                 {
-                  breakpoint: 960,
+                  breakpoint: 1260,
                   settings: {
                     slidesToScroll: posts.length > 1 ? 2 : posts.length,
                     slidesToShow: posts.length > 1 ? 2 : posts.length,
                   },
                 },
                 {
-                  breakpoint: 600,
+                  breakpoint: 900,
                   settings: {
                     slidesToScroll: 1,
                     slidesToShow: 1,

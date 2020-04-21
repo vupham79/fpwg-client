@@ -153,7 +153,7 @@ class Theme1About extends React.Component {
           <Grid item xs={12} sm={12} style={{ marginLeft: "25%" }}>
             <img src={this.renderImage()} alt="" style={{ width: 292, height: 348, marginTop: -50, objectFit: "cover", display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutLogo ? "block" : "none") }} />
 
-            <span style={{ height: 298, overflowY: "auto", maxWidth: 400, paddingLeft: 35, paddingTop: 30, display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutDescription ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutDescription ? "inline-block" : "none") }} >
+            <span style={{ height: 298, overflowY: "auto", whiteSpace: "pre-wrap", width: 400, paddingLeft: 35, paddingTop: 30, display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutDescription ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutDescription ? "inline-block" : "none") }} >
               <p style={classes.changableTitle2}>Introduction</p>
               <p style={classes.changableBody3}>
                 {isEdit && siteEdit && siteEdit.about}
@@ -167,7 +167,7 @@ class Theme1About extends React.Component {
 
         <Grid container item xs={12} justify={"center"} style={{ backgroundColor: isEdit ? lighten(titleEdit.color, 0.08) : lighten(titleView.color, 0.08), minHeight: 420, display: isShowStory() ? "block" : "none", paddingTop: 50 }}>
           <Grid item xs={12} sm={12} style={{ marginLeft: "25%" }}>
-            <span style={{ height: 298, overflowY: "auto", maxWidth: 400, paddingRight: 35, paddingTop: 30, display: "inline-block" }} >
+            <span style={{ height: 298, overflowY: "auto", whiteSpace: "pre-wrap", width: 400, paddingRight: 35, paddingTop: 30, display: "inline-block" }} >
               <p style={classes.changableTitle2}>
                 {isEdit
                   ? siteEdit && siteEdit.story && siteEdit.story.title

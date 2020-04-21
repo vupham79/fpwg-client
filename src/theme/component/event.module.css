@@ -60,3 +60,20 @@
   text-align: center;
   margin-top: 7vh !important;
 }
+
+.newsSlider {
+  width: 880px;
+  height: 100%;
+}
+
+@media only screen and (max-width: 1260px) {
+  .newsSlider {
+      width: 600px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .newsSlider {
+      width: 300px;
+  }
+}

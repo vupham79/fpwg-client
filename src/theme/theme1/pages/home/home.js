@@ -68,8 +68,8 @@ class Theme1Home extends React.Component {
       <Grid container style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
           <BannerComponent bannerType={0} />
-          <div style={{ width: 348, position: "relative", opacity: 0.9, zIndex: 99, backgroundColor: isEdit ? titleEdit.color : titleView.color, height: 450, marginTop: -400, marginLeft: "20%", padding: 20, overflowY: "auto", display: isShowStory() ? "block" : "none" }}>
-            <p style={{ color: "#ffffff", lineHeight: "1.5em", fontSize: 30, fontWeight: 700 }}>
+          <div style={{ width: 348, position: "relative", opacity: 0.9, zIndex: 99, backgroundColor: isEdit ? titleEdit.color : titleView.color, height: 450, marginTop: -400, marginLeft: "20%", padding: 20, overflowY: "auto", display: isShowStory() ? "block" : "none", whiteSpace: "pre-wrap" }}>
+            <p style={{ color: "#ffffff", lineHeight: "1.5em", fontSize: 30, fontWeight: 700, textTransform: "uppercase" }}>
               {isEdit
                 ? siteEdit && siteEdit.story && siteEdit.story.title
                 : siteView && siteView.story && siteView.story.title}
