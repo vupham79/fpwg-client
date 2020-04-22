@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Select, MenuItem, withStyles } from "@material-ui/core";
-import WebFont from "webfontloader";
 import { fontFamily } from "../constant/constant";
 const useStyle = (theme) => ({
   root: {
@@ -15,11 +14,6 @@ class FontPickerComponent extends Component {
   };
   render() {
     const { selectedValue, classes } = this.props;
-    WebFont.load({
-      google: {
-        families: fontFamily,
-      },
-    });
     return (
       <Select
         classes={{
