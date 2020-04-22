@@ -23,6 +23,8 @@ import {
   TableHead,
   TableRow,
   Typography,
+  Checkbox,
+  TextField,
 } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Close as CloseIcon } from "@material-ui/icons";
@@ -82,6 +84,21 @@ const useStyles = (theme) => ({
       color: "#0074aa",
       borderLeft: "4px solid #0074aa",
     },
+  },
+  notchedOutline: {
+    borderWidth: "1px",
+    borderColor: "#0087be !important",
+    color: "#434d58 !important",
+  },
+  focused: {
+    borderWidth: "1px",
+    borderColor: "#0087be !important",
+    color: "#434d58 !important",
+  },
+  inputTitle: {
+    fontFamily: "Roboto, sans-serif !important",
+    fontSize: 13,
+    color: "#555d66",
   },
 });
 
@@ -238,6 +255,28 @@ class SyncEditorTab extends React.Component {
     previousExpandItem: "",
     isExpanding: false,
     currentExpandItem: "",
+    schedulePostWithCheck: false,
+    scheduleContainMsgCheck: false,
+    schedulePostRadioValue: "",
+    scheduleTitleMsgCheck: false,
+    schedulePostMsg: null,
+    scheduleEventTitle: null,
+    autoPostWithCheck: false,
+    autoContainMsgCheck: false,
+    autoPostRadioValue: "",
+    autoTitleMsgCheck: false,
+    autoPostMsg: null,
+    autoEventTitle: null,
+    scheduleAboutCheck: false,
+    scheduleAddressCheck: false,
+    scheduleEmailCheck: false,
+    scheduleStoryCheck: false,
+    schedulePhoneCheck: false,
+    autoAboutCheck: false,
+    autoAddressCheck: false,
+    autoEmailCheck: false,
+    autoStoryCheck: false,
+    autoPhoneCheck: false,
   };
 
   selectTab = (event, tab) => {
@@ -254,6 +293,15 @@ class SyncEditorTab extends React.Component {
   handleRadioChange = (event) => {
     this.setState({ radioValue: event.target.value });
   };
+
+  handleRadioPostChange = (type, event) => {
+    if (type === "schedule") {
+      this.setState({ schedulePostRadioValue: parseInt(event.target.value) });
+    } else {
+      this.setState({ autoPostRadioValue: parseInt(event.target.value) });
+    }
+  };
+
   setStartDate = (date) => {
     this.setState({ startDate: date });
   };
@@ -386,6 +434,26 @@ class SyncEditorTab extends React.Component {
         currentExpandItem: item,
         isExpanding: expand,
       });
+    }
+  };
+
+  handleChangeCheckBox = (event) => {
+    this.setState({ [event.target.name]: event.target.checked });
+  };
+
+  handleChangeContainMessage = (type, event) => {
+    if (type === "schedule") {
+      this.setState({ schedulePostMsg: event.target.value });
+    } else {
+      this.setState({ autoPostMsg: event.target.value });
+    }
+  };
+
+  handleChangeContainTitle = (type, event) => {
+    if (type === "schedule") {
+      this.setState({ scheduleEventTitle: event.target.value });
+    } else {
+      this.setState({ autoEventTitle: event.target.value });
     }
   };
 
@@ -590,43 +658,292 @@ class SyncEditorTab extends React.Component {
                 container
                 item
                 xs={12}
-                alignItems="center"
+                justify="center"
                 className={classes.gridItem}
               >
-                <Grid item xs={4} sm={4} style={titleExpan}>
+                <Grid item xs={12} style={titleExpan}>
                   Data type:
                 </Grid>
-                <Grid item xs={6} sm={12} className={classes.gridItem}>
+                <Grid
+                  container
+                  justify="center"
+                  alignItems="center"
+                  item
+                  xs={10}
+                  className={classes.gridItem}
+                >
                   <RadioGroup
                     row
                     value={this.state.radioValue}
                     onChange={this.handleRadioChange}
                   >
-                    <FormControlLabel
-                      value="post"
-                      control={<Radio color="primary" />}
-                      label={<Typography style={radioButton}>Post</Typography>}
-                    />
-                    <FormControlLabel
-                      value="event"
-                      control={<Radio color="primary" />}
-                      label={<Typography style={radioButton}>Event</Typography>}
-                    />
-                    <FormControlLabel
-                      value="gallery"
-                      control={<Radio color="primary" />}
-                      label={
-                        <Typography style={radioButton}>Gallery</Typography>
-                      }
-                    />
-                    <FormControlLabel
-                      value="all"
-                      control={<Radio color="primary" />}
-                      label={<Typography style={radioButton}>All</Typography>}
-                    />
+                    <Grid container item xs={12} justify="center">
+                      <Grid item xs={12}>
+                        <FormControlLabel
+                          value="post"
+                          control={<Radio color="primary" />}
+                          label={
+                            <Typography style={radioButton}>Post</Typography>
+                          }
+                        />
+                      </Grid>
+                      {this.state.radioValue === "post" && (
+                        <Grid container item xs={10}>
+                          <Grid container item xs={12} justify="center">
+                            <Grid item xs={12}>
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    checked={this.state.schedulePostWithCheck}
+                                    onChange={this.handleChangeCheckBox}
+                                    name="schedulePostWithCheck"
+                                    color="primary"
+                                  />
+                                }
+                                label="Post With"
+                              />
+                            </Grid>
+                            {this.state.schedulePostWithCheck && (
+                              <Grid container item xs={10}>
+                                <RadioGroup
+                                  row
+                                  value={this.state.schedulePostRadioValue}
+                                  onChange={(e) =>
+                                    this.handleRadioPostChange("schedule", e)
+                                  }
+                                >
+                                  <Grid item xs={9}>
+                                    <FormControlLabel
+                                      value={1}
+                                      control={<Radio color="primary" />}
+                                      label={
+                                        <Typography style={radioButton}>
+                                          Message
+                                        </Typography>
+                                      }
+                                    />
+                                  </Grid>
+                                  <Grid item xs={9}>
+                                    <FormControlLabel
+                                      value={2}
+                                      control={<Radio color="primary" />}
+                                      label={
+                                        <Typography style={radioButton}>
+                                          Video
+                                        </Typography>
+                                      }
+                                    />
+                                  </Grid>
+                                  <Grid item xs={9}>
+                                    <FormControlLabel
+                                      value={3}
+                                      control={<Radio color="primary" />}
+                                      label={
+                                        <Typography style={radioButton}>
+                                          Photo
+                                        </Typography>
+                                      }
+                                    />
+                                  </Grid>
+                                </RadioGroup>
+                              </Grid>
+                            )}
+                          </Grid>
+                          <Grid container item xs={12} justify="center">
+                            <Grid item xs={12}>
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    checked={this.state.scheduleContainMsgCheck}
+                                    onChange={this.handleChangeCheckBox}
+                                    name="scheduleContainMsgCheck"
+                                    color="primary"
+                                  />
+                                }
+                                label="Post Contain Message"
+                              />
+                            </Grid>
+                            {this.state.scheduleContainMsgCheck && (
+                              <Grid item xs={10}>
+                                <TextField
+                                  variant="outlined"
+                                  label="Message"
+                                  fullWidth
+                                  value={this.state.schedulePostMsg}
+                                  onChange={(e) =>
+                                    this.handleChangeContainMessage(e)
+                                  }
+                                  InputLabelProps={{
+                                    classes: {
+                                      focused: classes.focused,
+                                      root: classes.inputLabel,
+                                    },
+                                  }}
+                                  InputProps={{
+                                    classes: {
+                                      notchedOutline: classes.notchedOutline,
+                                      input: classes.inputTitle,
+                                    },
+                                  }}
+                                  rows={3}
+                                  multiline
+                                  size="small"
+                                />
+                              </Grid>
+                            )}
+                          </Grid>
+                        </Grid>
+                      )}
+                    </Grid>
+                    <Grid container item xs={12} justify="center">
+                      <Grid item xs={12}>
+                        <FormControlLabel
+                          value="event"
+                          control={<Radio color="primary" />}
+                          label={
+                            <Typography style={radioButton}>Event</Typography>
+                          }
+                        />
+                      </Grid>
+                      {this.state.radioValue === "event" && (
+                        <Grid container item xs={10}>
+                          <Grid container item xs={12} justify="center">
+                            <Grid item xs={12}>
+                              <FormControlLabel
+                                control={
+                                  <Checkbox
+                                    checked={this.state.scheduleTitleMsgCheck}
+                                    onChange={this.handleChangeCheckBox}
+                                    name="scheduleTitleMsgCheck"
+                                    color="primary"
+                                  />
+                                }
+                                label="Event Contain Tittle"
+                              />
+                            </Grid>
+                            {this.state.scheduleTitleMsgCheck && (
+                              <Grid item xs={10}>
+                                <TextField
+                                  variant="outlined"
+                                  label="Titlte"
+                                  fullWidth
+                                  value={this.state.scheduleEventTitle}
+                                  onChange={(e) =>
+                                    this.handleChangeContainTitle(e)
+                                  }
+                                  InputLabelProps={{
+                                    classes: {
+                                      focused: classes.focused,
+                                      root: classes.inputLabel,
+                                    },
+                                  }}
+                                  InputProps={{
+                                    classes: {
+                                      notchedOutline: classes.notchedOutline,
+                                      input: classes.inputTitle,
+                                    },
+                                  }}
+                                  size="small"
+                                />
+                              </Grid>
+                            )}
+                          </Grid>
+                        </Grid>
+                      )}
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControlLabel
+                        value="gallery"
+                        control={<Radio color="primary" />}
+                        label={
+                          <Typography style={radioButton}>Gallery</Typography>
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControlLabel
+                        value="all"
+                        control={<Radio color="primary" />}
+                        label={<Typography style={radioButton}>All</Typography>}
+                      />
+                    </Grid>
                   </RadioGroup>
                 </Grid>
               </Grid>
+
+              <Grid container item xs={12} justify="center">
+                <Grid item xs={12} style={titleExpan}>
+                  Filter type:
+                </Grid>
+                <Grid container item xs={10}>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.scheduleAboutCheck}
+                          onChange={this.handleChangeCheckBox}
+                          name="scheduleAboutCheck"
+                          color="primary"
+                        />
+                      }
+                      label="About"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.scheduleStoryCheck}
+                          onChange={this.handleChangeCheckBox}
+                          name="scheduleStoryCheck"
+                          color="primary"
+                        />
+                      }
+                      label="Story"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.scheduleAddressCheck}
+                          onChange={this.handleChangeCheckBox}
+                          name="scheduleAddressCheck"
+                          color="primary"
+                        />
+                      }
+                      label="Address"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.scheduleEmailCheck}
+                          onChange={this.handleChangeCheckBox}
+                          name="scheduleEmailCheck"
+                          color="primary"
+                        />
+                      }
+                      label="Email"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.schedulePhoneCheck}
+                          onChange={this.handleChangeCheckBox}
+                          name="schedulePhoneCheck"
+                          color="primary"
+                        />
+                      }
+                      label="Phone"
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+
               {this.state.msg && (
                 <Grid
                   container
@@ -725,6 +1042,160 @@ class SyncEditorTab extends React.Component {
                 </Grid>
               </Grid>
 
+              {site.autoSync.dataType === "post" && (
+                <Grid container item xs={12}>
+                  <Grid container item xs={10} justify="center">
+                    <Grid item xs={12}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.autoPostWithCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="autoPostWithCheck"
+                            color="primary"
+                          />
+                        }
+                        label="Post With"
+                      />
+                    </Grid>
+                    {this.state.autoPostWithCheck && (
+                      <Grid container item xs={10}>
+                        <RadioGroup
+                          row
+                          value={this.state.autoPostRadioValue}
+                          onChange={(e) =>
+                            this.handleRadioPostChange("auto", e)
+                          }
+                        >
+                          <Grid item xs={9}>
+                            <FormControlLabel
+                              value={1}
+                              control={<Radio color="primary" />}
+                              label={
+                                <Typography style={radioButton}>
+                                  Message
+                                </Typography>
+                              }
+                            />
+                          </Grid>
+                          <Grid item xs={9}>
+                            <FormControlLabel
+                              value={2}
+                              control={<Radio color="primary" />}
+                              label={
+                                <Typography style={radioButton}>
+                                  Video
+                                </Typography>
+                              }
+                            />
+                          </Grid>
+                          <Grid item xs={9}>
+                            <FormControlLabel
+                              value={3}
+                              control={<Radio color="primary" />}
+                              label={
+                                <Typography style={radioButton}>
+                                  Photo
+                                </Typography>
+                              }
+                            />
+                          </Grid>
+                        </RadioGroup>
+                      </Grid>
+                    )}
+                  </Grid>
+                  <Grid container item xs={12} justify="center">
+                    <Grid item xs={12}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.autoContainMsgCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="autoContainMsgCheck"
+                            color="primary"
+                          />
+                        }
+                        label="Post Contain Message"
+                      />
+                    </Grid>
+                    {this.state.autoContainMsgCheck && (
+                      <Grid item xs={10}>
+                        <TextField
+                          variant="outlined"
+                          label="Message"
+                          fullWidth
+                          value={this.state.schedulePostMsg}
+                          onChange={(e) =>
+                            this.handleChangeContainMessage("auto", e)
+                          }
+                          InputLabelProps={{
+                            classes: {
+                              focused: classes.focused,
+                              root: classes.inputLabel,
+                            },
+                          }}
+                          InputProps={{
+                            classes: {
+                              notchedOutline: classes.notchedOutline,
+                              input: classes.inputTitle,
+                            },
+                          }}
+                          rows={3}
+                          multiline
+                          size="small"
+                        />
+                      </Grid>
+                    )}
+                  </Grid>
+                </Grid>
+              )}
+
+              {site.autoSync.dataType === "event" && (
+                <Grid container item xs={10}>
+                  <Grid container item xs={12} justify="center">
+                    <Grid item xs={12}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.autoTitleMsgCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="autoTitleMsgCheck"
+                            color="primary"
+                          />
+                        }
+                        label="Event Contain Tittle"
+                      />
+                    </Grid>
+                    {this.state.autoTitleMsgCheck && (
+                      <Grid item xs={10}>
+                        <TextField
+                          variant="outlined"
+                          label="Titlte"
+                          fullWidth
+                          value={this.state.autoEventTitle}
+                          onChange={(e) =>
+                            this.handleChangeContainTitle("auto", e)
+                          }
+                          InputLabelProps={{
+                            classes: {
+                              focused: classes.focused,
+                              root: classes.inputLabel,
+                            },
+                          }}
+                          InputProps={{
+                            classes: {
+                              notchedOutline: classes.notchedOutline,
+                              input: classes.inputTitle,
+                            },
+                          }}
+                          size="small"
+                        />
+                      </Grid>
+                    )}
+                  </Grid>
+                </Grid>
+              )}
+
               {site.autoSync.dataType !== "none" && (
                 <Grid
                   container
@@ -764,6 +1235,79 @@ class SyncEditorTab extends React.Component {
                   </Grid>
                 </Grid>
               )}
+              <Grid container item xs={12} justify="center">
+                <Grid item xs={12} style={titleExpan}>
+                  Filter type:
+                </Grid>
+                <Grid container item xs={10}>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.autoAboutCheck}
+                          onChange={this.handleChangeCheckBox}
+                          name="autoAboutCheck"
+                          color="primary"
+                        />
+                      }
+                      label="About"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.autoStoryCheck}
+                          onChange={this.handleChangeCheckBox}
+                          name="autoStoryCheck"
+                          color="primary"
+                        />
+                      }
+                      label="Story"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.autoAddressCheck}
+                          onChange={this.handleChangeCheckBox}
+                          name="autoAddressCheck"
+                          color="primary"
+                        />
+                      }
+                      label="Address"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.autoEmailCheck}
+                          onChange={this.handleChangeCheckBox}
+                          name="autoEmailCheck"
+                          color="primary"
+                        />
+                      }
+                      label="Email"
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={this.state.autoPhoneCheck}
+                          onChange={this.handleChangeCheckBox}
+                          name="autoPhoneCheck"
+                          color="primary"
+                        />
+                      }
+                      label="Phone"
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+
               {this.state.msg && (
                 <Grid
                   container
