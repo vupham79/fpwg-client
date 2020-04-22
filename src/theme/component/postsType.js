@@ -249,12 +249,12 @@ class PostTypeComponent extends React.Component {
           key={post._id}
           container
           item
-          // container={!fromHome}
-          // item={!fromHome}
-          // xs={!fromHome && 10}
-          // sm={!fromHome && 5}
-          // md={!fromHome && 5}
-          // lg={!fromHome && 3}
+          container={!fromHome}
+          item={!fromHome}
+          xs={!fromHome && 10}
+          sm={!fromHome && 5}
+          md={!fromHome && 3}
+          lg={!fromHome && 3}
           onClick={(e) =>
             isEdit
               ? altType && this.handleHomeClick(post)
@@ -492,12 +492,12 @@ class PostTypeComponent extends React.Component {
         key={post._id}
         container
         item
-        // container={!fromHome}
-        // item={!fromHome}
-        // xs={!fromHome && 10}
-        // sm={!fromHome && 5}
-        // md={!fromHome && 5}
-        // lg={!fromHome && 3}
+        container={!fromHome}
+        item={!fromHome}
+        xs={!fromHome && 10}
+        sm={!fromHome && 5}
+        md={!fromHome && 3}
+        lg={!fromHome && 3}
         onClick={(e) =>
           isEdit
             ? altType && this.handleHomeClick(post)
