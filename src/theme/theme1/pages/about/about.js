@@ -151,7 +151,7 @@ class Theme1About extends React.Component {
 
         <Grid container item xs={12} justify={"center"} style={{ backgroundColor: isEdit ? titleEdit.color : titleView.color, minHeight: 420 }}>
           <Grid item xs={12} sm={12} style={{ marginLeft: "25%" }}>
-            <img src={this.renderImage()} alt="" style={{ width: 292, height: 348, marginTop: -50, objectFit: "cover", display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutLogo ? "block" : "none") }} />
+            <img src={this.renderImage()} alt="" style={{ width: 292, height: 348, marginTop: -50, objectFit: "cover", display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutLogo ? "inline-block" : "none") }} />
 
             <span style={{ height: 298, overflowY: "auto", whiteSpace: "pre-wrap", width: 400, paddingLeft: 35, paddingTop: 30, display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutDescription ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutDescription ? "inline-block" : "none") }} >
               <p style={classes.changableTitle2}>Introduction</p>
