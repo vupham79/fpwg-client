@@ -774,7 +774,7 @@ class SyncEditorTab extends React.Component {
                                 }
                                 label={
                                   <p style={{ fontSize: 13, color: "#555d66" }}>
-                                    Posts containing message
+                                    Post containing message
                                   </p>
                                 }
                               />
@@ -889,7 +889,7 @@ class SyncEditorTab extends React.Component {
 
               <Grid container item xs={12} justify="center">
                 <Grid item xs={12} className={classes.title2}>
-                  Filter type:
+                  Additional data:
                 </Grid>
                 <Grid container item xs={10}>
                   <Grid item xs={12}>
@@ -1156,7 +1156,7 @@ class SyncEditorTab extends React.Component {
                         }
                         label={
                           <p style={{ fontSize: 13, color: "#555d66" }}>
-                            Posts containing message
+                            Post containing message
                           </p>
                         }
                       />
@@ -1286,7 +1286,7 @@ class SyncEditorTab extends React.Component {
               )}
               <Grid container item xs={12} justify="center">
                 <Grid item xs={12} className={classes.title2}>
-                  Filter type:
+                  Additional data:
                 </Grid>
                 <Grid container item xs={10}>
                   <Grid item xs={12}>
