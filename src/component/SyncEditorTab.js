@@ -100,6 +100,14 @@ const useStyles = (theme) => ({
     fontSize: 13,
     color: "#555d66",
   },
+  title2: {
+    fontSize: "12px",
+    marginTop: "0.25rem",
+    fontFamily: "Roboto, sans-serif",
+    fontWeight: 600,
+    marginBottom: "1rem",
+    color: "#555d66",
+  },
 });
 
 const styles = (theme) => ({
@@ -156,6 +164,7 @@ const tableStyle = makeStyles({
 
 const fontTable = {
   fontFamily: "Roboto, sans-serif",
+  fontSize: 13
 };
 
 function CreateTable({ data }) {
@@ -467,7 +476,7 @@ class SyncEditorTab extends React.Component {
       fontFamily: "Roboto, sans-serif",
     };
 
-    const radioButton = { fontSize: "14px", fontFamily: "Roboto, sans-serif" };
+    const radioButton = { fontSize: "13px", fontFamily: "Roboto, sans-serif", color: "#555d66" };
     const titleExpan = {
       fontFamily: "Roboto, sans-serif",
       fontWeight: "600",
@@ -584,11 +593,8 @@ class SyncEditorTab extends React.Component {
               >
                 <Grid
                   item
-                  xs={4}
-                  style={{
-                    textAlign: "start",
-                    fontFamily: "Roboto, sans-serif",
-                  }}
+                  xs={12}
+                  className={classes.title2}
                 >
                   Sync Type:
                 </Grid>
@@ -598,6 +604,8 @@ class SyncEditorTab extends React.Component {
                       style: {
                         padding: "0.5rem",
                         fontFamily: "Roboto, sans-serif",
+                        fontSize: 14,
+                        color: "#555d66"
                       },
                     }}
                     fullWidth
@@ -606,8 +614,8 @@ class SyncEditorTab extends React.Component {
                     value={this.state.selectValue}
                     onChange={this.handleChange}
                   >
-                    <option>All</option>
-                    <option>Date</option>
+                    <option style={{ fontSize: 14, color: "#555d66" }}>All</option>
+                    <option style={{ fontSize: 14, color: "#555d66" }}>Date</option>
                   </Select>
                 </Grid>
               </Grid>
@@ -621,10 +629,10 @@ class SyncEditorTab extends React.Component {
                   className={classes.gridItem}
                 >
                   <Grid container className={classes.datePicker}>
-                    <Grid item xs={4} sm={4} md={4} style={titleExpan}>
-                      From:
+                    <Grid item xs={12} className={classes.title2}>
+                      From
                     </Grid>
-                    <Grid item xs={6} sm={12} md={6}>
+                    <Grid item xs={12}>
                       <DatePicker
                         className={classes.picker}
                         selected={startDate}
@@ -636,10 +644,10 @@ class SyncEditorTab extends React.Component {
                     </Grid>
                   </Grid>
                   <Grid container className={classes.datePicker}>
-                    <Grid item xs={4} sm={4} md={4} style={titleExpan}>
-                      To:
+                    <Grid item xs={12} className={classes.title2}>
+                      To
                     </Grid>
-                    <Grid item xs={6} sm={12} md={6}>
+                    <Grid item xs={12}>
                       <DatePicker
                         className={classes.picker}
                         selected={this.state.endDate}
@@ -661,7 +669,7 @@ class SyncEditorTab extends React.Component {
                 justify="center"
                 className={classes.gridItem}
               >
-                <Grid item xs={12} style={titleExpan}>
+                <Grid item xs={12} className={classes.title2}>
                   Data type:
                 </Grid>
                 <Grid
@@ -681,7 +689,7 @@ class SyncEditorTab extends React.Component {
                       <Grid item xs={12}>
                         <FormControlLabel
                           value="post"
-                          control={<Radio color="primary" />}
+                          control={<Radio style={{ color: "#0074aa" }} />}
                           label={
                             <Typography style={radioButton}>Post</Typography>
                           }
@@ -697,10 +705,14 @@ class SyncEditorTab extends React.Component {
                                     checked={this.state.schedulePostWithCheck}
                                     onChange={this.handleChangeCheckBox}
                                     name="schedulePostWithCheck"
-                                    color="primary"
+                                    style={{ color: "#0074aa" }}
                                   />
                                 }
-                                label="Post With"
+                                label={
+                                  <p style={{ fontSize: 13, color: "#555d66" }}>
+                                    Post with
+                                  </p>
+                                }
                               />
                             </Grid>
                             {this.state.schedulePostWithCheck && (
@@ -715,7 +727,7 @@ class SyncEditorTab extends React.Component {
                                   <Grid item xs={9}>
                                     <FormControlLabel
                                       value={1}
-                                      control={<Radio color="primary" />}
+                                      control={<Radio style={{ color: "#0074aa" }} />}
                                       label={
                                         <Typography style={radioButton}>
                                           Message
@@ -726,7 +738,7 @@ class SyncEditorTab extends React.Component {
                                   <Grid item xs={9}>
                                     <FormControlLabel
                                       value={2}
-                                      control={<Radio color="primary" />}
+                                      control={<Radio style={{ color: "#0074aa" }} />}
                                       label={
                                         <Typography style={radioButton}>
                                           Video
@@ -737,7 +749,7 @@ class SyncEditorTab extends React.Component {
                                   <Grid item xs={9}>
                                     <FormControlLabel
                                       value={3}
-                                      control={<Radio color="primary" />}
+                                      control={<Radio style={{ color: "#0074aa" }} />}
                                       label={
                                         <Typography style={radioButton}>
                                           Photo
@@ -757,10 +769,14 @@ class SyncEditorTab extends React.Component {
                                     checked={this.state.scheduleContainMsgCheck}
                                     onChange={this.handleChangeCheckBox}
                                     name="scheduleContainMsgCheck"
-                                    color="primary"
+                                    style={{ color: "#0074aa" }}
                                   />
                                 }
-                                label="Post Contain Message"
+                                label={
+                                  <p style={{ fontSize: 13, color: "#555d66" }}>
+                                    Posts containing message
+                                  </p>
+                                }
                               />
                             </Grid>
                             {this.state.scheduleContainMsgCheck && (
@@ -799,7 +815,7 @@ class SyncEditorTab extends React.Component {
                       <Grid item xs={12}>
                         <FormControlLabel
                           value="event"
-                          control={<Radio color="primary" />}
+                          control={<Radio style={{ color: "#0074aa" }} />}
                           label={
                             <Typography style={radioButton}>Event</Typography>
                           }
@@ -815,7 +831,7 @@ class SyncEditorTab extends React.Component {
                                     checked={this.state.scheduleTitleMsgCheck}
                                     onChange={this.handleChangeCheckBox}
                                     name="scheduleTitleMsgCheck"
-                                    color="primary"
+                                    style={{ color: "#0074aa" }}
                                   />
                                 }
                                 label="Event Contain Tittle"
@@ -854,7 +870,7 @@ class SyncEditorTab extends React.Component {
                     <Grid item xs={12}>
                       <FormControlLabel
                         value="gallery"
-                        control={<Radio color="primary" />}
+                        control={<Radio style={{ color: "#0074aa" }} />}
                         label={
                           <Typography style={radioButton}>Gallery</Typography>
                         }
@@ -863,7 +879,7 @@ class SyncEditorTab extends React.Component {
                     <Grid item xs={12}>
                       <FormControlLabel
                         value="all"
-                        control={<Radio color="primary" />}
+                        control={<Radio style={{ color: "#0074aa" }} />}
                         label={<Typography style={radioButton}>All</Typography>}
                       />
                     </Grid>
@@ -872,7 +888,7 @@ class SyncEditorTab extends React.Component {
               </Grid>
 
               <Grid container item xs={12} justify="center">
-                <Grid item xs={12} style={titleExpan}>
+                <Grid item xs={12} className={classes.title2}>
                   Filter type:
                 </Grid>
                 <Grid container item xs={10}>
@@ -883,10 +899,14 @@ class SyncEditorTab extends React.Component {
                           checked={this.state.scheduleAboutCheck}
                           onChange={this.handleChangeCheckBox}
                           name="scheduleAboutCheck"
-                          color="primary"
+                          style={{ color: "#0074aa" }}
                         />
                       }
-                      label="About"
+                      label={
+                        <p style={{ fontSize: 13, color: "#555d66" }}>
+                          About
+                        </p>
+                      }
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -896,10 +916,14 @@ class SyncEditorTab extends React.Component {
                           checked={this.state.scheduleStoryCheck}
                           onChange={this.handleChangeCheckBox}
                           name="scheduleStoryCheck"
-                          color="primary"
+                          style={{ color: "#0074aa" }}
                         />
                       }
-                      label="Story"
+                      label={
+                        <p style={{ fontSize: 13, color: "#555d66" }}>
+                          Story
+                        </p>
+                      }
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -909,10 +933,14 @@ class SyncEditorTab extends React.Component {
                           checked={this.state.scheduleAddressCheck}
                           onChange={this.handleChangeCheckBox}
                           name="scheduleAddressCheck"
-                          color="primary"
+                          style={{ color: "#0074aa" }}
                         />
                       }
-                      label="Address"
+                      label={
+                        <p style={{ fontSize: 13, color: "#555d66" }}>
+                          Address
+                        </p>
+                      }
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -922,10 +950,14 @@ class SyncEditorTab extends React.Component {
                           checked={this.state.scheduleEmailCheck}
                           onChange={this.handleChangeCheckBox}
                           name="scheduleEmailCheck"
-                          color="primary"
+                          style={{ color: "#0074aa" }}
                         />
                       }
-                      label="Email"
+                      label={
+                        <p style={{ fontSize: 13, color: "#555d66" }}>
+                          Email
+                        </p>
+                      }
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -935,10 +967,14 @@ class SyncEditorTab extends React.Component {
                           checked={this.state.schedulePhoneCheck}
                           onChange={this.handleChangeCheckBox}
                           name="schedulePhoneCheck"
-                          color="primary"
+                          style={{ color: "#0074aa" }}
                         />
                       }
-                      label="Phone"
+                      label={
+                        <p style={{ fontSize: 13, color: "#555d66" }}>
+                          Phone
+                        </p>
+                      }
                     />
                   </Grid>
                 </Grid>
@@ -1011,11 +1047,8 @@ class SyncEditorTab extends React.Component {
               >
                 <Grid
                   item
-                  xs={4}
-                  style={{
-                    textAlign: "start",
-                    fontFamily: "Roboto, sans-serif",
-                  }}
+                  xs={12}
+                  className={classes.title2}
                 >
                   Data Type:
                 </Grid>
@@ -1025,6 +1058,8 @@ class SyncEditorTab extends React.Component {
                       style: {
                         padding: "0.5rem",
                         fontFamily: "Roboto, sans-serif",
+                        fontSize: 14,
+                        color: "#555d66"
                       },
                     }}
                     fullWidth
@@ -1033,11 +1068,11 @@ class SyncEditorTab extends React.Component {
                     value={site.autoSync.dataType}
                     onChange={this.handleChangeSchedule}
                   >
-                    <option value="none">None</option>
-                    <option value="post">Post</option>
-                    <option value="event">Event</option>
-                    <option value="gallery">Gallery</option>
-                    <option value="all">All</option>
+                    <option value="none" style={{ fontSize: 14, color: "#555d66" }}>None</option>
+                    <option value="post" style={{ fontSize: 14, color: "#555d66" }}>Post</option>
+                    <option value="event" style={{ fontSize: 14, color: "#555d66" }}>Event</option>
+                    <option value="gallery" style={{ fontSize: 14, color: "#555d66" }}>Gallery</option>
+                    <option value="all" style={{ fontSize: 14, color: "#555d66" }}>All</option>
                   </Select>
                 </Grid>
               </Grid>
@@ -1052,10 +1087,14 @@ class SyncEditorTab extends React.Component {
                             checked={this.state.autoPostWithCheck}
                             onChange={this.handleChangeCheckBox}
                             name="autoPostWithCheck"
-                            color="primary"
+                            style={{ color: "#0074aa" }}
                           />
                         }
-                        label="Post With"
+                        label={
+                          <p style={{ fontSize: 13, color: "#555d66" }}>
+                            Post with
+                          </p>
+                        }
                       />
                     </Grid>
                     {this.state.autoPostWithCheck && (
@@ -1070,7 +1109,7 @@ class SyncEditorTab extends React.Component {
                           <Grid item xs={9}>
                             <FormControlLabel
                               value={1}
-                              control={<Radio color="primary" />}
+                              control={<Radio style={{ color: "#0074aa" }} />}
                               label={
                                 <Typography style={radioButton}>
                                   Message
@@ -1081,7 +1120,7 @@ class SyncEditorTab extends React.Component {
                           <Grid item xs={9}>
                             <FormControlLabel
                               value={2}
-                              control={<Radio color="primary" />}
+                              control={<Radio style={{ color: "#0074aa" }} />}
                               label={
                                 <Typography style={radioButton}>
                                   Video
@@ -1092,7 +1131,7 @@ class SyncEditorTab extends React.Component {
                           <Grid item xs={9}>
                             <FormControlLabel
                               value={3}
-                              control={<Radio color="primary" />}
+                              control={<Radio style={{ color: "#0074aa" }} />}
                               label={
                                 <Typography style={radioButton}>
                                   Photo
@@ -1112,10 +1151,14 @@ class SyncEditorTab extends React.Component {
                             checked={this.state.autoContainMsgCheck}
                             onChange={this.handleChangeCheckBox}
                             name="autoContainMsgCheck"
-                            color="primary"
+                            style={{ color: "#0074aa" }}
                           />
                         }
-                        label="Post Contain Message"
+                        label={
+                          <p style={{ fontSize: 13, color: "#555d66" }}>
+                            Posts containing message
+                          </p>
+                        }
                       />
                     </Grid>
                     {this.state.autoContainMsgCheck && (
@@ -1160,10 +1203,14 @@ class SyncEditorTab extends React.Component {
                             checked={this.state.autoTitleMsgCheck}
                             onChange={this.handleChangeCheckBox}
                             name="autoTitleMsgCheck"
-                            color="primary"
+                            style={{ color: "#0074aa" }}
                           />
                         }
-                        label="Event Contain Tittle"
+                        label={
+                          <p style={{ fontSize: 13, color: "#555d66" }}>
+                            Events containing titles
+                          </p>
+                        }
                       />
                     </Grid>
                     {this.state.autoTitleMsgCheck && (
@@ -1204,16 +1251,18 @@ class SyncEditorTab extends React.Component {
                   alignItems="center"
                   className={classes.gridItem}
                 >
-                  <Grid item xs={4} sm={4} style={titleExpan}>
+                  <Grid item xs={12} className={classes.title2}>
                     Time:
                   </Grid>
-                  <Grid item xs={6} sm={6} className={classes.gridItem}>
+                  <Grid item xs={6} className={classes.gridItem}>
                     <Select
                       fullWidth
                       inputProps={{
                         style: {
                           padding: "0.5rem",
                           fontFamily: "Roboto, sans-serif",
+                          fontSize: 14,
+                          color: "#555d66"
                         },
                       }}
                       native
@@ -1225,18 +1274,18 @@ class SyncEditorTab extends React.Component {
                       }
                       onChange={this.handleChangeScheduleTime}
                     >
-                      <option value="2min">2 minutes</option>
-                      <option value="30min">30 minutes</option>
-                      <option value="1hr">1 hour</option>
-                      <option value="2hr">2 hours</option>
-                      <option value="12hr">12 hours</option>
-                      <option value="daily">Daily</option>
+                      <option value="2min" style={{ fontSize: 14, color: "#555d66" }}>2 minutes</option>
+                      <option value="30min" style={{ fontSize: 14, color: "#555d66" }}>30 minutes</option>
+                      <option value="1hr" style={{ fontSize: 14, color: "#555d66" }}>1 hour</option>
+                      <option value="2hr" style={{ fontSize: 14, color: "#555d66" }}>2 hours</option>
+                      <option value="12hr" style={{ fontSize: 14, color: "#555d66" }}>12 hours</option>
+                      <option value="daily" style={{ fontSize: 14, color: "#555d66" }}>Daily</option>
                     </Select>
                   </Grid>
                 </Grid>
               )}
               <Grid container item xs={12} justify="center">
-                <Grid item xs={12} style={titleExpan}>
+                <Grid item xs={12} className={classes.title2}>
                   Filter type:
                 </Grid>
                 <Grid container item xs={10}>
@@ -1247,10 +1296,14 @@ class SyncEditorTab extends React.Component {
                           checked={this.state.autoAboutCheck}
                           onChange={this.handleChangeCheckBox}
                           name="autoAboutCheck"
-                          color="primary"
+                          style={{ color: "#0074aa" }}
                         />
                       }
-                      label="About"
+                      label={
+                        <p style={{ fontSize: 13, color: "#555d66" }}>
+                          About
+                        </p>
+                      }
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -1260,10 +1313,14 @@ class SyncEditorTab extends React.Component {
                           checked={this.state.autoStoryCheck}
                           onChange={this.handleChangeCheckBox}
                           name="autoStoryCheck"
-                          color="primary"
+                          style={{ color: "#0074aa" }}
                         />
                       }
-                      label="Story"
+                      label={
+                        <p style={{ fontSize: 13, color: "#555d66" }}>
+                          Story
+                        </p>
+                      }
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -1273,10 +1330,14 @@ class SyncEditorTab extends React.Component {
                           checked={this.state.autoAddressCheck}
                           onChange={this.handleChangeCheckBox}
                           name="autoAddressCheck"
-                          color="primary"
+                          style={{ color: "#0074aa" }}
                         />
                       }
-                      label="Address"
+                      label={
+                        <p style={{ fontSize: 13, color: "#555d66" }}>
+                          Address
+                        </p>
+                      }
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -1286,10 +1347,14 @@ class SyncEditorTab extends React.Component {
                           checked={this.state.autoEmailCheck}
                           onChange={this.handleChangeCheckBox}
                           name="autoEmailCheck"
-                          color="primary"
+                          style={{ color: "#0074aa" }}
                         />
                       }
-                      label="Email"
+                      label={
+                        <p style={{ fontSize: 13, color: "#555d66" }}>
+                          Email
+                        </p>
+                      }
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -1299,10 +1364,14 @@ class SyncEditorTab extends React.Component {
                           checked={this.state.autoPhoneCheck}
                           onChange={this.handleChangeCheckBox}
                           name="autoPhoneCheck"
-                          color="primary"
+                          style={{ color: "#0074aa" }}
                         />
                       }
-                      label="Phone"
+                      label={
+                        <p style={{ fontSize: 13, color: "#555d66" }}>
+                          Phone
+                        </p>
+                      }
                     />
                   </Grid>
                 </Grid>
