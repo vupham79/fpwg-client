@@ -6,16 +6,18 @@ import {
   getAllThemes,
   getSiteById,
   setEditOn,
-  setSiteEdit
+  setSiteEdit,
+  setPreviewMode
 } from "../../actions";
 import EditPage from "./edit";
 class PreEditPage extends React.Component {
   componentDidMount() {
-    const { isLogin, setEditOn, currentEditId } = this.props;
+    const { isLogin, setEditOn, currentEditId, setPreviewMode } = this.props;
     if (isLogin) {
       this.getAllThemes();
       this.getSite(currentEditId);
       setEditOn();
+      setPreviewMode(false);
     }
   }
 
@@ -64,7 +66,8 @@ const mapDispatchToProps = dispatch => ({
   setSiteEdit: (site, titleStyle, bodyStyle) =>
     dispatch(setSiteEdit(site, titleStyle, bodyStyle)),
   getAllPost: posts => dispatch(getAllPost(posts)),
-  setEditOn: () => dispatch(setEditOn())
+  setEditOn: () => dispatch(setEditOn()),
+  setPreviewMode: (bool) => dispatch(setPreviewMode(bool)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PreEditPage);
