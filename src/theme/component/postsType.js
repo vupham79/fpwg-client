@@ -267,7 +267,7 @@ class PostTypeComponent extends React.Component {
             marginBottom: "1rem",
             cursor: altType && "pointer",
             borderRadius: "0.4rem",
-            width: 260,
+            // width: 260,
             marginLeft: fromHome ? "auto" : 10,
             marginRight: fromHome ? "auto" : 10,
           }}
@@ -510,7 +510,7 @@ class PostTypeComponent extends React.Component {
           marginBottom: "1rem",
           cursor: altType && "pointer",
           borderRadius: "0.4rem",
-          width: 260,
+          // width: 260,
           marginLeft: fromHome ? "auto" : 10,
           marginRight: fromHome ? "auto" : 10,
         }}
