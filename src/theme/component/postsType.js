@@ -697,22 +697,22 @@ class PostTypeComponent extends React.Component {
     return (
       <>
         {fromHome && (
-          <Grid className={styles.newsSlider}>
+          <Grid style={{ width: "100%" }}>
             <Slider
               speed={1000}
               autoplaySpeed={2500}
               arrows={true}
               infinite
-              slidesToScroll={posts.length > 2 ? 3 : posts.length}
-              slidesToShow={posts.length > 2 ? 3 : posts.length}
+              slidesToScroll={posts.length > 3 ? 4 : posts.length}
+              slidesToShow={posts.length > 3 ? 4 : posts.length}
               nextArrow={<SampleNextArrow dark={dark} />}
               prevArrow={<SamplePrevArrow dark={dark} />}
               responsive={[
                 {
                   breakpoint: 1260,
                   settings: {
-                    slidesToScroll: posts.length > 1 ? 2 : posts.length,
-                    slidesToShow: posts.length > 1 ? 2 : posts.length,
+                    slidesToScroll: posts.length > 2 ? 3 : posts.length,
+                    slidesToShow: posts.length > 2 ? 3 : posts.length,
                   },
                 },
                 {

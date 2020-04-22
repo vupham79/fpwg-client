@@ -1,4 +1,3 @@
-
 .image_page {
   margin: 1vh;
 }
@@ -68,12 +67,12 @@
 
 @media only screen and (max-width: 1260px) {
   .newsSlider {
-      width: 600px;
+    width: 600px;
   }
 }
 
 @media only screen and (max-width: 900px) {
   .newsSlider {
-      width: 300px;
+    width: 300px;
   }
 }
