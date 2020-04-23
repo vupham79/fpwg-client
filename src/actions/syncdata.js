@@ -78,7 +78,10 @@ export function syncDataFromFB(
   story,
   address,
   email,
-  phone
+  phone,
+  postWith,
+  containMsg,
+  eventContainTitle
 ) {
   return async (dispatch) => {
     dispatch({
@@ -97,6 +100,9 @@ export function syncDataFromFB(
           address: address,
           email: email,
           phone: phone,
+          postWith: postWith, //(int) 1: message, 2: video, 3: photo
+          containMsg: containMsg,
+          eventContainTitle: eventContainTitle
         },
       });
       dispatch({
@@ -345,8 +351,8 @@ export function setAutoSync(autoSync) {
         minute: autoSync.minute
           ? autoSync.minute
           : !autoSync.minute && !autoSync.hour && !autoSync.day
-          ? 2
-          : null,
+            ? 2
+            : null,
         hour: autoSync.hour ? autoSync.hour : null,
         day: autoSync.day ? autoSync.day : null,
       },
@@ -361,7 +367,10 @@ export function applyAutoSync(
   story,
   address,
   email,
-  phone
+  phone,
+  postWith,
+  containMsg,
+  eventContainTitle
 ) {
   return async (dispatch) => {
     dispatch({
@@ -379,6 +388,9 @@ export function applyAutoSync(
           address: address,
           email: email,
           phone: phone,
+          postWith: postWith, //(int) 1: message, 2: video, 3: photo
+          containMsg: containMsg,
+          eventContainTitle: eventContainTitle
         },
       });
       dispatch({

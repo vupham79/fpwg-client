@@ -206,15 +206,15 @@ function CreateTable({ data }) {
                   {!row.dateFrom && !row.dateTo ? (
                     "All"
                   ) : (
-                    <Grid container justify="center">
-                      <Grid style={fontTable} item xs={12}>
-                        From: {moment(row.dateFrom).format("DD-MM-YYYY")}
+                      <Grid container justify="center">
+                        <Grid style={fontTable} item xs={12}>
+                          From: {moment(row.dateFrom).format("DD-MM-YYYY")}
+                        </Grid>
+                        <Grid style={fontTable} item xs={12}>
+                          To: {moment(row.dateTo).format("DD-MM-YYYY")}
+                        </Grid>
                       </Grid>
-                      <Grid style={fontTable} item xs={12}>
-                        To: {moment(row.dateTo).format("DD-MM-YYYY")}
-                      </Grid>
-                    </Grid>
-                  )}
+                    )}
                 </TableCell>
                 <TableCell align="center">
                   <Grid
@@ -266,7 +266,7 @@ class SyncEditorTab extends React.Component {
     currentExpandItem: "",
     manualPostWithCheck: false,
     manualContainMsgCheck: false,
-    manualPostRadioValue: "", //milf
+    manualPostRadioValue: "",
     manualTitleEventCheck: false,
     manualPostMessage: null,
     maunalEventTitle: null,
@@ -391,6 +391,9 @@ class SyncEditorTab extends React.Component {
       manualAddressCheck,
       manualMailCheck,
       manualPhoneCheck,
+      manualPostRadioValue,
+      manualPostMessage,
+      maunalEventTitle
     } = this.state;
 
     const { startDate, endDate, radioValue, selectValue } = this.state;
@@ -429,7 +432,10 @@ class SyncEditorTab extends React.Component {
         manualStoryCheck,
         manualAddressCheck,
         manualMailCheck,
-        manualPhoneCheck
+        manualPhoneCheck,
+        manualPostRadioValue,
+        manualPostMessage,
+        maunalEventTitle
       );
     }
   };
@@ -442,7 +448,11 @@ class SyncEditorTab extends React.Component {
       autoAddressCheck,
       autoEmailCheck,
       autoPhoneCheck,
+      autoPostRadioValue,
+      autoPostMsg,
+      autoEventTitle
     } = this.state;
+
     applyAutoSync(
       site.id,
       site.autoSync,
@@ -450,7 +460,10 @@ class SyncEditorTab extends React.Component {
       autoStoryCheck,
       autoAddressCheck,
       autoEmailCheck,
-      autoPhoneCheck
+      autoPhoneCheck,
+      autoPostRadioValue,
+      autoPostMsg,
+      autoEventTitle
     );
   };
 
@@ -761,7 +774,7 @@ class SyncEditorTab extends React.Component {
                                       }
                                       label={
                                         <Typography style={radioButton}>
-                                          Message
+                                          None
                                         </Typography>
                                       }
                                     />
@@ -870,7 +883,7 @@ class SyncEditorTab extends React.Component {
                                 }
                                 label={
                                   <Typography style={radioButton}>
-                                    Event containing title
+                                    containing specified title
                                   </Typography>
                                 }
                               />
@@ -1151,7 +1164,7 @@ class SyncEditorTab extends React.Component {
                         }
                         label={
                           <p style={{ fontSize: 13, color: "#555d66" }}>
-                            with attachments
+                            with specified attachment only
                           </p>
                         }
                       />
@@ -1215,7 +1228,7 @@ class SyncEditorTab extends React.Component {
                         }
                         label={
                           <p style={{ fontSize: 13, color: "#555d66" }}>
-                            containing text
+                            containing specified text only
                           </p>
                         }
                       />
@@ -1224,7 +1237,6 @@ class SyncEditorTab extends React.Component {
                       <Grid item xs={10}>
                         <TextField
                           variant="outlined"
-                          label="Message"
                           fullWidth
                           value={this.state.manualPostMessage}
                           onChange={(e) =>
@@ -1267,7 +1279,7 @@ class SyncEditorTab extends React.Component {
                         }
                         label={
                           <p style={{ fontSize: 13, color: "#555d66" }}>
-                            Events containing titles
+                            containing specified title
                           </p>
                         }
                       />
@@ -1373,90 +1385,93 @@ class SyncEditorTab extends React.Component {
                   </Grid>
                 </Grid>
               )}
-              <Grid container item xs={12} justify="center">
-                <Grid item xs={12} className={classes.title2}>
-                  Additional data:
+
+              {site.autoSync.dataType === "all" && (
+                <Grid container item xs={12} justify="center">
+                  <Grid item xs={12} className={classes.title2}>
+                    Additional data:
                 </Grid>
-                <Grid container item xs={10}>
-                  <Grid item xs={12} sm={12} md={6} lg={4}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.autoAboutCheck}
-                          onChange={this.handleChangeCheckBox}
-                          name="autoAboutCheck"
-                          style={{ color: "#0074aa" }}
-                        />
-                      }
-                      label={
-                        <p style={{ fontSize: 11, color: "#555d66" }}>About</p>
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={4}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.autoStoryCheck}
-                          onChange={this.handleChangeCheckBox}
-                          name="autoStoryCheck"
-                          style={{ color: "#0074aa" }}
-                        />
-                      }
-                      label={
-                        <p style={{ fontSize: 11, color: "#555d66" }}>Story</p>
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={4}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.autoAddressCheck}
-                          onChange={this.handleChangeCheckBox}
-                          name="autoAddressCheck"
-                          style={{ color: "#0074aa" }}
-                        />
-                      }
-                      label={
-                        <p style={{ fontSize: 11, color: "#555d66" }}>
-                          Address
+                  <Grid container item xs={10}>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.autoAboutCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="autoAboutCheck"
+                            style={{ color: "#0074aa" }}
+                          />
+                        }
+                        label={
+                          <p style={{ fontSize: 11, color: "#555d66" }}>About</p>
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.autoStoryCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="autoStoryCheck"
+                            style={{ color: "#0074aa" }}
+                          />
+                        }
+                        label={
+                          <p style={{ fontSize: 11, color: "#555d66" }}>Story</p>
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.autoAddressCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="autoAddressCheck"
+                            style={{ color: "#0074aa" }}
+                          />
+                        }
+                        label={
+                          <p style={{ fontSize: 11, color: "#555d66" }}>
+                            Address
                         </p>
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={4}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.autoEmailCheck}
-                          onChange={this.handleChangeCheckBox}
-                          name="autoEmailCheck"
-                          style={{ color: "#0074aa" }}
-                        />
-                      }
-                      label={
-                        <p style={{ fontSize: 11, color: "#555d66" }}>Email</p>
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={4}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.autoPhoneCheck}
-                          onChange={this.handleChangeCheckBox}
-                          name="autoPhoneCheck"
-                          style={{ color: "#0074aa" }}
-                        />
-                      }
-                      label={
-                        <p style={{ fontSize: 11, color: "#555d66" }}>Phone</p>
-                      }
-                    />
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.autoEmailCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="autoEmailCheck"
+                            style={{ color: "#0074aa" }}
+                          />
+                        }
+                        label={
+                          <p style={{ fontSize: 11, color: "#555d66" }}>Email</p>
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.autoPhoneCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="autoPhoneCheck"
+                            style={{ color: "#0074aa" }}
+                          />
+                        }
+                        label={
+                          <p style={{ fontSize: 11, color: "#555d66" }}>Phone</p>
+                        }
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
+              )}
 
               {this.state.msg && (
                 <Grid
@@ -1505,7 +1520,10 @@ const mapDispatchToProps = (dispatch) => ({
     story,
     address,
     email,
-    phone
+    phone,
+    postWith,
+    containMsg,
+    eventContainTitle
   ) =>
     dispatch(
       syncDataFromFB(
@@ -1516,7 +1534,10 @@ const mapDispatchToProps = (dispatch) => ({
         story,
         address,
         email,
-        phone
+        phone,
+        postWith,
+        containMsg,
+        eventContainTitle
       )
     ),
   syncPostFromFB: (pageId, dateFrom, dateTo) =>
@@ -1526,8 +1547,8 @@ const mapDispatchToProps = (dispatch) => ({
   syncGalleryFromFB: (pageId, dateFrom, dateTo) =>
     dispatch(syncGalleryFromFB(pageId, dateFrom, dateTo)),
   setAutoSync: (autoSync) => dispatch(setAutoSync(autoSync)),
-  applyAutoSync: (id, autoSync, about, story, address, email, phone) =>
-    dispatch(applyAutoSync(id, autoSync, about, story, address, email, phone)),
+  applyAutoSync: (id, autoSync, about, story, address, email, phone, postWith, containMsg, eventContainTitle) =>
+    dispatch(applyAutoSync(id, autoSync, about, story, address, email, phone, postWith, containMsg, eventContainTitle)),
 });
 
 export default connect(
