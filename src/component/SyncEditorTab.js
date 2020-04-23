@@ -206,15 +206,15 @@ function CreateTable({ data }) {
                   {!row.dateFrom && !row.dateTo ? (
                     "All"
                   ) : (
-                    <Grid container justify="center">
-                      <Grid style={fontTable} item xs={12}>
-                        From: {moment(row.dateFrom).format("DD-MM-YYYY")}
+                      <Grid container justify="center">
+                        <Grid style={fontTable} item xs={12}>
+                          From: {moment(row.dateFrom).format("DD-MM-YYYY")}
+                        </Grid>
+                        <Grid style={fontTable} item xs={12}>
+                          To: {moment(row.dateTo).format("DD-MM-YYYY")}
+                        </Grid>
                       </Grid>
-                      <Grid style={fontTable} item xs={12}>
-                        To: {moment(row.dateTo).format("DD-MM-YYYY")}
-                      </Grid>
-                    </Grid>
-                  )}
+                    )}
                 </TableCell>
                 <TableCell align="center">
                   <Grid
@@ -840,7 +840,9 @@ class SyncEditorTab extends React.Component {
                                     style={{ color: "#0074aa" }}
                                   />
                                 }
-                                label="Event Contain Tittle"
+                                label={
+                                  <Typography style={radioButton}>Event containing title</Typography>
+                                }
                               />
                             </Grid>
                             {this.state.manualTitleEventCheck && (
@@ -898,7 +900,7 @@ class SyncEditorTab extends React.Component {
                   Additional data:
                 </Grid>
                 <Grid container item xs={10}>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={12} md={6} lg={4}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -909,11 +911,11 @@ class SyncEditorTab extends React.Component {
                         />
                       }
                       label={
-                        <p style={{ fontSize: 13, color: "#555d66" }}>About</p>
+                        <p style={{ fontSize: 11, color: "#555d66" }}>About</p>
                       }
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={12} md={6} lg={4}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -924,11 +926,11 @@ class SyncEditorTab extends React.Component {
                         />
                       }
                       label={
-                        <p style={{ fontSize: 13, color: "#555d66" }}>Story</p>
+                        <p style={{ fontSize: 11, color: "#555d66" }}>Story</p>
                       }
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={12} md={6} lg={4}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -939,13 +941,13 @@ class SyncEditorTab extends React.Component {
                         />
                       }
                       label={
-                        <p style={{ fontSize: 13, color: "#555d66" }}>
+                        <p style={{ fontSize: 11, color: "#555d66" }}>
                           Address
                         </p>
                       }
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={12} md={6} lg={4}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -956,11 +958,11 @@ class SyncEditorTab extends React.Component {
                         />
                       }
                       label={
-                        <p style={{ fontSize: 13, color: "#555d66" }}>Email</p>
+                        <p style={{ fontSize: 11, color: "#555d66" }}>Email</p>
                       }
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={12} md={6} lg={4}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -971,7 +973,7 @@ class SyncEditorTab extends React.Component {
                         />
                       }
                       label={
-                        <p style={{ fontSize: 13, color: "#555d66" }}>Phone</p>
+                        <p style={{ fontSize: 11, color: "#555d66" }}>Phone</p>
                       }
                     />
                   </Grid>
@@ -1336,7 +1338,7 @@ class SyncEditorTab extends React.Component {
                   Additional data:
                 </Grid>
                 <Grid container item xs={10}>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={12} md={6} lg={4}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -1347,11 +1349,11 @@ class SyncEditorTab extends React.Component {
                         />
                       }
                       label={
-                        <p style={{ fontSize: 13, color: "#555d66" }}>About</p>
+                        <p style={{ fontSize: 11, color: "#555d66" }}>About</p>
                       }
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={12} md={6} lg={4}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -1362,11 +1364,11 @@ class SyncEditorTab extends React.Component {
                         />
                       }
                       label={
-                        <p style={{ fontSize: 13, color: "#555d66" }}>Story</p>
+                        <p style={{ fontSize: 11, color: "#555d66" }}>Story</p>
                       }
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={12} md={6} lg={4}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -1377,13 +1379,13 @@ class SyncEditorTab extends React.Component {
                         />
                       }
                       label={
-                        <p style={{ fontSize: 13, color: "#555d66" }}>
+                        <p style={{ fontSize: 11, color: "#555d66" }}>
                           Address
                         </p>
                       }
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={12} md={6} lg={4}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -1394,11 +1396,11 @@ class SyncEditorTab extends React.Component {
                         />
                       }
                       label={
-                        <p style={{ fontSize: 13, color: "#555d66" }}>Email</p>
+                        <p style={{ fontSize: 11, color: "#555d66" }}>Email</p>
                       }
                     />
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} sm={12} md={6} lg={4}>
                     <FormControlLabel
                       control={
                         <Checkbox
@@ -1409,7 +1411,7 @@ class SyncEditorTab extends React.Component {
                         />
                       }
                       label={
-                        <p style={{ fontSize: 13, color: "#555d66" }}>Phone</p>
+                        <p style={{ fontSize: 11, color: "#555d66" }}>Phone</p>
                       }
                     />
                   </Grid>
