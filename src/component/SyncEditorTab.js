@@ -266,7 +266,7 @@ class SyncEditorTab extends React.Component {
     currentExpandItem: "",
     manualPostWithCheck: false,
     manualContainMsgCheck: false,
-    manualPostRadioValue: "",
+    manualPostRadioValue: "", //milf
     manualTitleEventCheck: false,
     manualPostMessage: null,
     maunalEventTitle: null,
@@ -384,6 +384,15 @@ class SyncEditorTab extends React.Component {
       syncGalleryFromFB,
       syncPostFromFB,
     } = this.props;
+
+    const {
+      manualAboutCheck,
+      manualStoryCheck,
+      manualAddressCheck,
+      manualMailCheck,
+      manualPhoneCheck,
+    } = this.state;
+
     const { startDate, endDate, radioValue, selectValue } = this.state;
     const msg = "Please choose the data type you want to sync.";
 
@@ -408,21 +417,41 @@ class SyncEditorTab extends React.Component {
       syncGalleryFromFB(
         site.id,
         selectValue === "All" ? null : startDate,
-        selectValue === "All" ? null : endDate
+        selectValue === "All" ? null : endDate,
       );
     } else if (radioValue === "all") {
       this.setState({ msg: "" });
       syncDataFromFB(
         site.id,
         selectValue === "All" ? null : startDate,
-        selectValue === "All" ? null : endDate
+        selectValue === "All" ? null : endDate,
+        manualAboutCheck,
+        manualStoryCheck,
+        manualAddressCheck,
+        manualMailCheck,
+        manualPhoneCheck
       );
     }
   };
 
   handleApply = () => {
     const { applyAutoSync, site } = this.props;
-    applyAutoSync(site.id, site.autoSync);
+    const {
+      autoAboutCheck,
+      autoStoryCheck,
+      autoAddressCheck,
+      autoEmailCheck,
+      autoPhoneCheck
+    } = this.state;
+    applyAutoSync(
+      site.id,
+      site.autoSync,
+      autoAboutCheck,
+      autoStoryCheck,
+      autoAddressCheck,
+      autoEmailCheck,
+      autoPhoneCheck
+    );
   };
 
   setHover = (position, onHover) => {
@@ -710,7 +739,7 @@ class SyncEditorTab extends React.Component {
                                 }
                                 label={
                                   <p style={{ fontSize: 13, color: "#555d66" }}>
-                                    Post with
+                                    with attachments
                                   </p>
                                 }
                               />
@@ -780,7 +809,7 @@ class SyncEditorTab extends React.Component {
                                 }
                                 label={
                                   <p style={{ fontSize: 13, color: "#555d66" }}>
-                                    Post containing message
+                                    containing text
                                   </p>
                                 }
                               />
@@ -895,90 +924,92 @@ class SyncEditorTab extends React.Component {
                 </Grid>
               </Grid>
 
-              <Grid container item xs={12} justify="center">
-                <Grid item xs={12} className={classes.title2}>
-                  Additional data:
+              {this.state.radioValue === "all" && (
+                <Grid container item xs={12} justify="center">
+                  <Grid item xs={12} className={classes.title2}>
+                    Additional data:
                 </Grid>
-                <Grid container item xs={10}>
-                  <Grid item xs={12} sm={12} md={6} lg={4}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.manualAboutCheck}
-                          onChange={this.handleChangeCheckBox}
-                          name="manualAboutCheck"
-                          style={{ color: "#0074aa" }}
-                        />
-                      }
-                      label={
-                        <p style={{ fontSize: 11, color: "#555d66" }}>About</p>
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={4}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.manualStoryCheck}
-                          onChange={this.handleChangeCheckBox}
-                          name="manualStoryCheck"
-                          style={{ color: "#0074aa" }}
-                        />
-                      }
-                      label={
-                        <p style={{ fontSize: 11, color: "#555d66" }}>Story</p>
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={4}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.manualAddressCheck}
-                          onChange={this.handleChangeCheckBox}
-                          name="manualAddressCheck"
-                          style={{ color: "#0074aa" }}
-                        />
-                      }
-                      label={
-                        <p style={{ fontSize: 11, color: "#555d66" }}>
-                          Address
+                  <Grid container item xs={10}>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.manualAboutCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="manualAboutCheck"
+                            style={{ color: "#0074aa" }}
+                          />
+                        }
+                        label={
+                          <p style={{ fontSize: 11, color: "#555d66" }}>About</p>
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.manualStoryCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="manualStoryCheck"
+                            style={{ color: "#0074aa" }}
+                          />
+                        }
+                        label={
+                          <p style={{ fontSize: 11, color: "#555d66" }}>Story</p>
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.manualAddressCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="manualAddressCheck"
+                            style={{ color: "#0074aa" }}
+                          />
+                        }
+                        label={
+                          <p style={{ fontSize: 11, color: "#555d66" }}>
+                            Address
                         </p>
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={4}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.manualMailCheck}
-                          onChange={this.handleChangeCheckBox}
-                          name="manualMailCheck"
-                          style={{ color: "#0074aa" }}
-                        />
-                      }
-                      label={
-                        <p style={{ fontSize: 11, color: "#555d66" }}>Email</p>
-                      }
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6} lg={4}>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={this.state.manualPhoneCheck}
-                          onChange={this.handleChangeCheckBox}
-                          name="manualPhoneCheck"
-                          style={{ color: "#0074aa" }}
-                        />
-                      }
-                      label={
-                        <p style={{ fontSize: 11, color: "#555d66" }}>Phone</p>
-                      }
-                    />
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.manualMailCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="manualMailCheck"
+                            style={{ color: "#0074aa" }}
+                          />
+                        }
+                        label={
+                          <p style={{ fontSize: 11, color: "#555d66" }}>Email</p>
+                        }
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={12} md={6} lg={4}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={this.state.manualPhoneCheck}
+                            onChange={this.handleChangeCheckBox}
+                            name="manualPhoneCheck"
+                            style={{ color: "#0074aa" }}
+                          />
+                        }
+                        label={
+                          <p style={{ fontSize: 11, color: "#555d66" }}>Phone</p>
+                        }
+                      />
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
+              )}
 
               {this.state.msg && (
                 <Grid
@@ -1111,7 +1142,7 @@ class SyncEditorTab extends React.Component {
                         }
                         label={
                           <p style={{ fontSize: 13, color: "#555d66" }}>
-                            Post with
+                            with attachments
                           </p>
                         }
                       />
@@ -1175,7 +1206,7 @@ class SyncEditorTab extends React.Component {
                         }
                         label={
                           <p style={{ fontSize: 13, color: "#555d66" }}>
-                            Post containing message
+                            containing text
                           </p>
                         }
                       />

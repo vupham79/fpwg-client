@@ -63,7 +63,7 @@ function revertSaveData(modDat) {
   return modDat;
 }
 
-export function syncDataFromFB(pageId, dateFrom, dateTo) {
+export function syncDataFromFB(pageId, dateFrom, dateTo, about, story, address, email, phone) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -95,7 +95,12 @@ export function syncDataFromFB(pageId, dateFrom, dateTo) {
           payload: {
             data: revertSaveData(site),
             titleEdit: titleStyle,
-            bodyEdit: bodyStyle
+            bodyEdit: bodyStyle,
+            about: about,
+            story: story,
+            address: address,
+            email: email,
+            phone: phone
           }
         });
         dispatch({
@@ -333,7 +338,7 @@ export function setAutoSync(autoSync) {
   };
 }
 
-export function applyAutoSync(id, autoSync) {
+export function applyAutoSync(id, autoSync, about, story, address, email, phone) {
   return async dispatch => {
     dispatch({
       type: "SHOW_LOADING"
@@ -344,7 +349,12 @@ export function applyAutoSync(id, autoSync) {
         url: "/site/autoSync",
         data: {
           id,
-          autoSync
+          autoSync,
+          about: about,
+          story: story,
+          address: address,
+          email: email,
+          phone: phone
         }
       });
       dispatch({
