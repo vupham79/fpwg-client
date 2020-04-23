@@ -739,7 +739,7 @@ class SyncEditorTab extends React.Component {
                                 }
                                 label={
                                   <p style={{ fontSize: 13, color: "#555d66" }}>
-                                    with attachments
+                                    with specified attachment only
                                   </p>
                                 }
                               />
@@ -809,7 +809,7 @@ class SyncEditorTab extends React.Component {
                                 }
                                 label={
                                   <p style={{ fontSize: 13, color: "#555d66" }}>
-                                    containing text
+                                    containing specified text only
                                   </p>
                                 }
                               />
@@ -818,7 +818,6 @@ class SyncEditorTab extends React.Component {
                               <Grid item xs={10}>
                                 <TextField
                                   variant="outlined"
-                                  label="Message"
                                   fullWidth
                                   value={this.state.manualPostMessage}
                                   onChange={(e) =>
@@ -1172,7 +1171,7 @@ class SyncEditorTab extends React.Component {
                               control={<Radio style={{ color: "#0074aa" }} />}
                               label={
                                 <Typography style={radioButton}>
-                                  Message
+                                  None
                                 </Typography>
                               }
                             />
