@@ -124,6 +124,7 @@ export const theme4Pages = [
 export const fontFamily = [
   "Arvo",
   "Avenir",
+  "Barlow",
   "Dosis",
   "Merriweather",
   "Verdana",
