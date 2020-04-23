@@ -68,6 +68,7 @@ class PreViewSite extends React.Component {
             families: [siteView.fontTitle, siteView.fontBody],
           },
         });
+
         return (
           <>
             <Helmet>
@@ -80,6 +81,14 @@ class PreViewSite extends React.Component {
               />
             </Helmet>
             {themesConstant.find((e) => e.id === siteView.theme._id).component}
+            <div id="fb-root">
+              <div
+                class="fb-customerchat"
+                attribution="setup_tool"
+                page_id="110628947267722"
+                theme_color="#0084ff"
+              />
+            </div>
           </>
         );
       }
