@@ -75,7 +75,12 @@ export function syncDataFromFB(pageId, dateFrom, dateTo, about, story, address, 
         data: {
           pageId: pageId,
           dateFrom: dateFrom,
-          dateTo: dateTo
+          dateTo: dateTo,
+          about: about,
+          story: story,
+          address: address,
+          email: email,
+          phone: phone
         }
       });
       dispatch({
@@ -96,11 +101,6 @@ export function syncDataFromFB(pageId, dateFrom, dateTo, about, story, address, 
             data: revertSaveData(site),
             titleEdit: titleStyle,
             bodyEdit: bodyStyle,
-            about: about,
-            story: story,
-            address: address,
-            email: email,
-            phone: phone
           }
         });
         dispatch({
