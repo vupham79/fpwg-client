@@ -83,7 +83,7 @@ class PreViewSite extends React.Component {
             {themesConstant.find((e) => e.id === siteView.theme._id).component}
             <div id="fb-root">
               <div
-                class="fb-customerchat blink"
+                class="fb-customerchat"
                 attribution="setup_tool"
                 page_id={siteView.id}
                 theme_color="#0084ff"
