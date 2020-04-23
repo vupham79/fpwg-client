@@ -7,7 +7,7 @@ import {
   getSiteById,
   setEditOn,
   setSiteEdit,
-  setPreviewMode
+  setPreviewMode,
 } from "../../actions";
 import EditPage from "./edit";
 class PreEditPage extends React.Component {
@@ -26,16 +26,16 @@ class PreEditPage extends React.Component {
     await getAllThemes();
   };
 
-  getSite = async id => {
+  getSite = async (id) => {
     const { getSiteById, setSiteEdit, getAllPost } = this.props;
     const data = await getSiteById(id);
     if (data) {
       const titleStyle = {
         fontFamily: data.fontTitle,
-        color: data.color
+        color: data.color,
       };
       const bodyStyle = {
-        fontFamily: data.fontBody
+        fontFamily: data.fontBody,
       };
       await setSiteEdit(data, titleStyle, bodyStyle);
       data.posts && getAllPost(data.posts);
@@ -47,25 +47,37 @@ class PreEditPage extends React.Component {
     if (!isLogin || !currentEditId) {
       return <Redirect to="/" />;
     } else if (siteEdit && isEdit) {
-      return <EditPage />;
+      return (
+        <>
+          <EditPage />
+          <div id="fb-root">
+            <div
+              class="fb-customerchat"
+              attribution="setup_tool"
+              page_id={siteEdit.id}
+              theme_color="#0084ff"
+            />
+          </div>
+        </>
+      );
     } else return <></>;
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isLogin: state.user.isLogin,
   currentEditId: state.site.currentEditId,
   siteEdit: state.site.siteEdit,
   posts: state.post.posts,
-  isEdit: state.site.isEdit
+  isEdit: state.site.isEdit,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   getAllThemes: () => dispatch(getAllThemes()),
-  getSiteById: id => dispatch(getSiteById(id)),
+  getSiteById: (id) => dispatch(getSiteById(id)),
   setSiteEdit: (site, titleStyle, bodyStyle) =>
     dispatch(setSiteEdit(site, titleStyle, bodyStyle)),
-  getAllPost: posts => dispatch(getAllPost(posts)),
+  getAllPost: (posts) => dispatch(getAllPost(posts)),
   setEditOn: () => dispatch(setEditOn()),
   setPreviewMode: (bool) => dispatch(setPreviewMode(bool)),
 });

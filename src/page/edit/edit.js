@@ -16,19 +16,7 @@ class EditPage extends Component {
           families: fontFamily,
         },
       });
-      return (
-        <EditLayout>
-          {!!theme && theme.component}
-          <div id="fb-root">
-            <div
-              class="fb-customerchat"
-              attribution="setup_tool"
-              page_id="110628947267722"
-              theme_color="#0084ff"
-            />
-          </div>
-        </EditLayout>
-      );
+      return <EditLayout>{!!theme && theme.component}</EditLayout>;
     }
     return <></>;
   }
