@@ -206,15 +206,15 @@ function CreateTable({ data }) {
                   {!row.dateFrom && !row.dateTo ? (
                     "All"
                   ) : (
-                      <Grid container justify="center">
-                        <Grid style={fontTable} item xs={12}>
-                          From: {moment(row.dateFrom).format("DD-MM-YYYY")}
-                        </Grid>
-                        <Grid style={fontTable} item xs={12}>
-                          To: {moment(row.dateTo).format("DD-MM-YYYY")}
-                        </Grid>
+                    <Grid container justify="center">
+                      <Grid style={fontTable} item xs={12}>
+                        From: {moment(row.dateFrom).format("DD-MM-YYYY")}
                       </Grid>
-                    )}
+                      <Grid style={fontTable} item xs={12}>
+                        To: {moment(row.dateTo).format("DD-MM-YYYY")}
+                      </Grid>
+                    </Grid>
+                  )}
                 </TableCell>
                 <TableCell align="center">
                   <Grid
@@ -417,7 +417,7 @@ class SyncEditorTab extends React.Component {
       syncGalleryFromFB(
         site.id,
         selectValue === "All" ? null : startDate,
-        selectValue === "All" ? null : endDate,
+        selectValue === "All" ? null : endDate
       );
     } else if (radioValue === "all") {
       this.setState({ msg: "" });
@@ -441,7 +441,7 @@ class SyncEditorTab extends React.Component {
       autoStoryCheck,
       autoAddressCheck,
       autoEmailCheck,
-      autoPhoneCheck
+      autoPhoneCheck,
     } = this.state;
     applyAutoSync(
       site.id,
@@ -870,7 +870,9 @@ class SyncEditorTab extends React.Component {
                                   />
                                 }
                                 label={
-                                  <Typography style={radioButton}>Event containing title</Typography>
+                                  <Typography style={radioButton}>
+                                    Event containing title
+                                  </Typography>
                                 }
                               />
                             </Grid>
@@ -928,7 +930,7 @@ class SyncEditorTab extends React.Component {
                 <Grid container item xs={12} justify="center">
                   <Grid item xs={12} className={classes.title2}>
                     Additional data:
-                </Grid>
+                  </Grid>
                   <Grid container item xs={10}>
                     <Grid item xs={12} sm={12} md={6} lg={4}>
                       <FormControlLabel
@@ -941,7 +943,9 @@ class SyncEditorTab extends React.Component {
                           />
                         }
                         label={
-                          <p style={{ fontSize: 11, color: "#555d66" }}>About</p>
+                          <p style={{ fontSize: 11, color: "#555d66" }}>
+                            About
+                          </p>
                         }
                       />
                     </Grid>
@@ -956,7 +960,9 @@ class SyncEditorTab extends React.Component {
                           />
                         }
                         label={
-                          <p style={{ fontSize: 11, color: "#555d66" }}>Story</p>
+                          <p style={{ fontSize: 11, color: "#555d66" }}>
+                            Story
+                          </p>
                         }
                       />
                     </Grid>
@@ -973,7 +979,7 @@ class SyncEditorTab extends React.Component {
                         label={
                           <p style={{ fontSize: 11, color: "#555d66" }}>
                             Address
-                        </p>
+                          </p>
                         }
                       />
                     </Grid>
@@ -988,7 +994,9 @@ class SyncEditorTab extends React.Component {
                           />
                         }
                         label={
-                          <p style={{ fontSize: 11, color: "#555d66" }}>Email</p>
+                          <p style={{ fontSize: 11, color: "#555d66" }}>
+                            Email
+                          </p>
                         }
                       />
                     </Grid>
@@ -1003,7 +1011,9 @@ class SyncEditorTab extends React.Component {
                           />
                         }
                         label={
-                          <p style={{ fontSize: 11, color: "#555d66" }}>Phone</p>
+                          <p style={{ fontSize: 11, color: "#555d66" }}>
+                            Phone
+                          </p>
                         }
                       />
                     </Grid>
@@ -1488,8 +1498,28 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   openDialog: () => dispatch(openDialog()),
   closeDialog: () => dispatch(closeDialog()),
-  syncDataFromFB: (pageId, dateFrom, dateTo) =>
-    dispatch(syncDataFromFB(pageId, dateFrom, dateTo)),
+  syncDataFromFB: (
+    pageId,
+    dateFrom,
+    dateTo,
+    about,
+    story,
+    address,
+    email,
+    phone
+  ) =>
+    dispatch(
+      syncDataFromFB(
+        pageId,
+        dateFrom,
+        dateTo,
+        about,
+        story,
+        address,
+        email,
+        phone
+      )
+    ),
   syncPostFromFB: (pageId, dateFrom, dateTo) =>
     dispatch(syncPostFromFB(pageId, dateFrom, dateTo)),
   syncEventFromFB: (pageId, dateFrom, dateTo) =>
@@ -1497,7 +1527,8 @@ const mapDispatchToProps = (dispatch) => ({
   syncGalleryFromFB: (pageId, dateFrom, dateTo) =>
     dispatch(syncGalleryFromFB(pageId, dateFrom, dateTo)),
   setAutoSync: (autoSync) => dispatch(setAutoSync(autoSync)),
-  applyAutoSync: (id, autoSync) => dispatch(applyAutoSync(id, autoSync)),
+  applyAutoSync: (id, autoSync, about, story, address, email, phone) =>
+    dispatch(applyAutoSync(id, autoSync, about, story, address, email, phone)),
 });
 
 export default connect(

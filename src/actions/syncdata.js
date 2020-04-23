@@ -12,20 +12,27 @@ function revertSaveData(modDat) {
     modDat.events = [];
   }
 
-  modDat.posts.sort((a, b) => {
-    return new Date(a.createdTime).getTime() -
-      new Date(b.createdTime).getTime()
-  }).reverse();
+  modDat.posts
+    .sort((a, b) => {
+      return (
+        new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime()
+      );
+    })
+    .reverse();
 
-  modDat.galleries.sort((a, b) => {
-    return new Date(a.createdTime).getTime() -
-      new Date(b.createdTime).getTime()
-  }).reverse();
+  modDat.galleries
+    .sort((a, b) => {
+      return (
+        new Date(a.createdTime).getTime() - new Date(b.createdTime).getTime()
+      );
+    })
+    .reverse();
 
-  modDat.events.sort((a, b) => {
-    return new Date(a.startTime).getTime() -
-      new Date(b.startTime).getTime()
-  }).reverse();
+  modDat.events
+    .sort((a, b) => {
+      return new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
+    })
+    .reverse();
 
   for (let i = 0; i < modDat.homepage.length; i++) {
     if (!modDat.homepage[i].filter.items) modDat.homepage[i].filter.items = [];
@@ -63,10 +70,19 @@ function revertSaveData(modDat) {
   return modDat;
 }
 
-export function syncDataFromFB(pageId, dateFrom, dateTo, about, story, address, email, phone) {
-  return async dispatch => {
+export function syncDataFromFB(
+  pageId,
+  dateFrom,
+  dateTo,
+  about,
+  story,
+  address,
+  email,
+  phone
+) {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
@@ -75,20 +91,25 @@ export function syncDataFromFB(pageId, dateFrom, dateTo, about, story, address, 
         data: {
           pageId: pageId,
           dateFrom: dateFrom,
-          dateTo: dateTo
-        }
+          dateTo: dateTo,
+          about: about,
+          story: story,
+          address: address,
+          email: email,
+          phone: phone,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         const site = data.data;
         const titleStyle = {
           fontFamily: site.fontTitle,
-          color: site.color
+          color: site.color,
         };
         const bodyStyle = {
-          fontFamily: site.fontBody
+          fontFamily: site.fontBody,
         };
         dispatch({
           type: "SET_SYNC_DATA_ALL",
@@ -96,12 +117,7 @@ export function syncDataFromFB(pageId, dateFrom, dateTo, about, story, address, 
             data: revertSaveData(site),
             titleEdit: titleStyle,
             bodyEdit: bodyStyle,
-            about: about,
-            story: story,
-            address: address,
-            email: email,
-            phone: phone
-          }
+          },
         });
         dispatch({
           type: "SET_POSTS_EDIT",
@@ -117,11 +133,11 @@ export function syncDataFromFB(pageId, dateFrom, dateTo, about, story, address, 
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
-          type: "SET_LOGOUT"
+          type: "SET_LOGOUT",
         });
       }
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(
         "There are something wrong when fetch data from your FB",
@@ -132,9 +148,9 @@ export function syncDataFromFB(pageId, dateFrom, dateTo, about, story, address, 
 }
 
 export function syncPostFromFB(pageId, dateFrom, dateTo) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
@@ -143,28 +159,28 @@ export function syncPostFromFB(pageId, dateFrom, dateTo) {
         data: {
           pageId: pageId,
           dateFrom: dateFrom,
-          dateTo: dateTo
-        }
+          dateTo: dateTo,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         const site = data.data;
         const titleStyle = {
           fontFamily: site.fontTitle,
-          color: site.color
+          color: site.color,
         };
         const bodyStyle = {
-          fontFamily: site.fontBody
+          fontFamily: site.fontBody,
         };
         dispatch({
           type: "SET_SYNC_DATA_ALL",
           payload: {
             data: revertSaveData(site),
             titleEdit: titleStyle,
-            bodyEdit: bodyStyle
-          }
+            bodyEdit: bodyStyle,
+          },
         });
         dispatch({
           type: "SET_POSTS_EDIT",
@@ -180,11 +196,11 @@ export function syncPostFromFB(pageId, dateFrom, dateTo) {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
-          type: "SET_LOGOUT"
+          type: "SET_LOGOUT",
         });
       }
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(
         "There are something wrong when fetch data from your FB",
@@ -195,9 +211,9 @@ export function syncPostFromFB(pageId, dateFrom, dateTo) {
 }
 
 export function syncEventFromFB(pageId, dateFrom, dateTo) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
@@ -206,11 +222,11 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
         data: {
           pageId: pageId,
           dateFrom: dateFrom,
-          dateTo: dateTo
-        }
+          dateTo: dateTo,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         if (data.data) {
@@ -218,18 +234,18 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
             const site = data.data;
             const titleStyle = {
               fontFamily: site.fontTitle,
-              color: site.color
+              color: site.color,
             };
             const bodyStyle = {
-              fontFamily: site.fontBody
+              fontFamily: site.fontBody,
             };
             dispatch({
               type: "SET_SYNC_DATA_ALL",
               payload: {
                 data: revertSaveData(site),
                 titleEdit: titleStyle,
-                bodyEdit: bodyStyle
-              }
+                bodyEdit: bodyStyle,
+              },
             });
           }
         }
@@ -243,7 +259,7 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
-          type: "SET_LOGOUT"
+          type: "SET_LOGOUT",
         });
       }
       if (error.response && error.response.data.msg) {
@@ -255,16 +271,16 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
         );
       }
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
     }
   };
 }
 
 export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
-  return async dispatch => {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
@@ -273,28 +289,28 @@ export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
         data: {
           pageId: pageId,
           dateFrom: dateFrom,
-          dateTo: dateTo
-        }
+          dateTo: dateTo,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         const site = data.data;
         const titleStyle = {
           fontFamily: site.fontTitle,
-          color: site.color
+          color: site.color,
         };
         const bodyStyle = {
-          fontFamily: site.fontBody
+          fontFamily: site.fontBody,
         };
         dispatch({
           type: "SET_SYNC_DATA_ALL",
           payload: {
             data: revertSaveData(site),
             titleEdit: titleStyle,
-            bodyEdit: bodyStyle
-          }
+            bodyEdit: bodyStyle,
+          },
         });
         toastr.success("Fetched gallery from FB successfully", "Success");
       } else {
@@ -306,11 +322,11 @@ export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
     } catch (error) {
       if (error.response && error.response.status === 401) {
         dispatch({
-          type: "SET_LOGOUT"
+          type: "SET_LOGOUT",
         });
       }
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error(
         "There are something wrong when fetch data from your FB",
@@ -321,7 +337,7 @@ export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
 }
 
 export function setAutoSync(autoSync) {
-  return dispatch => {
+  return (dispatch) => {
     dispatch({
       type: "SET_AUTO_SYNC",
       payload: {
@@ -329,19 +345,27 @@ export function setAutoSync(autoSync) {
         minute: autoSync.minute
           ? autoSync.minute
           : !autoSync.minute && !autoSync.hour && !autoSync.day
-            ? 2
-            : null,
+          ? 2
+          : null,
         hour: autoSync.hour ? autoSync.hour : null,
-        day: autoSync.day ? autoSync.day : null
-      }
+        day: autoSync.day ? autoSync.day : null,
+      },
     });
   };
 }
 
-export function applyAutoSync(id, autoSync, about, story, address, email, phone) {
-  return async dispatch => {
+export function applyAutoSync(
+  id,
+  autoSync,
+  about,
+  story,
+  address,
+  email,
+  phone
+) {
+  return async (dispatch) => {
     dispatch({
-      type: "SHOW_LOADING"
+      type: "SHOW_LOADING",
     });
     try {
       const data = await axios({
@@ -354,11 +378,11 @@ export function applyAutoSync(id, autoSync, about, story, address, email, phone)
           story: story,
           address: address,
           email: email,
-          phone: phone
-        }
+          phone: phone,
+        },
       });
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
         toastr.success("Apply auto sync success.", "Success");
@@ -367,7 +391,7 @@ export function applyAutoSync(id, autoSync, about, story, address, email, phone)
       }
     } catch (error) {
       dispatch({
-        type: "CLOSE_LOADING"
+        type: "CLOSE_LOADING",
       });
       toastr.error("Apply auto sync failed", "Error");
     }
