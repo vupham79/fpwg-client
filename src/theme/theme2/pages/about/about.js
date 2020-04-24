@@ -148,6 +148,7 @@ class AboutPage extends React.Component {
                   whiteSpace: "break-spaces",
                   textAlign: "justify",
                   whiteSpace: "pre-wrap",
+                  hyphens: "auto",
                 }}
               >
                 {isEdit
@@ -225,6 +226,7 @@ class AboutPage extends React.Component {
                   fontSize: 16,
                   whiteSpace: "break-spaces",
                   textAlign: "justify",
+                  hyphens: "auto",
                 }}
               >
                 {isEdit

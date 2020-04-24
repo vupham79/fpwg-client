@@ -386,6 +386,8 @@ class PostTypeComponent extends React.Component {
                   // height: "100%",
                   whiteSpace: "pre-wrap",
                   height: altType ? 80 : 60, //message height
+                  textAlign: "justify",
+                  hyphens: "auto",
                 }}
               >
                 {post.message}
@@ -568,6 +570,8 @@ class PostTypeComponent extends React.Component {
                 lineHeight: altType ? "22px" : "21px",
                 whiteSpace: "pre-wrap",
                 height: altType ? 218 : 210, //attach height + message height
+                textAlign: "justify",
+                hyphens: "auto",
               }}
             >
               {post.message}

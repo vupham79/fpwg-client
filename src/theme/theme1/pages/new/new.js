@@ -50,6 +50,7 @@ class Theme1News extends React.Component {
         color: "#535353",
         fontSize: 16,
         textAlign: "justify",
+        hyphens: "auto",
       },
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -89,51 +90,85 @@ class Theme1News extends React.Component {
                   altType
                   key={siteEdit.limitNews}
                   fromHome={fromHome}
-                  posts={
-                    (fromHome && homeList ? homeList : siteEdit.posts).filter(function (pos) {
-                      let type = pos && pos.attachments ? pos.attachments.media_type : "";
-                      let showPostMode = isEdit ? siteEdit.showDetailSetting.showPostMode : siteView.showDetailSetting.showPostMode;
-                      let show = true;
-                      if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
-                        show = false;
-                      } else if (type === "video" && (showPostMode === 1 || showPostMode === 3)) {
-                        show = false;
-                      } else if (type === "album" && (showPostMode === 2 || showPostMode === 3)) {
-                        show = false;
-                      } else if (type === "" && (showPostMode === 1 || showPostMode === 2)) {
-                        show = false;
-                      }
-                      return pos && pos.isActive === true && show;
-                    })
-                  }
+                  posts={(fromHome && homeList
+                    ? homeList
+                    : siteEdit.posts
+                  ).filter(function (pos) {
+                    let type =
+                      pos && pos.attachments ? pos.attachments.media_type : "";
+                    let showPostMode = isEdit
+                      ? siteEdit.showDetailSetting.showPostMode
+                      : siteView.showDetailSetting.showPostMode;
+                    let show = true;
+                    if (
+                      type === "photo" &&
+                      (showPostMode === 2 || showPostMode === 3)
+                    ) {
+                      show = false;
+                    } else if (
+                      type === "video" &&
+                      (showPostMode === 1 || showPostMode === 3)
+                    ) {
+                      show = false;
+                    } else if (
+                      type === "album" &&
+                      (showPostMode === 2 || showPostMode === 3)
+                    ) {
+                      show = false;
+                    } else if (
+                      type === "" &&
+                      (showPostMode === 1 || showPostMode === 2)
+                    ) {
+                      show = false;
+                    }
+                    return pos && pos.isActive === true && show;
+                  })}
                   pageCount={Math.ceil(
-                    (fromHome && homeList ? homeList : siteEdit.posts).filter(function (pos) {
-                      let type = pos && pos.attachments ? pos.attachments.media_type : "";
-                      let showPostMode = isEdit ? siteEdit.showDetailSetting.showPostMode : siteView.showDetailSetting.showPostMode;
-                      let show = true;
-                      if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
-                        show = false;
-                      } else if (type === "video" && (showPostMode === 1 || showPostMode === 3)) {
-                        show = false;
-                      } else if (type === "album" && (showPostMode === 2 || showPostMode === 3)) {
-                        show = false;
-                      } else if (type === "" && (showPostMode === 1 || showPostMode === 2)) {
-                        show = false;
+                    (fromHome && homeList ? homeList : siteEdit.posts).filter(
+                      function (pos) {
+                        let type =
+                          pos && pos.attachments
+                            ? pos.attachments.media_type
+                            : "";
+                        let showPostMode = isEdit
+                          ? siteEdit.showDetailSetting.showPostMode
+                          : siteView.showDetailSetting.showPostMode;
+                        let show = true;
+                        if (
+                          type === "photo" &&
+                          (showPostMode === 2 || showPostMode === 3)
+                        ) {
+                          show = false;
+                        } else if (
+                          type === "video" &&
+                          (showPostMode === 1 || showPostMode === 3)
+                        ) {
+                          show = false;
+                        } else if (
+                          type === "album" &&
+                          (showPostMode === 2 || showPostMode === 3)
+                        ) {
+                          show = false;
+                        } else if (
+                          type === "" &&
+                          (showPostMode === 1 || showPostMode === 2)
+                        ) {
+                          show = false;
+                        }
+                        return pos && pos.isActive === true && show;
                       }
-                      return pos && pos.isActive === true && show;
-                    }).length /
-                    siteEdit.limitNews
+                    ).length / siteEdit.limitNews
                   )}
                   bgWhite={true}
                 />
               </Grid>
             ) : (
-                <Grid container justify="center">
-                  <Typography className={classes.changableBody}>
-                    Currently there are no news.
+              <Grid container justify="center">
+                <Typography className={classes.changableBody}>
+                  Currently there are no news.
                 </Typography>
-                </Grid>
-              )
+              </Grid>
+            )
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
@@ -150,12 +185,12 @@ class Theme1News extends React.Component {
               />
             </Grid>
           ) : (
-                <Grid container justify="center">
-                  <Typography className={classes.changableBody}>
-                    Currently there are no news.
+            <Grid container justify="center">
+              <Typography className={classes.changableBody}>
+                Currently there are no news.
               </Typography>
-                </Grid>
-              )}
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );

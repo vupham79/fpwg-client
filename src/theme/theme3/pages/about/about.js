@@ -161,6 +161,7 @@ class AboutPage extends React.Component {
                       textAlign: "justify",
                       fontSize: 16,
                       whiteSpace: "pre-wrap",
+                      hyphens: "auto",
                     }}
                   >
                     {isEdit
@@ -227,6 +228,8 @@ class AboutPage extends React.Component {
                   fontWeight: 400,
                   color: "#fff",
                   fontSize: 16,
+                  textAlign: "justify",
+                  hyphens: "auto",
                 }}
               >
                 {isEdit
