@@ -6,7 +6,7 @@ import {
   faInstagram,
   faYoutube,
   faWhatsapp,
-  faFacebook
+  faFacebook,
 } from "@fortawesome/free-brands-svg-icons";
 
 class Footer extends React.Component {
@@ -19,18 +19,18 @@ class Footer extends React.Component {
       instagram,
       whatsapp,
       bodyEdit,
-      bodyView
+      bodyView,
     } = this.props;
 
     return (
       <Grid
         container
         style={{
-          backgroundColor: "#535353",
+          backgroundColor: "#121212",
           marginTop: 100,
           height: 200,
           postion: "absolute",
-          bottom: 0
+          bottom: 0,
         }}
       >
         <Grid container item xs={12} justify="center">
@@ -43,7 +43,12 @@ class Footer extends React.Component {
           </IconButton>
         </Grid>
         <Grid container item xs={12} justify="center">
-          <p style={{ color: "white", fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily }}>
+          <p
+            style={{
+              color: "white",
+              fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
+            }}
+          >
             @{isEdit ? siteEdit.title : siteView.title}
           </p>
         </Grid>
@@ -57,8 +62,8 @@ class Footer extends React.Component {
                   ? null
                   : { display: "none" }
                 : siteView.whatsapp
-                  ? null
-                  : { display: "none" }
+                ? null
+                : { display: "none" }
             }
           >
             <IconButton
@@ -78,8 +83,8 @@ class Footer extends React.Component {
                   ? null
                   : { display: "none" }
                 : siteView.instagram
-                  ? null
-                  : { display: "none" }
+                ? null
+                : { display: "none" }
             }
           >
             <IconButton
@@ -87,7 +92,7 @@ class Footer extends React.Component {
               color="primary"
               href={`https://instagram.com/${
                 isEdit ? instagram : siteView.instagram
-                }`}
+              }`}
             >
               <FontAwesomeIcon icon={faInstagram} color="white" size="1x" />
             </IconButton>
@@ -101,8 +106,8 @@ class Footer extends React.Component {
                   ? null
                   : { display: "none" }
                 : siteView.youtube
-                  ? null
-                  : { display: "none" }
+                ? null
+                : { display: "none" }
             }
           >
             <IconButton
@@ -119,7 +124,7 @@ class Footer extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   isEdit: state.site.isEdit,
   siteView: state.site.siteView,
   siteEdit: state.site.siteEdit,

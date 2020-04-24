@@ -102,7 +102,7 @@ export function syncDataFromFB(
           phone: phone,
           postWith: postWith, //(int) 1: message, 2: video, 3: photo
           containMsg: containMsg,
-          eventContainTitle: eventContainTitle
+          eventContainTitle: eventContainTitle,
         },
       });
       dispatch({
@@ -153,7 +153,7 @@ export function syncDataFromFB(
   };
 }
 
-export function syncPostFromFB(pageId, dateFrom, dateTo) {
+export function syncPostFromFB(pageId, dateFrom, dateTo, postWith, containMsg) {
   return async (dispatch) => {
     dispatch({
       type: "SHOW_LOADING",
@@ -166,6 +166,8 @@ export function syncPostFromFB(pageId, dateFrom, dateTo) {
           pageId: pageId,
           dateFrom: dateFrom,
           dateTo: dateTo,
+          postWith,
+          containMsg,
         },
       });
       dispatch({
@@ -216,11 +218,12 @@ export function syncPostFromFB(pageId, dateFrom, dateTo) {
   };
 }
 
-export function syncEventFromFB(pageId, dateFrom, dateTo) {
+export function syncEventFromFB(pageId, dateFrom, dateTo, containTitle) {
   return async (dispatch) => {
     dispatch({
       type: "SHOW_LOADING",
     });
+    console.log("hello", containTitle);
     try {
       const data = await axios({
         method: "patch",
@@ -229,6 +232,7 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
           pageId: pageId,
           dateFrom: dateFrom,
           dateTo: dateTo,
+          containTitle,
         },
       });
       dispatch({
@@ -351,8 +355,8 @@ export function setAutoSync(autoSync) {
         minute: autoSync.minute
           ? autoSync.minute
           : !autoSync.minute && !autoSync.hour && !autoSync.day
-            ? 2
-            : null,
+          ? 2
+          : null,
         hour: autoSync.hour ? autoSync.hour : null,
         day: autoSync.day ? autoSync.day : null,
       },
@@ -390,7 +394,7 @@ export function applyAutoSync(
           phone: phone,
           postWith: postWith, //(int) 1: message, 2: video, 3: photo
           containMsg: containMsg,
-          eventContainTitle: eventContainTitle
+          eventContainTitle: eventContainTitle,
         },
       });
       dispatch({

@@ -206,15 +206,15 @@ function CreateTable({ data }) {
                   {!row.dateFrom && !row.dateTo ? (
                     "All"
                   ) : (
-                      <Grid container justify="center">
-                        <Grid style={fontTable} item xs={12}>
-                          From: {moment(row.dateFrom).format("DD-MM-YYYY")}
-                        </Grid>
-                        <Grid style={fontTable} item xs={12}>
-                          To: {moment(row.dateTo).format("DD-MM-YYYY")}
-                        </Grid>
+                    <Grid container justify="center">
+                      <Grid style={fontTable} item xs={12}>
+                        From: {moment(row.dateFrom).format("DD-MM-YYYY")}
                       </Grid>
-                    )}
+                      <Grid style={fontTable} item xs={12}>
+                        To: {moment(row.dateTo).format("DD-MM-YYYY")}
+                      </Grid>
+                    </Grid>
+                  )}
                 </TableCell>
                 <TableCell align="center">
                   <Grid
@@ -268,14 +268,14 @@ class SyncEditorTab extends React.Component {
     manualContainMsgCheck: false,
     manualPostRadioValue: "",
     manualTitleEventCheck: false,
-    manualPostMessage: null,
-    maunalEventTitle: null,
+    manualPostMessage: "",
+    maunalEventTitle: "",
     autoPostWithCheck: false,
     autoContainMsgCheck: false,
     autoPostRadioValue: "",
     autoTitleMsgCheck: false,
-    autoPostMsg: null,
-    autoEventTitle: null,
+    autoPostMsg: "",
+    autoEventTitle: "",
     manualAboutCheck: false,
     manualAddressCheck: false,
     manualMailCheck: false,
@@ -393,7 +393,7 @@ class SyncEditorTab extends React.Component {
       manualPhoneCheck,
       manualPostRadioValue,
       manualPostMessage,
-      maunalEventTitle
+      maunalEventTitle,
     } = this.state;
 
     const { startDate, endDate, radioValue, selectValue } = this.state;
@@ -406,14 +406,17 @@ class SyncEditorTab extends React.Component {
       syncPostFromFB(
         site.id,
         selectValue === "All" ? null : startDate,
-        selectValue === "All" ? null : endDate
+        selectValue === "All" ? null : endDate,
+        manualPostRadioValue,
+        manualPostMessage
       );
     } else if (radioValue === "event") {
       this.setState({ msg: "" });
       syncEventFromFB(
         site.id,
         selectValue === "All" ? null : startDate,
-        selectValue === "All" ? null : endDate
+        selectValue === "All" ? null : endDate,
+        maunalEventTitle
       );
     } else if (radioValue === "gallery") {
       this.setState({ msg: "" });
@@ -450,7 +453,7 @@ class SyncEditorTab extends React.Component {
       autoPhoneCheck,
       autoPostRadioValue,
       autoPostMsg,
-      autoEventTitle
+      autoEventTitle,
     } = this.state;
 
     applyAutoSync(
@@ -490,6 +493,30 @@ class SyncEditorTab extends React.Component {
 
   handleChangeCheckBox = (event) => {
     this.setState({ [event.target.name]: event.target.checked });
+    if (!event.target.checked) {
+      switch (event.target.name) {
+        case "manualTitleEventCheck":
+          this.setState({ maunalEventTitle: "" });
+          break;
+        case "manualPostWithCheck":
+          this.setState({ manualPostRadioValue: "" });
+          break;
+        case "manualContainMsgCheck":
+          this.setState({ manualPostMessage: "" });
+          break;
+        case "autoPostWithCheck":
+          this.setState({ autoPostRadioValue: "" });
+          break;
+        case "autoContainMsgCheck":
+          this.setState({ autoPostMsg: "" });
+          break;
+        case "autoTitleMsgCheck":
+          this.setState({ autoEventTitle: "" });
+          break;
+        default:
+          break;
+      }
+    }
   };
 
   handleChangeContainMessage = (type, event) => {
@@ -1238,7 +1265,7 @@ class SyncEditorTab extends React.Component {
                         <TextField
                           variant="outlined"
                           fullWidth
-                          value={this.state.manualPostMessage}
+                          value={this.state.autoPostMsg}
                           onChange={(e) =>
                             this.handleChangeContainMessage("auto", e)
                           }
@@ -1390,7 +1417,7 @@ class SyncEditorTab extends React.Component {
                 <Grid container item xs={12} justify="center">
                   <Grid item xs={12} className={classes.title2}>
                     Additional data:
-                </Grid>
+                  </Grid>
                   <Grid container item xs={10}>
                     <Grid item xs={12} sm={12} md={6} lg={4}>
                       <FormControlLabel
@@ -1403,7 +1430,9 @@ class SyncEditorTab extends React.Component {
                           />
                         }
                         label={
-                          <p style={{ fontSize: 11, color: "#555d66" }}>About</p>
+                          <p style={{ fontSize: 11, color: "#555d66" }}>
+                            About
+                          </p>
                         }
                       />
                     </Grid>
@@ -1418,7 +1447,9 @@ class SyncEditorTab extends React.Component {
                           />
                         }
                         label={
-                          <p style={{ fontSize: 11, color: "#555d66" }}>Story</p>
+                          <p style={{ fontSize: 11, color: "#555d66" }}>
+                            Story
+                          </p>
                         }
                       />
                     </Grid>
@@ -1435,7 +1466,7 @@ class SyncEditorTab extends React.Component {
                         label={
                           <p style={{ fontSize: 11, color: "#555d66" }}>
                             Address
-                        </p>
+                          </p>
                         }
                       />
                     </Grid>
@@ -1450,7 +1481,9 @@ class SyncEditorTab extends React.Component {
                           />
                         }
                         label={
-                          <p style={{ fontSize: 11, color: "#555d66" }}>Email</p>
+                          <p style={{ fontSize: 11, color: "#555d66" }}>
+                            Email
+                          </p>
                         }
                       />
                     </Grid>
@@ -1465,7 +1498,9 @@ class SyncEditorTab extends React.Component {
                           />
                         }
                         label={
-                          <p style={{ fontSize: 11, color: "#555d66" }}>Phone</p>
+                          <p style={{ fontSize: 11, color: "#555d66" }}>
+                            Phone
+                          </p>
                         }
                       />
                     </Grid>
@@ -1540,15 +1575,39 @@ const mapDispatchToProps = (dispatch) => ({
         eventContainTitle
       )
     ),
-  syncPostFromFB: (pageId, dateFrom, dateTo) =>
-    dispatch(syncPostFromFB(pageId, dateFrom, dateTo)),
-  syncEventFromFB: (pageId, dateFrom, dateTo) =>
-    dispatch(syncEventFromFB(pageId, dateFrom, dateTo)),
+  syncPostFromFB: (pageId, dateFrom, dateTo, postWith, containMsg) =>
+    dispatch(syncPostFromFB(pageId, dateFrom, dateTo, postWith, containMsg)),
+  syncEventFromFB: (pageId, dateFrom, dateTo, eventContainTitle) =>
+    dispatch(syncEventFromFB(pageId, dateFrom, dateTo, eventContainTitle)),
   syncGalleryFromFB: (pageId, dateFrom, dateTo) =>
     dispatch(syncGalleryFromFB(pageId, dateFrom, dateTo)),
   setAutoSync: (autoSync) => dispatch(setAutoSync(autoSync)),
-  applyAutoSync: (id, autoSync, about, story, address, email, phone, postWith, containMsg, eventContainTitle) =>
-    dispatch(applyAutoSync(id, autoSync, about, story, address, email, phone, postWith, containMsg, eventContainTitle)),
+  applyAutoSync: (
+    id,
+    autoSync,
+    about,
+    story,
+    address,
+    email,
+    phone,
+    postWith,
+    containMsg,
+    eventContainTitle
+  ) =>
+    dispatch(
+      applyAutoSync(
+        id,
+        autoSync,
+        about,
+        story,
+        address,
+        email,
+        phone,
+        postWith,
+        containMsg,
+        eventContainTitle
+      )
+    ),
 });
 
 export default connect(
