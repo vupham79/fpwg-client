@@ -1,6 +1,7 @@
 import { Grid, lighten } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
+
 class Theme1About extends React.Component {
   renderImage = () => {
     const { isEdit, siteEdit, siteView, newLogo } = this.props;
@@ -150,24 +151,27 @@ class Theme1About extends React.Component {
         </Grid>
 
         <Grid container item xs={12} justify={"center"} style={{ backgroundColor: isEdit ? titleEdit.color : titleView.color, minHeight: 420 }}>
-          <Grid item xs={12} sm={12} style={{ marginLeft: "25%" }}>
-            <img src={this.renderImage()} alt="" style={{ width: 292, height: 348, marginTop: -50, objectFit: "cover", display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutLogo ? "inline-block" : "none") }} />
 
-            <span style={{ height: 298, overflowY: "auto", whiteSpace: "pre-wrap", width: 400, paddingLeft: 35, paddingTop: 30, display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutDescription ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutDescription ? "inline-block" : "none") }} >
-              <p style={classes.changableTitle2}>Introduction</p>
-              <p style={classes.changableBody3}>
-                {isEdit && siteEdit && siteEdit.about}
-                {!isEdit && siteView && siteView.about}
-                {isEdit && !siteEdit.about && "Welcome to our website!"}
-                {!isEdit && !siteView.about && "Welcome to our website!"}
-              </p>
-            </span>
+          <Grid item xs={10} sm={10} md={5} lg={4} style={{ marginTop: -50, display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutLogo ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutLogo ? "inline-block" : "none") }}>
+            <img src={this.renderImage()} alt="" style={{ objectFit: "cover", width: "100%", height: 348 }} />
           </Grid>
+
+          <Grid item xs={10} sm={10} md={5} lg={4} style={{ height: 298, overflowY: "auto", whiteSpace: "pre-wrap", paddingLeft: 35, paddingTop: 30, display: isEdit ? (this.props.siteEdit.showDetailSetting.showAboutDescription ? "inline-block" : "none") : (this.props.siteView.showDetailSetting.showAboutDescription ? "inline-block" : "none") }} >
+            <p style={classes.changableTitle2}>Introduction</p>
+            <p style={classes.changableBody3}>
+              {isEdit && siteEdit && siteEdit.about}
+              {!isEdit && siteView && siteView.about}
+              {isEdit && !siteEdit.about && "Welcome to our website!"}
+              {!isEdit && !siteView.about && "Welcome to our website!"}
+            </p>
+          </Grid>
+
         </Grid>
 
-        <Grid container item xs={12} justify={"center"} style={{ backgroundColor: isEdit ? lighten(titleEdit.color, 0.08) : lighten(titleView.color, 0.08), minHeight: 420, display: isShowStory() ? "block" : "none", paddingTop: 50 }}>
-          <Grid item xs={12} sm={12} style={{ marginLeft: "25%" }}>
-            <span style={{ height: 298, overflowY: "auto", whiteSpace: "pre-wrap", width: 400, paddingRight: 35, paddingTop: 30, display: "inline-block" }} >
+        {isShowStory() && (
+          <Grid container item xs={12} justify={"center"} style={{ backgroundColor: isEdit ? lighten(titleEdit.color, 0.08) : lighten(titleView.color, 0.08), minHeight: 420, paddingTop: 50 }}>
+
+            <Grid item xs={10} sm={10} md={5} lg={4} style={{ height: 298, overflowY: "auto", whiteSpace: "pre-wrap", paddingLeft: 35, paddingTop: 30, display: "inline-block" }} >
               <p style={classes.changableTitle2}>
                 {isEdit
                   ? siteEdit && siteEdit.story && siteEdit.story.title
@@ -182,15 +186,17 @@ class Theme1About extends React.Component {
                 {isEdit && !siteEdit.story && !siteEdit.story.composedText && "Create story on your Facebook page or inside Content Settings"}
                 {!isEdit && !siteView.story && !siteView.story.composedText && "Create story on your Facebook page or inside Content Settings"}
               </p>
-            </span>
+            </Grid>
 
-            <img src={this.getCover(1)} alt="" style={{ width: 292, height: 348, objectFit: "cover", display: "inline-block" }} />
+            <Grid item xs={10} sm={10} md={5} lg={4} style={{ display: "inline-block" }}>
+              <img src={this.getCover(1)} alt="" style={{ objectFit: "cover", width: "100%", height: 348 }} />
+            </Grid>
+
           </Grid>
-        </Grid>
-
+        )}
         {/* <Grid item xs={12} style={{ backgroundColor: "#3E5688", height: 150 }} /> */}
 
-      </Grid>
+      </Grid >
     );
   }
 }
