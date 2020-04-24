@@ -72,7 +72,7 @@ const useStyles = (theme) => ({
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: "#000",
+    backgroundColor: "#121212",
   },
   tooltip: {
     border: "2px solid orange",
@@ -201,7 +201,6 @@ class Header extends Component {
       siteView,
       siteEdit,
       titleView,
-      navTextColor,
       classes,
       titleEdit,
     } = this.props;
@@ -220,7 +219,8 @@ class Header extends Component {
                     fontFamily: isEdit
                       ? titleEdit.fontFamily
                       : titleView.fontFamily,
-                    color: isEdit ? titleEdit.color : titleView.color,
+                    // color: isEdit ? titleEdit.color : titleView.color,
+                    color: "#fff",
                     textTransform: "uppercase",
                     fontSize: 18,
                     padding: "1rem 0",

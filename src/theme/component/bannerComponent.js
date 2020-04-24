@@ -183,7 +183,7 @@ class BannerComponent extends React.Component {
   TypeCarousel = (arrows = true) => {
     return (
       <React.Fragment>
-        <Grid item xs={12}>
+        <Grid item xs={12} className={!arrows ? "slickNoArrow" : ""}>
           <Slider speed={1000} autoplay autoplaySpeed={2500} arrows={arrows}>
             {this.renderNewCoversSlider()}
           </Slider>

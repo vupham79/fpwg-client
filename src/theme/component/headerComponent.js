@@ -211,8 +211,9 @@ class HeaderComponent extends Component {
                       letterSpacing: "1px",
                     }}
                     activeStyle={{
-                      borderBottom: "1px solid",
+                      borderBottom: "2px solid",
                       borderColor: this.props.navColor,
+                      padding: "1rem",
                     }}
                     to={`/${siteView.sitePath}/${item.original}`}
                   >
@@ -369,15 +370,7 @@ class HeaderComponent extends Component {
           </Grid>
           {displayImg ? (
             <Grid container item md={5} sm={12} xs={5}>
-              <Grid
-                container
-                alignItems="center"
-                justify="center"
-                item
-                md={8}
-                sm={6}
-                xs={6}
-              >
+              <Grid item md={8} sm={6} xs={6}>
                 {this.renderTitle()}
               </Grid>
               <Grid
@@ -419,8 +412,8 @@ class HeaderComponent extends Component {
             <Grid container item md={6} sm={8} xs={8}>
               <Grid
                 item
-                md={4}
-                sm={4}
+                md={2}
+                sm={2}
                 xs={4}
                 style={{
                   ...imgStyles,
@@ -431,12 +424,12 @@ class HeaderComponent extends Component {
               />
               <Grid
                 container
-                justify="center"
                 alignItems="center"
                 item
                 md={6}
                 sm={7}
                 xs={8}
+                style={{ paddingLeft: "1rem" }}
               >
                 {this.renderTitle()}
               </Grid>
