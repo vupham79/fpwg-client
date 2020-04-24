@@ -192,7 +192,7 @@ class Gallery extends React.Component {
                     <Grid
                       item
                       key={index}
-                      xs={10}
+                      xs={12}
                       sm={4}
                       className={classes.gridItems}
                     >

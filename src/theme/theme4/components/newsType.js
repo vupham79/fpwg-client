@@ -377,7 +377,7 @@ class NewsType extends React.Component {
           key={post._id}
           container
           item
-          xs={10}
+          xs={12}
           sm={6}
           md={6}
           lg={4}

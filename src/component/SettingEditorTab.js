@@ -238,7 +238,7 @@ class SettingEditorTab extends React.Component {
             Set a unique path name to your website. Example: Site path "abc"
             means your website url will be "
             {process.env.REACT_APP_HOST
-              ? process.env.REACT_APP_HOST
+              ? `${process.env.REACT_APP_HOST}/abc`
               : `http://localhost:3000/abc`}
             "
           </Grid>
