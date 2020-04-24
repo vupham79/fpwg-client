@@ -1,5 +1,5 @@
 .about_page {
-  /* margin-bottom: 2.5rem; */
+  min-height: 80vh;
 }
 
 .about_title {

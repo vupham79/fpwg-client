@@ -88,17 +88,17 @@ class AboutPage extends React.Component {
               >
                 {isEdit
                   ? siteEdit &&
-                    siteEdit.navItems.map((item) => {
-                      if (item.original === "about") {
-                        return item.name;
-                      } else return "";
-                    })
+                  siteEdit.navItems.map((item) => {
+                    if (item.original === "about") {
+                      return item.name;
+                    } else return "";
+                  })
                   : siteView &&
-                    siteView.navItems.map((item) => {
-                      if (item.original === "about") {
-                        return item.name;
-                      } else return "";
-                    })}
+                  siteView.navItems.map((item) => {
+                    if (item.original === "about") {
+                      return item.name;
+                    } else return "";
+                  })}
               </Typography>
             </>
           </Grid>
@@ -137,8 +137,8 @@ class AboutPage extends React.Component {
                   display: fromHome
                     ? "none"
                     : isShowAboutLogo()
-                    ? "inline-block"
-                    : "none",
+                      ? "inline-block"
+                      : "none",
                 }}
               />
               <p
@@ -156,8 +156,8 @@ class AboutPage extends React.Component {
                     ? siteEdit.about
                     : "Welcome to our website! Take a look around and feel free to contact us for more information."
                   : siteView && siteView.about
-                  ? siteView.about
-                  : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+                    ? siteView.about
+                    : "Welcome to our website! Take a look around and feel free to contact us for more information."}
               </p>
             </Typography>
           </Grid>
@@ -248,6 +248,7 @@ const mapStateToProps = (state) => ({
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
   bodyView: state.site.bodyView,
+  newLogo: state.site.newLogo,
 });
 
 export default connect(mapStateToProps, null)(AboutPage);

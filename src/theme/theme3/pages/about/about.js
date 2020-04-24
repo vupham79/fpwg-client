@@ -84,22 +84,22 @@ class AboutPage extends React.Component {
             >
               {isEdit
                 ? siteEdit &&
-                  siteEdit.navItems.map((item) => {
-                    if (item.original === "about") {
-                      return item.name;
-                    } else return "";
-                  })
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "about") {
+                    return item.name;
+                  } else return "";
+                })
                 : siteView &&
-                  siteView.navItems.map((item) => {
-                    if (item.original === "about") {
-                      return item.name;
-                    } else return "";
-                  })}
+                siteView.navItems.map((item) => {
+                  if (item.original === "about") {
+                    return item.name;
+                  } else return "";
+                })}
             </Typography>
           </Grid>
         ) : (
-          <></>
-        )}
+            <></>
+          )}
         {fromHome ? (
           <Grid container item sm={10} xs={10} justify="center">
             <Typography
@@ -120,63 +120,63 @@ class AboutPage extends React.Component {
                   ? siteEdit.about
                   : "Welcome to our website! Take a look around and feel free to contact us for more information."
                 : siteView && siteView.about
-                ? siteView.about
-                : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+                  ? siteView.about
+                  : "Welcome to our website! Take a look around and feel free to contact us for more information."}
             </Typography>
           </Grid>
         ) : (
-          (this.isShowAboutDes() || this.isShowAboutLogo()) && (
-            <Grid container justify="center" className={styles.about_page}>
-              <Grid
-                container
-                item
-                sm={6}
-                xs={10}
-                justify="center"
-                style={{
-                  // marginTop: "2.5rem",
-                  display: this.isShowAboutDes() ? "inline-block" : "flex",
-                }}
-              >
-                <CardMedia
+            (this.isShowAboutDes() || this.isShowAboutLogo()) && (
+              <Grid container justify="center" className={styles.about_page}>
+                <Grid
+                  container
+                  item
+                  sm={6}
+                  xs={10}
+                  justify="center"
                   style={{
-                    width: this.isShowAboutDes() ? "30%" : "40%",
-                    float: "left",
-                    display: this.isShowAboutLogo() ? "block" : "none",
+                    // marginTop: "2.5rem",
+                    display: this.isShowAboutDes() ? "inline-block" : "flex",
                   }}
-                  component="img"
-                  alt=""
-                  image={this.renderImage()}
-                />
-                {this.isShowAboutDes() && (
-                  <Typography
-                    variant="body1"
-                    color="textPrimary"
+                >
+                  <CardMedia
                     style={{
-                      fontFamily: isEdit
-                        ? titleEdit.fontFamily
-                        : titleView.fontFamily,
-                      fontWeight: 400,
-                      color: "white",
-                      textAlign: "justify",
-                      fontSize: 16,
-                      whiteSpace: "pre-wrap",
-                      hyphens: "auto",
+                      width: this.isShowAboutDes() ? "30%" : "40%",
+                      float: "left",
+                      display: this.isShowAboutLogo() ? "block" : "none",
                     }}
-                  >
-                    {isEdit
-                      ? siteEdit && siteEdit.about
-                        ? siteEdit.about
-                        : "Welcome to our website! Take a look around and feel free to contact us for more information."
-                      : siteView && siteView.about
-                      ? siteView.about
-                      : "Welcome to our website! Take a look around and feel free to contact us for more information."}
-                  </Typography>
-                )}
+                    component="img"
+                    alt=""
+                    image={this.renderImage()}
+                  />
+                  {this.isShowAboutDes() && (
+                    <Typography
+                      variant="body1"
+                      color="textPrimary"
+                      style={{
+                        fontFamily: isEdit
+                          ? titleEdit.fontFamily
+                          : titleView.fontFamily,
+                        fontWeight: 400,
+                        color: "white",
+                        textAlign: "justify",
+                        fontSize: 16,
+                        whiteSpace: "pre-wrap",
+                        hyphens: "auto",
+                      }}
+                    >
+                      {isEdit
+                        ? siteEdit && siteEdit.about
+                          ? siteEdit.about
+                          : "Welcome to our website! Take a look around and feel free to contact us for more information."
+                        : siteView && siteView.about
+                          ? siteView.about
+                          : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+                    </Typography>
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
-          )
-        )}
+            )
+          )}
         {!fromHome && this.isShowStory() && (
           <>
             <Grid
@@ -234,29 +234,29 @@ class AboutPage extends React.Component {
               >
                 {isEdit
                   ? siteEdit &&
-                    siteEdit.story &&
-                    siteEdit.story.composedText &&
-                    siteEdit.story.composedText.map((text) => {
-                      const originalText = text.split("\n");
-                      return originalText.map((val, index) => (
-                        <React.Fragment key={index}>
-                          {val}
-                          <br />
-                        </React.Fragment>
-                      ));
-                    })
+                  siteEdit.story &&
+                  siteEdit.story.composedText &&
+                  siteEdit.story.composedText.map((text) => {
+                    const originalText = text.split("\n");
+                    return originalText.map((val, index) => (
+                      <React.Fragment key={index}>
+                        {val}
+                        <br />
+                      </React.Fragment>
+                    ));
+                  })
                   : siteView &&
-                    siteView.story &&
-                    siteView.story.composedText &&
-                    siteView.story.composedText.map((text) => {
-                      const originalText = text.split("\n");
-                      return originalText.map((val, index) => (
-                        <React.Fragment key={index}>
-                          {val}
-                          <br />
-                        </React.Fragment>
-                      ));
-                    })}
+                  siteView.story &&
+                  siteView.story.composedText &&
+                  siteView.story.composedText.map((text) => {
+                    const originalText = text.split("\n");
+                    return originalText.map((val, index) => (
+                      <React.Fragment key={index}>
+                        {val}
+                        <br />
+                      </React.Fragment>
+                    ));
+                  })}
               </Typography>
             </Grid>
           </>
@@ -273,6 +273,7 @@ const mapStateToProps = (state) => ({
   bodyEdit: state.site.bodyEdit,
   titleView: state.site.titleView,
   bodyView: state.site.bodyView,
+  newLogo: state.site.newLogo,
 });
 
 export default connect(mapStateToProps, null)(AboutPage);
