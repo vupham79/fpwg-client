@@ -170,6 +170,7 @@ class Header extends Component {
                       padding: "0 0.5rem",
                       overflow: "hidden",
                       mixBlendMode: "difference",
+                      wordBreak: "break-word",
                     }}
                     className={classes.navItemLinks}
                     onClick={() => this.handleChange(item.name)}

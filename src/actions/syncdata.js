@@ -153,7 +153,18 @@ export function syncDataFromFB(
   };
 }
 
-export function syncPostFromFB(pageId, dateFrom, dateTo, postWith, containMsg) {
+export function syncPostFromFB(
+  pageId,
+  dateFrom,
+  dateTo,
+  about,
+  story,
+  address,
+  email,
+  phone,
+  postWith,
+  containMsg
+) {
   return async (dispatch) => {
     dispatch({
       type: "SHOW_LOADING",
@@ -166,8 +177,13 @@ export function syncPostFromFB(pageId, dateFrom, dateTo, postWith, containMsg) {
           pageId: pageId,
           dateFrom: dateFrom,
           dateTo: dateTo,
-          postWith,
-          containMsg,
+          about: about,
+          story: story,
+          address: address,
+          email: email,
+          phone: phone,
+          postWith: postWith, //(int) 1: message, 2: video, 3: photo
+          containMsg: containMsg,
         },
       });
       dispatch({
@@ -218,7 +234,17 @@ export function syncPostFromFB(pageId, dateFrom, dateTo, postWith, containMsg) {
   };
 }
 
-export function syncEventFromFB(pageId, dateFrom, dateTo, containTitle) {
+export function syncEventFromFB(
+  pageId,
+  dateFrom,
+  dateTo,
+  about,
+  story,
+  address,
+  email,
+  phone,
+  eventContainTitle
+) {
   return async (dispatch) => {
     dispatch({
       type: "SHOW_LOADING",
@@ -232,7 +258,12 @@ export function syncEventFromFB(pageId, dateFrom, dateTo, containTitle) {
           pageId: pageId,
           dateFrom: dateFrom,
           dateTo: dateTo,
-          containTitle,
+          about,
+          story,
+          address,
+          email,
+          phone,
+          eventContainTitle,
         },
       });
       dispatch({
@@ -287,7 +318,16 @@ export function syncEventFromFB(pageId, dateFrom, dateTo, containTitle) {
   };
 }
 
-export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
+export function syncGalleryFromFB(
+  pageId,
+  dateFrom,
+  dateTo,
+  about,
+  story,
+  address,
+  email,
+  phone
+) {
   return async (dispatch) => {
     dispatch({
       type: "SHOW_LOADING",
@@ -300,6 +340,11 @@ export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
           pageId: pageId,
           dateFrom: dateFrom,
           dateTo: dateTo,
+          about: about,
+          story: story,
+          address: address,
+          email: email,
+          phone: phone,
         },
       });
       dispatch({

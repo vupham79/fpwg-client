@@ -407,6 +407,11 @@ class SyncEditorTab extends React.Component {
         site.id,
         selectValue === "All" ? null : startDate,
         selectValue === "All" ? null : endDate,
+        manualAboutCheck,
+        manualStoryCheck,
+        manualAddressCheck,
+        manualMailCheck,
+        manualPhoneCheck,
         manualPostRadioValue,
         manualPostMessage
       );
@@ -416,6 +421,11 @@ class SyncEditorTab extends React.Component {
         site.id,
         selectValue === "All" ? null : startDate,
         selectValue === "All" ? null : endDate,
+        manualAboutCheck,
+        manualStoryCheck,
+        manualAddressCheck,
+        manualMailCheck,
+        manualPhoneCheck,
         maunalEventTitle
       );
     } else if (radioValue === "gallery") {
@@ -423,7 +433,12 @@ class SyncEditorTab extends React.Component {
       syncGalleryFromFB(
         site.id,
         selectValue === "All" ? null : startDate,
-        selectValue === "All" ? null : endDate
+        selectValue === "All" ? null : endDate,
+        manualAboutCheck,
+        manualStoryCheck,
+        manualAddressCheck,
+        manualMailCheck,
+        manualPhoneCheck
       );
     } else if (radioValue === "all") {
       this.setState({ msg: "" });
@@ -1575,12 +1590,78 @@ const mapDispatchToProps = (dispatch) => ({
         eventContainTitle
       )
     ),
-  syncPostFromFB: (pageId, dateFrom, dateTo, postWith, containMsg) =>
-    dispatch(syncPostFromFB(pageId, dateFrom, dateTo, postWith, containMsg)),
-  syncEventFromFB: (pageId, dateFrom, dateTo, eventContainTitle) =>
-    dispatch(syncEventFromFB(pageId, dateFrom, dateTo, eventContainTitle)),
-  syncGalleryFromFB: (pageId, dateFrom, dateTo) =>
-    dispatch(syncGalleryFromFB(pageId, dateFrom, dateTo)),
+  syncPostFromFB: (
+    pageId,
+    dateFrom,
+    dateTo,
+    about,
+    story,
+    address,
+    email,
+    phone,
+    postWith,
+    containMsg
+  ) =>
+    dispatch(
+      syncPostFromFB(
+        pageId,
+        dateFrom,
+        dateTo,
+        about,
+        story,
+        address,
+        email,
+        phone,
+        postWith,
+        containMsg
+      )
+    ),
+  syncEventFromFB: (
+    pageId,
+    dateFrom,
+    dateTo,
+    about,
+    story,
+    address,
+    email,
+    phone,
+    eventContainTitle
+  ) =>
+    dispatch(
+      syncEventFromFB(
+        pageId,
+        dateFrom,
+        dateTo,
+        about,
+        story,
+        address,
+        email,
+        phone,
+        eventContainTitle
+      )
+    ),
+  syncGalleryFromFB: (
+    pageId,
+    dateFrom,
+    dateTo,
+    about,
+    story,
+    address,
+    email,
+    phone
+  ) =>
+    dispatch(
+      syncGalleryFromFB(
+        pageId,
+        dateFrom,
+        dateTo,
+        about,
+        story,
+        address,
+        email,
+        phone
+      )
+    ),
   setAutoSync: (autoSync) => dispatch(setAutoSync(autoSync)),
   applyAutoSync: (
     id,
