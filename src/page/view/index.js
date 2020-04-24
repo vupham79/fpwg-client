@@ -86,7 +86,7 @@ class PreViewSite extends React.Component {
                 class="fb-customerchat"
                 attribution="setup_tool"
                 page_id={siteView.id}
-                theme_color="#0084ff"
+                theme_color={siteView.color}
               />
             </div>
           </>

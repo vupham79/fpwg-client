@@ -55,7 +55,7 @@ class PreEditPage extends React.Component {
               class="fb-customerchat"
               attribution="setup_tool"
               page_id={siteEdit.id}
-              theme_color="#0084ff"
+              theme_color={siteEdit.color}
             />
           </div>
         </>
