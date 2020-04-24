@@ -54,7 +54,7 @@ class Footer extends React.Component {
       fontSize: 18,
       padding: "1.5rem",
       fonWeight: "600",
-      fontStyle: "oblique",
+      // fontStyle: "oblique",
       fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
     };
 
