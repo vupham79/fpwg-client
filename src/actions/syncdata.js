@@ -102,7 +102,7 @@ export function syncDataFromFB(
           phone: phone,
           postWith: postWith, //(int) 1: message, 2: video, 3: photo
           containMsg: containMsg,
-          eventContainTitle: eventContainTitle
+          eventContainTitle: eventContainTitle,
         },
       });
       dispatch({
@@ -153,7 +153,18 @@ export function syncDataFromFB(
   };
 }
 
-export function syncPostFromFB(pageId, dateFrom, dateTo) {
+export function syncPostFromFB(
+  pageId,
+  dateFrom,
+  dateTo,
+  about,
+  story,
+  address,
+  email,
+  phone,
+  postWith,
+  containMsg
+) {
   return async (dispatch) => {
     dispatch({
       type: "SHOW_LOADING",
@@ -166,6 +177,13 @@ export function syncPostFromFB(pageId, dateFrom, dateTo) {
           pageId: pageId,
           dateFrom: dateFrom,
           dateTo: dateTo,
+          about: about,
+          story: story,
+          address: address,
+          email: email,
+          phone: phone,
+          postWith: postWith, //(int) 1: message, 2: video, 3: photo
+          containMsg: containMsg,
         },
       });
       dispatch({
@@ -216,7 +234,17 @@ export function syncPostFromFB(pageId, dateFrom, dateTo) {
   };
 }
 
-export function syncEventFromFB(pageId, dateFrom, dateTo) {
+export function syncEventFromFB(
+  pageId,
+  dateFrom,
+  dateTo,
+  about,
+  story,
+  address,
+  email,
+  phone,
+  eventContainTitle
+) {
   return async (dispatch) => {
     dispatch({
       type: "SHOW_LOADING",
@@ -229,6 +257,12 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
           pageId: pageId,
           dateFrom: dateFrom,
           dateTo: dateTo,
+          about: about,
+          story: story,
+          address: address,
+          email: email,
+          phone: phone,
+          eventContainTitle: eventContainTitle,
         },
       });
       dispatch({
@@ -283,7 +317,16 @@ export function syncEventFromFB(pageId, dateFrom, dateTo) {
   };
 }
 
-export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
+export function syncGalleryFromFB(
+  pageId,
+  dateFrom,
+  dateTo,
+  about,
+  story,
+  address,
+  email,
+  phone
+) {
   return async (dispatch) => {
     dispatch({
       type: "SHOW_LOADING",
@@ -296,6 +339,11 @@ export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
           pageId: pageId,
           dateFrom: dateFrom,
           dateTo: dateTo,
+          about: about,
+          story: story,
+          address: address,
+          email: email,
+          phone: phone,
         },
       });
       dispatch({
@@ -351,8 +399,8 @@ export function setAutoSync(autoSync) {
         minute: autoSync.minute
           ? autoSync.minute
           : !autoSync.minute && !autoSync.hour && !autoSync.day
-            ? 2
-            : null,
+          ? 2
+          : null,
         hour: autoSync.hour ? autoSync.hour : null,
         day: autoSync.day ? autoSync.day : null,
       },
@@ -390,7 +438,7 @@ export function applyAutoSync(
           phone: phone,
           postWith: postWith, //(int) 1: message, 2: video, 3: photo
           containMsg: containMsg,
-          eventContainTitle: eventContainTitle
+          eventContainTitle: eventContainTitle,
         },
       });
       dispatch({
