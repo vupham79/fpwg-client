@@ -143,6 +143,7 @@ class AboutPage extends React.Component {
                       width: this.isShowAboutDes() ? "30%" : "40%",
                       float: "left",
                       display: this.isShowAboutLogo() ? "block" : "none",
+                      marginRight: 20
                     }}
                     component="img"
                     alt=""
