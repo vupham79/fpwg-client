@@ -174,17 +174,19 @@ class Theme1About extends React.Component {
               marginTop: -50,
               display: isEdit
                 ? this.props.siteEdit.showDetailSetting.showAboutLogo
-                  ? "inline-block"
+                  ? "flex"
                   : "none"
                 : this.props.siteView.showDetailSetting.showAboutLogo
-                ? "inline-block"
+                ? "flex"
                 : "none",
+              justifyContent: "center",
+              overflow: "hidden",
             }}
           >
             <img
               src={this.renderImage()}
               alt=""
-              style={{ objectFit: "cover", width: "100%", height: 348 }}
+              style={{ objectFit: "cover", height: 348 }}
             />
           </Grid>
 
