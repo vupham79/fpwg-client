@@ -153,18 +153,7 @@ export function syncDataFromFB(
   };
 }
 
-export function syncPostFromFB(
-  pageId,
-  dateFrom,
-  dateTo,
-  about,
-  story,
-  address,
-  email,
-  phone,
-  postWith,
-  containMsg
-) {
+export function syncPostFromFB(pageId, dateFrom, dateTo, postWith, containMsg) {
   return async (dispatch) => {
     dispatch({
       type: "SHOW_LOADING",
@@ -177,11 +166,6 @@ export function syncPostFromFB(
           pageId: pageId,
           dateFrom: dateFrom,
           dateTo: dateTo,
-          about: about,
-          story: story,
-          address: address,
-          email: email,
-          phone: phone,
           postWith: postWith, //(int) 1: message, 2: video, 3: photo
           containMsg: containMsg,
         },
@@ -234,22 +218,11 @@ export function syncPostFromFB(
   };
 }
 
-export function syncEventFromFB(
-  pageId,
-  dateFrom,
-  dateTo,
-  about,
-  story,
-  address,
-  email,
-  phone,
-  eventContainTitle
-) {
+export function syncEventFromFB(pageId, dateFrom, dateTo, eventContainTitle) {
   return async (dispatch) => {
     dispatch({
       type: "SHOW_LOADING",
     });
-    console.log("hello", containTitle);
     try {
       const data = await axios({
         method: "patch",
@@ -258,11 +231,6 @@ export function syncEventFromFB(
           pageId: pageId,
           dateFrom: dateFrom,
           dateTo: dateTo,
-          about,
-          story,
-          address,
-          email,
-          phone,
           eventContainTitle,
         },
       });
@@ -318,16 +286,7 @@ export function syncEventFromFB(
   };
 }
 
-export function syncGalleryFromFB(
-  pageId,
-  dateFrom,
-  dateTo,
-  about,
-  story,
-  address,
-  email,
-  phone
-) {
+export function syncGalleryFromFB(pageId, dateFrom, dateTo) {
   return async (dispatch) => {
     dispatch({
       type: "SHOW_LOADING",
@@ -340,11 +299,6 @@ export function syncGalleryFromFB(
           pageId: pageId,
           dateFrom: dateFrom,
           dateTo: dateTo,
-          about: about,
-          story: story,
-          address: address,
-          email: email,
-          phone: phone,
         },
       });
       dispatch({
