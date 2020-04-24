@@ -795,7 +795,7 @@ class SyncEditorTab extends React.Component {
                                 >
                                   <Grid item xs={9}>
                                     <FormControlLabel
-                                      value={1}
+                                      value={3}
                                       control={
                                         <Radio style={{ color: "#0074aa" }} />
                                       }
@@ -821,7 +821,7 @@ class SyncEditorTab extends React.Component {
                                   </Grid>
                                   <Grid item xs={9}>
                                     <FormControlLabel
-                                      value={3}
+                                      value={1}
                                       control={
                                         <Radio style={{ color: "#0074aa" }} />
                                       }
@@ -1207,7 +1207,7 @@ class SyncEditorTab extends React.Component {
                         >
                           <Grid item xs={9}>
                             <FormControlLabel
-                              value={1}
+                              value={3}
                               control={<Radio style={{ color: "#0074aa" }} />}
                               label={
                                 <Typography style={radioButton}>
@@ -1229,7 +1229,7 @@ class SyncEditorTab extends React.Component {
                           </Grid>
                           <Grid item xs={9}>
                             <FormControlLabel
-                              value={3}
+                              value={1}
                               control={<Radio style={{ color: "#0074aa" }} />}
                               label={
                                 <Typography style={radioButton}>
