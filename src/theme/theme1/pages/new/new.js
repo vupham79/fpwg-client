@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import PostTypeComponent from "../../../component/postsType";
@@ -76,15 +76,26 @@ class Theme1News extends React.Component {
       <Grid container style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>
-              {fromHome ? homeTitle.charAt(0) : "N"}
-            </span>
-            {fromHome ? homeTitle.substring(1) : "EWS"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+                ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "news") {
+                    return item.name;
+                  } else return "";
+                })
+                : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "news") {
+                    return item.name;
+                  } else return "";
+                })}
           </p>
         </Grid>
         <Grid item xs={12} container>
           {isEdit ? (
-            siteEdit && siteEdit.posts ? (
+            siteEdit && siteEdit.posts && siteEdit.posts.length > 0 ? (
               <Grid container>
                 <PostTypeComponent
                   altType
@@ -163,13 +174,13 @@ class Theme1News extends React.Component {
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography className={classes.changableBody}>
-                  Currently there are no news.
-                </Typography>
-              </Grid>
-            )
-          ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
+                <Grid container justify="center">
+                  <p className={classes.changableBody}>
+                    Currently there are no news.
+                </p>
+                </Grid>
+              )
+          ) : (siteView && siteView.posts && siteView.posts.length > 0) || (fromHome && homeList && homeList.length > 0) ? (
             <Grid container>
               <PostTypeComponent
                 altType
@@ -185,12 +196,12 @@ class Theme1News extends React.Component {
               />
             </Grid>
           ) : (
-            <Grid container justify="center">
-              <Typography className={classes.changableBody}>
-                Currently there are no news.
-              </Typography>
-            </Grid>
-          )}
+                <Grid container justify="center">
+                  <p className={classes.changableBody}>
+                    Currently there are no news.
+              </p>
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );

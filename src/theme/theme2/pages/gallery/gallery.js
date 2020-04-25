@@ -57,13 +57,13 @@ class GalleryPage extends React.Component {
             {fromHome
               ? homeTitle
               : isEdit
-              ? siteEdit &&
+                ? siteEdit &&
                 siteEdit.navItems.map((item) => {
                   if (item.original === "gallery") {
                     return item.name;
                   } else return "";
                 })
-              : siteView &&
+                : siteView &&
                 siteView.navItems.map((item) => {
                   if (item.original === "gallery") {
                     return item.name;
@@ -85,7 +85,7 @@ class GalleryPage extends React.Component {
           }}
         >
           {isEdit ? (
-            siteEdit && siteEdit.galleries ? (
+            siteEdit && siteEdit.galleries && siteEdit.galleries.length > 0 ? (
               <GalleryComponent
                 key={siteEdit.limitGallery}
                 galleries={fromHome && homeList ? homeList : siteEdit.galleries}
@@ -97,33 +97,33 @@ class GalleryPage extends React.Component {
                 )}
               />
             ) : (
-              <Grid
-                container
-                justify="center"
-                style={{ minHeight: "30vh", marginTop: "10vh" }}
-              >
-                <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-                  Currently no photo available.
-                </p>
-              </Grid>
-            )
-          ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
+                <Grid
+                  container
+                  justify="center"
+                  style={{ minHeight: "30vh", marginTop: "10vh" }}
+                >
+                  <Typography variant="body1" style={bodyEdit}>
+                    Currently no photo available.
+                </Typography>
+                </Grid>
+              )
+          ) : (siteView && siteView.galleries && siteView.galleries.length > 0) || (fromHome && homeList && homeList.length > 0) ? (
             <GalleryComponent
               galleries={fromHome && homeList ? homeList : siteView.galleries}
               siteInfo={siteView.sitePath}
               fromHome={fromHome}
             />
           ) : (
-            <Grid
-              container
-              justify="center"
-              style={{ minHeight: "30vh", marginTop: "10vh" }}
-            >
-              <p style={{ fontFamily: isEdit ? bodyEdit : bodyView }}>
-                Currently no photo available.
-              </p>
-            </Grid>
-          )}
+                <Grid
+                  container
+                  justify="center"
+                  style={{ minHeight: "30vh", marginTop: "10vh" }}
+                >
+                  <Typography variant="body1" style={bodyEdit}>
+                    Currently no photo available.
+                </Typography>
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );

@@ -46,7 +46,7 @@ class Theme1Contact extends React.Component {
         fontWeight: "bold",
         fontSize: 18,
         color: isEdit ? titleEdit.color : titleView.color,
-        marginLeft: "25%",
+        // marginLeft: "10%",
       },
       changableBody: {
         fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
@@ -59,7 +59,7 @@ class Theme1Contact extends React.Component {
         color: "#a0a09f",
         textAlign: "left",
         fontSize: 16,
-        marginLeft: "25%",
+        // marginLeft: "10%",
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -122,15 +122,26 @@ class Theme1Contact extends React.Component {
       <Grid container justify="center" style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>
-              {fromHome ? homeTitle.charAt(0) : "C"}
-            </span>
-            {fromHome ? homeTitle.substring(1) : "ONTACT"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+                ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "contact") {
+                    return item.name;
+                  } else return "";
+                })
+                : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "contact") {
+                    return item.name;
+                  } else return "";
+                })}
           </p>
         </Grid>
 
         {isEdit && phone && (
-          <Grid container item xs={12}>
+          <Grid container item xs={10}>
             <Grid item xs={12}>
               <p style={classes.changableTitle2}>PHONE</p>
             </Grid>
@@ -140,7 +151,7 @@ class Theme1Contact extends React.Component {
           </Grid>
         )}
         {!isEdit && siteView.phone && (
-          <Grid container item xs={12}>
+          <Grid container item xs={10}>
             <Grid item xs={12}>
               <p style={classes.changableTitle2}>PHONE</p>
             </Grid>
@@ -151,7 +162,7 @@ class Theme1Contact extends React.Component {
         )}
 
         {isEdit && email && email !== "" && (
-          <Grid container item xs={12}>
+          <Grid container item xs={10}>
             <Grid item xs={12}>
               <p style={classes.changableTitle2}>EMAIL</p>
             </Grid>
@@ -161,7 +172,7 @@ class Theme1Contact extends React.Component {
           </Grid>
         )}
         {!isEdit && siteView.email && siteView.email !== "" && (
-          <Grid container item xs={12}>
+          <Grid container item xs={10}>
             <Grid item xs={12}>
               <p style={classes.changableTitle2}>EMAIL</p>
             </Grid>
@@ -172,7 +183,7 @@ class Theme1Contact extends React.Component {
         )}
 
         {isEdit && address && address !== "" && (
-          <Grid container item xs={12}>
+          <Grid container item xs={10}>
             <Grid item xs={12}>
               <p style={classes.changableTitle2}>ADDRESS</p>
             </Grid>
@@ -182,7 +193,7 @@ class Theme1Contact extends React.Component {
           </Grid>
         )}
         {!isEdit && siteView.address && siteView.adress !== "" && (
-          <Grid container item xs={12}>
+          <Grid container item xs={10}>
             <Grid item xs={12}>
               <p style={classes.changableTitle2}>ADDRESS</p>
             </Grid>
@@ -192,7 +203,7 @@ class Theme1Contact extends React.Component {
           </Grid>
         )}
 
-        <Grid item xs={6} justify="center">
+        <Grid item xs={10} justify="center">
           {isEdit && siteEdit.latitude && siteEdit.longitude && (
             <MapWithAMarker
               googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"

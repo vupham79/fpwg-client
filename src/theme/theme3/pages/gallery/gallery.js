@@ -42,13 +42,13 @@ class GalleryPage extends React.Component {
             {fromHome
               ? homeTitle
               : isEdit
-              ? siteEdit &&
+                ? siteEdit &&
                 siteEdit.navItems.map((item) => {
                   if (item.original === "gallery") {
                     return item.name;
                   } else return "";
                 })
-              : siteView &&
+                : siteView &&
                 siteView.navItems.map((item) => {
                   if (item.original === "gallery") {
                     return item.name;
@@ -59,7 +59,7 @@ class GalleryPage extends React.Component {
 
         <Grid item xs={10} sm={12}>
           {isEdit ? (
-            siteEdit && siteEdit.galleries ? (
+            siteEdit && siteEdit.galleries && siteEdit.galleries.length > 0 ? (
               <Grid container justify="center">
                 <GalleryComponent
                   key={siteEdit.limitGallery}
@@ -77,20 +77,20 @@ class GalleryPage extends React.Component {
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography
-                  variant="body1"
-                  style={{
-                    fontFamily: bodyEdit.fontFamily,
-                    color: "white",
-                    padding: "5rem 0",
-                  }}
-                >
-                  Currently no photo available.
+                <Grid container justify="center">
+                  <Typography
+                    variant="body1"
+                    style={{
+                      fontFamily: bodyEdit.fontFamily,
+                      color: "white",
+                      padding: "5rem 0",
+                    }}
+                  >
+                    Currently no photo available.
                 </Typography>
-              </Grid>
-            )
-          ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
+                </Grid>
+              )
+          ) : (siteView && siteView.galleries && siteView.galleries.length > 0) || (fromHome && homeList && homeList.length > 0) ? (
             <Grid container justify={"center"}>
               <GalleryComponent
                 galleries={fromHome && homeList ? homeList : siteView.galleries}
@@ -101,19 +101,19 @@ class GalleryPage extends React.Component {
               />
             </Grid>
           ) : (
-            <Grid container justify="center">
-              <Typography
-                variant="body1"
-                style={{
-                  fontFamily: bodyView.fontFamily,
-                  color: "white",
-                  padding: "5rem 0",
-                }}
-              >
-                Currently no photo available.
+                <Grid container justify="center">
+                  <Typography
+                    variant="body1"
+                    style={{
+                      fontFamily: bodyView.fontFamily,
+                      color: "white",
+                      padding: "5rem 0",
+                    }}
+                  >
+                    Currently no photo available.
               </Typography>
-            </Grid>
-          )}
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );

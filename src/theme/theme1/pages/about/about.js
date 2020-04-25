@@ -60,6 +60,23 @@ class Theme1About extends React.Component {
       classes: classesTheme,
     } = this.props;
 
+    const isShowDiv = () => {
+      if (isEdit) {
+        if (
+          this.props.siteEdit.showDetailSetting.showAboutDescription ||
+          this.props.siteEdit.showDetailSetting.showAboutLogo
+        ) {
+          return true;
+        }
+      } else if (
+        this.props.siteView.showDetailSetting.showAboutDescription ||
+        this.props.siteView.showDetailSetting.showAboutLogo
+      ) {
+        return true;
+      }
+      return false;
+    };
+
     const isShowStory = () => {
       if (isEdit) {
         if (siteEdit && siteEdit.showDetailSetting.showStory) {
@@ -155,82 +172,94 @@ class Theme1About extends React.Component {
         justify={"center"}
         style={{ minHeight: "50vh", marginTop: fromHome ? 70 : 0 }}
       >
-        {!fromHome && (
-          <Grid item xs={12} style={{ marginBottom: 50 }}>
-            <p style={classes.changableTitle}>
-              <span style={classes.changableFirst}>
-                {fromHome ? homeTitle.charAt(0) : "A"}
-              </span>
-              {fromHome ? homeTitle.substring(1) : "BOUT"}
-            </p>
+        <Grid item xs={12} style={{ marginBottom: 50 }}>
+          <p style={classes.changableTitle}>
+            {fromHome
+              ? homeTitle
+              : isEdit
+              ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "about") {
+                    return item.name;
+                  } else return "";
+                })
+              : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "about") {
+                    return item.name;
+                  } else return "";
+                })}
+          </p>
+        </Grid>
+
+        {isShowDiv() && (
+          <Grid
+            container
+            item
+            xs={12}
+            justify={"center"}
+            style={{
+              backgroundColor: isEdit ? titleEdit.color : titleView.color,
+              minHeight: 420,
+            }}
+          >
+            <Grid
+              item
+              xs={10}
+              sm={10}
+              md={5}
+              lg={4}
+              style={{
+                marginTop: -50,
+                display: isEdit
+                  ? this.props.siteEdit.showDetailSetting.showAboutLogo
+                    ? "flex"
+                    : "none"
+                  : this.props.siteView.showDetailSetting.showAboutLogo
+                  ? "flex"
+                  : "none",
+                justifyContent: "center",
+                overflow: "hidden",
+              }}
+            >
+              <img
+                src={this.renderImage()}
+                alt=""
+                style={{ objectFit: "cover", height: 348 }}
+              />
+            </Grid>
+
+            <Grid
+              item
+              xs={10}
+              sm={10}
+              md={5}
+              lg={4}
+              style={{
+                height: 298,
+                overflowY: "auto",
+                whiteSpace: "pre-wrap",
+                paddingLeft: 35,
+                paddingTop: 30,
+                display: isEdit
+                  ? this.props.siteEdit.showDetailSetting.showAboutDescription
+                    ? "inline-block"
+                    : "none"
+                  : this.props.siteView.showDetailSetting.showAboutDescription
+                  ? "inline-block"
+                  : "none",
+              }}
+            >
+              <p style={classes.changableTitle2}>Introduction</p>
+              <p style={classes.changableBody3}>
+                {isEdit && siteEdit && siteEdit.about}
+                {!isEdit && siteView && siteView.about}
+                {isEdit && !siteEdit.about && "Welcome to our website!"}
+                {!isEdit && !siteView.about && "Welcome to our website!"}
+              </p>
+            </Grid>
           </Grid>
         )}
-        <Grid
-          container
-          item
-          xs={12}
-          justify={"center"}
-          style={{
-            backgroundColor: isEdit ? titleEdit.color : titleView.color,
-            minHeight: 420,
-          }}
-        >
-          <Grid
-            item
-            xs={10}
-            sm={10}
-            md={5}
-            lg={4}
-            style={{
-              marginTop: -50,
-              display: isEdit
-                ? this.props.siteEdit.showDetailSetting.showAboutLogo
-                  ? "flex"
-                  : "none"
-                : this.props.siteView.showDetailSetting.showAboutLogo
-                ? "flex"
-                : "none",
-              justifyContent: "center",
-              overflow: "hidden",
-            }}
-          >
-            <img
-              src={this.renderImage()}
-              alt=""
-              style={{ objectFit: "cover", height: 348 }}
-            />
-          </Grid>
-
-          <Grid
-            item
-            xs={10}
-            sm={10}
-            md={5}
-            lg={4}
-            style={{
-              height: 298,
-              overflowY: "auto",
-              whiteSpace: "pre-wrap",
-              // paddingLeft: 35,
-              paddingTop: 30,
-              display: isEdit
-                ? this.props.siteEdit.showDetailSetting.showAboutDescription
-                  ? "inline-block"
-                  : "none"
-                : this.props.siteView.showDetailSetting.showAboutDescription
-                ? "inline-block"
-                : "none",
-            }}
-          >
-            <p style={classes.changableTitle2}>Introduction</p>
-            <p style={classes.changableBody3}>
-              {isEdit && siteEdit && siteEdit.about}
-              {!isEdit && siteView && siteView.about}
-              {isEdit && !siteEdit.about && "Welcome to our website!"}
-              {!isEdit && !siteView.about && "Welcome to our website!"}
-            </p>
-          </Grid>
-        </Grid>
 
         {isShowStory() && (
           <Grid
@@ -296,7 +325,7 @@ class Theme1About extends React.Component {
               sm={10}
               md={5}
               lg={4}
-              style={{ display: "inline-block" }}
+              style={{ display: "inline-block", paddingLeft: 20 }}
             >
               <img
                 src={this.getCover(1)}

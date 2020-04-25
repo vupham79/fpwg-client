@@ -83,7 +83,7 @@ class Theme1News extends React.Component {
         )}
         <Grid item sm={12} xs={12} container style={{ padding: "2.5rem 0" }}>
           {isEdit ? (
-            siteEdit && siteEdit.posts ? (
+            siteEdit && siteEdit.posts && siteEdit.posts.length > 0 ? (
               <Grid container>
                 <NewsType
                   key={siteEdit.limitNews}
@@ -135,7 +135,7 @@ class Theme1News extends React.Component {
                 </Typography>
                 </Grid>
               )
-          ) : siteView && siteView.posts ? (
+          ) : siteView && siteView.posts && siteView.posts > 0 ? (
             <Grid container>
               <NewsType
                 key={siteEdit.limitNews}

@@ -73,9 +73,9 @@ class Theme4Gallery extends React.Component {
           </Grid>
         )}
 
-        <Grid container item xs={10} style={{ padding: "2.5rem 0" }}>
+        <Grid container item xs={10} justify="center" style={{ padding: "2.5rem 0" }}>
           {isEdit ? (
-            siteEdit && siteEdit.galleries ? (
+            siteEdit && siteEdit.galleries && siteEdit.galleries.length > 0 ? (
               <Gallery
                 key={siteEdit.limitGallery}
                 galleries={fromHome && homeList ? homeList : siteEdit.galleries}
@@ -87,19 +87,19 @@ class Theme4Gallery extends React.Component {
                 )}
               />
             ) : (
-              <p style={classes.changableBody2}>
-                Currently no photo available.
-              </p>
-            )
-          ) : siteView && siteView.galleries ? (
+                <p style={classes.changableBody2}>
+                  Currently no photo available.
+                </p>
+              )
+          ) : siteView && siteView.galleries && siteView.galleries.length > 0 ? (
             <Gallery
               galleries={siteView.galleries}
               siteInfo={siteView.sitePath}
               fromHome={fromHome}
             />
           ) : (
-            <p style={classes.changableBody2}>Currently no photo available.</p>
-          )}
+                <p style={classes.changableBody2}>Currently no photo available.</p>
+              )}
         </Grid>
       </Grid>
     );
