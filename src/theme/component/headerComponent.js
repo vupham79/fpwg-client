@@ -72,7 +72,7 @@ const useStyles = (theme) => ({
     border: "2px solid orange",
   },
   tabsRoot: {
-    minWidth: "72px !important",
+    // minWidth: "72px !important",
   },
 });
 
@@ -114,7 +114,7 @@ class HeaderComponent extends Component {
     const tabStyles = {
       fontFamily: titleEdit.fontFamily,
       color: navTextColor ? navTextColor : this.props.navColor,
-      width: "12vh",
+      minWidth: "15vh",
       wordBreak: "break-word",
       letterSpacing: "1px",
       "&:hover": {
@@ -133,8 +133,8 @@ class HeaderComponent extends Component {
     };
     return (
       <Tabs
-        // variant="fullWidth"
-
+        variant="fullWidth"
+        orientation={type}
         value={tabValue}
         textColor="primary"
         TabIndicatorProps={
