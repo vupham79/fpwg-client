@@ -49,6 +49,18 @@ class EventComponent extends React.Component {
     this.setState({ offset: offset, page: newValue });
   };
 
+  isShowDescription = () => {
+    const { isEdit, siteEdit, siteView } = this.props;
+    if (isEdit) {
+      if (siteEdit && siteEdit.showDetailSetting.showDesEvent) {
+        return true;
+      }
+    } else if (siteView && siteView.showDetailSetting.showDesEvent) {
+      return true;
+    }
+    return false;
+  };
+
   renderUpComingEvent = (homeList, classes) => {
     const {
       isEdit,
@@ -108,7 +120,7 @@ class EventComponent extends React.Component {
                     container
                     direction="row"
                     item
-                    xs={1}
+                    xs={2}
                     style={{ height: "6rem", display: "block" }}
                   >
                     <Grid
@@ -243,7 +255,7 @@ class EventComponent extends React.Component {
 
                   <Grid
                     item
-                    xs={4}
+                    xs={3}
                     style={{
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
@@ -367,7 +379,7 @@ class EventComponent extends React.Component {
                     container
                     direction="row"
                     item
-                    xs={1}
+                    xs={2}
                     style={{ height: "6rem", display: "block" }}
                   >
                     <Grid
@@ -503,7 +515,7 @@ class EventComponent extends React.Component {
 
                   <Grid
                     item
-                    xs={4}
+                    xs={3}
                     style={{
                       whiteSpace: "pre-wrap",
                       wordWrap: "break-word",
@@ -607,7 +619,7 @@ class EventComponent extends React.Component {
           >
             <Grid
               item
-              sm={
+              md={
                 isEdit
                   ? siteEdit.showDetailSetting.showPlaceEvent
                     ? siteEdit.showDetailSetting.showDesEvent ? (siteEdit.showDetailSetting.showCoverEvent ? 10 : 9) : (siteEdit.showDetailSetting.showCoverEvent ? 8 : 7)
@@ -616,6 +628,7 @@ class EventComponent extends React.Component {
                     ? siteView.showDetailSetting.showDesEvent ? (siteView.showDetailSetting.showCoverEvent ? 10 : 9) : (siteView.showDetailSetting.showCoverEvent ? 8 : 7)
                     : siteView.showDetailSetting.showDesEvent ? (siteView.showDetailSetting.showCoverEvent ? 8 : 7) : (siteView.showDetailSetting.showCoverEvent ? 6 : 5)
               }
+              sm={11}
               xs={12}
               container
               justify="center"
