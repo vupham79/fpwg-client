@@ -706,7 +706,6 @@ class HomepageEditorTab extends React.Component {
     img.src = this.state.selectedFilePath;
     let newHeight = e.target.value > (img.height - this.state.crop.y) ? (img.height - this.state.crop.y) : e.target.value
 
-
     this.setState(
       {
         crop:
@@ -1358,15 +1357,26 @@ class HomepageEditorTab extends React.Component {
             {/* <Typography className={classes.title}>Crop dimension: {this.state.crop.width} x {this.state.crop.height} </Typography>
             <Typography className={classes.title}>Recommended dimension: 750 x 400 </Typography> */}
             <Typography className={classes.title}>Crop Image</Typography>
-            <p style={{ color: "#555d66", display: "inline-block" }}>x:</p> <InputBase type="number" value={this.state.crop.width ? this.state.crop.width : ""} onChange={(e) => this.handleChangeCropWidth(e)} />
-            <p style={{ color: "#555d66", display: "inline-block" }}>y:</p> <InputBase type="number" value={this.state.crop.height ? this.state.crop.height : ""} onChange={(e) => this.handleChangeCropHeight(e)} />
+            <p style={{ color: "#555d66", display: "inline-block" }}>width:</p> <InputBase type="number" value={this.state.crop.width ? this.state.crop.width : ""} onChange={(e) => this.handleChangeCropWidth(e)} />
+            <p style={{ color: "#555d66", display: "inline-block", marginLeft: 20 }}>height:</p> <InputBase type="number" value={this.state.crop.height ? this.state.crop.height : ""} onChange={(e) => this.handleChangeCropHeight(e)} />
           </DialogTitle>
           <DialogContent style={{ height: "50vh" }}>
             <ReactCrop
               src={this.state.selectedFilePath}
               crop={this.state.pixelCrop}
-              onChange={(crop, pixelCrop) =>
-                this.state.pixelCrop && this.setState({ crop: crop, pixelCrop: pixelCrop })
+              onChange={(crop, pixelCrop) => {
+                let img = new Image();
+                img.src = this.state.selectedFilePath;
+                this.state.pixelCrop &&
+                  this.setState({
+                    crop: {
+                      ...crop,
+                      width: (pixelCrop.width * img.width) / 100,
+                      height: (pixelCrop.height * img.height) / 100
+                    },
+                    pixelCrop: pixelCrop
+                  })
+              }
               }
             />
           </DialogContent>
