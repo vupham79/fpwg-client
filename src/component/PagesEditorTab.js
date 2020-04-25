@@ -27,6 +27,7 @@ import {
   TableRow,
   TextField,
   Typography,
+  InputAdornment,
 } from "@material-ui/core";
 import { green } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
@@ -168,6 +169,13 @@ const useStyles = (theme) => ({
     height: "2.5rem",
     width: "-webkit-fill-available",
     padding: "0 1rem",
+    fontFamily: "Roboto, sans-serif !important",
+    fontSize: 14,
+  },
+  txtSearch: {
+    fontFamily: "Roboto, sans-serif !important",
+    fontSize: 14,
+    color: "#555d66",
   },
 });
 
@@ -410,7 +418,7 @@ class PagesEditorTab extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 3,
+    itemPerPage: 6,
     openDiag: false,
     currentFocusInput: "",
     previousExpandItem: "",
@@ -422,9 +430,10 @@ class PagesEditorTab extends React.Component {
     },
     startDate: null,
     searchByName: "",
+    dataSearch: null,
   };
 
-  setStartDate = (date) => {
+  SearchByDate = (date) => {
     this.setState({ startDate: date });
     const name = this.state.searchByName;
     if (this.props.posts) {
@@ -443,7 +452,13 @@ class PagesEditorTab extends React.Component {
           .format("DD-MM-YYYY")
           .includes(date ? moment(date).format("DD-MM-YYYY") : "");
       });
-      this.setListData(searchResult.slice(0, this.state.itemPerPage));
+      this.setListData(
+        searchResult.slice(
+          this.state.offset,
+          this.state.itemPerPage + this.state.offset
+        )
+      );
+      this.setState({ dataSearch: searchResult });
       this.setPageCount(searchResult);
     }
   };
@@ -518,18 +533,33 @@ class PagesEditorTab extends React.Component {
   };
 
   handlePageClick = (data) => {
-    const { posts } = this.props;
-    let selected = data.selected;
-    let offset = Math.ceil(selected * this.state.itemPerPage);
-    this.setState({ offset: offset }, () => {
-      const slicePosts = posts.slice(
-        this.state.offset,
-        this.state.itemPerPage + this.state.offset
-      );
-      this.setState({
-        filteredData: slicePosts,
+    const { dataSearch } = this.state;
+    if (dataSearch) {
+      let selected = data.selected;
+      let offset = Math.ceil(selected * this.state.itemPerPage);
+      this.setState({ offset: offset }, () => {
+        const slicePosts = dataSearch.slice(
+          this.state.offset,
+          this.state.itemPerPage + this.state.offset
+        );
+        this.setState({
+          filteredData: slicePosts,
+        });
       });
-    });
+    } else {
+      const { posts } = this.props;
+      let selected = data.selected;
+      let offset = Math.ceil(selected * this.state.itemPerPage);
+      this.setState({ offset: offset }, () => {
+        const slicePosts = posts.slice(
+          this.state.offset,
+          this.state.itemPerPage + this.state.offset
+        );
+        this.setState({
+          filteredData: slicePosts,
+        });
+      });
+    }
   };
 
   setListData = (listData) => {
@@ -542,8 +572,8 @@ class PagesEditorTab extends React.Component {
     this.props.setPostMode(parseInt(event.target.value));
   };
 
-  handleSearch = (keyword) => {
-    this.setState({ searchByName: keyword.toLowerCase() });
+  handleSearch = (event) => {
+    this.setState({ searchByName: event.target.value.toLowerCase() });
     const date = this.state.startDate;
     if (this.props.posts) {
       let searchByDate = this.props.posts.filter(function (pos) {
@@ -552,16 +582,22 @@ class PagesEditorTab extends React.Component {
           .includes(date ? moment(date).format("DD-MM-YYYY") : "");
       });
       let searchResult = searchByDate.filter(function (pos) {
-        if (keyword !== "") {
+        if (event.target.value !== "") {
           return (
             pos.message &&
-            pos.message.toLowerCase().includes(keyword.toLowerCase())
+            pos.message.toLowerCase().includes(event.target.value.toLowerCase())
           );
         } else {
           return pos;
         }
       });
-      this.setListData(searchResult.slice(0, this.state.itemPerPage));
+      this.setState({ dataSearch: searchResult });
+      this.setListData(
+        searchResult.slice(
+          this.state.offset,
+          this.state.itemPerPage + this.state.offset
+        )
+      );
       this.setPageCount(searchResult);
     }
   };
@@ -1015,53 +1051,39 @@ class PagesEditorTab extends React.Component {
                   fullWidth
                 >
                   <DialogTitle>
-                    <Grid container alignItems="center">
-                      <Grid item xs={6}>
-                        <Paper className={classes.root}>
-                          <InputBase
-                            inputLabelProps={{
-                              classes: {
-                                focused: classes.focused,
-                              },
-                            }}
-                            maxLength={50}
-                            inputProps={{
-                              classes: {
-                                notchedOutline: classes.notchedOutline,
-                                input: classes.inputTitle,
-                              },
-                            }}
-                            id="searchBox"
-                            placeholder="Search by message..."
-                            autoFocus={this.state.openDiag ? true : false}
-                            className={classes.input}
-                            onChange={() =>
-                              this.handleSearch(
-                                document.getElementById("searchBox").value
-                              )
-                            }
-                          />
-                          <IconButton
-                            className={classes.iconButton}
-                            color="primary"
-                            aria-label="search"
-                            onClick={() =>
-                              this.handleSearch(
-                                document.getElementById("searchBox").value
-                              )
-                            }
-                          >
-                            <SearchIcon />
-                          </IconButton>
-                        </Paper>
+                    <Grid container alignItems="center" spacing={3}>
+                      <Grid item>
+                        <TextField
+                          style={{ margin: 0 }}
+                          label="Search By Message"
+                          variant="outlined"
+                          onChange={this.handleSearch}
+                          margin="dense"
+                          InputProps={{
+                            classes: {
+                              notchedOutline: classes.notchedOutline,
+                              input: classes.txtSearch,
+                            },
+                            endAdornment: (
+                              <InputAdornment
+                                position="end"
+                                style={{
+                                  color: "rgb(0, 96, 136)",
+                                }}
+                              >
+                                <SearchIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
                       </Grid>
-                      <Grid container justify="center" item xs={6}>
+                      <Grid item>
                         <DatePicker
                           className={classes.picker}
                           selected={this.state.startDate}
-                          onChange={(date) => this.setStartDate(date)}
+                          onChange={(date) => this.SearchByDate(date)}
                           isClearable
-                          placeholderText="Search by day"
+                          placeholderText="Search By Day"
                           dateFormat="dd-MM-yyyy"
                         />
                       </Grid>
