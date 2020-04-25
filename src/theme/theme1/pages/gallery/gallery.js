@@ -51,10 +51,21 @@ class Theme1Gallery extends React.Component {
       <Grid container style={{ minHeight: "50vh" }} justify="center">
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>
-              {fromHome ? homeTitle.charAt(0) : "G"}
-            </span>
-            {fromHome ? homeTitle.substring(1) : "ALLERY"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+                ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "gallery") {
+                    return item.name;
+                  } else return "";
+                })
+                : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "gallery") {
+                    return item.name;
+                  } else return "";
+                })}
           </p>
         </Grid>
         {isEdit ? (

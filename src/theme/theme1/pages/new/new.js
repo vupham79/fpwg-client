@@ -76,10 +76,21 @@ class Theme1News extends React.Component {
       <Grid container style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>
-              {fromHome ? homeTitle.charAt(0) : "N"}
-            </span>
-            {fromHome ? homeTitle.substring(1) : "EWS"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+                ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "news") {
+                    return item.name;
+                  } else return "";
+                })
+                : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "news") {
+                    return item.name;
+                  } else return "";
+                })}
           </p>
         </Grid>
         <Grid item xs={12} container>
@@ -163,12 +174,12 @@ class Theme1News extends React.Component {
                 />
               </Grid>
             ) : (
-              <Grid container justify="center">
-                <Typography className={classes.changableBody}>
-                  Currently there are no news.
+                <Grid container justify="center">
+                  <Typography className={classes.changableBody}>
+                    Currently there are no news.
                 </Typography>
-              </Grid>
-            )
+                </Grid>
+              )
           ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
             <Grid container>
               <PostTypeComponent
@@ -185,12 +196,12 @@ class Theme1News extends React.Component {
               />
             </Grid>
           ) : (
-            <Grid container justify="center">
-              <Typography className={classes.changableBody}>
-                Currently there are no news.
+                <Grid container justify="center">
+                  <Typography className={classes.changableBody}>
+                    Currently there are no news.
               </Typography>
-            </Grid>
-          )}
+                </Grid>
+              )}
         </Grid>
       </Grid>
     );

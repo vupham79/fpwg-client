@@ -43,10 +43,21 @@ class Theme1Event extends React.Component {
       <Grid container style={{ minHeight: "50vh" }}>
         <Grid item xs={12}>
           <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>
-              {fromHome ? homeTitle.charAt(0) : "E"}
-            </span>
-            {fromHome ? homeTitle.substring(1) : "VENTS"}
+            {fromHome
+              ? homeTitle
+              : isEdit
+                ? siteEdit &&
+                siteEdit.navItems.map((item) => {
+                  if (item.original === "event") {
+                    return item.name;
+                  } else return "";
+                })
+                : siteView &&
+                siteView.navItems.map((item) => {
+                  if (item.original === "event") {
+                    return item.name;
+                  } else return "";
+                })}
           </p>
         </Grid>
         <Grid item xs={12}>
