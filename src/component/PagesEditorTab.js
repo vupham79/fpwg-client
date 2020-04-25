@@ -158,9 +158,9 @@ const useStyles = (theme) => ({
     backgroundColor: "#f0eded",
     "&:hover": {
       transitionDuration: "0.5s",
-      border: "1px solid #0074aa",
+      // border: "1px solid #0074aa",
       color: "#0074aa",
-      borderLeft: "4px solid #0074aa",
+      // borderLeft: "4px solid #0074aa",
     },
   },
 });

@@ -80,9 +80,9 @@ const useStyles = (theme) => ({
     backgroundColor: "#f0eded",
     "&:hover": {
       transitionDuration: "0.5s",
-      border: "1px solid #0074aa",
+      // border: "1px solid #0074aa",
       color: "#0074aa",
-      borderLeft: "4px solid #0074aa",
+      // borderLeft: "4px solid #0074aa",
     },
   },
   notchedOutline: {
@@ -206,15 +206,15 @@ function CreateTable({ data }) {
                   {!row.dateFrom && !row.dateTo ? (
                     "All"
                   ) : (
-                    <Grid container justify="center">
-                      <Grid style={fontTable} item xs={12}>
-                        From: {moment(row.dateFrom).format("DD-MM-YYYY")}
+                      <Grid container justify="center">
+                        <Grid style={fontTable} item xs={12}>
+                          From: {moment(row.dateFrom).format("DD-MM-YYYY")}
+                        </Grid>
+                        <Grid style={fontTable} item xs={12}>
+                          To: {moment(row.dateTo).format("DD-MM-YYYY")}
+                        </Grid>
                       </Grid>
-                      <Grid style={fontTable} item xs={12}>
-                        To: {moment(row.dateTo).format("DD-MM-YYYY")}
-                      </Grid>
-                    </Grid>
-                  )}
+                    )}
                 </TableCell>
                 <TableCell align="center">
                   <Grid
