@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import PostTypeComponent from "../../../component/postsType";
@@ -95,7 +95,7 @@ class Theme1News extends React.Component {
         </Grid>
         <Grid item xs={12} container>
           {isEdit ? (
-            siteEdit && siteEdit.posts ? (
+            siteEdit && siteEdit.posts && siteEdit.posts.length > 0 ? (
               <Grid container>
                 <PostTypeComponent
                   altType
@@ -175,12 +175,12 @@ class Theme1News extends React.Component {
               </Grid>
             ) : (
                 <Grid container justify="center">
-                  <Typography className={classes.changableBody}>
+                  <p className={classes.changableBody}>
                     Currently there are no news.
-                </Typography>
+                </p>
                 </Grid>
               )
-          ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
+          ) : (siteView && siteView.posts && siteView.posts.length > 0) || (fromHome && homeList && homeList.length > 0) ? (
             <Grid container>
               <PostTypeComponent
                 altType
@@ -197,9 +197,9 @@ class Theme1News extends React.Component {
             </Grid>
           ) : (
                 <Grid container justify="center">
-                  <Typography className={classes.changableBody}>
+                  <p className={classes.changableBody}>
                     Currently there are no news.
-              </Typography>
+              </p>
                 </Grid>
               )}
         </Grid>

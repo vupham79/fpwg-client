@@ -92,7 +92,7 @@ class NewPage extends Component {
           }}
         >
           {isEdit ? (
-            siteEdit && siteEdit.posts ? (
+            siteEdit && siteEdit.posts && siteEdit.posts.length > 0 ? (
               <Grid container>
                 <PostTypeComponent
                   key={siteEdit.limitNews}
@@ -151,7 +151,7 @@ class NewPage extends Component {
                 </Typography>
                 </Grid>
               )
-          ) : (siteView && siteView.posts) || (fromHome && homeList) ? (
+          ) : (siteView && siteView.posts && siteView.posts.length > 0) || (fromHome && homeList && homeList.length > 0) ? (
             <Grid container>
               <PostTypeComponent
                 fromHome={fromHome}

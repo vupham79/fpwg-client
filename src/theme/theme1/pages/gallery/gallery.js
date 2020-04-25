@@ -17,6 +17,8 @@ class Theme1Gallery extends React.Component {
       fromHome,
       homeTitle,
       homeList,
+      bodyEdit,
+      bodyView
     } = this.props;
 
     const useStyles = (theme) => ({
@@ -30,10 +32,11 @@ class Theme1Gallery extends React.Component {
         textTransform: "uppercase",
       },
       changableBody: {
-        fontFamily: isEdit ? titleEdit.fontBody : titleView.fontBody,
+        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
         color: "#535353",
-        textAlign: "center",
         fontSize: 16,
+        textAlign: "justify",
+        hyphens: "auto",
       },
       changableFirst: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -69,7 +72,7 @@ class Theme1Gallery extends React.Component {
           </p>
         </Grid>
         {isEdit ? (
-          siteEdit && siteEdit.galleries ? (
+          siteEdit && siteEdit.galleries && siteEdit.galleries.length > 0 ? (
             <GalleryComponent
               key={siteEdit.limitGallery}
               galleries={fromHome && homeList ? homeList : siteEdit.galleries}
@@ -85,7 +88,7 @@ class Theme1Gallery extends React.Component {
                 Currently no photo available.
               </p>
             )
-        ) : (siteView && siteView.galleries) || (fromHome && homeList) ? (
+        ) : (siteView && siteView.galleries && siteView.galleries.length > 0) || (fromHome && homeList && homeList.length > 0) ? (
           <GalleryComponent
             galleries={fromHome && homeList ? homeList : siteView.galleries}
             siteInfo={siteView.sitePath}
