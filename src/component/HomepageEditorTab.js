@@ -421,7 +421,10 @@ class HomepageEditorTab extends React.Component {
     currentFocusInput: "nameInput",
     openCropDiag: false,
     currentResolve: null,
-    crop: null,
+    crop: {
+      width: 50,
+      height: 50
+    },
     pixelCrop: {
       unit: "%",
       x: 20,
@@ -676,6 +679,49 @@ class HomepageEditorTab extends React.Component {
     }
     setActiveHomeItems(this.props.site);
   };
+
+  handleChangeCropWidth = (e) => {
+    let img = new Image();
+    img.src = this.state.selectedFilePath;
+    let newWidth = e.target.value > (img.width - this.state.crop.x) ? (img.width - this.state.crop.x) : e.target.value
+
+    this.setState(
+      {
+        crop:
+        {
+          ...this.state.crop,
+          width: newWidth
+        },
+        pixelCrop:
+        {
+          ...this.state.pixelCrop,
+          width: (newWidth * 100) / img.width
+        }
+      }
+    )
+  }
+
+  handleChangeCropHeight = (e) => {
+    let img = new Image();
+    img.src = this.state.selectedFilePath;
+    let newHeight = e.target.value > (img.height - this.state.crop.y) ? (img.height - this.state.crop.y) : e.target.value
+
+
+    this.setState(
+      {
+        crop:
+        {
+          ...this.state.crop,
+          height: newHeight
+        },
+        pixelCrop:
+        {
+          ...this.state.pixelCrop,
+          height: (newHeight * 100) / img.height
+        }
+      }
+    )
+  }
 
   urltoFile(url, filename, mimeType) {
     return fetch(url)
@@ -1312,13 +1358,15 @@ class HomepageEditorTab extends React.Component {
             {/* <Typography className={classes.title}>Crop dimension: {this.state.crop.width} x {this.state.crop.height} </Typography>
             <Typography className={classes.title}>Recommended dimension: 750 x 400 </Typography> */}
             <Typography className={classes.title}>Crop Image</Typography>
+            <p style={{ color: "#555d66", display: "inline-block" }}>x:</p> <InputBase type="number" value={this.state.crop.width ? this.state.crop.width : ""} onChange={(e) => this.handleChangeCropWidth(e)} />
+            <p style={{ color: "#555d66", display: "inline-block" }}>y:</p> <InputBase type="number" value={this.state.crop.height ? this.state.crop.height : ""} onChange={(e) => this.handleChangeCropHeight(e)} />
           </DialogTitle>
           <DialogContent style={{ height: "50vh" }}>
             <ReactCrop
               src={this.state.selectedFilePath}
               crop={this.state.pixelCrop}
               onChange={(crop, pixelCrop) =>
-                this.setState({ pixelCrop: pixelCrop })
+                this.state.pixelCrop && this.setState({ crop: crop, pixelCrop: pixelCrop })
               }
             />
           </DialogContent>

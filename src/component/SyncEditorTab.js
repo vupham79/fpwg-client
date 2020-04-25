@@ -919,7 +919,6 @@ class SyncEditorTab extends React.Component {
                               <Grid item xs={10}>
                                 <TextField
                                   variant="outlined"
-                                  label="Titlte"
                                   fullWidth
                                   value={this.state.maunalEventTitle}
                                   onChange={(e) =>
@@ -1315,7 +1314,6 @@ class SyncEditorTab extends React.Component {
                       <Grid item xs={10}>
                         <TextField
                           variant="outlined"
-                          label="Titlte"
                           fullWidth
                           value={this.state.autoEventTitle}
                           onChange={(e) =>
