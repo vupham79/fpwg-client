@@ -1,38 +1,44 @@
+import { faArrowCircleDown } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  Grid,
-  IconButton,
-  TextField,
-  Typography,
+  Avatar,
+  Button,
+  Checkbox,
   Dialog,
   DialogActions,
-  Button,
-  Table,
-  TableCell,
-  TableRow,
-  Avatar,
-  Divider,
-  TableHead,
-  TableBody,
-  TableContainer,
-  Checkbox,
   DialogContent,
   DialogTitle,
-  InputBase,
-  Paper,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
+  Divider,
   ExpansionPanel,
   ExpansionPanelDetails,
   ExpansionPanelSummary,
+  FormControlLabel,
+  Grid,
+  IconButton,
+  InputBase,
+  Paper,
+  Radio,
+  RadioGroup,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
 } from "@material-ui/core";
-import moment from "moment";
 import { green } from "@material-ui/core/colors";
 import { withStyles } from "@material-ui/core/styles";
 import MenuIcon from "@material-ui/icons/DragHandle";
+import SearchIcon from "@material-ui/icons/Search";
 import VisibilityOffOutlinedIcon from "@material-ui/icons/VisibilityOffOutlined";
 import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
+import moment from "moment";
 import React from "react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import ReactPaginate from "react-paginate";
 import { connect } from "react-redux";
 import {
   sortableContainer,
@@ -42,23 +48,18 @@ import {
 import {
   changeNavItemName,
   changeNavItems,
+  changeSiteAbout,
+  changeSiteStory,
+  changeSiteStoryTitle,
   savePosts,
+  setAboutCustomize,
   setActiveNavItems,
   setActivePost,
-  updateNavItemValue,
   setEventCustomize,
   setLimit,
-  setAboutCustomize,
   setPostMode,
-  changeSiteStoryTitle,
-  changeSiteStory,
-  changeSiteAbout,
+  updateNavItemValue,
 } from "../actions";
-import ReactPaginate from "react-paginate";
-import SearchIcon from "@material-ui/icons/Search";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowCircleDown } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = (theme) => ({
   content: {
@@ -141,7 +142,7 @@ const useStyles = (theme) => ({
     padding: "2px 4px",
     display: "flex",
     alignItems: "center",
-    width: 400,
+    // width: 400,
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -162,6 +163,11 @@ const useStyles = (theme) => ({
       color: "#0074aa",
       borderLeft: "4px solid #0074aa",
     },
+  },
+  picker: {
+    height: "2.5rem",
+    width: "-webkit-fill-available",
+    padding: "0 1rem",
   },
 });
 
@@ -217,7 +223,7 @@ function PostsList({ filteredData, setActivePost }) {
   return (
     <>
       <TableContainer style={{ height: "70vh" }}>
-        <Table stickyHeader>
+        <Table>
           <TableHead>
             <TableRow>
               {columns.map((column, index) => (
@@ -291,80 +297,80 @@ const SortableItem = sortableElement(
     changeNavItemName,
     classes,
   }) => (
-      <Grid container style={gridItem}>
-        <Grid
-          container
-          item
-          alignItems="center"
-          xs={10}
-          sm={12}
-          md={10}
-          style={{ padding: "0.2rem 0" }}
-        >
-          <Grid container justify="center" item xs={2} md={2} sm={12}>
-            <DragHandle />
-          </Grid>
-          <Grid item xs={10} md={10} sm={12}>
-            <TextField
-              // autoFocus={
-              //   this.state.currentFocusInput === item._id ? true : false
-              // }
-              // onClick={(e) => this.setState({ currentFocusInput: item._id })}
-              InputLabelProps={{
-                classes: {
-                  focused: classes.focused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  notchedOutline: classes.notchedOutline,
-                  input: classes.inputTitle,
-                },
-              }}
-              size="small"
-              style={{ backgroundColor: "white" }}
-              fullWidth
-              variant={"outlined"}
-              value={value}
-              inputProps={{
-                maxLength: 15,
-              }}
-              onChange={(e) => {
-                handleChangeNavName(
-                  item._id,
-                  site,
-                  e.target.value,
-                  changeNavItemName
-                );
-              }}
-            />
-          </Grid>
+    <Grid container style={gridItem}>
+      <Grid
+        container
+        item
+        alignItems="center"
+        xs={10}
+        sm={12}
+        md={10}
+        style={{ padding: "0.2rem 0" }}
+      >
+        <Grid container justify="center" item xs={2} md={2} sm={12}>
+          <DragHandle />
         </Grid>
-        <Grid container item justify="center" xs={2} sm={12} md={2}>
-          {item.original === "home" ? (
-            <></>
-          ) : (
-              <IconButton
-                style={viewButton}
-                onClick={() =>
-                  handleChangeActive(
-                    item._id,
-                    site,
-                    setActiveNavItems,
-                    updateNavItemValue
-                  )
-                }
-              >
-                {item.isActive && item.name !== "Home" ? (
-                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                ) : (
-                    <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
-                  )}
-              </IconButton>
-            )}
+        <Grid item xs={10} md={10} sm={12}>
+          <TextField
+            // autoFocus={
+            //   this.state.currentFocusInput === item._id ? true : false
+            // }
+            // onClick={(e) => this.setState({ currentFocusInput: item._id })}
+            InputLabelProps={{
+              classes: {
+                focused: classes.focused,
+              },
+            }}
+            InputProps={{
+              classes: {
+                notchedOutline: classes.notchedOutline,
+                input: classes.inputTitle,
+              },
+            }}
+            size="small"
+            style={{ backgroundColor: "white" }}
+            fullWidth
+            variant={"outlined"}
+            value={value}
+            inputProps={{
+              maxLength: 15,
+            }}
+            onChange={(e) => {
+              handleChangeNavName(
+                item._id,
+                site,
+                e.target.value,
+                changeNavItemName
+              );
+            }}
+          />
         </Grid>
       </Grid>
-    )
+      <Grid container item justify="center" xs={2} sm={12} md={2}>
+        {item.original === "home" ? (
+          <></>
+        ) : (
+          <IconButton
+            style={viewButton}
+            onClick={() =>
+              handleChangeActive(
+                item._id,
+                site,
+                setActiveNavItems,
+                updateNavItemValue
+              )
+            }
+          >
+            {item.isActive && item.name !== "Home" ? (
+              <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+            ) : (
+              <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+            )}
+          </IconButton>
+        )}
+      </Grid>
+    </Grid>
+  )
 );
 
 const SortableList = sortableContainer(
@@ -414,6 +420,32 @@ class PagesEditorTab extends React.Component {
       expanTab: 1,
       onHover: false,
     },
+    startDate: null,
+    searchByName: "",
+  };
+
+  setStartDate = (date) => {
+    this.setState({ startDate: date });
+    const name = this.state.searchByName;
+    if (this.props.posts) {
+      let searchByName = this.props.posts.filter(function (pos) {
+        if (name !== "") {
+          return (
+            pos.message &&
+            pos.message.toLowerCase().includes(name.toLowerCase())
+          );
+        } else {
+          return pos;
+        }
+      });
+      let searchResult = searchByName.filter(function (pos) {
+        return moment(pos.createdTime)
+          .format("DD-MM-YYYY")
+          .includes(date ? moment(date).format("DD-MM-YYYY") : "");
+      });
+      this.setListData(searchResult.slice(0, this.state.itemPerPage));
+      this.setPageCount(searchResult);
+    }
   };
 
   setPageCount = (listData) => {
@@ -511,9 +543,23 @@ class PagesEditorTab extends React.Component {
   };
 
   handleSearch = (keyword) => {
+    this.setState({ searchByName: keyword.toLowerCase() });
+    const date = this.state.startDate;
     if (this.props.posts) {
-      let searchResult = this.props.posts.filter(function (pos) {
-        return pos.message.toLowerCase().includes(keyword.toLowerCase());
+      let searchByDate = this.props.posts.filter(function (pos) {
+        return moment(pos.createdTime)
+          .format("DD-MM-YYYY")
+          .includes(date ? moment(date).format("DD-MM-YYYY") : "");
+      });
+      let searchResult = searchByDate.filter(function (pos) {
+        if (keyword !== "") {
+          return (
+            pos.message &&
+            pos.message.toLowerCase().includes(keyword.toLowerCase())
+          );
+        } else {
+          return pos;
+        }
       });
       this.setListData(searchResult.slice(0, this.state.itemPerPage));
       this.setPageCount(searchResult);
@@ -595,7 +641,7 @@ class PagesEditorTab extends React.Component {
       changeNavItemName,
       setEventCustomize,
       setAboutCustomize,
-      about
+      about,
     } = this.props;
     const { hover } = this.state;
     return (
@@ -631,11 +677,12 @@ class PagesEditorTab extends React.Component {
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Grid container>
-
               <Grid item container xs={12}>
                 <Grid item xs={12} style={{ height: 20 }} />
                 <Grid item xs={12}>
-                  <Typography className={classes.title2}>Story Title</Typography>
+                  <Typography className={classes.title2}>
+                    Story Title
+                  </Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -700,7 +747,9 @@ class PagesEditorTab extends React.Component {
               <Grid item xs={12}>
                 <Grid item xs={12} style={{ height: 20 }} />
                 <Grid item xs={12}>
-                  <Typography className={classes.title2}>Introduction</Typography>
+                  <Typography className={classes.title2}>
+                    Introduction
+                  </Typography>
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
@@ -966,43 +1015,57 @@ class PagesEditorTab extends React.Component {
                   fullWidth
                 >
                   <DialogTitle>
-                    <Paper component="form" className={classes.root}>
-                      <InputBase
-                        InputLabelProps={{
-                          classes: {
-                            focused: classes.focused,
-                          },
-                        }}
-                        maxLength={50}
-                        InputProps={{
-                          classes: {
-                            notchedOutline: classes.notchedOutline,
-                            input: classes.inputTitle,
-                          },
-                        }}
-                        id="searchBox"
-                        placeholder="Search by message..."
-                        autoFocus={this.state.openDiag ? true : false}
-                        className={classes.input}
-                        onChange={() =>
-                          this.handleSearch(
-                            document.getElementById("searchBox").value
-                          )
-                        }
-                      />
-                      <IconButton
-                        className={classes.iconButton}
-                        color="primary"
-                        aria-label="search"
-                        onClick={() =>
-                          this.handleSearch(
-                            document.getElementById("searchBox").value
-                          )
-                        }
-                      >
-                        <SearchIcon />
-                      </IconButton>
-                    </Paper>
+                    <Grid container alignItems="center">
+                      <Grid item xs={6}>
+                        <Paper className={classes.root}>
+                          <InputBase
+                            inputLabelProps={{
+                              classes: {
+                                focused: classes.focused,
+                              },
+                            }}
+                            maxLength={50}
+                            inputProps={{
+                              classes: {
+                                notchedOutline: classes.notchedOutline,
+                                input: classes.inputTitle,
+                              },
+                            }}
+                            id="searchBox"
+                            placeholder="Search by message..."
+                            autoFocus={this.state.openDiag ? true : false}
+                            className={classes.input}
+                            onChange={() =>
+                              this.handleSearch(
+                                document.getElementById("searchBox").value
+                              )
+                            }
+                          />
+                          <IconButton
+                            className={classes.iconButton}
+                            color="primary"
+                            aria-label="search"
+                            onClick={() =>
+                              this.handleSearch(
+                                document.getElementById("searchBox").value
+                              )
+                            }
+                          >
+                            <SearchIcon />
+                          </IconButton>
+                        </Paper>
+                      </Grid>
+                      <Grid container justify="center" item xs={6}>
+                        <DatePicker
+                          className={classes.picker}
+                          selected={this.state.startDate}
+                          onChange={(date) => this.setStartDate(date)}
+                          isClearable
+                          placeholderText="Search by day"
+                          dateFormat="dd-MM-yyyy"
+                        />
+                      </Grid>
+                    </Grid>
                   </DialogTitle>
                   <DialogContent>
                     <Grid container alignItems="center">
@@ -1296,7 +1359,7 @@ class PagesEditorTab extends React.Component {
             marginTop: 30,
           }}
         />
-      </div >
+      </div>
     );
   }
 }
