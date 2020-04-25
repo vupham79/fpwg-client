@@ -1391,6 +1391,8 @@ class HomepageEditorTab extends React.Component {
                   this.setState({
                     crop: {
                       ...crop,
+                      x: (pixelCrop.x * img.width) / 100,
+                      y: (pixelCrop.y * img.height) / 100,
                       width: (pixelCrop.width * img.width) / 100,
                       height: (pixelCrop.height * img.height) / 100,
                     },
