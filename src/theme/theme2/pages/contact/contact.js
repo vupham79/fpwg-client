@@ -21,8 +21,14 @@ import {
   GoogleMap,
   Marker,
 } from "react-google-maps";
-const useStyle = (theme) => ({});
-
+const useStyle = (theme) => ({
+  map: {
+    height: "100%",
+    [theme.breakpoints.up("sm")]: {
+      height: "300px",
+    },
+  },
+});
 class ContactPage extends React.Component {
   renderUrl = () => {
     const { isEdit } = this.props;
@@ -96,6 +102,13 @@ class ContactPage extends React.Component {
       withGoogleMap((props) => (
         <GoogleMap
           defaultZoom={15}
+          defaultOptions={{
+            disableDefaultUI: true, // disable default map UI
+            draggable: true, // make map draggable
+            keyboardShortcuts: false, // disable keyboard shortcuts
+            scaleControl: true, // allow scale controle
+            scrollwheel: true, // allow scroll wheel
+          }}
           defaultCenter={{
             lat: isEdit
               ? parseFloat(siteEdit.latitude)

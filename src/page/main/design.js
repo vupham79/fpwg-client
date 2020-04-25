@@ -11,6 +11,7 @@ import {
   getUserSites,
   setPostView,
 } from "../../actions";
+import WebFontLoader from "webfontloader";
 require("dotenv").config();
 
 const imgStyle = {
@@ -131,6 +132,11 @@ class Design extends Component {
         fontFamily: data.fontBody,
       };
       await setSiteEdit(data, titleStyle, bodyStyle);
+      WebFontLoader.load({
+        google: {
+          families: [data.fontTitle, data.fontBody],
+        },
+      });
       data.posts && getAllPost(data.posts);
     }
   };

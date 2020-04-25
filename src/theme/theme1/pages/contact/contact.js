@@ -89,6 +89,13 @@ class Theme1Contact extends React.Component {
       withGoogleMap((props) => (
         <GoogleMap
           defaultZoom={15}
+          defaultOptions={{
+            disableDefaultUI: true, // disable default map UI
+            draggable: true, // make map draggable
+            keyboardShortcuts: false, // disable keyboard shortcuts
+            scaleControl: true, // allow scale controle
+            scrollwheel: true, // allow scroll wheel
+          }}
           defaultCenter={{
             lat: isEdit
               ? parseFloat(siteEdit.latitude)
@@ -125,28 +132,20 @@ class Theme1Contact extends React.Component {
         {isEdit && phone && (
           <Grid container item xs={12}>
             <Grid item xs={12}>
-              <p style={classes.changableTitle2}>
-                PHONE
-            </p>
+              <p style={classes.changableTitle2}>PHONE</p>
             </Grid>
             <Grid item xs={12}>
-              <p style={classes.changableBody2}>
-                {phone}
-              </p>
+              <p style={classes.changableBody2}>{phone}</p>
             </Grid>
           </Grid>
         )}
         {!isEdit && siteView.phone && (
           <Grid container item xs={12}>
             <Grid item xs={12}>
-              <p style={classes.changableTitle2}>
-                PHONE
-            </p>
+              <p style={classes.changableTitle2}>PHONE</p>
             </Grid>
             <Grid item xs={12}>
-              <p style={classes.changableBody2}>
-                {siteView.phone}
-              </p>
+              <p style={classes.changableBody2}>{siteView.phone}</p>
             </Grid>
           </Grid>
         )}
@@ -154,28 +153,20 @@ class Theme1Contact extends React.Component {
         {isEdit && email && email !== "" && (
           <Grid container item xs={12}>
             <Grid item xs={12}>
-              <p style={classes.changableTitle2}>
-                EMAIL
-              </p>
+              <p style={classes.changableTitle2}>EMAIL</p>
             </Grid>
             <Grid item xs={12}>
-              <p style={classes.changableBody2}>
-                {email}
-              </p>
+              <p style={classes.changableBody2}>{email}</p>
             </Grid>
           </Grid>
         )}
         {!isEdit && siteView.email && siteView.email !== "" && (
           <Grid container item xs={12}>
             <Grid item xs={12}>
-              <p style={classes.changableTitle2}>
-                EMAIL
-              </p>
+              <p style={classes.changableTitle2}>EMAIL</p>
             </Grid>
             <Grid item xs={12}>
-              <p style={classes.changableBody2}>
-                {siteView.email}
-              </p>
+              <p style={classes.changableBody2}>{siteView.email}</p>
             </Grid>
           </Grid>
         )}
@@ -183,28 +174,20 @@ class Theme1Contact extends React.Component {
         {isEdit && address && address !== "" && (
           <Grid container item xs={12}>
             <Grid item xs={12}>
-              <p style={classes.changableTitle2}>
-                ADDRESS
-              </p>
+              <p style={classes.changableTitle2}>ADDRESS</p>
             </Grid>
             <Grid item xs={12}>
-              <p style={classes.changableBody2}>
-                {address}
-              </p>
+              <p style={classes.changableBody2}>{address}</p>
             </Grid>
           </Grid>
         )}
         {!isEdit && siteView.address && siteView.adress !== "" && (
           <Grid container item xs={12}>
             <Grid item xs={12}>
-              <p style={classes.changableTitle2}>
-                ADDRESS
-              </p>
+              <p style={classes.changableTitle2}>ADDRESS</p>
             </Grid>
             <Grid item xs={12}>
-              <p style={classes.changableBody2}>
-                {siteView.address}
-              </p>
+              <p style={classes.changableBody2}>{siteView.address}</p>
             </Grid>
           </Grid>
         )}
