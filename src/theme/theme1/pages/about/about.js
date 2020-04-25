@@ -92,7 +92,7 @@ class Theme1About extends React.Component {
       },
       changableBody3: {
         fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: "#616E89",
+        color: "#fff",
         textAlign: "justify",
         fontSize: 16,
         hyphens: "auto",
