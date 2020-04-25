@@ -1,8 +1,8 @@
-import { CardMedia, Grid, Typography } from "@material-ui/core";
+import { CardMedia, Grid, Typography, withStyles } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
 import styles from "./about.module.css";
-
+const useStyle = (theme) => ({});
 class AboutPage extends React.Component {
   renderImage = () => {
     const { isEdit, siteEdit, siteView, newLogo } = this.props;
@@ -60,7 +60,12 @@ class AboutPage extends React.Component {
       return false;
     };
     return (
-      <Grid container justify="center" className={styles.about_page}>
+      <Grid
+        container
+        justify="center"
+        className={styles.about_page}
+        style={{ minHeight: fromHome ? "auto" : "80vh" }}
+      >
         {!fromHome && (
           <Grid
             item
@@ -88,17 +93,17 @@ class AboutPage extends React.Component {
               >
                 {isEdit
                   ? siteEdit &&
-                  siteEdit.navItems.map((item) => {
-                    if (item.original === "about") {
-                      return item.name;
-                    } else return "";
-                  })
+                    siteEdit.navItems.map((item) => {
+                      if (item.original === "about") {
+                        return item.name;
+                      } else return "";
+                    })
                   : siteView &&
-                  siteView.navItems.map((item) => {
-                    if (item.original === "about") {
-                      return item.name;
-                    } else return "";
-                  })}
+                    siteView.navItems.map((item) => {
+                      if (item.original === "about") {
+                        return item.name;
+                      } else return "";
+                    })}
               </Typography>
             </>
           </Grid>
@@ -137,8 +142,8 @@ class AboutPage extends React.Component {
                   display: fromHome
                     ? "none"
                     : isShowAboutLogo()
-                      ? "inline-block"
-                      : "none",
+                    ? "inline-block"
+                    : "none",
                 }}
               />
               <p
@@ -156,8 +161,8 @@ class AboutPage extends React.Component {
                     ? siteEdit.about
                     : "Welcome to our website! Take a look around and feel free to contact us for more information."
                   : siteView && siteView.about
-                    ? siteView.about
-                    : "Welcome to our website! Take a look around and feel free to contact us for more information."}
+                  ? siteView.about
+                  : "Welcome to our website! Take a look around and feel free to contact us for more information."}
               </p>
             </Typography>
           </Grid>
@@ -251,4 +256,4 @@ const mapStateToProps = (state) => ({
   newLogo: state.site.newLogo,
 });
 
-export default connect(mapStateToProps, null)(AboutPage);
+export default connect(mapStateToProps, null)(withStyles(useStyle)(AboutPage));

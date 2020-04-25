@@ -1,7 +1,16 @@
-import { Grid, lighten } from "@material-ui/core";
+import { Grid, lighten, withStyles } from "@material-ui/core";
 import React from "react";
 import { connect } from "react-redux";
-
+const useStyle = (theme) => ({
+  description: {
+    marginRight: "0",
+    marginBottom: "1rem",
+    [theme.breakpoints.up("md")]: {
+      marginRight: "2rem",
+      marginBottom: "0",
+    },
+  },
+});
 class Theme1About extends React.Component {
   renderImage = () => {
     const { isEdit, siteEdit, siteView, newLogo } = this.props;
@@ -48,6 +57,7 @@ class Theme1About extends React.Component {
       fromHome,
       homeTitle,
       newCover,
+      classes: classesTheme,
     } = this.props;
 
     const isShowStory = () => {
@@ -65,7 +75,7 @@ class Theme1About extends React.Component {
       return false;
     };
 
-    const useStyles = () => ({
+    const useStyles = (theme) => ({
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
         fontWeight: 300,
@@ -145,15 +155,16 @@ class Theme1About extends React.Component {
         justify={"center"}
         style={{ minHeight: "50vh", marginTop: fromHome ? 70 : 0 }}
       >
-        <Grid item xs={12} style={{ marginBottom: 50 }}>
-          <p style={classes.changableTitle}>
-            <span style={classes.changableFirst}>
-              {fromHome ? homeTitle.charAt(0) : "A"}
-            </span>
-            {fromHome ? homeTitle.substring(1) : "BOUT"}
-          </p>
-        </Grid>
-
+        {!fromHome && (
+          <Grid item xs={12} style={{ marginBottom: 50 }}>
+            <p style={classes.changableTitle}>
+              <span style={classes.changableFirst}>
+                {fromHome ? homeTitle.charAt(0) : "A"}
+              </span>
+              {fromHome ? homeTitle.substring(1) : "BOUT"}
+            </p>
+          </Grid>
+        )}
         <Grid
           container
           item
@@ -200,7 +211,7 @@ class Theme1About extends React.Component {
               height: 298,
               overflowY: "auto",
               whiteSpace: "pre-wrap",
-              paddingLeft: 35,
+              // paddingLeft: 35,
               paddingTop: 30,
               display: isEdit
                 ? this.props.siteEdit.showDetailSetting.showAboutDescription
@@ -241,11 +252,12 @@ class Theme1About extends React.Component {
               sm={10}
               md={5}
               lg={4}
+              className={classesTheme.description}
               style={{
                 height: 298,
                 overflowY: "auto",
                 whiteSpace: "pre-wrap",
-                paddingLeft: 35,
+                // paddingLeft: 35,
                 paddingTop: 30,
                 display: "inline-block",
               }}
@@ -289,7 +301,12 @@ class Theme1About extends React.Component {
               <img
                 src={this.getCover(1)}
                 alt=""
-                style={{ objectFit: "cover", width: "100%", height: 348 }}
+                style={{
+                  objectFit: "cover",
+                  width: "100%",
+                  height: 348,
+                  borderRadius: "1rem",
+                }}
               />
             </Grid>
           </Grid>
@@ -312,4 +329,7 @@ const mapStateToProps = (state) => ({
   newCover: state.site.newCover,
 });
 
-export default connect(mapStateToProps, null)(Theme1About);
+export default connect(
+  mapStateToProps,
+  null
+)(withStyles(useStyle)(Theme1About));
