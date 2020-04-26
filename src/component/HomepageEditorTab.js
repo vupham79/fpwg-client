@@ -25,7 +25,6 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  TableSortLabel,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -412,7 +411,7 @@ class HomepageEditorTab extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 3,
+    itemPerPage: 6,
     currentExpandItemId: null,
     previousExpandItemId: null,
     isExpanding: false,
@@ -483,16 +482,13 @@ class HomepageEditorTab extends React.Component {
     return (
       <>
         <TableContainer
-          style={{ maxHeight: "70vh", width: "100%", overflowY: "scroll" }}
+          style={{ height: "70vh", width: "100%", overflowY: "scroll" }}
         >
           <Table stickyHeader>
             <TableHead>
               <TableRow>
                 {columns.map((column, index) => (
                   <TableCell align="center" key={index}>
-                    {column === "Created At" && (
-                      <TableSortLabel>date</TableSortLabel>
-                    )}
                     {column}
                   </TableCell>
                 ))}
@@ -501,7 +497,7 @@ class HomepageEditorTab extends React.Component {
             <TableBody>
               {this.state.filteredData &&
                 this.state.filteredData.map((row) => (
-                  <TableRow key={row._id}>
+                  <TableRow key={row._id} style={{ height: "20vh" }}>
                     <TableCell align="center">
                       {(row.attachments &&
                         row.attachments.media_type === "photo" && (
@@ -535,9 +531,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -557,7 +553,7 @@ class HomepageEditorTab extends React.Component {
     return (
       <>
         <TableContainer
-          style={{ maxHeight: "70vh", width: "100%", overflowY: "scroll" }}
+          style={{ height: "70vh", width: "100%", overflowY: "scroll" }}
         >
           <Table stickyHeader>
             <TableHead>
@@ -572,7 +568,7 @@ class HomepageEditorTab extends React.Component {
             <TableBody>
               {this.state.filteredData &&
                 this.state.filteredData.map((row) => (
-                  <TableRow key={row._id}>
+                  <TableRow key={row._id} style={{ height: "20vh" }}>
                     <TableCell align="left">
                       <Truncate lines={2} ellipsis={<span>...</span>}>
                         {row.name}
@@ -595,9 +591,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -617,7 +613,7 @@ class HomepageEditorTab extends React.Component {
     return (
       <>
         <TableContainer
-          style={{ maxHeight: "70vh", width: "100%", overflowY: "scroll" }}
+          style={{ height: "70vh", width: "100%", overflowY: "scroll" }}
         >
           <Table stickyHeader>
             <TableHead>
@@ -632,7 +628,7 @@ class HomepageEditorTab extends React.Component {
             <TableBody>
               {this.state.filteredData &&
                 this.state.filteredData.map((row) => (
-                  <TableRow key={row._id}>
+                  <TableRow key={row._id} style={{ height: "20vh" }}>
                     <TableCell style={{ width: 300 }}>
                       <CardMedia
                         component="img"
@@ -648,9 +644,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                          this.state.currentExpandItem.filter.items.includes(
-                            row
-                          )
+                            this.state.currentExpandItem.filter.items.includes(
+                              row
+                            )
                             ? true
                             : false
                         }
@@ -1078,20 +1074,6 @@ class HomepageEditorTab extends React.Component {
         fullWidth
       >
         <DialogTitle>
-          {
-            {
-              news: (
-                <Typography className={classes.title}>
-                  Search by message
-                </Typography>
-              ),
-              event: (
-                <Typography className={classes.title}>
-                  Search by event name
-                </Typography>
-              ),
-            }[this.state.currentExpandType]
-          }
           {this.state.currentExpandType !== "gallery" && (
             <Paper component="form" className={classes.root}>
               <InputBase
@@ -1108,7 +1090,13 @@ class HomepageEditorTab extends React.Component {
                   },
                 }}
                 id="searchBox"
-                autoFocus={this.state.openDiag ? true : false}
+                label={
+                  {
+                    news: "Search by post content...",
+                    event: "Search by event name...",
+                  }[this.state.currentExpandType]
+                }
+                // autoFocus={this.state.openDiag ? true : false}
                 className={classes.input}
                 onChange={() =>
                   this.handleSearch(document.getElementById("searchBox").value)
@@ -1154,7 +1142,7 @@ class HomepageEditorTab extends React.Component {
               activeClassName={"active"}
             />
           </Grid>
-          <Button
+          {/* <Button
             variant="contained"
             style={{
               float: "right",
@@ -1167,7 +1155,7 @@ class HomepageEditorTab extends React.Component {
             onClick={() => this.handleOpenPostDialogue(false)}
           >
             Cancel
-          </Button>
+          </Button> */}
           <Button
             variant="contained"
             style={{
@@ -1180,7 +1168,7 @@ class HomepageEditorTab extends React.Component {
             }}
             onClick={() => this.handleSave()}
           >
-            Save
+            Ok
           </Button>
         </DialogActions>
       </Dialog>
