@@ -140,22 +140,23 @@ class Header extends Component {
         .scrollIntoView({ block: "start", behavior: "smooth" });
   };
 
-  renderNavLinks = (navItems) => {
+  renderNavLinks = (navItems, homepageNavItems) => {
     const { classes, titleView, titleEdit, isEdit } = this.props;
     return (
       <>
         {navItems &&
           navItems.map(
             (item, index) =>
-              item.isActive && (
+              item.isActive && homepageNavItems.filter(function (homeNav) {
+                return homeNav.original === item.original && homeNav.isActive;
+              }).length > 0 && (
                 <Grid
                   item
-                  sm
-                  md
                   key={index}
                   style={{
                     textAlign: "center",
                     minWidth: "12vh",
+                    float: "left"
                   }}
                 >
                   <Typography
@@ -189,7 +190,8 @@ class Header extends Component {
     return (
       <Grid className={classes.navItems}>
         {this.renderNavLinks(
-          isEdit ? siteEdit && siteEdit.navItems : siteView && siteView.navItems
+          isEdit ? siteEdit && siteEdit.navItems : siteView && siteView.navItems,
+          isEdit ? siteEdit && siteEdit.homepage : siteView && siteView.homepage
         )}
       </Grid>
     );
@@ -212,28 +214,30 @@ class Header extends Component {
             ? siteEdit && siteEdit.navItems
             : siteView && siteView.navItems
           ).map((item, index) =>
-            item.isActive ? (
-              <ListItem button key={index} style={{ padding: "0" }}>
-                <Typography
-                  style={{
-                    fontFamily: isEdit
-                      ? titleEdit.fontFamily
-                      : titleView.fontFamily,
-                    // color: isEdit ? titleEdit.color : titleView.color,
-                    color: "#fff",
-                    textTransform: "uppercase",
-                    fontSize: 18,
-                    padding: "1rem 0",
-                    textAlign: "center",
-                    width: "-webkit-fill-available",
-                  }}
-                  className={classes.navItemLinks}
-                  onClick={() => this.handleChange(item.name)}
-                >
-                  {item.name}
-                </Typography>
-              </ListItem>
-            ) : null
+            item.isActive && (isEdit ? siteEdit && siteEdit.homepage : siteView && siteView.homepage).filter(function (homeNav) {
+              return homeNav.original === item.original && homeNav.isActive;
+            }).length > 0 ? (
+                <ListItem button key={index} style={{ padding: "0" }}>
+                  <Typography
+                    style={{
+                      fontFamily: isEdit
+                        ? titleEdit.fontFamily
+                        : titleView.fontFamily,
+                      // color: isEdit ? titleEdit.color : titleView.color,
+                      color: "#fff",
+                      textTransform: "uppercase",
+                      fontSize: 18,
+                      padding: "1rem 0",
+                      textAlign: "center",
+                      width: "-webkit-fill-available",
+                    }}
+                    className={classes.navItemLinks}
+                    onClick={() => this.handleChange(item.name)}
+                  >
+                    {item.name}
+                  </Typography>
+                </ListItem>
+              ) : null
           )}
         </List>
       </div>
