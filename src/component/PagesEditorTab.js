@@ -230,7 +230,7 @@ const columns = ["", "Title", "Message", "Created At", "Show"];
 function PostsList({ filteredData, setActivePost }) {
   return (
     <>
-      <TableContainer style={{ height: "70vh" }}>
+      <TableContainer style={{ height: "70vh", width: "100%", overflowY: "scroll" }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -244,7 +244,7 @@ function PostsList({ filteredData, setActivePost }) {
           <TableBody>
             {filteredData &&
               filteredData.map((row, index) => (
-                <TableRow key={index}>
+                <TableRow key={row._id} style={{ height: "20vh" }}>
                   <TableCell align="center">
                     {(row.attachments &&
                       row.attachments.media_type === "photo" && (
@@ -305,80 +305,80 @@ const SortableItem = sortableElement(
     changeNavItemName,
     classes,
   }) => (
-    <Grid container style={gridItem}>
-      <Grid
-        container
-        item
-        alignItems="center"
-        xs={10}
-        sm={12}
-        md={10}
-        style={{ padding: "0.2rem 0" }}
-      >
-        <Grid container justify="center" item xs={2} md={2} sm={12}>
-          <DragHandle />
+      <Grid container style={gridItem}>
+        <Grid
+          container
+          item
+          alignItems="center"
+          xs={10}
+          sm={12}
+          md={10}
+          style={{ padding: "0.2rem 0" }}
+        >
+          <Grid container justify="center" item xs={2} md={2} sm={12}>
+            <DragHandle />
+          </Grid>
+          <Grid item xs={10} md={10} sm={12}>
+            <TextField
+              // autoFocus={
+              //   this.state.currentFocusInput === item._id ? true : false
+              // }
+              // onClick={(e) => this.setState({ currentFocusInput: item._id })}
+              InputLabelProps={{
+                classes: {
+                  focused: classes.focused,
+                },
+              }}
+              InputProps={{
+                classes: {
+                  notchedOutline: classes.notchedOutline,
+                  input: classes.inputTitle,
+                },
+              }}
+              size="small"
+              style={{ backgroundColor: "white" }}
+              fullWidth
+              variant={"outlined"}
+              value={value}
+              inputProps={{
+                maxLength: 15,
+              }}
+              onChange={(e) => {
+                handleChangeNavName(
+                  item._id,
+                  site,
+                  e.target.value,
+                  changeNavItemName
+                );
+              }}
+            />
+          </Grid>
         </Grid>
-        <Grid item xs={10} md={10} sm={12}>
-          <TextField
-            // autoFocus={
-            //   this.state.currentFocusInput === item._id ? true : false
-            // }
-            // onClick={(e) => this.setState({ currentFocusInput: item._id })}
-            InputLabelProps={{
-              classes: {
-                focused: classes.focused,
-              },
-            }}
-            InputProps={{
-              classes: {
-                notchedOutline: classes.notchedOutline,
-                input: classes.inputTitle,
-              },
-            }}
-            size="small"
-            style={{ backgroundColor: "white" }}
-            fullWidth
-            variant={"outlined"}
-            value={value}
-            inputProps={{
-              maxLength: 15,
-            }}
-            onChange={(e) => {
-              handleChangeNavName(
-                item._id,
-                site,
-                e.target.value,
-                changeNavItemName
-              );
-            }}
-          />
-        </Grid>
-      </Grid>
-      <Grid container item justify="center" xs={2} sm={12} md={2}>
-        {item.original === "home" ? (
-          <></>
-        ) : (
-          <IconButton
-            style={viewButton}
-            onClick={() =>
-              handleChangeActive(
-                item._id,
-                site,
-                setActiveNavItems,
-                updateNavItemValue
-              )
-            }
-          >
-            {item.isActive && item.name !== "Home" ? (
-              <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-            ) : (
-              <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+        <Grid container item justify="center" xs={2} sm={12} md={2}>
+          {item.original === "home" ? (
+            <></>
+          ) : (
+              <IconButton
+                style={viewButton}
+                onClick={() =>
+                  handleChangeActive(
+                    item._id,
+                    site,
+                    setActiveNavItems,
+                    updateNavItemValue
+                  )
+                }
+              >
+                {item.isActive && item.name !== "Home" ? (
+                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+                ) : (
+                    <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+                  )}
+              </IconButton>
             )}
-          </IconButton>
-        )}
+        </Grid>
       </Grid>
-    </Grid>
-  )
+    )
 );
 
 const SortableList = sortableContainer(
@@ -434,7 +434,10 @@ class PagesEditorTab extends React.Component {
   };
 
   SearchByDate = (date) => {
-    this.setState({ startDate: date });
+    this.setState({
+      startDate: date,
+      offset: 0
+    });
     const name = this.state.searchByName;
     if (this.props.posts) {
       let searchByName = this.props.posts.filter(function (pos) {
@@ -454,8 +457,10 @@ class PagesEditorTab extends React.Component {
       });
       this.setListData(
         searchResult.slice(
-          this.state.offset,
-          this.state.itemPerPage + this.state.offset
+          // this.state.offset,
+          // this.state.itemPerPage + this.state.offset
+          0,
+          this.state.itemPerPage
         )
       );
       this.setState({ dataSearch: searchResult });
@@ -471,9 +476,12 @@ class PagesEditorTab extends React.Component {
 
   setPosts = () => {
     const { posts } = this.props;
+    this.setState({ offset: 0 });
     const slicePosts = posts.slice(
-      this.state.offset,
-      this.state.itemPerPage + this.state.offset
+      // this.state.offset,
+      // this.state.itemPerPage + this.state.offset
+      0,
+      this.state.itemPerPage
     );
     this.setState({
       filteredData: slicePosts,
@@ -573,7 +581,10 @@ class PagesEditorTab extends React.Component {
   };
 
   handleSearch = (event) => {
-    this.setState({ searchByName: event.target.value.toLowerCase() });
+    this.setState({
+      searchByName: event.target.value.toLowerCase(),
+      offset: 0
+    });
     const date = this.state.startDate;
     if (this.props.posts) {
       let searchByDate = this.props.posts.filter(function (pos) {
@@ -594,8 +605,10 @@ class PagesEditorTab extends React.Component {
       this.setState({ dataSearch: searchResult });
       this.setListData(
         searchResult.slice(
-          this.state.offset,
-          this.state.itemPerPage + this.state.offset
+          // this.state.offset,
+          // this.state.itemPerPage + this.state.offset
+          0,
+          this.state.itemPerPage
         )
       );
       this.setPageCount(searchResult);
@@ -1089,7 +1102,7 @@ class PagesEditorTab extends React.Component {
                       </Grid>
                     </Grid>
                   </DialogTitle>
-                  <DialogContent>
+                  <DialogContent style={{ overflow: "hidden" }}>
                     <Grid container alignItems="center">
                       <PostsList
                         posts={this.props.posts}
@@ -1114,7 +1127,7 @@ class PagesEditorTab extends React.Component {
                         activeClassName={"active"}
                       />
                     </Grid>
-                    <Button
+                    {/* <Button
                       autoFocus
                       variant="contained"
                       onClick={() => this.handleOpenDialogue(false)}
@@ -1128,7 +1141,7 @@ class PagesEditorTab extends React.Component {
                       }}
                     >
                       Cancel
-                    </Button>
+                    </Button> */}
                     <Button
                       variant="contained"
                       onClick={() => this.handleSave(this.props.posts)}
@@ -1141,7 +1154,7 @@ class PagesEditorTab extends React.Component {
                         fontSize: 11,
                       }}
                     >
-                      Save
+                      Ok
                     </Button>
                   </DialogActions>
                 </Dialog>
