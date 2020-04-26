@@ -150,13 +150,13 @@ class Theme1About extends React.Component {
             item
             xs={10}
             sm={8}
-            style={{ display: "flex", justifyContent: "center" }}
+            style={{ justifyContent: "center" }}
           >
             <CardMedia
               style={{
                 width: isShowAboutDes() ? "30%" : "40%",
                 float: isShowAboutDes() ? "left" : "none",
-                display: isShowAboutLogo() ? "block" : "none",
+                display: isShowAboutLogo() ? "inline-block" : "none",
                 marginRight: "1rem",
                 borderRadius: "1rem",
               }}
@@ -182,82 +182,82 @@ class Theme1About extends React.Component {
         </Grid>
         {isEdit
           ? siteEdit &&
-            siteEdit.story &&
-            siteEdit.story.composedText && (
-              <Grid
-                container
-                item
-                xs={12}
-                justify="center"
-                style={{
-                  padding: "2rem 0",
-                  display: isShowStory() ? "contents" : "none",
-                }}
-              >
-                <Grid item xs={12} style={classes.changableBody5}>
-                  {isEdit
-                    ? siteEdit && siteEdit.story && siteEdit.story.title
-                    : siteView && siteView.story && siteView.story.title}
-                </Grid>
-                {/* <Grid container item xs={8} sm={3}>
+          siteEdit.story &&
+          siteEdit.story.composedText && (
+            <Grid
+              container
+              item
+              xs={12}
+              justify="center"
+              style={{
+                padding: "2rem 0",
+                display: isShowStory() ? "contents" : "none",
+              }}
+            >
+              <Grid item xs={12} style={classes.changableBody5}>
+                {isEdit
+                  ? siteEdit && siteEdit.story && siteEdit.story.title
+                  : siteView && siteView.story && siteView.story.title}
+              </Grid>
+              {/* <Grid container item xs={8} sm={3}>
                   <CardMedia
                     component="img"
                     style={{ height: "100%" }}
                     image={this.renderImage()}
                   />
                 </Grid> */}
-                <Grid
-                  container
-                  item
-                  xs={10}
-                  sm={8}
-                  alignItems="center"
-                  justify="center"
-                  style={{ padding: "1rem" }}
-                >
-                  <Typography variant="body1" style={classes.changableBody3}>
-                    {siteEdit.story.composedText.map((text) => {
-                      return text;
-                    })}
-                  </Typography>
-                </Grid>
-              </Grid>
-            )
-          : siteView &&
-            siteView.story &&
-            siteView.story.composedText && (
               <Grid
                 container
                 item
-                xs={11}
-                justify="center"
+                xs={10}
+                sm={8}
                 alignItems="center"
-                style={{
-                  padding: "2rem 0",
-                  display: isShowStory() ? "contents" : "none",
-                }}
+                justify="center"
+                style={{ padding: "1rem" }}
               >
-                <Grid item xs={12} style={classes.changableBody5}>
-                  {isEdit
-                    ? siteEdit && siteEdit.story && siteEdit.story.title
-                    : siteView && siteView.story && siteView.story.title}
-                </Grid>
-                {/* <Grid container item xs={10} sm={3}>
+                <Typography variant="body1" style={classes.changableBody3}>
+                  {siteEdit.story.composedText.map((text) => {
+                    return text;
+                  })}
+                </Typography>
+              </Grid>
+            </Grid>
+          )
+          : siteView &&
+          siteView.story &&
+          siteView.story.composedText && (
+            <Grid
+              container
+              item
+              xs={11}
+              justify="center"
+              alignItems="center"
+              style={{
+                padding: "2rem 0",
+                display: isShowStory() ? "contents" : "none",
+              }}
+            >
+              <Grid item xs={12} style={classes.changableBody5}>
+                {isEdit
+                  ? siteEdit && siteEdit.story && siteEdit.story.title
+                  : siteView && siteView.story && siteView.story.title}
+              </Grid>
+              {/* <Grid container item xs={10} sm={3}>
                   <CardMedia
                     component="img"
                     style={{ height: "100%" }}
                     image={this.renderImage()}
                   />
                 </Grid> */}
-                <Grid container item xs={10} sm={8} style={{ padding: "1rem" }}>
-                  <Typography variant="body1" style={classes.changableBody3}>
-                    {siteView.story.composedText.map((text) => {
-                      return text;
-                    })}
-                  </Typography>
-                </Grid>
+              <Grid container item xs={10} sm={8} style={{ padding: "1rem" }}>
+                <Typography variant="body1" style={classes.changableBody3}>
+                  {siteView.story.composedText.map((text) => {
+                    return text;
+                  })}
+                </Typography>
               </Grid>
-            )}
+            </Grid>
+          )}
       </Grid>
     );
   }

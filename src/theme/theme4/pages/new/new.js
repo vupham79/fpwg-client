@@ -135,7 +135,7 @@ class Theme1News extends React.Component {
                 </Typography>
                 </Grid>
               )
-          ) : siteView && siteView.posts && siteView.posts > 0 ? (
+          ) : siteView && siteView.posts ? (
             <Grid container>
               <NewsType
                 key={siteEdit.limitNews}

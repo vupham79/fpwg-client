@@ -141,7 +141,7 @@ class Theme1Contact extends React.Component {
         </Grid>
 
         {isEdit && phone && (
-          <Grid container item xs={10}>
+          <Grid container item xs={8}>
             <Grid item xs={12}>
               <p style={classes.changableTitle2}>PHONE</p>
             </Grid>
@@ -151,7 +151,7 @@ class Theme1Contact extends React.Component {
           </Grid>
         )}
         {!isEdit && siteView.phone && (
-          <Grid container item xs={10}>
+          <Grid container item xs={8}>
             <Grid item xs={12}>
               <p style={classes.changableTitle2}>PHONE</p>
             </Grid>
@@ -162,7 +162,7 @@ class Theme1Contact extends React.Component {
         )}
 
         {isEdit && email && email !== "" && (
-          <Grid container item xs={10}>
+          <Grid container item xs={8}>
             <Grid item xs={12}>
               <p style={classes.changableTitle2}>EMAIL</p>
             </Grid>
@@ -172,7 +172,7 @@ class Theme1Contact extends React.Component {
           </Grid>
         )}
         {!isEdit && siteView.email && siteView.email !== "" && (
-          <Grid container item xs={10}>
+          <Grid container item xs={8}>
             <Grid item xs={12}>
               <p style={classes.changableTitle2}>EMAIL</p>
             </Grid>
@@ -183,7 +183,7 @@ class Theme1Contact extends React.Component {
         )}
 
         {isEdit && address && address !== "" && (
-          <Grid container item xs={10}>
+          <Grid container item xs={8}>
             <Grid item xs={12}>
               <p style={classes.changableTitle2}>ADDRESS</p>
             </Grid>
@@ -193,7 +193,7 @@ class Theme1Contact extends React.Component {
           </Grid>
         )}
         {!isEdit && siteView.address && siteView.adress !== "" && (
-          <Grid container item xs={10}>
+          <Grid container item xs={8}>
             <Grid item xs={12}>
               <p style={classes.changableTitle2}>ADDRESS</p>
             </Grid>
@@ -203,7 +203,7 @@ class Theme1Contact extends React.Component {
           </Grid>
         )}
 
-        <Grid item xs={10} justify="center">
+        <Grid item xs={8} justify="center">
           {isEdit && siteEdit.latitude && siteEdit.longitude && (
             <MapWithAMarker
               googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4eDIsVpSTDmUOlyFAJLSS6pZYH4P9B7Q&libraries=geometry,drawing,places"
