@@ -177,6 +177,10 @@ const useStyles = (theme) => ({
     fontSize: 14,
     color: "#555d66",
   },
+  inputLabel: {
+    fontFamily: "Roboto, sans-serif !important",
+    fontSize: 14,
+  },
 });
 
 const gridContainer = {};
@@ -1072,6 +1076,15 @@ class PagesEditorTab extends React.Component {
                           variant="outlined"
                           onChange={this.handleSearch}
                           margin="dense"
+                          InputLabelProps={{
+                            classes: {
+                              focused: classes.focused,
+                              root: classes.inputLabel,
+                            },
+                          }}
+                          inputProps={{
+                            maxLength: 100,
+                          }}
                           InputProps={{
                             classes: {
                               notchedOutline: classes.notchedOutline,

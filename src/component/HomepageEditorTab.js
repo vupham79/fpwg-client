@@ -1090,7 +1090,7 @@ class HomepageEditorTab extends React.Component {
                   },
                 }}
                 id="searchBox"
-                label={
+                placeholder={
                   {
                     news: "Search by post content...",
                     event: "Search by event name...",

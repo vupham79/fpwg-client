@@ -222,16 +222,16 @@ class EventComponent extends React.Component {
                                 : "none",
                           }}
                         >
-                          {" "}
-                          /{" "}
+                          {(row.place && row.place.city) || (row.place && row.place.name) ? " / " : ""}
+
                           <p
                             style={{
                               color: dark ? "#fff" : "#a0a09f",
-                              fontSize: 10,
+                              fontSize: 12,
                               display: "inline-block",
                             }}
                           >
-                            {row.place && row.place.city}
+                            {row.place && row.place.city ? row.place.city : (row.place && row.place.name)}
                           </p>
                         </span>
                       </a>
@@ -482,16 +482,16 @@ class EventComponent extends React.Component {
                                 : "none",
                           }}
                         >
-                          {" "}
-                          /{" "}
+                          {(row.place && row.place.city) || (row.place && row.place.name) ? " / " : ""}
+
                           <p
                             style={{
                               color: dark ? "#fff" : "#a0a09f",
-                              fontSize: 10,
+                              fontSize: 12,
                               display: "inline-block",
                             }}
                           >
-                            {row.place && row.place.city}
+                            {row.place && row.place.city ? row.place.city : (row.place && row.place.name)}
                           </p>
                         </span>
                       </a>
