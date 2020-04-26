@@ -441,6 +441,14 @@ class NewsType extends React.Component {
                   />
                 </Grid>
               )}
+              {type === "link" && (
+                <Grid item xs={12}>
+                  <CardMedia
+                    className={classes.cardView}
+                    image={post.attachments.images[0]}
+                  />
+                </Grid>
+              )}
               {type === "album" && (
                 <Grid item xs={12}>
                   <Slider
