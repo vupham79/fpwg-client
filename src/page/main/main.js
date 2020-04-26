@@ -103,7 +103,15 @@ function EmptyListSite() {
       </Grid>
       <Grid container item xs={12}>
         <Grid item xs={12}>
-          <Typography variant="h4" className={style.h4}>
+          <Typography
+            variant="h4"
+            className={style.h4}
+            style={{
+              color: "#fff",
+              fontSize: "20px",
+              fontWeight: "400",
+            }}
+          >
             You don't have any FPWG sites yet.
           </Typography>
         </Grid>
@@ -150,191 +158,195 @@ class MainPage extends Component {
             xs={12}
             alignItems="center"
             className={classes.root}
+            style={{
+              backgroundImage: `url('/images/dark_background.jpg')`,
+              backgroundSize: "cover",
+            }}
           >
             <EmptyListSite />
           </Grid>
         ) : (
+          <Grid
+            container
+            item
+            xs={12}
+            alignItems="center"
+            className={classes.root}
+            style={{
+              backgroundImage: `url('/images/dark_background.jpg')`,
+              backgroundSize: "cover",
+            }}
+          >
+            <Grid container item xs={12} sm={2} className={classes.sites}>
+              <DesignTab />
+            </Grid>
             <Grid
               container
               item
               xs={12}
+              sm={10}
               alignItems="center"
-              className={classes.root}
-              style={{
-                backgroundImage: `url('/images/dark_background.jpg')`,
-                backgroundSize: "cover",
-              }}
+              className={classes.view}
             >
-              <Grid container item xs={12} sm={2} className={classes.sites}>
-                <DesignTab />
-              </Grid>
-              <Grid
-                container
-                item
-                xs={12}
-                sm={10}
-                alignItems="center"
-                className={classes.view}
-              >
-                {siteEdit && this.props.isEdit ? (
-                  <>
+              {siteEdit && this.props.isEdit ? (
+                <>
+                  <Grid
+                    container
+                    alignItems="center"
+                    justify="flex-end"
+                    item
+                    xs={12}
+                    className={classes.toolEdit}
+                  >
+                    <Grid item xs={4} sm={7} md={6}>
+                      <TextField
+                        id="txtSitePath"
+                        className={`mainFont ${classes.textField}`}
+                        inputProps={{
+                          style: {
+                            readOnly: true,
+                            padding: "0.5rem",
+                            textAlign: "center",
+                            fontFamily: "Segoe UI",
+                            fontSize: "14px",
+                          },
+                        }}
+                        fullWidth
+                        variant={"outlined"}
+                        value={
+                          process.env.REACT_APP_HOST
+                            ? `${process.env.REACT_APP_HOST}${siteEdit.sitePath}`
+                            : `http://localhost:3000/${siteEdit.sitePath}`
+                        }
+                        InputProps={{
+                          endAdornment: (
+                            <Button
+                              className={"mainFont"}
+                              onClick={(e) => this.copyToClipboard(e)}
+                              position="end"
+                            >
+                              Copy
+                            </Button>
+                          ),
+                        }}
+                      />
+                    </Grid>
                     <Grid
                       container
-                      alignItems="center"
-                      justify="flex-end"
                       item
-                      xs={12}
-                      className={classes.toolEdit}
+                      xs={6}
+                      sm={5}
+                      md={3}
+                      spacing={1}
+                      justify="flex-end"
                     >
-                      <Grid item xs={4} sm={7} md={6}>
-                        <TextField
-                          id="txtSitePath"
-                          className={`mainFont ${classes.textField}`}
-                          inputProps={{
-                            style: {
-                              readOnly: true,
-                              padding: "0.5rem",
-                              textAlign: "center",
-                              fontFamily: "Segoe UI",
-                              fontSize: "14px",
-                            },
-                          }}
-                          fullWidth
-                          variant={"outlined"}
-                          value={
-                            process.env.REACT_APP_HOST
-                              ? `${process.env.REACT_APP_HOST}${siteEdit.sitePath}`
-                              : `http://localhost:3000/${siteEdit.sitePath}`
-                          }
-                          InputProps={{
-                            endAdornment: (
-                              <Button
-                                className={"mainFont"}
-                                onClick={(e) => this.copyToClipboard(e)}
-                                position="end"
-                              >
-                                Copy
-                              </Button>
-                            ),
-                          }}
-                        />
+                      <Grid item>
+                        <Link to="/edit">
+                          <ButtonStyled
+                            style={{
+                              borderColor: "rgb(0, 96, 136)",
+                              color: "rgb(0, 96, 136)",
+                              fontWeight: "bold",
+                            }}
+                            onClick={() => {
+                              this.props.setPostView(null);
+                              this.props.setCurrentEditId(siteEdit.id);
+                            }}
+                            label="Edit"
+                          />
+                        </Link>
                       </Grid>
-                      <Grid
-                        container
-                        item
-                        xs={6}
-                        sm={5}
-                        md={3}
-                        spacing={1}
-                        justify="flex-end"
-                      >
-                        <Grid item>
-                          <Link to="/edit">
+                      <Grid item>
+                        {siteEdit.isPublish ? (
+                          <a
+                            href={`/${siteEdit.sitePath}`}
+                            rel="noopener noreferrer"
+                            target="_blank"
+                            style={{ textDecoration: "none" }}
+                          >
                             <ButtonStyled
                               style={{
                                 borderColor: "rgb(0, 96, 136)",
                                 color: "rgb(0, 96, 136)",
                                 fontWeight: "bold",
                               }}
-                              onClick={() => {
-                                this.props.setPostView(null);
-                                this.props.setCurrentEditId(siteEdit.id);
-                              }}
-                              label="Edit"
+                              label="Visit"
                             />
-                          </Link>
-                        </Grid>
-                        <Grid item>
-                          {siteEdit.isPublish ? (
-                            <a
-                              href={`/${siteEdit.sitePath}`}
-                              rel="noopener noreferrer"
-                              target="_blank"
-                              style={{ textDecoration: "none" }}
-                            >
-                              <ButtonStyled
-                                style={{
-                                  borderColor: "rgb(0, 96, 136)",
-                                  color: "rgb(0, 96, 136)",
-                                  fontWeight: "bold",
-                                }}
-                                label="Visit"
-                              />
-                            </a>
-                          ) : (
-                              <ButtonStyled
-                                style={{ color: "rgb(195, 196, 199)" }}
-                                disabled={!siteEdit.isPublish}
-                                label="Visit"
-                              />
-                            )}
-                        </Grid>
-                        <Grid item>
+                          </a>
+                        ) : (
                           <ButtonStyled
-                            style={
-                              siteEdit.isPublish
-                                ? {
-                                  backgroundColor: "#cc2127",
-                                  color: "#fff",
-                                  fontWeight: "600",
-                                }
-                                : {
-                                  backgroundColor: "#5ea95a",
-                                  color: "#fff",
-                                  fontWeight: "600",
-                                }
-                            }
-                            onClick={() =>
-                              siteEdit.isPublish
-                                ? unPublishSite({
-                                  siteId: siteEdit.id,
-                                  siteName: siteEdit.title,
-                                })
-                                : publishSite({
-                                  siteId: siteEdit.id,
-                                  siteName: siteEdit.title,
-                                })
-                            }
-                            label={`${
-                              siteEdit.isPublish
-                                ? "Unpublish Site"
-                                : "Publish Site"
-                              }`}
+                            style={{ color: "rgb(195, 196, 199)" }}
+                            disabled={!siteEdit.isPublish}
+                            label="Visit"
                           />
-                        </Grid>
+                        )}
                       </Grid>
-                    </Grid>
-                    <Grid item xs={12}>
-                      {this.renderViewPage(siteEdit)}
-                    </Grid>
-                  </>
-                ) : (
-                    <Grid container alignItems="center" justify="center">
-                      <Grid item xs={3} sm={2} md={2}>
-                        <img
-                          src={"/images/FPWGlogo.png"}
-                          alt=""
-                          className={classes.img}
+                      <Grid item>
+                        <ButtonStyled
+                          style={
+                            siteEdit.isPublish
+                              ? {
+                                  backgroundColor: "rgb(255,69,58)",
+                                  color: "#fff",
+                                  fontWeight: "600",
+                                }
+                              : {
+                                  backgroundColor: "rgb(48,209,88)",
+                                  color: "#fff",
+                                  fontWeight: "600",
+                                }
+                          }
+                          onClick={() =>
+                            siteEdit.isPublish
+                              ? unPublishSite({
+                                  siteId: siteEdit.id,
+                                  siteName: siteEdit.title,
+                                })
+                              : publishSite({
+                                  siteId: siteEdit.id,
+                                  siteName: siteEdit.title,
+                                })
+                          }
+                          label={`${
+                            siteEdit.isPublish
+                              ? "Unpublish Site"
+                              : "Publish Site"
+                          }`}
                         />
                       </Grid>
-                      <Grid item xs={12}>
-                        <Typography
-                          // variant="h5"
-                          className={classes.h4}
-                          style={{
-                            color: "#fff",
-                            fontSize: "20px",
-                            fontWeight: "400",
-                          }}
-                        >
-                          Hello, {user.name} !
-                    </Typography>
-                      </Grid>
                     </Grid>
-                  )}
-              </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                    {this.renderViewPage(siteEdit)}
+                  </Grid>
+                </>
+              ) : (
+                <Grid container alignItems="center" justify="center">
+                  <Grid item xs={3} sm={2} md={2}>
+                    <img
+                      src={"/images/FPWGlogo.png"}
+                      alt=""
+                      className={classes.img}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Typography
+                      // variant="h5"
+                      className={classes.h4}
+                      style={{
+                        color: "#fff",
+                        fontSize: "20px",
+                        fontWeight: "400",
+                      }}
+                    >
+                      Hello, {user.name} !
+                    </Typography>
+                  </Grid>
+                </Grid>
+              )}
             </Grid>
-          )}
+          </Grid>
+        )}
       </Grid>
     );
   }

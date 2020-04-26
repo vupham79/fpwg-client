@@ -170,20 +170,20 @@ class Theme1About extends React.Component {
       <Grid
         container
         justify={"center"}
-        style={{ minHeight: "50vh", marginTop: fromHome ? 70 : 0 }}
+        style={{ minHeight: "50vh", marginTop: fromHome ? 0 : 0 }}
       >
         <Grid item xs={12} style={{ marginBottom: 50 }}>
           <p style={classes.changableTitle}>
             {fromHome
               ? homeTitle
               : isEdit
-                ? siteEdit &&
+              ? siteEdit &&
                 siteEdit.navItems.map((item) => {
                   if (item.original === "about") {
                     return item.name;
                   } else return "";
                 })
-                : siteView &&
+              : siteView &&
                 siteView.navItems.map((item) => {
                   if (item.original === "about") {
                     return item.name;
@@ -216,8 +216,8 @@ class Theme1About extends React.Component {
                     ? "flex"
                     : "none"
                   : this.props.siteView.showDetailSetting.showAboutLogo
-                    ? "flex"
-                    : "none",
+                  ? "flex"
+                  : "none",
                 justifyContent: "center",
                 overflow: "hidden",
               }}
@@ -225,7 +225,11 @@ class Theme1About extends React.Component {
               <img
                 src={this.renderImage()}
                 alt=""
-                style={{ objectFit: "cover", height: 348, borderRadius: "0.1rem" }}
+                style={{
+                  objectFit: "cover",
+                  height: 348,
+                  borderRadius: "0.1rem",
+                }}
               />
             </Grid>
 
@@ -246,8 +250,8 @@ class Theme1About extends React.Component {
                     ? "inline-block"
                     : "none"
                   : this.props.siteView.showDetailSetting.showAboutDescription
-                    ? "inline-block"
-                    : "none",
+                  ? "inline-block"
+                  : "none",
               }}
             >
               <p style={classes.changableTitle2}>Introduction</p>
