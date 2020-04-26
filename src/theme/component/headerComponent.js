@@ -238,7 +238,7 @@ class HeaderComponent extends Component {
             {siteView &&
               siteView.navItems.map((item, index) =>
                 item.isActive ? (
-                  <ListItem button key={index}>
+                  <ListItem button key={index} disableGutters>
                     <NavLink
                       style={{
                         ...titleView,
@@ -248,9 +248,11 @@ class HeaderComponent extends Component {
                         textDecoration: "none",
                         textTransform: "uppercase",
                         letterSpacing: "1px",
+                        backgroundColor: "unset",
                       }}
                       activeStyle={{
-                        borderBottom: "1px solid",
+                        borderLeft: pos === "left" ? "1px solid" : 0,
+                        borderRight: pos === "right" ? "1px solid" : 0,
                       }}
                       to={`/${siteView.sitePath}/${item.original}`}
                     >
