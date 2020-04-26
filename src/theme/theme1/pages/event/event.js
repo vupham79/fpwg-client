@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 import EventComponent from "../../../component/eventComponent";
 
 class Theme1Event extends React.Component {
-
   render() {
     const {
       isEdit,
@@ -16,7 +15,6 @@ class Theme1Event extends React.Component {
       siteEdit,
       siteView,
     } = this.props;
-
     const useStyles = () => ({
       changableTitle: {
         fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
@@ -46,13 +44,13 @@ class Theme1Event extends React.Component {
             {fromHome
               ? homeTitle
               : isEdit
-                ? siteEdit &&
+              ? siteEdit &&
                 siteEdit.navItems.map((item) => {
                   if (item.original === "event") {
                     return item.name;
                   } else return "";
                 })
-                : siteView &&
+              : siteView &&
                 siteView.navItems.map((item) => {
                   if (item.original === "event") {
                     return item.name;
@@ -63,23 +61,37 @@ class Theme1Event extends React.Component {
         <Grid item xs={12}>
           <EventComponent
             altType
-            key={this.props.isEdit ? this.props.siteEdit.limitEvent : this.props.siteView.limitEvent}
+            key={
+              this.props.isEdit
+                ? this.props.siteEdit.limitEvent
+                : this.props.siteView.limitEvent
+            }
             homeList={
               fromHome && homeList
                 ? homeList
                 : isEdit
-                  ? siteEdit.events
-                  : siteView.events
+                ? siteEdit.events
+                : siteView.events
             }
             siteInfo={siteView && siteView.sitePath}
             fromHome={fromHome}
             pageCount={Math.ceil(
-              (fromHome && homeList ? homeList : siteEdit.events).length /
-              (this.props.isEdit ? this.props.siteEdit.limitEvent : this.props.siteView.limitEvent)
+              (fromHome && homeList
+                ? homeList.length
+                : siteEdit
+                ? siteEdit.events
+                  ? siteEdit.events.length
+                  : 0
+                : siteView.events
+                ? siteView.events.length
+                : 0) /
+                (this.props.isEdit
+                  ? this.props.siteEdit.limitEvent
+                  : this.props.siteView.limitEvent)
             )}
           />
         </Grid>
-      </Grid >
+      </Grid>
     );
   }
 }

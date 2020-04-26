@@ -171,7 +171,15 @@ class EventPage extends React.Component {
                 siteInfo={siteView && siteView.sitePath}
                 fromHome={fromHome}
                 pageCount={Math.ceil(
-                  (fromHome && homeList ? homeList : siteEdit.events).length /
+                  (fromHome && homeList
+                    ? homeList.length
+                    : siteEdit
+                    ? siteEdit.events
+                      ? siteEdit.events.length
+                      : 0
+                    : siteView.events
+                    ? siteView.events.length
+                    : 0) /
                     (this.props.isEdit
                       ? this.props.siteEdit.limitEvent
                       : this.props.siteView.limitEvent)

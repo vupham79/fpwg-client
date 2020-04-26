@@ -92,16 +92,31 @@ class Theme1News extends React.Component {
                     ? homeList
                     : siteEdit.posts
                   ).filter(function (pos) {
-                    let type = pos && pos.attachments ? pos.attachments.media_type : "";
-                    let showPostMode = isEdit ? siteEdit.showDetailSetting.showPostMode : siteView.showDetailSetting.showPostMode;
+                    let type =
+                      pos && pos.attachments ? pos.attachments.media_type : "";
+                    let showPostMode = isEdit
+                      ? siteEdit.showDetailSetting.showPostMode
+                      : siteView.showDetailSetting.showPostMode;
                     let show = true;
-                    if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
+                    if (
+                      type === "photo" &&
+                      (showPostMode === 2 || showPostMode === 3)
+                    ) {
                       show = false;
-                    } else if (type === "video" && (showPostMode === 1 || showPostMode === 3)) {
+                    } else if (
+                      type === "video" &&
+                      (showPostMode === 1 || showPostMode === 3)
+                    ) {
                       show = false;
-                    } else if (type === "album" && (showPostMode === 2 || showPostMode === 3)) {
+                    } else if (
+                      type === "album" &&
+                      (showPostMode === 2 || showPostMode === 3)
+                    ) {
                       show = false;
-                    } else if (type === "" && (showPostMode === 1 || showPostMode === 2)) {
+                    } else if (
+                      type === "" &&
+                      (showPostMode === 1 || showPostMode === 2)
+                    ) {
                       show = false;
                     }
                     return pos && pos.isActive === true && show;
@@ -109,16 +124,33 @@ class Theme1News extends React.Component {
                   pageCount={Math.ceil(
                     (fromHome && homeList ? homeList : siteEdit.posts).filter(
                       function (pos) {
-                        let type = pos && pos.attachments ? pos.attachments.media_type : "";
-                        let showPostMode = isEdit ? siteEdit.showDetailSetting.showPostMode : siteView.showDetailSetting.showPostMode;
+                        let type =
+                          pos && pos.attachments
+                            ? pos.attachments.media_type
+                            : "";
+                        let showPostMode = isEdit
+                          ? siteEdit.showDetailSetting.showPostMode
+                          : siteView.showDetailSetting.showPostMode;
                         let show = true;
-                        if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
+                        if (
+                          type === "photo" &&
+                          (showPostMode === 2 || showPostMode === 3)
+                        ) {
                           show = false;
-                        } else if (type === "video" && (showPostMode === 1 || showPostMode === 3)) {
+                        } else if (
+                          type === "video" &&
+                          (showPostMode === 1 || showPostMode === 3)
+                        ) {
                           show = false;
-                        } else if (type === "album" && (showPostMode === 2 || showPostMode === 3)) {
+                        } else if (
+                          type === "album" &&
+                          (showPostMode === 2 || showPostMode === 3)
+                        ) {
                           show = false;
-                        } else if (type === "" && (showPostMode === 1 || showPostMode === 2)) {
+                        } else if (
+                          type === "" &&
+                          (showPostMode === 1 || showPostMode === 2)
+                        ) {
                           show = false;
                         }
                         return pos && pos.isActive === true && show;
@@ -129,16 +161,16 @@ class Theme1News extends React.Component {
                 />
               </Grid>
             ) : (
-                <Grid container justify="center">
-                  <Typography style={classes.changableBody2}>
-                    Currently there are no news.
+              <Grid container justify="center">
+                <Typography style={classes.changableBody2}>
+                  Currently there are no news.
                 </Typography>
-                </Grid>
-              )
+              </Grid>
+            )
           ) : siteView && siteView.posts ? (
             <Grid container>
               <NewsType
-                key={siteEdit.limitNews}
+                key={siteView.limitNews}
                 fromHome={fromHome}
                 posts={siteView.posts.filter(function (pos) {
                   return pos.isActive === true;
@@ -158,12 +190,12 @@ class Theme1News extends React.Component {
               />
             </Grid>
           ) : (
-                <Grid container justify="center">
-                  <Typography style={classes.changableBody2}>
-                    Currently there are no news.
+            <Grid container justify="center">
+              <Typography style={classes.changableBody2}>
+                Currently there are no news.
               </Typography>
-                </Grid>
-              )}
+            </Grid>
+          )}
         </Grid>
       </Grid>
     );

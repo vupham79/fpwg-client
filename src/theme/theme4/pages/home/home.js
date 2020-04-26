@@ -60,41 +60,7 @@ class Theme1Home extends React.Component {
     }
   };
   render() {
-    const {
-      siteEdit,
-      isEdit,
-      titleView,
-      titleEdit,
-      siteView,
-      bodyEdit,
-      bodyView,
-      newCover,
-      classes,
-    } = this.props;
-    let coverIndex = 1;
-    const titleStyle = () => ({
-      changableLink: {
-        fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-        color: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        textAlign: "center",
-        fontStyle: "italic",
-        fontSize: 20,
-      },
-      changableTitle: {
-        fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-        color: isEdit ? titleEdit.color : titleView.color,
-        fontWeight: "600",
-        letterSpacing: "0.1em",
-        whiteSpace: "no-wrap",
-        overflow: "hidden",
-        textAlign: "center",
-        position: "absolute",
-        top: "50%",
-        // lineHeight: "1.5em",
-      },
-    });
-
-    const style = titleStyle();
+    const { siteEdit, isEdit, siteView, newCover, classes } = this.props;
     return (
       <Grid
         container
@@ -132,28 +98,39 @@ class Theme1Home extends React.Component {
                 autoplay
                 infinite
               >
-                {newCover.map((val, index) => (
-                  <Parallax
-                    bgImage={this.getCover(index)}
-                    bgImageAlt="the Banner"
-                    strength={200}
-                    style={{
-                      width: "100%",
-                    }}
-                  >
-                    <div className={classes.home} />
-                  </Parallax>
-                ))}
+                {isEdit ? (
+                  newCover.map((val, index) => (
+                    <Parallax
+                      key={index}
+                      bgImage={this.getCover(index)}
+                      bgImageAlt="the Banner"
+                      strength={200}
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <div className={classes.home} />
+                    </Parallax>
+                  ))
+                ) : siteView.cover ? (
+                  siteView.cover.map((val, index) => (
+                    <Parallax
+                      key={index}
+                      bgImage={val}
+                      bgImageAlt="the Banner"
+                      strength={200}
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <div className={classes.home} />
+                    </Parallax>
+                  ))
+                ) : (
+                  <></>
+                )}
               </Slider>
             </Grid>
-            {/* <Grid
-              item
-              xs={10}
-              style={style.changableTitle}
-              className={classes.title}
-            >
-              {isEdit ? siteEdit && siteEdit.title : siteView && siteView.title}
-            </Grid> */}
           </Grid>
         </Grid>
         {isEdit &&
