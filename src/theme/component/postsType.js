@@ -364,6 +364,19 @@ class PostTypeComponent extends React.Component {
                   </Grid>
                 </CardMedia>
               )}
+              {type === "link" && (
+                <CardMedia
+                  style={{
+                    width: "100%",
+                    height: altType ? "138px" : "150px", //attach height
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                    borderRadius: altType ? "0.4rem 0.4rem 0 0" : 0,
+                  }}
+                  image={post.attachments.images[0]}
+                />
+              )}
             </Grid>
             <Grid
               item

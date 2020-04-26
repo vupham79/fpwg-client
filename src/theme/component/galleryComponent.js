@@ -28,7 +28,7 @@ const useStyles = (theme) => ({
     color: "rgba(255, 255, 255, 0.54)",
   },
   media: {
-    paddingTop: "76.25%",
+    paddingTop: "100%",
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",

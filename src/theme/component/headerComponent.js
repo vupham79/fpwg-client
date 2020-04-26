@@ -114,7 +114,7 @@ class HeaderComponent extends Component {
     const tabStyles = {
       fontFamily: titleEdit.fontFamily,
       color: navTextColor ? navTextColor : this.props.navColor,
-      minWidth: "15vh",
+      minWidth: "12vh",
       wordBreak: "break-word",
       letterSpacing: "1px",
       "&:hover": {
