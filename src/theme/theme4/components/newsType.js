@@ -610,8 +610,8 @@ class NewsType extends React.Component {
     let titleShow = null;
     if (post && post.message) {
       const title = post.message.split(".", 1).toString();
-      titleShow = title && title.slice(0, 70);
-      if (title.length > 70) {
+      titleShow = title && title.slice(0, 50);
+      if (title.length > 50) {
         titleShow += "...";
       } else {
         titleShow += ".";
@@ -620,8 +620,8 @@ class NewsType extends React.Component {
     let messageShow = null;
     if (post && post.message) {
       const message = post.message.split(".", 5).toString();
-      messageShow = message && message.slice(0, 200);
-      if (message.length > 200) {
+      messageShow = message && message.slice(0, 170);
+      if (message.length > 170) {
         messageShow += "...";
       } else {
         messageShow += ".";
@@ -637,7 +637,7 @@ class NewsType extends React.Component {
         key={post._id}
         container
         item
-        xs={10}
+        xs={12}
         sm={6}
         md={6}
         lg={4}
@@ -720,6 +720,11 @@ class NewsType extends React.Component {
                     post.isActive &&
                     showPostMode !== 1 &&
                     showPostMode !== 2 &&
+                    this.renderMessage(post)) ||
+                  (!post.attachments &&
+                    post.isActive &&
+                    showPostMode !== 1 &&
+                    showPostMode !== 2 &&
                     this.renderMessage(post))
               )}
           </Grid>
@@ -740,6 +745,11 @@ class NewsType extends React.Component {
                     )) ||
                   (post.attachments &&
                     !post.attachments.media_type &&
+                    post.isActive &&
+                    showPostMode !== 1 &&
+                    showPostMode !== 2 &&
+                    this.renderMessage(post)) ||
+                  (!post.attachments &&
                     post.isActive &&
                     showPostMode !== 1 &&
                     showPostMode !== 2 &&

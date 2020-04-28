@@ -1,5 +1,5 @@
 const defaultState = {
-  selectedAdminIndex: 0
+  selectedAdminIndex: 0,
 };
 
 const AdminTabReducer = (state = defaultState, action) => {
@@ -7,11 +7,11 @@ const AdminTabReducer = (state = defaultState, action) => {
     case "UPDATE_ADMIN_INDEX":
       return {
         ...state,
-        selectedAdminIndex: action.payload
+        selectedAdminIndex: action.payload,
       };
-    case "SET_LOGOUT":
+    case "SET_LOGOUT_ADMIN":
       return {
-        ...defaultState
+        ...defaultState,
       };
     default:
       return state;

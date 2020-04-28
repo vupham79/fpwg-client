@@ -265,7 +265,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updateAdminTabIndex: (index) => dispatch(updateAdminTabIndex(index)),
-  setLogoutAdmin: (index) => dispatch(setLogoutAdmin()),
+  setLogoutAdmin: () => dispatch(setLogoutAdmin()),
 });
 
 export default connect(

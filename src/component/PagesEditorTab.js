@@ -234,7 +234,9 @@ const columns = ["", "Title", "Message", "Created At", "Show"];
 function PostsList({ filteredData, setActivePost }) {
   return (
     <>
-      <TableContainer style={{ height: "70vh", width: "100%", overflowY: "scroll" }}>
+      <TableContainer
+        style={{ height: "60vh", width: "100%", overflowY: "scroll" }}
+      >
         <Table>
           <TableHead>
             <TableRow>
@@ -309,80 +311,80 @@ const SortableItem = sortableElement(
     changeNavItemName,
     classes,
   }) => (
-      <Grid container style={gridItem}>
-        <Grid
-          container
-          item
-          alignItems="center"
-          xs={10}
-          sm={12}
-          md={10}
-          style={{ padding: "0.2rem 0" }}
-        >
-          <Grid container justify="center" item xs={2} md={2} sm={12}>
-            <DragHandle />
-          </Grid>
-          <Grid item xs={10} md={10} sm={12}>
-            <TextField
-              // autoFocus={
-              //   this.state.currentFocusInput === item._id ? true : false
-              // }
-              // onClick={(e) => this.setState({ currentFocusInput: item._id })}
-              InputLabelProps={{
-                classes: {
-                  focused: classes.focused,
-                },
-              }}
-              InputProps={{
-                classes: {
-                  notchedOutline: classes.notchedOutline,
-                  input: classes.inputTitle,
-                },
-              }}
-              size="small"
-              style={{ backgroundColor: "white" }}
-              fullWidth
-              variant={"outlined"}
-              value={value}
-              inputProps={{
-                maxLength: 15,
-              }}
-              onChange={(e) => {
-                handleChangeNavName(
-                  item._id,
-                  site,
-                  e.target.value,
-                  changeNavItemName
-                );
-              }}
-            />
-          </Grid>
+    <Grid container style={gridItem}>
+      <Grid
+        container
+        item
+        alignItems="center"
+        xs={10}
+        sm={12}
+        md={10}
+        style={{ padding: "0.2rem 0" }}
+      >
+        <Grid container justify="center" item xs={2} md={2} sm={12}>
+          <DragHandle />
         </Grid>
-        <Grid container item justify="center" xs={2} sm={12} md={2}>
-          {item.original === "home" ? (
-            <></>
-          ) : (
-              <IconButton
-                style={viewButton}
-                onClick={() =>
-                  handleChangeActive(
-                    item._id,
-                    site,
-                    setActiveNavItems,
-                    updateNavItemValue
-                  )
-                }
-              >
-                {item.isActive && item.name !== "Home" ? (
-                  <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
-                ) : (
-                    <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
-                  )}
-              </IconButton>
-            )}
+        <Grid item xs={10} md={10} sm={12}>
+          <TextField
+            // autoFocus={
+            //   this.state.currentFocusInput === item._id ? true : false
+            // }
+            // onClick={(e) => this.setState({ currentFocusInput: item._id })}
+            InputLabelProps={{
+              classes: {
+                focused: classes.focused,
+              },
+            }}
+            InputProps={{
+              classes: {
+                notchedOutline: classes.notchedOutline,
+                input: classes.inputTitle,
+              },
+            }}
+            size="small"
+            style={{ backgroundColor: "white" }}
+            fullWidth
+            variant={"outlined"}
+            value={value}
+            inputProps={{
+              maxLength: 15,
+            }}
+            onChange={(e) => {
+              handleChangeNavName(
+                item._id,
+                site,
+                e.target.value,
+                changeNavItemName
+              );
+            }}
+          />
         </Grid>
       </Grid>
-    )
+      <Grid container item justify="center" xs={2} sm={12} md={2}>
+        {item.original === "home" ? (
+          <></>
+        ) : (
+          <IconButton
+            style={viewButton}
+            onClick={() =>
+              handleChangeActive(
+                item._id,
+                site,
+                setActiveNavItems,
+                updateNavItemValue
+              )
+            }
+          >
+            {item.isActive && item.name !== "Home" ? (
+              <VisibilityOutlinedIcon style={{ color: "#555d66" }} />
+            ) : (
+              <VisibilityOffOutlinedIcon style={{ color: "#555d66" }} />
+            )}
+          </IconButton>
+        )}
+      </Grid>
+    </Grid>
+  )
 );
 
 const SortableList = sortableContainer(
@@ -435,12 +437,14 @@ class PagesEditorTab extends React.Component {
     startDate: null,
     searchByName: "",
     dataSearch: null,
+    showAllPost: false,
+    currentPage: 0,
   };
 
   SearchByDate = (date) => {
     this.setState({
       startDate: date,
-      offset: 0
+      offset: 0,
     });
     const name = this.state.searchByName;
     if (this.props.posts) {
@@ -467,7 +471,7 @@ class PagesEditorTab extends React.Component {
           this.state.itemPerPage
         )
       );
-      this.setState({ dataSearch: searchResult });
+      this.setState({ dataSearch: searchResult, currentPage: 0 });
       this.setPageCount(searchResult);
     }
   };
@@ -546,9 +550,11 @@ class PagesEditorTab extends React.Component {
 
   handlePageClick = (data) => {
     const { dataSearch } = this.state;
+    const { posts } = this.props;
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.state.itemPerPage);
+    this.setState({ currentPage: selected });
     if (dataSearch) {
-      let selected = data.selected;
-      let offset = Math.ceil(selected * this.state.itemPerPage);
       this.setState({ offset: offset }, () => {
         const slicePosts = dataSearch.slice(
           this.state.offset,
@@ -559,9 +565,6 @@ class PagesEditorTab extends React.Component {
         });
       });
     } else {
-      const { posts } = this.props;
-      let selected = data.selected;
-      let offset = Math.ceil(selected * this.state.itemPerPage);
       this.setState({ offset: offset }, () => {
         const slicePosts = posts.slice(
           this.state.offset,
@@ -587,7 +590,7 @@ class PagesEditorTab extends React.Component {
   handleSearch = (event) => {
     this.setState({
       searchByName: event.target.value.toLowerCase(),
-      offset: 0
+      offset: 0,
     });
     const date = this.state.startDate;
     if (this.props.posts) {
@@ -606,7 +609,7 @@ class PagesEditorTab extends React.Component {
           return pos;
         }
       });
-      this.setState({ dataSearch: searchResult });
+      this.setState({ dataSearch: searchResult, currentPage: 0 });
       this.setListData(
         searchResult.slice(
           // this.state.offset,
@@ -647,6 +650,12 @@ class PagesEditorTab extends React.Component {
       }
     }
     this.setState({ filteredData: this.state.filteredData });
+  };
+
+  setActiveAllPost = (checked) => {
+    const { posts } = this.props;
+    posts.map((item) => (item.isActive = checked));
+    this.setState({ showAllPost: checked });
   };
 
   handleSave = async (posts) => {
@@ -1068,8 +1077,8 @@ class PagesEditorTab extends React.Component {
                   fullWidth
                 >
                   <DialogTitle>
-                    <Grid container alignItems="center" spacing={3}>
-                      <Grid item>
+                    <Grid container alignItems="center" spacing={1}>
+                      <Grid item xs={12} sm={4}>
                         <TextField
                           style={{ margin: 0 }}
                           label="Search By Message"
@@ -1103,7 +1112,7 @@ class PagesEditorTab extends React.Component {
                           }}
                         />
                       </Grid>
-                      <Grid item>
+                      <Grid container item xs={12} sm={4}>
                         <DatePicker
                           className={classes.picker}
                           selected={this.state.startDate}
@@ -1112,6 +1121,30 @@ class PagesEditorTab extends React.Component {
                           placeholderText="Search By Day"
                           dateFormat="dd-MM-yyyy"
                         />
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        sm={4}
+                        alignItems="center"
+                        justify="flex-end"
+                      >
+                        <Grid
+                          item
+                          xs={6}
+                          className={classes.inputLabel}
+                          style={{ textAlign: "end" }}
+                        >
+                          Show All Post
+                        </Grid>
+                        <Grid item xs={2}>
+                          <GreenCheckbox
+                            checked={this.state.showAllPost}
+                            onChange={(e) =>
+                              this.setActiveAllPost(e.target.checked)
+                            }
+                          />
+                        </Grid>
                       </Grid>
                     </Grid>
                   </DialogTitle>
@@ -1138,6 +1171,7 @@ class PagesEditorTab extends React.Component {
                         containerClassName={"pagination"}
                         subContainerClassName={"pages pagination"}
                         activeClassName={"active"}
+                        forcePage={this.state.currentPage}
                       />
                     </Grid>
                     {/* <Button
