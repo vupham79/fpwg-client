@@ -25,6 +25,7 @@ import {
   Typography,
   Checkbox,
   TextField,
+  DialogActions,
 } from "@material-ui/core";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { Close as CloseIcon } from "@material-ui/icons";
@@ -43,6 +44,7 @@ import {
   syncGalleryFromFB,
   syncPostFromFB,
 } from "../actions";
+import ReactPaginate from "react-paginate";
 
 const expanStyle = {
   marginTop: "1rem",
@@ -147,7 +149,7 @@ const tableStyle = makeStyles({
     padding: "0.1rem 0.3rem",
     background: "#5ea95a",
     marginTop: "0.2rem",
-    color: "#fff",
+    color: "#22C31F",
     textAlign: "center",
     fontFamily: "Roboto, sans-serif",
   },
@@ -156,7 +158,7 @@ const tableStyle = makeStyles({
     padding: "0.1rem 0.3rem",
     background: "#cc2127",
     marginTop: "0.2rem",
-    color: "#fff",
+    color: "#DE1B0D",
     textAlign: "center",
     fontFamily: "Roboto, sans-serif",
   },
@@ -167,86 +169,87 @@ const fontTable = {
   fontSize: 13,
 };
 
-function CreateTable({ data }) {
-  const classes = tableStyle();
-  return (
-    <TableContainer component={Paper}>
-      <Table size="small" stickyHeader>
-        <TableHead
-          style={{
-            backgroundColor: "#ccccb3",
-          }}
-        >
-          <TableRow>
-            <TableCell style={fontTable} align="center">
-              Sync At
-            </TableCell>
-            <TableCell style={fontTable} align="center">
-              Data Type
-            </TableCell>
-            <TableCell style={fontTable} align="center">
-              Sync Type
-            </TableCell>
-            <TableCell style={fontTable} align="center">
-              Status
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data &&
-            data.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell style={fontTable} align="center">
-                  {moment(row.createdAt).format("LT-DD-MM-YYYY")}
-                </TableCell>
-                <TableCell style={fontTable} align="center">
-                  {row.dataType}
-                </TableCell>
-                <TableCell style={fontTable} align="center">
-                  {!row.dateFrom && !row.dateTo ? (
-                    "All"
-                  ) : (
-                      <Grid container justify="center">
-                        <Grid style={fontTable} item xs={12}>
-                          From: {moment(row.dateFrom).format("DD-MM-YYYY")}
-                        </Grid>
-                        <Grid style={fontTable} item xs={12}>
-                          To: {moment(row.dateTo).format("DD-MM-YYYY")}
-                        </Grid>
-                      </Grid>
-                    )}
-                </TableCell>
-                <TableCell align="center">
-                  <Grid
-                    container
-                    className={"mainFont"}
-                    style={{
-                      fontSize: "12px",
-                      overflow: "hidden",
-                    }}
-                    justify="center"
-                  >
-                    <Grid
-                      item
-                      className={
-                        row.status.toString() === "true"
-                          ? classes.success
-                          : classes.failed
-                      }
-                    >
-                      {row.status.toString() === "true"
-                        ? "Success "
-                        : "Failed "}
-                    </Grid>
-                  </Grid>
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  );
-}
+// function CreateTable({ data }) {
+//   const classes = tableStyle();
+//   return (
+//     <TableContainer component={Paper}>
+//       <Table size="small" stickyHeader>
+//         <TableHead
+//           style={{
+//             backgroundColor: "#ccccb3",
+//           }}
+//         >
+//           <TableRow>
+//             <TableCell style={fontTable} align="center">
+//               Sync At
+//             </TableCell>
+//             <TableCell style={fontTable} align="center">
+//               Data Type
+//             </TableCell>
+//             <TableCell style={fontTable} align="center">
+//               Sync Type
+//             </TableCell>
+//             <TableCell style={fontTable} align="center">
+//               Status
+//             </TableCell>
+//           </TableRow>
+//         </TableHead>
+//         <TableBody>
+//           {data &&
+//             data.map((row, index) => (
+//               <TableRow key={index}>
+//                 <TableCell style={fontTable} align="center">
+//                   {moment(row.createdAt).format("LT-DD-MM-YYYY")}
+//                 </TableCell>
+//                 <TableCell style={fontTable} align="center">
+//                   {row.dataType}
+//                 </TableCell>
+//                 <TableCell style={fontTable} align="center">
+//                   {!row.dateFrom && !row.dateTo ? (
+//                     "All"
+//                   ) : (
+//                       <Grid container justify="center">
+//                         <Grid style={fontTable} item xs={12}>
+//                           From: {moment(row.dateFrom).format("DD-MM-YYYY")}
+//                         </Grid>
+//                         <Grid style={fontTable} item xs={12}>
+//                           To: {moment(row.dateTo).format("DD-MM-YYYY")}
+//                         </Grid>
+//                       </Grid>
+//                     )}
+//                 </TableCell>
+//                 <TableCell align="center">
+//                   <Grid
+//                     container
+//                     className={"mainFont"}
+//                     style={{
+//                       fontSize: "12px",
+//                       overflow: "hidden",
+//                     }}
+//                     justify="center"
+//                   >
+//                     <Grid
+//                       item
+//                       style={
+//                         row.status.toString() === "true"
+//                           ? classes.success
+//                           : classes.failed
+//                       }
+//                     >
+//                       {row.status.toString() === "true"
+//                         ? "Success "
+//                         : "Failed "}
+//                     </Grid>
+//                   </Grid>
+//                 </TableCell>
+//               </TableRow>
+//             ))}
+//         </TableBody>
+//       </Table>
+//     </TableContainer>
+//   );
+// }
+
 class SyncEditorTab extends React.Component {
   state = {
     open: false,
@@ -286,7 +289,28 @@ class SyncEditorTab extends React.Component {
     autoEmailCheck: false,
     autoStoryCheck: false,
     autoPhoneCheck: false,
+    filteredData: [],
+    pageCount: 1,
+    offset: 0,
+    itemPerPage: 5,
   };
+
+  setLog = () => {
+    const { site } = this.props;
+    if (site.syncRecords) {
+      this.setState({
+        filteredData: site.syncRecords.slice(
+          0,
+          this.state.itemPerPage
+        ),
+        pageCount: Math.ceil(site.syncRecords.length / this.state.itemPerPage),
+      });
+    }
+  };
+
+  // componentDidMount() {
+  //   this.setLog();
+  // }
 
   selectTab = (event, tab) => {
     this.setState({
@@ -297,6 +321,7 @@ class SyncEditorTab extends React.Component {
     this.setState({
       open: !this.state.open,
     });
+    this.setLog();
   };
 
   handleRadioChange = (event) => {
@@ -491,6 +516,20 @@ class SyncEditorTab extends React.Component {
     }
   };
 
+  handlePageClick = (data) => {
+    let selected = data.selected;
+    let offset = Math.ceil(selected * this.state.itemPerPage);
+    this.setState({ offset: offset }, () => {
+      const slicePosts = this.props.site.syncRecords.slice(
+        this.state.offset,
+        this.state.itemPerPage + this.state.offset
+      );
+      this.setState({
+        filteredData: slicePosts,
+      });
+    });
+  };
+
   handleChangeCheckBox = (event) => {
     this.setState({ [event.target.name]: event.target.checked });
     if (!event.target.checked) {
@@ -614,9 +653,103 @@ class SyncEditorTab extends React.Component {
                     </DialogTitle>
                     <DialogContent>
                       {site.syncRecords && (
-                        <CreateTable data={site.syncRecords} />
+                        // <CreateTable data={this.state.filteredData} />
+                        <TableContainer component={Paper}>
+                          <Table size="small" stickyHeader>
+                            <TableHead
+                              style={{
+                                backgroundColor: "#ccccb3",
+                              }}
+                            >
+                              <TableRow>
+                                <TableCell style={fontTable} align="center">
+                                  Sync At
+                                </TableCell>
+                                <TableCell style={fontTable} align="center">
+                                  Data Type
+                                </TableCell>
+                                <TableCell style={fontTable} align="center">
+                                  Sync Type
+                                </TableCell>
+                                <TableCell style={fontTable} align="center">
+                                  Status
+                              </TableCell>
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {this.state.filteredData &&
+                                this.state.filteredData.map((row) => (
+                                  <TableRow key={row._id}>
+                                    <TableCell style={fontTable} align="center">
+                                      {moment(row.createdAt).format("LT-DD-MM-YYYY")}
+                                    </TableCell>
+                                    <TableCell style={fontTable} align="center">
+                                      {row.dataType}
+                                    </TableCell>
+                                    <TableCell style={fontTable} align="center">
+                                      {!row.dateFrom && !row.dateTo ? (
+                                        "All"
+                                      ) : (
+                                          <Grid container justify="center">
+                                            <Grid style={fontTable} item xs={12}>
+                                              From: {moment(row.dateFrom).format("DD-MM-YYYY")}
+                                            </Grid>
+                                            <Grid style={fontTable} item xs={12}>
+                                              To: {moment(row.dateTo).format("DD-MM-YYYY")}
+                                            </Grid>
+                                          </Grid>
+                                        )}
+                                    </TableCell>
+                                    <TableCell align="center">
+                                      <Grid
+                                        container
+                                        className={"mainFont"}
+                                        style={{
+                                          fontSize: "12px",
+                                          overflow: "hidden",
+                                        }}
+                                        justify="center"
+                                      >
+                                        <Grid
+                                          item
+                                          style={
+                                            row.status.toString() === "true"
+                                              ? classes.success
+                                              : classes.failed
+                                          }
+                                        >
+                                          {row.status.toString() === "true"
+                                            ? "Success "
+                                            : "Failed "}
+                                        </Grid>
+                                      </Grid>
+                                    </TableCell>
+                                  </TableRow>
+                                ))}
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
                       )}
                     </DialogContent>
+                    <DialogActions>
+                      {this.state.pageCount > 1 && (
+                        <Grid container justify="center">
+                          <ReactPaginate
+                            previousLabel={"previous"}
+                            nextLabel={"next"}
+                            breakLabel={"..."}
+                            breakClassName={"break-me"}
+                            pageCount={this.state.pageCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={5}
+                            onPageChange={this.handlePageClick}
+                            containerClassName={"pagination"}
+                            subContainerClassName={"pages pagination"}
+                            activeClassName={"active"}
+                          />
+                        </Grid>
+                      )}
+                    </DialogActions>
                   </Dialog>
                 </Grid>
               </Grid>
