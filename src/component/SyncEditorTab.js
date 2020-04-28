@@ -292,17 +292,14 @@ class SyncEditorTab extends React.Component {
     filteredData: [],
     pageCount: 1,
     offset: 0,
-    itemPerPage: 5,
+    itemPerPage: 10,
   };
 
   setLog = () => {
     const { site } = this.props;
     if (site.syncRecords) {
       this.setState({
-        filteredData: site.syncRecords.slice(
-          0,
-          this.state.itemPerPage
-        ),
+        filteredData: site.syncRecords.slice(0, this.state.itemPerPage),
         pageCount: Math.ceil(site.syncRecords.length / this.state.itemPerPage),
       });
     }
@@ -673,7 +670,7 @@ class SyncEditorTab extends React.Component {
                                 </TableCell>
                                 <TableCell style={fontTable} align="center">
                                   Status
-                              </TableCell>
+                                </TableCell>
                               </TableRow>
                             </TableHead>
                             <TableBody>
@@ -681,7 +678,9 @@ class SyncEditorTab extends React.Component {
                                 this.state.filteredData.map((row) => (
                                   <TableRow key={row._id}>
                                     <TableCell style={fontTable} align="center">
-                                      {moment(row.createdAt).format("LT-DD-MM-YYYY")}
+                                      {moment(row.createdAt).format(
+                                        "LT-DD-MM-YYYY"
+                                      )}
                                     </TableCell>
                                     <TableCell style={fontTable} align="center">
                                       {row.dataType}
@@ -690,15 +689,21 @@ class SyncEditorTab extends React.Component {
                                       {!row.dateFrom && !row.dateTo ? (
                                         "All"
                                       ) : (
-                                          <Grid container justify="center">
-                                            <Grid style={fontTable} item xs={12}>
-                                              From: {moment(row.dateFrom).format("DD-MM-YYYY")}
-                                            </Grid>
-                                            <Grid style={fontTable} item xs={12}>
-                                              To: {moment(row.dateTo).format("DD-MM-YYYY")}
-                                            </Grid>
+                                        <Grid container justify="center">
+                                          <Grid style={fontTable} item xs={12}>
+                                            From:{" "}
+                                            {moment(row.dateFrom).format(
+                                              "DD-MM-YYYY"
+                                            )}
                                           </Grid>
-                                        )}
+                                          <Grid style={fontTable} item xs={12}>
+                                            To:{" "}
+                                            {moment(row.dateTo).format(
+                                              "DD-MM-YYYY"
+                                            )}
+                                          </Grid>
+                                        </Grid>
+                                      )}
                                     </TableCell>
                                     <TableCell align="center">
                                       <Grid
