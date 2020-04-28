@@ -145,13 +145,13 @@ class TableSite extends Component {
             backgroundColor: "rgb(0, 96, 136)",
           }}
         >
-          <Grid item xs={2}>
+          <Grid item xs={1}>
             <p style={{ fontWeight: "bold" }}>Owner</p>
           </Grid>
           <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Title</p>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={1}>
             <p style={{ fontWeight: "bold" }}>Theme</p>
           </Grid>
           <Grid item xs={2}>
@@ -161,64 +161,70 @@ class TableSite extends Component {
             <p style={{ fontWeight: "bold" }}>Path</p>
           </Grid>
           <Grid item xs={2}>
+            <p style={{ fontWeight: "bold" }}>Url</p>
+          </Grid>
+          <Grid item xs={2}>
             <p style={{ fontWeight: "bold" }}>Published</p>
           </Grid>
         </Grid>
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-          this.state.filteredData.map((row, index) => (
-            <React.Fragment key={index}>
-              <Grid
-                container
-                direction="row"
-                alignItems="center"
-                style={{ padding: "0 0.5rem" }}
-              >
-                <Grid item xs={2}>
-                  {row.displayName}
-                </Grid>
-                <Grid item xs={2}>
-                  {row.title}
-                </Grid>
-                <Grid item xs={2}>
-                  {row.theme && row.theme.name}
-                </Grid>
-                <Grid item xs={2}>
-                  {row.categories && row.categories.map((c) => c.name + ", ")}
-                </Grid>
-                <Grid item xs={2}>
-                  {row.sitePath}
-                </Grid>
+            this.state.filteredData.map((row) => (
+              <React.Fragment key={row._id}>
                 <Grid
                   container
-                  item
-                  xs={2}
-                  className={"mainFont"}
-                  style={{
-                    fontSize: "12px",
-                    overflow: "hidden",
-                    height: "4rem",
-                  }}
+                  direction="row"
                   alignItems="center"
+                  style={{ padding: "0 0.5rem" }}
                 >
+                  <Grid item xs={1}>
+                    {row.displayName}
+                  </Grid>
+                  <Grid item xs={2}>
+                    {row.title}
+                  </Grid>
+                  <Grid item xs={1}>
+                    {row.theme && row.theme.name}
+                  </Grid>
+                  <Grid item xs={2}>
+                    {row.categories && row.categories.map((c) => c.name + ", ")}
+                  </Grid>
+                  <Grid item xs={2}>
+                    {row.sitePath}
+                  </Grid>
+                  <Grid item xs={2}>
+                    {row.url}
+                  </Grid>
                   <Grid
+                    container
                     item
-                    lg={6}
-                    sm={8}
-                    xs={8}
-                    className={
-                      row.isPublish ? classes.published : classes.unpublished
-                    }
+                    xs={2}
+                    className={"mainFont"}
+                    style={{
+                      fontSize: "12px",
+                      overflow: "hidden",
+                      height: "4rem",
+                    }}
+                    alignItems="center"
                   >
-                    {row.isPublish ? "Published " : "Unpublished "}
+                    <Grid
+                      item
+                      lg={6}
+                      sm={8}
+                      xs={8}
+                      className={
+                        row.isPublish ? classes.published : classes.unpublished
+                      }
+                    >
+                      {row.isPublish ? "Published " : "Unpublished "}
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-              {/* <Divider /> */}
-            </React.Fragment>
-          ))
-        )}
+                {/* <Divider /> */}
+              </React.Fragment>
+            ))
+          )}
         {this.state.pageCount > 1 && (
           <div className="commentBox">
             <ReactPaginate

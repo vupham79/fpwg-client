@@ -240,6 +240,7 @@ const SiteReducer = (state = defaultState, action) => {
           posts: [...action.payload.data.posts],
           events: [...action.payload.data.events],
           galleries: [...action.payload.data.galleries],
+          syncRecords: action.payload.data.syncRecords,
           autoSync: {
             ...action.payload.data.autoSync,
             convertAutoSyncValue,
