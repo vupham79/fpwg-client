@@ -143,13 +143,13 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-const tableStyle = makeStyles({
+const tableStyle = {
   success: {
     borderRadius: "5px",
     padding: "0.1rem 0.3rem",
     background: "#5ea95a",
     marginTop: "0.2rem",
-    color: "#22C31F",
+    color: "#fff",
     textAlign: "center",
     fontFamily: "Roboto, sans-serif",
   },
@@ -158,11 +158,11 @@ const tableStyle = makeStyles({
     padding: "0.1rem 0.3rem",
     background: "#cc2127",
     marginTop: "0.2rem",
-    color: "#DE1B0D",
+    color: "#fff",
     textAlign: "center",
     fontFamily: "Roboto, sans-serif",
   },
-});
+};
 
 const fontTable = {
   fontFamily: "Roboto, sans-serif",
@@ -689,21 +689,21 @@ class SyncEditorTab extends React.Component {
                                       {!row.dateFrom && !row.dateTo ? (
                                         "All"
                                       ) : (
-                                        <Grid container justify="center">
-                                          <Grid style={fontTable} item xs={12}>
-                                            From:{" "}
-                                            {moment(row.dateFrom).format(
-                                              "DD-MM-YYYY"
-                                            )}
+                                          <Grid container justify="center">
+                                            <Grid style={fontTable} item xs={12}>
+                                              From:{" "}
+                                              {moment(row.dateFrom).format(
+                                                "DD-MM-YYYY"
+                                              )}
+                                            </Grid>
+                                            <Grid style={fontTable} item xs={12}>
+                                              To:{" "}
+                                              {moment(row.dateTo).format(
+                                                "DD-MM-YYYY"
+                                              )}
+                                            </Grid>
                                           </Grid>
-                                          <Grid style={fontTable} item xs={12}>
-                                            To:{" "}
-                                            {moment(row.dateTo).format(
-                                              "DD-MM-YYYY"
-                                            )}
-                                          </Grid>
-                                        </Grid>
-                                      )}
+                                        )}
                                     </TableCell>
                                     <TableCell align="center">
                                       <Grid
@@ -719,8 +719,8 @@ class SyncEditorTab extends React.Component {
                                           item
                                           style={
                                             row.status.toString() === "true"
-                                              ? classes.success
-                                              : classes.failed
+                                              ? tableStyle.success
+                                              : tableStyle.failed
                                           }
                                         >
                                           {row.status.toString() === "true"
