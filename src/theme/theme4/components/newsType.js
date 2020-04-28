@@ -224,21 +224,21 @@ class NewsType extends React.Component {
           style={
             dark
               ? {
-                backgroundColor: "#1a1919",
-                border: "1px solid #FFFFFF",
-                marginLeft: "1rem",
-                marginBottom: "1rem",
-                padding: "1rem",
-                borderRadius: "4px",
-              }
+                  backgroundColor: "#1a1919",
+                  border: "1px solid #FFFFFF",
+                  marginLeft: "1rem",
+                  marginBottom: "1rem",
+                  padding: "1rem",
+                  borderRadius: "4px",
+                }
               : {
-                backgroundColor: "#FFFFFF",
-                border: "1px solid #121212",
-                marginLeft: "1rem",
-                marginBottom: "1rem",
-                borderRadius: "4px",
-                padding: "1rem",
-              }
+                  backgroundColor: "#FFFFFF",
+                  border: "1px solid #121212",
+                  marginLeft: "1rem",
+                  marginBottom: "1rem",
+                  borderRadius: "4px",
+                  padding: "1rem",
+                }
           }
         >
           <Grid
@@ -432,65 +432,69 @@ class NewsType extends React.Component {
               </Grid>
             </CardActionArea>
           ) : (
-              <CardActionArea onClick={() => this.handleHomeClick(post)}>
-                {type === "photo" && (
-                  <Grid item xs={12}>
-                    <CardMedia
-                      className={classes.cardView}
-                      image={post && post.attachments && post.attachments.images[0]}
-                    />
-                  </Grid>
-                )}
-                {type === "link" && (
-                  <Grid item xs={12}>
-                    <CardMedia
-                      className={classes.cardView}
-                      image={post && post.attachments && post.attachments.images[0]}
-                    />
-                  </Grid>
-                )}
-                {type === "album" && (
-                  <Grid item xs={12}>
-                    <Slider
-                      autoplay
-                      speed={2000}
-                      autoplay
-                      autoplaySpeed={2500}
-                      arrows={false}
-                    >
-                      {post &&
-                        post.attachments &&
-                        post.attachments.images.map((item, index) => (
-                          <CardMedia
-                            key={index}
-                            className={classes.cardMediaAlbum}
-                            image={item}
-                          />
-                        ))}
-                    </Slider>
-                  </Grid>
-                )}
-                <Grid
-                  container
-                  item
-                  xs={12}
-                  style={{
-                    ...txtStyle,
-                    padding: "1rem 0.5rem",
-                    position: "absolute",
-                    height: "45%",
-                    bottom: 0,
-                  }}
-                >
-                  <Grid item xs={12}>
-                    {moment(post.createdTime).format("MMMM DD, YYYY")}
-                  </Grid>
-                  <Grid item xs={12} style={titleStyle}>
-                    {titleShow}
-                  </Grid>
+            <CardActionArea onClick={() => this.handleHomeClick(post)}>
+              {type === "photo" && (
+                <Grid item xs={12}>
+                  <CardMedia
+                    className={classes.cardView}
+                    image={
+                      post && post.attachments && post.attachments.images[0]
+                    }
+                  />
                 </Grid>
-              </CardActionArea>
-            )}
+              )}
+              {type === "link" && (
+                <Grid item xs={12}>
+                  <CardMedia
+                    className={classes.cardView}
+                    image={
+                      post && post.attachments && post.attachments.images[0]
+                    }
+                  />
+                </Grid>
+              )}
+              {type === "album" && (
+                <Grid item xs={12}>
+                  <Slider
+                    autoplay
+                    speed={2000}
+                    autoplay
+                    autoplaySpeed={2500}
+                    arrows={false}
+                  >
+                    {post &&
+                      post.attachments &&
+                      post.attachments.images.map((item, index) => (
+                        <CardMedia
+                          key={index}
+                          className={classes.cardMediaAlbum}
+                          image={item}
+                        />
+                      ))}
+                  </Slider>
+                </Grid>
+              )}
+              <Grid
+                container
+                item
+                xs={12}
+                style={{
+                  ...txtStyle,
+                  padding: "1rem 0.5rem",
+                  position: "absolute",
+                  height: "45%",
+                  bottom: 0,
+                }}
+              >
+                <Grid item xs={12}>
+                  {moment(post.createdTime).format("MMMM DD, YYYY")}
+                </Grid>
+                <Grid item xs={12} style={titleStyle}>
+                  {titleShow}
+                </Grid>
+              </Grid>
+            </CardActionArea>
+          )}
         </Grid>
       );
     } else return <></>;
@@ -526,20 +530,20 @@ class NewsType extends React.Component {
         style={
           dark
             ? {
-              backgroundColor: "#1a1919",
-              border: "1px solid #FFFFFF",
-              marginLeft: "1rem",
-              marginBottom: "1rem",
-              padding: "1rem",
-              borderRadius: "4px",
-            }
+                backgroundColor: "#1a1919",
+                border: "1px solid #FFFFFF",
+                marginLeft: "1rem",
+                marginBottom: "1rem",
+                padding: "1rem",
+                borderRadius: "4px",
+              }
             : {
-              backgroundColor: "#FFFFFF",
-              border: "1px solid #121212",
-              marginLeft: "1rem",
-              marginBottom: "1rem",
-              borderRadius: "4px",
-            }
+                backgroundColor: "#FFFFFF",
+                border: "1px solid #121212",
+                marginLeft: "1rem",
+                marginBottom: "1rem",
+                borderRadius: "4px",
+              }
         }
       >
         <Grid
@@ -607,31 +611,16 @@ class NewsType extends React.Component {
       fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
       fontSize: "14px",
     };
-    let titleShow = null;
-    if (post && post.message) {
-      const title = post.message.split(".", 1).toString();
-      titleShow = title && title.slice(0, 50);
-      if (title.length > 50) {
-        titleShow += "...";
-      } else {
-        titleShow += ".";
-      }
-    }
     let messageShow = null;
     if (post && post.message) {
       const message = post.message.split(".", 5).toString();
-      messageShow = message && message.slice(0, 170);
-      if (message.length > 170) {
+      messageShow = message && message.slice(0, 400);
+      if (message.length > 400) {
         messageShow += "...";
       } else {
         messageShow += ".";
       }
     }
-    const titleStyle = {
-      fontFamily: isEdit ? bodyEdit.fontFamily : bodyEdit.fontFamily,
-      fontSize: 18,
-      fontWeight: "600",
-    };
     return (
       <Grid
         key={post._id}
@@ -663,9 +652,6 @@ class NewsType extends React.Component {
           >
             <Grid item xs={12}>
               {moment(post.createdTime).format("MMMM DD, YYYY")}
-            </Grid>
-            <Grid item xs={12} style={{ ...titleStyle, padding: "1rem 0" }}>
-              {titleShow}
             </Grid>
             <Grid item xs={12}>
               {messageShow}
@@ -799,7 +785,7 @@ class NewsType extends React.Component {
             padding: "1rem 0",
             borderBottom: `3px solid ${
               isEdit ? titleEdit.color : titleView.color
-              }`,
+            }`,
           }}
           alignItems="center"
         >
@@ -830,7 +816,7 @@ class NewsType extends React.Component {
             className="fb-post"
             data-href={`https://www.facebook.com/${
               post.id.split("_")[0]
-              }/posts/${post.id.split("_")[1]}`}
+            }/posts/${post.id.split("_")[1]}`}
             data-show-text="true"
             style={{
               // maxWidth: "100%",
@@ -909,13 +895,13 @@ class NewsType extends React.Component {
             {this.renderNews(
               isEdit
                 ? siteEdit &&
-                siteEdit.posts &&
-                siteEdit.posts
-                  .filter(function (pos) {
-                    return pos.isActive === true;
-                  })
-                  .sort((a, b) => b.createdTime - a.createdTime)
-                  .slice(0, 3)
+                    siteEdit.posts &&
+                    siteEdit.posts
+                      .filter(function (pos) {
+                        return pos.isActive === true;
+                      })
+                      .sort((a, b) => b.createdTime - a.createdTime)
+                      .slice(0, 3)
                 : posts && posts.slice(0, 3)
             )}
           </Grid>
@@ -988,42 +974,42 @@ class NewsType extends React.Component {
             {this.renderViewNew(editPostView)}
           </Grid>
         ) : (
+          <Grid
+            container
+            item
+            // xs={10}
+            // spacing={2}
+            justify="center"
+            xs={11}
+            sm={11}
+            style={{
+              //  marginTop: "2.5rem", marginBottom: "2.5rem"
+              overflow: "visible",
+            }}
+          >
             <Grid
               container
               item
-              // xs={10}
-              // spacing={2}
+              xs={12}
+              // spacing={3}
               justify="center"
-              xs={11}
-              sm={11}
-              style={{
-                //  marginTop: "2.5rem", marginBottom: "2.5rem"
-                overflow: "visible",
-              }}
-            >
-              <Grid
-                container
-                item
-                xs={12}
-                // spacing={3}
-                justify="center"
               // style={{ padding: "1rem 0rem" }}
-              >
-                {isEdit
-                  ? this.renderNews(
+            >
+              {isEdit
+                ? this.renderNews(
                     posts.slice(
                       this.state.page > pageCount ? 0 : this.state.offset,
                       this.state.page > pageCount
                         ? 3
                         : parseInt(this.state.itemPerPage) +
-                        parseInt(this.state.offset)
+                            parseInt(this.state.offset)
                     )
                   )
-                  : this.renderNews(posts)}
-              </Grid>
+                : this.renderNews(posts)}
+            </Grid>
 
-              {isEdit
-                ? pageCount > 1 &&
+            {isEdit
+              ? pageCount > 1 &&
                 itemPerPage < posts.length && (
                   <Grid
                     container
@@ -1041,7 +1027,7 @@ class NewsType extends React.Component {
                     />
                   </Grid>
                 )
-                : !!pageCountView &&
+              : !!pageCountView &&
                 this.state.pageView < pageCountView && (
                   <Grid
                     container
@@ -1059,8 +1045,8 @@ class NewsType extends React.Component {
                     />
                   </Grid>
                 )}
-            </Grid>
-          )}
+          </Grid>
+        )}
       </Grid>
     );
   }
