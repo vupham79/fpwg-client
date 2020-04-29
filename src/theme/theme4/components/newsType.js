@@ -80,7 +80,7 @@ const useStyles = (theme) => ({
     },
   },
   video: {
-    minHeight: "35vh",
+    // minHeight: "35vh",
   },
 });
 
@@ -177,168 +177,6 @@ class NewsType extends React.Component {
         .scrollIntoView({ block: "start", behavior: "smooth" });
   };
 
-  renderPostComponent(index, post, style, dark, type, showPostMode) {
-    const {
-      fromHome,
-      isEdit,
-      titleEdit,
-      titleView,
-      bodyEdit,
-      bodyView,
-    } = this.props;
-    const { classes } = this.props;
-    const txtStyle = {
-      fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-      fontSize: "14px",
-    };
-    const titleStyle = {
-      fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-      fontSize: "14px",
-    };
-    const btnStyle = {
-      padding: "0.5rem 1.5rem",
-      fontSize: "11px",
-      border: `1px solid ${dark ? "#FFFFFF" : "#121212"}`,
-      backgroundColor: dark ? "#1A1919" : "#FFFFFF",
-      color: dark ? "#FFFFFF" : "#121212",
-      height: "fit-content",
-    };
-    let show = true;
-    if (type === "photo" && (showPostMode === 2 || showPostMode === 3)) {
-      show = false;
-    } else if (type === "video" && (showPostMode === 1 || showPostMode === 3)) {
-      show = false;
-    } else if (type === "album" && (showPostMode === 2 || showPostMode === 3)) {
-      show = false;
-    }
-    if (show) {
-      return (
-        <Grid
-          key={post._id}
-          container={!fromHome}
-          item={!fromHome}
-          xs={!fromHome && 10}
-          sm={!fromHome && 5}
-          md={!fromHome && 5}
-          lg={!fromHome && 3}
-          style={
-            dark
-              ? {
-                  backgroundColor: "#1a1919",
-                  border: "1px solid #FFFFFF",
-                  marginLeft: "1rem",
-                  marginBottom: "1rem",
-                  padding: "1rem",
-                  borderRadius: "4px",
-                }
-              : {
-                  backgroundColor: "#FFFFFF",
-                  border: "1px solid #121212",
-                  marginLeft: "1rem",
-                  marginBottom: "1rem",
-                  borderRadius: "4px",
-                  padding: "1rem",
-                }
-          }
-        >
-          <Grid
-            container
-            item
-            xs={12}
-            style={{
-              // padding: "0.5rem",
-              backgroundColor: dark ? "#1a1919" : "#FFFFFF",
-            }}
-          >
-            <Grid
-              item
-              xs={12}
-              style={
-                {
-                  // padding: "1rem 0"
-                }
-              }
-            >
-              <Typography
-                variant={"body1"}
-                style={{
-                  ...titleStyle,
-                  fontWeight: "700",
-                  fontSize: "16px",
-                  color: dark ? "#FFFFFF" : "#121212",
-                }}
-              >
-                {moment(post.createdTime).format("MMMM DD, YYYY")}
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              {type === "photo" && (
-                <CardMedia
-                  className={classes.cardView}
-                  image={post && post.attachments && post.attachments.images[0]}
-                />
-              )}
-              {type === "video" && (
-                <ReactPlayer
-                  url={post && post.attachments && post.attachments.video}
-                  controls={true}
-                  style={{ objectFit: "unset" }}
-                  width="100%"
-                  height="30vh"
-                />
-              )}
-              {type === "album" && (
-                <CardMedia
-                  className={classes.cardMediaAlbum}
-                  image={post && post.attachments && post.attachments.images[0]}
-                >
-                  <Grid
-                    container
-                    alignItems="center"
-                    justify="center"
-                    className={classes.album}
-                  >
-                    <Typography
-                      variant="h3"
-                      style={{ color: dark ? "#FFFFFF" : "#FFFFFF" }}
-                    >
-                      {post.attachments.images.length} +
-                    </Typography>
-                  </Grid>
-                </CardMedia>
-              )}
-            </Grid>
-            <Grid
-              item
-              xs={12}
-              style={{
-                ...txtStyle,
-                padding: "1rem 0",
-                // height: "5rem",
-                color: dark ? "#FFFFFF" : "#121212",
-              }}
-            >
-              <div style={gridContent}>{post.message}</div>
-            </Grid>
-            <Grid
-              container
-              item
-              xs={12}
-              justify="flex-start"
-              alignItems="flex-end"
-            >
-              <ButtonComponent
-                label="READ MORE"
-                style={btnStyle}
-                onClick={(e) => this.handleHomeClick(post)}
-              />
-            </Grid>
-          </Grid>
-        </Grid>
-      );
-    } else return <></>;
-  }
-
   renderPost(post, type, showPostMode) {
     const { isEdit, bodyEdit, bodyView } = this.props;
     const { classes } = this.props;
@@ -388,27 +226,25 @@ class NewsType extends React.Component {
               className={classes.video}
               onClick={() => this.handleHomeClick(post)}
             >
-              {type === "video" && (
-                <Grid
-                  item
-                  xs={12}
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    right: 0,
-                    left: 0,
-                    height: "55%",
-                    background: "rgb(0,0,0)",
-                  }}
-                >
-                  <ReactPlayer
-                    url={post && post.attachments && post.attachments.video}
-                    controls={true}
-                    width="100%"
-                    height="100%"
-                  />
-                </Grid>
-              )}
+              <Grid
+                item
+                xs={12}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  left: 0,
+                  height: "55%",
+                  background: "rgb(0,0,0)",
+                }}
+              >
+                <ReactPlayer
+                  url={post && post.attachments && post.attachments.video}
+                  controls={true}
+                  width="100%"
+                  height="100%"
+                />
+              </Grid>
 
               <Grid
                 container
@@ -430,6 +266,7 @@ class NewsType extends React.Component {
                   {titleShow}
                 </Grid>
               </Grid>
+              <Grid item style={{ paddingTop: "100%" }} />
             </CardActionArea>
           ) : (
             <CardActionArea onClick={() => this.handleHomeClick(post)}>
@@ -500,111 +337,6 @@ class NewsType extends React.Component {
     } else return <></>;
   }
 
-  renderPostMessage(index, post, style, dark, type) {
-    const { isEdit, bodyEdit, bodyView, titleEdit, titleView } = this.props;
-    const txtStyle = {
-      fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
-      fontSize: "14px",
-    };
-    const titleStyle = {
-      fontFamily: isEdit ? titleEdit.fontFamily : titleView.fontFamily,
-      fontSize: "14px",
-    };
-    const btnStyle = {
-      padding: "0.5rem 1.5rem",
-      fontSize: "11px",
-      border: `1px solid ${dark ? "#FFFFFF" : "#121212"}`,
-      backgroundColor: dark ? "#1A1919" : "#FFFFFF",
-      color: dark ? "#FFFFFF" : "#121212",
-      height: "fit-content",
-    };
-    return (
-      <Grid
-        key={post._id}
-        container
-        item
-        xs={10}
-        sm={5}
-        md={5}
-        lg={3}
-        style={
-          dark
-            ? {
-                backgroundColor: "#1a1919",
-                border: "1px solid #FFFFFF",
-                marginLeft: "1rem",
-                marginBottom: "1rem",
-                padding: "1rem",
-                borderRadius: "4px",
-              }
-            : {
-                backgroundColor: "#FFFFFF",
-                border: "1px solid #121212",
-                marginLeft: "1rem",
-                marginBottom: "1rem",
-                borderRadius: "4px",
-              }
-        }
-      >
-        <Grid
-          container
-          item
-          xs={12}
-          style={{
-            // padding: "0.5rem",
-            backgroundColor: "white",
-            borderRadius: "0.4rem",
-          }}
-        >
-          <Grid
-            item
-            xs={12}
-            style={
-              {
-                // padding: "1rem 0"
-              }
-            }
-          >
-            <Typography
-              variant={"body1"}
-              style={{
-                ...titleStyle,
-                fontWeight: "700",
-                fontSize: "16px",
-              }}
-            >
-              {moment(post.createdTime).format("MMMM DD,YYYY")}
-            </Typography>
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            style={{
-              ...txtStyle,
-              // padding: "0 !important",
-              // height: "43vh",
-            }}
-          >
-            <div style={gridMessage}>{post.message}</div>
-          </Grid>
-          <Grid
-            container
-            item
-            xs={12}
-            justify="flex-start"
-            alignItems="flex-end"
-          >
-            <ButtonComponent
-              label="READ MORE"
-              style={btnStyle}
-              onClick={(e) => this.handleHomeClick(post)}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-    );
-  }
-
   renderMessage(post) {
     const { isEdit, bodyEdit, bodyView, classes } = this.props;
     const txtStyle = {
@@ -657,6 +389,7 @@ class NewsType extends React.Component {
               {messageShow}
             </Grid>
           </Grid>
+          <Grid item style={{ paddingTop: "100%" }} />
         </CardActionArea>
       </Grid>
     );

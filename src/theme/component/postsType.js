@@ -216,6 +216,7 @@ class PostTypeComponent extends React.Component {
       bodyEdit,
       bodyView,
       altType,
+      posts,
     } = this.props;
     const { classes } = this.props;
     const txtStyle = {
@@ -250,11 +251,29 @@ class PostTypeComponent extends React.Component {
           container
           item
           container={!fromHome}
-          item={!fromHome}
+          // item={!fromHome}
+          // xs={!fromHome && 10}
+          // sm={!fromHome && 5}
+          // md={!fromHome && 3}
+          // lg={!fromHome && 3}
           xs={!fromHome && 10}
-          sm={!fromHome && 5}
-          md={!fromHome && 3}
-          lg={!fromHome && 3}
+          sm={fromHome ? 6 : 3}
+          md={
+            fromHome
+              ? posts &&
+                (posts.length < 3
+                  ? (posts.length === 1 && 4) || (posts.length === 2 && 8)
+                  : 12)
+              : 3
+          }
+          lg={
+            fromHome
+              ? posts &&
+                (posts.length < 3
+                  ? (posts.length === 1 && 4) || (posts.length === 2 && 8)
+                  : 12)
+              : 3
+          }
           onClick={(e) =>
             isEdit
               ? altType && this.handleHomeClick(post)
@@ -438,12 +457,12 @@ class PostTypeComponent extends React.Component {
                     <ButtonComponent label="READ MORE" style={btnStyle} />
                   </Link>
                 ) : (
-                      <ButtonComponent
-                        onClick={() => this.handleOpen(post)}
-                        label="READ MORE"
-                        style={btnStyle}
-                      />
-                    )}
+                  <ButtonComponent
+                    onClick={() => this.handleOpen(post)}
+                    label="READ MORE"
+                    style={btnStyle}
+                  />
+                )}
               </Grid>
               <Grid
                 item
@@ -484,6 +503,7 @@ class PostTypeComponent extends React.Component {
       titleEdit,
       titleView,
       altType,
+      posts,
     } = this.props;
     const txtStyle = {
       fontFamily: isEdit ? bodyEdit.fontFamily : bodyView.fontFamily,
@@ -509,10 +529,28 @@ class PostTypeComponent extends React.Component {
         item
         container={!fromHome}
         item={!fromHome}
+        // xs={!fromHome && 10}
+        // sm={!fromHome && 5}
+        // md={!fromHome && 3}
+        // lg={!fromHome && 3}
         xs={!fromHome && 10}
-        sm={!fromHome && 5}
-        md={!fromHome && 3}
-        lg={!fromHome && 3}
+        sm={fromHome ? 6 : 3}
+        md={
+          fromHome
+            ? posts &&
+              (posts.length < 3
+                ? (posts.length === 1 && 4) || (posts.length === 2 && 8)
+                : 12)
+            : 3
+        }
+        lg={
+          fromHome
+            ? posts &&
+              (posts.length < 3
+                ? (posts.length === 1 && 4) || (posts.length === 2 && 8)
+                : 12)
+            : 3
+        }
         onClick={(e) =>
           isEdit
             ? altType && this.handleHomeClick(post)
@@ -622,12 +660,12 @@ class PostTypeComponent extends React.Component {
                   <ButtonComponent label="READ MORE" style={btnStyle} />
                 </Link>
               ) : (
-                    <ButtonComponent
-                      onClick={() => this.handleOpen(post)}
-                      label="READ MORE"
-                      style={btnStyle}
-                    />
-                  )}
+                <ButtonComponent
+                  onClick={() => this.handleOpen(post)}
+                  label="READ MORE"
+                  style={btnStyle}
+                />
+              )}
             </Grid>
             <Grid
               item
@@ -733,7 +771,7 @@ class PostTypeComponent extends React.Component {
                   },
                 },
                 {
-                  breakpoint: 900,
+                  breakpoint: 960,
                   settings: {
                     slidesToScroll: 1,
                     slidesToShow: 1,
@@ -961,7 +999,7 @@ class PostTypeComponent extends React.Component {
             className="fb-post"
             data-href={`https://www.facebook.com/${
               post.id.split("_")[0]
-              }/posts/${post.id.split("_")[1]}`}
+            }/posts/${post.id.split("_")[1]}`}
             data-show-text="true"
             style={{
               // maxWidth: "100%",
@@ -1016,13 +1054,13 @@ class PostTypeComponent extends React.Component {
             {this.renderNews(
               isEdit
                 ? siteEdit &&
-                siteEdit.posts &&
-                siteEdit.posts
-                  .filter(function (pos) {
-                    return pos.isActive === true;
-                  })
-                  .sort((a, b) => b.createdTime - a.createdTime)
-                  .slice(0, 3)
+                    siteEdit.posts &&
+                    siteEdit.posts
+                      .filter(function (pos) {
+                        return pos.isActive === true;
+                      })
+                      .sort((a, b) => b.createdTime - a.createdTime)
+                      .slice(0, 3)
                 : posts && posts.slice(0, 3)
             )}
           </Grid>
@@ -1056,30 +1094,30 @@ class PostTypeComponent extends React.Component {
             {this.renderViewNew(isEdit ? editPostView : postOpen)}
           </Grid>
         ) : (
+          <Grid
+            container
+            item
+            // xs={10}
+            // spacing={2}
+            justify="center"
+            xs={10}
+            sm={10}
+            style={{
+              //  marginTop: "2.5rem", marginBottom: "2.5rem"
+              overflow: "visible",
+            }}
+          >
             <Grid
               container
               item
-              // xs={10}
-              // spacing={2}
+              xs={12}
+              // spacing={3}
               justify="center"
-              xs={10}
-              sm={10}
-              style={{
-                //  marginTop: "2.5rem", marginBottom: "2.5rem"
-                overflow: "visible",
-              }}
-            >
-              <Grid
-                container
-                item
-                xs={12}
-                // spacing={3}
-                justify="center"
               // style={{ padding: "1rem 0rem" }}
-              >
-                {isEdit
-                  ? !fromHome
-                    ? this.renderNews(
+            >
+              {isEdit
+                ? !fromHome
+                  ? this.renderNews(
                       posts
                         .filter(function (pos) {
                           return pos.isActive === true;
@@ -1089,21 +1127,21 @@ class PostTypeComponent extends React.Component {
                           this.state.page > pageCount
                             ? 3
                             : parseInt(this.state.itemPerPage) +
-                            parseInt(this.state.offset)
+                                parseInt(this.state.offset)
                         )
                     )
-                    : this.renderNews(
+                  : this.renderNews(
                       posts
                         .filter(function (pos) {
                           return pos.isActive === true;
                         })
                         .slice(0, 6)
                     )
-                  : this.renderNews(posts)}
-              </Grid>
+                : this.renderNews(posts)}
+            </Grid>
 
-              {isEdit
-                ? pageCount > 1 &&
+            {isEdit
+              ? pageCount > 1 &&
                 !fromHome && (
                   <Grid
                     container
@@ -1128,8 +1166,8 @@ class PostTypeComponent extends React.Component {
                             }}
                           />
                         ) : (
-                            <PaginationItem {...item} />
-                          )
+                          <PaginationItem {...item} />
+                        )
                       }
                       shape="rounded"
                       variant="outlined"
@@ -1139,7 +1177,7 @@ class PostTypeComponent extends React.Component {
                     />
                   </Grid>
                 )
-                : pageCountView > 1 &&
+              : pageCountView > 1 &&
                 !fromHome && (
                   <Grid
                     container
@@ -1167,8 +1205,8 @@ class PostTypeComponent extends React.Component {
                             }}
                           />
                         ) : (
-                            <PaginationItem {...item} />
-                          )
+                          <PaginationItem {...item} />
+                        )
                       }
                       shape="rounded"
                       variant="outlined"
@@ -1178,8 +1216,8 @@ class PostTypeComponent extends React.Component {
                     />
                   </Grid>
                 )}
-            </Grid>
-          )}
+          </Grid>
+        )}
       </Grid>
     );
   }

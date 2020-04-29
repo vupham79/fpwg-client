@@ -433,6 +433,7 @@ class HomepageEditorTab extends React.Component {
     },
     selectedFile: null,
     selectedFilePath: null,
+    currentPage: 0,
   };
 
   handleUploadCover = async (e) => {
@@ -482,7 +483,7 @@ class HomepageEditorTab extends React.Component {
     return (
       <>
         <TableContainer
-          style={{ height: "70vh", width: "100%", overflowY: "scroll" }}
+          style={{ height: "60vh", width: "100%", overflowY: "scroll" }}
         >
           <Table stickyHeader>
             <TableHead>
@@ -531,9 +532,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -553,7 +554,7 @@ class HomepageEditorTab extends React.Component {
     return (
       <>
         <TableContainer
-          style={{ height: "70vh", width: "100%", overflowY: "scroll" }}
+          style={{ height: "60vh", width: "100%", overflowY: "scroll" }}
         >
           <Table stickyHeader>
             <TableHead>
@@ -591,9 +592,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -644,9 +645,9 @@ class HomepageEditorTab extends React.Component {
                       <GreenCheckbox
                         checked={
                           this.state.currentExpandItem.filter.items &&
-                            this.state.currentExpandItem.filter.items.includes(
-                              row
-                            )
+                          this.state.currentExpandItem.filter.items.includes(
+                            row
+                          )
                             ? true
                             : false
                         }
@@ -967,7 +968,7 @@ class HomepageEditorTab extends React.Component {
         });
       }
     }
-
+    this.setState({ currentPage: 0 });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
     this.setPageCount(searchResult);
   };
@@ -1030,6 +1031,7 @@ class HomepageEditorTab extends React.Component {
       currentList = this.props.site.events;
     }
     let selected = data.selected;
+    this.setState({ currentPage: selected });
     let offset = Math.ceil(selected * this.state.itemPerPage);
     this.setState({ offset: offset }, () => {
       const slicePosts = currentList.slice(
@@ -1141,6 +1143,7 @@ class HomepageEditorTab extends React.Component {
                 containerClassName={"pagination"}
                 subContainerClassName={"pages pagination"}
                 activeClassName={"active"}
+                forcePage={this.state.currentPage}
               />
             </Grid>
           )}
