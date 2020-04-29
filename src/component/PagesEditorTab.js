@@ -667,6 +667,7 @@ class PagesEditorTab extends React.Component {
   handleOpenDialogue = (bool) => {
     this.setState({
       openDiag: bool,
+      currentPage: 0,
     });
     if (bool) {
       this.setPosts(this.props.posts);

@@ -784,6 +784,7 @@ class HomepageEditorTab extends React.Component {
   handleOpenPostDialogue = (bool) => {
     this.setState({
       openDiag: bool,
+      currentPage: 0,
     });
     if (bool) {
       if (this.state.currentExpandType === "news" && this.props.posts) {
