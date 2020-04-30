@@ -105,8 +105,7 @@ class Theme1News extends React.Component {
                     ? homeList
                     : siteEdit.posts
                   ).filter(function (pos) {
-                    let type =
-                      pos && pos.attachments ? pos.attachments.media_type : "";
+                    let type = (pos && pos.attachments && pos.attachments.images && pos.attachments.images.length > 0) || (pos && pos.attachments && pos.attachments.video) ? pos.attachments.media_type : "";
                     let showPostMode = isEdit
                       ? siteEdit.showDetailSetting.showPostMode
                       : siteView.showDetailSetting.showPostMode;
@@ -137,10 +136,7 @@ class Theme1News extends React.Component {
                   pageCount={Math.ceil(
                     (fromHome && homeList ? homeList : siteEdit.posts).filter(
                       function (pos) {
-                        let type =
-                          pos && pos.attachments
-                            ? pos.attachments.media_type
-                            : "";
+                        let type = (pos && pos.attachments && pos.attachments.images && pos.attachments.images.length > 0) || (pos && pos.attachments && pos.attachments.video) ? pos.attachments.media_type : "";
                         let showPostMode = isEdit
                           ? siteEdit.showDetailSetting.showPostMode
                           : siteView.showDetailSetting.showPostMode;
