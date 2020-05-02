@@ -31,6 +31,8 @@ class TablePath extends Component {
     pageCount: 1,
     offset: 0,
     itemPerPage: 5, // chỉnh số item 1 trang ở đây, ko chỉnh chỗ khac
+    currentPage: 0,
+    searchData: null,
   };
 
   setListData = (listData) => {
@@ -59,17 +61,28 @@ class TablePath extends Component {
   }
 
   handlePageClick = (data) => {
+    const { searchData } = this.state;
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.itemPerPage);
-
-    this.setState({ offset: offset }, () => {
-      this.setListData(
-        this.props.paths.slice(
-          this.state.offset,
-          this.state.itemPerPage + this.state.offset
-        )
-      );
-    });
+    if (searchData) {
+      this.setState({ offset: offset, currentPage: selected }, () => {
+        this.setListData(
+          searchData.slice(
+            this.state.offset,
+            this.state.itemPerPage + this.state.offset
+          )
+        );
+      });
+    } else {
+      this.setState({ offset: offset, currentPage: selected }, () => {
+        this.setListData(
+          this.props.paths.slice(
+            this.state.offset,
+            this.state.itemPerPage + this.state.offset
+          )
+        );
+      });
+    }
   };
 
   handleSearch = (event) => {
@@ -78,6 +91,7 @@ class TablePath extends Component {
         .toLowerCase()
         .includes(event.target.value.toLowerCase());
     });
+    this.setState({ currentPage: 0, searchData: searchResult });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
     this.setPageCount(searchResult);
   };
@@ -187,6 +201,7 @@ class TablePath extends Component {
               containerClassName={"pagination"}
               subContainerClassName={"pages pagination"}
               activeClassName={"active"}
+              forcePage={this.state.currentPage}
             />
           </div>
         )}

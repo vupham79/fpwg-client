@@ -45,6 +45,8 @@ class TableSite extends Component {
     pageCount: 1,
     offset: 0,
     itemPerPage: 5,
+    currentPage: 0,
+    searchData: null,
   };
 
   setListData = (listData) => {
@@ -76,17 +78,28 @@ class TableSite extends Component {
   }
 
   handlePageClick = (data) => {
+    const { searchData } = this.state;
     let selected = data.selected;
     let offset = Math.ceil(selected * this.state.itemPerPage);
-
-    this.setState({ offset: offset }, () => {
-      this.setListData(
-        this.props.sites.slice(
-          this.state.offset,
-          this.state.itemPerPage + this.state.offset
-        )
-      );
-    });
+    if (searchData) {
+      this.setState({ offset: offset, currentPage: selected }, () => {
+        this.setListData(
+          searchData.slice(
+            this.state.offset,
+            this.state.itemPerPage + this.state.offset
+          )
+        );
+      });
+    } else {
+      this.setState({ offset: offset, currentPage: selected }, () => {
+        this.setListData(
+          this.props.sites.slice(
+            this.state.offset,
+            this.state.itemPerPage + this.state.offset
+          )
+        );
+      });
+    }
   };
 
   handleSearch = (event) => {
@@ -95,6 +108,7 @@ class TableSite extends Component {
         .toLowerCase()
         .includes(event.target.value.toLowerCase());
     });
+    this.setState({ currentPage: 0, searchData: searchResult });
     this.setListData(searchResult.slice(0, this.state.itemPerPage));
     this.setPageCount(searchResult);
   };
@@ -170,61 +184,61 @@ class TableSite extends Component {
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-            this.state.filteredData.map((row) => (
-              <React.Fragment key={row._id}>
+          this.state.filteredData.map((row) => (
+            <React.Fragment key={row._id}>
+              <Grid
+                container
+                direction="row"
+                alignItems="center"
+                style={{ padding: "0 0.5rem" }}
+              >
+                <Grid item xs={1}>
+                  {row.displayName}
+                </Grid>
+                <Grid item xs={2}>
+                  {row.title}
+                </Grid>
+                <Grid item xs={1}>
+                  {row.theme && row.theme.name}
+                </Grid>
+                <Grid item xs={2}>
+                  {row.categories && row.categories.map((c) => c.name + ", ")}
+                </Grid>
+                <Grid item xs={2}>
+                  {row.sitePath}
+                </Grid>
+                <Grid item xs={2}>
+                  {row.url}
+                </Grid>
                 <Grid
                   container
-                  direction="row"
+                  item
+                  xs={2}
+                  className={"mainFont"}
+                  style={{
+                    fontSize: "12px",
+                    overflow: "hidden",
+                    height: "4rem",
+                  }}
                   alignItems="center"
-                  style={{ padding: "0 0.5rem" }}
                 >
-                  <Grid item xs={1}>
-                    {row.displayName}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.title}
-                  </Grid>
-                  <Grid item xs={1}>
-                    {row.theme && row.theme.name}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.categories && row.categories.map((c) => c.name + ", ")}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.sitePath}
-                  </Grid>
-                  <Grid item xs={2}>
-                    {row.url}
-                  </Grid>
                   <Grid
-                    container
                     item
-                    xs={2}
-                    className={"mainFont"}
-                    style={{
-                      fontSize: "12px",
-                      overflow: "hidden",
-                      height: "4rem",
-                    }}
-                    alignItems="center"
+                    lg={6}
+                    sm={8}
+                    xs={8}
+                    className={
+                      row.isPublish ? classes.published : classes.unpublished
+                    }
                   >
-                    <Grid
-                      item
-                      lg={6}
-                      sm={8}
-                      xs={8}
-                      className={
-                        row.isPublish ? classes.published : classes.unpublished
-                      }
-                    >
-                      {row.isPublish ? "Published " : "Unpublished "}
-                    </Grid>
+                    {row.isPublish ? "Published " : "Unpublished "}
                   </Grid>
                 </Grid>
-                {/* <Divider /> */}
-              </React.Fragment>
-            ))
-          )}
+              </Grid>
+              {/* <Divider /> */}
+            </React.Fragment>
+          ))
+        )}
         {this.state.pageCount > 1 && (
           <div className="commentBox">
             <ReactPaginate
@@ -239,6 +253,7 @@ class TableSite extends Component {
               containerClassName={"pagination"}
               subContainerClassName={"pages pagination"}
               activeClassName={"active"}
+              forcePage={this.state.currentPage}
             />
           </div>
         )}
