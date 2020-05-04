@@ -1283,7 +1283,7 @@ class SyncEditorTab extends React.Component {
                       value="none"
                       style={{ fontSize: 14, color: "#555d66" }}
                     >
-                      None
+                      Off
                     </option>
                     <option
                       value="post"

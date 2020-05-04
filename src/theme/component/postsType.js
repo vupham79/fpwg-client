@@ -26,6 +26,7 @@ import ButtonComponent from "../../component/Button";
 import Link from "../../component/link";
 import Slider from "react-slick";
 import styles from "./event.module.css";
+import { withRouter } from "react-router-dom";
 
 const useStyles = (theme) => ({
   root: {
@@ -180,6 +181,12 @@ class PostTypeComponent extends React.Component {
     this.setState({
       postOpen: post,
     });
+    if (this.props.fromHome && !this.props.isEdit && this.props.altType) {
+      this.props.history.push({
+        pathname: `/${this.props.siteView.sitePath}/news`,
+        postView: post
+      })
+    }
     document.getElementById("topPos").scrollIntoView();
   };
 
@@ -1245,4 +1252,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(withStyles(useStyles)(PostTypeComponent));
+)(withStyles(useStyles)(withRouter(PostTypeComponent)));
