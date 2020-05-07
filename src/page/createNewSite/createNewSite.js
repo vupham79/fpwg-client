@@ -325,7 +325,7 @@ class createNewSite extends Component {
             }}
           >
             By submit creating new site you agree to our{" "}
-            <span style={{ color: "#000" }}>Terms of Service</span> and to sync{" "}
+            <span style={{ color: "#000" }}>Terms of Service</span> to sync{" "}
             <span style={{ color: "#000" }}>certain data and settings</span> to
             FPWG
           </Typography>

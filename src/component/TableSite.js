@@ -192,22 +192,22 @@ class TableSite extends Component {
                 alignItems="center"
                 style={{ padding: "0 0.5rem" }}
               >
-                <Grid item xs={1}>
+                <Grid item xs={1} style={{ overflowWrap: "break-word" }}>
                   {row.displayName}
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={2} style={{ overflowWrap: "break-word" }}>
                   {row.title}
                 </Grid>
-                <Grid item xs={1}>
+                <Grid item xs={1} style={{ overflowWrap: "break-word" }}>
                   {row.theme && row.theme.name}
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={2} style={{ overflowWrap: "break-word" }}>
                   {row.categories && row.categories.map((c) => c.name + ", ")}
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={2} style={{ overflowWrap: "break-word" }}>
                   {row.sitePath}
                 </Grid>
-                <Grid item xs={2}>
+                <Grid item xs={2} style={{ overflowWrap: "break-word" }}>
                   {row.url}
                 </Grid>
                 <Grid
@@ -230,6 +230,7 @@ class TableSite extends Component {
                     className={
                       row.isPublish ? classes.published : classes.unpublished
                     }
+                    style={{ overflowWrap: "break-word" }}
                   >
                     {row.isPublish ? "Published " : "Unpublished "}
                   </Grid>
