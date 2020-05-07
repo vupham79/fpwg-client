@@ -122,9 +122,14 @@ class TableCategory extends Component {
 
   handleInsert = async () => {
     const { insertCategory } = this.props;
-    await insertCategory(this.state.name, this.state.picture);
-    await this.getCategories();
-    this.setCloseDialogue();
+    if (!this.state.name || !this.state.picture) {
+      toastr.error("Please enter valid info", "Invalid info")
+    }
+    else {
+      await insertCategory(this.state.name, this.state.picture);
+      await this.getCategories();
+      this.setCloseDialogue();
+    }
   };
 
   handleDelete = async () => {
@@ -325,40 +330,40 @@ class TableCategory extends Component {
         {this.state.filteredData.length === 0 ? (
           <p style={{ fontStyle: "italic" }}>No result.</p>
         ) : (
-          this.state.filteredData.map((row) => (
-            <div key={row._id}>
-              <Grid
-                container
-                direction="row"
-                alignItems="center"
-                style={{ padding: "0.2rem 0.5rem" }}
-              >
-                <Grid item xs={2}>
-                  {row.name}
-                  {/* <div style={{ height: 20 }} /> */}
-                </Grid>
-                <Grid item xs={3}>
-                  <img
-                    style={{
-                      height: "4rem",
-                    }}
-                    alt=""
-                    src={row.picture}
-                  />
-                </Grid>
-                <Grid container justify="flex-end" item xs={7}>
-                  <Button
-                    style={{ color: "rgb(0, 96, 136)" }}
-                    onClick={() => this.setOpenEditDialogue(row)}
-                  >
-                    Edit
+            this.state.filteredData.map((row) => (
+              <div key={row._id}>
+                <Grid
+                  container
+                  direction="row"
+                  alignItems="center"
+                  style={{ padding: "0.2rem 0.5rem" }}
+                >
+                  <Grid item xs={2}>
+                    {row.name}
+                    {/* <div style={{ height: 20 }} /> */}
+                  </Grid>
+                  <Grid item xs={3}>
+                    <img
+                      style={{
+                        height: "4rem",
+                      }}
+                      alt=""
+                      src={row.picture}
+                    />
+                  </Grid>
+                  <Grid container justify="flex-end" item xs={7}>
+                    <Button
+                      style={{ color: "rgb(0, 96, 136)" }}
+                      onClick={() => this.setOpenEditDialogue(row)}
+                    >
+                      Edit
                   </Button>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Divider />
-            </div>
-          ))
-        )}
+                <Divider />
+              </div>
+            ))
+          )}
         {this.state.pageCount > 1 && (
           <div className="commentBox">
             <ReactPaginate
