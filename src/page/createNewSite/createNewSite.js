@@ -311,13 +311,14 @@ class createNewSite extends Component {
           item
           sm={12}
           style={{
-            borderTop: "1px solid #f6f7f7",
+            // borderTop: "1px solid #f6f7f7",
             justifyContent: "flex-end",
             display: "flex",
             flexDirection: "column",
+            marginTop: 20
           }}
         >
-          <Typography
+          {/* <Typography
             style={{
               fontSize: "11px",
               margin: "0 0 16px",
@@ -328,7 +329,7 @@ class createNewSite extends Component {
             <span style={{ color: "#000" }}>Terms of Service</span> to sync{" "}
             <span style={{ color: "#000" }}>certain data and settings</span> to
             FPWG
-          </Typography>
+          </Typography> */}
           <ButtonStyled
             style={{
               color: "#006088",
