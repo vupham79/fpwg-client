@@ -127,7 +127,7 @@ class TableCategory extends Component {
     }
     else {
       await insertCategory(this.state.name, this.state.picture);
-      await this.getCategories();
+      this.getCategories();
       this.setCloseDialogue();
     }
   };
@@ -135,7 +135,7 @@ class TableCategory extends Component {
   handleDelete = async () => {
     const { deleteCategory } = this.props;
     await deleteCategory(this.state.edit.id);
-    await this.getCategories();
+    this.getCategories();
     this.setCloseEditDialogue();
   };
 
@@ -152,15 +152,15 @@ class TableCategory extends Component {
   };
 
   getCategories = async () => {
-    const { getAllCategoriesAdmin, categories } = this.props;
+    const { getAllCategoriesAdmin } = this.props;
     await getAllCategoriesAdmin();
     this.setListData(
-      categories.slice(
+      this.props.categories.slice(
         this.state.offset,
         this.state.itemPerPage + this.state.offset
       )
     );
-    this.setPageCount(categories);
+    this.setPageCount(this.props.categories);
   };
 
   componentDidMount() {
