@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Grid, IconButton } from "@material-ui/core";
+import { Grid, IconButton, Typography } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faInstagram,
@@ -20,6 +20,8 @@ class Footer extends React.Component {
       whatsapp,
       bodyEdit,
       bodyView,
+      titleEdit,
+      titleView
     } = this.props;
 
     return (
@@ -28,7 +30,7 @@ class Footer extends React.Component {
         style={{
           backgroundColor: "#121212",
           marginTop: 100,
-          height: 200,
+          height: 250,
           postion: "absolute",
           bottom: 0,
         }}
@@ -38,6 +40,7 @@ class Footer extends React.Component {
             aria-label=""
             color="primary"
             href={isEdit ? siteEdit.url : siteView.url}
+            target={"_blank"}
           >
             <FontAwesomeIcon icon={faFacebook} color="white" size="1x" />
           </IconButton>
@@ -62,14 +65,15 @@ class Footer extends React.Component {
                   ? null
                   : { display: "none" }
                 : siteView.whatsapp
-                ? null
-                : { display: "none" }
+                  ? null
+                  : { display: "none" }
             }
           >
             <IconButton
               aria-label=""
               color="primary"
               href={`https://wa.me/${isEdit ? whatsapp : siteView.whatsapp}`}
+              target={"_blank"}
             >
               <FontAwesomeIcon icon={faWhatsapp} color="white" size="1x" />
             </IconButton>
@@ -83,8 +87,8 @@ class Footer extends React.Component {
                   ? null
                   : { display: "none" }
                 : siteView.instagram
-                ? null
-                : { display: "none" }
+                  ? null
+                  : { display: "none" }
             }
           >
             <IconButton
@@ -92,7 +96,8 @@ class Footer extends React.Component {
               color="primary"
               href={`https://instagram.com/${
                 isEdit ? instagram : siteView.instagram
-              }`}
+                }`}
+              target={"_blank"}
             >
               <FontAwesomeIcon icon={faInstagram} color="white" size="1x" />
             </IconButton>
@@ -106,17 +111,34 @@ class Footer extends React.Component {
                   ? null
                   : { display: "none" }
                 : siteView.youtube
-                ? null
-                : { display: "none" }
+                  ? null
+                  : { display: "none" }
             }
           >
             <IconButton
               aria-label=""
               color="primary"
               href={isEdit ? youtube : siteView.youtube}
+              target={"_blank"}
             >
               <FontAwesomeIcon icon={faYoutube} color="white" size="1x" />
             </IconButton>
+          </Grid>
+
+          <Grid style={{ border: "1px solid white", color: "white", height: 60, }}>
+            <Typography
+              style={{
+                padding: "1rem",
+                fontWeight: "800",
+                textAlign: "center",
+                fontFamily: isEdit
+                  ? titleEdit.fontFamily
+                  : titleView.fontFamily,
+              }}
+              variant="body1"
+            >
+              POWERED BY FPWG
+            </Typography>
           </Grid>
         </Grid>
       </Grid>
@@ -133,6 +155,8 @@ const mapStateToProps = (state) => ({
   whatsapp: state.site.whatsapp,
   bodyEdit: state.site.bodyEdit,
   bodyView: state.site.bodyView,
+  titleEdit: state.site.titleEdit,
+  titleView: state.site.titleView,
 });
 
 export default connect(mapStateToProps, null)(Footer);
