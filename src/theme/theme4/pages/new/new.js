@@ -83,80 +83,108 @@ class Theme1News extends React.Component {
         )}
         <Grid item sm={12} xs={12} container style={{ padding: "2.5rem 0" }}>
           {isEdit ? (
-            siteEdit && siteEdit.posts && siteEdit.posts.length > 0 ? (
-              <Grid container>
-                <NewsType
-                  key={siteEdit.limitNews}
-                  fromHome={fromHome}
-                  posts={(fromHome && homeList
-                    ? homeList
-                    : siteEdit.posts
-                  ).filter(function (pos) {
-                    let type = (pos && pos.attachments && pos.attachments.images && pos.attachments.images.length > 0) || (pos && pos.attachments && pos.attachments.video) ? pos.attachments.media_type : "";
-                    let showPostMode = isEdit
-                      ? siteEdit.showDetailSetting.showPostMode
-                      : siteView.showDetailSetting.showPostMode;
-                    let show = true;
-                    if (
-                      type === "photo" &&
-                      (showPostMode === 2 || showPostMode === 3)
-                    ) {
-                      show = false;
-                    } else if (
-                      type === "video" &&
-                      (showPostMode === 1 || showPostMode === 3)
-                    ) {
-                      show = false;
-                    } else if (
-                      type === "album" &&
-                      (showPostMode === 2 || showPostMode === 3)
-                    ) {
-                      show = false;
-                    } else if (
-                      type === "" &&
-                      (showPostMode === 1 || showPostMode === 2)
-                    ) {
-                      show = false;
-                    }
-                    return pos && pos.isActive === true && show;
-                  })}
-                  pageCount={Math.ceil(
-                    (fromHome && homeList ? homeList : siteEdit.posts).filter(
-                      function (pos) {
-                        let type = (pos && pos.attachments && pos.attachments.images && pos.attachments.images.length > 0) || (pos && pos.attachments && pos.attachments.video) ? pos.attachments.media_type : "";
-                        let showPostMode = isEdit
-                          ? siteEdit.showDetailSetting.showPostMode
-                          : siteView.showDetailSetting.showPostMode;
-                        let show = true;
-                        if (
-                          type === "photo" &&
-                          (showPostMode === 2 || showPostMode === 3)
-                        ) {
-                          show = false;
-                        } else if (
-                          type === "video" &&
-                          (showPostMode === 1 || showPostMode === 3)
-                        ) {
-                          show = false;
-                        } else if (
-                          type === "album" &&
-                          (showPostMode === 2 || showPostMode === 3)
-                        ) {
-                          show = false;
-                        } else if (
-                          type === "" &&
-                          (showPostMode === 1 || showPostMode === 2)
-                        ) {
-                          show = false;
-                        }
-                        return pos && pos.isActive === true && show;
+            siteEdit && siteEdit.posts && siteEdit.posts.filter(function (pos) {
+              let type = (pos && pos.attachments && pos.attachments.images && pos.attachments.images.length > 0) || (pos && pos.attachments && pos.attachments.video) ? pos.attachments.media_type : "";
+              let showPostMode = isEdit
+                ? siteEdit.showDetailSetting.showPostMode
+                : siteView.showDetailSetting.showPostMode;
+              let show = true;
+              if (
+                type === "photo" &&
+                (showPostMode === 2 || showPostMode === 3)
+              ) {
+                show = false;
+              } else if (
+                type === "video" &&
+                (showPostMode === 1 || showPostMode === 3)
+              ) {
+                show = false;
+              } else if (
+                type === "album" &&
+                (showPostMode === 2 || showPostMode === 3)
+              ) {
+                show = false;
+              } else if (
+                type === "" &&
+                (showPostMode === 1 || showPostMode === 2)
+              ) {
+                show = false;
+              }
+              return pos && pos.isActive === true && show;
+            }).length > 0 ? (
+                <Grid container>
+                  <NewsType
+                    key={siteEdit.limitNews}
+                    fromHome={fromHome}
+                    posts={(fromHome && homeList
+                      ? homeList
+                      : siteEdit.posts
+                    ).filter(function (pos) {
+                      let type = (pos && pos.attachments && pos.attachments.images && pos.attachments.images.length > 0) || (pos && pos.attachments && pos.attachments.video) ? pos.attachments.media_type : "";
+                      let showPostMode = isEdit
+                        ? siteEdit.showDetailSetting.showPostMode
+                        : siteView.showDetailSetting.showPostMode;
+                      let show = true;
+                      if (
+                        type === "photo" &&
+                        (showPostMode === 2 || showPostMode === 3)
+                      ) {
+                        show = false;
+                      } else if (
+                        type === "video" &&
+                        (showPostMode === 1 || showPostMode === 3)
+                      ) {
+                        show = false;
+                      } else if (
+                        type === "album" &&
+                        (showPostMode === 2 || showPostMode === 3)
+                      ) {
+                        show = false;
+                      } else if (
+                        type === "" &&
+                        (showPostMode === 1 || showPostMode === 2)
+                      ) {
+                        show = false;
                       }
-                    ).length / siteEdit.limitNews
-                  )}
-                  bgWhite={true}
-                />
-              </Grid>
-            ) : (
+                      return pos && pos.isActive === true && show;
+                    })}
+                    pageCount={Math.ceil(
+                      (fromHome && homeList ? homeList : siteEdit.posts).filter(
+                        function (pos) {
+                          let type = (pos && pos.attachments && pos.attachments.images && pos.attachments.images.length > 0) || (pos && pos.attachments && pos.attachments.video) ? pos.attachments.media_type : "";
+                          let showPostMode = isEdit
+                            ? siteEdit.showDetailSetting.showPostMode
+                            : siteView.showDetailSetting.showPostMode;
+                          let show = true;
+                          if (
+                            type === "photo" &&
+                            (showPostMode === 2 || showPostMode === 3)
+                          ) {
+                            show = false;
+                          } else if (
+                            type === "video" &&
+                            (showPostMode === 1 || showPostMode === 3)
+                          ) {
+                            show = false;
+                          } else if (
+                            type === "album" &&
+                            (showPostMode === 2 || showPostMode === 3)
+                          ) {
+                            show = false;
+                          } else if (
+                            type === "" &&
+                            (showPostMode === 1 || showPostMode === 2)
+                          ) {
+                            show = false;
+                          }
+                          return pos && pos.isActive === true && show;
+                        }
+                      ).length / siteEdit.limitNews
+                    )}
+                    bgWhite={true}
+                  />
+                </Grid>
+              ) : (
                 <Grid container justify="center">
                   <Typography style={classes.changableBody2}>
                     Currently there are no news.
