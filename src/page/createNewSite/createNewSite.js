@@ -80,7 +80,7 @@ class createNewSite extends Component {
   handleConfirm = async () => {
     const { confirmPage, accessToken, profile } = this.props;
     const { id, pageUrl, name, sitepath, isPublish } = this.state;
-    if (pageUrl && sitepath) {
+    if (pageUrl && sitepath && !(sitepath.length < 3)) {
       this.setState({
         pageUrlError: false,
         sitepathError: false,
@@ -107,7 +107,7 @@ class createNewSite extends Component {
           pageUrlError: false,
         });
       }
-      if (!sitepath) {
+      if (!sitepath || (sitepath && sitepath.length < 3)) {
         this.setState({
           sitepathError: true,
         });
@@ -289,7 +289,7 @@ class createNewSite extends Component {
                 fontFamily: "Roboto,sans-serif",
                 fontSize: "12px",
               },
-              maxLength: 50,
+              maxLength: 35,
             }}
             error={this.state.sitepathError}
             fullWidth
