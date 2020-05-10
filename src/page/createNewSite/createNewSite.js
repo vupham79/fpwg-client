@@ -137,7 +137,7 @@ class createNewSite extends Component {
 
   handleChangeSitepath = (e) => {
     this.setState({
-      sitepath: e.target.value,
+      sitepath: e.target.value.trim(),
     });
   };
 
