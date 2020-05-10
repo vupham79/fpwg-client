@@ -264,7 +264,7 @@ class SettingEditorTab extends React.Component {
                 },
               }}
               inputProps={{
-                maxLength: 50,
+                maxLength: 35,
               }}
             />
           </Grid>
