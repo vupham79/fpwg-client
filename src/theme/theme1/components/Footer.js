@@ -30,7 +30,7 @@ class Footer extends React.Component {
         style={{
           backgroundColor: "#121212",
           marginTop: 100,
-          height: 250,
+          height: 270,
           postion: "absolute",
           bottom: 0,
         }}
@@ -125,7 +125,7 @@ class Footer extends React.Component {
             </IconButton>
           </Grid>
 
-          <Grid style={{ border: "1px solid white", color: "white", height: 60, }}>
+          <Grid item xs={12} style={{ border: "1px solid white", color: "white", height: 60, marginTop: 20 }}>
             <Typography
               style={{
                 padding: "1rem",

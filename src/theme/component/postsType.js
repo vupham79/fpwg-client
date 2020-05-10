@@ -1032,24 +1032,33 @@ class PostTypeComponent extends React.Component {
             borderTop: `1px solid ${!dark || bgWhite ? "#535353" : "white"}`,
           }}
         >
-          <Grid
-            container
-            item
-            xs={12}
-            justify="center"
-            style={{ marginTop: "2.5rem" }}
-          >
-            <Typography
-              variant="h6"
-              style={{
-                textAlign: "center",
-                color: dark || !bgWhite ? "#fff" : "#535353",
-                fontWeight: "bold",
-              }}
-            >
-              LATEST NEWS
+          {(siteEdit &&
+            siteEdit.posts &&
+            siteEdit.posts
+              .filter(function (pos) {
+                return pos.isActive === true;
+              })
+              .length > 0)
+            || (posts && posts.length > 0) ? (
+              <Grid
+                container
+                item
+                xs={12}
+                justify="center"
+                style={{ marginTop: "2.5rem" }}
+              >
+                <Typography
+                  variant="h6"
+                  style={{
+                    textAlign: "center",
+                    color: dark || !bgWhite ? "#fff" : "#535353",
+                    fontWeight: "bold",
+                  }}
+                >
+                  LATEST NEWS
             </Typography>
-          </Grid>
+              </Grid>
+            ) : (<Grid></Grid>)}
           <Grid
             container
             item
@@ -1060,9 +1069,8 @@ class PostTypeComponent extends React.Component {
           >
             {this.renderNews(
               isEdit
-                ? siteEdit &&
-                siteEdit.posts &&
-                siteEdit.posts
+                ? posts &&
+                posts
                   .filter(function (pos) {
                     return pos.isActive === true;
                   })
