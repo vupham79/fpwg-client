@@ -499,6 +499,7 @@ class NewsType extends React.Component {
       titleView,
       isEdit,
       dark,
+      siteView,
     } = this.props;
     return (
       <Grid
@@ -635,7 +636,7 @@ class NewsType extends React.Component {
                       })
                       .sort((a, b) => b.createdTime - a.createdTime)
                       .slice(0, 3)
-                : posts && posts.slice(0, 3)
+                : siteView.latestNews && siteView.latestNews
             )}
           </Grid>
         </Grid>

@@ -257,6 +257,7 @@ class SyncEditorTab extends React.Component {
     radioValue: "",
     startDate: new Date(),
     endDate: new Date(),
+    currentDate: new Date(),
     selectValue: "All",
     msg: null,
     selectValueSchedule: "None",
@@ -573,7 +574,7 @@ class SyncEditorTab extends React.Component {
 
   render() {
     const { site, classes } = this.props;
-    const { open, startDate, endDate } = this.state;
+    const { open, startDate, endDate, currentDate } = this.state;
     const btnSync = {
       width: "-webkit-fill-available",
       backgroundColor: "rgb(0, 116, 170)",
@@ -689,21 +690,21 @@ class SyncEditorTab extends React.Component {
                                       {!row.dateFrom && !row.dateTo ? (
                                         "All"
                                       ) : (
-                                          <Grid container justify="center">
-                                            <Grid style={fontTable} item xs={12}>
-                                              From:{" "}
-                                              {moment(row.dateFrom).format(
-                                                "DD-MM-YYYY"
-                                              )}
-                                            </Grid>
-                                            <Grid style={fontTable} item xs={12}>
-                                              To:{" "}
-                                              {moment(row.dateTo).format(
-                                                "DD-MM-YYYY"
-                                              )}
-                                            </Grid>
+                                        <Grid container justify="center">
+                                          <Grid style={fontTable} item xs={12}>
+                                            From:{" "}
+                                            {moment(row.dateFrom).format(
+                                              "DD-MM-YYYY"
+                                            )}
                                           </Grid>
-                                        )}
+                                          <Grid style={fontTable} item xs={12}>
+                                            To:{" "}
+                                            {moment(row.dateTo).format(
+                                              "DD-MM-YYYY"
+                                            )}
+                                          </Grid>
+                                        </Grid>
+                                      )}
                                     </TableCell>
                                     <TableCell align="center">
                                       <Grid
@@ -847,6 +848,7 @@ class SyncEditorTab extends React.Component {
                         selectsStart
                         startDate={startDate}
                         endDate={endDate}
+                        maxDate={currentDate}
                       />
                     </Grid>
                   </Grid>

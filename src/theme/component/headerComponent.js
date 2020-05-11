@@ -114,7 +114,8 @@ class HeaderComponent extends Component {
     const tabStyles = {
       fontFamily: titleEdit.fontFamily,
       color: navTextColor ? navTextColor : this.props.navColor,
-      minWidth: "12vh",
+      minWidth: "14vh",
+      padding: "0.4rem",
       wordBreak: "break-word",
       letterSpacing: "1px",
       "&:hover": {
@@ -133,6 +134,7 @@ class HeaderComponent extends Component {
     };
     return (
       <Tabs
+        style={{ overflow: "unset" }}
         variant="fullWidth"
         orientation={type}
         value={tabValue}
@@ -358,7 +360,10 @@ class HeaderComponent extends Component {
           style={
             displayImg
               ? { backgroundColor: this.props.headerColor }
-              : { padding: "1rem", backgroundColor: this.props.headerColor }
+              : {
+                  padding: "1rem 0.2rem",
+                  backgroundColor: this.props.headerColor,
+                }
           }
         >
           <Grid container item md={8} sm={4} xs={5} justify="flex-start">
@@ -405,13 +410,16 @@ class HeaderComponent extends Component {
       );
     } else if (navPos === "right") {
       return (
-        <Grid
-          container
-          alignItems="center"
-          style={displayImg ? null : { padding: "1rem" }}
-        >
+        <Grid container alignItems="center">
           {displayImg ? (
-            <Grid container item md={6} sm={8} xs={8}>
+            <Grid
+              container
+              item
+              md={4}
+              sm={8}
+              xs={8}
+              style={{ padding: "0 1rem" }}
+            >
               <Grid
                 item
                 md={2}
@@ -428,9 +436,9 @@ class HeaderComponent extends Component {
                 container
                 alignItems="center"
                 item
-                md={6}
-                sm={7}
-                xs={8}
+                md={10}
+                sm={10}
+                xs={10}
                 style={{ paddingLeft: "1rem" }}
               >
                 {this.renderTitle()}
@@ -452,7 +460,7 @@ class HeaderComponent extends Component {
             justify="center"
             alignItems="center"
             item
-            md={6}
+            md={8}
             sm={4}
             xs={4}
           >
