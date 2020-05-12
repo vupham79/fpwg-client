@@ -639,7 +639,7 @@ class PagesEditorTab extends React.Component {
         if (!list[i].filter.items) list[i].filter.items = [];
 
         list[i].filter.items.filter(function (pos) {
-          return pos._id !== post._id;
+          return pos && pos._id !== post._id;
         });
 
         if (list[i].filter.items.length === 0) {
