@@ -125,23 +125,25 @@ class Footer extends React.Component {
             </IconButton>
           </Grid>
 
-          <Grid item xs={12} style={{ border: "1px solid white", color: "white", height: 60, marginTop: 20 }}>
-            <Typography
-              style={{
-                padding: "1rem",
-                fontWeight: "800",
-                textAlign: "center",
-                fontFamily: isEdit
-                  ? titleEdit.fontFamily
-                  : titleView.fontFamily,
-              }}
-              variant="body1"
-            >
-              POWERED BY FPWG
+          <Grid item container xs={12} justify="center">
+            <Grid item xs={3} style={{ border: "1px solid white", color: "white", height: 60, marginTop: 20 }}>
+              <Typography
+                style={{
+                  padding: "1rem",
+                  fontWeight: "800",
+                  textAlign: "center",
+                  fontFamily: isEdit
+                    ? titleEdit.fontFamily
+                    : titleView.fontFamily,
+                }}
+                variant="body1"
+              >
+                POWERED BY FPWG
             </Typography>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      </Grid >
     );
   }
 }

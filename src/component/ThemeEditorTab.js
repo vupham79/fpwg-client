@@ -98,6 +98,12 @@ class ThemeEditorTab extends React.Component {
     if (searchResult) {
       updateNavItemValue(searchResult[0].order - 1);
     }
+    try {
+      document.getElementById("topPos").scrollIntoView();
+    }
+    catch (e) {
+
+    }
   };
 
   render() {
