@@ -470,7 +470,6 @@ export function saveDesignSite({
         type: "CLOSE_LOADING",
       });
       if (data.status === 200) {
-        revertSaveData(site);
         dispatch({
           type: "SET_ISCHANGED_FALSE",
         });
@@ -505,6 +504,7 @@ export function saveDesignSite({
         toastr.error("There are something wrong when save your site", "Error");
       }
     }
+    revertSaveData(site);
   };
 }
 
