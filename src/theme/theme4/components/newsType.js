@@ -270,7 +270,7 @@ class NewsType extends React.Component {
                   <Grid item style={{ paddingTop: "100%" }} />
                 </>
               )}
-              {post && post.attachments && post.attachments.images && (
+              {post && post.attachments && post.attachments.images && post.attachments.video && (
                 <>
                   <Grid item xs={12}>
                     <CardMedia
@@ -639,7 +639,7 @@ class NewsType extends React.Component {
                   fontSize: 34,
                 }}
               >
-                LASTEST NEWS
+                LATEST NEWS
               </Grid>
               <Grid item xs={3} sm={4}>
                 <Divider

@@ -158,7 +158,7 @@ class SettingEditorTab extends React.Component {
 
   handleChangeSitepath = (e) => {
     const { changeSiteSitepath } = this.props;
-    changeSiteSitepath(e.target.value);
+    changeSiteSitepath(e.target.value.trim());
   };
 
   handleChangeAddress = (address) => {
@@ -436,49 +436,49 @@ class SettingEditorTab extends React.Component {
                   getSuggestionItemProps,
                   loading,
                 }) => (
-                  <div>
-                    <TextField
-                      {...getInputProps({
-                        placeholder: "Search Places ...",
-                        className: "location-search-input",
-                      })}
-                      variant="outlined"
-                      label="Address"
-                      size="small"
-                      inputMode={"Address"}
-                      fullWidth
-                      InputLabelProps={{
-                        classes: {
-                          focused: classes.focused,
-                          root: classes.inputLabel,
-                        },
-                      }}
-                      InputProps={{
-                        classes: {
-                          notchedOutline: classes.notchedOutline,
-                          input: classes.inputTitle,
-                        },
-                      }}
-                      inputProps={{
-                        maxLength: 250,
-                      }}
-                    />
-                    <div className="autocomplete-dropdown-container">
-                      {loading && (
-                        <div style={{ color: "#565d66", fontSize: 13 }}>
-                          Loading...
-                        </div>
-                      )}
-                      {suggestions.map((suggestion) => {
-                        const style = suggestion.active
-                          ? {
+                    <div>
+                      <TextField
+                        {...getInputProps({
+                          placeholder: "Search Places ...",
+                          className: "location-search-input",
+                        })}
+                        variant="outlined"
+                        label="Address"
+                        size="small"
+                        inputMode={"Address"}
+                        fullWidth
+                        InputLabelProps={{
+                          classes: {
+                            focused: classes.focused,
+                            root: classes.inputLabel,
+                          },
+                        }}
+                        InputProps={{
+                          classes: {
+                            notchedOutline: classes.notchedOutline,
+                            input: classes.inputTitle,
+                          },
+                        }}
+                        inputProps={{
+                          maxLength: 250,
+                        }}
+                      />
+                      <div className="autocomplete-dropdown-container">
+                        {loading && (
+                          <div style={{ color: "#565d66", fontSize: 13 }}>
+                            Loading...
+                          </div>
+                        )}
+                        {suggestions.map((suggestion) => {
+                          const style = suggestion.active
+                            ? {
                               backgroundColor: "#0074aa",
                               cursor: "pointer",
                               color: "white",
                               borderBottom: "1px solid #0074aa",
                               fontSize: 13,
                             }
-                          : {
+                            : {
                               backgroundColor: "#ffffff",
                               borderLeft: "1px solid #0074aa",
                               borderRight: "1px solid #0074aa",
@@ -486,19 +486,19 @@ class SettingEditorTab extends React.Component {
                               color: "#565d66",
                               fontSize: 13,
                             };
-                        return (
-                          <div
-                            {...getSuggestionItemProps(suggestion, {
-                              style,
-                            })}
-                          >
-                            <span>{suggestion.description}</span>
-                          </div>
-                        );
-                      })}
+                          return (
+                            <div
+                              {...getSuggestionItemProps(suggestion, {
+                                style,
+                              })}
+                            >
+                              <span>{suggestion.description}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
               </PlacesAutocomplete>
             </Grid>
           </Grid>
